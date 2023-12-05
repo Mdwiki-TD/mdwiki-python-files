@@ -26,7 +26,6 @@ def get_info(root):
 
 
 def process_folders(root_folder):
-
     n = 0
     for root, dirs, files in os.walk(root_folder):
         # Check if there's an info.json file in the current folder
@@ -42,7 +41,7 @@ def process_folders(root_folder):
             printe.output(f"{n} diseases:{disease_name}:")
             page = ncc_MainPage(f'Category:{disease_name}', 'www', family='nccommons')
             # ---
-            categories  = page.get_categories(with_hidden=False)
+            categories = page.get_categories(with_hidden=False)
             # ---
             text = page.text
             # ---
