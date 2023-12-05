@@ -10,9 +10,6 @@ def printn(s):
     return
 
 
-# ---
-
-
 class move_External_links_section:
     def __init__(self, text):
         self.text = text
@@ -130,7 +127,6 @@ class move_External_links_section:
         return self.new_text
 
 
-# ---
 if __name__ == "__main__":
     # python3 pwb.py newupdater/mv_section Alcohol_septal_ablation
     import pywikibot
