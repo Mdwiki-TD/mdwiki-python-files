@@ -36,11 +36,13 @@ time.sleep(5)
 print('time.sleep(5)')
 len_all_images = []
 
-def create_set( disease_name, image_infos ):
+
+def create_set(disease_name, image_infos):
     title = disease_name
     text = ''
     # ---
-    if 'noset' in sys.argv: return
+    if 'noset' in sys.argv:
+        return
     # ---
     title = title.replace('_', ' ').replace('  ', ' ')
     if title in pages:
@@ -61,11 +63,14 @@ def create_set( disease_name, image_infos ):
     new = api.create_Page(text, title)
     # ---
     return new
+
+
 def create_category(disease_name):
     cat_text = f'* Image set: [[{disease_name}]]\n[[Category:Atlasdermatologico]]'
     cat_title = f'Category:{disease_name}'
     # ---
-    if 'nocat' in sys.argv: return cat_title
+    if 'nocat' in sys.argv:
+        return cat_title
     # ---
     disease_name = disease_name.replace('_', ' ').replace('  ', ' ')
     if cat_title in pages:
@@ -75,6 +80,8 @@ def create_category(disease_name):
     mosab_api.create_Page(cat_text, cat_title)
     # ---
     return cat_title
+
+
 def upload_image(category_name, image_path, image_url, image_name, disease_url):
     global len_all_images
     # split disease_url to get last text after =
@@ -94,6 +101,8 @@ def upload_image(category_name, image_path, image_url, image_name, disease_url):
     upload = mosab_api.upload_by_url(image_name, image_text, image_url, comment='')
 
     print(f"upload result: {upload}")
+
+
 def get_info(root):
     info_file_path = os.path.join(root, 'info.json')
 
@@ -102,6 +111,8 @@ def get_info(root):
         info_data = json.load(info_file)
 
     return info_data
+
+
 def process_folder(root):
     info_data = get_info(root)
     disease_name = info_data.get("disease_name", "").replace("_", " ")
@@ -146,6 +157,7 @@ def process_folders(root_folder):
     len_all_images = list(set(len_all_images))
     # ---
     print(f'len_all_images: {len(len_all_images)}')
+
 
 if __name__ == "__main__":
     # Process all subfolders in the specified root folder
