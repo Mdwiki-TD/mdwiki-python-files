@@ -32,6 +32,7 @@ if py_v.endswith('.None'):
     py_v = py_v[: -len('.None')]
 # ---
 pymysql_version = pkg_resources.parse_version(py_v)
+# printe.output(f'<<lightyellow>> pymysql_version: {pymysql_version}')
 # ---
 db_username = config.db_username
 db_password = config.db_password

@@ -1,23 +1,17 @@
 """
-python3 core8/pwb.py TDpynew/text_changes
+A few small changes when we are greeting the starting text at User:Mr.
+Ibrahem/Article name
 
-Usage:
-from TDpynew import text_changes
+1) Can we leave out the "{{short description|text here}}
+
+2) Can we also leave out "{{TOC limit}}"
+
+James
 """
-from TDpynew import printe
 import wikitextparser as wtp
+
 # ---
-temps_to_delete = [
-    "short description", 
-    "toc limit", 
-    'use american english', 
-    'use dmy dates', 
-    'sprotect', 
-    'about', 
-    'featured article', 
-    'redirect',
-    '#unlinkedwikibase'
-    ]
+temps_to_delete = ["short description", "toc limit", 'use american english', 'use dmy dates', 'about', 'redirect']
 
 
 def work(text):
@@ -29,19 +23,7 @@ def work(text):
         if name.lower() in temps_to_delete:
             text = text.replace(temp.string.strip(), '')
     # ---
-    parsed = wtp.parse(text)
-    # ---
-    for func in parsed.parser_functions:
-        name = func.name
-        # ---
-        if name.lower() in temps_to_delete:
-            text = text.replace(func.string.strip(), '')
-    # ---
     return text.strip()
 
-if __name__ == '__main__':
-    tet = """"""
-    #---
-    newtext = work(tet)
-    printe.showDiff(tet, newtext)
-    #---
+
+# ---

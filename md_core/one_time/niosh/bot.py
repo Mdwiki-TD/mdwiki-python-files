@@ -7,30 +7,29 @@ import os
 from pathlib import Path
 import re
 import json
+import codecs
+
 # ---
 from new_api.wiki_page import MainPage, NEW_API
 
 # ---
 Dir = Path(__file__).parent
-Dir2 = os.path.dirname(Dir)
 # ---
 file_json1 = f"{Dir}/jsons/extlinks.json"
 # ---
 if not os.path.isfile(file_json1):
-    with open(file_json1, 'w', encoding='utf-8') as aa:
-        json.dump({}, aa)
+    json.dump({}, codecs.open(file_json1, 'w', encoding='utf-8'))
 
-toto = json.load(open(file_json1, 'r', encoding='utf-8'))
+toto = json.load(codecs.open(file_json1, 'r', encoding='utf-8'))
 # ---
 file_json2 = f"{Dir}/jsons/niosh.json"
 file_all_links = f"{Dir}/jsons/all_links.json"
 # ---
 if not os.path.isfile(file_json2):
-    with open(file_json2, 'w', encoding='utf-8') as aa:
-        json.dump({}, aa)
+    json.dump({}, codecs.open(file_json2, 'w', encoding='utf-8'))
 
-with open(file_json2, 'r', encoding='utf-8') as cc:
-    new = json.load(cc)
+new = json.load(codecs.open(file_json2, 'r', encoding='utf-8'))
+
 
 def new_search():
     global toto
@@ -51,8 +50,7 @@ def new_search():
         extlinks = page.get_extlinks()
         toto[x] = extlinks
     # ---
-    with open(file_json1, 'w', encoding='utf-8') as dd:
-        json.dump(toto, dd)
+    json.dump(toto, codecs.open(file_json1, 'w', encoding='utf-8'))
 
 
 def new_vals():
@@ -87,8 +85,7 @@ def new_vals():
     # ---
     new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
     # ---
-    with open(file_json2, 'w', encoding='utf-8') as ee:
-        json.dump(new, ee, ensure_ascii=False, indent=4)
+    json.dump(new, codecs.open(file_json2, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
 
 
 def start():
@@ -99,6 +96,7 @@ def start():
     if 'new2' in sys.argv:
         new_vals()
     # ---
+    ns = len(new.keys())
     n = 0
     # ---
     all_links = []
@@ -106,13 +104,12 @@ def start():
     for x, exts in new.items():
         n += 1
         all_links.extend(exts)
-        # print(f'n:{n}/{len(new.keys())}, title:{x} lenth:{len(exts)}')
+        # print(f'n:{n}/{ns}, title:{x} lenth:{len(exts)}')
     # ---
     all_links = sorted(set(all_links))
     # ---
     # ---
-    with open(file_all_links, 'w', encoding='utf-8') as ff:
-        json.dump(all_links, ff, ensure_ascii=False, indent=4)
+    json.dump(all_links, codecs.open(file_all_links, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
     # ---
     len_all_links = len(all_links)
     # ---

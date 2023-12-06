@@ -1,7 +1,8 @@
 #!/usr/bin/env python
+#   himo
 """
 
-python3 core8/pwb.py mdpy/bots/catdepth2
+python3 core8/pwb.py mdpy/catdepth2
 
 """
 #
@@ -14,11 +15,14 @@ import traceback
 import codecs
 import time
 import os
+import datetime
 from datetime import datetime
+
 # ---
 from mdpy.bots import mdwiki_api
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title  # valid_title(title)
+
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---
@@ -224,7 +228,6 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
         textn = ''
     # ---
     Table = {}
-    # ---
     if textn != '':
         Table = json.loads(textn)
     # ---
@@ -240,8 +243,7 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
         # ---
         Table['Day_History'] = Day_History
         # ---
-        with open(filename, 'w', encoding='utf8') as aa:
-            json.dump(Table, aa)
+        json.dump(Table, open(filename, 'w'))
         # ---
     # ---
     if 'print' in sys.argv:

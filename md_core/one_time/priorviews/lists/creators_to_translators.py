@@ -26,7 +26,7 @@ Dir = Path(__file__).parent
 file_cts = f'{Dir}/creators_as_translators.json'
 # ---
 if not os.path.exists(file_cts):
-    with open(file_cts, 'w', encoding="utf-8") as f:
+    with open(file_cts, 'w') as f:
         json.dump({}, f)
 # ---
 creators_as_translators = json.load(codecs.open(file_cts, 'r', 'utf-8'))

@@ -1,29 +1,43 @@
 #!/usr/bin/python3
 """
 
-Usage:
-from TDpynew import mdapi
-# result = enapi.submitAPI(params, addtoken=False)
 """
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import json
-import traceback
-import requests
-from TDpynew import user_account_new
+
 # ---
-SS = {}
+import traceback
+
+# import pywikibot
+# ---
+
+# import datetime
+# import dateutil.parser
+# import time
+# ---
+
+# ---
+# ---
+# ---
+import requests
+
+# ---
+import user_account_new
+
 # ---
 username = user_account_new.my_username  # user_account_new.bot_username
 passe = user_account_new.mdwiki_pass  # user_account_new.bot_password     #user_account_new.my_password
 # ---
-login_done = {1: False}
-print_pywikibot = {1: False}
 # ---
+SS = {}
+# ---
+print_pywikibot = {1: False}
 try:
     import pywikibot
+
     print_pywikibot[1] = True
 except BaseException:
     print_pywikibot[1] = False
@@ -32,9 +46,12 @@ except BaseException:
 def printt(s):
     if print_pywikibot[1]:
         pywikibot.output(s)
+    # else:
+    # print(s)
 
-def login():
-    # ---
+
+def start_sea():
+    global SS
     SS["ss"] = requests.Session()
     SS["url"] = 'https://' + 'mdwiki.org/w/api.php'
     SS["ss"] = requests.Session()
@@ -68,8 +85,8 @@ def login():
         ress = r22.json()['login']['result']
         if print_pywikibot[1]:
             pywikibot.output('Traceback (most recent call last):')
-            pywikibot.output('Exception:' + str(ress))
-            pywikibot.output(traceback.format_exc())
+            warn('Exception:' + str(ress), UserWarning)
+            pywikibot.output(r22.json())
             pywikibot.output('CRITICAL:')
     else:
         printt(f"<<lightgreen>> mdwiki/TDpynew/mdapi.py: log to {SS['url']} user:{username} Success... ")
@@ -85,15 +102,17 @@ def login():
     )
     # ---
     SS["r3_token"] = SS["r33"].json()['query']['tokens']['csrftoken']
-    login_done[1] = True
 
-def submitAPI(params, addtoken=False):
     # ---
-    if not login_done[1]:
-        login()
-    # ---
-    if addtoken:
-        params['token'] = SS["r3_token"]
+
+
+# ---
+start_sea()
+# ---
+# mdapi.submitAPI( params, type ="get" )
+
+
+def submitAPI(params, type='get'):
     # ---
     json1 = {}
     # ---
@@ -108,3 +127,6 @@ def submitAPI(params, addtoken=False):
         return {}
     # ---
     return json1
+
+
+# ---

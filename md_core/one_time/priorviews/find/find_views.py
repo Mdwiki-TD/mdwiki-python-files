@@ -26,7 +26,7 @@ Dir2 = os.path.dirname(Dir)
 file = f'{Dir2}/lists/views_mdwiki_langs.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, 'w') as f:
         json.dump({}, f)
 # ---
 # ---

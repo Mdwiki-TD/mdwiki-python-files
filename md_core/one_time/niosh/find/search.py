@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 import re
 import json
+import codecs
+
 # ---
 from new_api.wiki_page import MainPage, NEW_API
 
@@ -17,20 +19,18 @@ Dir2 = os.path.dirname(Dir)
 file_json1 = f"{Dir2}/jsons/extlinks.json"
 # ---
 if not os.path.isfile(file_json1):
-    with open(file_json1, 'w', encoding='utf-8') as aa:
-        json.dump({}, aa)
+    json.dump({}, codecs.open(file_json1, 'w', encoding='utf-8'))
 
-toto = json.load(open(file_json1, 'r', encoding='utf-8'))
+toto = json.load(codecs.open(file_json1, 'r', encoding='utf-8'))
 # ---
 file_json2 = f"{Dir2}/jsons/niosh.json"
 file_all_links = f"{Dir2}/jsons/all_links.json"
 # ---
 if not os.path.isfile(file_json2):
-    with open(file_json2, 'w', encoding='utf-8') as aa:
-        json.dump({}, aa)
+    json.dump({}, codecs.open(file_json2, 'w', encoding='utf-8'))
 
-with open(file_json2, 'r', encoding='utf-8') as cc:
-    new = json.load(cc)
+new = json.load(codecs.open(file_json2, 'r', encoding='utf-8'))
+
 
 def new_search():
     global toto
@@ -38,8 +38,8 @@ def new_search():
     # ---
     api_new = NEW_API('en', family='wikipedia')
     # ---
-    vv = 'insource:"cdc.gov/niosh/"'
-    search = api_new.Search(value=vv, ns="0", offset='', srlimit="", RETURN_dict=False, addparams={})
+    bb = 'insource:"cdc.gov/niosh/"'
+    search = api_new.Search(value=bb, ns="0", offset='', srlimit="", RETURN_dict=False, addparams={})
     # ---
     na = 0
     nn = len(search)
@@ -51,8 +51,7 @@ def new_search():
         extlinks = page.get_extlinks()
         toto[x] = extlinks
     # ---
-    with open(file_json1, 'w', encoding='utf-8') as dd:
-        json.dump(toto, dd)
+    json.dump(toto, codecs.open(file_json1, 'w', encoding='utf-8'))
 
 
 def new_vals():
@@ -87,8 +86,7 @@ def new_vals():
     # ---
     new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
     # ---
-    with open(file_json2, 'w', encoding='utf-8') as ee:
-        json.dump(new, ee, ensure_ascii=False, indent=4)
+    json.dump(new, codecs.open(file_json2, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
 
 
 def start():
@@ -112,8 +110,7 @@ def start():
     all_links = sorted(set(all_links))
     # ---
     # ---
-    with open(file_all_links, 'w', encoding='utf-8') as ff:
-        json.dump(all_links, ff, ensure_ascii=False, indent=4)
+    json.dump(all_links, codecs.open(file_all_links, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
     # ---
     len_all_links = len(all_links)
     # ---

@@ -70,7 +70,7 @@ def get_RTT2():
     # ---
     qids = sitelinks_all.get('qids', {})
     # ---
-    for _qid, tab in qids.items():
+    for qid, tab in qids.items():
         mdtitle = tab['mdtitle']
         en = tab.get('sitelinks', {}).get('en', '')
         if mdtitle != '' and en != '':
@@ -127,7 +127,7 @@ def main():
     # ---
     printe.output(f'no_views:{no_views},\t len of n_views: {len(n_views.keys())}')
     # ---
-    with open(enwiki_pageviews, 'w', encoding="utf-8") as outfile:
+    with open(enwiki_pageviews, 'w') as outfile:
         json.dump(n_views, outfile, sort_keys=True, indent=4)
     outfile.close()
 

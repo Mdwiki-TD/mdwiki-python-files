@@ -6,52 +6,142 @@
 # (C) Ibrahem Qasim, 2022
 #
 #
+import json
+
 import sys
+
+# ---
+
+# ---
+import urllib
+import urllib.request
 import urllib.parse
-from pathlib import Path
+import requests
+
 # ---
-Dir = Path(__file__).parent.parent
+import text_changes
+import ref
+
+# ref.fix_ref( first , alltext )
 # ---
-sys.path.append(str(Dir))
-# ---
-from TDpynew import printe
-from TDpynew import text_changes
-from TDpynew import ref
-from TDpynew import user_account_new
-from TDpynew import mdapi
-from TDpynew import enapi
+import user_account_new
+
 # ---
 lgname_enwiki = user_account_new.lgname_enwiki
 lgpass_enwiki = user_account_new.lgpass_enwiki
 # ---
+import mdapi
+
+# mdapi.submitAPI( params )
+# ---
 wholearticle = {1: False}
+# ---
+SS = {"token": ''}
+session = {}
+session[1] = requests.Session()
+session["url"] = ""
 # ---
 Url_To_login = {1: '', 'not': True}
 # ---
 login_done = {1: False}
+
 
 def print_py(s):
     if sys.stdin.isatty():
         print(s)
 
 
+def log_to_enwiki():
+    # ---
+    if login_done[1]:
+        return ''
+    # ---
+    api_urle = 'https://' + 'en.wikipedia.org/w/api.php'
+    # ---
+    Url_To_login[1] = api_urle
+    # ---
+    session[1] = requests.Session()
+    # ---
+    session["url"] = api_urle
+    # ---
+    # get login token
+    r1 = session[1].get(
+        api_urle,
+        params={
+            'format': 'json',
+            'action': 'query',
+            'meta': 'tokens',
+            'type': 'login',
+        },
+    )
+    r1.raise_for_status()
+    # log in
+    r2 = session[1].post(
+        api_urle,
+        data={
+            'format': 'json',
+            'action': 'login',
+            'lgname': lgname_enwiki,
+            'lgpassword': lgpass_enwiki,
+            'lgtoken': r1.json()['query']['tokens']['logintoken'],
+        },
+    )
+
+    r3 = session[1].get(
+        api_urle,
+        params={
+            'format': 'json',
+            'action': 'query',
+            'meta': 'tokens',
+        },
+    )
+    # ---
+    token = r3.json()['query']['tokens']['csrftoken']
+    # ---
+    print_py(f'token:{token}')
+    # ---
+    login_done[1] = True
+    # ---
+    session["token"] = token
+
+
+def submit_to_enwiki(params):
+    # ---
+    log_to_enwiki()
+    # ---
+    params['token'] = session.get("token", "")
+    # ---
+    json1 = {}
+    # ---
+    try:
+        r4 = session[1].post(session["url"], data=params)
+        json1 = json.loads(r4.text)
+    except Exception as e:
+        print_py(f"post_ss error: {e}")
+        return {}
+    # ---
+    return json1
+
+
 def put(title, text):
     # ---
-    suus = 'from https://mdwiki.org/wiki/' + title.replace(' ', '_')
+    text = text.replace("{{Sprotect|small=yes}}", "")
     # ---
-    title2 = 'User:Mr. Ibrahem/' + title
+    suus = 'from https://' + 'mdwiki.org/wiki/' + title.replace(' ', '_')
+    # ---
+    tit2 = 'User:Mr. Ibrahem/' + title
     # ---
     dataa = {
         "format": "json",
         "utf8": 1,
         "action": "edit",
-        "title": title2,
+        "title": tit2,
         "text": text,
         "summary": suus,
         # "nocreate": 1,
     }
     # ---
-    js = enapi.submitAPI(dataa, addtoken=True)
+    js = submit_to_enwiki(dataa)
     # ---
     if 'Success' in str(js):
         print('true')
@@ -93,39 +183,37 @@ def work(title):
         # text += '\n==References==\n<references />\n[[en:%s]]' % title
         text += '\n==References==\n<references />'
     # ---
-    newtext = ref.fix_ref(text, alltext)
+    text = ref.fix_ref(text, alltext)
     # ---
-    newtext = text_changes.work(newtext)
+    text = text_changes.work(text)
     # ---
-    newtext = newtext.replace('[[Category:', '[[:Category:')
+    text = text.replace('[[Category:', '[[:Category:')
     # ---
-    if newtext == '':
+    if text == '':
         print_py('no text')
         return "notext"
     # ---
-    if 'ask' in sys.argv:
-        printe.showDiff(text, newtext)
-        ask = input('save?')
-        if not ask in ['y', 'Y', '']:
-            return
-    # ---
     return put(title, text)
 
+    # ---
 
-if __name__ == '__main__':
-    title = ''
+
+title = ''
+# ---
+# python translate.py -title:Amoebiasis
+# ---
+for arg in sys.argv:
+    arg, _, value = arg.partition(':')
     # ---
-    # python3 I:/mdwiki/pybot/TDpynew/translate.py -title:Endometrial_cancer
-    # python3 core8/pwb.py TDpynew/translate -title:Endometrial_cancer
+    if arg == "-title":
+        title = value
     # ---
-    for arg in sys.argv:
-        arg, _, value = arg.partition(':')
-        # ---
-        if arg == "-title":
-            title = value
-        # ---
-        if arg == "wholearticle":
-            wholearticle[1] = True
-        # ---
-    if title != '':
-        work(title)
+    if arg == "wholearticle":
+        wholearticle[1] = True
+    # ---
+if title != '':
+    work(title)
+    # print(a)
+# ---
+
+# ---

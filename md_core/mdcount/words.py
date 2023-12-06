@@ -66,8 +66,7 @@ get_word_files()
 
 
 def log(file, table):
-    with open(file, 'w', encoding='utf-8') as aa:
-        json.dump(table, aa, sort_keys=True)
+    json.dump(table, open(file, 'w'), sort_keys=True)
     # ---
     printe.output(f'<<lightgreen>> {len(table)} lines to {file}')
 

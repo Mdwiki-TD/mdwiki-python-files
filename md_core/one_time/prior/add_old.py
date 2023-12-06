@@ -121,7 +121,7 @@ class PriorAddOld:
             print(f'no change: {filename}')
         else:
             # ---
-            json.dump(data_new, open(filename, 'w', encoding="utf-8"))
+            json.dump(data_new, open(filename, 'w'))
 
 
 # ---
