@@ -1,11 +1,9 @@
 """
 
 """
-# ---
 import re
 import sys
 
-# ---
 printn_t = {1: False}
 
 
@@ -57,7 +55,6 @@ def portal_remove(text):
     return new_text
 
 
-# ---
 if __name__ == "__main__":
     printn_t[1] = True
     remove_cite_web('temptext', {}, '', '')
