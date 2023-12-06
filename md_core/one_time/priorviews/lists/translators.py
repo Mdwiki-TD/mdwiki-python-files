@@ -20,7 +20,7 @@ Dir = Path(__file__).parent
 file = f'{Dir}/translators_mdwiki_langs.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w') as f:
+    with open(file, 'w', encoding="utf-8") as f:
         json.dump({}, f)
 # ---
 tra_by_lang = json.load(codecs.open(file, 'r', 'utf-8'))

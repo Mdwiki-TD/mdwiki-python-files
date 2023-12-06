@@ -2,8 +2,9 @@
 """
 
 Usage:
-from TDpynew import mdapi
+from TDpynew import enapi
 # result = enapi.submitAPI(params, addtoken=False)
+
 """
 #
 # (C) Ibrahem Qasim, 2022
@@ -16,8 +17,8 @@ from TDpynew import user_account_new
 # ---
 SS = {}
 # ---
-username = user_account_new.my_username  # user_account_new.bot_username
-passe = user_account_new.mdwiki_pass  # user_account_new.bot_password     #user_account_new.my_password
+lgname_enwiki = user_account_new.lgname_enwiki
+lgpass_enwiki = user_account_new.lgpass_enwiki
 # ---
 login_done = {1: False}
 print_pywikibot = {1: False}
@@ -36,7 +37,7 @@ def printt(s):
 def login():
     # ---
     SS["ss"] = requests.Session()
-    SS["url"] = 'https://' + 'mdwiki.org/w/api.php'
+    SS["url"] = 'https://' + 'en.wikipedia.org/w/api.php'
     SS["ss"] = requests.Session()
     # ---
     r11 = SS["ss"].get(
@@ -56,8 +57,8 @@ def login():
             # 'assert': 'user',
             'format': 'json',
             'action': 'login',
-            'lgname': username,
-            'lgpassword': passe,
+            'lgname': lgname_enwiki,
+            'lgpassword': lgpass_enwiki,
             'lgtoken': r11.json()['query']['tokens']['logintoken'],
         },
     )
@@ -72,7 +73,7 @@ def login():
             pywikibot.output(traceback.format_exc())
             pywikibot.output('CRITICAL:')
     else:
-        printt(f"<<lightgreen>> mdwiki/TDpynew/mdapi.py: log to {SS['url']} user:{username} Success... ")
+        printt(f"<<lightgreen>> mdwiki/TDpynew/mdapi.py: log to {SS['url']} user:{lgname_enwiki} Success... ")
     # ---
     # get edit token
     SS["r33"] = SS["ss"].get(
@@ -87,7 +88,7 @@ def login():
     SS["r3_token"] = SS["r33"].json()['query']['tokens']['csrftoken']
     login_done[1] = True
 
-def submitAPI(params, addtoken=False):
+def submitAPI(params, addtoken=True):
     # ---
     if not login_done[1]:
         login()
@@ -108,3 +109,4 @@ def submitAPI(params, addtoken=False):
         return {}
     # ---
     return json1
+

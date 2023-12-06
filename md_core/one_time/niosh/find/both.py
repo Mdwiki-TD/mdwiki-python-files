@@ -43,7 +43,8 @@ def do_all():
     # ---
     all_links = list(set(all_links))
     # ---
-    json.dump(all_links, codecs.open(file_all_links, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+    with open(file_all_links, 'w', encoding='utf-8') as ff:
+        json.dump(all_links, ff, ensure_ascii=False, indent=4)
     # ---
     len_all_links = len(all_links)
     # ---

@@ -28,7 +28,7 @@ with codecs.open(f'{Dir}/lang_links.json', 'r', encoding='utf-8') as f:
 file = f'{Dir}/views.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w') as f:
+    with open(file, 'w', encoding="utf-8") as f:
         json.dump({}, f)
 # ---
 with codecs.open(file, 'r', encoding='utf-8') as f:
