@@ -26,9 +26,9 @@ def add_resources(new_text, drug_resources):
     if page_identifier_params == {}:
         return new_text, ''
     # ---
-    for pa in page_identifier_params:
+    for pa, pap in page_identifier_params.items():
         # ---
-        to_add += f"| {pa} = {page_identifier_params[pa]}\n"
+        to_add += f"| {pa} = {pap}\n"
         # ---
     # ---
     to_add = to_add.replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n")
