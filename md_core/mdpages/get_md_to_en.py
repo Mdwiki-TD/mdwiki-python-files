@@ -127,11 +127,14 @@ def check():
     # ---
     if 'nodump' not in sys.argv:
         # الكتابة إلى الملفات
-        json.dump(medwiki_to_enwiki, open(project + 'medwiki_to_enwiki' + json_ext, 'w', encoding='utf-8'))
+        with open(project + 'medwiki_to_enwiki' + json_ext, 'w', encoding='utf-8') as aa:
+            json.dump(medwiki_to_enwiki, aa)
         # ---
-        json.dump(missing_in_enwiki, open(project + 'missing_in_enwiki' + json_ext, 'w', encoding='utf-8'))
+        with open(project + 'missing_in_enwiki' + json_ext, 'w', encoding='utf-8') as bb:
+            json.dump(missing_in_enwiki, bb)
         # ---
-        json.dump(sames, open(project + 'sames' + json_ext, 'w', encoding='utf-8'))
+        with open(project + 'sames' + json_ext, 'w', encoding='utf-8') as cc:
+            json.dump(sames, cc)
 
 
 if __name__ == '__main__':

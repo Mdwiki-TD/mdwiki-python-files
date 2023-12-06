@@ -18,13 +18,11 @@ import json
 import codecs
 import os
 import sys
-
 # ---
-from mdpy.bots.en_to_md import mdwiki_to_enwiki, enwiki_to_mdwiki
+from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from mdpy.bots import wiki_api
 from mdpy.bots import catdepth2
 from mdpy import printe
-
 # ---
 project = '/data/project/mdwiki/'
 # ---
@@ -71,7 +69,7 @@ for arg in sys.argv:
 
 
 def log():
-    with open(json_file[0], 'w') as outfile:
+    with open(json_file[0], 'w', encoding="utf-8") as outfile:
         json.dump(assessments, outfile, sort_keys=True)
     outfile.close()
     # ---

@@ -73,9 +73,9 @@ def work_in_file(filename):
     # ---
     cite_all_links[filename.replace('.txt', '')] = lista
     # ---
-    json.dump(tab, codecs.open(f"{filename2}.json", 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+    with open(f"{filename2}.json", 'w', encoding='utf-8') as ee:
+        json.dump(tab, ee, ensure_ascii=False, indent=4)
 
-    # ---
 
 
 # scan all txt files in Dir and work on them
@@ -88,4 +88,5 @@ for filename in os.listdir(Dird):
         work_in_file(filename)
         # break
 # ---
-json.dump(cite_all_links, codecs.open(cite_file, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+with open(cite_file, 'w', encoding='utf-8') as gg:
+    json.dump(cite_all_links, gg, ensure_ascii=False, indent=4)

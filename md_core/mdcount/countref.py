@@ -3,9 +3,9 @@
 
 إنشاء قائمة بعدد المراجع
 
-python3 core8/pwb.py /data/project/mdwiki/mdpy/countref less100
+python3 /data/project/mdwiki/md_core/mdcount/countref.py newpages
 
-python3 core8/pwb.py mdpy/countref newpages
+python3 core8/pwb.py mdcount/countref newpages
 
 """
 #
@@ -112,7 +112,7 @@ def count_refs(title):
 
 
 def logaa(file, table):
-    with open(file, 'w') as outfile:
+    with open(file, 'w', encoding='utf-8') as outfile:
         json.dump(table, outfile, sort_keys=True, indent=4)
     outfile.close()
     # ---

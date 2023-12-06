@@ -71,7 +71,7 @@ def get_qids_sitelinks(qidslist):
         "utf8": 1,
     }
     # ---
-    TEST = {"heads": ["arwiki"], "qids": {"Q1": {"mdtitle": "test", "sitelinks": {"arwiki": "test"}}}}
+    #  {"heads": ["arwiki"], "qids": {"Q1": {"mdtitle": "test", "sitelinks": {"arwiki": "test"}}}}
     table_d = {"heads": [], "qids": {}}
     table_l = {"heads": [], "qids": {}}
     # ---
@@ -97,7 +97,7 @@ def get_qids_sitelinks(qidslist):
             # ---
             all_entities = {**all_entities, **entities}
         # ---
-        for qid_1, kk in all_entities.items():
+        for _qid_1, kk in all_entities.items():
             # ---
             numb += 1
             if "missing" in kk:
@@ -197,15 +197,16 @@ def cash_wd():
         if qid != '':
             qids_list[qid] = x
     # ---
-    lists, table_l = get_qids_sitelinks(qids_list)
+    lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
-    json.dump(lists, open(Dashboard_path + '/Tables/sitelinks.json', 'w'))
+    with open(Dashboard_path + '/Tables/sitelinks.json', 'w', encoding='utf-8') as aa:
+        json.dump(lists, aa)
     # ---
-    # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w'), ensure_ascii=False, indent=4 )
+    # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w', encoding="utf-8"), ensure_ascii=False, indent=4 )
     # ---
     # table_to_log = { "redirects": redirects_qids, "missing": mis_qids }
     # ---
-    # json.dump( table_to_log, open( Dashboard_path + '/Tables/qid_redirects_missing.json' , 'w') )
+    # json.dump( table_to_log, open( Dashboard_path + '/Tables/qid_redirects_missing.json' , 'w', encoding="utf-8") )
     # ---
     for site, liste in main_table_sites.items():
         # printe.output('<<lightblue>> main_table_sites:%s, len:%d.' % (site, len(liste)) )
@@ -223,7 +224,8 @@ def cash_wd():
         # ---
         # dump liste to json_file
         try:
-            json.dump(liste, codecs.open(json_file, 'w', encoding="utf-8"), ensure_ascii=False, indent=4)
+            with codecs.open(json_file, 'w', encoding="utf-8") as aa:
+                json.dump(liste, aa, ensure_ascii=False, indent=4)
             printe.output(f'<<lightgreenn>>dump to cash_exists/{site}.json done..')
         except Exception:
             pywikibot.output('Traceback (most recent call last):')
@@ -236,7 +238,8 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    json.dump(noqids, open(Dashboard_path + '/Tables/noqids.json', 'w'))
+    with open(Dashboard_path + '/Tables/noqids.json', 'w', encoding="utf-8") as dd:
+        json.dump(noqids, dd)
     # ---
     # redirects_qids
     # mis_qids
@@ -250,7 +253,8 @@ def cash_wd():
     printe.output(f' len of redirects_qids:  {len(redirects_qids.keys())}')
     printe.output(f' len of missing_qids:    {len(mis_qids)}')
     # ---
-    json.dump(missing, open(Dashboard_path + '/Tables/missing.json', 'w'))
+    with codecs.open(Dashboard_path + '/Tables/missing.json', 'w', encoding="utf-8") as xx:
+        json.dump(missing, xx)
     printe.output(' log to missing.json true.... ')
 
     # ---
