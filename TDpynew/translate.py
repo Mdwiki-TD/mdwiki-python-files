@@ -109,7 +109,7 @@ def work(title):
         if ask not in ['y', 'Y', '']:
             return
     # ---
-    return put(title, text)
+    return put(title, newtext)
 
 
 if __name__ == '__main__':
