@@ -40,7 +40,7 @@ Dir2 = os.path.dirname(Dir)
 file = f'{Dir2}/lists/blames.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w') as f:
+    with open(file, 'w', encoding="utf-8") as f:
         json.dump({}, f)
 # ---
 new_data = json.load(codecs.open(file, 'r', 'utf-8'))

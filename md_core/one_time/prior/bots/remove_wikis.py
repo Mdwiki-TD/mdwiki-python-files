@@ -58,7 +58,7 @@ def work_in_jsfile(filename):
             data[title]["old"]["extlinks"] = extlinks
         # ---
     # ---
-    json.dump(data, open(filename, 'w'))
+    json.dump(data, open(filename, 'w', encoding="utf-8"))
 
     # ---
 

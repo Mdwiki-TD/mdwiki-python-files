@@ -38,7 +38,6 @@ if py_v.endswith('.None'):
     py_v = py_v[: -len('.None')]
 # ---
 pymysql_version = pkg_resources.parse_version(py_v)
-print(f'<<lightyellow>> pymysql_version: {pymysql_version}')
 # ---
 project = '/data/project/mdwiki/'
 # ---

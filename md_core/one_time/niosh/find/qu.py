@@ -77,4 +77,5 @@ print(f'all pages:{len(new.keys())}, {len_all_links=}')
 # sort dict keys
 new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
 # ---
-json.dump(new, codecs.open(f"{Dir2}/jsons/both.json", 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+with codecs.open(f"{Dir2}/jsons/both.json", 'w', encoding='utf-8') as ii:
+    json.dump(new, ii, ensure_ascii=False, indent=4)

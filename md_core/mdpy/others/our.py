@@ -57,7 +57,7 @@ def work(title):
     # ---
     for temp in ingr:
         # ---
-        name, namestrip, params, template = temp['name'], temp['namestrip'], temp['params'], temp['item']
+        namestrip, params = temp['namestrip'], temp['params']
         # ---
         if namestrip.lower() == 'ourworldindatamirror':
             # ---
@@ -91,7 +91,7 @@ def work(title):
                 sa = True
         # ---
         if sa:
-            vav = mdwiki_api.page_put_new(newtext, 'fix ourworldindatamirror template.', title)
+            mdwiki_api.page_put_new(newtext, 'fix ourworldindatamirror template.', title)
     # ---
     printe.output(pas)
 
@@ -155,30 +155,29 @@ def make_log(dad):
 
 
 def main():
-    nn = ''
     # ---
     global values
     # ---
     if 'read' in sys.argv:
-        list = mdwiki_api.Get_template_pages("Template:Ourworldindatamirror", namespace="0", limit="max")
+        listas = mdwiki_api.Get_template_pages("Template:Ourworldindatamirror", namespace="0", limit="max")
         # ---
         num = 0
         # ---
-        for page in list:
+        for page in listas:
             num += 1
             # ---
-            printe.output(f'<<lightyellow>> work {num}/{len(list)} page: {page}')
+            printe.output(f'<<lightyellow>> work {num}/{len(listas)} page: {page}')
             # ---
             work(page)
             # ---
             if '50' in sys.argv and num > 50:
                 break
         # ---
-        with open(project + '/md_core/mdpy/our.json', 'w') as f:
+        with open(project + '/md_core/mdpy/our.json', 'w', encoding="utf-8") as f:
             json.dump(values, f)
         # ---
     else:
-        with open(project + '/md_core/mdpy/our.json') as f:
+        with open(project + '/md_core/mdpy/our.json', 'r', encoding='utf-8') as f:
             values = json.load(f)
     # ---
     make_log(values)
