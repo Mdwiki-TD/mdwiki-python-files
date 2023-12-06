@@ -20,7 +20,7 @@ if not os.path.isfile(file_json1):
     with open(file_json1, 'w', encoding='utf-8') as aa:
         json.dump({}, aa)
 
-toto = json.load(open(file_json1, 'r', encoding='utf-8'))
+totox = json.load(open(file_json1, 'r', encoding='utf-8'))
 # ---
 file_json2 = f"{Dir}/jsons/niosh.json"
 file_all_links = f"{Dir}/jsons/all_links.json"
@@ -33,8 +33,8 @@ with open(file_json2, 'r', encoding='utf-8') as cc:
     new = json.load(cc)
 
 def new_search():
-    global toto
-    toto = {}
+    global totox
+    totox = {}
     # ---
     api_new = NEW_API('en', family='wikipedia')
     # ---
@@ -49,10 +49,10 @@ def new_search():
         page = MainPage(x, 'en', family='wikipedia')
         print(f'p:{na}/{nn}, title:{x}, get_extlinks:')
         extlinks = page.get_extlinks()
-        toto[x] = extlinks
+        totox[x] = extlinks
     # ---
     with open(file_json1, 'w', encoding='utf-8') as dd:
-        json.dump(toto, dd)
+        json.dump(totox, dd)
 
 
 def new_vals():
@@ -70,7 +70,7 @@ def new_vals():
         return x
 
     # ---
-    for title, exts in toto.items():
+    for title, exts in totox.items():
         tat = []
         # ---
         for x in exts:
@@ -103,7 +103,7 @@ def start():
     # ---
     all_links = []
     # ---
-    for x, exts in new.items():
+    for _x, exts in new.items():
         n += 1
         all_links.extend(exts)
         # print(f'n:{n}/{len(new.keys())}, title:{x} lenth:{len(exts)}')

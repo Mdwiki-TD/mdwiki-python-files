@@ -106,7 +106,7 @@ def work(title):
     if 'ask' in sys.argv:
         printe.showDiff(text, newtext)
         ask = input('save?')
-        if not ask in ['y', 'Y', '']:
+        if ask not in ['y', 'Y', '']:
             return
     # ---
     return put(title, text)

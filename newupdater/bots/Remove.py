@@ -48,7 +48,7 @@ def remove_cite_web(text, resources_get_NLM, line, title):
 
 
 def portal_remove(text):
-    par = "{{portal bar|Medicine}}"
+    # par = "{{portal bar|Medicine}}"
     new_text = text
     new_text = re.sub(r"\{\{\s*portal bar\s*\|\s*Medicine\s*\}\}", "", new_text, flags=re.IGNORECASE)
     # ---
