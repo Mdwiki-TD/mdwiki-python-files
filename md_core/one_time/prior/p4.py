@@ -249,7 +249,8 @@ def start_all():
         # ---
         tanko[str(n)] = {'file': main_File, 'file_en': main_File_en, 'links': titles}
         # ---
-        printe.output(f'jsub -N s{n} python3 core8/pwb.py prior/p4 -s:{n}')
+        printe.output(f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"')
+
         # ---
     # ---
     valu = ''
