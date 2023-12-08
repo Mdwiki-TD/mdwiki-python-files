@@ -52,7 +52,7 @@ class PriorAddOld:
             if filename.endswith('.json'):
                 p += 1
                 self.all_file.append(filename)
-                print(f'jsub -N p{p} python3 core8/pwb.py prior/add_old -file:{filename}')
+                print(f'toolforge jobs run p{p} --command "python3 core8/pwb.py prior/add_old -file:{filename}" --image python3.9')
         # ---
         file_to = ''
         # ---

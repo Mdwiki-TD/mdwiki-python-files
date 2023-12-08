@@ -109,4 +109,3 @@ def submitAPI(params, addtoken=True):
         return {}
     # ---
     return json1
-
