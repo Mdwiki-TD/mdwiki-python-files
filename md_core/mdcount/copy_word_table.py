@@ -9,16 +9,20 @@ python3 core8/pwb.py mdcount/copy_word_table
 #
 #
 # ---
-import codecs
-import os
 import json
 import sys
-from mdpy.bots import sql_for_mdwiki
-
+from pathlib import Path
 # ---
+from mdpy.bots import sql_for_mdwiki
 from mdpy import printe
 from pymysql.converters import escape_string
-
+# ---
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
+# split path before "mdwiki"
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+print(f'dir2 : {dir2}')
 # ---
 que = '''select DISTINCT w_title, w_lead_words, w_all_words from words;'''
 # ---
@@ -34,14 +38,13 @@ for q in sql_for_mdwiki.mdwiki_sql(que, return_dict=True):
     in_sql_lead[w_title] = w_lead_words
     in_sql_all[w_title] = w_all_words
 # ---
-project = '/data/project/mdwiki/'
-if not os.path.isdir(project):
-    project = '/mdwiki'
+project_tables = dir2 + '/public_html/Translation_Dashboard/Tables'
 # ---
-project_tables = project + '/public_html/Translation_Dashboard/Tables'
-# ---
-lead_words = json.loads(codecs.open(project_tables + '/words.json', "r", encoding="utf-8").read())
-all_words = json.loads(codecs.open(project_tables + '/allwords.json', "r", encoding="utf-8").read())
+with open(project_tables + '/words.json', "r", encoding="utf-8") as f:
+    lead_words = json.load(f)
+
+with open(project_tables + '/allwords.json', "r", encoding="utf-8") as f:
+    all_words = json.load(f)
 # ---
 new_words = {}
 # ---
@@ -92,40 +95,46 @@ for tit in na_list:
                 UPDATE.append(qua_update)
         else:
             same += 1
-# ---
 all_textx = []
 texts = []
 # ---
 n = 0
 # ---
-for qu in UPDATE:
-    # ---
-    n += 1
-    # ---
-    all_textx.append(qu)
-    texts.append(qu)
-    # ---
-    if len(texts) % 50 == 0 or n == len(UPDATE):
-        tt = "\n".join(texts)
-        # ---
-        printe.output('====')
-        printe.output('%d run sql for %s lines.' % (n, len(texts)))
-        # ---
-        printe.output(tt)
-        # ---
-        vfg = sql_for_mdwiki.mdwiki_sql(tt, update=True, Prints=True)
-        # ---
-        texts = []
-        # ---
-        if 'break' in sys.argv:
-            break
+if UPDATE != []:
+    if 'update' in sys.argv:
+        for qu in UPDATE:
+            # ---
+            n += 1
+            # ---
+            all_textx.append(qu)
+            texts.append(qu)
+            # ---
+            if len(texts) % 50 == 0 or n == len(UPDATE):
+                tt = "\n".join(texts)
+                # ---
+                printe.output('====')
+                printe.output('%d run sql for %s lines.' % (n, len(texts)))
+                # ---
+                printe.output(tt)
+                # ---
+                vfg = sql_for_mdwiki.mdwiki_sql(tt, update=True, Prints=True)
+                # ---
+                texts = []
+                # ---
+                if 'break' in sys.argv:
+                    break
+    else:
+        printe.output('add "update" to sys.argv to update new words.')
 # ---
 if INSERT != []:
-    insert_line = ',\n'.join(INSERT)
-    # ---
-    qu = 'INSERT INTO words (w_title, w_lead_words, w_all_words) values\n' + insert_line
-    printe.output(qu)
-    vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True, Prints=True)
+    if 'insert' in sys.argv:
+        insert_line = ',\n'.join(INSERT)
+        # ---
+        qu = 'INSERT INTO words (w_title, w_lead_words, w_all_words) values\n' + insert_line
+        printe.output(qu)
+        vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True, Prints=True)
+    else:
+        printe.output('add "insert" to sys.argv to insert new words.')
 # ---
 printe.output(f'len lead_words from file: {len(lead_words)}')
 printe.output(f'len all_words from file: {len(all_words)}')
@@ -133,5 +142,5 @@ printe.output(f'len all_words from file: {len(all_words)}')
 printe.output(f'len sql titles: {len(in_sql_lead)}')
 printe.output(f'pages with same values in sql and file: {same}')
 # ---
-codecs.open(project + '/md_core/mdcount/words.txt', "w", encoding="utf-8").write("\n".join(all_textx))
-# ---
+with open(Dir + '/words.txt', "w", encoding="utf-8") as f:
+    f.write("\n".join(all_textx))

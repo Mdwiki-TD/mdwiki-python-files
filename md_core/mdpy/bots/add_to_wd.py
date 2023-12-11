@@ -15,37 +15,15 @@ from mdpy.bots import add_to_wd
 #
 import re
 import os
-
 import sys
-
 # ---
 from pymysql.converters import escape_string
-
-# ---
 from mdpy.bots import sql_for_mdwiki
-
-# sql_for_mdwiki.mdwiki_sql(query , update = False)
-# ---
 from mdpy.bots import wiki_api
 from mdpy import printe
-
-# ---
 from mdpy.bots import mdwiki_api
-
-# ---
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-# ---
 from mdpy.bots import en_to_md
-
-# en_to_md.mdtitle_to_qid
-# en_to_md.enwiki_to_mdwiki
-# en_to_md.mdwiki_to_enwiki
-# ---
 from mdpy import orred
-
 # ---
 '''CREATE TABLE wddone (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,

@@ -36,7 +36,7 @@ qids = {v[0]: q for q, v in vals_d.items() if len(v) == 1}
 # ---
 for q, v in vals_d.items():
     if len(v) > 1:
-        printe.output(f'q:{q}, v:{v}')
+        printe.output(f'<<red>> duplicate: q:{q}, v:{v}')
 
 
 def work_page(title, qid):
@@ -51,15 +51,15 @@ def work_page(title, qid):
     # ---
     text = page.get_text()
     # refs        = page.Get_tags(tag='ref')# for x in ref: name, contents = x.name, x.contents
-    templates = page.get_templates()
+    # templates = page.get_templates()
     # ---
     if text.find('{{#unlinkedwikibase:id=') != -1:
         printe.output('page already tagged')
         return
     # ---
-    tag = '{{#unlinkedwikibase:id=' + qid + '}}'
+    tag = '{{#unlinkedwikibase:id=' + qid + '}}\n'
     # ---
-    newtext = tag + text
+    newtext = tag + text.strip()
     page.save(newtext=newtext, summary='add tag:' + tag, nocreate=1, minor='')
 
 

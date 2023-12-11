@@ -21,20 +21,13 @@ import resources_new
 import chembox  # fix_Chembox
 
 
-def printn(s):
-    return
-
-
-# ---
-project = "/data/project/mdwiki/"
-# ---
-if not os.path.isdir(project):
-    project = "/mdwiki"
-# ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
 # ---
 lkj2 = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status)\s*-->)"
 
+
+def printn(s):
+    return
 
 def work_on_text_md(title, text):
     # ---

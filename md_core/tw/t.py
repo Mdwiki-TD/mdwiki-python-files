@@ -13,7 +13,6 @@ python3 core8/pwb.py tw/t
 #
 #
 # ---
-import tweepy
 import re
 import sys
 import os
@@ -21,17 +20,24 @@ import codecs
 import json
 import requests
 import random
-
+import tweepy
+from pathlib import Path
 # ---
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
 import twet_config
-
+# ---
 # Create variables for each key, secret, token
 consumer_key = twet_config.consumer_key
 consumer_secret = twet_config.consumer_secret
 access_token = twet_config.access_token
 access_token_secret = twet_config.access_token_secret
 bearer_token = twet_config.bearer_token
+# ---
+title = 'WikiProjectMed:List'
+# ---
+json_file = Dir + '/done.json'
 
 
 def auth_ready(tweet, link=None):
@@ -39,8 +45,6 @@ def auth_ready(tweet, link=None):
     api = tweepy.Client(bearer_token=bearer_token, consumer_key=consumer_key, consumer_secret=consumer_secret, access_token=access_token, access_token_secret=access_token_secret)
     # ---
     # print(dir(api))
-    # ---
-
     # ---
     # t = api.search_recent_tweets(tweet)
     t = api.create_tweet(text=tweet, media_ids=['1582864493234851846'])
@@ -54,21 +58,13 @@ def auth_ready(tweet, link=None):
         return True
 
 
-# ---
-project = '/data/project/mdwiki'
-# ---
-if not os.path.isdir(project):
-    print(f'{project} is not dir')
-    project = '/mdwiki'
-
-
 def auth(tweet, link=None):
     # ---
     auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token=access_token, access_token_secret=access_token_secret)
     api = tweepy.API(auth)
     # ---
     # t = api.update_status(tweet)
-    t = api.update_status_with_media(tweet, project + '/md_core/tw/a.png')
+    t = api.update_status_with_media(tweet, Dir + '/a.png')
     print(t)
     # ---
     dataid = getattr(t, 'id')
@@ -93,12 +89,6 @@ def do_api(params):
         return {}
     # ---
     return {}
-
-
-# ---
-title = 'WikiProjectMed:List'
-# ---
-json_file = project + '/md_core/tw/done.json'
 
 
 def get_links():
@@ -217,10 +207,8 @@ def start_md():
         # ---
 
 
-# ---
 if 'test' in sys.argv:
     print('test!')
     auth('test!')
 else:
     start_md()
-# ---

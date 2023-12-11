@@ -23,23 +23,15 @@ import os
 import json
 import codecs
 from pathlib import Path
-
 # ---
 from new_api.wiki_page import MainPage, change_codes
 from mdpy import printe
-
-# ---
 from mdpy.bots import sql_for_mdwiki
 
 # sql_for_mdwiki.mdwiki_sql(query, update = False)
 mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
 # ---
 Dir = Path(__file__).parent.parent
-# ---
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
 # ---
 with codecs.open(f'{Dir}/lists/md_links.json', 'r', encoding='utf-8') as f:
     md_links = json.load(f)

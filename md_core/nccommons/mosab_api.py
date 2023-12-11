@@ -21,15 +21,13 @@ import os
 import pywikibot
 import configparser
 import requests
-
 # ---
-project = "/data/project/mdwiki/"
-# ---
-if not os.path.isdir(project):
-    project = "I:/mdwiki"
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
 config = configparser.ConfigParser()
-config.read(project + "/confs/nccommons_user.ini")
+config.read(Dir + "/confs/nccommons_user.ini")
 # ---
 username = config["MOSSAB"]["username"].strip()
 password = config["MOSSAB"]["password"].strip()

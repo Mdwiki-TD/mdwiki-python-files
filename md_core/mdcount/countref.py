@@ -22,19 +22,21 @@ from TDpynew import ref
 from mdpy.bots import mdwiki_api
 from mdpy import printe
 from mdpy.bots import catdepth2
-
 # ---
-project = '/data/project/mdwiki/'
-if not os.path.isdir(project):
-    project = '/mdwiki'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
+# ---
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 all_ref = {}
 lead_ref = {}
 vaild_links = {1: []}
 list_ma = {1: []}
 # ---
-file_all = project + '/public_html/Translation_Dashboard/Tables/all_refcount.json'
-file_lead = project + '/public_html/Translation_Dashboard/Tables/lead_refcount.json'
+file_all  = dir2 + '/public_html/Translation_Dashboard/Tables/all_refcount.json'
+file_lead = dir2 + '/public_html/Translation_Dashboard/Tables/lead_refcount.json'
 # ---
 a = {}
 # ---

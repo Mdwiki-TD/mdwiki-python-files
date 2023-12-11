@@ -28,12 +28,13 @@ import codecs
 import os
 import json
 from mdpy.bots import sql_for_mdwiki
-
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 enwiki_to_mdwiki = {}
 mdwiki_to_enwiki = {}
@@ -45,7 +46,7 @@ lala = ''
 
 def make_mdwiki_list():
     # ---
-    ffile = f'{project}/public_html/Translation_Dashboard/Tables/medwiki_to_enwiki.json'
+    ffile = f'{dir2}/public_html/Translation_Dashboard/Tables/medwiki_to_enwiki.json'
     # ---
     From_json = {}
     # ---
@@ -71,5 +72,5 @@ if __name__ == "__main__":
         print(line.strip())
         text += line
     # ---
-    with open(project + '/uu.txt', "w", encoding="utf-8-sig") as f:
+    with open(dir2 + '/uu.txt', "w", encoding="utf-8-sig") as f:
         f.write(text)

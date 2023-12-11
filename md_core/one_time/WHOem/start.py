@@ -3,22 +3,17 @@
 python3 core8/pwb.py WHOem/start enonly
 
 '''
-from WHOem import get_them
-from new_api.wiki_page import change_codes
-from mdpy import printe
 import sys
 import os
 import json
 import codecs
 from pathlib import Path
-
+# ---
+from WHOem import get_them
+from new_api.wiki_page import change_codes
+from mdpy import printe
 # ---
 Dir = Path(__file__).parent
-# ---
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
 # ---
 with codecs.open(f'{Dir}/lists/md_links.json', 'r', encoding='utf-8') as f:
     md_links = json.load(f)
@@ -90,6 +85,5 @@ def start_all():
         json.dump(allen, f, ensure_ascii=False, indent=4)
 
 
-# ---
 if __name__ == '__main__':
     start_all()

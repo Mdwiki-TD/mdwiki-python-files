@@ -22,10 +22,12 @@ from mdpy.bots.check_title import valid_title  # valid_title(title)
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 # sql_for_mdwiki.mdwiki_sql(query, update = False)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
@@ -199,7 +201,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
 
 
 def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
-    filename = project + f'/public_html/Translation_Dashboard/cats_cash/{cat}.json'
+    filename = dir2 + f'/public_html/Translation_Dashboard/cats_cash/{cat}.json'
     # ---
     if cat == 'RTT':
         depth = 2

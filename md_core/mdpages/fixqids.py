@@ -12,7 +12,6 @@ from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
 # ---
 mdlist = sql_for_mdwiki.get_all_qids()
 # ---
@@ -45,7 +44,7 @@ def fix_redirects(qs_list):
             sql_for_mdwiki.mdwiki_sql(qua, update=True)
         else:
             printe.output(qua)
-            printe.output('add "fix" to sys.argv to fix them..')
+            printe.output('<<lightgreen>> add "fix" to sys.argv to fix them..')
 
 
 def add_to_qids(mdlist):

@@ -27,18 +27,15 @@ python3 core8/pwb.py prior/add_old new  -file:en_14.json
 import sys
 import os
 import json
-
+from pathlib import Path
 # ---
 from prior import get_them
 from mdpy import printe
-
 # ---
-project = '/data/project/mdwiki/'
-if not os.path.isdir(project):
-    project = '/mdwiki'
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-project += '/md_core/prior'
-project_js_new = f'{project}/json_en/'
+project_js_new = f'{Dir}/json_en/'
 # ---
 
 

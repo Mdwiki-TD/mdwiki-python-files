@@ -39,10 +39,12 @@ if py_v.endswith('.None'):
 # ---
 pymysql_version = pkg_resources.parse_version(py_v)
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 db_username = config.db_username
 db_password = config.db_password
@@ -61,7 +63,7 @@ main_args = {
     'autocommit': True,
 }
 # ---
-if 'localhost' in sys.argv or project == '/mdwiki':
+if 'localhost' in sys.argv or dir2 == 'I:/mdwiki':
     main_args['host'] = '127.0.0.1'
     main_args['db'] = 'mdwiki'
     credentials = {'user': 'root', 'password': 'root11'}

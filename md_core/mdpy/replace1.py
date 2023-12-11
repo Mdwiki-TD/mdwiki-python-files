@@ -6,20 +6,19 @@
 # (C) Ibrahem Qasim, 2023
 #
 #
-from new_api.mdwiki_page import MainPage, NEW_API
-import os
 import codecs
 import sys
-
 # ---
-numbers = {1: 20000, 'done': 0}
+from new_api.mdwiki_page import MainPage, NEW_API
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
-public_html = project + '/public_html'
+public_html = dir2 + '/public_html'
 # ---
 api_new = NEW_API('www', family='mdwiki')
 api_new.Login_to_wiki()
@@ -27,6 +26,7 @@ api_new.Login_to_wiki()
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 # ---
 file_name = {}
+numbers = {1: 20000, 'done': 0}
 
 
 def work(title, Find, Replace, nn):

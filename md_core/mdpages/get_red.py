@@ -28,12 +28,6 @@ Day_History = datetime.now().strftime("%Y-%m-%d")
 # pages = sql_for_mdwiki.get_all_pages()
 # sql_for_mdwiki.add_titles_to_qids(tab, add_empty_qid=False)
 # ---
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-
-
 def get_pages():
     # ---
     table = {}

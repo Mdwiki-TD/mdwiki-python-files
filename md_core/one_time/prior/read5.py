@@ -13,23 +13,18 @@ import os
 import json
 import wikitextparser
 import codecs
-
 # ---
 from new_api.mdwiki_page import MainPage as md_MainPage
 from mdpy import printe
 from prior import text_bot
-
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-# ---
-project += '/md_core/prior'
-# ---
-project_json = f'{project}/json'
-project_js_new = f'{project}/json_langs/'
-project_js_newen = f'{project}/json_en/'
+project_json = f'{Dir}/json'
+project_js_new = f'{Dir}/json_langs/'
+project_js_newen = f'{Dir}/json_en/'
 # ---
 '''
 page      = md_MainPage(title, 'www', family='mdwiki')
@@ -59,7 +54,7 @@ def work_test(All, allen):
             All[a]['old'] = tab.get('old', {})
 
     # Create a file title for the log file
-    filetitle = f'{project}/log_test.txt'
+    filetitle = f'{Dir}/log_test.txt'
 
     # Call a function 'make_text' with 'All' dictionary as input and store the output in 'text' variable.
     text = text_bot.make_text(All)
@@ -201,7 +196,7 @@ class WorkAll:
             # ---
             ttt = f'User:Mr. Ibrahem/prior/{t}'
             # ---
-            filetitle = f'{project}/log/{t}.txt'
+            filetitle = f'{Dir}/log/{t}.txt'
             # ---
             text = text_bot.make_text(_all_, ttt=t)
             # ---

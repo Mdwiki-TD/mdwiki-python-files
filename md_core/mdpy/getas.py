@@ -24,10 +24,13 @@ from mdpy.bots import wiki_api
 from mdpy.bots import catdepth2
 from mdpy import printe
 # ---
-project = '/data/project/mdwiki/'
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
+# ---
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 printe.output('Get vaild_links from cat : RTT')
 # ---
@@ -36,7 +39,7 @@ vaild_links = tabe['list']
 # ---
 printe.output(f'len of vaild_links: {len(vaild_links)}')
 # ---
-json_file = {0: project + '/public_html/Translation_Dashboard/Tables/assessments.json'}
+json_file = {0: dir2 + '/public_html/Translation_Dashboard/Tables/assessments.json'}
 # ---
 old_assessments = {}
 lala = ''
