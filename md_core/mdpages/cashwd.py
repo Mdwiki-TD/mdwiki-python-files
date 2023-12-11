@@ -14,7 +14,6 @@ import os
 import traceback
 from datetime import datetime
 import pywikibot
-
 # ---
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
@@ -22,16 +21,18 @@ from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_md
 from mdpy.bots import mdwiki_api
 from mdpy.bots import wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
+# ---
+# ---
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
+# ---
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-# ---
-Dashboard_path = project + '/public_html/Translation_Dashboard'
+Dashboard_path = dir2 + '/public_html/Translation_Dashboard'
 # ---
 redirects_qids = {}
 mis_qids = []

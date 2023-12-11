@@ -13,36 +13,14 @@ python3 core8/pwb.py mdpy/sql
 #
 import re
 import os
-
 import sys
 import time as tttime
 from pymysql.converters import escape_string
-
 from mdpy.bots import add_to_wd
-
-# add_to_wd.add_tab_to_wd(New_Table_by_lang)
-# ---
 from mdpy.bots import py_tools
 from mdpy import printe
-
-# escape_string(string)
-
-# ---
 from mdpy.bots import wiki_sql
-
-# wiki_sql.GET_SQL()
-# wiki_sql.Make_sql_many_rows( queries , wiki="", printqua = False)
-# ---
 from mdpy.bots import sql_for_mdwiki
-
-# sql_for_mdwiki.mdwiki_sql(query , update = False)
-# ---
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-# ---
-cat_for_pages = {}
 from mdpy.others.fixcat import cat_for_pages
 
 # ---

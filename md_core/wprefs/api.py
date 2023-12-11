@@ -11,7 +11,6 @@ import codecs
 import os
 import sys
 import requests
-
 # ---
 try:
     import pywikibot
@@ -21,7 +20,10 @@ except ImportError:
 sys.path.append('/data/project/mdwiki/md_core/')
 # ---
 from wprefs.helps import print_s
-
+# ---
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
 SS = {"token": ''}
 session = {}
@@ -31,11 +33,6 @@ session["url"] = ""
 Url_To_login = {1: '', 'not': True}
 # ---
 login_done = {1: False}
-# ---
-project = '/data/project/mdwiki'
-# ---
-if not os.path.isdir(project):
-    project = 'I:/mdwiki'
 # ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
 # ---
@@ -267,7 +264,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         print_s(r4.text)
     # ---
     if 'savetofile' in sys.argv:
-        with codecs.open(project + '/md_core/wprefs/wpref_1.txt', "w", encoding="utf-8") as ggg:
+        with codecs.open(str(Dir) + '/wpref_1.txt', "w", encoding="utf-8") as ggg:
             ggg.write(NewText)
         ggg.close()
     # ---

@@ -16,14 +16,15 @@ from mdpy.bots import wiki_api
 from mdpy.bots import mdwiki_api
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
-project += '/public_html/Translation_Dashboard/Tables/'
+dir2 += '/public_html/Translation_Dashboard/Tables/'
 # ---
 medwiki_to_enwiki_conflic = {}
 medwiki_to_enwiki = {}
@@ -127,13 +128,13 @@ def check():
     # ---
     if 'nodump' not in sys.argv:
         # الكتابة إلى الملفات
-        with open(project + 'medwiki_to_enwiki' + json_ext, 'w', encoding='utf-8') as aa:
+        with open(dir2 + 'medwiki_to_enwiki' + json_ext, 'w', encoding='utf-8') as aa:
             json.dump(medwiki_to_enwiki, aa)
         # ---
-        with open(project + 'missing_in_enwiki' + json_ext, 'w', encoding='utf-8') as bb:
+        with open(dir2 + 'missing_in_enwiki' + json_ext, 'w', encoding='utf-8') as bb:
             json.dump(missing_in_enwiki, bb)
         # ---
-        with open(project + 'sames' + json_ext, 'w', encoding='utf-8') as cc:
+        with open(dir2 + 'sames' + json_ext, 'w', encoding='utf-8') as cc:
             json.dump(sames, cc)
 
 

@@ -10,17 +10,18 @@ python3 core8/pwb.py mdpy/fixref
 import codecs
 import sys
 import os
-
+# ---
 from mdpy.fixref.fixref_text_new import fix_ref_template
 from mdpy.bots import catdepth2
 from mdpy.bots import mdwiki_api
 from mdpy import printe
-
-project = '/data/project/mdwiki/'
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 thenumbers = {1: 20000, 'done': 0}
 
@@ -56,7 +57,7 @@ def main():
             thenumbers[1] = int(value)
         # ---
         if arg == '-file':
-            text = codecs.open(project + f'/public_html/find/{value.strip()}', 'r', 'utf8').read()
+            text = codecs.open(dir2 + f'/public_html/find/{value.strip()}', 'r', 'utf8').read()
             List = [x.strip() for x in text.split('\n') if x.strip() != '']
         # ---
         if arg == 'allpages':

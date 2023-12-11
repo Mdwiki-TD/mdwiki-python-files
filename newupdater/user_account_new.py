@@ -10,15 +10,16 @@ lgpass_enwiki   = user_account_new.lgpass_enwiki
 '''
 import os
 import configparser
-
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 config = configparser.ConfigParser()
-config.read(project + '/confs/user.ini')
+config.read(dir2 + '/confs/user.ini')
 
 username = config['DEFAULT']['botusername']
 password = config['DEFAULT']['botpassword']

@@ -10,31 +10,23 @@ import sys
 import os
 import json
 import codecs
-
 # ---
 from mdpy import printe
-
-# ---
 from new_api.mdwiki_page import MainPage as md_MainPage
-
-'''
-page      = md_MainPage(title, 'www', family='mdwiki')
-text        = page.get_text()
-'''
-# ---
 from new_api.wiki_page import MainPage, change_codes
-
 # ---
 from prior import get_them
-
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
+All = {}
+allen = {}
+n_al = 0
 # ---
-project_js_new = f'{project}/md_core/prior/json_langs/'
-project_js_newen = f'{project}/md_core/prior/json_en/'
+project_js_new = f'{Dir}/md_core/prior/json_langs/'
+project_js_newen = f'{Dir}/md_core/prior/json_en/'
 
 
 def main_links():
@@ -54,11 +46,6 @@ def main_links():
     printe.output(f'{len(links)} links found')
     # ---
     return links
-
-
-# ---
-All = {}
-allen = {}
 
 
 def log_all(main_File):
@@ -175,10 +162,6 @@ def work_in_en_page(title):
     # ---
 
 
-# ---
-n_al = 0
-
-
 def work_in_links(links, main_File, main_File_en, Log=True):
     # ---
     global n_al
@@ -285,7 +268,5 @@ def start_all():
         log_all(main_File)
         log_allen(main_File_en)
 
-
-# ---
 if __name__ == '__main__':
     start_all()

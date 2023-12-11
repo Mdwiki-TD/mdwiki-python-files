@@ -9,27 +9,20 @@
 #
 #
 # ---
-
 import traceback
-
-# import pywikibot
 import re
 import urllib
 import json
 import sys
-
-# ---
 import pywikibot
-
-# ---
 from datetime import datetime
-
-# ---
-menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
+import requests
 # ---
 from mdpy import printe
 from mdpy.bots import py_tools
-
+from mdpy.bots import user_account_new
+# ---
+menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
 # ---
 '''
 # ---
@@ -47,12 +40,6 @@ from mdpy.bots import wikidataapi
 # wikidataapi.
 # ---
 '''
-# ---
-import requests
-
-# ---
-from mdpy.bots import user_account_new
-
 # ---
 username = user_account_new.bot_username  # user_account_new.my_username
 password = user_account_new.bot_password  # user_account_new.my_password      #user_account_new.mdwiki_pass
@@ -340,7 +327,6 @@ def Labels_API(Qid, label, lang, remove=False):
             item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
             printe.output('<<lightred>>API: same label item: ' + item2)
             # ---
-            # outbot(text, fi = out, NoWait = nowait)
         # ---
         if 'success' in req:
             printe.output('<<lightgreen>> **Labels_API true.')
@@ -377,60 +363,38 @@ def get_redirects(liste):
     return redirects
 
 
-# ---
-'''
-def Sitelink_API(Qid, title, wiki):
+def new_item(data, summary, returnid=False):
     # ---
-    if wiki.endswith("wiki") : wiki = wiki[:-4]
-    # ---
-    wiki = f"{wiki}wiki"
-    # ---
-    print(' **Sitelink_API: Qid:"%s" %s:%s, lag:"%s"' % (Qid, wiki, title, FFa_lag[1]) )
-    # ---
-    if Qid.strip() == "":
-        printe.output('<<lightred>> **Sitelink_API: False: Qid == "" %s:%s.' % (wiki, title) )
-        return False
-    # ---
-    paramse = {
-        "action": "wbsetsitelink",
-        "id": Qid,
-        "linktitle": title,
-        "linksite": wiki,
+    params = {
+        "action": "wbeditentity",
+        "new": "item",
+        "summary": summary,
+        "data": data
     }
     # ---
-    out = 'Added link to "%s" [%s]:"%s"' % ( Qid, wiki, title)
+    req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---
-    r4 = post(paramse, apiurl = "https://www.wikidata.org/w/api.php", token = True)
+    if not req or req == {}:
+        printe.output(f'req:str({req})')
+        return False
     # ---
-    if not r4 or r4 == {}: return False
-    # ---
-    if 'success' in str(r4).lower():
-        printe.output( '<<lightgreen>> true ' + out )
+    if 'success' in req:
+        printe.output('<<lightgreen>> **Claim_API true.')
+        if returnid:
+            # ---
+            Qid = False
+            # ---
+            if "entity" in req and "id" in req["entity"]:
+                Qid = req["entity"]['id']
+                printe.output(f'<<lightgreen>> himoAPI.py New_API: returnid:"{Qid}" ')
+            # ---
+            return Qid
+        # ---
         return True
+    else:
+        printe.output('<<lightred>> req' + str(req))
     # ---
     return False
-
-
-def Remove_Sitelink(Qid, wiki):
-    # ---
-    if wiki.endswith("wiki") : wiki = wiki[:-4]
-    # ---
-    wiki = f"{wiki}wiki"
-    # ---
-    out = 'remove "%s" link from "%s"' % ( wiki , Qid)
-    # ---
-    params ={ "action": "wbsetsitelink", "id": Qid, "linksite": wiki}
-    # ---
-    r4 = post(params, apiurl = "https://www.wikidata.org/w/api.php", token = True)
-    # ---
-    if not r4 or r4 == {}: return False
-    # ---
-    if 'success' in str(r4).lower():
-        printe.output( '<<lightgreen>> true ' + out )
-        return True
-    # ---
-    return False
-'''
 
 
 def Claim_API_str(qid, property, string):
@@ -648,7 +612,7 @@ def Get_claim(q, property, get_claim_id=False):
     for claims in claims_p:
         claim_id = claims.get('id', '')
         datavalue = claims.get('mainsnak', {}).get('datavalue', {})
-        Type = datavalue.get("type", False)
+        # Type = datavalue.get("type", False)
         value = datavalue.get("value", "")
         # ---
         if isinstance(value, dict):
@@ -663,8 +627,5 @@ def Get_claim(q, property, get_claim_id=False):
     return listo
 
 
-# ---
 if __name__ == '__main__':
     Log_to_wiki(url="https://www.wikidata.org/w/api.php")
-# ---
-# ---

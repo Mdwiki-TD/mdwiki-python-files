@@ -19,10 +19,6 @@ python3 core8/pwb.py wprefs/bot ask
 #
 import os
 import sys
-
-# ---
-# newtext = fix_page(text,title, move_dots= move_dot[1], infobox = False)
-# ---
 sys.path.append('/data/project/mdwiki/md_core/')
 # ---
 if 'returnfile' not in sys.argv:
@@ -37,12 +33,6 @@ from wprefs.wpref_text import fix_page
 move_dot = {1: False}
 expend_infobox = {1: False}
 # ---
-project = '/data/project/mdwiki'
-# ---
-if not os.path.isdir(project):
-    project = 'I:/mdwiki'
-
-
 def fix_page_here(text, title, langcode):
     newtext = text
     # ---

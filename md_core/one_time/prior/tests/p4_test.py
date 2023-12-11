@@ -1,13 +1,12 @@
-from prior.p4 import work_in_links
 import os
+from prior.p4 import work_in_links
 
 # ---
-project = '/data/project/mdwiki/'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-# ---
-project_json = f'{project}/md_core/prior/json/'
+project_json = f'{Dir}/json/'
 
 
 def start_test(links=[]):

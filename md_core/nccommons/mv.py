@@ -6,24 +6,22 @@ python3 core8/pwb.py nccommons/mv
 # (C) Ibrahem Qasim, 2023
 #
 # ---
-from new_api.ncc_page import MainPage as ncc_MainPage
-from new_api.mdwiki_page import NEW_API
-from nccommons import api
-from mdpy.bots import mdwiki_api
 import sys
 import json
 import os
 import codecs
 import pywikibot
-
 # ---
-project = "/data/project/mdwiki/"
+from new_api.ncc_page import MainPage as ncc_MainPage
+from new_api.mdwiki_page import NEW_API
+from nccommons import api
+from mdpy.bots import mdwiki_api
 # ---
-if not os.path.isdir(project):
-    project = "I:/mdwiki"
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-# ---
-cats = json.load(codecs.open(f'{project}/md_core/nccommons/mv.json', 'r', 'utf-8'))
+cats = json.load(codecs.open(f'{Dir}/mv.json', 'r', 'utf-8'))
 # ---
 pywikibot.output(f'len of cats: {len(cats)}')
 # ---

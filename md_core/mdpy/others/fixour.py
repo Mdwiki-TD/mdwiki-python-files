@@ -7,21 +7,12 @@
 #
 #
 import re
-
+import os
+# ---
+from new_api.mdwiki_page import MainPage, NEW_API
 # ---
 numbers = {1: 20000, 'done': 0}
 # ---
-import os
-
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-# ---
-public_html = project + '/public_html'
-# ---
-from new_api.mdwiki_page import MainPage, NEW_API
-
 api_new = NEW_API('www', family='mdwiki')
 api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)

@@ -17,25 +17,23 @@ import traceback
 import pywikibot
 import datetime
 from datetime import timedelta
-
 # ---
 from mdpy.bots import wiki_api
 from mdpy import printe
-
-# ---
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
-
-# --
-project = '/data/project/mdwiki/'
 # ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
+# ---
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+# ---
 
 def get_RTT():
     RTT = []
     # ---
-    filename = project + '/public_html/Translation_Dashboard/cats_cash/RTT.json'
+    filename = dir2 + '/public_html/Translation_Dashboard/cats_cash/RTT.json'
     # ---
     try:
         textn = codecs.open(filename, "r", encoding="utf-8").read()
@@ -60,7 +58,7 @@ def get_RTT2():
     # ---
     RTT = []
     # ---
-    sitelinks_file = project + '/public_html/Translation_Dashboard/Tables/sitelinks.json'
+    sitelinks_file = dir2 + '/public_html/Translation_Dashboard/Tables/sitelinks.json'
     # ---
     print(f'get sitelinks from {sitelinks_file}')
     # ---
@@ -109,7 +107,7 @@ def main():
     # ---
     no_views = 0
     # ---
-    enwiki_pageviews = project + '/public_html/Translation_Dashboard/Tables/enwiki_pageviews.json'
+    enwiki_pageviews = dir2 + '/public_html/Translation_Dashboard/Tables/enwiki_pageviews.json'
     # ---
     old_views = json.loads(codecs.open(enwiki_pageviews, "r", encoding="utf-8-sig").read())
     # ---

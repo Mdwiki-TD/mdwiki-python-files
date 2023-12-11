@@ -21,16 +21,18 @@ import os
 import json
 import codecs
 import sys
-
-# ---
 # ---
 from mdpy.bots import mdwiki_api
 from mdpy import printe
 from mdcount.links import get_valid_Links
-
-# ---
 from mdcount import lead
-
+# ---
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
+# ---
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 json_file = {}
 # ---
@@ -43,16 +45,11 @@ def get_word_files():
     # ---
     global json_file, words_n, all_words_n
     # ---
-    project = '/data/project/mdwiki/'
-    # ---
-    if not os.path.isdir(project):
-        project = '/mdwiki'
-    # ---
-    json_file[1] = project + '/public_html/Translation_Dashboard/Tables/allwords.json'
+    json_file[1] = dir2 + '/public_html/Translation_Dashboard/Tables/allwords.json'
     # ---
     all_words_n = json.loads(codecs.open(json_file[1], "r", encoding="utf-8").read())
     # ---
-    json_file[0] = project + '/public_html/Translation_Dashboard/Tables/words.json'
+    json_file[0] = dir2 + '/public_html/Translation_Dashboard/Tables/words.json'
     # ---
     words_n = json.loads(codecs.open(json_file[0], "r", encoding="utf-8").read())
     # ---

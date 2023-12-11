@@ -10,21 +10,19 @@ import codecs
 import os
 import sys
 from pathlib import Path
-
 # ---
 sys.path.append('/data/project/mdwiki/md_core/')
 # ---
 from wprefs.helps import exepts
-
 # ---
-project = '/data/project/mdwiki'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = 'I:/mdwiki'
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
-Dir = Path(__file__).parent
-# ---
-fixwikirefs = project + '/confs/fixwikirefs.json'
+fixwikirefs = dir2 + '/confs/fixwikirefs.json'
 reffixed_file = f'{Dir}/reffixed.csv'
 # ---
 setting = {}
@@ -75,7 +73,7 @@ def save_wprefcash(title, newtext):
     title2 = title2.replace(':', '-').replace('/', '-').replace(' ', '_')
     # ---
     try:
-        filename = project + '/public_html/wprefcash/' + title2 + '.txt'
+        filename = dir2 + '/public_html/wprefcash/' + title2 + '.txt'
         with codecs.open(filename, "w", encoding="utf-8") as uy:
             uy.write(newtext)
         uy.close()
@@ -85,7 +83,7 @@ def save_wprefcash(title, newtext):
     except Exception:
         exepts()
 
-        filename = project + '/public_html/wprefcash/title2.txt'
+        filename = dir2 + '/public_html/wprefcash/title2.txt'
         with codecs.open(filename, "w", encoding="utf-8") as gf:
             gf.write(newtext)
         gf.close()

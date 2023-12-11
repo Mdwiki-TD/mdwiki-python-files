@@ -8,26 +8,19 @@ python3 core8/pwb.py mdpy/our
 # (C) Ibrahem Qasim, 2022
 #
 #
-from pywikibot.comms import http
 import json
 import pywikibot
-
+import os
 import sys
-
+from pywikibot.comms import http
 # ---
 from mdpy.bots import txtlib2
 from mdpy import printe
 from mdpy.bots import mdwiki_api
-
 # ---
-import os
-
-project = '/data/project/mdwiki/'
-# ---
-if not os.path.isdir(project):
-    project = '/mdwiki'
-# ---
-public_html = project + '/public_html'
+from pathlib import Path
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
 values = {}
 
@@ -173,18 +166,15 @@ def main():
             if '50' in sys.argv and num > 50:
                 break
         # ---
-        with open(project + '/md_core/mdpy/our.json', 'w', encoding="utf-8") as f:
+        with open(Dir + '/our.json', 'w', encoding="utf-8") as f:
             json.dump(values, f)
         # ---
     else:
-        with open(project + '/md_core/mdpy/our.json', 'r', encoding='utf-8') as f:
+        with open(Dir + '/our.json', 'r', encoding='utf-8') as f:
             values = json.load(f)
     # ---
     make_log(values)
 
-    # ---
-
 
 if __name__ == "__main__":
     main()
-# ---

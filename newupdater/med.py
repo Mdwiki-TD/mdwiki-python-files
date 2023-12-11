@@ -6,20 +6,16 @@
 # (C) Ibrahem Qasim, 2023
 #
 #
-import user_account_new
 import codecs
 import sys
-
 import os
-
-# ---
 import requests
 import urllib
 import urllib.parse
-
+from pathlib import Path
 # ---
+import user_account_new
 import MedWorkNew
-
 # ---
 from_toolforge = True
 printe = False
@@ -28,10 +24,11 @@ if "from_toolforge" not in sys.argv:
     from_toolforge = False
     import printe
 # ---
-project = "/data/project/mdwiki/"
+Dir = str(Path(__file__).parents[0])
+print(f'Dir : {Dir}')
 # ---
-if not os.path.isdir(project):
-    project = "/mdwiki"
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
@@ -186,14 +183,14 @@ def work_on_title(title, returntext=False, text_O=""):
         title2 = 'xx'
     # ---
     try:
-        filename = project + "/public_html/updatercash/" + title2 + "_1.txt"
+        filename = dir2 + "/public_html/updatercash/" + title2 + "_1.txt"
         # ---
         codecs.open(filename, "w", encoding="utf-8").write(new_text)
         # ---
         print(filename)
         # ---
     except Exception:
-        filename = project + "/public_html/updatercash/title2.txt"
+        filename = dir2 + "/public_html/updatercash/title2.txt"
         # ---
         codecs.open(filename, "w", encoding="utf-8").write(new_text)
         # ---
