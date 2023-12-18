@@ -6,10 +6,12 @@ write python code to do:
 * do def create_category(chapter_name)
 * upload images to nccommons.org using def upload_image(chapter_name, image_url, image_name, chapter_url)
 
-python3 core8/pwb.py mass/usask/up ask
+python3 I:/mdwiki/pybot/mass/usask/up.py
+python3 core8/pwb.py mass/usask/up break
 
 """
 import sys
+import re
 import os
 import time
 import json
@@ -25,6 +27,8 @@ main_dir = Path(__file__).parent
 with open(os.path.join(str(main_dir), 'images.json'), 'r') as f:
     data = json.load(f)
 
+data = {k: v for k, v in sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True)}
+
 # print how many has images and how many has no images
 printe.output(f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}")
 
@@ -36,10 +40,21 @@ printe.output(f"<<green>> Number of images: {sum([len(v['images']) for k, v in d
 done = []
 
 pages = CatDepth('Category:UndergradImaging', sitecode='www', family="nccommons", depth=1, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
-time.sleep(5)
-print('time.sleep(5)')
-len_all_images = []
+time.sleep(1)
+print('time.sleep(1)')
 
+def make_file(image_name, image_url):
+    
+    image_name = image_name.replace('_', ' ').replace('  ', ' ')
+    base_name = os.path.basename(image_url)
+
+    # get image extension from base_name
+    extension = re.match(r'\.(\w+)$', base_name).group(1)
+
+    # add extension to image_name
+    image_name = f'{image_name}.{extension}'
+
+    return image_name
 
 def create_set(chapter_name, image_infos):
     title = chapter_name
@@ -51,16 +66,20 @@ def create_set(chapter_name, image_infos):
     title = title.replace('_', ' ').replace('  ', ' ')
     if title in pages:
         printe.output(f'<<lightyellow>>{title} already exists')
-        return
+        # return
     # ---
     text += '{{Imagestack\n|width=850\n'
     text += f'|title={chapter_name}\n|align=centre\n|loop=no\n'
     # ---
 
-    # for image_name, image_url in image_infos.items():
-    for image_name in image_infos.keys():
-        # |File:Pediculosis Palpebrarum (Dermatology Atlas 1).jpg|
+    for image_url, image_name in image_infos.items():
+
+        # add extension to image_name
+        image_name = make_file(image_name, image_url)
+
         text += f'|File:{image_name}|\n'
+
+    # ---
     text += '\n}}\n[[Category:Image set]]\n'
     text += f'[[Category:{chapter_name}|*]]'
     # ---
@@ -79,7 +98,7 @@ def create_category(chapter_name):
     chapter_name = chapter_name.replace('_', ' ').replace('  ', ' ')
     if cat_title in pages:
         printe.output(f'<<lightyellow>>{cat_title} already exists')
-        return
+        return cat_title
     # ---
     api.create_Page(cat_text, cat_title)
     # ---
@@ -87,18 +106,17 @@ def create_category(chapter_name):
 
 
 def upload_image(category, image_url, image_name, chapter_url, chapter_name):
-    global len_all_images
-    # split chapter_url to get last text after =
-    image_name = image_name.replace('_', ' ').replace('  ', ' ')
-    len_all_images.append(image_name)
+    # get image base name
+    # add extension to image_name
+    image_name = make_file(image_name, image_url)
 
     if f'File:{image_name}' in pages:
         printe.output(f'<<lightyellow>> File:{image_name} already exists')
         return
     # ---
+    base_name = os.path.basename(image_url)
+    # ---
     image_text = '== {{int:summary}} ==\n'
-    # get image base name
-    base_name = os.path.basename(image_name)
 
     image_text += (
         '{{Information\n'
@@ -122,9 +140,6 @@ def upload_image(category, image_url, image_name, chapter_url, chapter_name):
 
 
 def process_folder():
-
-    with open(os.path.join(str(main_dir), 'images.json'), 'r', encoding='utf-8') as f:
-        data = json.load(f)
 
     for chapter_name, info_data in data.items():
         images_info = info_data.get("images", {})
