@@ -108,7 +108,6 @@ def export_en_history(title):
                 # ---
                 with codecs.open(path, "w", encoding="utf-8") as oodfo:
                     oodfo.write(first + texts[num] + last)
-                oodfo.close()
                 # ---
                 FILE_PATHS.append(path)
                 # ---
@@ -122,7 +121,6 @@ def export_en_history(title):
             # ---
             with codecs.open(path2, "w", encoding="utf-8") as oodfo:
                 oodfo.write(first + texts[num] + last)
-            oodfo.close()
             # ---
             FILE_PATHS.append(path2)
             # ---
@@ -135,7 +133,6 @@ def export_en_history(title):
         FILE_PATH = f'mdwiki/xml/{title2}.xml'
         with codecs.open(FILE_PATH, "w", encoding="utf-8") as ooo:
             ooo.write(xmldata)
-        ooo.close()
         # ---
         printe.output(' revisions in one file.')
         # ---
@@ -170,7 +167,6 @@ def export(title):
     FILE_PATH = f'mdwiki/xml/{title2}.xml'
     with codecs.open(FILE_PATH, "w", encoding="utf-8") as ooo:
         ooo.write(xmldata)
-    ooo.close()
     # ---
     # printe.output( ' revisions in one file.' )
     # ---

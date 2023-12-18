@@ -20,7 +20,7 @@ from mdpy.bots import mdwiki_api
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 values = {}
 

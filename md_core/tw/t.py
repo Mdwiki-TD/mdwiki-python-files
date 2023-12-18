@@ -24,7 +24,7 @@ import tweepy
 from pathlib import Path
 # ---
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 import twet_config
 # ---
@@ -144,13 +144,11 @@ def get_done():
         print(f'create new file {json_file}')
         with codecs.open(json_file, "w", encoding="utf-8") as ffe:
             json.dump(['XX'], ffe)
-        ffe.close()
         return jsj
     # ---
     # load json file
     with open(json_file) as f:
         jsj = json.load(f)
-    f.close()
     return jsj
 
 
@@ -202,7 +200,6 @@ def start_md():
         with codecs.open(json_file, "w", encoding="utf-8") as ii:
             json.dump(done, ii)
             print('json.dump(done, ii)')
-        ii.close()
 
         # ---
 

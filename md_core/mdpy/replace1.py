@@ -13,7 +13,7 @@ from new_api.mdwiki_page import MainPage, NEW_API
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -44,7 +44,8 @@ def work(title, Find, Replace, nn):
     if text.strip() == '':
         print(f"page:{title} text = ''")
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
-        codecs.open(file_name[1], 'a', encoding="utf-8").write(line)
+        with codecs.open(file_name[1], 'a', encoding="utf-8") as file:
+            file.write(line)
         return
     # ---
     new_text = text
@@ -56,7 +57,8 @@ def work(title, Find, Replace, nn):
     # ---
     if new_text == text:
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
-        codecs.open(file_name[1], 'a', encoding="utf-8").write(line)
+        with codecs.open(file_name[1], 'a', encoding="utf-8") as file:
+            file.write(line)
         return
     # ---
     numbers['done'] += 1
@@ -78,7 +80,8 @@ def work(title, Find, Replace, nn):
             line = '"%s":%d,\n' % (title.replace('"', '\\"'), newrevid)
             # ---
     # ---
-    codecs.open(file_name[1], 'a', encoding="utf-8").write(line)
+    with codecs.open(file_name[1], 'a', encoding="utf-8") as file:
+        file.write(line)
 
 
 def main():
@@ -112,7 +115,8 @@ def main():
     # ---
     file_name[1] = public_html + f'/find/log/{nn}.txt'
     # ---
-    codecs.open(file_name[1], 'w', encoding="utf-8").write('')
+    with codecs.open(Path(file_name[1]), 'w', encoding="utf-8") as file:
+        file.write('')
     # ---
     file_name[2] = public_html + f'/find/log/{nn}-text.txt'
     # ---

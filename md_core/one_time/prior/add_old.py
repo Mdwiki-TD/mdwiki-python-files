@@ -33,7 +33,7 @@ from prior import get_them
 from mdpy import printe
 # ---
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 project_js_new = f'{Dir}/json_en/'
 # ---
@@ -71,8 +71,8 @@ class PriorAddOld:
             # ---
             print(f'filename: {filename}..')
             # ---
-            data = json.load(open(filename))
-            # ---
+            with open(filename, 'r', encoding='utf-8') as file:
+                data = json.load(file)
             data_new = data
             # ---
             len_all = len(data)
@@ -118,8 +118,8 @@ class PriorAddOld:
             print(f'no change: {filename}')
         else:
             # ---
-            json.dump(data_new, open(filename, 'w', encoding="utf-8"))
-
+            with open(filename, 'w', encoding='utf-8') as file:
+                json.dump(data_new, file)
 
 # ---
 pao = PriorAddOld()

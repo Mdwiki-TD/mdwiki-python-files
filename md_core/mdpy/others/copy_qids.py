@@ -41,7 +41,7 @@ print(f'len_qids_not_empty = {len_qids_not_empty}')
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 # en_to_md.mdtitle_to_qid
 qids_list = en_to_md.mdtitle_to_qid
@@ -86,6 +86,6 @@ if texts != '':
     vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True, Prints=False)
 # ---
 # log all_texts
-with codecs.open(f'{Dir}/copy_qids.txt', 'w', 'utf-8') as f:
+with open(f'{Dir}/copy_qids.txt', 'w', encoding='utf-8') as f:
     f.write(all_texts)
 # ---

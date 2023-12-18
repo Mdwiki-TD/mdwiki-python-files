@@ -324,7 +324,9 @@ def Labels_API(Qid, label, lang, remove=False):
     if req:
         text = str(req)
         if ('using the same description text' in text) and ('associated with language code' in text):
-            item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
+            # item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
+            match = re.search(r'(Q\d+)', str(req["error"]['info']))
+            item2 = match.group(1) if match else 'Unknown'
             printe.output('<<lightred>>API: same label item: ' + item2)
             # ---
         # ---

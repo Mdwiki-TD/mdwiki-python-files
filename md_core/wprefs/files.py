@@ -17,7 +17,7 @@ from wprefs.helps import exepts
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -42,7 +42,6 @@ def make_ref_done_list():
     try:
         with codecs.open(reffixed_file, "r", encoding="utf-8-sig") as mama:
             reffixed = mama.read()
-        mama.close()
     except Exception:
         exepts()
     # ---
@@ -64,7 +63,6 @@ def append_reffixed_file(lang, title, titles=[]):
     # ---
     with codecs.open(reffixed_file, "a", encoding="utf-8") as ggg:
         ggg.write('\n' + lio)
-    ggg.close()
 
 
 def save_wprefcash(title, newtext):
@@ -76,7 +74,6 @@ def save_wprefcash(title, newtext):
         filename = dir2 + '/public_html/wprefcash/' + title2 + '.txt'
         with codecs.open(filename, "w", encoding="utf-8") as uy:
             uy.write(newtext)
-        uy.close()
         # ---
         print(filename)
         # ---
@@ -86,7 +83,6 @@ def save_wprefcash(title, newtext):
         filename = dir2 + '/public_html/wprefcash/title2.txt'
         with codecs.open(filename, "w", encoding="utf-8") as gf:
             gf.write(newtext)
-        gf.close()
         # ---
         print(filename)
     # ---

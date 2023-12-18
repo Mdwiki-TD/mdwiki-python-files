@@ -32,7 +32,6 @@ def get_text(file_path):
     with open(file_path, 'rb') as f:
         raw = f.read()
         enc = chardet.detect(raw)['encoding']
-        f.close()
     # ---
     if enc and enc.startswith("ISO-8859"):
         enc = "windows-1256"
