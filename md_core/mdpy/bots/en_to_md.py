@@ -31,7 +31,7 @@ from mdpy.bots import sql_for_mdwiki
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -72,5 +72,5 @@ if __name__ == "__main__":
         print(line.strip())
         text += line
     # ---
-    with open(dir2 + '/uu.txt', "w", encoding="utf-8-sig") as f:
+    with open(Path(dir2) / 'uu.txt', "w", encoding="utf-8-sig") as f:
         f.write(text)

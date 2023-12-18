@@ -16,11 +16,8 @@ from mdpy.bots import mdwiki_api
 import sys
 from pathlib import Path
 import codecs
-
-# ---
 # ---
 Dir = Path(__file__).parent
-# ---
 # ---
 NewList = {}
 # ---
@@ -84,13 +81,11 @@ masha = '\n'.join([f"{s}" for d, s in new])
 # ---
 with codecs.open(f'{Dir}/date_after_20200701.txt', "w", encoding="utf-8") as logfil3e:
     logfil3e.write(masha)
-logfil3e.close()
 # ---
 masha3 = '\n'.join([f"{ss}" for ds, ss in old])
 # ---
 with codecs.open(f'{Dir}/date_before_20200701.txt', "w", encoding="utf-8") as ooo:
     ooo.write(masha3)
-ooo.close()
 # ---
 text = f''''
 * all pages: {len(laly)}

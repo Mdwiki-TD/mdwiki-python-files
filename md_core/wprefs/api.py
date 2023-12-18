@@ -23,7 +23,7 @@ from wprefs.helps import print_s
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 SS = {"token": ''}
 session = {}
@@ -266,6 +266,5 @@ def page_put(oldtext, NewText, summary, title, lang):
     if 'savetofile' in sys.argv:
         with codecs.open(str(Dir) + '/wpref_1.txt', "w", encoding="utf-8") as ggg:
             ggg.write(NewText)
-        ggg.close()
     # ---
     return False

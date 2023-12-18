@@ -11,5 +11,7 @@ git clone --recurse-submodules https://github.com/MrIbrahem/mdwiki.toolforge.org
 
 cp -rf -v mdwikix/pybot/* pybot/
 
+chmod -R 6770 pybot
+
 # Remove the `mdwikix` directory.
 rm -rf mdwikix

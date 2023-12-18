@@ -19,9 +19,9 @@ from mdpy.bots import mdwiki_api
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
-cats = json.load(codecs.open(f'{Dir}/mv.json', 'r', 'utf-8'))
+cats = json.load(open(f'{Dir}/mv.json', 'r', encoding='utf-8'))
 # ---
 pywikibot.output(f'len of cats: {len(cats)}')
 # ---

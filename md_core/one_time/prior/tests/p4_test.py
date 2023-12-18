@@ -4,7 +4,7 @@ from prior.p4 import work_in_links
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 project_json = f'{Dir}/json/'
 

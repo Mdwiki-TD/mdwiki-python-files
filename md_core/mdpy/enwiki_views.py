@@ -24,7 +24,7 @@ from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -33,10 +33,11 @@ dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 def get_RTT():
     RTT = []
     # ---
-    filename = dir2 + '/public_html/Translation_Dashboard/cats_cash/RTT.json'
+    filename = Path(dir2) / 'public_html/Translation_Dashboard/cats_cash/RTT.json'
     # ---
     try:
-        textn = codecs.open(filename, "r", encoding="utf-8").read()
+        with codecs.open(filename, "r", encoding="utf-8") as file:
+            textn = file.read()
     except Exception:
         pywikibot.output('Traceback (most recent call last):')
         pywikibot.output(traceback.format_exc())
@@ -58,7 +59,7 @@ def get_RTT2():
     # ---
     RTT = []
     # ---
-    sitelinks_file = dir2 + '/public_html/Translation_Dashboard/Tables/sitelinks.json'
+    sitelinks_file = Path(dir2) / 'public_html/Translation_Dashboard/Tables/sitelinks.json'
     # ---
     print(f'get sitelinks from {sitelinks_file}')
     # ---
@@ -107,7 +108,7 @@ def main():
     # ---
     no_views = 0
     # ---
-    enwiki_pageviews = dir2 + '/public_html/Translation_Dashboard/Tables/enwiki_pageviews.json'
+    enwiki_pageviews = Path(dir2) / 'public_html/Translation_Dashboard/Tables/enwiki_pageviews.json'
     # ---
     old_views = json.loads(codecs.open(enwiki_pageviews, "r", encoding="utf-8-sig").read())
     # ---
@@ -127,7 +128,6 @@ def main():
     # ---
     with open(enwiki_pageviews, 'w', encoding="utf-8") as outfile:
         json.dump(n_views, outfile, sort_keys=True, indent=4)
-    outfile.close()
 
     # ---
     # add_to_mdwiki_sql(numbers , lange)

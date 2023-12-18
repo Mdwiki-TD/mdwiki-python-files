@@ -25,7 +25,7 @@ from mdpy.bots import catdepth2
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -116,7 +116,6 @@ def count_refs(title):
 def logaa(file, table):
     with open(file, 'w', encoding='utf-8') as outfile:
         json.dump(table, outfile, sort_keys=True, indent=4)
-    outfile.close()
     # ---
     printe.output(f'<<lightgreen>> {len(table)} lines to {file}')
 

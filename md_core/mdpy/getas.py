@@ -27,7 +27,7 @@ from mdpy import printe
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -46,7 +46,6 @@ lala = ''
 # ---
 with codecs.open(json_file[0], "r", encoding="utf-8-sig") as listt:
     lala = listt.read()
-listt.close()
 # ---
 printe.output(f'file_name:{json_file[0]}')
 fa = str(lala)
@@ -74,7 +73,6 @@ for arg in sys.argv:
 def log():
     with open(json_file[0], 'w', encoding="utf-8") as outfile:
         json.dump(assessments, outfile, sort_keys=True)
-    outfile.close()
     # ---
     printe.output(f'<<lightgreen>> {len(assessments)} lines to {json_file[0]}')
     printe.output('<<lightgreen>> len old assessments %d' % len_old)

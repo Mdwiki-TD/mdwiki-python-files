@@ -20,7 +20,7 @@ from prior import text_bot
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 project_json = f'{Dir}/json'
 project_js_new = f'{Dir}/json_langs/'

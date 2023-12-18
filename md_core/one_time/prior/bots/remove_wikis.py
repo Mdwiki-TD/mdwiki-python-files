@@ -19,7 +19,8 @@ black_list = [
 
 
 def work_in_jsfile(filename):
-    data = json.load(open(filename))
+    with open(filename, 'r', encoding='utf-8') as file:
+        data = json.load(file)
 
     def fix_extlinks(extlinks):
         extlinks2 = extlinks

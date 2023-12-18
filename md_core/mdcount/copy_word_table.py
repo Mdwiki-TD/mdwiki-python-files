@@ -18,11 +18,11 @@ from mdpy import printe
 from pymysql.converters import escape_string
 # ---
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # split path before "mdwiki"
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
-print(f'dir2 : {dir2}')
+#print(f'dir2 : {dir2}')
 # ---
 que = '''select DISTINCT w_title, w_lead_words, w_all_words from words;'''
 # ---
@@ -38,7 +38,7 @@ for q in sql_for_mdwiki.mdwiki_sql(que, return_dict=True):
     in_sql_lead[w_title] = w_lead_words
     in_sql_all[w_title] = w_all_words
 # ---
-project_tables = dir2 + '/public_html/Translation_Dashboard/Tables'
+project_tables = Path(dir2) / 'public_html' / 'Translation_Dashboard' / 'Tables'
 # ---
 with open(project_tables + '/words.json', "r", encoding="utf-8") as f:
     lead_words = json.load(f)

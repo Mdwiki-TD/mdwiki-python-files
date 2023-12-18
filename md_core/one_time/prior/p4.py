@@ -19,7 +19,7 @@ from prior import get_them
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-print(f'Dir : {Dir}')
+#print(f'Dir : {Dir}')
 # ---
 All = {}
 allen = {}
@@ -53,11 +53,13 @@ def log_all(main_File):
     if 'enonly' in sys.argv or 'newenonly' in sys.argv:
         return
     # ---
-    codecs.open(main_File, 'w', encoding='utf-8').write(json.dumps(All))
+    with codecs.open(main_File, 'w', encoding='utf-8') as file:
+        file.write(json.dumps(All))
 
 
 def log_allen(main_File):
-    codecs.open(main_File, 'w', encoding='utf-8').write(json.dumps(allen))
+    with codecs.open(main_File, 'w', encoding='utf-8') as file:
+        file.write(json.dumps(allen))
 
 
 def advance_work_en(title, title2, page):
