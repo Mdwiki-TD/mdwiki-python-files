@@ -100,7 +100,7 @@ def work_for_list(listn):
         # ---
         assessments[title] = importance
     # ---
-    print(f'len of new assessments:{lenn}')
+    printe.output(f'len of new assessments:{lenn}')
 
 
 def mmain():

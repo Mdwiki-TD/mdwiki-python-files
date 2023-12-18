@@ -13,8 +13,10 @@ def execute_command(command):
     # execute the command
     print(command)
     try:
-        result = subprocess.call(command, shell=True)
-        print(result)
+        # result = subprocess.call(command, shell=True)
+        # print(result)
+        result = subprocess.run(command.split(), capture_output=True, text=True)
+        print(result.stdout)
     except Exception as e:
         print(e)
 

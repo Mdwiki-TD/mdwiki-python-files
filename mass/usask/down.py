@@ -1,21 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-write python code to do:
-
-
-
-* use print() to output steps in the code
-* images name should be like: {disease_name} (Dermatology Atlas {imageId}).jpg
-* disease  url should be like: https://www.atlasdermatologico.com.br/{disease_url} 
-* after create_folder should add file like info.json in create_folder contains:
-    disease name
-    disease_url 
-    all images link in the disease_url like:
-    "image_name": "image_url"
-* add main_dir = Path(__file__).parent, and change : folder_name to os.path.join(str(main_dir), disease_name)
-* also image_url = urljoin("https://www.atlasdermatologico.com.br/", link['href'])
-
-
 python3 md_core/atlas/bot.py
 
 """
