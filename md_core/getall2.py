@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 I:/mdwiki/md_core/getall2.py
+python3 I:/mdwiki/pybot/md_core/getall2.py
 
 """
 import os

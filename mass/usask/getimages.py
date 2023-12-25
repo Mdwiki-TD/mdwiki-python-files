@@ -2,23 +2,8 @@
 """
 Usage:
 python3 I:/mdwiki/pybot/mass/usask/getimages.py
-python3 core8/pwb.py mass/usask/getimages
-write python code to do:
+python3 core8/pwb.py mass/usask/getimages break
 
-main_dir = Path(__file__).parent
-jsonfile = os.path.join(str(main_dir), 'urls.json')
-
-1. read file jsonfile and get all urls
-# { "Foreword": { "url": "https://openpress.usask.ca/undergradimaging/front-matter/introduction/", "images": {} }, ... }
-
-2. for each url in urls do:
-    * open url
-    * get all figure tags like: (<figure id="attachment_1081" aria-describedby="caption-attachment-1081" style="width: 600px"
-    class="wp-caption aligncenter">...</figure>)
-    * get the caption from figcaption tag like: (<figcaption>...</figcaption>)
-    * get the image "srcset" from img tag
-        (srcset="https://openpress.usask.ca/app/uploads/sites/34/2019/02/ODIN-image-viewing-pane-300x238.jpg 300w, https://openpress.usask.ca/app/uploads/sites/34/2019/02/ODIN-image-viewing-pane-768x609.jpg 768w, ..")
-    * store the image url in images dictionary like: {"image_url": "caption"}
 """
 
 import re
@@ -137,12 +122,21 @@ def main():
         # If images are found, update the data with the extracted image information
         if images_info:
             data[section]['images'] = images_info
+            if 'break' in sys.argv:
+                break
 
-    # If 'test' is in the command line arguments, print the updated data
-    if 'test' in sys.argv:
-        printe.output('')
-        # printe.output(json.dumps(data, indent=2))
-    else:
+    # sort the data by if it has images
+    data = {k: v for k, v in sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True)}
+
+    # print how many has images and how many has no images
+    printe.output(f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}")
+
+    printe.output(f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}")
+
+    # print len of all images
+    printe.output(f"<<green>> Number of images: {sum([len(v['images']) for k, v in data.items()])}")
+    
+    if 'test' not in sys.argv:
         # Save the updated data back to the JSON file
         with open(jsonimages, 'w', encoding="utf-8") as file:
             json.dump(data, file, indent=2)

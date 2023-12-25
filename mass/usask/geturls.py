@@ -11,6 +11,7 @@ like:(
 
 
 python3 I:/mdwiki/pybot/mass/usask/geturls.py
+python3 core8/pwb.py mass/usask/geturls
 '''
 import requests
 from bs4 import BeautifulSoup

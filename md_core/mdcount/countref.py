@@ -3,7 +3,7 @@
 
 إنشاء قائمة بعدد المراجع
 
-python3 /data/project/mdwiki/md_core/mdcount/countref.py newpages
+python3 /data/project/mdwiki/pybot/md_core/mdcount/countref.py newpages
 
 python3 core8/pwb.py mdcount/countref newpages
 

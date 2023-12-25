@@ -24,10 +24,12 @@ import requests
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+#---
+dir2 = Dir.replace('\\', '/')
+dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 config = configparser.ConfigParser()
-config.read(Dir + "/confs/nccommons_user.ini")
+config.read(dir2 + "/confs/nccommons_user.ini")
 # ---
 username = config["DEFAULT"]["username"].strip()
 password = config["DEFAULT"]["password"].strip()

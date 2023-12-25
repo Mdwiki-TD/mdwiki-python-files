@@ -31,6 +31,8 @@ def work_in_jsfile(filename):
                     extlinks2.remove(x)
                     continue
         # ---
+        # extlinks2 = [x for x in extlinks if not any(oo in x for oo in black_list)]
+        # ---
         return extlinks2
 
     # ---

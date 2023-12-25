@@ -87,7 +87,7 @@ masha3 = '\n'.join([f"{ss}" for ds, ss in old])
 with codecs.open(f'{Dir}/date_before_20200701.txt', "w", encoding="utf-8") as ooo:
     ooo.write(masha3)
 # ---
-text = f''''
+text = f'''
 * all pages: {len(laly)}
 ** pages with date < 20200701: {len(old)}
 ** pages with date > 20200701: {len(new)}

@@ -57,7 +57,8 @@ def remove_session_id_from_url(url):
 
 # Function to download and save an image
 def save_image(url, folder_name, file_name):
-    response = requests.get(url, stream=True)
+    # response = requests.get(url, stream=True)
+    response = requests.get(url, stream=True, timeout=10)
     image_path = os.path.join(folder_name, file_name)
 
     with open(image_path, 'wb') as file:
