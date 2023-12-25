@@ -20,6 +20,7 @@ from new_api import printe
 from pathlib import Path
 from nccommons import api
 from new_api.ncc_page import CatDepth
+from new_api.ncc_page import MainPage as ncc_MainPage
 
 # Specify the root folder
 main_dir = Path(__file__).parent
@@ -39,21 +40,32 @@ printe.output(f"<<green>> Number of images: {sum([len(v['images']) for k, v in d
 
 done = []
 
-pages = CatDepth('Category:UndergradImaging', sitecode='www', family="nccommons", depth=1, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
+pages = CatDepth('Category:UndergradImaging', sitecode='www', family="nccommons", depth=2, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
 time.sleep(1)
 print('time.sleep(1)')
+
+def get_image_extension(image_url):
+    # Split the URL to get the filename and extension
+    _, filename = os.path.split(image_url)
+    
+    # Split the filename to get the name and extension
+    name, extension = os.path.splitext(filename)
+    
+    # Return the extension (without the dot)
+    return extension[1:]
 
 def make_file(image_name, image_url):
     
     image_name = image_name.replace('_', ' ').replace('  ', ' ')
-    base_name = os.path.basename(image_url)
+    # base_name = os.path.basename(image_url)
 
-    # get image extension from base_name
-    extension = re.match(r'\.(\w+)$', base_name).group(1)
+    # get image extension from image_url
+    print(image_url)
+    extension = get_image_extension(image_url)
 
     # add extension to image_name
     image_name = f'{image_name}.{extension}'
-
+    image_name = image_name.replace('..', '.')
     return image_name
 
 def create_set(chapter_name, image_infos):
@@ -64,9 +76,6 @@ def create_set(chapter_name, image_infos):
         return
     # ---
     title = title.replace('_', ' ').replace('  ', ' ')
-    if title in pages:
-        printe.output(f'<<lightyellow>>{title} already exists')
-        # return
     # ---
     text += '{{Imagestack\n|width=850\n'
     text += f'|title={chapter_name}\n|align=centre\n|loop=no\n'
@@ -83,10 +92,15 @@ def create_set(chapter_name, image_infos):
     text += '\n}}\n[[Category:Image set]]\n'
     text += f'[[Category:{chapter_name}|*]]'
     # ---
-    new = api.create_Page(text, title)
+    page = ncc_MainPage(title, 'www', family='nccommons')
+    # ---
+    if title in pages:
+        printe.output(f'<<lightyellow>>{title} already exists')
+        new = page.save(newtext=text, summary='update', nocreate=0, minor='')
+    else:
+        new = page.Create(text=text, summary='')
     # ---
     return new
-
 
 def create_category(chapter_name):
     cat_text = f'* Image set: [[{chapter_name}]]\n[[Category:UndergradImaging]]'
@@ -104,7 +118,6 @@ def create_category(chapter_name):
     # ---
     return cat_title
 
-
 def upload_image(category, image_url, image_name, chapter_url, chapter_name):
     # get image base name
     # add extension to image_name
@@ -114,7 +127,7 @@ def upload_image(category, image_url, image_name, chapter_url, chapter_name):
         printe.output(f'<<lightyellow>> File:{image_name} already exists')
         return
     # ---
-    base_name = os.path.basename(image_url)
+    _, base_name = os.path.split(image_url)
     # ---
     image_text = '== {{int:summary}} ==\n'
 
@@ -148,19 +161,21 @@ def process_folder():
         chapter_name2 = f'{chapter_name} (UndergradImaging)'
         print(f'Processing {chapter_name2}')
         # Create category
-        category = create_category(chapter_name2)
+        
+        if images_info:
+            category = create_category(chapter_name2)
 
-        if category and 'noup' not in sys.argv:
-            # Upload images
-            n = 0
-            for image_url, image_name in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
-                n += 1
-                print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
-                upload_image(category, image_url, image_name, chapter_url, chapter_name)
+            if category and 'noup' not in sys.argv:
+                # Upload images
+                n = 0
+                for image_url, image_name in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
+                    n += 1
+                    print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
+                    upload_image(category, image_url, image_name, chapter_url, chapter_name)
 
-        create_set(chapter_name2, images_info)
-        if 'break' in sys.argv:
-            break
+            create_set(chapter_name2, images_info)
+            if 'break' in sys.argv:
+                break
 
 if __name__ == "__main__":
     # Process all subfolders in the specified root folder

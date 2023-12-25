@@ -11,7 +11,7 @@ import os
 import sys
 from pathlib import Path
 # ---
-sys.path.append('/data/project/mdwiki/md_core/')
+sys.path.append('/data/project/mdwiki/pybot/md_core/')
 # ---
 from wprefs.helps import exepts
 # ---
