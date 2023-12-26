@@ -39,7 +39,7 @@ def put(title, text):
     # ---
     suus = 'from https://mdwiki.org/wiki/' + title.replace(' ', '_')
     # ---
-    title2 = 'User:Mr. Ibrahem/' + title
+    title2 = f'User:Mr. Ibrahem/{title}/full' if wholearticle[1] else f'User:Mr. Ibrahem/{title}'
     # ---
     dataa = {
         "format": "json",
