@@ -17,12 +17,8 @@ sys.path.append(str(Dir))
 from TDpynew import printe
 from TDpynew import text_changes
 from TDpynew import ref
-from TDpynew import user_account_new
 from TDpynew import mdapi
 from TDpynew import enapi
-# ---
-lgname_enwiki = user_account_new.lgname_enwiki
-lgpass_enwiki = user_account_new.lgpass_enwiki
 # ---
 wholearticle = {1: False}
 # ---
@@ -39,7 +35,10 @@ def put(title, text):
     # ---
     suus = 'from https://mdwiki.org/wiki/' + title.replace(' ', '_')
     # ---
-    title2 = f'User:Mr. Ibrahem/{title}/full' if wholearticle[1] else f'User:Mr. Ibrahem/{title}'
+    title2 = 'User:Mr. Ibrahem/' + title
+    if wholearticle[1]:
+        title2 = 'User:Mr. Ibrahem/' + title + '/full' 
+    
     # ---
     dataa = {
         "format": "json",
