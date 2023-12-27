@@ -11,18 +11,12 @@ from mdpy.bots import wiki_sql
 # (C) Ibrahem Qasim, 2023
 #
 #
-
 import sys
-
-# ---
 import time as tttime
-
-# ---
 from mdpy import printe
-
 # ---
 from new_api import sql_qu
-
+# ---
 can_use_sql_db = sql_qu.can_use_sql_db
 # results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[], return_dict=False)
 
@@ -107,5 +101,3 @@ def sql_new(queries, wiki="", printqua=False):
     # ---
     return rows
 
-
-# ---

@@ -44,7 +44,7 @@ def doo():
         text += '|-\n'
 
     text += '|}'
-    text += '\n[[Categoey:UndergradImaging|*]]'
+    text += '\n[[Category:UndergradImaging|*]]'
 
     page = ncc_MainPage('User:Mr._Ibrahem/UndergradImaging', 'www', family='nccommons')
     # ---
