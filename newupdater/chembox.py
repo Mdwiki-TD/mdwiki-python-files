@@ -41,6 +41,9 @@ class fix_Chembox:
         # ---
         for template in parsed.templates:
             # ---
+            if not template:
+                continue
+            # ---
             name = str(template.normal_name()).strip()
             # ---
             boxes = [

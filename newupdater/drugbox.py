@@ -46,6 +46,9 @@ class TextProcessor:
         # ---
         for template in parsed.templates:
             # ---
+            if not template:
+                continue
+            # ---
             name = str(template.normal_name()).strip()
             # ---
             if name.lower() in ["infobox medical condition (new)", "infobox medical condition"]:

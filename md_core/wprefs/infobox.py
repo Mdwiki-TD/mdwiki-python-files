@@ -16,6 +16,10 @@ from wprefs.helps import print_s
 def expend_new(main_temp):
     parsed = wtp.parse(main_temp)
     for template in parsed.templates:
+        # ---
+        if not template:
+            continue
+        # ---
         str_ = template.string
         if str_.strip() != main_temp.strip():
             continue
