@@ -62,6 +62,9 @@ def mv_es_refs(text):
     # ---
     for template in parsed.templates:
         # ---
+        if not template:
+            continue
+        # ---
         template_name = str(template.normal_name()).strip()
         if template_name.lower() in ['reflist', 'listaref']:
             refs_arg = template.get_arg('refs')

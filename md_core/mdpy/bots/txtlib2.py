@@ -50,6 +50,9 @@ def extract_templates_and_params(text):
     # ---
     for template in templates:
         # ---
+        if not template:
+            continue
+        # ---
         name = template.name.strip()
         # ---
         if parser_name == 'wikitextparser':

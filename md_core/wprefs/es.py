@@ -142,6 +142,10 @@ def fix_temps(text):
     # ---
     for template in parsed.templates:
         # ---
+        # ---
+        if not template:
+            continue
+        # ---
         name = str(template.normal_name()).strip()
         # ---
         if name.lower() in refs_temps.keys() or name.lower() in refs_temps.values():

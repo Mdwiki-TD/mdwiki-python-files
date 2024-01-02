@@ -11,6 +11,8 @@ def printn(s):
 
 
 def expend_new(template, min_len=1):
+    if not template:
+        return template
     template_name = str(template.normal_name()).strip()
     template.name = template_name + '\n'
     to_del = []
