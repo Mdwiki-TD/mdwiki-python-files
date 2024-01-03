@@ -57,22 +57,14 @@ def export_en_history(title):
         # ---
     # ---
     printe.output(f'<<lightyellow>> len of history == {len(xmldata)} ')
-    # ---
-    last = '''
-    </page>
-</mediawiki>'''
     first = xmldata.split('<revision>')[0]
-    # if 'teest' in sys.argv:
-    # printe.output( 'first' )
-    # printe.output( first )
-    # printe.output( 'first' )
-    # ---
-    # 16282189
-    # ---
-    texts = {}
     # ---
     revisione = xmldata.replace(first, '').split('</page>')[0].split('</revision>')
-    revisions = [x + '</revision>' for x in revisione if x.strip().startswith('<revision>')]
+    revisions = [
+        f'{x}</revision>'
+        for x in revisione
+        if x.strip().startswith('<revision>')
+    ]
     if 'teest' in sys.argv:
         printe.output(revisions)
     # ---
@@ -80,16 +72,28 @@ def export_en_history(title):
     # ---
     # ---
     title2 = title.replace(':', '-').replace('/', '-')
-    num = 1
     Lasa = [1, 2, 3, 4, 5]
-    FILE_PATHS = []
     done = False
-    # ---
-    numbdone = []
     # ---
 
     # ---
     if len(xmldata) > La_si[1] and 'nosplit' not in sys.argv:
+        # ---
+        last = '''
+    </page>
+</mediawiki>'''
+        # if 'teest' in sys.argv:
+        # printe.output( 'first' )
+        # printe.output( first )
+        # printe.output( 'first' )
+        # ---
+        # 16282189
+        # ---
+        texts = {}
+        num = 1
+        FILE_PATHS = []
+        # ---
+        numbdone = []
         # while done == False :
         for rev in revisions:
             # ---
@@ -128,7 +132,7 @@ def export_en_history(title):
         printe.output(f' split revisions to {len(FILE_PATHS)} files..')
         printe.output(FILE_PATHS)
         return FILE_PATHS
-        # ---
+            # ---
     else:
         FILE_PATH = f'mdwiki/xml/{title2}.xml'
         with codecs.open(FILE_PATH, "w", encoding="utf-8") as ooo:

@@ -60,7 +60,7 @@ def work_page(title, qid):
     tag = '{{#unlinkedwikibase:id=' + qid + '}}\n'
     # ---
     newtext = tag + text.strip()
-    page.save(newtext=newtext, summary='add tag:' + tag, nocreate=1, minor='')
+    page.save(newtext=newtext, summary=f'add tag:{tag}', nocreate=1, minor='')
 
 
 def add_tag():

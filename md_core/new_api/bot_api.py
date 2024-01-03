@@ -213,7 +213,7 @@ class NEW_API:
             "apfilterredir": "nonredirects",
         }
         # ---
-        if str(namespace) in ['*', '', 'all']:
+        if str(namespace) in {'*', '', 'all'}:
             del params['apnamespace']
         # ---
         if apfilterredir in ['redirects', 'all', 'nonredirects']:
@@ -464,10 +464,7 @@ class NEW_API:
         # ---
         if not data or data == {}:
             return text
-        # ---
-        newtext = data.get("expandtemplates", {}).get("wikitext") or text
-        # ---
-        return newtext
+        return data.get("expandtemplates", {}).get("wikitext") or text
 
     def Parse_Text(self, line, title):
         # ---
@@ -493,7 +490,7 @@ class NEW_API:
         # ---
         results = []
         # ---
-        while continue_params != {} or results == []:
+        while continue_params != {} or not results:
             # ---
             if continue_params:
                 params = {**params, **continue_params}
@@ -512,17 +509,9 @@ class NEW_API:
             results.extend(linkso)
         # ---
         links = [x['url'] for x in results]
-        # ---
-        # remove duplicates
-        liste1 = sorted(set(links))
-        # ---
-        # ---
-        return liste1
+        return sorted(set(links))
 
     def get_revisions(self, title):
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "utf8": 1, "formatversion": "2", "rvprop": "comment|timestamp|user|content|ids", "rvdir": "newer", "rvlimit": "max"}
-        # ---
-        results = self.post_continue(params, "query", "pages", [])
-        # ---
-        return results
+        return self.post_continue(params, "query", "pages", [])
         # ---

@@ -155,7 +155,7 @@ class MainPage:
         # ---
         self.log = login_def(self.lang, family=self.family)
         # ---
-        if self.lang != "" and self.lang != not_loged_m[1]:
+        if self.lang not in ["", not_loged_m[1]]:
             # ---
             self.log.Log_to_wiki()
             # ---
@@ -183,7 +183,7 @@ class MainPage:
         for k, v in pages.items():
             # ---
             if print_test[1] or 'printdata' in sys.argv:
-                warn(warn_err('v:' + str(v)), UserWarning)
+                warn(warn_err(f'v:{str(v)}'), UserWarning)
             # ---
             if 'missing' in v or k == "-1":
                 self.Exists = False
@@ -292,7 +292,7 @@ class MainPage:
         self.length = ta.get('length') or self.length
         self.revid = ta.get('lastrevid') or self.revid
         # ---
-        self.is_redirect = True if 'redirect' in ta else False
+        self.is_redirect = 'redirect' in ta
         # ---
         for cat in ta.get('categories', []):
             # ---
@@ -456,8 +456,8 @@ class MainPage:
         # ---
         for pag in search:
             tit = pag["title"]
-            count = pag["wordcount"]
             if tit == self.title:
+                count = pag["wordcount"]
                 self.words = count
                 break
         # ---
@@ -493,18 +493,6 @@ class MainPage:
         return liste1
 
     def get_revisions(self, rvprops=[]):
-        params = {
-            "action": "query",
-            "format": "json",
-            "prop": "revisions",
-            "titles": self.title,
-            "utf8": 1,
-            "formatversion": "2",
-            # "rvprop": "comment|timestamp|user|content|ids",
-            "rvdir": "newer",
-            "rvslots": "*",
-            "rvlimit": "max",
-        }
         # ---
         rvprop = [
             "comment",
@@ -517,8 +505,18 @@ class MainPage:
         for x in rvprops:
             if x not in rvprop:
                 rvprop.append(x)
-        # ---
-        params['rvprop'] = '|'.join(rvprop)
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "revisions",
+            "titles": self.title,
+            "utf8": 1,
+            "formatversion": "2",
+            "rvdir": "newer",
+            "rvslots": "*",
+            "rvlimit": "max",
+            'rvprop': '|'.join(rvprop),
+        }
         # ---
         _revisions = self.post_continue(params, "query", "pages", [])
         # ---
@@ -584,10 +582,7 @@ class MainPage:
         if not self.info['done']:
             self.get_infos()
         # ---
-        if with_hidden:
-            return self.all_categories_with_hidden
-        # ---
-        return self.categories
+        return self.all_categories_with_hidden if with_hidden else self.categories
 
     def get_hidden_categories(self):
         # ---
@@ -642,16 +637,7 @@ class MainPage:
         # ---
         # printe.output(f'tags:{str(tags)}')
         # ---
-        if tag == '':
-            return tags
-        # ---
-        new_tags = []
-        # ---
-        for x in tags:
-            if x.name == tag:
-                new_tags.append(x)
-        # ---
-        return new_tags
+        return tags if tag == '' else [x for x in tags if x.name == tag]
 
     def can_edit(self, script=''):
         # ---
@@ -701,10 +687,7 @@ class MainPage:
             data = self.post_params(params)
             # ---
             _userinfo_ = {"id": 229481, "name": "Mr. Ibrahem", "groups": ["editor", "reviewer", "rollbacker", "*", "user", "autoconfirmed"]}
-            # ---
-            ff = data.get("query", {}).get("users", [{}])
-            # ---
-            if ff:
+            if ff := data.get("query", {}).get("users", [{}]):
                 self.userinfo = ff[0]
         # ---
         return self.userinfo
@@ -716,7 +699,6 @@ class MainPage:
         return self.templates
 
     def ask_put(self, nodiff=False):
-        yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
         # ---
         if 'ask' in sys.argv and not Save_Edit_Pages[1] or print_test[1]:
             # ---
@@ -737,6 +719,7 @@ class MainPage:
                 printe.output(f'<<lightgreen>> {__file__} save all without asking.')
                 printe.output('<<lightgreen>> ---------------------------------')
                 Save_Edit_Pages[1] = True
+            yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
             # ---
             if sa not in yes_answer:
                 printe.output("wrong answer")
@@ -821,7 +804,9 @@ class MainPage:
         if result.lower() == 'success':
             self.text = newtext
             self.user = ''
-            printe.output('<<lightgreen>> ** true .. ' + f'[[{self.lang}:{self.family}:{self.title}]] ')
+            printe.output(
+                f'<<lightgreen>> ** true .. [[{self.lang}:{self.family}:{self.title}]] '
+            )
             printe.output('Done True... time.sleep() ')
             # ---
             if 'printpop' in sys.argv:
@@ -834,12 +819,7 @@ class MainPage:
             # ---
             return True
         # ---
-        if error != {}:
-            er = self.handel_err(error, function='Save')
-            # ---
-            return er
-        # ---
-        return False
+        return self.handel_err(error, function='Save') if error != {} else False
 
     def Create(self, text='', summary=''):
         # ---
@@ -878,7 +858,9 @@ class MainPage:
             # ---
             self.text = text
             # ---
-            printe.output('<<lightgreen>> ** true .. ' + f'[[{self.lang}:{self.family}:{self.title}]] ')
+            printe.output(
+                f'<<lightgreen>> ** true .. [[{self.lang}:{self.family}:{self.title}]] '
+            )
             printe.output('Done True... time.sleep() ')
             # ---
             self.pageid = edit.get('pageid') or self.pageid
@@ -888,12 +870,7 @@ class MainPage:
             # ---
             return True
         # ---
-        if error != {}:
-            er = self.handel_err(error, function='Create')
-            # ---
-            return er
-            # ---
-        return False
+        return self.handel_err(error, function='Create') if error != {} else False
 
 
 # ---

@@ -47,8 +47,7 @@ def url_parser(url):
         k, sep, v = q.partition('=')
         queries1[k] = v
         # https://webcache.googleusercontent.com/search?hl=fr&q=cache:https://books.google.fr/books?id=faunzyqrhtgc&pg=pa47&vq=pancréas+mucoviscidose&dq=physiologie+humaine&source=gbs_search_r&cad=0_1&sig=564mkm4lqqdqy18ukodcuyffamm
-    # ---
-    elements = {
+    return {
         'scheme': parts.scheme,
         'netloc': parts.netloc,
         'path': parts.path,
@@ -59,8 +58,6 @@ def url_parser(url):
         'queries': queries1,
     }
 
-    return elements
-
 
 def filter_urls(links):
     # ---
@@ -70,7 +67,7 @@ def filter_urls(links):
     for x in links:
         # ---
         if x.startswith('//'):
-            x = 'https:' + x
+            x = f'https:{x}'
         # ---
         x = x.replace('//www.', '//').replace('http://', 'https://')
         # ---
@@ -111,12 +108,7 @@ def filter_urls(links):
                     x = x2
         # ---
         liste1.append(x.lower())
-    # ---
-    # remove duplicates
-    liste1 = sorted(set(liste1))
-    # ---
-    # ---
-    return liste1
+    return sorted(set(liste1))
 
 
 # ---
@@ -127,7 +119,7 @@ class work_in_one_lang_link:
         self.lang = change_codes.get(lang) or lang
         # ---
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f'https://{self.lang}.wikipedia.org/w/api.php'
         self.text = ''
         self.section0 = ''
         self.lead = {'extlinks': [], 'refsname': {}}
@@ -170,10 +162,7 @@ class work_in_one_lang_link:
         params = {"action": "expandtemplates", "format": "json", "text": text, "prop": "wikitext", "formatversion": "2"}
         # ---
         data = self.post_to_json(params)
-        # ---
-        newtext = data.get("expandtemplates", {}).get("wikitext") or text
-        # ---
-        return newtext
+        return data.get("expandtemplates", {}).get("wikitext") or text
 
     def get_expended(self):
         # ---
@@ -182,10 +171,7 @@ class work_in_one_lang_link:
         tags = parsed.get_tags()
         # ---
         refsn = self.get_ref_names(tags)
-        # ---
-        refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
-        # ---
-        if len(refsn) > 0:
+        if refsn := {k: v for k, v in refsn.items() if k not in self.refsname}:
             printe.output(f' new refsn: {len(refsn)}')
             printe.output(refsn)
             # ---
@@ -325,7 +311,7 @@ class get_old:
         # ---
         self.lang = lang
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f'https://{self.lang}.wikipedia.org/w/api.php'
         self.oldtext = ''
         self.text = ''
         self.section0 = ''
@@ -373,10 +359,7 @@ class get_old:
         params = {"action": "expandtemplates", "format": "json", "text": text, "prop": "wikitext", "formatversion": "2"}
         # ---
         data = self.post_to_json(params)
-        # ---
-        newtext = data.get("expandtemplates", {}).get("wikitext") or text
-        # ---
-        return newtext
+        return data.get("expandtemplates", {}).get("wikitext") or text
 
     def get_expended(self):
         # ---
@@ -385,10 +368,7 @@ class get_old:
         tags = parsed.get_tags()
         # ---
         refsn = self.get_ref_names(tags)
-        # ---
-        refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
-        # ---
-        if len(refsn) > 0:
+        if refsn := {k: v for k, v in refsn.items() if k not in self.refsname}:
             printe.output(f' new refsn: {len(refsn)}')
             printe.output(refsn)
             # ---

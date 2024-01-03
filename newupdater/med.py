@@ -101,12 +101,7 @@ def GetPageText(title):
     except Exception as e:
         print_new(e)
         r4 = {}
-    # ---
-    # print_new(r4)
-    # ---{'parse': {'title': 'Semaglutide', 'pageid': 55901, 'wikitext': {'*': '
-    text = r4.get("parse", {}).get("wikitext", {}).get("*", "")
-    # ---
-    return text
+    return r4.get("parse", {}).get("wikitext", {}).get("*", "")
 
 
 def page_put(NewText, title):
@@ -127,7 +122,7 @@ def page_put(NewText, title):
     try:
         r4 = SS["ss"].post(SS["url"], data=pparams).json()
     except Exception as e:
-        print("save error: " + str(e))
+        print(f"save error: {str(e)}")
         return
     # ---
     if "success" in str(r4).lower():
@@ -183,14 +178,14 @@ def work_on_title(title, returntext=False, text_O=""):
         title2 = 'xx'
     # ---
     try:
-        filename = dir2 + "/public_html/updatercash/" + title2 + "_1.txt"
+        filename = f"{dir2}/public_html/updatercash/{title2}_1.txt"
         # ---
         codecs.open(filename, "w", encoding="utf-8").write(new_text)
         # ---
         print(filename)
-        # ---
+            # ---
     except Exception:
-        filename = dir2 + "/public_html/updatercash/title2.txt"
+        filename = f"{dir2}/public_html/updatercash/title2.txt"
         # ---
         codecs.open(filename, "w", encoding="utf-8").write(new_text)
         # ---

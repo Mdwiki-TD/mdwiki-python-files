@@ -53,8 +53,7 @@ def work_in_file(filename):
             # printe.output(z)
             # if z match "^(\w\w):(.*?)$"
             z = z.strip()
-            mat = re.match(r'^(\w\w):(.*?)$', z)
-            if mat:
+            if mat := re.match(r'^(\w\w):(.*?)$', z):
                 na = mat.group(1)
                 na = nas_rep.get(na.lower(), na)
                 # ---
@@ -64,7 +63,7 @@ def work_in_file(filename):
                 nan[na] = value
         # ---
         tab.append(nan)
-        # ---
+            # ---
     # ---
     lista = [x['url'].replace('http://', 'https://') for x in tab if x.get('url', '').find('cdc.gov/niosh/') != -1]
     lista = sorted(lista, key=lambda x: x.lower(), reverse=False)

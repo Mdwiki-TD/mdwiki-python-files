@@ -95,7 +95,12 @@ def extract_templates_and_params(text):
         # ---
         namestrip = name
         # ---
-        ficrt = {'name': "قالب:" + name, 'namestrip': namestrip, 'params': params, 'item': pa_item}
+        ficrt = {
+            'name': f"قالب:{name}",
+            'namestrip': namestrip,
+            'params': params,
+            'item': pa_item,
+        }
         # ---
         result.append(ficrt)
     # ---
@@ -114,11 +119,7 @@ def get_one_temp_params(text, tempname="", templates=[], lowers=False, get_all_t
     # ---
     if lowers:
         temps = [x.lower() for x in temps]
-    # ---
-    named = {}
-    # ---
-    if get_all_temps:
-        named = []
+    named = [] if get_all_temps else {}
     # ---
     for temp in ingr:
         # ---
@@ -128,22 +129,19 @@ def get_one_temp_params(text, tempname="", templates=[], lowers=False, get_all_t
             namestrip = namestrip.lower()
         # ---
         if namestrip in temps:
-            # ---
-            # print("te:%s, namestrip:%s" % (te,namestrip) )
-            # ---
-            if get_all_temps:
-                tabe = {namestrip: params}
-                named.append(tabe)
-            else:
+            if not get_all_temps:
                 return params
-            # ---
+            tabe = {namestrip: params}
+            named.append(tabe)
+                    # ---
     # ---
     return named
 
 
 def get_all_temps_params(text, templates=[], lowers=False):
-    tab = get_one_temp_params(text, templates=templates, lowers=lowers, get_all_temps=True)
-    return tab
+    return get_one_temp_params(
+        text, templates=templates, lowers=lowers, get_all_temps=True
+    )
 
 
 # ---

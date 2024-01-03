@@ -28,7 +28,7 @@ class FindTranslator:
         # ---
         self.lang = lang
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f'https://{self.lang}.wikipedia.org/w/api.php'
         self.translator = ''
         # ---
         self.session = requests.Session()
@@ -89,10 +89,7 @@ class FindTranslator:
 def get_au(title, lang):
     # ---
     bot = FindTranslator(title, lang=lang)
-    # ---
-    auu = bot.Translator()
-    # ---
-    return auu
+    return bot.Translator()
 
 
 # ---

@@ -34,9 +34,7 @@ def make_new_val(val):
     maa = r'^(?P<d>\d{1,2} |)(?P<m>%s) (?P<y>\d{4})$' % months_line
     # match date like : January 10, 2020
     maa2 = r'^(?P<m>%s) (?P<d>\d{1,2}), (?P<y>\d{4})$' % months_line
-    # ---
-    sas = re.search(maa, val.strip())
-    if sas:
+    if sas := re.search(maa, newval.strip()):
         d = sas.group('d')
         m = sas.group('m')
         y = sas.group('y')
@@ -51,10 +49,7 @@ def make_new_val(val):
             newval = f"{d} {pt_m} {y}"
         # ---
         return newval
-    # ---
-    sas2 = re.search(maa2, newval.strip())
-    # ---
-    if sas2:
+    if sas2 := re.search(maa2, newval.strip()):
         d = sas2.group('d')
         m = sas2.group('m')
         y = sas2.group('y')
@@ -80,7 +75,7 @@ def pt_months(text):
     for x in tags:
         if 'dd' in sys.argv:
             print('--------------------------------')
-            print(str(x))
+            print(x)
             print(dir(x))
         # ---
         if not x or not x.name:
@@ -98,17 +93,15 @@ def pt_months(text):
             for arg in temp.arguments:
                 na = arg.name
                 val = arg.value.strip()
-                # ---
-                new_val = make_new_val(val)
-                if new_val:
+                if new_val := make_new_val(val):
                     # arg.value = new_val
                     temp.set_arg(na, new_val)
-                # --
+                            # --
         # ---
         _new = parsed2.string
         # ---
         x.contents = _new
-        # ---
+            # ---
     # ---
     text = parsed.string
     # ---

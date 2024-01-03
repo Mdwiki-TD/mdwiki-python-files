@@ -44,15 +44,12 @@ def change_lay_source(temp):
 
 def add_title(temp):
     title = ''
-    url = ''
     # ---
     title_arg = temp.get_arg('title')
     # ---
     if title_arg:
         title = str(title_arg.value).strip()
-    # ---
-    if temp.has_arg('url'):
-        url = temp.get_arg('url').value
+    url = temp.get_arg('url').value if temp.has_arg('url') else ''
     # ---
     if title != '' or url == '':
         return temp
@@ -108,7 +105,4 @@ def fix_ref_template(text, returnsummary=False):
             # ---
             newtext = newtext.replace(temp_str, temp_new)
     # ---
-    if returnsummary:
-        return newtext, summary
-    # ---
-    return newtext
+    return (newtext, summary) if returnsummary else newtext

@@ -56,10 +56,10 @@ def work(title):
         if newtext.find(content) != -1:
             newtext = newtext.replace(aaa, '{{ourworldindatamirror|%s}}' % content)
     # ---
-    sus = 'fix ourworldindatamirror'
-    # ---
     if newtext != text:
         numbers['done'] += 1
+        # ---
+        sus = 'fix ourworldindatamirror'
         # ---
         save_page = page.save(newtext=newtext, summary=sus)
 

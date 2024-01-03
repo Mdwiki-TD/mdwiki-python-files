@@ -3,6 +3,7 @@
 python3 core8/pwb.py priorviews/by_lang ask
 
 """
+
 from priorviews.lists import translators
 from priorviews.lists.creators_to_translators import creators_as_translators
 from pathlib import Path
@@ -34,7 +35,7 @@ by_lang_tra = views.count_tra_by_lang
 by_lang = views.count_views_by_lang.copy()
 # ---
 # sort by_lang
-keys_1 = {x: v for x, v in sorted(by_lang.items(), key=lambda item: item[1], reverse=True)}
+keys_1 = dict(sorted(by_lang.items(), key=lambda item: item[1], reverse=True))
 # ---
 total_tra = 0
 with_trator = 0
@@ -69,8 +70,6 @@ te_langs += "\n|}"
 # ---
 en_views = keys_1.get("en", 0)
 # ---
-newtext = ''
-# ---
 '''
 newtext += f';Views (from July 2015 to June 2023):\n'
 newtext += f'* Total views: {total_views:,}\n'
@@ -79,16 +78,14 @@ newtext += f'* Total translations: {total_tra:,}\n'
 newtext += f'* Enwiki Views: {en_views:,}\n'
 newtext += te_langs
 '''
-# ---
-newtext += te_langs
+newtext = f'{te_langs}'
 # ---
 if __name__ == "__main__":
     page = md_MainPage('User:Mr. Ibrahem/priorviews/bylang', 'www', family='mdwiki')
-    exists = page.exists()
-    if not exists:
-        create = page.Create(text=newtext, summary='update')
-    else:
+    if exists := page.exists():
         # ---
         text = page.get_text()
         save_page = page.save(newtext=newtext, summary='update', nocreate=1, minor='')
+    else:
+        create = page.Create(text=newtext, summary='update')
     # ---

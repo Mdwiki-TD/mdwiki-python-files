@@ -7,6 +7,7 @@ from priorviews.lists import creators
 python3 core8/pwb.py priorviews/lists/creators
 
 '''
+
 import sys
 import json
 import os
@@ -77,9 +78,8 @@ for lang in CreatorsData.copy():
 # ---
 if Dump_it:
     helps.dump_data(file, CreatorsData)
-# ---
-if __name__ == '__main__':
-    if 'dd' not in sys.argv:
+if 'dd' not in sys.argv:
+    if __name__ == '__main__':
         print(f'len of Creators_by_lang_title: {len(Creators_by_lang_title)}')
         for lang, titles in Creators_by_lang_title.items():
             for title, words in titles.items():

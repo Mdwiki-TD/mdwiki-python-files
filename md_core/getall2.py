@@ -68,7 +68,7 @@ for pyfile in os.listdir(drivepath):
     # ---
     printe("blue", pyfile)
     # ---
-    pyfilepath = drivepath + '/' + pyfile
+    pyfilepath = f'{drivepath}/{pyfile}'
     # ---
     if os.path.isfile(pyfilepath) and pyfile.endswith('.py'):
         # printe( "red" , "%s found in: %s" % (pyfile,floder) )

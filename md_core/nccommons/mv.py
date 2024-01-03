@@ -2,6 +2,7 @@
 """
 python3 core8/pwb.py nccommons/mv
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -37,10 +38,7 @@ to_create = [x for x, t in exists.items() if t == False]
 # ---
 pywikibot.output(f'len of to_create: {len(to_create)}')
 # ---
-n = 0
-# ---
-for cat in to_create:
-    n += 1
+for n, cat in enumerate(to_create, start=1):
     pywikibot.output(f'cat: {n}/{len(to_create)}:')
     text = mdwiki_api.GetPageText(cat)
     new = api.create_Page(text, cat, summary='Copy categories from mdwiki')

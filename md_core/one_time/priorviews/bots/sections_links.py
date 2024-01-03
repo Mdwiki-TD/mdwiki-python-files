@@ -88,7 +88,7 @@ class Sectios_links:
             wikilinks = [replaces.get(x, x) for x in wikilinks]
 
             # If there are no wikilinks in the section, skip it
-            if len(wikilinks) == 0:
+            if not wikilinks:
                 continue
 
             # Replace any forward slashes in the section title with hyphens

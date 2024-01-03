@@ -100,23 +100,14 @@ def check():
             printe.output("<<lightred>> check.py no jsone")
             printe.output(jsone)
         # ---
-    # ---
-    numb = 0
-    for fromm, to in medwiki_to_enwiki.items():
-        numb += 1
+    for numb, (fromm, to) in enumerate(medwiki_to_enwiki.items(), start=1):
         faf = f'["{fromm}"]'
         printe.output(f'en titles {numb} from_to{faf.ljust(30)} = "{to}"')
-    # ---
-    numb = 0
-    for mis in missing_in_enwiki:
-        numb += 1
+    for numb, mis in enumerate(missing_in_enwiki, start=1):
         printe.output(f'<<lightyellow>> {numb} title:{mis.ljust(25)} missing_in_enwiki')
     # ---
-    numb = 0
-    # ---
     printe.output('<<lightred>> pages both in mdwiki cat:::')
-    for md, en in medwiki_to_enwiki_conflic.items():
-        numb += 1
+    for numb, (md, en) in enumerate(medwiki_to_enwiki_conflic.items(), start=1):
         faf = f'["{md}"]'
         fen = f'["{en}"]'
         printe.output(f'<<lightred>> {numb} page{faf.ljust(40)} to enwiki{fen}')
@@ -128,13 +119,13 @@ def check():
     # ---
     if 'nodump' not in sys.argv:
         # الكتابة إلى الملفات
-        with open(dir2 + 'medwiki_to_enwiki' + json_ext, 'w', encoding='utf-8') as aa:
+        with open(f'{dir2}medwiki_to_enwiki{json_ext}', 'w', encoding='utf-8') as aa:
             json.dump(medwiki_to_enwiki, aa)
         # ---
-        with open(dir2 + 'missing_in_enwiki' + json_ext, 'w', encoding='utf-8') as bb:
+        with open(f'{dir2}missing_in_enwiki{json_ext}', 'w', encoding='utf-8') as bb:
             json.dump(missing_in_enwiki, bb)
         # ---
-        with open(dir2 + 'sames' + json_ext, 'w', encoding='utf-8') as cc:
+        with open(f'{dir2}sames{json_ext}', 'w', encoding='utf-8') as cc:
             json.dump(sames, cc)
 
 

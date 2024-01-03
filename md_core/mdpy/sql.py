@@ -7,6 +7,7 @@ python3 core8/pwb.py mdpy/sql justsql
 python3 core8/pwb.py mdpy/sql
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -33,18 +34,28 @@ skip_langs = ['zh-yue', 'ceb']
 # ---
 New_Table_by_lang = {}
 # ---
-Skip_titles = {}
-Skip_titles['Mr. Ibrahem'] = {
-    'targets': [
-        'جامعة نورث كارولاينا',
-        'جامعة ولاية كارولينا الشمالية إيه آند تي',
-        'نيشان راجاميترابورن'
-    ],
-    'mdtitles': []
+Skip_titles = {
+    'Mr. Ibrahem': {
+        'targets': [
+            'جامعة نورث كارولاينا',
+            'جامعة ولاية كارولينا الشمالية إيه آند تي',
+            'نيشان راجاميترابورن',
+        ],
+        'mdtitles': [],
+    },
+    'Avicenno': {
+        'targets': ['ألم فرجي', 'لقاح المكورة السحائية', 'استئصال اللوزتين'],
+        'mdtitles': [],
+    },
+    'Subas Chandra Rout': {
+        'targets': [],
+        'mdtitles': [
+            "Wilms' tumor",
+            "Sheehan's syndrome",
+            "Membranous nephropathy",
+        ],
+    },
 }
-Skip_titles['Avicenno'] = {'targets': ['ألم فرجي', 'لقاح المكورة السحائية', 'استئصال اللوزتين'], 'mdtitles': []}
-# ---
-Skip_titles['Subas Chandra Rout'] = {'targets': [], 'mdtitles': ["Wilms' tumor", "Sheehan's syndrome", "Membranous nephropathy"]}
 # ---
 Skip_titles_global = ['جامعة نورث كارولاينا', 'جامعة ولاية كارولينا الشمالية إيه آند تي', 'نيشان راجاميترابورن', 'موميتازون']
 # ---
@@ -158,7 +169,7 @@ def dodo_sql():
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(':')
-        if arg == 'lang' or arg == '-lang':
+        if arg in ['lang', '-lang']:
             lang_o = value
             Langs_to_title_and_user[value] = {}
         # ---
@@ -306,14 +317,14 @@ def start(result, lange):
         # للتأكد من الصفحات غير المنشورة
         if target2 not in tgd and target not in tgd:
             # ---
-            if tul_target != '':
-                if tul_target == target:
-                    printe.output(f'target already in, {target}')
-                else:
-                    printe.output(f'puplished target: {tul_target} != target to add: {target}')
-            else:
+            if tul_target == '':
                 New_Table_by_lang[lange][md_title] = Taba2
                 printe.output(laloly)
+
+            elif tul_target == target:
+                printe.output(f'target already in, {target}')
+            else:
+                printe.output(f'puplished target: {tul_target} != target to add: {target}')
 
 
 def main():

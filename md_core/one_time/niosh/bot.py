@@ -40,12 +40,9 @@ def new_search():
     # ---
     vv = 'insource:"cdc.gov/niosh/"'
     search = api_new.Search(value=vv, ns="0", offset='', srlimit="", RETURN_dict=False, addparams={})
-    # ---
-    na = 0
     nn = len(search)
     # ---
-    for x in search:
-        na += 1
+    for na, x in enumerate(search, start=1):
         page = MainPage(x, 'en', family='wikipedia')
         print(f'p:{na}/{nn}, title:{x}, get_extlinks:')
         extlinks = page.get_extlinks()
@@ -85,7 +82,9 @@ def new_vals():
         if tat:
             new[title] = tat
     # ---
-    new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
+    new = dict(
+        sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)
+    )
     # ---
     with open(file_json2, 'w', encoding='utf-8') as ee:
         json.dump(new, ee, ensure_ascii=False, indent=4)

@@ -33,19 +33,18 @@ def match_p(refs, p_ref):
     same = [x for x in p_ref if x in refs]
 
     len_same = len(same)
-    len_refs = len(refs)
-
-    # If there are no common elements between `p_ref` and `refs`, return False and the length of `same`
     if len_same < 1:
         return False, len_same
 
+    len_refs = len(refs)
+
     # If the length of `same` is less than 8 or less than half the length of `refs` minus 1,
     # return False and the length of `same`
-    if 6 > len_same < ((len_refs / 2) - 1):
-        return False, len_same
-
-    # Otherwise, return True and the length of `same`
-    return True, len_same
+    return (
+        (False, len_same)
+        if 6 > len_same < ((len_refs / 2) - 1)
+        else (True, len_same)
+    )
 
 
 # ---
@@ -101,9 +100,10 @@ def get_t_sections():
     text += f'! total\n! {allen:,}\n! {allall:,}\n! {allgreen:,} ({green_p}%)\n! {allred:,} ({red_p}%)'
     # ---
     text += '\n|}'
-    # ---
-    te_langs = '\n== All languages =='
-    te_langs += '\n<div style="width:100%;overflow-x:auto; overflow-y:auto">'
+    te_langs = (
+        '\n== All languages =='
+        + '\n<div style="width:100%;overflow-x:auto; overflow-y:auto">'
+    )
     te_langs += '\n{| class="wikitable sortable" style="width:100%;"'
     te_langs += '\n|- style="position: sticky;top: 0; z-index: 2;"'
     te_langs += '\n! style="position: sticky;top: 0;left: 0;" | key'
@@ -171,10 +171,7 @@ def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_ref
                     print(f'ref {x}, count:{count}....')
                     break
         # ---
-    # ---
-    tab = {'same1': same1, 'same2': same2, 'color': color}
-    # ---
-    return tab
+    return {'same1': same1, 'same2': same2, 'color': color}
 
 
 # ---
@@ -182,10 +179,10 @@ all_pages_states = {}
 
 
 def log_all_pages_states():
-    Dir = Path(__file__).parent
-    file = f'{Dir}/all_pages_states.json'
     # ---
     if all_pages_states != {}:
+        Dir = Path(__file__).parent
+        file = f'{Dir}/all_pages_states.json'
         printe.output(f'<<lightyellow>> log_all_pages_states(): lenth: {len(all_pages_states.keys())}')
         json.dump(all_pages_states, codecs.open(file, 'w', encoding='utf-8'))
 

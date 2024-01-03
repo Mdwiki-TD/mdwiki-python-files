@@ -8,6 +8,7 @@ python3 /data/project/mdwiki/pybot/md_core/mdcount/countref.py newpages
 python3 core8/pwb.py mdcount/countref newpages
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -33,10 +34,11 @@ dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 all_ref = {}
 lead_ref = {}
 vaild_links = {1: []}
-list_ma = {1: []}
 # ---
-file_all  = dir2 + '/public_html/Translation_Dashboard/Tables/all_refcount.json'
-file_lead = dir2 + '/public_html/Translation_Dashboard/Tables/lead_refcount.json'
+file_all = f'{dir2}/public_html/Translation_Dashboard/Tables/all_refcount.json'
+file_lead = (
+    f'{dir2}/public_html/Translation_Dashboard/Tables/lead_refcount.json'
+)
 # ---
 a = {}
 # ---
@@ -55,7 +57,7 @@ list_fu = list(set(all_ref.keys()) & set(lead_ref.keys()))
 # ---
 # remove duplicates from list
 list_fu = list(set(list_fu))
-list_ma[1] = [x for x in list_fu if (x in all_ref and x in lead_ref)]
+list_ma = {1: [x for x in list_fu if (x in all_ref and x in lead_ref)]}
 
 
 def count_ref_from_text(text, get_short=False):
@@ -90,10 +92,7 @@ def count_ref_from_text(text, get_short=False):
             if content.strip() not in ref_list:
                 ref_list.append(content.strip())
             # count += 1
-    # ---
-    count = len(ref_list)
-    # ---
-    return count
+    return len(ref_list)
 
 
 def count_refs(title):
@@ -136,10 +135,7 @@ def from_sql():
 
 def get_links():
     tabe = catdepth2.subcatquery2('RTT', depth='1', ns='0')
-    lale = tabe['list']
-    # ---
-    if 'sql' in sys.argv:
-        lale = from_sql()
+    lale = from_sql() if 'sql' in sys.argv else tabe['list']
     # ---
     if 'newpages' in sys.argv:
         lale = [x for x in lale if (x not in list_ma[1])]
@@ -152,10 +148,7 @@ def mai():
     numb = 0
     # ---
     vaild_links[1] = get_links()
-    # ---
-    limit = 10000
-    if 'limit100' in sys.argv:
-        limit = 100
+    limit = 100 if 'limit100' in sys.argv else 10000
     # ---
     # python pwb.py mdwiki/public_html/Translation_Dashboard/countref test1 local -title:Testosterone_\(medication\)
     # python3 core8/pwb.py /data/project/mdwiki/mdpy/countref test1 -title:Testosterone_\(medication\)

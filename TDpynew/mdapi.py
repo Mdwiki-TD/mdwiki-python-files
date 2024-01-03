@@ -68,7 +68,7 @@ def login():
         ress = r22.json()['login']['result']
         if print_pywikibot[1]:
             pywikibot.output('Traceback (most recent call last):')
-            pywikibot.output('Exception:' + str(ress))
+            pywikibot.output(f'Exception:{str(ress)}')
             pywikibot.output(traceback.format_exc())
             pywikibot.output('CRITICAL:')
     else:

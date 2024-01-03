@@ -70,17 +70,13 @@ def start_all():
     # ---
     printe.output(f'len of lang_links: {len(lang_linkss)}')
     # ---
-    no = 0
-    # ---
     for x, va in lang_links.items():
-        no += 1
         # ---
         pap = f'p {n}/{len(lang_links)}: {x}'
         # ---
         printe.output(pap)
         # ---
         work_lang_links(x, va['langs'])
-        # ---
     with codecs.open(f'{Dir}/lists/start.json', 'w', encoding='utf-8') as f:
         json.dump(allen, f, ensure_ascii=False, indent=4)
 

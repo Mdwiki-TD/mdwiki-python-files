@@ -48,10 +48,7 @@ def fix_page_here(text, title, langcode):
     expend = expend_infobox[1]
     if lang_default.get('expend', 0) == 1:
         expend = True
-    # ---
-    adden = False
-    if lang_default.get('add_en_lang', 0) == 1:
-        adden = True
+    adden = lang_default.get('add_en_lang', 0) == 1
     # ---
     newtext = fix_page(newtext, title, move_dots=dots, infobox=expend, section_0=section_0_text, lang=langcode, add_en_lang=adden)
     # ---
@@ -66,7 +63,7 @@ def work_one_lang(list_, lang):
     # ---
     if 'lala' not in sys.argv:
         newlist = [x for x in list_ if f"{lang}:{x}" not in reffixed_list]
-        dd = int(len(list_)) - int(len(newlist))
+        dd = len(list_) - len(newlist)
         print("already in reffixed_list :%d" % dd)
     # ---
     if len(newlist) > 0:
@@ -120,7 +117,7 @@ for arg in sys.argv:
     # ---
     if arg == 'infobox':
         expend_infobox[1] = True
-    if arg == 'movedots':
+    elif arg == 'movedots':
         move_dot[1] = True
 
 
@@ -135,42 +132,40 @@ def maine():
         # remove the - from the argument
         arg = arg[1:] if arg.startswith("-") else arg
         # ---
-        if arg == 'nolang':
-            nolange = value
         if arg == 'lang':
             lange = value
+        elif arg == 'nolang':
+            nolange = value
         if arg == 'page':
             page = value.replace("_", " ")
     # ---
     newtable = {}
-    # ---
     if page != "" and lange != "":
         newtable[lange] = [page]
-    # ---
-    if page != "" and lange != "" and 'returnfile' in sys.argv:
-        # ---
-        title = ec_de_code(page, 'decode')
-        log(lange)
-        text = GetPageText(title, lang=lange, Print=False)
-        # ---
-        if text == '':
-            print('notext')
+        if 'returnfile' in sys.argv:
+            # ---
+            title = ec_de_code(page, 'decode')
+            log(lange)
+            text = GetPageText(title, lang=lange, Print=False)
+            # ---
+            if text == '':
+                print('notext')
+                return ''
+            # ---
+            newtext = fix_page_here(text, title, lange)
+            # ---
+            if text == newtext:
+                print('no changes')
+                return ''
+            # ---
+            if newtext == '':
+                print('notext')
+                return ''
+            # ---
+            filee = save_wprefcash(title, newtext)
+            print(filee)
+            # ---
             return ''
-        # ---
-        newtext = fix_page_here(text, title, lange)
-        # ---
-        if text == newtext:
-            print('no changes')
-            return ''
-        # ---
-        if newtext == '':
-            print('notext')
-            return ''
-        # ---
-        filee = save_wprefcash(title, newtext)
-        print(filee)
-        # ---
-        return ''
     # ---
     if page == "":
         # ---

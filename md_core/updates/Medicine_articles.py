@@ -32,10 +32,7 @@ def sql_result():
     """
     # ---
     result = wiki_sql.sql_new(query, 'enwiki')
-    # ---
-    languages = {x['ll_lang']: x['counts'] for x in result}
-    # ---
-    return languages
+    return {x['ll_lang']: x['counts'] for x in result}
 
 
 def get_articles():
@@ -57,13 +54,7 @@ def get_articles():
     """
     # ---
     result = wiki_sql.sql_new(query, 'enwiki')
-    # ---
-    articles = [x['articles'] for x in result]
-    # ---
-    if articles:
-        return articles[0]
-    # ---
-    return 0
+    return articles[0] if (articles := [x['articles'] for x in result]) else 0
 
 
 def start():
@@ -101,7 +92,9 @@ def start():
     text += '''{| class="sortable wikitable"\n!Lang\n!#\n|-'''
     # ---
     # sort languages by count
-    languages = {k: v for k, v in sorted(languages.items(), key=lambda item: item[1], reverse=True)}
+    languages = dict(
+        sorted(languages.items(), key=lambda item: item[1], reverse=True)
+    )
     # ---
     for lang, count in languages.items():
         text += f'\n!{lang}\n|{count:,}\n|-'

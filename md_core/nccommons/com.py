@@ -6,6 +6,7 @@ create pages in nccommons
 python3 nccommons/com.py -limitall:50000 -files:200 ask
 
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -29,12 +30,12 @@ limit_0 = 0
 for arg in sys.argv:
     arg, sep, value = arg.partition(":")
     # ---
-    if arg == "-limit0":
-        limit_0 = int(value)
-    if arg == "-limitall":
-        limitall = int(value)
     if arg == "-files":
         files_len = int(value)
+    elif arg == "-limit0":
+        limit_0 = int(value)
+    elif arg == "-limitall":
+        limitall = int(value)
     # ---
 # ---
 file_dir = __file__.replace("com.py", "")
@@ -42,14 +43,18 @@ file_dir = __file__.replace("com.py", "")
 print(f"file_dir : {file_dir}")
 # ---
 if 'usefiles' in sys.argv:
-    ns_0_pages = codecs.open(file_dir + "ns_0_pages.json", "r", "utf-8").read()
-    all_files = codecs.open(file_dir + "all_files.json", "r", "utf-8").read()
+    ns_0_pages = codecs.open(f"{file_dir}ns_0_pages.json", "r", "utf-8").read()
+    all_files = codecs.open(f"{file_dir}all_files.json", "r", "utf-8").read()
 else:
     ns_0_pages = api.Get_All_pages("", limit="max", namespace="0", limit_all=limit_0)
     all_files = api.Get_All_pages("", limit="max", namespace="6", limit_all=limitall)
     # ---
-    codecs.open(file_dir + "ns_0_pages.json", "w", "utf-8").write(json.dumps(ns_0_pages, indent=4, ensure_ascii=False))
-    codecs.open(file_dir + "all_files.json", "w", "utf-8").write(json.dumps(all_files, indent=4, ensure_ascii=False))
+    codecs.open(f"{file_dir}ns_0_pages.json", "w", "utf-8").write(
+        json.dumps(ns_0_pages, indent=4, ensure_ascii=False)
+    )
+    codecs.open(f"{file_dir}all_files.json", "w", "utf-8").write(
+        json.dumps(all_files, indent=4, ensure_ascii=False)
+    )
 # ---
 if 'onlyread' in sys.argv:
     sys.exit(0)
@@ -60,14 +65,9 @@ all_reg = {}
 
 def make_page(x, tab):
     # ---
-    lines = ""
-    # ---
-    gt = [(numb, hy) for numb, hy in tab.items()]
+    gt = list(tab.items())
     gt.sort(reverse=False)
-    # ---
-    for _, title in gt:
-        # ---
-        lines += f"|File:{title}|\n"
+    lines = "".join(f"|File:{title}|\n" for _, title in gt)
     # ---
     x2 = x.split("(")[0].split("-")[0].strip()
     # ---
@@ -84,23 +84,23 @@ def make_page(x, tab):
 def work():
     # ---
     nomatch = 0
+    # Abdominal_aortic_aneurysm_(Radiopaedia_10122-10660_Axial_C+_portal_venous_phase_30).jpg
+    ra = r"^File\:(.*?\(.*?)[\s\-\w](\d+)\)\.(?:jpg|JPG|png|PNG|gif|GIF|svg|SVG)$"
     # ---
     for title in all_files:
-        # Abdominal_aortic_aneurysm_(Radiopaedia_10122-10660_Axial_C+_portal_venous_phase_30).jpg
-        ra = r"^File\:(.*?\(.*?)[\s\-\w](\d+)\)\.(?:jpg|JPG|png|PNG|gif|GIF|svg|SVG)$"
         mate = re.match(ra, title)
         # ---
         title2 = title.replace("File:", "")
         # ---
         if mate:
             number = int(mate.group(2))
-            page = mate.group(1) + ")"
+            page = f"{mate.group(1)})"
             # ---
             if page in all_reg:
                 all_reg[page][number] = title2
             else:
                 all_reg[page] = {number: title2}
-            # ---
+                    # ---
         else:
             nomatch += 1
             print(f"title:{nomatch}/\t{title}.")
@@ -112,9 +112,9 @@ def work():
         # ---
         if le >= files_len:
             print(f"x:{x}, len: {le}")
-            tab = all_reg[x]
             # ---
             if x not in ns_0_pages:
+                tab = all_reg[x]
                 # ---
                 make_page(x, tab)
             else:

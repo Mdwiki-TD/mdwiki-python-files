@@ -15,6 +15,7 @@ from mdpy.bots import wiki_api
 # wiki_api.
 # ---
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -37,9 +38,7 @@ from mdpy.bots import user_account_new
 
 # ---
 SS = {"token": ''}
-session = {}
-session[1] = requests.Session()
-session["url"] = ""
+session = {1: requests.Session(), "url": ""}
 # ---
 Url_To_login = {1: '', 'not': True}
 # ---
@@ -94,7 +93,7 @@ def log(api_urle):
     if r2.json()['login']['result'] != 'Success':
         pywikibot.output('Traceback (most recent call last):')
         pywikibot.output(f'<<lightred>> {__file__} log():')
-        warn('Exception:' + str(r2.json()), UserWarning)
+        warn(f'Exception:{str(r2.json())}', UserWarning)
         pywikibot.output('CRITICAL:')
     else:
         pywikibot.output(f"<<lightgreen>> mdwiki/mdpy/wiki_api.py: log to {api_urle} user:{lgname} Success... ")
@@ -216,22 +215,15 @@ def Find_pages_exists_or_not(liste, apiurl=''):
     }
     # ---
     table = {}
-    # ---
-    json1 = submitAPI(params, apiurl=apiurl)
-    # ---
-    if json1:
+    if json1 := submitAPI(params, apiurl=apiurl):
         query_pages = json1.get("query", {}).get("pages", {})
+        faso = ''
         for page in query_pages:
             kk = query_pages[page]
-            faso = ''
             if "title" in kk:
                 tit = kk.get("title", "")
                 # ---
-                if "missing" in kk:
-                    table[tit] = False
-                else:
-                    table[tit] = True
-        # ---
+                table[tit] = "missing" not in kk
     return table
 
 
@@ -244,15 +236,15 @@ def get_langlinks(title, lang):
         "lllimit": "max",  # langlinks
         "formatversion": "2",
     }
-    # ---
-    ta = submitAPI(params, apiurl='https://' + lang + '.wikipedia.org/w/api.php')
-    # ---
-    if not ta:
+    if ta := submitAPI(
+        params, apiurl=f'https://{lang}.wikipedia.org/w/api.php'
+    ):
+        return {
+            ta["lang"]: ta.get("*") or ta.get("title")
+            for ta in ta.get('langlinks', [])
+        }
+    else:
         return {}
-    # ---
-    langlinks = {ta["lang"]: ta.get("*") or ta.get("title") for ta in ta.get('langlinks', [])}
-    # ---
-    return langlinks
 
 
 def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
@@ -261,7 +253,7 @@ def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
         sitecode = sitecode[:-4]
     # ---
     if apiurl == '' and sitecode != "":
-        apiurl = "https://" + sitecode + ".wikipedia.org/w/api.php"
+        apiurl = f"https://{sitecode}.wikipedia.org/w/api.php"
     # ---
     if isinstance(titles, str):
         titles = [titles]
@@ -289,19 +281,16 @@ def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
         group = titles[i : i + 50]
         # ---
         params["titles"] = "|".join(group)
-        # ---
-        json1 = submitAPI(params, apiurl=apiurl)
-        # ---
-        if json1:
+        if json1 := submitAPI(params, apiurl=apiurl):
             js_query = json1.get('query', {})
             # ---
             for red in js_query.get('redirects', {}):
                 # redirects_table[ red["from"] ] = red["to"]
                 Main_table[red["from"]] = {'isRedirectPage': True, 'missing': True, 'from': red["from"], 'to': red["to"], 'title': red["from"], 'ns': '', 'q': ''}
+            faso = ''
             # ---
             for id in js_query.get('pages', {}):
                 kk = js_query['pages'][id]
-                faso = ''
                 title = ""
                 if "title" in kk:
                     title = kk["title"]
@@ -342,7 +331,7 @@ def Getpageassessments_from_wikipedia(titles, site="en", find_redirects=False, p
     langcode = "ar"
     # if pasubprojects == 1 : params["pasubprojects"] = 1
     # ---
-    json1 = submitAPI(params, apiurl='https://' + site + '.wikipedia.org/w/api.php')
+    json1 = submitAPI(params, apiurl=f'https://{site}.wikipedia.org/w/api.php')
     # ---
     if not json1 or json1 == {}:
         return Tables
@@ -388,8 +377,9 @@ def GetPageText(title, lang, redirects=False):
         params["redirects"] = 1
     # ---
     text = ''
-    json1 = submitAPI(params, apiurl='https://' + lang + '.wikipedia.org/w/api.php')
-    if json1:
+    if json1 := submitAPI(
+        params, apiurl=f'https://{lang}.wikipedia.org/w/api.php'
+    ):
         text = json1.get('parse', {}).get('wikitext', {}).get('*', '')
     else:
         printe.output('no parse in json1:')
@@ -436,17 +426,13 @@ def _get_page_views_(titles, site='en', days=30):
         # ---
         params['titles'] = "|".join(titles_1)
         # ---
-        json1 = submitAPI(params, apiurl='https://' + site + '.wikipedia.org/w/api.php')
+        json1 = submitAPI(params, apiurl=f'https://{site}.wikipedia.org/w/api.php')
         # ---
         if not json1 or json1 == {}:
             continue
         # ---
         js = json1.get('query', {})
-        # ---
-        redirects = {}
-        # ---
-        for red in js.get('redirects', []):
-            redirects[red["from"]] = red["to"]
+        redirects = {red["from"]: red["to"] for red in js.get('redirects', [])}
         # ---
         for key in js.get('pages', []):
             # ---
@@ -458,10 +444,7 @@ def _get_page_views_(titles, site='en', days=30):
             # {'pageid': 46133, 'ns': 0, 'title': 'Cardiomyopathy', 'pageviews': {'2022-11-14': 3076, '2022-11-15': 2114, '2022-11-16': 2895, '2022-11-17': 2616, '2022-11-18': 2247, '2022-11-19': 2303, '2022-11-20': 2152, '2022-11-21': 1752, '2022-11-22': 1617, '2022-11-23': 1595, '2022-11-24': 1520, '2022-11-25': 1534, '2022-11-26': 1611, '2022-11-27': 1702, '2022-11-28': 1457, '2022-11-29': 1362, '2022-11-30': 1517, '2022-12-01': 1689, '2022-12-02': 1510, '2022-12-03': 1588, '2022-12-04': 1678, '2022-12-05': 1449, '2022-12-06': 1578, '2022-12-07': 1411, '2022-12-08': 1495, '2022-12-09': 1732, '2022-12-10': 1553, '2022-12-11': 1702, '2022-12-12': 1472, '2022-12-13': 1333}}
             # ---
             title = kk['title']
-            # ---
-            title2 = redirects.get(title)
-            # ---
-            if title2:
+            if title2 := redirects.get(title):
                 printe.output(f'page: {title} redirect to {title2}')
                 title = title2
             # ---
@@ -474,17 +457,16 @@ def _get_page_views_(titles, site='en', days=30):
                 continue
             # ---
             pageviews = kk.get('pageviews', {})
-            # ---
-            all_views = 0
-            # ---
-            for date, views in pageviews.items():
-                if isinstance(views, int):
-                    all_views += views
+            all_views = sum(
+                views
+                for date, views in pageviews.items()
+                if isinstance(views, int)
+            )
             # ---
             Main_table[title] = all_views
         # ---
         done += len(titles_1)
-        # ---
+            # ---
     # ---
     len_no_pv = len(no_pv)
     # ---
@@ -512,11 +494,7 @@ def get_page_views(titles, site='en', days=30):
 def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20300101', printurl=False, printstr=False, Type=''):
     # ---
     numbers = {}
-    # ---
-    _Type = 'monthly'
-    # ---
-    if Type in ["daily", "monthly"]:
-        _Type = Type
+    _Type = Type if Type in ["daily", "monthly"] else 'monthly'
     # ---
     numb = 0
     # ---

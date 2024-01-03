@@ -67,10 +67,7 @@ def work_on_text_md(title, text):
 
 def work_on_text(title, text):
     newtext = text
-    # ---
-    Chem = re.search(r"{{(Chembox)", newtext, flags=re.IGNORECASE)
-    # ---
-    if Chem:
+    if Chem := re.search(r"{{(Chembox)", newtext, flags=re.IGNORECASE):
         bot = chembox.fix_Chembox(newtext)
         newtext = bot.run()
     # ---

@@ -9,6 +9,7 @@ from mdpy.bots import add_to_wd
 # ---
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -50,8 +51,8 @@ for tab in sq_dd:
     lang = tab['lang']
     user = tab['user']
     # ---
-    wddone_by_u_t.append(tuple([user, target]))
-    wddone_by_u_l_mdt.append(tuple([user, lang, mdtitle]))
+    wddone_by_u_t.append((user, target))
+    wddone_by_u_l_mdt.append((user, lang, mdtitle))
     # ---
 from mdpy.bots import wikidataapi
 
@@ -94,10 +95,9 @@ def work_with_2_qids(oldq, new_q):
             printe.output('<<lightred>> **remove2 label false.')
             printe.output(remove2)
     # ---
-    if len_sites == 1 or len_sites == 0:
+    if len_sites in {1, 0}:
         printe.output('<<lightblue>> merge qids')
-        mer = wikidataapi.WD_Merge(oldq, new_q)
-        return mer
+        return wikidataapi.WD_Merge(oldq, new_q)
     # ---
     return False
 
@@ -106,9 +106,7 @@ def add_wd(qid, enlink, lang, target):
     params = {
         "action": "wbsetsitelink",
         "linktitle": target,
-        "linksite": lang + 'wiki',
-        # "title": enlink,
-        # "site": 'enwiki',
+        "linksite": f'{lang}wiki',
         "format": "json",
         "utf8": 1,
     }
@@ -133,10 +131,8 @@ def add_wd(qid, enlink, lang, target):
     # ---
     error = ss.get('error', {}).get('code', {})
     # ---
-    if str(ss).find('wikibase-validator-sitelink-conflict') != -1:
-        qii = re.match(r'.*\"\>(Q\d+)\<\/a.*', str(ss))
-        # ---
-        if qii:
+    if 'wikibase-validator-sitelink-conflict' in str(ss):
+        if qii := re.match(r'.*\"\>(Q\d+)\<\/a.*', str(ss)):
             qid2 = qii.group(1)
             # ---
             if qid == "":
@@ -145,10 +141,7 @@ def add_wd(qid, enlink, lang, target):
                 for x, tab in qids_from_wiki.items():
                     qid = tab.get('q', '')
                     break
-            # ---
-            uu = work_with_2_qids(qid2, qid)
-            return uu
-            # ---
+            return work_with_2_qids(qid2, qid)
     # ---
     return False
 
@@ -214,10 +207,10 @@ def add_tab_to_wd(table):
             if str(ns) != '0':
                 continue
             # ---
-            if tuple([user, target]) in wddone_by_u_t:
+            if (user, target) in wddone_by_u_t:
                 continue
             # ---
-            if tuple([user, lang, mdtitle]) in wddone_by_u_l_mdt:
+            if (user, lang, mdtitle) in wddone_by_u_l_mdt:
                 continue
             # ---
             number += 1

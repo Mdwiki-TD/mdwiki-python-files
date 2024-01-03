@@ -6,6 +6,7 @@ python3 core8/pwb.py mdpy/copy_qids
 delete from qids q1 WHERE q1.qid = '' and EXISTS  (SELECT 1 FROM qids q2 WHERE q1.title = q2.title and q2.qid != '')
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -72,9 +73,8 @@ for title, qid in qids_list.items():
         # ---
         all_texts += f'\n{qua}'
         texts += f'\n{qua}'
-    # ---
-    if texts != '':
-        if num % 300 == 0:
+    if num % 300 == 0:
+        if texts != '':
             print(texts)
             vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True, Prints=False)
             texts = ''

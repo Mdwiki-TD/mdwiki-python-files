@@ -13,6 +13,7 @@ like:(
 python3 I:/mdwiki/pybot/mass/usask/geturls.py
 python3 core8/pwb.py mass/usask/geturls
 '''
+
 import requests
 from bs4 import BeautifulSoup
 import os
@@ -42,8 +43,7 @@ print("Step 2: Parsed the HTML content.")
 # Step 3 and 4: Extract href and title, and add to the dictionary
 urls_dict = {}
 for p_tag in soup.find_all('p', class_='toc__title'):
-    a_tag = p_tag.find('a')
-    if a_tag:
+    if a_tag := p_tag.find('a'):
         title = a_tag.text.strip()
         href = a_tag['href']
         urls_dict[title] = {"url": href, "images": {}}

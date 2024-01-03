@@ -20,14 +20,11 @@ from wprefs.bots.replace_except import replaceExcept, removeprefix
 
 
 def get_html_attributes_value(text, param):
-    # rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
-    rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
     if not text:
         return ''
-    m = re.search(rar, text)
-    if m:
-        return m.group(param)
-    return ''
+    # rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
+    rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
+    return m.group(param) if (m := re.search(rar, text)) else ''
 
 
 def merge_references(text):
@@ -79,7 +76,7 @@ def merge_references(text):
                 ref_tab_new[Group][name]["others"].append(Match.group())
     # ---
     # Fix references
-    for groupname, tab in ref_tab_new.items():
+    for tab in ref_tab_new.values():
         for name, tab2 in tab.items():
             if name.find("autogen") == -1:
                 org = tab2["org"]
@@ -132,10 +129,7 @@ def DuplicateReferences(text):
             v[1].append(Match.group())
         else:
             v = [None, [Match.group()], False, False]
-        # ---
-        namefound = re.search(name_r, params)
-        # ---
-        if namefound:
+        if namefound := re.search(name_r, params):
             # ---
             quote = namefound.group('quote')
             name = namefound.group('name')
@@ -222,7 +216,11 @@ def DuplicateReferences(text):
         if v[1]:
             name = f'"{name}"'
         # ---
-        text = re.sub(r'<ref name\s*=\s*(?P<quote>["\']?)\s*{}\s*(?P=quote)\s*/>'.format(ref), f'<ref name={name} />', text)
+        text = re.sub(
+            f"""<ref name\s*=\s*(?P<quote>["\']?)\s*{ref}\s*(?P=quote)\s*/>""",
+            f'<ref name={name} />',
+            text,
+        )
     # ---
     # iui_to_named = {}
     for iui, named in iui_to_named.items():

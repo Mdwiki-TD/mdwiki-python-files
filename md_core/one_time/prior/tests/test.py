@@ -21,7 +21,7 @@ class testmycode:
         expected = ['https://www.bbc.com', 'https://www.cnn.com']
         f = get_weblinks(refs, '')
         print(f)
-        print('test_incomplete_links: ' + str(set(f) == set(expected)))
+        print(f'test_incomplete_links: {set(f) == set(expected)}')
 
 
 # ---

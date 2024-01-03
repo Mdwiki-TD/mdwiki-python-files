@@ -3,6 +3,7 @@
 python3 core8/pwb.py WHOem/make_text
 
 """
+
 import sys
 import codecs
 import json
@@ -31,10 +32,9 @@ with codecs.open(f'{Dir}/text.txt', 'w', 'utf-8') as f:
 title = 'User:Mr. Ibrahem/WHOem'
 # ---
 page = md_MainPage(title, 'www', family='mdwiki')
-exists = page.exists()
-if not exists:
-    create = page.Create(text=ntext, summary='update')
-else:
+if exists := page.exists():
     # ---
     text = page.get_text()
     save_page = page.save(newtext=ntext, summary='update', nocreate=1, minor='')
+else:
+    create = page.Create(text=ntext, summary='update')

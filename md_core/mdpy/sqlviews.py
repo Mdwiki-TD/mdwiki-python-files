@@ -65,7 +65,7 @@ def update_2023(lang, table):
         if 'nosql' not in sys.argv:
             qu = sql_for_mdwiki.mdwiki_sql(qua, update=True)
             # ---
-            printe.output("<<lightyellow>>sqlviewsm.py mdwiki_sql result:" + str(qu))
+            printe.output(f"<<lightyellow>>sqlviewsm.py mdwiki_sql result:{str(qu)}")
 
 
 def update_in_sql(lang, table):
@@ -104,12 +104,10 @@ def update_in_sql(lang, table):
         if 'nosql' not in sys.argv:
             qu = sql_for_mdwiki.mdwiki_sql(qua, update=True)
             # ---
-            printe.output("<<lightyellow>>sqlviewsm.py mdwiki_sql result:" + str(qu))
+            printe.output(f"<<lightyellow>>sqlviewsm.py mdwiki_sql result:{str(qu)}")
 
 
 def insert_to_sql(lang, table):
-    # ---
-    to_insert = []
     # ---
     for target, tab in table.items():
         # ---
@@ -131,8 +129,7 @@ def insert_to_sql(lang, table):
         qu = sql_for_mdwiki.mdwiki_sql(qu, update=True, Prints=True)
         # ---
         # to_insert.append(qu)
-    # ---
-    if len(to_insert) > 0:
+    if to_insert := []:
         ins = ",\n".join(to_insert)
         qua = f""" INSERT INTO views (target, countall, count2021, count2022, count2023, lang) VALUES
             {ins}; """
@@ -142,15 +139,11 @@ def insert_to_sql(lang, table):
         if 'nosql' not in sys.argv:
             qu = sql_for_mdwiki.mdwiki_sql(qua, update=True)
             # ---
-            printe.output("<<lightyellow>>sqlviewsm.py mdwiki_sql result:" + str(qu))
+            printe.output(f"<<lightyellow>>sqlviewsm.py mdwiki_sql result:{str(qu)}")
 
 
 def get_targets(lang_o):
-    # ---
-    uu = ''
-    # ---
-    if lang_o != '':
-        uu = f'and lang = "{lang_o}"'
+    uu = f'and lang = "{lang_o}"' if lang_o != '' else ''
     # ---
     que = f'''select DISTINCT lang, target, pupdate from pages
     where target != ""
@@ -176,10 +169,7 @@ def get_targets(lang_o):
 
 
 def get_views_sql(lang_o):
-    # ---
-    uu = ''
-    if lang_o != '':
-        uu = f'where lang = "{lang_o}"'
+    uu = f'where lang = "{lang_o}"' if lang_o != '' else ''
     # ---
     que11 = f'''select DISTINCT target, lang, countall, count2021, count2022, count2023
     from views
@@ -211,7 +201,7 @@ def main():
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(':')
-        if arg == 'lang' or arg == '-lang':
+        if arg in ['lang', '-lang']:
             lang_o = value
     # ---
     get_targets(lang_o)
@@ -239,10 +229,9 @@ def main():
         # ---
         for pupdate, title_list in tab.items():
             start = '20210401'
-            # ---
-            rem = re.match(r'^(?P<y>\d\d\d\d)-(?P<m>\d\d)-(?P<d>\d\d)$', pupdate)
-            # ---
-            if rem:
+            if rem := re.match(
+                r'^(?P<y>\d\d\d\d)-(?P<m>\d\d)-(?P<d>\d\d)$', pupdate
+            ):
                 start = rem.group('y') + rem.group('m') + rem.group('d')
             # ---
             lenlist = len(title_list)

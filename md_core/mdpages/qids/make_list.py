@@ -125,18 +125,12 @@ def check():
             printe.output("<<lightred>> check.py no jsone")
             printe.output(jsone)
         # ---
-    # ---
-    numb = 0
-    for fromm, to in medwiki_to_enwiki.items():
-        numb += 1
+    for numb, (fromm, to) in enumerate(medwiki_to_enwiki.items(), start=1):
         faf = f'["{fromm}"]'
         printe.output(f'en titles {numb} from_to{faf.ljust(30)} = "{to}"')
     # ---
-    numb = 0
-    # ---
     printe.output('<<lightred>> pages both in mdwiki cat:::')
-    for md, en in medwiki_to_enwiki_conflic.items():
-        numb += 1
+    for numb, (md, en) in enumerate(medwiki_to_enwiki_conflic.items(), start=1):
         faf = f'["{md}"]'
         fen = f'["{en}"]'
         printe.output(f'<<lightred>> {numb} page{faf.ljust(40)} to enwiki{fen}')
@@ -155,7 +149,7 @@ def check():
     printe.output(f'<<lightgreen>> len of o_qids (qid != ""):{len(o_qids_n)}')
     # ---
     for x in missing_in_enwiki:
-        if not x in o_qids:
+        if x not in o_qids:
             o_qids[x] = ''
     # ---
     o_qids = {x: v for x, v in o_qids.items() if x in Listo}

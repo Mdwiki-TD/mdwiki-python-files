@@ -42,22 +42,15 @@ def Find_pages_exists_or_not(liste, apiurl=''):
     }
     # ---
     table = {}
-    # ---
-    json1 = wpref.submitAPI(params, lang='or')
-    # ---
-    if json1:
+    if json1 := wpref.submitAPI(params, lang='or'):
         query_pages = json1.get("query", {}).get("pages", {})
+        faso = ''
         for page in query_pages:
             kk = query_pages[page]
-            faso = ''
             if "title" in kk:
                 tit = kk.get("title", "")
                 # ---
-                if "missing" in kk:
-                    table[tit] = False
-                else:
-                    table[tit] = True
-        # ---
+                table[tit] = "missing" not in kk
     return table
 
 
@@ -100,10 +93,7 @@ and lang = "or"
     # ---
     sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
     # ---
-    n = 0
-    # ---
-    for tab in sq:
-        n += 1
+    for n, tab in enumerate(sq, start=1):
         mdtitle = tab['title']
         target = tab['target']
         # ---

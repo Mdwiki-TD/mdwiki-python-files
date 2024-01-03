@@ -76,8 +76,7 @@ def open_json_url(url, maxsleeps=0, **kwargs):
         return {}
     # ---
     try:
-        json1 = json.loads(js_text)
-        return json1
+        return json.loads(js_text)
     except Exception:
         pywikibot.output(traceback.format_exc())
         printe.output(js_text)

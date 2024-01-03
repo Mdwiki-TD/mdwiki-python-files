@@ -69,9 +69,7 @@ def Expend_Infobox(text, title, section_0):
     tempse = {}
     # ---
     ingr = txtlib2.extract_templates_and_params(section_0)
-    u = 0
-    for temp in ingr:
-        u += 1
+    for u, temp in enumerate(ingr, start=1):
         name, namestrip, params, template = temp['name'], temp['namestrip'], temp['params'], temp['item']
         if len(params) > 4 and section_0.find(f'>{template}') == -1:
             tempse_by_u[u] = temp
@@ -103,6 +101,6 @@ def Expend_Infobox(text, title, section_0):
         # ---
         if new_temp != main_temp_text:
             newtext = newtext.replace(main_temp_text, new_temp)
-            newtext = newtext.replace(new_temp + "'''", new_temp + "\n'''")
+            newtext = newtext.replace(f"{new_temp}'''", new_temp + "\n'''")
     # ---
     return newtext

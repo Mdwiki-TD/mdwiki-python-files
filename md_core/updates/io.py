@@ -40,10 +40,7 @@ def get_timestamp(titles):
     # ---
     global NewList
     # ---
-    num = 0
-    # ---
-    for page in titles:
-        num += 1
+    for num, page in enumerate(titles, start=1):
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": page, "rvprop": "timestamp", "rvlimit": "1", "rvdir": "newer"}
         hh = mdwiki_api.post(params)
         # ---
@@ -101,9 +98,7 @@ text += '''
 ! Creation date
 ! Import history
 '''
-numb = 0
-for Date, pag in new:
-    numb += 1
+for numb, (Date, pag) in enumerate(new, start=1):
     url = 'https://' + 'mdwiki.toolforge.org/import-history.php?code=James%2399&title={{urlencode:' + pag + '}}'
     text += '|-\n| %d || [[%s]] || %s || [%s ] \n' % (numb, pag, Date, url)
 

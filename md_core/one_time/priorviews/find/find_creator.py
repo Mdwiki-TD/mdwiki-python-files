@@ -50,9 +50,7 @@ def get_creator(links, lang):
 
     def valid(x, tab, empty=''):
         i = tab.get(x) or tab.get(x.lower())
-        if not i or i == empty:
-            return True
-        return False
+        return not i or i == empty
 
     # ---
     if "new" in sys.argv:
@@ -119,16 +117,11 @@ def start():
         if arg == "-lang":
             langkeys = [value]
     # ---
-    n = 0
-    # ---
     for lang in langkeys:
         # ---
         links = links_by_lang[lang]
         # ---
-        n += 1
-        # ---
         get_creator(links, lang)
-        # ---
     # ---
     log_Data()
 

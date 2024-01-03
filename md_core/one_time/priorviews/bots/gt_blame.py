@@ -63,7 +63,7 @@ def match_ref_names(r, refnames, lang):
         _tags_[name] += 1
     # ---
     # sort by count
-    _tags_ = {k: v for k, v in sorted(_tags_.items(), key=lambda item: item[1], reverse=True)}
+    _tags_ = dict(sorted(_tags_.items(), key=lambda item: item[1], reverse=True))
     for k, v in _tags_.items():
         if k in refnames:
             printe.output(f'<<green>> find: {k=} count: {v=}| main: {refnames[k]=}')
@@ -82,7 +82,7 @@ class FindInHistory:
         # ---
         self.lang = lang
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f'https://{self.lang}.wikipedia.org/w/api.php'
         self.author = ''
         # ---
         self.revisions = []
@@ -143,10 +143,7 @@ class FindInHistory:
 
     def get_revisions(self, title):
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "utf8": 1, "formatversion": "2", "rvprop": "comment|timestamp|user|content|ids", "rvdir": "newer", "rvstart": "2011-01-01T00:00:00.000Z", "rvend": "2018-01-01T00:00:00.000Z", "rvlimit": "max"}
-        # ---
-        pages = self.post_continue(params, "query", "pages", [])
-        # ---
-        return pages
+        return self.post_continue(params, "query", "pages", [])
 
     def start(self):
         pages = self.get_revisions(self.title)
@@ -211,11 +208,8 @@ def search_history(title, lang, en='', refname=[], extlinks=[]):
         if user.lower().endswith('bot'):
             print(f'skip bots {user}...')
             continue
-        # ---
-        comment = r.get('comment')
-        if comment:
-            comment_v = helps.isv(comment)
-            if comment_v:
+        if comment := r.get('comment'):
+            if comment_v := helps.isv(comment):
                 printe.output(f'<<green>> find: {comment_v=}')
                 return user
         # ---

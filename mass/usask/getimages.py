@@ -41,7 +41,7 @@ def extract_images_from_url(url):
 
         # Return an empty dictionary
         return {}
-    
+
     # Parse the HTML content of the response using BeautifulSoup
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -60,11 +60,7 @@ def extract_images_from_url(url):
         # Get the text of the 'figcaption' tag and remove leading/trailing whitespaces
         caption = caption_tag.text.strip() if caption_tag else ""
         printe.output(f'\t\t <<yellow>> caption: <<default>> {caption}')
-        # Find the 'img' tag within the 'figure' tag
-        img_tag = figure_tag.find('img')
-
-        # Check if 'img' tag exists
-        if img_tag:
+        if img_tag := figure_tag.find('img'):
             # Get the value of the 'srcset' attribute of the 'img' tag
             img_srcset = img_tag.get('srcset', '').split(',')[0].split()[0] if img_tag.get('srcset', '') else ''
             img_src    = img_tag.get('src', '')
@@ -72,10 +68,10 @@ def extract_images_from_url(url):
             # printe.output(f'\t\t <<yellow>> img_src: <<default>> {img_src}')
             # Split the 'srcset' value by comma and get the first URL
             img_url = img_srcset
-            if not img_srcset:
+            if not img_url:
                 img_url = img_src
                 printe.output(f'\t\t <<red>> no srcset, use src')
-        
+
             # Remove the dimension part from the URL using regex
             img_url = re.sub(r'-\d+x\d+(\.\w+)$', r'\1', img_url)
             printe.output(f'\t\t <<yellow>> img_url: <<default>> {img_url}')
@@ -116,17 +112,17 @@ def main():
         # Get the URL from the section data
         url = section_data['url']
 
-        # Extract images from the URL
-        images_info = extract_images_from_url(url)
-
-        # If images are found, update the data with the extracted image information
-        if images_info:
+        if images_info := extract_images_from_url(url):
             data[section]['images'] = images_info
             if 'break' in sys.argv:
                 break
 
     # sort the data by if it has images
-    data = {k: v for k, v in sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True)}
+    data = dict(
+        sorted(
+            data.items(), key=lambda item: len(item[1]['images']), reverse=True
+        )
+    )
 
     # print how many has images and how many has no images
     printe.output(f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}")
@@ -134,8 +130,10 @@ def main():
     printe.output(f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}")
 
     # print len of all images
-    printe.output(f"<<green>> Number of images: {sum([len(v['images']) for k, v in data.items()])}")
-    
+    printe.output(
+        f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}"
+    )
+
     if 'test' not in sys.argv:
         # Save the updated data back to the JSON file
         with open(jsonimages, 'w', encoding="utf-8") as file:

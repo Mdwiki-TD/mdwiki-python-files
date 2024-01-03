@@ -21,15 +21,11 @@ def printn(s):
 
 def add_resources(new_text, drug_resources):
     # ---
-    to_add = ''
-    # ---
     if page_identifier_params == {}:
         return new_text, ''
-    # ---
-    for pa, pap in page_identifier_params.items():
-        # ---
-        to_add += f"| {pa} = {pap}\n"
-        # ---
+    to_add = ''.join(
+        f"| {pa} = {pap}\n" for pa, pap in page_identifier_params.items()
+    )
     # ---
     to_add = to_add.replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n")
     to_add = to_add.replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|")
@@ -82,8 +78,6 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     # ---
     drugbox_old = ""
     drugbox_params = {}
-    # ---
-    drug_resources = ""
     resources_params = {}
     # ---
     # Parse the wikitext
@@ -95,9 +89,9 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     for temp in temps:
         name = str(temp.normal_name()).lower()
         # ---
-        if name in ['drugbox', 'infobox drug']:
+        if name in {'drugbox', 'infobox drug'}:
             infobox_temp = temp
-        if name in ['drug resources']:
+        if name in {'drug resources'}:
             resources_temp = temp
     # ---
     if infobox_temp == {}:
@@ -112,10 +106,7 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         if infobox_temp.has_arg(param):
             # ---
             value = infobox_temp.get_arg(param).value
-            # ---
-            fa = re.search(lkj2, value)
-            # ---
-            if fa:
+            if fa := re.search(lkj2, value):
                 printn(f'fa = {fa}')
                 printn(dir(fa))
                 tt = fa.group()
@@ -175,12 +166,9 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         # ---
         new_text = new_text.replace(resources_old, resources_new)
         # ---
-    else:
-        # ---
-        if page_identifier_params != {}:
+    elif page_identifier_params != {}:
             # نقل المعرفات لأسفل
-            new_text, line = add_resources(new_text, drug_resources)
-        # ---
+        new_text, line = add_resources(new_text, "")
     resources_get_NLM = False
     # ---
     if 'NLM' in resources_params:

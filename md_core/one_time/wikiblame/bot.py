@@ -36,7 +36,7 @@ class WikiBlame:
 
     def fetch_content(self) -> None:
         """Fetch the content of the web page."""
-        url = self.base_url + "?" + urlencode(self.params)
+        url = f"{self.base_url}?{urlencode(self.params)}"
         # ---
         if 'printurl' in sys.argv:
             print(url)
@@ -68,10 +68,7 @@ class WikiBlame:
             if not href:
                 print("No href found.")
                 continue
-            # match url like https://es.wikipedia.org/w/index.php?title=Letrina_de_hoyo&amp;diff=prev&amp;oldid=87638632
-            # print(href)
-            search = re.search(r"oldid=(\d+)", href)
-            if search:
+            if search := re.search(r"oldid=(\d+)", href):
                 oldid = search.group(1)
                 self.oldids.append(oldid)
         # ---
