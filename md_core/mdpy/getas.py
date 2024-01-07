@@ -10,6 +10,7 @@ python3 core8/pwb.py /data/project/mdwiki/mdpy/getas
 python3 core8/pwb.py mdpy/getas newpages
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -39,9 +40,9 @@ vaild_links = tabe['list']
 # ---
 printe.output(f'len of vaild_links: {len(vaild_links)}')
 # ---
-json_file = {0: dir2 + '/public_html/Translation_Dashboard/Tables/assessments.json'}
-# ---
-old_assessments = {}
+json_file = {
+    0: f'{dir2}/public_html/Translation_Dashboard/Tables/assessments.json'
+}
 lala = ''
 # ---
 with codecs.open(json_file[0], "r", encoding="utf-8-sig") as listt:
@@ -49,12 +50,11 @@ with codecs.open(json_file[0], "r", encoding="utf-8-sig") as listt:
 # ---
 printe.output(f'file_name:{json_file[0]}')
 fa = str(lala)
-if fa != '':
-    old_assessments = json.loads(fa)
+old_assessments = json.loads(fa) if fa != '' else {}
 # ---
 len_old = len(old_assessments)
 # ---
-assessments = {x: z for x, z in old_assessments.items()}
+assessments = dict(old_assessments.items())
 # ---
 if 'newpages' in sys.argv:  # vaild_links
     vaild_links2 = vaild_links

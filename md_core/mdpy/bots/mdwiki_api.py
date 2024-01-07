@@ -2,6 +2,7 @@
 """
 
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -61,9 +62,7 @@ account = {
 # ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
 # ---
-SS = {}
-SS["ss"] = requests.Session()
-SS["r3_token"] = ""
+SS = {"ss": requests.Session(), "r3_token": ""}
 # ---
 timesleep = 0
 # ---
@@ -71,22 +70,17 @@ login_not_done = {1: True}
 
 
 def py_input(s):
-    # ---
-    sa = pywikibot.input(s)
-    # ---
-    return sa
+    return pywikibot.input(s)
 
 
 def get_status(req):
     try:
-        st = req.status_code
-        return st
+        return req.status_code
     except Exception:
         pywikibot.output('<<lightred>> Traceback (most recent call last):')
         pywikibot.output(traceback.format_exc())
         pywikibot.output('CRITICAL:')
-        st = req.status
-        return st
+        return req.status
 
 
 def post_all(params, addtoken=False, **kwargs):
@@ -136,7 +130,7 @@ def Log_to_wiki(family='mdwiki', lang="www"):
     printe.output(f"mdwiki/mdpy/mdwiki_api.py: log to {lang}.{family}.org user:{account['u']}")
     SS["family"] = family
     SS["lang"] = lang
-    SS["url"] = 'https://' + f'{lang}.{family}.org/w/api.php'
+    SS["url"] = f'https://{lang}.{family}.org/w/api.php'
     SS["ss"] = requests.Session()
     # ---
     r1_params = {'format': 'json', 'action': 'query', 'meta': 'tokens', 'type': 'login'}
@@ -152,8 +146,13 @@ def Log_to_wiki(family='mdwiki', lang="www"):
         pywikibot.output('CRITICAL:')
         return False
     # ---
-    r2_params = {'format': 'json', 'action': 'login', 'lgname': account['u'], 'lgpassword': account['p']}
-    r2_params['lgtoken'] = r11.json()['query']['tokens']['logintoken']
+    r2_params = {
+        'format': 'json',
+        'action': 'login',
+        'lgname': account['u'],
+        'lgpassword': account['p'],
+        'lgtoken': r11.json()['query']['tokens']['logintoken'],
+    }
     # ---
     r22 = post_all(r2_params)
     if r22:
@@ -179,7 +178,7 @@ def Log_to_wiki(family='mdwiki', lang="www"):
         pywikibot.output(f"mdwiki_api.py: Log_to_wiki error: {e}")
         return False
     # ---
-    SS["url"] = 'https://' + f'{lang}.{family}.org/w/api.php'
+    SS["url"] = f'https://{lang}.{family}.org/w/api.php'
     # ---
     SS["r3_token"] = SS["r33"].json()['query']['tokens']['csrftoken']
     # ---
@@ -258,10 +257,7 @@ def import_history2(FILE_PATH, title):
     # ---
     if login_not_done[1]:
         Log_to_wiki("mdwiki", lang="www")
-    # ---
-    namespace = 0
-    if title.lower().startswith('user:'):
-        namespace = 2
+    namespace = 2 if title.lower().startswith('user:') else 0
     # ---
     pp = {
         "action": "import",
@@ -276,10 +272,11 @@ def import_history2(FILE_PATH, title):
     # ---
     NewList = []
     # ---
-    if FILE_PATH and not isinstance(FILE_PATH, list):
-        NewList.append(FILE_PATH)
-    elif FILE_PATH and isinstance(FILE_PATH, list):
-        NewList = FILE_PATH
+    if FILE_PATH:
+        if not isinstance(FILE_PATH, list):
+            NewList.append(FILE_PATH)
+        else:
+            NewList = FILE_PATH
     # ---
     for fff in NewList:
         printe.output(f' file:"{fff}"')
@@ -303,10 +300,7 @@ def import_history(FILE_PATH, title):
     # ---
     if login_not_done[1]:
         Log_to_wiki("mdwiki", lang="www")
-    # ---
-    namespace = 0
-    if title.lower().startswith('user:'):
-        namespace = 2
+    namespace = 2 if title.lower().startswith('user:') else 0
     # ---
     pparams = {
         "action": "import",
@@ -320,10 +314,11 @@ def import_history(FILE_PATH, title):
     # ---
     NewList = []
     # ---
-    if FILE_PATH and not isinstance(FILE_PATH, list):
-        NewList.append(FILE_PATH)
-    elif FILE_PATH and isinstance(FILE_PATH, list):
-        NewList = FILE_PATH
+    if FILE_PATH:
+        if not isinstance(FILE_PATH, list):
+            NewList.append(FILE_PATH)
+        else:
+            NewList = FILE_PATH
     # ---
     for fff in NewList:
         printe.output(f' file:"{fff}"')
@@ -382,14 +377,15 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
         Invalid = r4.get("error", {}).get("info", '')
     # ---
     if 'Success' in str(r4):
-        printe.output('<<lightgreen>> ** true .. ' + f'[[mdwiki:{title}]]   time.sleep({tts}) ')
+        printe.output(
+            f'<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) '
+        )
         printe.output('Save True.. time.sleep(%d) ' % tts)
         time.sleep(tts)
         if return_table:
             return r4
         elif returntrue:
             return True
-    # ---
     elif Invalid == "Invalid CSRF token.":
         printe.output('<<lightred>> ** error "Invalid CSRF token.". ')
         printe.output(r4)
@@ -397,7 +393,6 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
         Log_to_wiki("mdwiki", lang="www")
         # ---
         return page_put_new(NewText, summary, title, time_sleep=time_sleep, family=family, lang=lang, minor=minor, nocreate=nocreate, tags=tags, returntrue=returntrue)
-    # ---
     else:
         outbot(r4)
         if returntrue:
@@ -545,8 +540,8 @@ def create_Page(text, summary, title, ask, sleep=0, family="", duplicate4="", mi
         # if ask:
         # pywikibot.showDiff("" , text)
         if printtext:
-            printe.output("<<lightgreen>> " + text)
-        printe.output(" summary: " + summary)
+            printe.output(f"<<lightgreen>> {text}")
+        printe.output(f" summary: {summary}")
         sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: create {family}:\"{title}\" page ? ([y]es, [N]o):user:{account['u']}")
         if sa.strip() in yes_answer:
             # ---
@@ -663,8 +658,8 @@ def wordcount(title, srlimit='30'):
     # ---
     for pag in search:
         tit = pag["title"]
-        count = pag["wordcount"]
         if tit == title:
+            count = pag["wordcount"]
             words = count
             break
     # ---
@@ -678,7 +673,7 @@ def Get_cat(enlink, ns, lllang="", tempyes=[], lang_no='', print_url=True):
     # printe.output(' Get_cat for %s' % (enlink) )
     # ---
     if not enlink.startswith('Category:'):
-        enlink = 'Category:' + enlink
+        enlink = f'Category:{enlink}'
     # ---
     params = {
         "action": "query",
@@ -708,7 +703,7 @@ def Get_cat(enlink, ns, lllang="", tempyes=[], lang_no='', print_url=True):
         # params["lllang"] = lllang
         params["lllimit"] = "max"
     # ---all
-    if ns == "0" or ns == "10":
+    if ns in ["0", "10"]:
         params["gcmtype"] = "page"
     elif ns == "14":
         params["gcmtype"] = "subcat"
@@ -795,7 +790,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False, without_lang="", 
     final = time.time()
     # ---
     if not title.strip().startswith('Category:'):
-        title = 'Category:' + title.strip()
+        title = f'Category:{title.strip()}'
     # ---
     tablemember = Get_cat(title, ns, tempyes=tempyes, lang_no=without_lang, lllang=with_lang, print_url=False)
     # ---
@@ -814,10 +809,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False, without_lang="", 
         # البحث عن وصلة لغة مرغوب بوجودها
         if with_lang and with_lang != "":
             langs = tablemember[x].get('langlinks', {}).get(with_lang, '')
-            if langs != "":
-                vaild = True
-            else:
-                vaild = False
+            vaild = langs != ""
         # ---
         if vaild:
             result_table[x] = tablemember[x]
@@ -861,14 +853,10 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False, without_lang="", 
                     # البحث عن وصلة لغة مرغوب بوجودها
                     if with_lang and with_lang != "":
                         langs = table2[x].get('langlinks', {}).get(with_lang, '')
-                        if langs != "":
-                            vaild = True
-                        else:
-                            vaild = False
+                        vaild = langs != ""
                     # ---
                     if vaild:
                         result_table[x] = table2[x]
-                    # ---
         new_list = new_tab2
     # ---
     final = time.time()
@@ -941,10 +929,7 @@ def Get_Newpages(limit="max", namespace="0", rcstart="", user=''):
     newp = json1.get("query", {}).get("recentchanges", {})
     # ---
     ccc = {"type": "new", "ns": 0, "title": "تشارلز مسيون ريمي", "pageid": 7004776, "revid": 41370093, "old_revid": 0, "rcid": 215347464, "timestamp": "2019-12-15T13:14:34Z"}
-    # ---
-    Main_table = [x["title"] for x in newp]
-    # ---
-    return Main_table
+    return [x["title"] for x in newp]
 
 
 def Get_page_links(title, namespace="0", limit="max"):
@@ -992,8 +977,7 @@ def Get_page_links(title, namespace="0", limit="max"):
 
 def Get_page_links_2(title):
     Main_table = Get_page_links(title)
-    lista = Main_table.get('links', {}).keys()
-    return lista
+    return Main_table.get('links', {}).keys()
 
 
 def Get_template_pages(title, namespace="*", limit="max"):
@@ -1019,11 +1003,9 @@ def Get_template_pages(title, namespace="*", limit="max"):
         # ---
         pages = json1.get("query", {}).get("pages", {})
         # ---
-        for _, tab in pages.items():
-            Main_table.append(tab["title"])
+        Main_table.extend(tab["title"] for _, tab in pages.items())
         # ---
         printe.output(f'len of Main_table:{len(Main_table)}.')
-        # ---
     # ---
     printe.output(f"mdwiki_api.py Get_template_pages : find {len(Main_table)} pages.")
     # ---
@@ -1103,10 +1085,7 @@ def get_section(title, level):
     # ---
     if not json1 or json1 == {}:
         return ""
-    # ---
-    text = json1.get("parse", {}).get("wikitext", {}).get("*", '')
-    # ---
-    return text
+    return json1.get("parse", {}).get("wikitext", {}).get("*", '')
 
 
 def Get_UserContribs(user, limit="max", namespace="*", ucshow=""):
@@ -1181,10 +1160,10 @@ def Search(value="", lang="", family='', ns="", offset='', srlimit="max", RETURN
     json1 = post_s(params, addtoken=True)
     if "query" in json1 and "search" in json1['query']:
         for pag in json1['query']['search']:
-            tit = pag["title"]
             if RETURN_dict:
                 Lidy.append(pag)
             else:
+                tit = pag["title"]
                 Lidy.append(tit)
     # ---
     # if Lidy == []:

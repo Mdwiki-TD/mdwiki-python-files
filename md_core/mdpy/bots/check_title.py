@@ -13,7 +13,4 @@ def valid_title(title):
         return False
     # ---
     # if title.startswith('category:') or title.startswith('file:') or title.startswith('template:') or title.startswith('user:'):
-    if any(title.startswith(prefix) for prefix in falses):
-        return False
-    # ---
-    return True
+    return not any(title.startswith(prefix) for prefix in falses)

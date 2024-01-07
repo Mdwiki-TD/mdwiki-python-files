@@ -2,6 +2,7 @@
 """
 
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -18,7 +19,7 @@ Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
-public_html = dir2 + '/public_html'
+public_html = f'{dir2}/public_html'
 # ---
 api_new = NEW_API('www', family='mdwiki')
 api_new.Login_to_wiki()
@@ -75,7 +76,7 @@ def work(title, Find, Replace, nn):
         # ---
         newrevid = page.newrevid
         # ---
-        if newrevid != revid and newrevid != '':
+        if newrevid not in [revid, '']:
             # ---
             line = '"%s":%d,\n' % (title.replace('"', '\\"'), newrevid)
             # ---
@@ -101,9 +102,11 @@ def main():
     # ---
     print(nn)
     # ---
-    find = codecs.open(public_html + f'/find/{nn}_find.txt', 'r', 'utf8').read()
+    find = codecs.open(f'{public_html}/find/{nn}_find.txt', 'r', 'utf8').read()
     # ---
-    replace = codecs.open(public_html + f'/find/{nn}_replace.txt', 'r', 'utf8').read()
+    replace = codecs.open(
+        f'{public_html}/find/{nn}_replace.txt', 'r', 'utf8'
+    ).read()
     # ---
     if replace.strip() == "empty":
         replace = ""
@@ -113,12 +116,12 @@ def main():
         replace = ', '
         nn = 0
     # ---
-    file_name[1] = public_html + f'/find/log/{nn}.txt'
+    file_name[1] = f'{public_html}/find/log/{nn}.txt'
     # ---
     with codecs.open(Path(file_name[1]), 'w', encoding="utf-8") as file:
         file.write('')
     # ---
-    file_name[2] = public_html + f'/find/log/{nn}-text.txt'
+    file_name[2] = f'{public_html}/find/log/{nn}-text.txt'
     # ---
     if 'newlist' in sys.argv:
         Add_pa = {"srsort": "just_match", "srwhat": "text"}
@@ -129,7 +132,7 @@ def main():
         # ---
     # ---
     text = f"start work in {len(titles)} pages."
-    line = "<span style='font-size:12px'>" + text + "</span>"
+    line = f"<span style='font-size:12px'>{text}</span>"
     codecs.open(file_name[2], 'w', encoding="utf-8").write(line)
     # ---
     num = 0

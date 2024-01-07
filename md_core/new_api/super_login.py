@@ -58,7 +58,7 @@ class Login:
         if self.username.find("bot") == -1:
             self.Bot_or_himo = 1
         # ---
-        self.endpoint = 'https://' + f'{self.lang}.{self.family}.org/w/api.php'
+        self.endpoint = f'https://{self.lang}.{self.family}.org/w/api.php'
         self.r3_token = ''
         # ---
         if self.lang not in tokens_by_lang:
@@ -80,7 +80,7 @@ class Login:
             if isinstance(v, str) and len(v) > 100:
                 pams2[x] = v[:100]
         # ---
-        url_o_print = self.endpoint + '?' + urllib.parse.urlencode(pams2)
+        url_o_print = f'{self.endpoint}?{urllib.parse.urlencode(pams2)}'
         # ---
         url_o_print = url_o_print.replace('&format=json', '')
         # ---
@@ -125,7 +125,7 @@ class Login:
                 # ---
                 return {}
         # ---
-        if text == '':
+        if not text:
             return {}
         # ---
         try:
@@ -184,7 +184,7 @@ class Login:
         # ---
         if success != 'success':
             pywikibot.output('<<lightred>> Traceback (most recent call last):')
-            warn(warn_err('Exception:' + str(r22)), UserWarning)
+            warn(warn_err(f'Exception:{str(r22)}'), UserWarning)
             # ---
             if reason == "Incorrect username or password entered. Please try again.":
                 pywikibot.output(f'user:{self.username}, pass:{self.password}')

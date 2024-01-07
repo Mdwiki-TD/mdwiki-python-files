@@ -493,7 +493,7 @@ class NEW_API:
         # ---
         results = []
         # ---
-        while continue_params != {} or results == []:
+        while continue_params != {} or not results:
             # ---
             if continue_params:
                 params = {**params, **continue_params}
@@ -512,12 +512,7 @@ class NEW_API:
             results.extend(linkso)
         # ---
         links = [x['url'] for x in results]
-        # ---
-        # remove duplicates
-        liste1 = sorted(set(links))
-        # ---
-        # ---
-        return liste1
+        return sorted(set(links))
 
     def get_revisions(self, title):
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "utf8": 1, "formatversion": "2", "rvprop": "comment|timestamp|user|content|ids", "rvdir": "newer", "rvlimit": "max"}

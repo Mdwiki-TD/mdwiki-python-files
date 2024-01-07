@@ -155,7 +155,7 @@ class MainPage:
         # ---
         self.log = login_def(self.lang, family=self.family)
         # ---
-        if self.lang != "" and self.lang != not_loged_m[1]:
+        if self.lang not in ["", not_loged_m[1]]:
             # ---
             self.log.Log_to_wiki()
             # ---
@@ -183,7 +183,7 @@ class MainPage:
         for k, v in pages.items():
             # ---
             if print_test[1] or 'printdata' in sys.argv:
-                warn(warn_err('v:' + str(v)), UserWarning)
+                warn(warn_err(f'v:{str(v)}'), UserWarning)
             # ---
             if 'missing' in v or k == "-1":
                 self.Exists = False
@@ -456,8 +456,8 @@ class MainPage:
         # ---
         for pag in search:
             tit = pag["title"]
-            count = pag["wordcount"]
             if tit == self.title:
+                count = pag["wordcount"]
                 self.words = count
                 break
         # ---
@@ -493,18 +493,6 @@ class MainPage:
         return liste1
 
     def get_revisions(self, rvprops=[]):
-        params = {
-            "action": "query",
-            "format": "json",
-            "prop": "revisions",
-            "titles": self.title,
-            "utf8": 1,
-            "formatversion": "2",
-            # "rvprop": "comment|timestamp|user|content|ids",
-            "rvdir": "newer",
-            "rvslots": "*",
-            "rvlimit": "max",
-        }
         # ---
         rvprop = [
             "comment",
@@ -518,7 +506,19 @@ class MainPage:
             if x not in rvprop:
                 rvprop.append(x)
         # ---
-        params['rvprop'] = '|'.join(rvprop)
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "revisions",
+            "titles": self.title,
+            "utf8": 1,
+            "formatversion": "2",
+            "rvdir": "newer",
+            "rvslots": "*",
+            "rvlimit": "max",
+            # "rvprop": "comment|timestamp|user|content|ids",
+            'rvprop': '|'.join(rvprop),
+        }
         # ---
         _revisions = self.post_continue(params, "query", "pages", [])
         # ---
@@ -650,6 +650,8 @@ class MainPage:
         for x in tags:
             if x.name == tag:
                 new_tags.append(x)
+        # ---
+        # return tags if tag == '' else [x for x in tags if x.name == tag]
         # ---
         return new_tags
 
@@ -821,7 +823,7 @@ class MainPage:
         if result.lower() == 'success':
             self.text = newtext
             self.user = ''
-            printe.output('<<lightgreen>> ** true .. ' + f'[[{self.lang}:{self.family}:{self.title}]] ')
+            printe.output(f'<<lightgreen>> ** true .. [[{self.lang}:{self.family}:{self.title}]] ')
             printe.output('Done True... time.sleep() ')
             # ---
             if 'printpop' in sys.argv:
@@ -878,7 +880,7 @@ class MainPage:
             # ---
             self.text = text
             # ---
-            printe.output('<<lightgreen>> ** true .. ' + f'[[{self.lang}:{self.family}:{self.title}]] ')
+            printe.output(f'<<lightgreen>> ** true .. [[{self.lang}:{self.family}:{self.title}]] ')
             printe.output('Done True... time.sleep() ')
             # ---
             self.pageid = edit.get('pageid') or self.pageid

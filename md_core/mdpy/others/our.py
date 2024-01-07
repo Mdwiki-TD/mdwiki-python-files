@@ -62,10 +62,10 @@ def work(title):
                 pp = list(params.keys())[0]
                 vv = params[pp]
                 if pp.find('https') != -1 and vv.find('Webarchive') != -1:
-                    param = pp + '=' + vv
+                    param = f'{pp}={vv}'
                     # ---
                     newtext = fix_p(title, newtext, param)
-                    # ---
+                                    # ---
             # ---
             param = param.strip()
             if param not in values:
@@ -77,11 +77,9 @@ def work(title):
         sa = True
         # ---
         if 'ask' in sys.argv:
-            sa = False
             pywikibot.showDiff(text, newtext)
             sas = pywikibot.input(f'<<lightyellow>>API: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {title}')
-            if sas in ['', 'y']:
-                sa = True
+            sa = sas in ['', 'y']
         # ---
         if sa:
             mdwiki_api.page_put_new(newtext, 'fix ourworldindatamirror template.', title)
@@ -100,7 +98,7 @@ def check_urls(urls):
         url = u
         url = url.split('{{')[0].strip()
         if url.find('http') == -1:
-            url = 'https://owidm.wmcloud.org/grapher/' + url
+            url = f'https://owidm.wmcloud.org/grapher/{url}'
         # ---
         print(url)
         # ---
@@ -166,11 +164,11 @@ def main():
             if '50' in sys.argv and num > 50:
                 break
         # ---
-        with open(Dir + '/our.json', 'w', encoding="utf-8") as f:
+        with open(f'{Dir}/our.json', 'w', encoding="utf-8") as f:
             json.dump(values, f)
-        # ---
+            # ---
     else:
-        with open(Dir + '/our.json', 'r', encoding='utf-8') as f:
+        with open(f'{Dir}/our.json', 'r', encoding='utf-8') as f:
             values = json.load(f)
     # ---
     make_log(values)

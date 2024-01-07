@@ -43,7 +43,7 @@ def Get_cat(enlink, print_url=False):
     # print(' Get_cat for %s' % (enlink) )
     # ---
     if not enlink.startswith('Category:'):
-        enlink = 'Category:' + enlink
+        enlink = f'Category:{enlink}'
     # ---
     params = {
         "action": "query",
@@ -52,23 +52,10 @@ def Get_cat(enlink, print_url=False):
         "generator": "categorymembers",
         "gcmtitle": enlink,
         "gcmprop": "title",
-        "gcmtype": "page|subcat",
         "gcmlimit": "max",
         "redirects": 1,
-        # "prop": "templates",
-        # "tllimit": "max",
-        # "lllang": langcode,
-        # "lllimit": "max",
+        "gcmtype": "page|subcat",
     }
-    # ---
-    # if "tempapi" not in sys.argv :
-    # params["prop"] = "templates"
-    # params["tllimit"] = "max"
-    # ---all
-    # if ns == "0" or ns == "10" : params["gcmtype"] = "page"
-    # elif ns == "14" : params["gcmtype"] = "subcat"
-    # elif ns == "all" :
-    params["gcmtype"] = "page|subcat"
     # ---
     # print('<<lightblue>> API_CALLS %d  for %s' % (API_CALLS[1],enlink) )
     # ----
@@ -106,10 +93,7 @@ def Get_cat(enlink, print_url=False):
                 caca = pages[category]
             # ---
             cate_title = caca["title"]
-            tablese = {}
-            # print("<<lightblue>> cate_title: %s" % cate_title )
-            # ---
-            tablese['title'] = caca['title']
+            tablese = {'title': caca['title']}
             # ---
             if "ns" in caca:
                 tablese['ns'] = caca['ns']
@@ -119,13 +103,10 @@ def Get_cat(enlink, print_url=False):
                 tablese['templates'] = [x['title'] for x in caca['templates']]
             # ---
             if 'langlinks' in caca:
-                tablese['langlinks'] = {}
-                for fo in caca['langlinks']:
-                    # result = fo['*']
-                    tablese['langlinks'][fo['lang']] = fo['*']
+                tablese['langlinks'] = {fo['lang']: fo['*'] for fo in caca['langlinks']}
             # ---
             table[cate_title] = tablese
-            # ---
+                    # ---
     # ---
     return table
 
@@ -140,7 +121,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
     final = time.time()
     # ---
     if not title.strip().startswith('Category:'):
-        title = 'Category:' + title.strip()
+        title = f'Category:{title.strip()}'
     # ---
     tablemember = Get_cat(title, print_url=True)
     # ---
@@ -185,23 +166,19 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
         new_list = new_tab2
     # ---
     final = time.time()
-    delta = int(final - start)
     # ---
     # if "printresult" in sys.argv: print(result_table)
     # ---
     if 'newlist' in sys.argv:
+        delta = int(final - start)
         print('<<lightblue>>catdepth.py: find %d pages(ns:%s) in %s, depth:%d, subcat:%d in %d seconds' % (len(result_table), str(ns), title, depth, len(cat_done), delta))
-        if len(cat_done) > 0:
+        if cat_done:
             print(f"subcats:{', '.join(cat_done)}")
-    # ---
-    result_tab = list(result_table.keys())
-    # ---
-    # return result_table
-    return result_tab
+    return list(result_table.keys())
 
 
 def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
-    filename = dir2 + f'/public_html/Translation_Dashboard/cats_cash/{cat}.json'
+    filename = f'{dir2}/public_html/Translation_Dashboard/cats_cash/{cat}.json'
     # ---
     if cat == 'RTT':
         depth = 2
@@ -213,9 +190,9 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
                 json.dump({}, uu)
         except Exception as e:
             print('Traceback (most recent call last):')
-            print(f'<<lightred>> {__file__} Exception:' + str(e))
+            print(f'<<lightred>> {__file__} Exception:{str(e)}')
             print('CRITICAL:')
-        # ---
+            # ---
     # ---
     try:
         with codecs.open(filename, "r", encoding="utf-8") as file:
@@ -225,11 +202,7 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
         print(traceback.format_exc())
         print('CRITICAL:')
         textn = ''
-    # ---
-    Table = {}
-    # ---
-    if textn != '':
-        Table = json.loads(textn)
+    Table = json.loads(textn) if textn != '' else {}
     # ---
     if str(Table.get('Day_History', '')) != str(Day_History) or 'newlist' in sys.argv or len(Table['list']) < 1500:
         # ---

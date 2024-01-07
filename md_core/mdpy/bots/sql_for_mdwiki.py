@@ -73,15 +73,10 @@ def sql_connect_pymysql(query, return_dict=False):
     # ---
     # print('start sql_connect_pymysql:')
     # ---
-    args = {x: v for x, v in main_args.items()}
+    args = dict(main_args.items())
     # ---
     params = None
-    # ---
-    # connect to the database server without error
-    # ---
-    Typee = pymysql.cursors.Cursor
-    if return_dict:
-        Typee = pymysql.cursors.DictCursor
+    Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
     args['cursorclass'] = Typee
     # ---
@@ -143,37 +138,26 @@ def mdwiki_sql(query, return_dict=False, **kwargs):
 
 def get_all_qids():
     # ---
-    mdtitle_to_qid = {}
-    # ---
     sq = mdwiki_sql('select DISTINCT title, qid from qids;', return_dict=True)
-    # ---
-    for ta in sq:
-        mdtitle_to_qid[ta['title']] = ta['qid']
-    # ---
-    return mdtitle_to_qid
+    return {ta['title']: ta['qid'] for ta in sq}
 
 
 def get_all_pages():
-    # ---
-    pages = []
-    # ---
-    for ta in mdwiki_sql('select DISTINCT title from pages;', return_dict=True):
-        pages.append(ta['title'])
-    # ---
-    return pages
+    return [
+        ta['title']
+        for ta in mdwiki_sql(
+            'select DISTINCT title from pages;', return_dict=True
+        )
+    ]
 
 
 def get_db_categories():
-    # ---
-    cats = {}
-    # ---
-    for c in mdwiki_sql('select category, depth from categories;', return_dict=True):
-        cat = c['category']
-        dep = c['depth']
-        # ---
-        cats[cat] = dep
-    # ---
-    return cats
+    return {
+        c['category']: c['depth']
+        for c in mdwiki_sql(
+            'select category, depth from categories;', return_dict=True
+        )
+    }
 
 
 def add_qid(title, qid):

@@ -73,7 +73,12 @@ def extract_templates_and_params(text):
         # ---
         namestrip = name
         # ---
-        ficrt = {'name': "قالب:" + name, 'namestrip': namestrip, 'params': params, 'item': pa_item}
+        ficrt = {
+            'name': f"قالب:{name}",
+            'namestrip': namestrip,
+            'params': params,
+            'item': pa_item,
+        }
         # ---
         result.append(ficrt)
     # ---

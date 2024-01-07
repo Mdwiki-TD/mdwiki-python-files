@@ -53,10 +53,7 @@ if not os.path.isdir(dir1) and not os.path.isdir(dir2):
 def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_dict=False):
     # ---
     printe.output('start sql_connect_pymysql:')
-    # ---
-    Typee = pymysql.cursors.Cursor
-    if return_dict:
-        Typee = pymysql.cursors.DictCursor
+    Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
     args2 = {
         'host': host,
