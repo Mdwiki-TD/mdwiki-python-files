@@ -3,7 +3,7 @@ import wikitextparser as wtp
 text = "{{Ficha de medicamento| Drugscom = {{drugs.com|monograph|alitretinoin}}}}"
 parsed = wtp.parse(text)
 n = 0
-for template in parsed.templates:
+for template in reversed(parsed.templates):
     n += 1
     print(f'template {n}:')
     print(template)

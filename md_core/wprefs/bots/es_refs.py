@@ -60,7 +60,7 @@ def mv_es_refs(text):
     # ---
     tempin = False
     # ---
-    for template in parsed.templates:
+    for template in reversed(parsed.templates):
         # ---
         if not template:
             continue

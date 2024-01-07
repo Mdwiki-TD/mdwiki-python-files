@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """
-بوت قواعد البيانات
 
 python3 core8/pwb.py mdpy/sql justsql break
 python3 core8/pwb.py mdpy/sql justsql
@@ -12,10 +11,8 @@ python3 core8/pwb.py mdpy/sql
 #
 #
 import re
-import os
 import sys
 import time as tttime
-from pymysql.converters import escape_string
 # ---
 from mdpy.bots import add_to_wd
 from mdpy.bots import py_tools
@@ -23,6 +20,8 @@ from mdpy import printe
 from mdpy.bots import wiki_sql
 from mdpy.bots import sql_for_mdwiki
 from mdpy.others.fixcat import cat_for_pages
+# ---
+from mdpy.sql_bots.add_to_mdwiki import add_to_mdwiki_sql
 # ---
 Lang_usr_mdtitle = {}
 targets_done = {}
@@ -86,70 +85,6 @@ query_main = '''
     #and p.page_namespace = 0
     group by p.page_title, a.actor_name, c.comment_text
 '''
-
-
-def add_to_mdwiki_sql(table):
-    # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
-    # ---
-    for lane, tab in table.items():
-        for tt in tab:
-            tabe = tab[tt]
-            mdtitle = tabe['mdtitle']
-            lang = tabe['lang']
-            target = tabe['target']
-            user = tabe['user']
-            pupdate = tabe['pupdate']
-            namespace = tabe['namespace']
-            # ---
-            cat = cat_for_pages.get(mdtitle, '')
-            # ---
-            mdtit = escape_string(mdtitle)
-            user2 = escape_string(user)
-            tar = escape_string(target)
-            word = 0
-            # ---
-            if str(namespace) != '0':
-                continue
-            # ---
-            tata = to_update_lang_user_mdtitle.get(lang, {}).get(user, [])
-            # ---
-            uuu = ''
-            # ---
-            # date now format like 2023-01-01
-            add_date = tttime.strftime("%Y-%m-%d")
-            # ---
-            update_qua = f'''UPDATE pages 
-            SET 
-                target='{tar}', 
-                pupdate="{pupdate}", 
-                add_date="{add_date}" 
-            WHERE 
-                user='{user2}' 
-            AND 
-                title='{mdtit}'
-            AND 
-                lang="{lang}"
-            ;'''
-            # ---
-            insert_qua = f'''
-                INSERT INTO pages (title, word, translate_type, cat, lang, date, user, pupdate, target, add_date)
-                SELECT '{mdtit}', '{word}', 'lead', '{cat}', '{lang}', '{add_date}', '{user2}', '{pupdate}', '{tar}', '{add_date}'
-                WHERE NOT EXISTS (SELECT 1 FROM pages WHERE title='{mdtit}' AND lang='{lang}' AND user='{user2}' );'''
-            # ---
-            printe.output('______ \\/\\/\\/ _______')
-            # find if to update or to insert
-            if mdtitle in tata:
-                printe.output(f'to update: title:{mdtitle}, user:{user} ')
-                uuu = update_qua
-            else:
-                printe.output(f'to insert: title:{mdtitle}, user:{user} ')
-                uuu = insert_qua
-            # ---
-            printe.output(uuu)
-            # ---
-            qu = sql_for_mdwiki.mdwiki_sql(uuu, update=True, Prints=False)
-            # ---
-            printe.output(qu)
 
 
 def dodo_sql():
@@ -252,11 +187,11 @@ def start(result, lange):
         # ---
         # printe.output( lis )
         # ---
-        target        = lis['title']
-        co_text       = lis['comment_text']
-        user          = lis['actor_name']
-        pupdate       = lis['rev_timestamp']
-        namespace     = lis['page_namespace']
+        target = lis['title']
+        co_text = lis['comment_text']
+        user = lis['actor_name']
+        pupdate = lis['rev_timestamp']
+        namespace = lis['page_namespace']
         rev_parent_id = lis['rev_parent_id']
         # ---
         # target        = py_tools.Decode_bytes(lis[0])
@@ -320,8 +255,6 @@ def main():
     # ---
     dodo_sql()
     # ---
-    New_Table_by_lang = {}
-    # ---
     numb_lang = 0
     lnn = len(Langs_to_title_and_user.keys())
     # ---
@@ -365,7 +298,7 @@ def main():
         # ---
         add_to_wd.add_tab_to_wd({lange: New_Table_by_lang[lange]})
         # ---
-        add_to_mdwiki_sql({lange: New_Table_by_lang[lange]})
+        add_to_mdwiki_sql({lange: New_Table_by_lang[lange]}, to_update_lang_user_mdtitle)
 
 
 if __name__ == '__main__':
