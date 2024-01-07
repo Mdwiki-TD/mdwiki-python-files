@@ -1,18 +1,22 @@
 #!/usr/bin/python3
 """
+بوت قواعد البيانات
 
 python3 core8/pwb.py mdpy/sql justsql break
 python3 core8/pwb.py mdpy/sql justsql
 python3 core8/pwb.py mdpy/sql
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import re
+import os
 import sys
 import time as tttime
+from pymysql.converters import escape_string
 # ---
 from mdpy.bots import add_to_wd
 from mdpy.bots import py_tools
@@ -32,18 +36,28 @@ skip_langs = ['zh-yue', 'ceb']
 # ---
 New_Table_by_lang = {}
 # ---
-Skip_titles = {}
-Skip_titles['Mr. Ibrahem'] = {
-    'targets': [
-        'جامعة نورث كارولاينا',
-        'جامعة ولاية كارولينا الشمالية إيه آند تي',
-        'نيشان راجاميترابورن'
-    ],
-    'mdtitles': []
+Skip_titles = {
+    'Mr. Ibrahem': {
+        'targets': [
+            'جامعة نورث كارولاينا',
+            'جامعة ولاية كارولينا الشمالية إيه آند تي',
+            'نيشان راجاميترابورن',
+        ],
+        'mdtitles': [],
+    },
+    'Avicenno': {
+        'targets': ['ألم فرجي', 'لقاح المكورة السحائية', 'استئصال اللوزتين'],
+        'mdtitles': [],
+    },
+    'Subas Chandra Rout': {
+        'targets': [],
+        'mdtitles': [
+            "Wilms' tumor",
+            "Sheehan's syndrome",
+            "Membranous nephropathy",
+        ],
+    },
 }
-Skip_titles['Avicenno'] = {'targets': ['ألم فرجي', 'لقاح المكورة السحائية', 'استئصال اللوزتين'], 'mdtitles': []}
-# ---
-Skip_titles['Subas Chandra Rout'] = {'targets': [], 'mdtitles': ["Wilms' tumor", "Sheehan's syndrome", "Membranous nephropathy"]}
 # ---
 Skip_titles_global = ['جامعة نورث كارولاينا', 'جامعة ولاية كارولينا الشمالية إيه آند تي', 'نيشان راجاميترابورن', 'موميتازون']
 # ---
@@ -86,14 +100,13 @@ query_main = '''
     group by p.page_title, a.actor_name, c.comment_text
 '''
 
-
 def dodo_sql():
     # ---
     lang_o = ''
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(':')
-        if arg == 'lang' or arg == '-lang':
+        if arg in ['lang', '-lang']:
             lang_o = value
             Langs_to_title_and_user[value] = {}
         # ---
@@ -187,11 +200,11 @@ def start(result, lange):
         # ---
         # printe.output( lis )
         # ---
-        target = lis['title']
-        co_text = lis['comment_text']
-        user = lis['actor_name']
-        pupdate = lis['rev_timestamp']
-        namespace = lis['page_namespace']
+        target        = lis['title']
+        co_text       = lis['comment_text']
+        user          = lis['actor_name']
+        pupdate       = lis['rev_timestamp']
+        namespace     = lis['page_namespace']
         rev_parent_id = lis['rev_parent_id']
         # ---
         # target        = py_tools.Decode_bytes(lis[0])
@@ -241,14 +254,13 @@ def start(result, lange):
         # للتأكد من الصفحات غير المنشورة
         if target2 not in tgd and target not in tgd:
             # ---
-            if tul_target != '':
-                if tul_target == target:
-                    printe.output(f'target already in, {target}')
-                else:
-                    printe.output(f'puplished target: {tul_target} != target to add: {target}')
-            else:
+            if tul_target == '':
                 New_Table_by_lang[lange][md_title] = Taba2
                 printe.output(laloly)
+            elif tul_target == target:
+                printe.output(f'target already in, {target}')
+            else:
+                printe.output(f'puplished target: {tul_target} != target to add: {target}')
 
 
 def main():

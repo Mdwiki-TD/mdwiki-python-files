@@ -36,6 +36,7 @@ user        = page.get_user()
 purge       = page.purge()
 '''
 """
+
 # ---
 import os
 import configparser
@@ -52,7 +53,7 @@ dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 config = configparser.ConfigParser()
-config.read(dir2 + "/confs/nccommons_user.ini")
+config.read(f"{dir2}/confs/nccommons_user.ini")
 # ---
 print(config["DEFAULT"])
 # ---

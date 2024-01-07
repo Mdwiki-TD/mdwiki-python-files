@@ -43,10 +43,7 @@ def get_RTT():
         pywikibot.output(traceback.format_exc())
         pywikibot.output('CRITICAL:')
         textn = ''
-    # ---
-    Table = {}
-    if textn != '':
-        Table = json.loads(textn)
+    Table = json.loads(textn) if textn != '' else {}
     # ---
     RTT = Table['list']
     # ---
@@ -112,7 +109,7 @@ def main():
     # ---
     old_views = json.loads(codecs.open(enwiki_pageviews, "r", encoding="utf-8-sig").read())
     # ---
-    n_views = {x: z for x, z in old_views.items()}
+    n_views = dict(old_views.items())
     # ---
     for k, view in enviews.items():
         if view == 0:

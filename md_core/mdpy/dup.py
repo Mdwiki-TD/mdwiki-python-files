@@ -4,6 +4,7 @@
 نسخ التحويلات من الإنجليزية إلى mdwiki
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -27,7 +28,7 @@ offset = {1: 0}
 for arg in sys.argv:
     arg, _, value = arg.partition(':')
     # ---
-    if (arg.lower() == 'offset' or arg.lower() == '-offset') and value.isdigit():
+    if arg.lower() in ['offset', '-offset'] and value.isdigit():
         offset[1] = int(value)
 # ---
 from_to = {}
@@ -66,10 +67,7 @@ def main():
         From = gg['from']
         To = gg['to']
         from_to[From] = To
-    # ---
-    nu = 0
-    for title in redirects:
-        nu += 1
+    for nu, title in enumerate(redirects, start=1):
         From = title['from']
         printe.output('-------------------------------------------\n*<<lightyellow>> >%d/%d From:"%s".' % (nu, len(redirects), From))
         To = title['to']

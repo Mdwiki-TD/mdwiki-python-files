@@ -45,7 +45,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     # ---
     host = f"{wiki}.analytics.db.svc.wikimedia.cloud"
     # ---
-    dbs_p = dbs + '_p'
+    dbs_p = f'{dbs}_p'
     # ---
     return host, dbs_p
 

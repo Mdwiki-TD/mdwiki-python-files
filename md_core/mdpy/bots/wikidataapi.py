@@ -4,6 +4,7 @@
 بوت للعمل على ويكيبيانات أو ويكيبيديا
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -49,8 +50,6 @@ if 'workhimo' in sys.argv:
     password = user_account_new.my_password
 # ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
-# ---
-SS = {}
 r1_params = {
     'format': 'json',
     'action': 'query',
@@ -64,8 +63,7 @@ r2_params = {
     'lgname': username,
     'lgpassword': password,
 }
-# ---
-SS["ss"] = requests.Session()
+SS = {"ss": requests.Session()}
 # ---
 timesleep = 0
 # ---
@@ -122,11 +120,9 @@ def Log_to_wiki(url=''):
 
 def get_status(req):
     try:
-        st = req.status_code
-        return st
+        return req.status_code
     except BaseException:
-        st = req.status
-        return st
+        return req.status
 
 
 def post(params, apiurl='', token=True):
@@ -181,7 +177,7 @@ def post_to_qs(data):
     if not r2 or r2 == {}:
         return False
     # ---
-    print("QS_New_API: " + str(r2.text))
+    print(f"QS_New_API: {r2.text}")
     # ---
     return r2.json()
 
@@ -205,7 +201,7 @@ def QS_New_API(data2):
             if value != "":
                 CREATE += f"LAST|{P['mainsnak']['property']}|{value}||"
     # ---
-    CREATE = CREATE + "XX"
+    CREATE = f"{CREATE}XX"
     CREATE = CREATE.replace("||XX", "")
     # ---
     return post_to_qs(CREATE)
@@ -224,24 +220,22 @@ def Get_sitelinks_From_Qid(q):
     # ---
     json1 = post(params, apiurl="https://www.wikidata.org/w/api.php")
     # ---
-    if json1:
-        if 'success' in json1 and json1['success'] == 1:
-            if 'entities' in json1:
-                if "-1" not in json1['entities']:
-                    qli = [x for x in json1['entities'].keys()]
-                    q2 = qli[0]
-                    # ---
-                    if q2 in json1['entities']:
-                        table['q'] = q2
-                        ppe = json1['entities'][q2]
-                        # ---
-                        if 'sitelinks' in ppe:
-                            for site in ppe['sitelinks'].keys():
-                                fsai = ppe['sitelinks'][site]
-                                table['sitelinks'][fsai['site']] = fsai['title']
-                        # ---
-        else:
-            return {}
+    if not json1 or 'success' not in json1 or json1['success'] != 1:
+        return {}
+    # ---
+    if 'entities' in json1:
+        if "-1" not in json1['entities']:
+            qli = list(json1['entities'].keys())
+            q2 = qli[0]
+            # ---
+            if q2 in json1['entities']:
+                table['q'] = q2
+                ppe = json1['entities'][q2]
+                # ---
+                if 'sitelinks' in ppe:
+                    for site in ppe['sitelinks'].keys():
+                        fsai = ppe['sitelinks'][site]
+                        table['sitelinks'][fsai['site']] = fsai['title']
     # ---
     return table
 
@@ -293,9 +287,9 @@ def WD_Merge(q1, q2):
                 printe.output('<<lightgreen>> **createredirect true.')
                 return True
             else:
-                printe.output('<<lightred>> r5' + str(r5))
+                printe.output(f'<<lightred>> r5{str(r5)}')
     else:
-        printe.output('<<lightred>> r4' + str(r4))
+        printe.output(f'<<lightred>> r4{str(r4)}')
         return False
 
 
@@ -327,14 +321,13 @@ def Labels_API(Qid, label, lang, remove=False):
             # item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
             match = re.search(r'(Q\d+)', str(req["error"]['info']))
             item2 = match.group(1) if match else 'Unknown'
-            printe.output('<<lightred>>API: same label item: ' + item2)
-            # ---
+            printe.output(f'<<lightred>>API: same label item: {item2}')
         # ---
         if 'success' in req:
             printe.output('<<lightgreen>> **Labels_API true.')
             return True
         else:
-            printe.output('<<lightred>> r5' + str(req))
+            printe.output(f'<<lightred>> r5{str(req)}')
     # ---
     return False
 
@@ -361,7 +354,6 @@ def get_redirects(liste):
             redd = json1.get("query", {}).get("redirects", [])
             for red in redd:
                 redirects[red["from"]] = red["to"]
-            # ---
     return redirects
 
 
@@ -394,7 +386,7 @@ def new_item(data, summary, returnid=False):
         # ---
         return True
     else:
-        printe.output('<<lightred>> req' + str(req))
+        printe.output(f'<<lightred>> req{str(req)}')
     # ---
     return False
 
@@ -418,7 +410,7 @@ def Claim_API_str(qid, property, string):
         printe.output('<<lightgreen>> **Claim_API true.')
         return True
     else:
-        printe.output('<<lightred>> req' + str(req))
+        printe.output(f'<<lightred>> req{str(req)}')
     # ---
     return False
 
@@ -437,7 +429,7 @@ def Delete_claim(claimid):
         printe.output('<<lightgreen>> **Claim_API true.')
         return True
     else:
-        printe.output('<<lightred>> req' + str(req))
+        printe.output(f'<<lightred>> req{str(req)}')
     # ---
     return False
 
@@ -471,7 +463,7 @@ def Claim_API_qid(qid, property, numeric):
         printe.output('<<lightgreen>> **Claim_API true.')
         return True
     else:
-        printe.output('<<lightred>> req' + str(req))
+        printe.output(f'<<lightred>> req{str(req)}')
     # ---
     return False
 
@@ -522,26 +514,20 @@ def sparql_generator_url(quary, printq=False, add_date=True):
     # ---
     fao = py_tools.quoteurl(quary)
     # ---
-    url = 'https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query=' + fao
+    url = f'https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query={fao}'
     # ---
     json1 = open_url(url, return_json=False)
     # ---
     if json1 and 'head' in json1:
-        var = sorted([x for x in json1['head']['vars']])
+        var = sorted(list(json1['head']['vars']))
     # ---
     qlist = []
     if json1:
         if 'results' in json1:
             results = json1['results']
             if 'bindings' in results:
-                for result in json1['results']['bindings']:
-                    s = {}
-                    # for se in result: s[se] = result[se]['value']
-                    for vv in var:
-                        if vv in result:
-                            s[vv] = result[vv]['value']
-                        else:
-                            s[vv] = ''
+                for result in results['bindings']:
+                    s = {vv: result[vv]['value'] if vv in result else '' for vv in var}
                     qlist.append(s)
     # ---
     printe.output(f'#sparql_generator_url:<<lightgreen>> {len(qlist)} items found. {menet}')
@@ -558,7 +544,7 @@ def wbsearchentities(search, language):
         return False
     # ---
     if 'success' not in req:
-        printe.output('<<lightred>> wbsearchentities: ' + str(req))
+        printe.output(f'<<lightred>> wbsearchentities: {str(req)}')
         return False
     # ---
     table = {}

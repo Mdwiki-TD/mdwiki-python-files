@@ -27,10 +27,7 @@ thenumbers = {1: 20000, 'done': 0}
 
 
 def work(title):
-    # ---
-    Ask = False
-    if 'ask' in sys.argv:
-        Ask = True
+    Ask = 'ask' in sys.argv
     # ---
     text = mdwiki_api.GetPageText(title)
     # ---
@@ -57,7 +54,9 @@ def main():
             thenumbers[1] = int(value)
         # ---
         if arg == '-file':
-            text = codecs.open(dir2 + f'/public_html/find/{value.strip()}', 'r', 'utf8').read()
+            text = codecs.open(
+                f'{dir2}/public_html/find/{value.strip()}', 'r', 'utf8'
+            ).read()
             List = [x.strip() for x in text.split('\n') if x.strip() != '']
         # ---
         if arg == 'allpages':
@@ -70,7 +69,7 @@ def main():
         # python pwb.py mdpy/fixref/start -page:Histrelin ask
         if arg in ['-page', '-title']:
             List = [value]
-        # ---
+            # ---
     # ---
     num = 0
     for title in List:

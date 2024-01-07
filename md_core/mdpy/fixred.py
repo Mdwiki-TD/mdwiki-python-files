@@ -56,7 +56,7 @@ def find_redirects(links):
             if str(ns) == '0':
                 titles.append(x)
             else:
-                printe.output('ns:' + str(ns))
+                printe.output(f'ns:{str(ns)}')
     # ---
     oldlen = len(from_to.items())
     # ---
@@ -70,10 +70,7 @@ def find_redirects(links):
         line = "|".join(group)
         # ---
         params = {"action": "query", "format": "json", "prop": "redirects", "titles": line, "redirects": 1, "converttitles": 1, "utf8": 1, "rdlimit": "max"}
-        # ---
-        jsone = mdwiki_api.post(params)
-        # ---
-        if jsone:
+        if jsone := mdwiki_api.post(params):
             # ---
             query = jsone.get("query", {})
             # ---
@@ -99,12 +96,11 @@ def find_redirects(links):
                 for pa in tab.get('redirects', []):
                     from_to[pa["title"]] = tab["title"]
                     # printe.output('<<lightyellow>> from_to["%s"] = "%s"' % ( pa["title"] , tab["title"] ) )
-            # ---
         else:
             printe.output(" no jsone")
     # ---
     newlen = len(from_to.items())
-    nn = int(newlen) - int(oldlen)
+    nn = newlen - oldlen
     # ---
     printe.output("def find_redirects: find %d lenth" % nn)
     # printe.output( "def find_redirects: find %d for normalized" % normalized_numb )
@@ -163,10 +159,7 @@ def treat_page(title):
         page = links['links'][tt]
         tit = page['title']
         tit2 = normalized.get(page['title'], page['title'])
-        # ---
-        fixed_tit = from_to.get(tit) or from_to.get(tit2)
-        # ---
-        if fixed_tit:
+        if fixed_tit := from_to.get(tit) or from_to.get(tit2):
             # fixed_tit2 = normalized.get( fixed_tit , fixed_tit )
             # ---
             # fix_to = from_to.get( title ) or from_to.get( tit2 )
@@ -174,7 +167,6 @@ def treat_page(title):
             # ---
             # if fixed_tit in nonredirects :
             newtext = replace_links2(newtext, tit, fixed_tit)
-        # else:
         elif tit not in nonredirects:
             if tit2 != tit:
                 printe.output(f'<<lightred>> tit:["{tit}"] and tit:["{tit2}"] not in from_to')
@@ -197,14 +189,14 @@ def main():
     for arg in sys.argv:
         arg, _, value = arg.partition(':')
         # ---
-        if arg == "-page2" or arg == "page2":
+        if arg in ["-page2", "page2"]:
             value = py_tools.ec_de_code(value.strip(), 'decode')
             ttab.append(value.strip())
         # ---
         if arg == "-page":
             ttab.append(value)
     # ---
-    if ttab == [] or ttab == ['all']:
+    if ttab in [[], ['all']]:
         ttab = nonredirects
     # ---
     for title in ttab:

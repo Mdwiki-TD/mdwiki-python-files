@@ -27,18 +27,14 @@ else:
 
         .. versionadded:: 5.4
         """
-        if string.startswith(prefix):
-            return string[len(prefix) :]
-        return string
+        return string[len(prefix) :] if string.startswith(prefix) else string
 
     def removesuffix(string: str, suffix: str) -> str:
         """Remove prefix from a string or return a copy otherwise.
 
         .. versionadded:: 5.4
         """
-        if string.endswith(suffix):
-            return string[: -len(suffix)]
-        return string
+        return string[: -len(suffix)] if string.endswith(suffix) else string
 
 
 def quoteurl(fao):

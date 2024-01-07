@@ -48,7 +48,7 @@ def dodo_sql():
     # ---
     for arg in sys.argv:
         arg, sep, value = arg.partition(":")
-        if arg == "lang" or arg == "-lang":
+        if arg in ["lang", "-lang"]:
             lang_o = value
     # ---
     que = ''' select title,user,lang,target from pages #where target = ""'''
@@ -99,7 +99,7 @@ def do_it_sql(lange, targets):
         # ---
         ase = [escape_string(t.strip().replace(" ", "_")) for t in group if t.strip() != ""]
         # ---
-        if ase == []:
+        if not ase:
             continue
         # ---
         laly = "', '".join(ase)
@@ -213,18 +213,12 @@ def do_it_api(lange, targets):
 
 
 # ---
-numb_lang = 0
 for lange in targets_done:
-    # ---
-    numb_lang += 1
     # printe.output( ' ================================ ')
     # printe.output( 'mdwiki/mdpy/sql.py: %d Lang : "%s"' % (numb_lang,lange) )
     # ---
     # if "sql" in sys.argv:
     do_it_sql(lange, targets_done[lange])
-    # else:
-    # do_it_api(lange,targets_done[lange])
-    # ---
 # ---
 from mdpy.bots import en_to_md
 
@@ -312,7 +306,7 @@ def work_with_2_qids(oldq, new_q):
         else:
             printe.output("<<lightred>> **remove2 label false.")
     # ---
-    if len_sites == 1 or len_sites == 0:
+    if len_sites in [1, 0]:
         printe.output("<<lightblue>> merge qids")
         wikidataapi.WD_Merge(oldq, new_q)
     # ---

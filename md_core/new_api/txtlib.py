@@ -95,7 +95,12 @@ def extract_templates_and_params(text):
         # ---
         namestrip = name
         # ---
-        ficrt = {'name': "قالب:" + name, 'namestrip': namestrip, 'params': params, 'item': pa_item}
+        ficrt = {
+            'name': f"قالب:{name}",
+            'namestrip': namestrip,
+            'params': params,
+            'item': pa_item,
+        }
         # ---
         result.append(ficrt)
     # ---
@@ -128,15 +133,13 @@ def get_one_temp_params(text, tempname="", templates=[], lowers=False, get_all_t
             namestrip = namestrip.lower()
         # ---
         if namestrip in temps:
+            if not get_all_temps:
+                return params
             # ---
             # print("te:%s, namestrip:%s" % (te,namestrip) )
             # ---
-            if get_all_temps:
-                tabe = {namestrip: params}
-                named.append(tabe)
-            else:
-                return params
-            # ---
+            tabe = {namestrip: params}
+            named.append(tabe)
     # ---
     return named
 

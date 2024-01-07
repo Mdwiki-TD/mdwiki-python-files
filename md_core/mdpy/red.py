@@ -4,6 +4,7 @@
 نسخ التحويلات من الإنجليزية إلى mdwiki
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -29,7 +30,7 @@ to_make = {}
 for arg in sys.argv:
     arg, _, value = arg.partition(':')
     # ---
-    if (arg.lower() == 'offset' or arg.lower() == '-offset') and value.isdigit():
+    if arg.lower() in ['offset', '-offset'] and value.isdigit():
         offset[1] = int(value)
 # ---
 # from export import * # export_en_history( title )
@@ -132,7 +133,7 @@ def main():
         if arg == "-from":
             From = py_tools.ec_de_code(value, 'decode')
         # ---
-        if arg == "-page2" or arg == "page2":
+        if arg in ["-page2", "page2"]:
             page2 = py_tools.ec_de_code(value, 'decode')
     # ---
     if page2 != '' and From != '':
@@ -158,29 +159,29 @@ def main():
         # ---
         arg = arg.lower()
         # ---
-        if arg == "-limit" or arg == "limit":
+        if arg in ["-limit", "limit"]:
             limite = value
         # ---
-        if arg == "-userlimit" or arg == "userlimit":
+        if arg in ["-userlimit", "userlimit"]:
             user_limit = value
         # ---
-        if arg == "-page" or arg == "page":
+        if arg in ["-page", "page"]:
             pages.append(value)
         # ---
-        if arg == "-page2" or arg == "page2":
+        if arg in ["-page2", "page2"]:
             value = py_tools.ec_de_code(value, 'decode')
             pages.append(value)
         # ---
-        if arg == 'newpages' or arg == '-newpages':
+        if arg in ['newpages', '-newpages']:
             newpages = value
         # ---
         # python red.py -ns:0 -usercontribs:Edoderoobot
         # python red.py -ns:0 -usercontribs:Ghuron
-        if arg == "-user" or arg == "-usercontribs":
+        if arg in ["-user", "-usercontribs"]:
             user = value
         # ---
         # python red.py -start:!
-        if arg == 'start' or arg == '-start':
+        if arg in ['start', '-start']:
             starts = value
         # ---
         if arg == "-ns":
@@ -195,8 +196,7 @@ def main():
             # ---
             text2 = codecs.open(value, 'r', 'utf8')
             text = text2.read()
-            for x in text.split("\n"):
-                pages.append(x.strip())
+            pages.extend(x.strip() for x in text.split("\n"))
         # ---
         # python red.py -ns:0 search:drug
         if arg == 'search':
@@ -206,13 +206,13 @@ def main():
             ccc = api_new.Search(value=value, ns="0", srlimit="max")
             for x in ccc:
                 pages.append(x)
-        # ---
+            # ---
     # ---
     start_done = starts
     okay = True
     # ---
     if starts == 'all':
-        while okay == True:
+        while okay:
             # ---
             if starts == start_done:
                 okay = False
@@ -222,20 +222,16 @@ def main():
             # ---
             list = api_new.Get_All_pages(start='', namespace=namespaces, limit=limite)
             start_done = starts
-            num = 0
-            for page in list:
-                num += 1
+            for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
                 # ---
                 starts = page
     # ---
     if starts != '':
         listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
-        num = 0
-        for page in listen:
-            num += 1
+        for num, page in enumerate(listen, start=1):
             work(page, num, len(listen))
-            # ---
+                    # ---
     # ---
     list = []
     # ---
@@ -245,16 +241,13 @@ def main():
         list = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
     elif pages != []:
         list = pages
-    # ---
-    num = 0
-    for page in list:
-        num += 1
+    for num, page in enumerate(list, start=1):
         work(page, num, len(list))
     # ---
     # '''
     # ---
     if starts == 'all':
-        while okay == True:
+        while okay:
             # ---
             if starts == start_done:
                 okay = False
@@ -264,16 +257,13 @@ def main():
             # ---
             list = api_new.Get_All_pages(start='', namespace=namespaces, limit=limite)
             start_done = starts
-            num = 0
-            for page in list:
-                num += 1
+            for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
                 # ---
                 starts = page
-    # ---
     elif starts != '':
         # while start_done != starts :
-        while okay == True:
+        while okay:
             # ---
             if starts == start_done:
                 okay = False
@@ -283,9 +273,7 @@ def main():
             # ---
             list = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
             start_done = starts
-            num = 0
-            for page in list:
-                num += 1
+            for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
                 # ---
                 starts = page
