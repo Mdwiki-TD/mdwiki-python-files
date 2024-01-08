@@ -205,7 +205,7 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False):
         # ---
         if sa.strip() not in yes_answer:
             pywikibot.output("<<lightred>> wrong answer")
-            return False
+            return file_name
         # ---
         if sa.strip() == "a":
             pywikibot.output("---------------------------------------------")
