@@ -5,6 +5,7 @@ python3 core8/pwb.py mass/radio/start nodiff test
 '''
 import sys
 import os
+from new_api import printe
 from pathlib import Path
 import re
 import requests
@@ -33,7 +34,6 @@ def get_pages():
     return pages
 
 def main(ids_tab):
-    n = 0
     tabs = {"1": {}, "2": {}, "3": {}, "4": {}}
     print(f'all cases: {len(ids_tab)}')
     length = len(ids_tab) // 4
@@ -49,9 +49,11 @@ def main(ids_tab):
 
     pages = get_pages()
 
+    n = 0
     for case_url, tab in ids_tab.items():
         n += 1
         caseId  = tab['caseId']
+        printe.output(f'<<purple>> case:{n} / {len(ids_tab)}:')
         author = authors.get(str(caseId), '')
         title   = tab['title']
 
