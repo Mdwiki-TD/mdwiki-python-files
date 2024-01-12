@@ -34,18 +34,19 @@ def get_pages():
     return pages
 
 def main(ids_tab):
-    tabs = {"1": {}, "2": {}, "3": {}, "4": {}}
-    print(f'all cases: {len(ids_tab)}')
-    length = len(ids_tab) // 4
-    for i in range(0, len(ids_tab), length):
-        tabs[str(i//length+1)] = dict(list(ids_tab.items())[i:i+length])
-        print(f'tab {i//length+1} : {len(tabs[str(i//length+1)])}')
-    
-    for arg in sys.argv:
-        arg, _, value = arg.partition(':')
-        if arg == 'get':
-            ids_tab = tabs[value]
-            print(f'work in {len(ids_tab)} cases')
+    if 'test' not in sys.argv:
+        tabs = {"1": {}, "2": {}, "3": {}, "4": {}}
+        print(f'all cases: {len(ids_tab)}')
+        length = len(ids_tab) // 4
+        for i in range(0, len(ids_tab), length):
+            tabs[str(i//length+1)] = dict(list(ids_tab.items())[i:i+length])
+            print(f'tab {i//length+1} : {len(tabs[str(i//length+1)])}')
+        
+        for arg in sys.argv:
+            arg, _, value = arg.partition(':')
+            if arg == 'get':
+                ids_tab = tabs[value]
+                print(f'work in {len(ids_tab)} cases')
 
     pages = get_pages()
 
@@ -67,13 +68,13 @@ def main(ids_tab):
 if __name__ == "__main__":
     if 'test' in sys.argv:
         ids = {
-            "https://radiopaedia.org/cases/benign-thyroid-lesion-ultrasound": {
-                "caseId": 21889,
-                "title": "Benign thyroid lesion (ultrasound)",
-                "studies": [
-                    "https://radiopaedia.org/cases/21889/studies/21861"
-                ]
-            }
+            "https://radiopaedia.org/cases/absent-ulnar-styloid-process": {
+        "caseId": 53712,
+        "title": "Absent ulnar styloid process",
+        "studies": [
+            "https://radiopaedia.org/cases/53712/studies/59772"
+        ]
+    }
     }
     #---
     main(ids)

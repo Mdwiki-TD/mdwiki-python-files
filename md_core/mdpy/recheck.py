@@ -15,7 +15,7 @@ import sys
 
 # ---
 from mdpy import printe
-from mdpy.bots import wiki_sql
+from api_sql import wiki_sql
 
 # wiki_sql.GET_SQL()
 # wiki_sql.Make_sql_many_rows( queries , wiki="", printqua = False)

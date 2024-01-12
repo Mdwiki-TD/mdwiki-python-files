@@ -21,7 +21,7 @@ from pymysql.converters import escape_string
 from mdpy.bots import add_to_wd
 from mdpy.bots import py_tools
 from mdpy import printe
-from mdpy.bots import wiki_sql
+from api_sql import wiki_sql
 from mdpy.bots import sql_for_mdwiki
 from mdpy.others.fixcat import cat_for_pages
 # ---

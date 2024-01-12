@@ -3,7 +3,7 @@
 
 بوت قواعد البيانات
 
-from new_api import sql_qu
+from api_sql import sql_qu
 can_use_sql_db = sql_qu.can_use_sql_db
 results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[], return_dict=False)
 """
@@ -43,14 +43,14 @@ else:
 # ---
 can_use_sql_db = {1: True}
 # ---
-dir1 = '/mnt/nfs/labstore-secondary-tools-project/mdwiki/'
-dir2 = '/data/project/mdwiki/'
+dir1 = '/mnt/nfs/labstore-secondary-tools-project/'
+dir2 = '/data/project/'
 # ---
 if not os.path.isdir(dir1) and not os.path.isdir(dir2):
     can_use_sql_db[1] = False
 
 
-def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_dict=False):
+def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_dict=False, values=None):
     # ---
     printe.output('start sql_connect_pymysql:')
     Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
@@ -66,11 +66,13 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
     # ---
     params = None
     # ---
+    if values:
+        params = values
+    # ---
     # connect to the database server without error
     # ---
     try:
         connection = pymysql.connect(**args2, **credentials)
-
     except Exception:
         pywikibot.output('Traceback (most recent call last):')
         pywikibot.output(traceback.format_exc())
@@ -79,7 +81,6 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
     # ---
     if pymysql_version < pkg_resources.parse_version('1.0.0'):
         from contextlib import closing
-
         connection = closing(connection)
     # ---
     with connection as conn, conn.cursor() as cursor:
@@ -133,8 +134,7 @@ def resolve_bytes(rows):
     # ---
     return decoded_rows
 
-
-def make_sql_connect(query, db='', host='', update=False, Return=[], return_dict=False):
+def make_sql_connect(query, db='', host='', update=False, Return=[], return_dict=False, values=None):
     # ---
     if query == '':
         printe.output("query == ''")
@@ -142,12 +142,9 @@ def make_sql_connect(query, db='', host='', update=False, Return=[], return_dict
     # ---
     printe.output('<<lightyellow>> newsql::')
     # ---
-    rows = sql_connect_pymysql(query, db=db, host=host, update=update, Return=Return, return_dict=return_dict)
+    rows = sql_connect_pymysql(query, db=db, host=host, update=update, Return=Return, return_dict=return_dict, values=values)
     # ---
     if return_dict:
         rows = resolve_bytes(rows)
     # ---
     return rows
-
-
-# ---

@@ -12,6 +12,7 @@ from new_api import printe
 from nccommons import api
 from new_api.ncc_page import MainPage as ncc_MainPage
 from mass.radio.studies import get_images
+from mass.radio.bmp import work_bmp
 #---
 main_dir = Path(__file__).parent
 #--
@@ -36,6 +37,7 @@ class OneCase:
         self.case_url = case_url
         self.title   = title
         self.studies_ids = studies_ids
+        self.images_count = 0
         self.files = []
         self.studies = {}
         self.set_title = f'Radiopaedia case {self.caseId} {self.title}'
@@ -120,13 +122,23 @@ class OneCase:
             image_url = image['public_filename']
             #---
             if image_url in urls_done:
+                self.images_count += 1
                 continue
-            urls_done.append(image_url)
             #---
-            extension = get_image_extension(image_url)
+            # extension = get_image_extension(image_url)
+            extension = image_url.split(".")[-1].lower()
             #---
             if extension == '':
-                extension = get_image_extension(image['fullscreen_filename'])
+                # extension = get_image_extension(image['fullscreen_filename'])
+                extension = image['fullscreen_filename'].split(".")[-1].lower()
+            #---
+            if extension != "bmp" and 'bmp' in sys.argv:
+                continue
+            #---
+            if extension == "bmp":
+                image_url, extension = work_bmp(image_url)
+            #---
+            urls_done.append(image_url)
             #---
             image_id  = image['id']
             plane  = image['plane_projection']
@@ -137,24 +149,36 @@ class OneCase:
             #---
             file_name = f'{self.title} (Radiopaedia {self.caseId}-{study} {plane} {planes[plane]}).{extension}'
             #---
-            file_name = file_name.replace('  ', ' ')
+            file_name = file_name.replace('  ', ' ').replace('  ', ' ').replace('  ', ' ')
+            file_name = file_name.replace(':', '.')
             #---
             new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
             #---
             file_n = f'File:{new_name}' if new_name else f'File:{file_name}'
             #---
+            self.images_count += 1
+            #---
             sets.append(file_n)
 
         set_title = f'Radiopaedia case {self.title} id: {self.caseId} study: {study}'
-        self.create_set(set_title, sets)
+
+        if self.images_count > 1:
+            self.create_set(set_title, sets)
 
     def start(self):
         self.get_studies()
-        self.create_category()
+
         for study, images in self.studies.items():
             printe.output(f'{study} : len(images) = {len(images)}')
             self.upload_images(study, images)
 
+        printe.output(f'Images count: {self.images_count}')
+
+        if self.images_count == 0:
+            printe.output('no category created')
+            return
+
+        self.create_category()
     def create_set(self, set_title, sets):
         text = ''
         # ---
@@ -179,5 +203,8 @@ class OneCase:
         # ---
         # if text != page.get_text():
         #     printe.output(f'<<lightyellow>>{set_title} already exists')
-        #     new = page.save(newtext=text, summary='update', nocreate=0, minor='')
-        #     return new
+        p_text = page.get_text()
+        if p_text.find('.bmp') != -1:
+            p_text = p_text.replace('.bmp', '.jpg')
+            ssa = page.save(newtext=p_text, summary='update', nocreate=0, minor='')
+            return ssa

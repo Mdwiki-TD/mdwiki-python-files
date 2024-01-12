@@ -4,7 +4,7 @@ python3 core8/pwb.py priorviews/find/find_creator new
 python3 core8/pwb.py priorviews/find/find_creator -lang:ar
 
 """
-from mdpy.bots import wiki_sql
+from api_sql import wiki_sql
 import sys
 import json
 import os
