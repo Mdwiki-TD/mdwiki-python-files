@@ -10,7 +10,7 @@ import datetime
 
 # ---
 from new_api.mdwiki_page import MainPage as md_MainPage
-from mdpy.bots import wiki_sql
+from api_sql import wiki_sql
 
 
 def sql_result():
