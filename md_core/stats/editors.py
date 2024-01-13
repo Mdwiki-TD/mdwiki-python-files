@@ -90,13 +90,9 @@ def get_editors(links, site):
     # ---
     if os.path.exists(editors_dir / f'{site}.json'):
         with open(editors_dir / f'{site}.json', 'r', encoding='utf-8') as f:
-            editors = json.load(f)
-            return editors
+            return json.load(f)
     # ---
-    if site == 'ar':
-        editors = get_ar_results()
-    else:
-        editors = get_editors_sql(links, site)
+    editors = get_ar_results() if site == 'ar' else get_editors_sql(links, site)
     # ---
     editors = dict(sorted(editors.items(), key=lambda x: x[1], reverse=True))
     # ---

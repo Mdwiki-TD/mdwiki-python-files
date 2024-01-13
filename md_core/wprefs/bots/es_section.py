@@ -1,5 +1,6 @@
 """
 """
+
 import re
 
 # ---
@@ -7,12 +8,7 @@ from wprefs.helps import print_s
 from wprefs.api import get_revisions
 from wprefs.bots.es_months import es_months_tab
 
-# ---
-n = 0
-m_keys = {}
-for k, v in es_months_tab.items():
-    n += 1
-    m_keys[n] = v
+m_keys = {n: v for n, (k, v) in enumerate(es_months_tab.items(), start=1)}
 
 
 def make_date(timestamp):
@@ -36,10 +32,7 @@ def make_date(timestamp):
     m_ky = int(m)
     m_ky = m_keys.get(m_ky, '').strip()
     # ---
-    if m_ky == '':
-        return timestamp
-    # ---
-    return f"{d} de {m_ky} de {y}"
+    return timestamp if m_ky == '' else f"{d} de {m_ky} de {y}"
 
 
 def add_section(text, title):
@@ -70,16 +63,10 @@ def add_section(text, title):
     print_s(f'comment = {comment}')
     # ---
     oldid = re.search(r'revision/(\d+)\|', comment)
-    if oldid:
-        oldid = oldid.group(1)
-    else:
-        oldid = ''
+    oldid = oldid.group(1) if oldid else ''
     # ---
     _title = re.search(r'\|(User:Mr. Ibrahem/[^\]\[]+)\]\]', comment)
-    if _title:
-        _title = _title.group(1)
-    else:
-        _title = ''
+    _title = _title.group(1) if _title else ''
     # ---
     section = '\n==Enlaces externos==\n{{'
     # {{Traducido ref|en|User:Mr. Ibrahem/Herpes labialis|oldid=1138582883|trad=|fecha=10 Febrero 2023}}
@@ -92,9 +79,7 @@ def add_section(text, title):
     # ---
     if _title == '' or date == '':
         return text
-    # ---
-    gag = re.search(r'(==\s*Enlaces\s*externos\s*==)', text)
-    if gag:
+    if gag := re.search(r'(==\s*Enlaces\s*externos\s*==)', text):
         ss = gag.group(1)
         text = text.replace(ss, section)
     else:

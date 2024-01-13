@@ -66,15 +66,12 @@ def mv_es_refs(text):
             continue
         # ---
         template_name = str(template.normal_name()).strip()
-        if template_name.lower() in ['reflist', 'listaref']:
+        if template_name.lower() in {'reflist', 'listaref'}:
             refs_arg = template.get_arg('refs')
             template.set_arg('refs', line)
             tempin = True
     # ---
-    if not tempin:
-        return text
-    # ---
-    return parsed.string
+    return text if not tempin else parsed.string
 
 
 if __name__ == '__main__':

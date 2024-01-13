@@ -36,31 +36,24 @@ lang_to_wrks = list(lang_to_wrks.keys())
 
 def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
     lang_text = ''
-    u = 0
-
     # ---
     if 'test1' in sys.argv:
         print('mdtitle:', mdtitle)
         print('langlinks:', langlinks)
     # ---
 
-    for l in langs_keys_sorted:
-        u += 1
+    for u, l in enumerate(langs_keys_sorted, start=1):
         if l not in section_langs_views:
             section_langs_views[l] = 0
         view = ''
 
-        data = langlinks.get(l)
-        # print('data:', data)#{'title': 'قائمة الأدوية الأساسية النموذجية لمنظمة الصحة العالمية', 'views': 159424}
-
-        if data:
+        if data := langlinks.get(l):
             title = data['title']
             view = data['views']
             section_langs_views[l] += view
             # ---
             # view = helps.views_url(title, l, view)
             view = f'[[:w:{l}:{title}|{view:,}]]'
-            # ---
         # Create a formatted string with the view count for the current language and title
         tt = f' || {view}'
 
@@ -119,7 +112,7 @@ def make_text(ViewsData):
         # Call make_lang_text to create the language text for this row.
         lang_text = make_lang_text(mdtitle, langlinks, langs_keys)
 
-        mdtitle_views = sum([x['views'] for x in langlinks.values()])
+        mdtitle_views = sum(x['views'] for x in langlinks.values())
 
         section_views += mdtitle_views
         # Create the table row with the language text and the row number.
@@ -142,7 +135,7 @@ def make_text(ViewsData):
     # Add the closing table tag and div tag to the text variable.
     text += '\n|}\n</div>'
     # ---
-    all_articles = sum([len(x) for x in ViewsData.values()])
+    all_articles = sum(len(x) for x in ViewsData.values())
     # Create the final formatted text with the section header, number of links, and the table.
     # ---
     faf = f'* {all_articles:,} articles with work in {len(langs_keys):,} languages\n'

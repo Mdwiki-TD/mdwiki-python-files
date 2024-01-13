@@ -34,19 +34,17 @@ def process_folders(root_folder):
             continue
 
         info_data = get_info(root)
-        disease_name = info_data.get("disease_name", "").replace("_", " ")
-        # images_info = info_data.get("images_info", {})
-        if disease_name:
+        if disease_name := info_data.get("disease_name", "").replace("_", " "):
             n += 1
             printe.output(f"{n} diseases:{disease_name}:")
             page = ncc_MainPage(f'Category:{disease_name}', 'www', family='nccommons')
             # ---
             categories = page.get_categories(with_hidden=False)
             # ---
-            text = page.text
-            # ---
             if 'Category:Atlasdermatologico' not in categories:
                 printe.output(categories)
+                # ---
+                text = page.text
                 text += '\n[[Category:Atlasdermatologico]]'
                 # ---
                 page.save(newtext=text, summary='added [[:Category:Atlasdermatologico]]', nocreate=0, minor='')

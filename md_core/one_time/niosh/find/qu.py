@@ -60,10 +60,7 @@ for title in titles:
         if x.find('cdc.gov/niosh/') > -1:
             x = fix_links(x)
             tat.append(x)
-    # ---
-    tat = list(set(tat))
-    # ---
-    if tat:
+    if tat := list(set(tat)):
         new[title] = tat
         all_links.extend(tat)
 # ---
@@ -75,7 +72,9 @@ len_all_links = len(all_links)
 print(f'all pages:{len(new.keys())}, {len_all_links=}')
 # ---
 # sort dict keys
-new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
+new = dict(
+    sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)
+)
 # ---
 with codecs.open(f"{Dir2}/jsons/both.json", 'w', encoding='utf-8') as ii:
     json.dump(new, ii, ensure_ascii=False, indent=4)

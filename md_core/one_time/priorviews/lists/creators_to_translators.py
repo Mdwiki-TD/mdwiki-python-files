@@ -5,6 +5,7 @@ python3 core8/pwb.py priorviews/lists/creators_to_translators
 from priorviews.lists.creators_to_translators import creators_as_translators
 # ---
 """
+
 import json
 import os
 from pathlib import Path
@@ -31,13 +32,10 @@ if not os.path.exists(file_cts):
 # ---
 creators_as_translators = json.load(codecs.open(file_cts, 'r', 'utf-8'))
 # ---
-n = 0
-# ---
 notadded = 0
 added = 0
 # ---
-for lang, links in links_by_lang.items():
-    n += 1
+for n, (lang, links) in enumerate(links_by_lang.items()):
     # ---
     # printe.output(f'<<yellow>> {n}/{len(links_by_lang.keys())} lang: {lang}:')
     # ---

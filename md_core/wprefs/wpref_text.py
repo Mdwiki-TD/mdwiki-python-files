@@ -84,11 +84,7 @@ def remove_False_code(text):
 
 
 def move_dots_text(newtext, lang=''):
-    # ---
-    dot = r'(\.|\,)'
-    # ---
-    if lang == 'zh':
-        dot = '(。)'
+    dot = '(。)' if lang == 'zh' else r'(\.|\,)'
     # ---
     regline = r'((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)'
     # ---

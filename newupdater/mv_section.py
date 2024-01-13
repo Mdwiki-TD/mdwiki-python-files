@@ -52,27 +52,22 @@ class move_External_links_section:
         tmpText = self.text_to_work
         # ---
         while True:
-            match = metadataR.search(tmpText)
-            if match:
+            if match := metadataR.search(tmpText):
                 tmpText = tmpText[: match.start()]
             else:
                 break
         # ---
         index = len(tmpText)
         # ---
-        newtext = self.text_to_work[:index].rstrip() + f'\n\n{self.new_ext_sec.strip()}\n\n' + self.text_to_work[index:].strip()
+        newtext = f'{self.text_to_work[:index].rstrip()}\n\n{self.new_ext_sec.strip()}\n\n{self.text_to_work[index:].strip()}'
         # ---
         self.new_text = newtext
 
     def get_sects(self):
         # ---
-        n = -1
-        # ---
         last = ''
         # ---
-        for s in self.sections:
-            # ---
-            n += 1
+        for n, s in enumerate(self.sections, start=-1):
             # ---
             t = s.title
             c = s.contents
@@ -83,7 +78,7 @@ class move_External_links_section:
                 # ---
             # ---
             last = s
-            # ---
+                # ---
         # ---
         if self.ext_sec == '':
             return
@@ -97,10 +92,11 @@ class move_External_links_section:
             # ---
             printn(f'title: {self.last_sec.title}')
             printn(f'contents: {l_c}')
-            # ---
-            mata = re.search(r'^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}', l_c, flags=re.IGNORECASE)
-            # ---
-            if mata:
+            if mata := re.search(
+                r'^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}',
+                l_c,
+                flags=re.IGNORECASE,
+            ):
                 # ---
                 # ---
                 index = len(l_c[: mata.end()])
@@ -142,11 +138,11 @@ if __name__ == "__main__":
     # ---
     # text = codecs.open(Dir+ "/texts/section.txt", "r", "utf-8").read()
     # ---
-    codecs.open(Dir + "/texts/section.txt", "w", "utf-8").write(text)
+    codecs.open(f"{Dir}/texts/section.txt", "w", "utf-8").write(text)
     # ---
     bot = move_External_links_section(str(text))
     # ---
     new_text = bot.make_new_txt()
     # ---
     pywikibot.showDiff(text, new_text)
-    codecs.open(Dir + "/texts/secnew.txt", "w", "utf-8").write(new_text)
+    codecs.open(f"{Dir}/texts/secnew.txt", "w", "utf-8").write(new_text)

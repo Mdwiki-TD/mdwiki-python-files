@@ -1,6 +1,7 @@
 """
 from wprefs.files import reffixed_list, setting, append_reffixed_file
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -22,7 +23,7 @@ Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
-fixwikirefs = dir2 + '/confs/fixwikirefs.json'
+fixwikirefs = f'{dir2}/confs/fixwikirefs.json'
 reffixed_file = f'{Dir}/reffixed.csv'
 # ---
 setting = {}
@@ -44,10 +45,7 @@ def make_ref_done_list():
             reffixed = mama.read()
     except Exception:
         exepts()
-    # ---
-    reffixed_list = [x.strip() for x in reffixed.split('\n') if x.strip() != '']
-    # ---
-    return reffixed_list
+    return [x.strip() for x in reffixed.split('\n') if x.strip() != '']
 
 
 # ---
@@ -71,16 +69,16 @@ def save_wprefcash(title, newtext):
     title2 = title2.replace(':', '-').replace('/', '-').replace(' ', '_')
     # ---
     try:
-        filename = dir2 + '/public_html/wprefcash/' + title2 + '.txt'
+        filename = f'{dir2}/public_html/wprefcash/{title2}.txt'
         with codecs.open(filename, "w", encoding="utf-8") as uy:
             uy.write(newtext)
         # ---
         print(filename)
-        # ---
+            # ---
     except Exception:
         exepts()
 
-        filename = dir2 + '/public_html/wprefcash/title2.txt'
+        filename = f'{dir2}/public_html/wprefcash/title2.txt'
         with codecs.open(filename, "w", encoding="utf-8") as gf:
             gf.write(newtext)
         # ---

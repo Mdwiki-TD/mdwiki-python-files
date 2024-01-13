@@ -104,8 +104,7 @@ class Login:
         text = ''
         # ---
         try:
-            data = req0.json()
-            return data
+            return req0.json()
         except Exception as e:
             text = str(req0.text).strip()
             if not text.startswith('{') or not text.endswith('}'):
@@ -129,8 +128,7 @@ class Login:
             return {}
         # ---
         try:
-            data = json.loads(text)
-            return data
+            return json.loads(text)
         except Exception as e:
             pywikibot.output('<<lightred>> Traceback (most recent call last):')
             pywikibot.output(f'error:{e} when json.loads(response.text)')

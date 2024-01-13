@@ -20,14 +20,8 @@ from mdpy.bots import sql_for_mdwiki
 
 def get_others_qids():
     # ---
-    mdtitle_to_qid = {}
-    # ---
     sq = sql_for_mdwiki.mdwiki_sql('select DISTINCT title, qid from qids_others;', return_dict=True)
-    # ---
-    for ta in sq:
-        mdtitle_to_qid[ta['title']] = ta['qid']
-    # ---
-    return mdtitle_to_qid
+    return {ta['title']: ta['qid'] for ta in sq}
 
 
 def add_qid(title, qid):
@@ -85,17 +79,15 @@ def add_titles_to_qids(tab, add_empty_qid=False):
         if title not in others_in:
             add_qid(title, qid)
             continue
-        # ---
-        q_in = others_in[title]
-        # ---
         if qid != '':
+            # ---
+            q_in = others_in[title]
             if q_in == '':
                 set_qid_where_title(title, qid)
+            elif qid == q_in:
+                same += 1
             else:
-                if qid != q_in:
-                    printe.output(f'<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}')
-                else:
-                    same += 1
-        # ---
+                printe.output(f'<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}')
+            # ---
     # ---
     printe.output(f'<<yellow>> len of same qids: {same}')

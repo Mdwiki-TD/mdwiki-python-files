@@ -10,6 +10,7 @@ python3 I:/mdwiki/pybot/mass/usask/up.py
 python3 core8/pwb.py mass/usask/up break
 
 """
+
 import sys
 import re
 import os
@@ -28,7 +29,9 @@ main_dir = Path(__file__).parent
 with open(os.path.join(str(main_dir), 'jsons/images.json'), 'r') as f:
     data = json.load(f)
 
-data = {k: v for k, v in sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True)}
+data = dict(
+    sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True)
+)
 
 # print how many has images and how many has no images
 printe.output(f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}")
@@ -36,7 +39,9 @@ printe.output(f"<<green>> Number of sections with images: {len([k for k, v in da
 printe.output(f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}")
 
 # print len of all images
-printe.output(f"<<green>> Number of images: {sum([len(v['images']) for k, v in data.items()])}")
+printe.output(
+    f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}"
+)
 
 done = []
 
@@ -70,14 +75,12 @@ def make_file(image_name, image_url):
 
 def create_set(chapter_name, image_infos):
     title = chapter_name
-    text = ''
     # ---
     if 'noset' in sys.argv:
         return
     # ---
     title = title.replace('_', ' ').replace('  ', ' ')
-    # ---
-    text += '{{Imagestack\n|width=850\n'
+    text = '' + '{{Imagestack\n|width=850\n'
     text += f'|title={chapter_name}\n|align=centre\n|loop=no\n'
     # ---
 
@@ -93,14 +96,10 @@ def create_set(chapter_name, image_infos):
     text += f'[[Category:{chapter_name}|*]]'
     # ---
     page = ncc_MainPage(title, 'www', family='nccommons')
-    # ---
-    if title in pages:
-        printe.output(f'<<lightyellow>>{title} already exists')
-        new = page.save(newtext=text, summary='update', nocreate=0, minor='')
-    else:
-        new = page.Create(text=text, summary='')
-    # ---
-    return new
+    if title not in pages:
+        return page.Create(text=text, summary='')
+    printe.output(f'<<lightyellow>>{title} already exists')
+    return page.save(newtext=text, summary='update', nocreate=0, minor='')
 
 def create_category(chapter_name):
     cat_text = f'* Image set: [[{chapter_name}]]\n[[Category:UndergradImaging]]'
@@ -161,15 +160,12 @@ def process_folder():
         chapter_name2 = f'{chapter_name} (UndergradImaging)'
         print(f'Processing {chapter_name2}')
         # Create category
-        
+
         if images_info:
             category = create_category(chapter_name2)
 
             if category and 'noup' not in sys.argv:
-                # Upload images
-                n = 0
-                for image_url, image_name in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
-                    n += 1
+                for n, (image_url, image_name) in enumerate(tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())), start=1):
                     print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
                     upload_image(category, image_url, image_name, chapter_url, chapter_name)
 

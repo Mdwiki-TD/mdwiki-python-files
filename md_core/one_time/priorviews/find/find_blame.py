@@ -4,6 +4,7 @@ python3 core8/pwb.py priorviews/find/find_blame -lang:ar
 
 '''
 
+
 import sys
 import os
 from pathlib import Path
@@ -26,11 +27,15 @@ from priorviews.bots import helps
 # ---
 from wikiblame.bot import get_blame  # first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
 
-# ---
-links_without_translator = {}
-# ---
-for lla, titles in links_by_lang.items():
-    links_without_translator[lla] = [x for x in titles if tra_by_lang.get(lla, {}).get(x, '') == '' and tra_by_lang.get(lla, {}).get(x.lower(), '') == '']
+links_without_translator = {
+    lla: [
+        x
+        for x in titles
+        if tra_by_lang.get(lla, {}).get(x, '') == ''
+        and tra_by_lang.get(lla, {}).get(x.lower(), '') == ''
+    ]
+    for lla, titles in links_by_lang.items()
+}
 # ---
 COUNTS_ALL = 0
 # ---
@@ -60,8 +65,9 @@ def gtblame_value(title, lang):
     en = infos.get('en', '')
     # ---
     if 'history' in sys.argv:
-        ne = gt_blame.search_history(title, lang, en=en, refname=refname, extlinks=extlinks)
-        if ne:
+        if ne := gt_blame.search_history(
+            title, lang, en=en, refname=refname, extlinks=extlinks
+        ):
             return ne
     else:
         # ---
@@ -94,9 +100,7 @@ def get_b(links, lang):
 
     def valid(x, tab, empty=''):
         i = tab.get(x) or tab.get(x.lower())
-        if not i or i == empty:
-            return True
-        return False
+        return not i or i == empty
 
     # ---
     if 'new' in sys.argv:
@@ -135,7 +139,7 @@ def get_b(links, lang):
         # ---
         if page_time:
             printe.output(f'<<yellow>> page_time: {page_time}')
-            year = int(str(page_time)[0:4])
+            year = int(str(page_time)[:4])
             if year < 2012 and 'all' not in sys.argv:
                 printe.output('<<red>> skip....')
                 continue
@@ -167,16 +171,12 @@ def start():
         if arg == "-lang":
             langkeys = [value]
     # ---
-    n = 0
-    # ---
     for la in langkeys:
         # ---
         links = links_without_translator[la]
         # ---
         print('=============================' * 2)
         print(f'lang: {la}, links: {len(links)}')
-        # ---
-        n += 1
         # ---
         get_b(links, la)
     # ---

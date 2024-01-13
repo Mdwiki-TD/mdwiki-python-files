@@ -72,10 +72,9 @@ def get_qids(noqids_list):
         group = noqids_list[i : i + 50]
         # ---
         params["titles"] = '|'.join(group)
-        # ---
-        json1 = wiki_api.submitAPI(params, apiurl='https://en.wikipedia.org/w/api.php')
-        # ---
-        if json1:
+        if json1 := wiki_api.submitAPI(
+            params, apiurl='https://en.wikipedia.org/w/api.php'
+        ):
             redirects = json1.get("query", {}).get("redirects", [])
             redirects = {x['to']: x['from'] for x in redirects}
             # ---
@@ -144,7 +143,7 @@ def start():
     printe.output('===================')
     printe.output(f'find qid to {len(to_add)} from {len(noqids)} pages.')
     # ---
-    if len(to_add) > 0:
+    if to_add:
         printe.output('<<lightyellow>>\n'.join([f'{k}\t:\t{v}' for k, v in to_add.items()]))
         # ---
         printe.output('<<purple>> add "addthem" to sys.argv to add them?')

@@ -26,7 +26,7 @@ def get_ids(url):
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         return '', studies
-    
+
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
@@ -60,7 +60,7 @@ def get_ids(url):
                 except (ValueError, IndexError):
                     print("Error: Unable to extract caseId from JSON.")
 
-    print(f"case_id: {case_id}, studies: {str(studies)}")
+    print(f"case_id: {case_id}, studies: {studies}")
     return case_id, studies
 
 def main():

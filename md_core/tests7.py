@@ -2,9 +2,7 @@
 import wikitextparser as wtp
 text = "{{Ficha de medicamento| Drugscom = {{drugs.com|monograph|alitretinoin}}}}"
 parsed = wtp.parse(text)
-n = 0
-for template in reversed(parsed.templates):
-    n += 1
+for n, template in enumerate(reversed(parsed.templates), start=1):
     print(f'template {n}:')
     print(template)
     # if not template: continue

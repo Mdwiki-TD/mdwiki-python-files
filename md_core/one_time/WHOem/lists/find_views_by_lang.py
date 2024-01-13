@@ -46,11 +46,11 @@ def log_views():
 def get_v(lang, links):
     # ---
     global ViewsData, N_g
-    # ---
-    len_p = len(links)
     # -- -
     if 'new' in sys.argv:
         links = {x: t for x, t in links.items() if ViewsData[t].get(lang, {}).get('views', 0) == 0}
+        # ---
+        len_p = len(links)
         de = len_p - len(links)
         printe.output(f'de: {de}')
     # ---

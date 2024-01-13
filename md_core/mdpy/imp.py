@@ -176,9 +176,8 @@ def main():
                 value = searchlist[value]
             # ---
             ccc = api_new.Search(value=value, ns="0", srlimit="max")
-            for x in ccc:
-                pages.append(x)
-            # ---
+            pages.extend(iter(ccc))
+                    # ---
     # ---
     start_done = starts
     okay = True

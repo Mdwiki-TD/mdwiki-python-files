@@ -51,11 +51,14 @@ class TextProcessor:
             # ---
             name = str(template.normal_name()).strip()
             # ---
-            if name.lower() in ["infobox medical condition (new)", "infobox medical condition"]:
+            if name.lower() in {
+                "infobox medical condition (new)",
+                "infobox medical condition",
+            }:
                 printn(f"*find temp:[{name}].")
                 continue
             # ---
-            if name.lower() in ["drugbox", "infobox drug"]:
+            if name.lower() in {"drugbox", "infobox drug"}:
                 # ---
                 self.drugbox_title = name
                 # ---
@@ -97,10 +100,7 @@ class TextProcessor:
         combo_titles = {"mab": "Monoclonal antibody data", "vaccine": "Vaccine data", "combo": "Combo data"}
         # ---
         Type = self.drugbox_params.get("type", "").lower().strip()
-        # ---
-        empty = False
-        if re.match(r"<!--\s*empty\s*-->", Type):
-            empty = True
+        empty = bool(re.match(r"<!--\s*empty\s*-->", Type))
         # ---
         # remove html coments
         Type = re.sub(r"<!--.*?-->", "", Type)

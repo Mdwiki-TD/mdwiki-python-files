@@ -254,7 +254,7 @@ for target in wd_tt:
         # printe.output( '<<lightred>> qid_target is empty> target:%s' % dsd )
         continue
     # ---
-    if qid_mdwiki == "" and qid_2 != "":
+    if qid_mdwiki == "":
         mdtitle = tit2
         qid_mdwiki = qid_2
         printe.output(f"<<lightyellow>> mdtitle: ({mdtitle}), tit2: ({tit2})")
@@ -297,16 +297,13 @@ def work_with_2_qids(oldq, new_q):
         else:
             printe.output("<<lightred>> **remove sitelink false.")
             printe.output(remove)
-        # ---
-        remove2 = wikidataapi.Labels_API(oldq, '', 'en', remove=True)
-        # ---
-        if remove2:
+        if remove2 := wikidataapi.Labels_API(oldq, '', 'en', remove=True):
             len_sites -= 1
             printe.output("<<lightgreen>> **remove2 label true.")
         else:
             printe.output("<<lightred>> **remove2 label false.")
     # ---
-    if len_sites in [1, 0]:
+    if len_sites in {1, 0}:
         printe.output("<<lightblue>> merge qids")
         wikidataapi.WD_Merge(oldq, new_q)
     # ---

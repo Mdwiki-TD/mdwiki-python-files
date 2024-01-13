@@ -60,18 +60,14 @@ else:
 
         .. versionadded:: 5.4
         """
-        if string.startswith(prefix):
-            return string[len(prefix) :]
-        return string
+        return string[len(prefix) :] if string.startswith(prefix) else string
 
     def removesuffix(string: str, suffix: str) -> str:
         """Remove prefix from a string or return a copy otherwise.
 
         .. versionadded:: 5.4
         """
-        if string.endswith(suffix):
-            return string[: -len(suffix)]
-        return string
+        return string[: -len(suffix)] if string.endswith(suffix) else string
 
 
 def compileLinkR(withoutBracketed: bool = False, onlyBracketed: bool = False):
@@ -84,8 +80,7 @@ def compileLinkR(withoutBracketed: bool = False, onlyBracketed: bool = False):
         regex = r'(?<!\[)' + regex
     elif onlyBracketed:
         regex = r'\[' + regex
-    linkR = re.compile(regex)
-    return linkR
+    return re.compile(regex)
 
 
 def ignore_case(string: str) -> str:
@@ -106,35 +101,48 @@ def _create_default_regexes() -> None:
     """Fill (and possibly overwrite) _regex_cache with default regexes."""
     _regex_cache.update(
         {
-            # categories
-            'category': (r'\[\[ *(?:%s)\s*:.*?\]\]', lambda site: '|'.join(site.namespaces[14])),
+            'category': (
+                r'\[\[ *(?:%s)\s*:.*?\]\]',
+                lambda site: '|'.join(site.namespaces[14]),
+            ),
             'comment': re.compile(r'<!--[\s\S]*?-->'),
-            # files
-            'file': (FILE_LINK_REGEX, lambda site: '|'.join(site.namespaces[6])),
-            # section headers
-            'header': re.compile(r'(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*' r'=(?:[^\n]|<!--[\s\S]*?-->)+=' r' *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)'),
-            # external links
+            'file': (
+                FILE_LINK_REGEX,
+                lambda site: '|'.join(site.namespaces[6]),
+            ),
+            'header': re.compile(
+                r'(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*'
+                r'=(?:[^\n]|<!--[\s\S]*?-->)+='
+                r' *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)'
+            ),
             'hyperlink': compileLinkR(),
-            # also finds links to foreign sites with preleading ":"
-            'interwiki': (r'\[\[:?(%s)\s?:[^\]]*\]\]\s*', lambda site: '|'.join(ignore_case(i) for i in site.validLanguageLinks() + list(site.family.obsolete.keys()))),
-            # Module invocations (currently only Lua)
-            'invoke': (r'\{\{\s*\#(?:%s):[\s\S]*?\}\}', lambda site: '|'.join(ignore_case(mw) for mw in site.getmagicwords('invoke'))),
-            # this matches internal wikilinks, but also interwiki, categories, and
-            # images.
+            'interwiki': (
+                r'\[\[:?(%s)\s?:[^\]]*\]\]\s*',
+                lambda site: '|'.join(
+                    ignore_case(i)
+                    for i in site.validLanguageLinks()
+                    + list(site.family.obsolete.keys())
+                ),
+            ),
+            'invoke': (
+                r'\{\{\s*\#(?:%s):[\s\S]*?\}\}',
+                lambda site: '|'.join(
+                    ignore_case(mw) for mw in site.getmagicwords('invoke')
+                ),
+            ),
             'link': re.compile(r'\[\[[^\]|]*(\|[^\]]*)?\]\]'),
-            # pagelist tag (used in Proofread extension).
-            'pagelist': re.compile(r'<{}[\s\S]*?/>'.format(ignore_case('pagelist'))),
-            # Wikibase property inclusions
-            'property': (r'\{\{\s*\#(?:%s):\s*[Pp]\d+.*?\}\}', lambda site: '|'.join(ignore_case(mw) for mw in site.getmagicwords('property'))),
-            # lines that start with a colon or more will be indented
+            'pagelist': re.compile(f"<{ignore_case('pagelist')}[\s\S]*?/>"),
+            'property': (
+                r'\{\{\s*\#(?:%s):\s*[Pp]\d+.*?\}\}',
+                lambda site: '|'.join(
+                    ignore_case(mw) for mw in site.getmagicwords('property')
+                ),
+            ),
             'startcolon': re.compile(r'(?:(?<=\n)|\A):(.*?)(?=\n|\Z)'),
-            # lines that start with a space are shown in a monospace font and
-            # have whitespace preserved.
             'startspace': re.compile(r'(?:(?<=\n)|\A) (.*?)(?=\n|\Z)'),
-            # tables often have whitespace that is used to improve wiki
-            # source code readability.
-            # TODO: handle nested tables.
-            'table': re.compile(r'(?:(?<=\n)|\A){\|[\S\s]*?\n\|}|%s' % _tag_pattern('table')),
+            'table': re.compile(
+                r'(?:(?<=\n)|\A){\|[\S\s]*?\n\|}|%s' % _tag_pattern('table')
+            ),
             'template': NESTED_TEMPLATE_REGEX,
         }
     )
@@ -186,9 +194,7 @@ def _get_regexes(keys, site):
         elif exc == 'chem':
             result.append(_tag_regex('ce'))
         elif exc == 'math':
-            result.append(_tag_regex('chem'))
-            result.append(_tag_regex('ce'))
-
+            result.extend((_tag_regex('chem'), _tag_regex('ce')))
     return result
 
 
@@ -263,10 +269,7 @@ def replaceExcept(text: str, old, new, exceptions: list, caseInsensitive: bool =
             text = text[: match.start()] + replacement + text[match.end() :]
 
             # continue the search on the remaining text
-            if allowoverlap:
-                index = match.start() + 1
-            else:
-                index = match.start() + len(replacement)
+            index = match.start() + 1 if allowoverlap else match.start() + len(replacement)
             if not match.group():
                 # When the regex allows to match nothing, shift by one char
                 index += 1

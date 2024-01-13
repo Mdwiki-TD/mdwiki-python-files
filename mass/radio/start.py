@@ -41,7 +41,7 @@ def main(ids_tab):
         for i in range(0, len(ids_tab), length):
             tabs[str(i//length+1)] = dict(list(ids_tab.items())[i:i+length])
             print(f'tab {i//length+1} : {len(tabs[str(i//length+1)])}')
-        
+
         for arg in sys.argv:
             arg, _, value = arg.partition(':')
             if arg == 'get':
@@ -50,9 +50,7 @@ def main(ids_tab):
 
     pages = get_pages()
 
-    n = 0
-    for case_url, tab in ids_tab.items():
-        n += 1
+    for n, (case_url, tab) in enumerate(ids_tab.items(), start=1):
         caseId  = tab['caseId']
         printe.output(f'<<purple>> case:{n} / {len(ids_tab)}:')
         author = authors.get(str(caseId), '')

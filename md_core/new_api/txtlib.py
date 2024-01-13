@@ -119,11 +119,7 @@ def get_one_temp_params(text, tempname="", templates=[], lowers=False, get_all_t
     # ---
     if lowers:
         temps = [x.lower() for x in temps]
-    # ---
-    named = {}
-    # ---
-    if get_all_temps:
-        named = []
+    named = [] if get_all_temps else {}
     # ---
     for temp in ingr:
         # ---
@@ -145,8 +141,9 @@ def get_one_temp_params(text, tempname="", templates=[], lowers=False, get_all_t
 
 
 def get_all_temps_params(text, templates=[], lowers=False):
-    tab = get_one_temp_params(text, templates=templates, lowers=lowers, get_all_temps=True)
-    return tab
+    return get_one_temp_params(
+        text, templates=templates, lowers=lowers, get_all_temps=True
+    )
 
 
 # ---

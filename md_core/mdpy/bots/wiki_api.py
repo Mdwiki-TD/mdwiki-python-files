@@ -215,10 +215,7 @@ def Find_pages_exists_or_not(liste, apiurl=''):
     }
     # ---
     table = {}
-    # ---
-    json1 = submitAPI(params, apiurl=apiurl)
-    # ---
-    if json1:
+    if json1 := submitAPI(params, apiurl=apiurl):
         query_pages = json1.get("query", {}).get("pages", {})
         for page in query_pages:
             kk = query_pages[page]
@@ -238,14 +235,15 @@ def get_langlinks(title, lang):
         "lllimit": "max",  # langlinks
         "formatversion": "2",
     }
-    ta = submitAPI(params, apiurl=f'https://{lang}.wikipedia.org/w/api.php')
-    # ---
-    if not ta:
+    if ta := submitAPI(
+        params, apiurl=f'https://{lang}.wikipedia.org/w/api.php'
+    ):
+        return {
+            ta["lang"]: ta.get("*") or ta.get("title")
+            for ta in ta.get('langlinks', [])
+        }
+    else:
         return {}
-    # ---
-    langlinks = {ta["lang"]: ta.get("*") or ta.get("title") for ta in ta.get('langlinks', [])}
-    # ---
-    return langlinks
 
 
 def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
@@ -282,10 +280,7 @@ def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
         group = titles[i : i + 50]
         # ---
         params["titles"] = "|".join(group)
-        # ---
-        json1 = submitAPI(params, apiurl=apiurl)
-        # ---
-        if json1:
+        if json1 := submitAPI(params, apiurl=apiurl):
             js_query = json1.get('query', {})
             # ---
             for red in js_query.get('redirects', {}):
@@ -380,8 +375,9 @@ def GetPageText(title, lang, redirects=False):
         params["redirects"] = 1
     # ---
     text = ''
-    json1 = submitAPI(params, apiurl=f'https://{lang}.wikipedia.org/w/api.php')
-    if json1:
+    if json1 := submitAPI(
+        params, apiurl=f'https://{lang}.wikipedia.org/w/api.php'
+    ):
         text = json1.get('parse', {}).get('wikitext', {}).get('*', '')
     else:
         printe.output('no parse in json1:')
@@ -446,10 +442,7 @@ def _get_page_views_(titles, site='en', days=30):
             # {'pageid': 46133, 'ns': 0, 'title': 'Cardiomyopathy', 'pageviews': {'2022-11-14': 3076, '2022-11-15': 2114, '2022-11-16': 2895, '2022-11-17': 2616, '2022-11-18': 2247, '2022-11-19': 2303, '2022-11-20': 2152, '2022-11-21': 1752, '2022-11-22': 1617, '2022-11-23': 1595, '2022-11-24': 1520, '2022-11-25': 1534, '2022-11-26': 1611, '2022-11-27': 1702, '2022-11-28': 1457, '2022-11-29': 1362, '2022-11-30': 1517, '2022-12-01': 1689, '2022-12-02': 1510, '2022-12-03': 1588, '2022-12-04': 1678, '2022-12-05': 1449, '2022-12-06': 1578, '2022-12-07': 1411, '2022-12-08': 1495, '2022-12-09': 1732, '2022-12-10': 1553, '2022-12-11': 1702, '2022-12-12': 1472, '2022-12-13': 1333}}
             # ---
             title = kk['title']
-            # ---
-            title2 = redirects.get(title)
-            # ---
-            if title2:
+            if title2 := redirects.get(title):
                 printe.output(f'page: {title} redirect to {title2}')
                 title = title2
             # ---

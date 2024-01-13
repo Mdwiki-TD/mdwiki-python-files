@@ -153,9 +153,7 @@ def Log_to_wiki(family='mdwiki', lang="www"):
         'lgpassword': account['p'],
         'lgtoken': r11.json()['query']['tokens']['logintoken'],
     }
-    # ---
-    r22 = post_all(r2_params)
-    if r22:
+    if r22 := post_all(r2_params):
         if r22['login']['result'] != 'Success':
             pywikibot.output(r22['login']['reason'])
         else:
@@ -890,8 +888,7 @@ def GetPageText(title, redirects=False):
         params["redirects"] = 1
     # ---
     text = ''
-    json1 = post_s(params)
-    if json1:
+    if json1 := post_s(params):
         text = json1.get('parse', {}).get('wikitext', {}).get('*', '')
     else:
         printe.output('no parse in json1:')
@@ -1188,10 +1185,7 @@ def get_redirect(liste):
             "utf8": 1,
             # "normalize": 1,
         }
-        # ---
-        json1 = post_s(params)
-        # ---
-        if json1:
+        if json1 := post_s(params):
             redd = json1.get("query", {}).get("redirects", [])
             for red in redd:
                 redirects[red["from"]] = red["to"]

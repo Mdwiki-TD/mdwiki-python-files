@@ -43,9 +43,7 @@ def search_history(page):
         # ---
         if not content:
             continue
-        # ---
-        fi = re.search(r'\{\{\s*\|', content)
-        if fi:
+        if fi := re.search(r'\{\{\s*\|', content):
             # ---
             del r["slots"]
             print(r)
@@ -68,11 +66,7 @@ def work_on_title(title):
     if text == "":
         printe.output("<<red>> notext")
         return
-    # ---
-    # find if text has {{|
-    # ---
-    fi = re.search(r'\{\{\s*\|', text)
-    if fi:
+    if fi := re.search(r'\{\{\s*\|', text):
         printe.output(f'<<red>> {title} has err')
         with_err[title] = search_history(page)
 
@@ -104,9 +98,6 @@ def main(listen=[]):
 
 
 if __name__ == "__main__":
-    listen = []
-    # ---
-    if 'test' in sys.argv:
-        listen = ['User:Mr. Ibrahem/sandbox']
+    listen = ['User:Mr. Ibrahem/sandbox'] if 'test' in sys.argv else []
     # ---
     main(listen)

@@ -12,6 +12,7 @@ python3 /data/project/mdwiki/pybot/md_core/mdpy/listo.py save
 python3 core8/pwb.py mdpy/listo save
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -48,11 +49,12 @@ for arg in sys.argv:
     # ---
     if arg.lower() == 'li' or arg.lower() == '-li' and value.isdigit():
         limit_m[1] = int(value)
-# ---
-redirects_pages = []
-# ---
 if 'nored' not in sys.argv:
-    redirects_pages = mdwiki_api.Get_All_pages('!', namespace='0', apfilterredir='redirects', limit_all=limit_m[1])
+    redirects_pages = mdwiki_api.Get_All_pages(
+        '!', namespace='0', apfilterredir='redirects', limit_all=limit_m[1]
+    )
+else:
+    redirects_pages = []
 # ---
 dones = []
 links = []
@@ -105,13 +107,15 @@ num = 0
 print(f'len of listo: {len(listo)}')
 # ---
 lines = "\n".join([f'# [[{x}]]' for x in listo])
-text = '''Pages in [[WikiProjectMed:List]] missing [[:Category:RTT]]:
+text = (
+    '''Pages in [[WikiProjectMed:List]] missing [[:Category:RTT]]:
 --~~~~
 __TOC__
 
 == Articles ==
 '''
-text += lines
+    + lines
+)
 # ---
 text += "\n\n== Redirects ==\n\n"
 # ---

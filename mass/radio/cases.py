@@ -35,8 +35,7 @@ def geo():
     reg = r'^Category:Radiopaedia case (\d+) (.*?)$'
 
     for cat in cases:
-        match = re.match(reg, cat)
-        if match:
+        if match := re.match(reg, cat):
             case_id = match.group(1)
             case_title = match.group(2)
             if case_id in cases_in:

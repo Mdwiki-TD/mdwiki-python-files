@@ -157,10 +157,11 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
                     if int(tabla["ns"]) == 14 or tabla["title"].startswith('Category:'):
                         new_tab2.append(x)
                     # ---
-                    if ns in [0, '0']:
-                        if int(tabla["ns"]) == 0:
-                            result_table[x] = tabla
-                    else:
+                    if (
+                        ns in [0, '0']
+                        and int(tabla["ns"]) == 0
+                        or ns not in [0, '0']
+                    ):
                         result_table[x] = tabla
         # ---
         new_list = new_tab2

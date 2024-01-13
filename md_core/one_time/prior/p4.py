@@ -222,21 +222,18 @@ def start_all():
     # ---
     tanko = {}
     # ---
-    n = 0
-    # ---
-    for i in range(0, len(links), 100):
-        n += 1
+    for n, i in enumerate(range(0, len(links), 100), start=1):
         # ---
         titles = links[i : i + 100]
         # ---
-        main_File = project_js_new + f'{n}.json'
-        main_File_en = project_js_newen + f'en_{n}.json'
+        main_File = f'{project_js_new}{n}.json'
+        main_File_en = f'{project_js_newen}en_{n}.json'
         # ---
         tanko[str(n)] = {'file': main_File, 'file_en': main_File_en, 'links': titles}
         # ---
         printe.output(f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"')
 
-        # ---
+            # ---
     # ---
     valu = ''
     # ---

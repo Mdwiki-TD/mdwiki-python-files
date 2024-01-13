@@ -61,10 +61,7 @@ def api_views(title, lang):
     # ---
     if not enviews or enviews == {}:
         return 0
-    # ---
-    vs = enviews.get(title, {}).get('all', 0)
-    # ---
-    return vs
+    return enviews.get(title, {}).get('all', 0)
 
 
 def get_v(mdtitle, langslinks):
@@ -107,11 +104,7 @@ def start():
     if 'en' in sys.argv:
         all_lenth = len(lang_links)
     # ---
-    n = 0
-    # ---
-    for mdtitle, tab in lang_links.items():
-        # ---
-        n += 1
+    for n, (mdtitle, tab) in enumerate(lang_links.items(), start=1):
         # ---
         if mdtitle not in ViewsData:
             ViewsData[mdtitle] = {}
@@ -122,7 +115,7 @@ def start():
         # printe.output(f'langslinks: {len(langslinks)}')
         # ---
         get_v(mdtitle, langslinks)
-        # ---
+            # ---
     # ---
     log_views()
 

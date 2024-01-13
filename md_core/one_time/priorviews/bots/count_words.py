@@ -25,7 +25,7 @@ class InOldText:
         # ---
         self.lang = lang
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f'https://{self.lang}.wikipedia.org/w/api.php'
         self.oldtext = ''
         self.newtext = ''
         self.words = 0
@@ -126,10 +126,7 @@ class InOldText:
 def get_words(title, lang):
     # ---
     bot = InOldText(title, lang=lang)
-    # ---
-    words = bot.Words()
-    # ---
-    return words
+    return bot.Words()
 
 
 # ---

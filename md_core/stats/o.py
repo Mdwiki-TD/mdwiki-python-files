@@ -53,9 +53,10 @@ def work_in_one_site(site, links):
         return
     # ---
     title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_2023/{site}"
-    # ---
-    text = '{{:WPM:WikiProject Medicine/Total medical articles}}\n'
-    text += '{{Top medical editors 2023 by lang}}\n'
+    text = (
+        '{{:WPM:WikiProject Medicine/Total medical articles}}\n'
+        + '{{Top medical editors 2023 by lang}}\n'
+    )
     # ---
     if site != 'ar':
         text += f'Numbers of 2023. There are {len(links):,} articles in {site}\n'

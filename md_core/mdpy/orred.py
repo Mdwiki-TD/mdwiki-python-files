@@ -42,10 +42,7 @@ def Find_pages_exists_or_not(liste, apiurl=''):
     }
     # ---
     table = {}
-    # ---
-    json1 = wpref.submitAPI(params, lang='or')
-    # ---
-    if json1:
+    if json1 := wpref.submitAPI(params, lang='or'):
         query_pages = json1.get("query", {}).get("pages", {})
         for page in query_pages:
             kk = query_pages[page]

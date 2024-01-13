@@ -4,6 +4,7 @@
 python3 core8/pwb.py mdpy/cashwd
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -32,7 +33,7 @@ dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---
-Dashboard_path = dir2 + '/public_html/Translation_Dashboard'
+Dashboard_path = f'{dir2}/public_html/Translation_Dashboard'
 # ---
 redirects_qids = {}
 mis_qids = []
@@ -89,10 +90,9 @@ def get_qids_sitelinks(qidslist):
         params_wd["ids"] = '|'.join(qids)
         # ---
         printe.output(f'<<lightgreen>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.')
-        # ---
-        json1 = wikidataapi.post(params_wd, apiurl='https://www.wikidata.org/w/api.php')
-        # ---
-        if json1:
+        if json1 := wikidataapi.post(
+            params_wd, apiurl='https://www.wikidata.org/w/api.php'
+        ):
             # ---
             entities = json1.get("entities", {})
             # ---
@@ -106,9 +106,7 @@ def get_qids_sitelinks(qidslist):
                 mis_qids.append(kk.get("id"))
                 # ---
                 continue
-            # ---
-            redirects = kk.get("redirects", {})
-            if redirects:  # "redirects": {"from": "Q113489270","to": "Q22792051"}
+            if redirects := kk.get("redirects", {}):
                 redirects_qids[redirects.get("from")] = redirects.get("to")
             # ---
             qid = kk.get("id", '')
@@ -156,7 +154,7 @@ def get_qids_sitelinks(qidslist):
             # ---
             table_d["qids"][qid]["sitelinks"] = sitelinks
             table_l["qids"][qid]["sitelinks"] = list(sitelinks.keys())
-            # ---
+                    # ---
     # ---
     table_d["heads"] = heads
     table_l["heads"] = heads
@@ -200,7 +198,7 @@ def cash_wd():
     # ---
     lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
-    with open(Dashboard_path + '/Tables/sitelinks.json', 'w', encoding='utf-8') as aa:
+    with open(f'{Dashboard_path}/Tables/sitelinks.json', 'w', encoding='utf-8') as aa:
         json.dump(lists, aa)
     # ---
     # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w', encoding="utf-8"), ensure_ascii=False, indent=4 )
@@ -215,7 +213,7 @@ def cash_wd():
         # remove duplicates
         liste = list(set(liste))
         # ---
-        leeen = int(len(titles)) - int(len(liste))
+        leeen = len(titles) - len(liste)
         missing['langs'][site] = {'missing': leeen, 'exists': len(liste)}
         # ---
         json_file = f'{Dashboard_path}/cash_exists/{site}.json'
@@ -239,7 +237,7 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    with open(Dashboard_path + '/Tables/noqids.json', 'w', encoding="utf-8") as dd:
+    with open(f'{Dashboard_path}/Tables/noqids.json', 'w', encoding="utf-8") as dd:
         json.dump(noqids, dd)
     # ---
     # redirects_qids
@@ -254,7 +252,7 @@ def cash_wd():
     printe.output(f' len of redirects_qids:  {len(redirects_qids.keys())}')
     printe.output(f' len of missing_qids:    {len(mis_qids)}')
     # ---
-    with codecs.open(Dashboard_path + '/Tables/missing.json', 'w', encoding="utf-8") as xx:
+    with codecs.open(f'{Dashboard_path}/Tables/missing.json', 'w', encoding="utf-8") as xx:
         json.dump(missing, xx)
     printe.output(' log to missing.json true.... ')
 

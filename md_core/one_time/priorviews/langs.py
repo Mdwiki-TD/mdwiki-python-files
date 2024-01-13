@@ -3,6 +3,7 @@
 python3 core8/pwb.py priorviews/langs -lang:ar write ask
 
 """
+
 from priorviews.lists import creators
 from priorviews.lists.creators_to_translators import creators_as_translators
 import sys
@@ -42,9 +43,7 @@ Dir = Path(__file__).parent
 # ---
 translators_all = {}
 # ---
-tab_new = {}
-# ---
-tab_new['links'] = {}
+tab_new = {'links': {}}
 # ---
 for section, links in sects_links_langlinks.items():
     # ---
@@ -75,7 +74,7 @@ def authors_table(authors, lang):
     # ---
     for cunts, users in tab2.items():
         # ---
-        for u in users:
+        for _ in users:
             lang_cunt += cunts
         # ---
         users.sort()
@@ -83,7 +82,7 @@ def authors_table(authors, lang):
         usrs_line = ', '.join([helps.talk_url(lang, x, x) for x in users])
         # ---
         authors_text += f'\n! {cunts} \n| {usrs_line}\n|-'
-        # ---
+            # ---
     # ---
     authors_text += '\n|}'
     # ---
@@ -118,7 +117,7 @@ def make_lang_textso(lang):
         secs_texts += f'* section links: {len(links)}\n'
         secs_texts += f'* with ({lang}) translations: {len(tab)}'
         # ---
-        if len(tab) > 0:
+        if tab:
             secs_texts += '\n\n'
             # ---
             head_table = '{| class="wikitable sortable mw-collapsible mw-collapsed plainrowheaders"\n|-\n'
@@ -129,10 +128,7 @@ def make_lang_textso(lang):
             secs_texts += head_table
             secs_texts += f'! # !! title !! {lang} !! views !! words !! translator !! creator !! time\n|-\n'
             # ---
-            n = 0
-            # ---
-            for x, ar in tab.items():
-                n += 1
+            for n, (x, ar) in enumerate(tab.items(), start=1):
                 secs_texts += "|-\n"
                 # ---
                 arviews = views.views_by_lang.get(lang, {}).get(ar.lower(), 0)
@@ -203,7 +199,7 @@ def make_lang_textso(lang):
             # ---
             secs_texts += "|}\n"
     # ---
-    newtext = '[https://:' + f'{lang}.wikipedia.org {lang}.wikipedia.org] statistics:\n'
+    newtext = f'[https://:{lang}.wikipedia.org {lang}.wikipedia.org] statistics:\n'
     newtext += f'* All links: {all_links:,}\n'
     newtext += f'** With ({lang}) translations: {all_links_with_ar:,}\n'
     newtext += f"*** With translators: {tr_all:,}\n"
@@ -216,7 +212,9 @@ def make_lang_textso(lang):
     print(newtext)
     # ----
     # authors = sorted(authors.items(), key=lambda x: x[1])
-    authors_2 = {x: v for x, v in sorted(authors_2.items(), key=lambda item: item[1], reverse=True)}
+    authors_2 = dict(
+        sorted(authors_2.items(), key=lambda item: item[1], reverse=True)
+    )
     authors_text = "\n==Translators==\n"
     # ----
     authors_text += authors_table(authors_2, lang)
@@ -263,10 +261,7 @@ if __name__ == "__main__":
     # ---
     lenn = len(langs)
     # ---
-    n = 0
-    # ---
-    for lang in langs:
-        n += 1
+    for n, lang in enumerate(langs, start=1):
         printe.output(f'<<yellow>> {n}/{lenn} langs.py lang: {lang}')
         # ---
         work(lang)

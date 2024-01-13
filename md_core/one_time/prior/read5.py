@@ -152,7 +152,7 @@ class WorkAll:
             # ---
             wikilinks = [replaces.get(x, x) for x in wikilinks]
             # ---
-            if len(wikilinks) == 0:
+            if not wikilinks:
                 continue
             # ---
             t = t.replace('/', '-')
@@ -173,17 +173,13 @@ class WorkAll:
             elif len(_all_) > 400:
                 numb = 120
             # ---
-            n = 1
-            # ---
-            for i in range(0, len(_all_), numb):
+            for n, i in enumerate(range(0, len(_all_), numb), start=1):
                 # ---
                 las = dict(list(_all_.items())[i : i + numb])
                 # ---
                 ta = f'{t}_{n}'
                 # ---
                 self.all_sections[ta] = las
-                # ---
-                n += 1
 
     def run(self):
         # ---
@@ -194,25 +190,22 @@ class WorkAll:
             # ---
             printe.output(f'<<lightyellow>> section:({t}), \t\twikilinks: {lrnn}')
             # ---
-            ttt = f'User:Mr. Ibrahem/prior/{t}'
-            # ---
-            filetitle = f'{Dir}/log/{t}.txt'
-            # ---
-            text = text_bot.make_text(_all_, ttt=t)
-            # ---
             if 'dontsave' not in sys.argv:
+                # ---
+                ttt = f'User:Mr. Ibrahem/prior/{t}'
+                # ---
+                filetitle = f'{Dir}/log/{t}.txt'
+                # ---
+                text = text_bot.make_text(_all_, ttt=t)
                 codecs.open(filetitle, 'w', encoding='utf-8').write(text)
                 # ---
                 page_x = md_MainPage(ttt, 'www', family='mdwiki')
-                # ---
-                exists = page_x.exists()
-                if not exists:
-                    page_x.Create(text=text, summary='update')
-                # ---
-                else:
+                if exists := page_x.exists():
                     page_x_text = page_x.get_text()
                     # ---
                     page_x.save(newtext=text, summary='update', nocreate=0)
+                else:
+                    page_x.Create(text=text, summary='update')
 
 
 def work_all():

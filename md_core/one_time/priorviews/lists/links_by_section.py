@@ -6,6 +6,7 @@ from priorviews.lists.links_by_section import sects_links_langlinks
 python3 core8/pwb.py priorviews/lists/links_by_section
 
 """
+
 import sys
 import json
 import os
@@ -65,7 +66,7 @@ if 'small' in sys.argv:
     sects_links_langlinks = {least_section: sects_links_langlinks[least_section]}
 # ---
 # make text for each section
-for section, links in sects_links_langlinks.items():
+for links in sects_links_langlinks.values():
     # ---
     for md, langs in links.items():
         for lang, title in langs.items():

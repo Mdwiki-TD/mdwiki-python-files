@@ -213,7 +213,7 @@ class NEW_API:
             "apfilterredir": "nonredirects",
         }
         # ---
-        if str(namespace) in ['*', '', 'all']:
+        if str(namespace) in {'*', '', 'all'}:
             del params['apnamespace']
         # ---
         if apfilterredir in ['redirects', 'all', 'nonredirects']:
@@ -464,10 +464,7 @@ class NEW_API:
         # ---
         if not data or data == {}:
             return text
-        # ---
-        newtext = data.get("expandtemplates", {}).get("wikitext") or text
-        # ---
-        return newtext
+        return data.get("expandtemplates", {}).get("wikitext") or text
 
     def Parse_Text(self, line, title):
         # ---
@@ -516,8 +513,5 @@ class NEW_API:
 
     def get_revisions(self, title):
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "utf8": 1, "formatversion": "2", "rvprop": "comment|timestamp|user|content|ids", "rvdir": "newer", "rvlimit": "max"}
-        # ---
-        results = self.post_continue(params, "query", "pages", [])
-        # ---
-        return results
+        return self.post_continue(params, "query", "pages", [])
         # ---

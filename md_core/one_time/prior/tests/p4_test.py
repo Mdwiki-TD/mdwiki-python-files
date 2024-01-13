@@ -17,8 +17,8 @@ def start_test(links=[]):
     # ---
     # links.sort()
     # ---
-    main_File = project_json + 'test.json'
-    main_File_en = project_json + 'en_test.json'
+    main_File = f'{project_json}test.json'
+    main_File_en = f'{project_json}en_test.json'
     # ---
     # python3 core8/pwb.py prior/p4 test
     # ---

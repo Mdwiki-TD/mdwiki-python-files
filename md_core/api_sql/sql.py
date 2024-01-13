@@ -86,16 +86,20 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     # ---
     host = f"{wiki}.analytics.db.svc.wikimedia.cloud"
     # ---
-    dbs_p = dbs + '_p'
+    dbs_p = f'{dbs}_p'
     # ---
     return host, dbs_p
 
 
 def make_sql_connect(query, db='', host='', update=False, Return=False, return_dict=False):
-    # ---
-    rows = sql_qu.make_sql_connect(query, db=db, host=host, update=update, Return=Return, return_dict=return_dict)
-    # ---
-    return rows
+    return sql_qu.make_sql_connect(
+        query,
+        db=db,
+        host=host,
+        update=update,
+        Return=Return,
+        return_dict=return_dict,
+    )
 
 
 def MySQLdbar(arcatTitle):
@@ -320,7 +324,7 @@ def MySQLdb_finder_2_rows(encatTitle):
 
     AND tl_target_id = (SELECT lt_id FROM linktarget WHERE lt_namespace = 10 AND lt_title = "%s")
     '''
-    queries = queries % item
+    queries %= item
     encats = Make_sql_2_rows(queries)
     # ---end of sql--------------------------------------------
     printe.output(f"encats: <<lightred>> {len(encats.keys())} <<default>> template:{item}")
@@ -346,26 +350,16 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
         GROUP BY ll_title ;'''
     # ---
     encats = Make_sql(queries)
-    # ---
-    arcats = []
-    if arcatTitle and arcatTitle != "":
-        arcats = MySQLdbar(arcatTitle)
+    arcats = MySQLdbar(arcatTitle) if arcatTitle and arcatTitle != "" else []
     # ---
     final = tttime.time()
     printe.output(f"encats: <<lightred>> {len(encats)} <<default>> {item}")
-    # ---
-    final_cat = []
-    for cat in encats:
-        if cat not in arcats:
-            final_cat.append(str(cat))
+    final_cat = [str(cat) for cat in encats if cat not in arcats]
     # ---
     delta = int(final - start)
     print(f'API/sql_py MySQLdb_finder_N_New len(final_cat) = "{len( final_cat )}", in {delta} seconds')
     # ---
-    if final_cat != []:
-        return final_cat
-    else:
-        return False
+    return final_cat if final_cat != [] else False
 
 
 def MySQLdb_finder_New(encatTitle, arcatTitle):

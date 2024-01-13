@@ -39,7 +39,6 @@ len_all_images = []
 
 def create_set(disease_name, image_infos):
     title = disease_name
-    text = ''
     # ---
     if 'noset' in sys.argv:
         return
@@ -48,8 +47,7 @@ def create_set(disease_name, image_infos):
     if title in pages:
         printe.output(f'<<lightyellow>>{title} already exists')
         return
-    # ---
-    text += '{{Imagestack\n|width=850\n'
+    text = '' + '{{Imagestack\n|width=850\n'
     text += f'|title={disease_name}\n|align=centre\n|loop=no\n'
     # ---
 
@@ -59,10 +57,7 @@ def create_set(disease_name, image_infos):
         text += f'|File:{image_name}|\n'
     text += '\n}}\n[[Category:Image set]]\n'
     text += f'[[Category:{disease_name}|*]]'
-    # ---
-    new = api.create_Page(text, title)
-    # ---
-    return new
+    return api.create_Page(text, title)
 
 
 def create_category(disease_name):
@@ -133,10 +128,7 @@ def process_folder(root):
     category = create_category(disease_name)
 
     if category and 'noup' not in sys.argv:
-        # Upload images
-        n = 0
-        for image_name, image_url in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
-            n += 1
+        for n, (image_name, image_url) in enumerate(tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())), start=1):
             image_path = os.path.join(root, image_name)
             print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
             upload_image(category, image_path, image_url, image_name, disease_url)

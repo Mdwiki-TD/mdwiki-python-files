@@ -60,9 +60,7 @@ def get_t(links, lang):
 
     def valid(x, tab, empty=''):
         i = tab.get(x) or tab.get(x.lower())
-        if not i or i == empty:
-            return True
-        return False
+        return not i or i == empty
 
     # ---
     if 'onlynew' in sys.argv:
@@ -111,8 +109,6 @@ def start():
         if arg == "-lang":
             langkeys = [value]
     # ---
-    n = 0
-    # ---
     for lang in langkeys:
         # ---
         links = links_by_lang[lang]
@@ -120,10 +116,7 @@ def start():
         print(f'lang: {lang}')
         print(f'links: {len(links)}')
         # ---
-        n += 1
-        # ---
         get_t(links, lang)
-        # ---
     # ---
     logem()
 
@@ -136,9 +129,9 @@ def test():
     # ---
     logem()
     # ---
-    n = 0
-    # ---
     if "print" in sys.argv:
+        # ---
+        n = 0
         for lang, titles in tra_by_lang.items():
             for title, tra in titles.items():
                 if tra != '':

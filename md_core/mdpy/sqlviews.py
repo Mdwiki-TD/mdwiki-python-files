@@ -109,8 +109,6 @@ def update_in_sql(lang, table):
 
 def insert_to_sql(lang, table):
     # ---
-    to_insert = []
-    # ---
     for target, tab in table.items():
         # ---
         all = tab.get('all', 0)
@@ -131,8 +129,7 @@ def insert_to_sql(lang, table):
         qu = sql_for_mdwiki.mdwiki_sql(qu, update=True, Prints=True)
         # ---
         # to_insert.append(qu)
-    # ---
-    if len(to_insert) > 0:
+    if to_insert := []:
         ins = ",\n".join(to_insert)
         qua = f""" INSERT INTO views (target, countall, count2021, count2022, count2023, lang) VALUES
             {ins}; """
@@ -232,10 +229,9 @@ def main():
         # ---
         for pupdate, title_list in tab.items():
             start = '20210401'
-            # ---
-            rem = re.match(r'^(?P<y>\d\d\d\d)-(?P<m>\d\d)-(?P<d>\d\d)$', pupdate)
-            # ---
-            if rem:
+            if rem := re.match(
+                r'^(?P<y>\d\d\d\d)-(?P<m>\d\d)-(?P<d>\d\d)$', pupdate
+            ):
                 start = rem.group('y') + rem.group('m') + rem.group('d')
             # ---
             lenlist = len(title_list)

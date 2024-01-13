@@ -4,64 +4,61 @@ params_placeholders = {
     "side_effects": "<!-- common side effects and notable side effects -->",
     "interactions": "<!-- notable interactions -->",
 }
-# ---
-all_params = {}
-params_to_add = {}
-# ---
-all_params['first'] = [
-    "Verifiedfields",
-    "Verifiedrevid",
-    "Watchedfields",
-    "Watchedrevid",
-    "verifiedfields",
-    "verifiedrevid",
-    "watchedfields",
-    "watchedrevid",
-    "drug_name",
-    "INN",
-    "image",
-    "width",
-    "alt",
-    "image2",
-    "width2",
-    "alt2",
-    "caption",
-    "caption2",
-    "imageL",
-    "widthL",
-    "altL",
-    "imageR",
-    "widthR",
-    "altR",
-    "captionLR",
-]
-# ---
-all_params['combo'] = {
-    "mab": [
-        "type",
-        "mab_type",
-        "source",
-        "target",
+all_params = {
+    'first': [
+        "Verifiedfields",
+        "Verifiedrevid",
+        "Watchedfields",
+        "Watchedrevid",
+        "verifiedfields",
+        "verifiedrevid",
+        "watchedfields",
+        "watchedrevid",
+        "drug_name",
+        "INN",
+        "image",
+        "width",
+        "alt",
+        "image2",
+        "width2",
+        "alt2",
+        "caption",
+        "caption2",
+        "imageL",
+        "widthL",
+        "altL",
+        "imageR",
+        "widthR",
+        "altR",
+        "captionLR",
     ],
-    "vaccine": [
-        "type",
-        "target",
-        "vaccine_type",
-    ],
-    "combo": [
-        "type",
-        "component1",
-        "class1",
-        "component2",
-        "class2",
-        "component3",
-        "class3",
-        "component4",
-        "class4",
-        "component5",
-        "class5",
-    ],
-    "all": [],
+    'combo': {
+        "mab": [
+            "type",
+            "mab_type",
+            "source",
+            "target",
+        ],
+        "vaccine": [
+            "type",
+            "target",
+            "vaccine_type",
+        ],
+        "combo": [
+            "type",
+            "component1",
+            "class1",
+            "component2",
+            "class2",
+            "component3",
+            "class3",
+            "component4",
+            "class4",
+            "component5",
+            "class5",
+        ],
+        "all": [],
+    },
 }
 # ---
 all_params['combo']['all'] = all_params['combo']['mab'] + all_params['combo']['vaccine'] + all_params['combo']['combo']
@@ -80,8 +77,6 @@ all_params['names'] = [
     "USAN",
     "IUPAC_name",
 ]
-# ---
-params_to_add['names'] = ["pronounce", "tradename", "synonyms", "IUPAC_name"]
 # ---
 all_params['gene'] = [
     "gt_target_gene",
@@ -117,19 +112,26 @@ all_params['clinical'] = [
     "duration",
 ]
 # ---
-params_to_add['clinical'] = ["class", "uses", "side_effects", "interactions", "onset", "duration_of_action", "defined_daily_dose", "typical_dose", "breastfeeding"]
-# ---
 all_params['external'] = [
     "Drugs.com",
     "NLM",
     "MedlinePlus",
 ]
-# ---
-params_to_add['external'] = [
-    "Drugs.com",
-    # "NLM",
-    "MedlinePlus",
-]
+params_to_add = {
+    'names': ["pronounce", "tradename", "synonyms", "IUPAC_name"],
+    'clinical': [
+        "class",
+        "uses",
+        "side_effects",
+        "interactions",
+        "onset",
+        "duration_of_action",
+        "defined_daily_dose",
+        "typical_dose",
+        "breastfeeding",
+    ],
+    'external': ["Drugs.com", "MedlinePlus"],
+}
 # ---
 all_params['legal'] = [
     "INN_EMA",

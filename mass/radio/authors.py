@@ -29,7 +29,7 @@ def get_author(url):
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         return '', studies
-    
+
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
@@ -37,9 +37,7 @@ def get_author(url):
 
     # Step 2: Parse the HTML content
     soup = BeautifulSoup(response.content, 'html.parser')
-    # <meta name="author" content="Frank Gaillard"/>
-    author = soup.find('meta', attrs={'name': 'author'}).get('content')
-    return author
+    return soup.find('meta', attrs={'name': 'author'}).get('content')
 
 def main():
     n = 0

@@ -8,6 +8,7 @@ python t.py test
 python3 core8/pwb.py tw/t
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -37,7 +38,7 @@ bearer_token = twet_config.bearer_token
 # ---
 title = 'WikiProjectMed:List'
 # ---
-json_file = Dir + '/done.json'
+json_file = f'{Dir}/done.json'
 
 
 def auth_ready(tweet, link=None):
@@ -64,7 +65,7 @@ def auth(tweet, link=None):
     api = tweepy.API(auth)
     # ---
     # t = api.update_status(tweet)
-    t = api.update_status_with_media(tweet, Dir + '/a.png')
+    t = api.update_status_with_media(tweet, f'{Dir}/a.png')
     print(t)
     # ---
     dataid = getattr(t, 'id')
@@ -83,8 +84,7 @@ def do_api(params):
     json1 = {}
     try:
         r4 = requests.Session().post(url, data=params)
-        json1 = json.loads(r4.text)
-        return json1
+        return json.loads(r4.text)
     except Exception:
         return {}
     # ---
@@ -178,7 +178,7 @@ def start_md():
     # ---
     print(f'lenth of links: {len(links)} links:')
     # ---
-    if len(links) == 0:
+    if not links:
         print('close')
         sys.exit()
     # ---

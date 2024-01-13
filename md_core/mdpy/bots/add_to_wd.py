@@ -95,7 +95,7 @@ def work_with_2_qids(oldq, new_q):
             printe.output('<<lightred>> **remove2 label false.')
             printe.output(remove2)
     # ---
-    if len_sites in [1, 0]:
+    if len_sites in {1, 0}:
         printe.output('<<lightblue>> merge qids')
         return wikidataapi.WD_Merge(oldq, new_q)
     # ---
@@ -132,8 +132,7 @@ def add_wd(qid, enlink, lang, target):
     error = ss.get('error', {}).get('code', {})
     # ---
     if 'wikibase-validator-sitelink-conflict' in str(ss):
-        qii = re.match(r'.*\"\>(Q\d+)\<\/a.*', str(ss))
-        if qii:
+        if qii := re.match(r'.*\"\>(Q\d+)\<\/a.*', str(ss)):
             qid2 = qii.group(1)
             # ---
             if qid == "":

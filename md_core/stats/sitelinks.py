@@ -39,10 +39,9 @@ def get_sitelinks(qs_list, lena=300):
         params_wd["ids"] = '|'.join(qids)
         # ---
         printe.output(f'<<lightgreen>> done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.')
-        # ---
-        json1 = wikidataapi.post(params_wd, apiurl='https://www.wikidata.org/w/api.php')
-        # ---
-        if json1:
+        if json1 := wikidataapi.post(
+            params_wd, apiurl='https://www.wikidata.org/w/api.php'
+        ):
             # ---
             entities = json1.get("entities", {})
             # ---
@@ -59,7 +58,7 @@ def get_sitelinks(qs_list, lena=300):
             title = tab.get("title", '')
             site  = tab.get("site", '')
             # ---
-            if not site in sitelinks:
+            if site not in sitelinks:
                 sitelinks[site] = []
             # ---
             sitelinks[site].append(title)

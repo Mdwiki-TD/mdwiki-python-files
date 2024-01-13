@@ -9,6 +9,7 @@ from nccommons import mosab_api
 # upload = mosab_api.upload_by_url(file_name, text, url, comment='')
 # ---
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -30,7 +31,7 @@ dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 config = configparser.ConfigParser()
-config.read(dir2 + "/confs/nccommons_user.ini")
+config.read(f"{dir2}/confs/nccommons_user.ini")
 # ---
 username = config["MOSSAB"]["username"].strip()
 password = config["MOSSAB"]["password"].strip()
@@ -45,16 +46,12 @@ upload_all = {1: False}
 r1_params = {"format": "json", "action": "query", "meta": "tokens", "type": "login"}
 r2_params = {"format": "json", "action": "login", "lgname": username, "lgpassword": password}
 # ---
-SS = {}
-SS["ss"] = requests.Session()
-SS["login_not_done"] = True
+SS = {"ss": requests.Session(), "login_not_done": True}
 
 
 def py_input(s):
     pywikibot.output(s)
-    sa = input()
-    # ---
-    return sa
+    return input()
 
 
 def Log_to_wiki(family="nccommons", lang="www"):
@@ -65,7 +62,7 @@ def Log_to_wiki(family="nccommons", lang="www"):
     # ---
     SS["family"] = family
     SS["lang"] = lang
-    SS["url"] = "https://" + f"{lang}.{family}.org/w/api.php"
+    SS["url"] = f"https://{lang}.{family}.org/w/api.php"
     SS["ss"] = requests.Session()
     # ---
     r11 = SS["ss"].get(SS["url"], params=r1_params)
@@ -241,7 +238,6 @@ def upload_by_url(file_name, text, url, comment=''):
 
 def create_Page(text, title, summary="create page"):
     pywikibot.output(f" create Page {title}:")
-    time_sleep = 0
     # ---
     params = {"action": "edit", "title": title, "text": text, "summary": summary, "notminor": 1, "createonly": 1}
     # ---
@@ -271,6 +267,7 @@ def create_Page(text, title, summary="create page"):
     # ---
     if success:
         pywikibot.output(f"** true ..  {SS['family']} : [[{title}]] ")
+        time_sleep = 0
         pywikibot.output("Done True... time.sleep(%d) " % time_sleep)
         time.sleep(time_sleep)
         return True

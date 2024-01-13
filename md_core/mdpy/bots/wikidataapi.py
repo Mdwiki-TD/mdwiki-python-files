@@ -312,10 +312,9 @@ def Labels_API(Qid, label, lang, remove=False):
         "language": lang,
         "value": label,
     }
-    # ---
-    req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
-    # ---
-    if req:
+    if req := post(
+        params, apiurl="https://www.wikidata.org/w/api.php", token=True
+    ):
         text = str(req)
         if ('using the same description text' in text) and ('associated with language code' in text):
             # item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
@@ -347,10 +346,9 @@ def get_redirects(liste):
             "redirects": 1,
             "utf8": 1,
         }
-        # ---
-        json1 = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
-        # ---
-        if json1:
+        if json1 := post(
+            params, apiurl="https://www.wikidata.org/w/api.php", token=True
+        ):
             redd = json1.get("query", {}).get("redirects", [])
             for red in redd:
                 redirects[red["from"]] = red["to"]

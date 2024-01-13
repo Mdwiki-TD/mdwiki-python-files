@@ -180,12 +180,10 @@ class OneCase:
 
         self.create_category()
     def create_set(self, set_title, sets):
-        text = ''
         # ---
         if 'noset' in sys.argv:
             return
-        # ---
-        text += '{{Imagestack\n|width=850\n'
+        text = '' + '{{Imagestack\n|width=850\n'
         text += f'|title={set_title}\n|align=centre\n|loop=no\n'
         # ---
         for image_name in sets:
@@ -198,13 +196,11 @@ class OneCase:
         page = ncc_MainPage(set_title, 'www', family='nccommons')
         # ---
         if not page.exists():
-            new = page.Create(text=text, summary='')
-            return new
+            return page.Create(text=text, summary='')
         # ---
         # if text != page.get_text():
         #     printe.output(f'<<lightyellow>>{set_title} already exists')
         p_text = page.get_text()
         if p_text.find('.bmp') != -1:
             p_text = p_text.replace('.bmp', '.jpg')
-            ssa = page.save(newtext=p_text, summary='update', nocreate=0, minor='')
-            return ssa
+            return page.save(newtext=p_text, summary='update', nocreate=0, minor='')

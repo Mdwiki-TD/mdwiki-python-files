@@ -80,17 +80,15 @@ def fix_es_months(text):
             for arg in temp.arguments:
                 na = arg.name
                 val = arg.value.strip()
-                # ---
-                new_val = make_new_val(val)
-                if new_val:
+                if new_val := make_new_val(val):
                     # arg.value = new_val
                     temp.set_arg(na, new_val)
-                # --
+                            # --
         # ---
         _new = parsed2.string
         # ---
         x.contents = _new
-        # ---
+            # ---
     # ---
     text = parsed.string
     # ---

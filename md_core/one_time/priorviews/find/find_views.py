@@ -52,11 +52,7 @@ def api_views(title, lang):
     # ---
     if not enviews or enviews == {}:
         return 0
-    # ---
-    vs = enviews.get(title, {}).get('all', 0)
-    # ---
-    # ---
-    return vs
+    return enviews.get(title, {}).get('all', 0)
 
 
 # ---
@@ -67,13 +63,9 @@ def get_v(links):
     # ---
     global ViewsData, N_g
     # ---
-    m = 0
-    # ---
     lena = len(links.keys())
     # ---
-    for mdtitle, langs in links.items():
-        # ---
-        m += 1
+    for m, (mdtitle, langs) in enumerate(links.items(), start=1):
         # ---
         if mdtitle not in ViewsData:
             ViewsData[mdtitle] = {}
@@ -113,7 +105,6 @@ def get_v(links):
 
 
 def start():
-    n = 0
     # ---
     # make text for each section
     for section, links in sects_links_langlinks.items():
@@ -121,10 +112,7 @@ def start():
         print(f'section: {section}')
         print(f'links: {len(links)}')
         # ---
-        n += 1
-        # ---
         get_v(links)
-        # ---
     # ---
     log_views()
 

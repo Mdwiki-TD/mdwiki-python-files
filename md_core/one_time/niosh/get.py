@@ -34,14 +34,14 @@ all_pages = {}
 
 def write_main():
     title = 'User:Mr. Ibrahem/niosh'
-    text = ''
     # ---
     # sort all_pages
-    all_pa = {x: v for x, v in sorted(all_pages.items(), key=lambda item: item[0].lower(), reverse=False)}
-    # ---
-    for x, tt in all_pa.items():
-        text += f'* [[{tt}]]\n'
-
+    all_pa = dict(
+        sorted(
+            all_pages.items(), key=lambda item: item[0].lower(), reverse=False
+        )
+    )
+    text = ''.join(f'* [[{tt}]]\n' for tt in all_pa.values())
     page = md_MainPage(title, 'www', family='mdwiki')
 
     # Get the current text of the page.
@@ -56,8 +56,10 @@ def write_main():
 def write_to_mdwiki(data, x):
     if 'write' not in sys.argv:
         return
-    wikitext = '''{| class="wikitable sortable"\n|-\n'''
-    wikitext += '! # !! title !! urls\n|-\n'
+    wikitext = (
+        '''{| class="wikitable sortable"\n|-\n'''
+        + '! # !! title !! urls\n|-\n'
+    )
     n = 0
     for k, v in data.items():
         if v:
@@ -103,7 +105,7 @@ def run(x, urls):
                 if title not in by_url_all[link]:
                     by_url_all[link].append(title)
         # ---
-        if len(ya) > 0:
+        if ya:
             by_title[title] = ya
         if title not in by_title_all:
             by_title_all[title] = ya
@@ -115,7 +117,9 @@ def run(x, urls):
             by_url[_u] = []
     # ---
     # sort by_url keys
-    by_url = {k: v for k, v in sorted(by_url.items(), key=lambda item: item[0].lower(), reverse=False)}
+    by_url = dict(
+        sorted(by_url.items(), key=lambda item: item[0].lower(), reverse=False)
+    )
     # ---
     file1 = f"{Dir}/by_title/{x}.json"
     # ---

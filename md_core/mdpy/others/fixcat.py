@@ -43,16 +43,16 @@ def get_cats_and_pages():
         pages = mdwiki_api.subcatquery(cat, depth=depth, ns="0")
         # ---
         for page in pages:
-            if page in cat_for_pages:
-                if cat != 'RTT':
-                    cat_for_pages[page] = cat
-                    catlen[cat] += 1
-                else:
-                    RTT_dpl += 1
-            else:
+            if (
+                page in cat_for_pages
+                and cat != 'RTT'
+                or page not in cat_for_pages
+            ):
                 cat_for_pages[page] = cat
                 catlen[cat] += 1
-        # ---
+            else:
+                RTT_dpl += 1
+            # ---
     # ---
     for cat, len in catlen.items():
         printe.output(f'cat: {cat} , len: {len}')

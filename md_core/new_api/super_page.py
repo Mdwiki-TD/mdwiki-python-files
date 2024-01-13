@@ -292,7 +292,7 @@ class MainPage:
         self.length = ta.get('length') or self.length
         self.revid = ta.get('lastrevid') or self.revid
         # ---
-        self.is_redirect = True if 'redirect' in ta else False
+        self.is_redirect = 'redirect' in ta
         # ---
         for cat in ta.get('categories', []):
             # ---
@@ -584,10 +584,7 @@ class MainPage:
         if not self.info['done']:
             self.get_infos()
         # ---
-        if with_hidden:
-            return self.all_categories_with_hidden
-        # ---
-        return self.categories
+        return self.all_categories_with_hidden if with_hidden else self.categories
 
     def get_hidden_categories(self):
         # ---
@@ -642,18 +639,7 @@ class MainPage:
         # ---
         # printe.output(f'tags:{str(tags)}')
         # ---
-        if tag == '':
-            return tags
-        # ---
-        new_tags = []
-        # ---
-        for x in tags:
-            if x.name == tag:
-                new_tags.append(x)
-        # ---
-        # return tags if tag == '' else [x for x in tags if x.name == tag]
-        # ---
-        return new_tags
+        return tags if tag == '' else [x for x in tags if x.name == tag]
 
     def can_edit(self, script=''):
         # ---
@@ -703,10 +689,7 @@ class MainPage:
             data = self.post_params(params)
             # ---
             _userinfo_ = {"id": 229481, "name": "Mr. Ibrahem", "groups": ["editor", "reviewer", "rollbacker", "*", "user", "autoconfirmed"]}
-            # ---
-            ff = data.get("query", {}).get("users", [{}])
-            # ---
-            if ff:
+            if ff := data.get("query", {}).get("users", [{}]):
                 self.userinfo = ff[0]
         # ---
         return self.userinfo
@@ -718,7 +701,6 @@ class MainPage:
         return self.templates
 
     def ask_put(self, nodiff=False):
-        yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
         # ---
         if 'ask' in sys.argv and not Save_Edit_Pages[1] or print_test[1]:
             # ---
@@ -739,6 +721,7 @@ class MainPage:
                 printe.output(f'<<lightgreen>> {__file__} save all without asking.')
                 printe.output('<<lightgreen>> ---------------------------------')
                 Save_Edit_Pages[1] = True
+            yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
             # ---
             if sa not in yes_answer:
                 printe.output("wrong answer")
@@ -836,12 +819,7 @@ class MainPage:
             # ---
             return True
         # ---
-        if error != {}:
-            er = self.handel_err(error, function='Save')
-            # ---
-            return er
-        # ---
-        return False
+        return self.handel_err(error, function='Save') if error != {} else False
 
     def Create(self, text='', summary=''):
         # ---
@@ -890,12 +868,7 @@ class MainPage:
             # ---
             return True
         # ---
-        if error != {}:
-            er = self.handel_err(error, function='Create')
-            # ---
-            return er
-            # ---
-        return False
+        return self.handel_err(error, function='Create') if error != {} else False
 
 
 # ---

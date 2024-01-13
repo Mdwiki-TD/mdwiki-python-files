@@ -41,11 +41,11 @@ def process_folders(root_folder):
 
     all_diseases = dict(sorted(all_diseases.items(), key=lambda x: x[1], reverse=True))
 
-    text = '{| class="wikitable sortable"\n|-\n'
-    text += '! # !! Category !! Image set !! Number of images\n|-\n'
-    n = 0
-    for x, count in all_diseases.items():
-        n += 1
+    text = (
+        '{| class="wikitable sortable"\n|-\n'
+        + '! # !! Category !! Image set !! Number of images\n|-\n'
+    )
+    for n, (x, count) in enumerate(all_diseases.items(), start=1):
         text += f'! {n}\n'
         text += f'| [[:Category:{x}]]\n'  # + ' ||{{#ifexist:Category:' + x + '|1|0}}\n'
         text += f'| [[{x}]]\n'  # + '|| {{#ifexist:' + x + '|1|0}}\n'

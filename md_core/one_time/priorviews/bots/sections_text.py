@@ -39,8 +39,6 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
     Returns a formatted string containing view counts for all available languages.
     """
     lang_text = ''
-    u = 0
-
     if 'test1' in sys.argv:
         print('mdtitle:')
         print(mdtitle)
@@ -48,8 +46,7 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
         print(langlinks)
 
     # Loop through all available languages in the sorted order
-    for l in langs_keys_sorted:
-        u += 1
+    for u, l in enumerate(langs_keys_sorted, start=1):
         if l not in section_langs_views[section]:
             section_langs_views[section][l] = 0
         view = ''
