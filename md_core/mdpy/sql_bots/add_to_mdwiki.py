@@ -34,8 +34,8 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             # ---
             mdtit = escape_string(mdtitle)
             user2 = escape_string(user)
-            tar = escape_string(target)
-            word = 0
+            tar   = escape_string(target)
+            word  = 0
             # ---
             if str(namespace) != '0':
                 continue

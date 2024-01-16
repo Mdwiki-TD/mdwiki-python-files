@@ -23,8 +23,7 @@ from mdpy.bots import sql_for_mdwiki
 # ---
 from mdpy import printe
 from mdpy import wpref
-
-# wpref.submitAPI( params , lang = 'or' , returnjson = False )
+from wprefs.api import submitAPI#(params, lang='', Type='post')
 # ---
 or_url = 'https://' + 'or.wikipedia.org/w/api.php'
 
@@ -43,7 +42,7 @@ def Find_pages_exists_or_not(liste, apiurl=''):
     # ---
     table = {}
     # ---
-    json1 = wpref.submitAPI(params, lang='or')
+    json1 = submitAPI(params, lang='or')
     # ---
     if json1:
         query_pages = json1.get("query", {}).get("pages", {})
@@ -76,7 +75,7 @@ def create_redirect(target, mdtitle):
         sus = f'Redirected page to [[{target}]]'
         params = {"action": "edit", "format": "json", "title": mdtitle, "text": text, "summary": sus, "createonly": 1, "utf8": 1, "token": ""}
         # ---
-        uu = wpref.submitAPI(params, lang='or')
+        uu = submitAPI(params, lang='or')
         # ---
         if 'Success' in uu:
             printe.output(f'<<lightgreen>>** true .. [[{mdtitle}]] ')

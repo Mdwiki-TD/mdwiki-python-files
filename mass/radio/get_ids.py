@@ -86,7 +86,7 @@ def main():
             continue
         #---
         case_id, studies = get_ids(url)
-        ids[url] = {"caseId": case_id, "title": title, "studies": studies}
+        ids[str(case_id)] = {"url":url, "caseId": case_id, "title": title, "studies": studies}
         #---
         if n % 100 == 0:
             with open(ids_file, 'w', encoding='utf-8') as f:

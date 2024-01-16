@@ -66,7 +66,7 @@ def main():
         ids = json.loads(f.read())
 
     n = 0
-    for url, tab in ids.items():
+    for _, tab in ids.items():
 
         for study in tab['studies']:
             n += 1

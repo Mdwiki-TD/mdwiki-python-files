@@ -11,26 +11,38 @@ from pathlib import Path
 # ---
 from mdpy import printe
 from new_api.mdwiki_page import MainPage as md_MainPage
-from stats.editors import get_editors
+from stats.editors import get_editors, validate_ip
 #---
 Dir = Path(__file__).parent
 sites_dir   = Dir / 'sites'
 editors_dir = Dir / 'editors'
 #---
-change_codes = {
-    "nb": "no",
-    "bat_smg": "bat-smg",
-    "be_x_old": "be-tarask",
-    "be-x-old": "be-tarask",
-    "cbk_zam": "cbk-zam",
-    "fiu_vro": "fiu-vro",
-    "map_bms": "map-bms",
-    "nds_nl": "nds-nl",
-    "roa_rup": "roa-rup",
-    "zh_classical": "zh-classical",
-    "zh_min_nan": "zh-min-nan",
-    "zh_yue": "zh-yue",
-}
+skip_sites = [
+    'enwiki', 
+    'wikidatawiki', 
+    'commonswiki', 
+    'specieswiki'
+    ]
+
+def filter_editors(editors, site):
+    # ---
+    editors = dict(sorted(editors.items(), key=lambda x: x[1], reverse=True))
+    # ---
+    for x, v in editors.copy().items():
+        if validate_ip(x):
+            del editors[x]
+    # ---
+    # del editor with less then 100 edits
+    for x, v in editors.copy().items():
+        if v < 10:
+            del editors[x]
+    # ---
+    # del Mr. Ibrahem if site != 'arwiki'
+    if site != 'ar':
+        if 'Mr._Ibrahem' in editors:    del editors['Mr._Ibrahem']
+        if 'Mr. Ibrahem' in editors:    del editors['Mr. Ibrahem']
+    # ---
+    return editors
 
 def work_in_one_site(site, links):
     # ---
@@ -43,6 +55,8 @@ def work_in_one_site(site, links):
         # return
     # ---
     editors = get_editors(links, site)
+    # ---
+    editors = filter_editors(editors, site)
     # ---
     if not editors:
         printe.output('<<red>> no editors')
@@ -66,13 +80,21 @@ def work_in_one_site(site, links):
         # ---
         user = user.replace('_', ' ')
         # ---
-        text += f'\n|-\n!{i}\n|[[:w:{site}:{user}|{user}]]\n|{count:,}'
+        text += f'\n|-\n!{i}\n|[[:w:{site}:user:{user}|{user}]]\n|{count:,}'
+        # ---
+        if i == 100:
+            break
         # ---
     # ---
     text += '\n|}'
     # ---
     page = md_MainPage(title, 'www', family='mdwiki')
-    page.save(newtext=text, summary='update', nocreate=0, minor='')
+    p_text = page.get_text()
+    # ---
+    if p_text != text:
+        page.save(newtext=text, summary='update', nocreate=0, minor='')
+    else:
+        printe.output('<<lightgreen>> no changes')
     # ---
     return editors
 
@@ -86,8 +108,9 @@ def start():
     # ---
     # read json files in sites_dir
     files = os.listdir(sites_dir)
-    # sort
-    files.sort()
+    # ---
+    # sort files by biggest size
+    files = sorted(files, key=lambda x: os.stat(sites_dir / x).st_size, reverse=True)
     # ---
     for numb, file in enumerate(files, start=1):
         # ---
@@ -97,6 +120,9 @@ def start():
             continue
         # ---
         site = file[:-5]
+        # ---
+        if site in skip_sites:
+            continue
         # ---
         if p_site and f'{p_site}wiki' != site:
             continue

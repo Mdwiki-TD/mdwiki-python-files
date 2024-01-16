@@ -98,8 +98,6 @@ def get_editors(links, site):
     else:
         editors = get_editors_sql(links, site)
     # ---
-    editors = dict(sorted(editors.items(), key=lambda x: x[1], reverse=True))
-    # ---
     if 'dump' in sys.argv and editors:
         with open(editors_dir / f'{site}.json', 'w', encoding='utf-8') as f:
             json.dump(editors, f, sort_keys=True)

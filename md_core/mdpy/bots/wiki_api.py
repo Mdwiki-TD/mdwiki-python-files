@@ -495,10 +495,10 @@ def get_page_views(titles, site='en', days=30):
     return views
 
 
-def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20300101', printurl=False, printstr=False, Type=''):
+def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20300101', printurl=False, printstr=False, Type='daily'):
     # ---
     numbers = {}
-    _Type = Type if Type in ["daily", "monthly"] else 'monthly'
+    # _Type = Type if Type in ["daily", "monthly"] else 'monthly'
     # ---
     numb = 0
     # ---
@@ -515,7 +515,7 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         # ---
         pa = urllib.parse.quote(page)
         # ---
-        url = 'https:' + '//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/' + langcode + '.wikipedia/all-access/all-agents/' + pa.replace('/', '%2F') + '/' + _Type + '/' + date_start + '00/' + date_end + '00'
+        url = 'https:' + '//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/' + langcode + '.wikipedia/all-access/all-agents/' + pa.replace('/', '%2F') + '/daily/' + date_start + '00/' + date_end + '00'
         # ---
         if "printurl" in sys.argv or printurl:
             printe.output('printboturl:\t\t' + url)
@@ -545,7 +545,10 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         if not data or data == {}:
             pywikibot.output(url)
         # ---
-        sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
+        sadasd = [
+            {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, 
+            {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}
+            ]
         # ---
         number_all = 0
         # ---
@@ -562,7 +565,11 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
                 tabl[year] = {'all': 0}
             # ---
             tabl[year]['all'] += x["views"]
-            tabl[year][month] = x["views"]
+            # ---
+            if month not in tabl[year]:
+                tabl[year][month] = 0
+            # ---
+            tabl[year][month] += x["views"]
             # ---
         # ---
         if number_all > 0:
