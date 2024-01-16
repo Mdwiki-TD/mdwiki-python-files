@@ -150,15 +150,17 @@ class OneCase:
             file_name = f'{self.title} (Radiopaedia {self.caseId}-{study} {plane} {planes[plane]}).{extension}'
             #---
             file_name = file_name.replace('  ', ' ').replace('  ', ' ').replace('  ', ' ')
-            file_name = file_name.replace(':', '.')
+            # ---
+            # fix BadFileName
+            file_name = file_name.replace(':', '.').replace('/', '.')
             #---
             new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
             #---
             file_n = f'File:{new_name}' if new_name else f'File:{file_name}'
             #---
-            self.images_count += 1
-            #---
-            sets.append(file_n)
+            if file_n not in sets:
+                self.images_count += 1
+                sets.append(file_n)
 
         set_title = f'Radiopaedia case {self.title} id: {self.caseId} study: {study}'
 
@@ -204,7 +206,15 @@ class OneCase:
         # if text != page.get_text():
         #     printe.output(f'<<lightyellow>>{set_title} already exists')
         p_text = page.get_text()
+        # ---
         if p_text.find('.bmp') != -1:
             p_text = p_text.replace('.bmp', '.jpg')
             ssa = page.save(newtext=p_text, summary='update', nocreate=0, minor='')
+            return ssa
+
+        elif 'fix' in sys.argv:
+            if text == p_text:
+                printe.output('<<lightyellow>> no changes')
+                return True
+            ssa = page.save(newtext=text, summary='update', nocreate=0, minor='')
             return ssa

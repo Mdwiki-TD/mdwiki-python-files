@@ -10,25 +10,22 @@ python3 core8/pwb.py mdpy/enwiki_views
 # (C) Ibrahem Qasim, 2022
 #
 #
-import os
-import codecs
+import sys
 import json
 import traceback
 import pywikibot
-import datetime
-from datetime import timedelta
 # ---
-from mdpy.bots import wiki_api
+from mdpy.bots import rest_v1_views
 from mdpy import printe
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 # ---
 from pathlib import Path
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
+
 
 def get_RTT():
     RTT = []
@@ -36,7 +33,7 @@ def get_RTT():
     filename = Path(dir2) / 'public_html/Translation_Dashboard/cats_cash/RTT.json'
     # ---
     try:
-        with codecs.open(filename, "r", encoding="utf-8") as file:
+        with open(filename, "r", encoding="utf-8") as file:
             textn = file.read()
     except Exception:
         pywikibot.output('Traceback (most recent call last):')
@@ -60,7 +57,10 @@ def get_RTT2():
     # ---
     print(f'get sitelinks from {sitelinks_file}')
     # ---
-    sitelinks_all = json.loads(codecs.open(sitelinks_file, "r", encoding="utf-8").read())
+    sitelinks_all = {}
+    # ---
+    with open(sitelinks_file, "r", encoding="utf-8") as file:
+        sitelinks_all = json.load(file)
     # ---
     diff = 0
     # ---
@@ -89,17 +89,9 @@ def main():
     # ---
     en_keys.append('Cisatracurium')
     # ---
-    # enviews = wiki_api.get_page_views(en_keys, site='en', days=30)
-    # ---
-    d_end = datetime.datetime.utcnow() - timedelta(days=1)
-    d_start = d_end - timedelta(weeks=4)
-    # ---
-    d_end = d_end.strftime('%Y%m%d')
-    d_start = d_start.strftime('%Y%m%d')
-    # ---
     print(f'start get_views_with_rest_v1: lenth: {len(en_keys)}')
     # ---
-    enviews = wiki_api.get_views_with_rest_v1('en', en_keys, date_start=d_start, date_end=d_end)
+    enviews = rest_v1_views.get_views_last_30_days('en', en_keys)
     # ---
     printe.output(f'len of enviews: {len(enviews.keys())}')
     # ---
@@ -107,7 +99,10 @@ def main():
     # ---
     enwiki_pageviews = Path(dir2) / 'public_html/Translation_Dashboard/Tables/enwiki_pageviews.json'
     # ---
-    old_views = json.loads(codecs.open(enwiki_pageviews, "r", encoding="utf-8-sig").read())
+    old_views = {}
+    # ---
+    with open(enwiki_pageviews, "r", encoding="utf-8-sig") as file:
+        old_views = json.load(file)
     # ---
     n_views = dict(old_views.items())
     # ---
@@ -119,19 +114,17 @@ def main():
         if enwiki_to_mdwiki.get(k):
             k = enwiki_to_mdwiki.get(k)
         # ---
-        n_views[k] = view['all']
+        n_views[k] = view
     # ---
     printe.output(f'no_views:{no_views},\t len of n_views: {len(n_views.keys())}')
     # ---
-    with open(enwiki_pageviews, 'w', encoding="utf-8") as outfile:
-        json.dump(n_views, outfile, sort_keys=True, indent=4)
-
+    if 'nodump' not in sys.argv:
+        with open(enwiki_pageviews, 'w', encoding="utf-8") as outfile:
+            json.dump(n_views, outfile, sort_keys=True, indent=4)
     # ---
     # add_to_mdwiki_sql(numbers , lange)
     # ---
 
 
-# ---
 if __name__ == '__main__':
     main()
-# ---

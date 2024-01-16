@@ -17,8 +17,11 @@ def convert_bmp_to_jpg(bmp_data):
     print("Converting BMP to JPEG...")
     bmp_image = Image.open(BytesIO(bmp_data))
     jpg_data = BytesIO()
-    bmp_image.convert("RGB").save(jpg_data, format="JPEG")
-    return jpg_data.getvalue()
+    try:
+        bmp_image.convert("RGB").save(jpg_data, format="JPEG")
+        return jpg_data.getvalue()
+    except:
+        return False
 
 def save_image(image_data, pathh):
     print(f"Saving image to {pathh}...")
@@ -44,7 +47,8 @@ def work_bmp(url):
         #---
         jpg_data = convert_bmp_to_jpg(image_data)
         #---
-        save_image(jpg_data, img_path)
+        if jpg_data:
+            save_image(jpg_data, img_path)
     else:
         print(f"Image already exists at {img_path}. continue...")
     #---

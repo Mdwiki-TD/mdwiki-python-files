@@ -210,7 +210,7 @@ class Login:
         # ---
         tokens_by_lang[self.lang] = r3_token
         # ---
-        printe.output(f'<<green>> r3_token: {self.r3_token}')
+        # printe.output(f'<<green>> r3_token: {self.r3_token}')
 
     def post(self, params, Type='get', addtoken=False, CSRF=True):
         # ---

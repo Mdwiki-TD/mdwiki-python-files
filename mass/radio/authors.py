@@ -47,8 +47,9 @@ def main():
     with open(authors_file, 'r', encoding='utf-8') as ff:
         authors = json.loads(ff.read())
 
-    for url, tab in ids.items():
+    for _, tab in ids.items():
         caseId = str(tab['caseId'])
+        url = tab['url']
         n += 1
         #---
         print(f"n: {n}/ {len(ids)}")

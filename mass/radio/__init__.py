@@ -14,6 +14,7 @@ python3 core8/pwb.py mass/radio/authors
 
 python3 core8/pwb.py mass/radio/start
 
+tfj run fix1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/fix"
 tfj run start1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:1"
 tfj run start2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:2"
 tfj run start3 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:3"
