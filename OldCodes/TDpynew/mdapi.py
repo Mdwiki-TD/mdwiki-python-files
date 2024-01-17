@@ -2,9 +2,8 @@
 """
 
 Usage:
-from TDpynew import enapi
+from TDpynew import mdapi
 # result = enapi.submitAPI(params, addtoken=False)
-
 """
 #
 # (C) Ibrahem Qasim, 2022
@@ -14,17 +13,19 @@ import json
 import traceback
 import requests
 from TDpynew import user_account_new
+
 # ---
 SS = {}
 # ---
-lgname_enwiki = user_account_new.lgname_enwiki
-lgpass_enwiki = user_account_new.lgpass_enwiki
+username = user_account_new.my_username  # user_account_new.bot_username
+passe = user_account_new.mdwiki_pass  # user_account_new.bot_password     #user_account_new.my_password
 # ---
 login_done = {1: False}
 print_pywikibot = {1: False}
 # ---
 try:
     import pywikibot
+
     print_pywikibot[1] = True
 except BaseException:
     print_pywikibot[1] = False
@@ -34,10 +35,11 @@ def printt(s):
     if print_pywikibot[1]:
         pywikibot.output(s)
 
+
 def login():
     # ---
     SS["ss"] = requests.Session()
-    SS["url"] = 'https://' + 'en.wikipedia.org/w/api.php'
+    SS["url"] = 'https://' + 'mdwiki.org/w/api.php'
     SS["ss"] = requests.Session()
     # ---
     r11 = SS["ss"].get(
@@ -57,8 +59,8 @@ def login():
             # 'assert': 'user',
             'format': 'json',
             'action': 'login',
-            'lgname': lgname_enwiki,
-            'lgpassword': lgpass_enwiki,
+            'lgname': username,
+            'lgpassword': passe,
             'lgtoken': r11.json()['query']['tokens']['logintoken'],
         },
     )
@@ -73,7 +75,7 @@ def login():
             pywikibot.output(traceback.format_exc())
             pywikibot.output('CRITICAL:')
     else:
-        printt(f"<<lightgreen>> mdwiki/TDpynew/mdapi.py: log to {SS['url']} user:{lgname_enwiki} Success... ")
+        printt(f"<<lightgreen>> mdwiki/TDpynew/mdapi.py: log to {SS['url']} user:{username} Success... ")
     # ---
     # get edit token
     SS["r33"] = SS["ss"].get(
@@ -88,7 +90,8 @@ def login():
     SS["r3_token"] = SS["r33"].json()['query']['tokens']['csrftoken']
     login_done[1] = True
 
-def submitAPI(params, addtoken=True):
+
+def submitAPI(params, addtoken=False):
     # ---
     if not login_done[1]:
         login()

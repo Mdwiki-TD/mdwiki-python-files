@@ -10,16 +10,20 @@ import sys
 import os
 import json
 import codecs
+
 # ---
 from mdpy import printe
 from new_api.mdwiki_page import MainPage as md_MainPage
 from new_api.wiki_page import MainPage, change_codes
+
 # ---
 from prior import get_them
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 All = {}
 allen = {}
@@ -269,6 +273,7 @@ def start_all():
         # ---
         log_all(main_File)
         log_allen(main_File_en)
+
 
 if __name__ == '__main__':
     start_all()

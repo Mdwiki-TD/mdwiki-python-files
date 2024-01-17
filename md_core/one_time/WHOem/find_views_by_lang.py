@@ -1,6 +1,6 @@
 '''
 
-python3 core8/pwb.py WHOem/lists/find_views_by_lang
+python3 core8/pwb.py WHOem/find_views_by_lang
 
 '''
 import sys
@@ -8,24 +8,15 @@ import json
 import os
 from pathlib import Path
 import codecs
-
 # ---
 from mdpy import printe
 from mdpy.bots import wiki_api
-from priorviews.bots import helps
-
 # ---
 TEST = False
 # ---
 Dir = Path(__file__).parent
 # ---
-with codecs.open(f'{Dir}/lang_links.json', 'r', encoding='utf-8') as f:
-    lang_links = json.load(f)  # {'en': 'enwiki', 'redirect_to': '', 'langs': {'ar': 'arwiki'}}
-# ---
-with codecs.open(f'{Dir}/lang_links_mdtitles.json', 'r', encoding='utf-8') as f:
-    lang_links_mdtitles = json.load(f)
-# ---
-file = f'{Dir}/views.json'
+file = f'{Dir}/lists/views.json'
 # ---
 if not os.path.exists(file):
     with open(file, 'w', encoding='utf-8') as f:
@@ -36,14 +27,23 @@ with codecs.open(file, 'r', encoding='utf-8') as f:
 # ---
 N_g = 0
 
+def dump_data(file, data):
+    printe.output(f'<<green>> dump_data() file:{file}.')
+    printe.output(f'<<yellow>> dump_data {len(data)} views')
+    try:
+        with codecs.open(file, 'w', encoding='utf-8') as f:
+            json.dump(data, f)
+    except KeyboardInterrupt:
+        printe.output('<<red>> keyboard interrupt sys.exit()')
+        # ---
+        with codecs.open(f'{file}_1', 'w', encoding='utf-8') as f:
+            json.dump(data, f)
+        # ---
+        sys.exit()
+    except Exception as e:
+        printe.output(f'<<red>> dump Error: {e}')
 
-def log_views():
-    printe.output(f'<<yellow>> log_views {len(ViewsData)} views')
-    # dump ViewsData
-    helps.dump_data(file, ViewsData)
-
-
-def get_v(lang, links):
+def get_v(lang, links, lang_links_mdtitle_s):
     # ---
     global ViewsData, N_g
     # ---
@@ -64,7 +64,7 @@ def get_v(lang, links):
             # ---
             # _views_ = {"all": 14351,"2021": {"all": 907,"202108": 186},"2022": {"all": 5750,"202201": 158}}
             # ---
-            mdtitle = lang_links_mdtitles.get(lang, {}).get(title, None)
+            mdtitle = lang_links_mdtitle_s.get(lang, {}).get(title, None)
             if mdtitle is None:
                 continue
             # ---
@@ -92,22 +92,40 @@ def get_v(lang, links):
             N_g += 1
             # ---
             if N_g % 100 == 0:
-                log_views()
+                dump_data(file, ViewsData)
 
+def get_lang_links_mdtitles(lang_links):
+    # ---
+    lang_links_mdtitles = {lang: {} for mdtitle, tab in lang_links.items() for lang in tab['langs'].keys()}
+    # ---
+    for lang in lang_links_mdtitles.keys():
+        lang_links_mdtitles[lang] = {tab['langs'][lang]: md for md, tab in lang_links.items() if lang in tab['langs']}
+    # ---
+    with codecs.open(f'{Dir}/lists/lang_links_mdtitles.json', 'w', encoding='utf-8') as f:
+        json.dump(lang_links_mdtitles, f, ensure_ascii=False, indent=4)
+    # ---
+    # sort lang_links_mdtitles by lenth
+    lang_links_mdtitles = dict(sorted(lang_links_mdtitles.items(), key=lambda x: len(x[1]), reverse=True))
+    # ---
+    # print first 10 of lang_links_mdtitles
+    to_p = dict(list(lang_links_mdtitles.items())[0:10])
+    # ---
+    for x, z in to_p.items():
+        print(x, len(z))
+    # ---
+    return lang_links_mdtitles
 
 def start():
+    # ---
+    with codecs.open(f'{Dir}/lists/lang_links.json', 'r', encoding='utf-8') as f:
+        lang_links = json.load(f)  # {'en': 'enwiki', 'redirect_to': '', 'langs': {'ar': 'arwiki'}}
+    # ---
+    lang_links_mdtitles = get_lang_links_mdtitles(lang_links)
     # ---
     # len of tab in lang_links
     all_lenth = sum(len(tab.keys()) for tab in lang_links_mdtitles.values())
     # ---
     to_work = lang_links_mdtitles
-    # ---
-    for arg in sys.argv:
-        arg, _, value = arg.partition(':')
-        if arg == 'lang' and value in lang_links_mdtitles.keys():
-            all_lenth = len(lang_links_mdtitles.get(value, {}))
-            to_work = {value: lang_links_mdtitles[value]}
-            printe.output(f'<<purple>> work in lang: {value}')
     # ---
     n = 0
     # ---
@@ -119,17 +137,11 @@ def start():
         # ---
         printe.output(f'<<blue>> p:{n}/{all_lenth} lang: {lang}, titles: {len(tab)}')
         # ---
-        get_v(lang, tab)
+        get_v(lang, tab, lang_links_mdtitles)
         # ---
     # ---
-    log_views()
+    dump_data(file, ViewsData)
 
 
 if __name__ == '__main__':
-    if 'fix' in sys.argv:
-        ViewsData = {x: z for x, z in ViewsData.items() if x in lang_links.keys()}
-        with codecs.open(file, 'w', encoding='utf-8') as f:
-            json.dump(ViewsData, f, ensure_ascii=False, indent=4)
-        print(f'len ViewsData: {len(ViewsData)}')
-    else:
-        start()
+    start()

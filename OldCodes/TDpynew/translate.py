@@ -9,6 +9,7 @@
 import sys
 import urllib.parse
 from pathlib import Path
+
 # ---
 Dir = Path(__file__).parent.parent
 # ---
@@ -19,12 +20,14 @@ from TDpynew import text_changes
 from TDpynew import ref
 from TDpynew import mdapi
 from TDpynew import enapi
+
 # ---
 wholearticle = {1: False}
 # ---
 Url_To_login = {1: '', 'not': True}
 # ---
 login_done = {1: False}
+
 
 def print_py(s):
     if sys.stdin.isatty():
@@ -37,8 +40,8 @@ def put(title, text):
     # ---
     title2 = 'User:Mr. Ibrahem/' + title
     if wholearticle[1]:
-        title2 = 'User:Mr. Ibrahem/' + title + '/full' 
-    
+        title2 = 'User:Mr. Ibrahem/' + title + '/full'
+
     # ---
     dataa = {
         "format": "json",

@@ -14,6 +14,7 @@ import os
 import traceback
 from datetime import datetime
 import pywikibot
+
 # ---
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
@@ -21,11 +22,13 @@ from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_md
 from mdpy.bots import mdwiki_api
 from mdpy.bots import wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
+
 # ---
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'

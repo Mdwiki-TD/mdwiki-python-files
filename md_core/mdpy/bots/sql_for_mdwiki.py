@@ -40,8 +40,9 @@ if py_v.endswith('.None'):
 pymysql_version = pkg_resources.parse_version(py_v)
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -143,21 +144,11 @@ def get_all_qids():
 
 
 def get_all_pages():
-    return [
-        ta['title']
-        for ta in mdwiki_sql(
-            'select DISTINCT title from pages;', return_dict=True
-        )
-    ]
+    return [ta['title'] for ta in mdwiki_sql('select DISTINCT title from pages;', return_dict=True)]
 
 
 def get_db_categories():
-    return {
-        c['category']: c['depth']
-        for c in mdwiki_sql(
-            'select category, depth from categories;', return_dict=True
-        )
-    }
+    return {c['category']: c['depth'] for c in mdwiki_sql('select category, depth from categories;', return_dict=True)}
 
 
 def add_qid(title, qid):

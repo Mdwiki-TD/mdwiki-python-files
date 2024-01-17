@@ -12,17 +12,19 @@ python3 core8/pwb.py mdcount/copy_word_table
 import json
 import sys
 from pathlib import Path
+
 # ---
 from mdpy.bots import sql_for_mdwiki
 from mdpy import printe
 from pymysql.converters import escape_string
+
 # ---
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # split path before "mdwiki"
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
-#print(f'dir2 : {dir2}')
+# print(f'dir2 : {dir2}')
 # ---
 que = '''select DISTINCT w_title, w_lead_words, w_all_words from words;'''
 # ---

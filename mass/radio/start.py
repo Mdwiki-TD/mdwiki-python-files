@@ -13,6 +13,7 @@ import json
 
 from new_api.ncc_page import CatDepth
 from mass.radio.One_Case import OneCase
+
 main_dir = Path(__file__).parent
 
 # ---
@@ -46,7 +47,7 @@ def main(ids_tab):
         print(f'all cases: {len(ids_tab)}')
         length = len(ids_tab) // 4
         for i in range(0, len(ids_tab), length):
-            tabs[str(i//length+1)] = dict(list(ids_tab.items())[i:i+length])
+            tabs[str(i // length + 1)] = dict(list(ids_tab.items())[i : i + length])
             print(f'tab {i//length+1} : {len(tabs[str(i//length+1)])}')
 
         for arg in sys.argv:
@@ -83,10 +84,7 @@ if __name__ == "__main__":
                 "url": "https://radiopaedia.org/cases/active-colonic-bleeding-importance-of-preliminary-non-contrast-arterial-phase-and-delayed-phase-imaging-on-ct-mesenteric-angiography",
                 "caseId": 42290,
                 "title": "Active colonic bleeding: importance of preliminary non-contrast, arterial phase and delayed phase imaging on CT mesenteric angiography",
-                "studies": [
-                    "https://radiopaedia.org/cases/42290/studies/45394",
-                    "https://radiopaedia.org/cases/42290/studies/45397"
-                ]
+                "studies": ["https://radiopaedia.org/cases/42290/studies/45394", "https://radiopaedia.org/cases/42290/studies/45397"],
             }
         }
     # ---

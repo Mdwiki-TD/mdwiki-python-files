@@ -15,9 +15,11 @@ import time as tttime
 import datetime
 from datetime import datetime
 from pymysql.converters import escape_string
+
 # ---
 from API import printe
 from api_sql import sql_qu
+
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db
 db_username = sql_qu.db_username
@@ -374,9 +376,8 @@ def MySQLdb_finder_New(encatTitle, arcatTitle):
     return MySQLdb_finder_N_New(encatTitle, arcatTitle)
 
 
-
 if __name__ == '__main__':
-    # ---        
+    # ---
     arqueries = '''
         select CONCAT("تصنيف:",page_title), ll_title
         from page, templatelinks, langlinks
@@ -390,4 +391,3 @@ if __name__ == '__main__':
     ss = Make_sql_2_rows(arqueries, wiki="arwiki")
     # ss = MySQLdb_finder_2_rows("Fooian_fooers")
     printe.output(f'sql py test:: Make_sql_2_rows lenth:{len(ss)}')
-

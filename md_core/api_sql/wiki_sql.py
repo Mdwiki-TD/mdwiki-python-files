@@ -15,9 +15,11 @@ from api_sql import wiki_sql
 #
 import sys
 import time as tttime
+
 # ---
 from mdpy import printe
 from api_sql import sql_qu
+
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db
 # results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[], return_dict=False)
@@ -51,7 +53,8 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     # ---
     return host, dbs_p
 
-def sql_new(queries, wiki="", printqua=False, values = []):
+
+def sql_new(queries, wiki="", printqua=False, values=[]):
     # ---
     printe.output(f"wiki_sql.py sql_new wiki '{wiki}'")
     # ---
@@ -75,6 +78,7 @@ def sql_new(queries, wiki="", printqua=False, values = []):
     printe.output(f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
     # ---
     return rows
+
 
 def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     # ---
@@ -165,4 +169,3 @@ def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
         # ---
     # ---
     return newlist
-

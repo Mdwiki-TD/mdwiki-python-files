@@ -13,9 +13,11 @@ import requests
 import urllib
 import urllib.parse
 from pathlib import Path
+
 # ---
 import user_account_new
 import MedWorkNew
+
 # ---
 from_toolforge = True
 printe = False
@@ -25,7 +27,7 @@ if "from_toolforge" not in sys.argv:
     import printe
 # ---
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'

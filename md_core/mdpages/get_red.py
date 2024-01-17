@@ -22,6 +22,8 @@ from mdpy.bots import mdwiki_api
 mdwiki_to_qid = sql_for_mdwiki.get_all_qids()
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
+
+
 # ---
 # sql_for_mdwiki.mdwiki_sql(query, update = False)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()

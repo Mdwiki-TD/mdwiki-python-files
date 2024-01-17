@@ -8,20 +8,19 @@ import re
 import os
 import sys
 from pathlib import Path
+
 # ---
 from mdpy import printe
 from new_api.mdwiki_page import MainPage as md_MainPage
 from stats.editors import validate_ip
-#---
+
+# ---
 Dir = Path(__file__).parent
 editors_dir = Dir / 'editors'
-#---
-skip_sites = [
-    'enwiki', 
-    'wikidatawiki', 
-    'commonswiki', 
-    'specieswiki'
-    ]
+# ---
+skip_sites = ['enwiki', 'wikidatawiki', 'commonswiki', 'specieswiki']
+
+
 def targets_text(targets):
     tt = '{| class="sortable wikitable floatright"\n|\n'
     tt += '<div style="max-height:250px; overflow: auto;vertical-align:top;font-size:90%;max-width:400px">\n'
@@ -35,6 +34,7 @@ def targets_text(targets):
     # ---
     return tt
 
+
 def filter_editors(editors, site):
     # ---
     for x in editors.copy().keys():
@@ -42,6 +42,7 @@ def filter_editors(editors, site):
             del editors[x]
     # ---
     return editors
+
 
 def work_all(editors):
     # ---
@@ -76,13 +77,7 @@ def work_all(editors):
         # #{{#target:User:{User}|{wiki}.wikipedia.org}}
         targets += f'#{{{{#target:User:{user}|{wiki}.wikipedia.org}}}}\n'
         # ---
-        txt_table += (
-            f'|-\n'
-            f'!{i}\n'
-            f'|[[:w:{site}:user:{user}|{user}]]\n'
-            f'|{count:,}\n'
-            f'|{wiki}\n'
-            )
+        txt_table += f'|-\n' f'!{i}\n' f'|[[:w:{site}:user:{user}|{user}]]\n' f'|{count:,}\n' f'|{wiki}\n'
         # ---
         if i == 1000:
             break
@@ -104,6 +99,7 @@ def work_all(editors):
         printe.output('<<lightgreen>> no changes')
     # ---
     return editors
+
 
 def start():
     # ---
@@ -135,6 +131,7 @@ def start():
     all_editors = dict(sorted(all_editors.items(), key=lambda x: x[1]['count'], reverse=True))
     # ---
     work_all(all_editors)
+
 
 if __name__ == "__main__":
     start()

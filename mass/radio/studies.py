@@ -21,6 +21,7 @@ ids_file = os.path.join(str(main_dir), 'jsons/ids.json')
 with open(ids_file, 'r', encoding='utf-8') as f:
     ids = json.loads(f.read())
 
+
 def get_images(url):
     print(f"url: {url}")
 
@@ -36,7 +37,7 @@ def get_images(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     # <a class="view-fullscreen-link" href="/cases/97085/studies/117071?lang=us">
     scripts = soup.find_all('script')
-    
+
     image_info = []
 
     for script in scripts:
@@ -54,10 +55,11 @@ def get_images(url):
 
                     for image in entry['images']:
                         image_info.append(image)
-                    
+
     print(f'len image_info: {len(image_info)}')
 
     return image_info
+
 
 def main():
     ids = {}
@@ -67,21 +69,21 @@ def main():
 
     n = 0
     for _, tab in ids.items():
-
         for study in tab['studies']:
             n += 1
             print(f"n: {n}/ f {len(ids)}")
             # study id
             st_id = study.split('/')[-1]
             st_file = os.path.join(str(main_dir), 'studies', f'{st_id}.json')
-            #---
+            # ---
             if not os.path.exists(st_file):
-                #---
+                # ---
                 ux = get_images(study)
-                #---
+                # ---
                 with open(st_file, 'w', encoding='utf-8') as f:
                     json.dump(ux, f, ensure_ascii=False, indent=4)
-                #---
+                # ---
+
 
 if __name__ == "__main__":
     if 'test' in sys.argv:

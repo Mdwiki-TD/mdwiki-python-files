@@ -6,18 +6,9 @@ from TDpynew import text_changes
 """
 from TDpynew import printe
 import wikitextparser as wtp
+
 # ---
-temps_to_delete = [
-    "short description", 
-    "toc limit", 
-    'use american english', 
-    'use dmy dates', 
-    'sprotect', 
-    'about', 
-    'featured article', 
-    'redirect',
-    '#unlinkedwikibase'
-    ]
+temps_to_delete = ["short description", "toc limit", 'use american english', 'use dmy dates', 'sprotect', 'about', 'featured article', 'redirect', '#unlinkedwikibase']
 
 
 def work(text):
@@ -38,6 +29,7 @@ def work(text):
             text = text.replace(func.string.strip(), '')
     # ---
     return text.strip()
+
 
 if __name__ == '__main__':
     tet = """{{#unlinkedwikibase:id=Q2553496}}{{Short description|Medication}}
@@ -104,7 +96,7 @@ Netilmicin was patented in 1973 and approved for medical use in 1981.<ref name=F
 ==References==
 <references />
 """
-    #---
+    # ---
     newtext = work(tet)
     printe.showDiff(tet, newtext)
-    #---
+    # ---

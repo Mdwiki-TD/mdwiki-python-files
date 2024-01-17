@@ -10,14 +10,17 @@ import codecs
 import os
 import sys
 from pathlib import Path
+
 # ---
 sys.path.append('/data/project/mdwiki/pybot/md_core/')
 # ---
 from wprefs.helps import exepts
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'

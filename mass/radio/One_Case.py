@@ -7,42 +7,47 @@ from pathlib import Path
 import re
 import requests
 import json
-#---
+
+# ---
 from new_api import printe
 from nccommons import api
 from new_api.ncc_page import MainPage as ncc_MainPage
 from mass.radio.studies import get_images
 from mass.radio.bmp import work_bmp
-#---
+
+# ---
 main_dir = Path(__file__).parent
-#--
+# --
 urls_done = []
-#--
+
+
+# --
 def get_image_extension(image_url):
     # Split the URL to get the filename and extension
     _, filename = os.path.split(image_url)
-    
+
     # Split the filename to get the name and extension
     name, extension = os.path.splitext(filename)
-    
+
     # Return the extension (without the dot)
     ext = extension[1:]
     return ext if ext else 'jpeg'
 
+
 class OneCase:
     def __init__(self, case_url, caseId, title, studies_ids, pages, author):
-        self.author  = author
-        self.pages  = pages
-        self.caseId  = caseId
+        self.author = author
+        self.pages = pages
+        self.caseId = caseId
         self.case_url = case_url
-        self.title   = title
+        self.title = title
         self.studies_ids = studies_ids
         self.images_count = 0
         self.files = []
         self.studies = {}
         self.set_title = f'Radiopaedia case {self.caseId} {self.title}'
         self.category = f'Category:Radiopaedia case {self.caseId} {self.title}'
-    
+
     def create_category(self):
         text = f'* [{self.case_url} Radiopaedia case: {self.title} ({self.caseId})]\n'
         text += f'[[Category:Radiopaedia images by case|{self.caseId}]]'
@@ -63,10 +68,9 @@ class OneCase:
         # ---
 
     def get_studies(self):
-
         for study in self.studies_ids:
             st_file = os.path.join(str(main_dir), 'studies', f'{study}.json')
-            #---
+            # ---
             if os.path.exists(st_file):
                 with open(st_file, 'r', encoding='utf-8') as f:
                     ja = json.loads(f.read())
@@ -120,44 +124,44 @@ class OneCase:
 
         for image in images:
             image_url = image['public_filename']
-            #---
+            # ---
             if image_url in urls_done:
                 self.images_count += 1
                 continue
-            #---
+            # ---
             # extension = get_image_extension(image_url)
             extension = image_url.split(".")[-1].lower()
-            #---
+            # ---
             if extension == '':
                 # extension = get_image_extension(image['fullscreen_filename'])
                 extension = image['fullscreen_filename'].split(".")[-1].lower()
-            #---
+            # ---
             if extension != "bmp" and 'bmp' in sys.argv:
                 continue
-            #---
+            # ---
             if extension == "bmp":
                 image_url, extension = work_bmp(image_url)
-            #---
+            # ---
             urls_done.append(image_url)
-            #---
-            image_id  = image['id']
-            plane  = image['plane_projection']
-            #---
+            # ---
+            image_id = image['id']
+            plane = image['plane_projection']
+            # ---
             if plane not in planes:
                 planes[plane] = 0
             planes[plane] += 1
-            #---
+            # ---
             file_name = f'{self.title} (Radiopaedia {self.caseId}-{study} {plane} {planes[plane]}).{extension}'
-            #---
+            # ---
             file_name = file_name.replace('  ', ' ').replace('  ', ' ').replace('  ', ' ')
             # ---
             # fix BadFileName
             file_name = file_name.replace(':', '.').replace('/', '.')
-            #---
+            # ---
             new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
-            #---
+            # ---
             file_n = f'File:{new_name}' if new_name else f'File:{file_name}'
-            #---
+            # ---
             if file_n not in sets:
                 self.images_count += 1
                 sets.append(file_n)
@@ -181,6 +185,7 @@ class OneCase:
             return
 
         self.create_category()
+
     def create_set(self, set_title, sets):
         text = ''
         # ---

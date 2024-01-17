@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import json
+
 # ---
 from new_api.wiki_page import MainPage, NEW_API
 
@@ -31,6 +32,7 @@ if not os.path.isfile(file_json2):
 
 with open(file_json2, 'r', encoding='utf-8') as cc:
     new = json.load(cc)
+
 
 def new_search():
     global totox

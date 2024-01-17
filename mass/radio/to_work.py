@@ -26,7 +26,7 @@ with open(cases_file, 'r', encoding='utf-8') as f:
 print(f"lenth of cases_in: {len(cases_in)}")
 
 # items in all_urls and not in cases_in
-to_work = {item :va for item, va in all_urls.items() if va not in cases_in.values()}
+to_work = {item: va for item, va in all_urls.items() if va not in cases_in.values()}
 
 print(f"lenth of to_work: {len(to_work)}")
 

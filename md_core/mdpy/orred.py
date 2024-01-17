@@ -23,7 +23,8 @@ from mdpy.bots import sql_for_mdwiki
 # ---
 from mdpy import printe
 from mdpy import wpref
-from wprefs.api import submitAPI#(params, lang='', Type='post')
+from wprefs.api import submitAPI  # (params, lang='', Type='post')
+
 # ---
 or_url = 'https://' + 'or.wikipedia.org/w/api.php'
 

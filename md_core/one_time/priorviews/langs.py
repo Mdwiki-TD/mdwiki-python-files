@@ -3,8 +3,6 @@
 python3 core8/pwb.py priorviews/langs -lang:ar write ask
 
 """
-from priorviews.lists import creators
-from priorviews.lists.creators_to_translators import creators_as_translators
 import sys
 import json
 from pathlib import Path
@@ -17,25 +15,15 @@ from mdpy import printe
 # ---
 from priorviews.lists.links_by_section import sects_links_langlinks, links_by_lang
 from priorviews.lists import views
+from priorviews.bots import helps
+from priorviews.bots import w_all
+from priorviews.lists import creators
+from priorviews.lists.creators_to_translators import creators_as_translators
 from priorviews.lists import translators
 from priorviews.lists import words
-
-# ---
-from priorviews.bots import helps
-
-# v_comm = helps.isv(comment)
-# _views = helps.views_url(title, lang, view)
-# helps.is_ip(user)
-# helps.talk_url(lang, user, labl)
-# ---
-from priorviews.bots import w_all
-
-# ---
 from new_api.mdwiki_page import MainPage as md_MainPage
-
 # ---
 Dir = Path(__file__).parent
-# ---
 # ---
 # creators.Creators_by_lang_title
 # creators.counts_creators_by_lang
@@ -107,7 +95,10 @@ def make_lang_textso(lang):
     # ---
     for section, links in sects_links_langlinks.items():
         # ---
-        tab = {x: v[lang] for x, v in links.items() if lang in v}
+        tab = {
+            x: v[lang]
+            for x, v in links.items() if lang in v
+        }
         # ---
         all_links += len(links)
         all_links_with_ar += len(tab)
@@ -256,7 +247,7 @@ if __name__ == "__main__":
     wrtire = True
     # ---
     for arg in sys.argv:
-        arg, sep, value = arg.partition(":")
+        arg, _, value = arg.partition(":")
         if arg == "-lang":
             langs = [value]
             wrtire = False

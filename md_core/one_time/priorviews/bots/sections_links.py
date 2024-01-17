@@ -35,6 +35,7 @@ replaces = {
 
 
 class Sectios_links:
+
     def __init__(self):
         """
         Initializes an instance of the class.
@@ -98,13 +99,13 @@ class Sectios_links:
             self.SectionsToLinks[t] = wikilinks
 
 
-def dump_secs_links(secs_links):
+def dump_secs_links(d_links):
     # ---
     global sect_file
     # ---
-    if secs_links != {}:
-        printe.output(f'<<lightyellow>> secs_links(): lenth: {len(secs_links.keys())}')
-        json.dump(secs_links, codecs.open(sect_file, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+    if d_links != {}:
+        printe.output(f'<<lightyellow>> d_links(): lenth: {len(d_links.keys())}')
+        json.dump(d_links, codecs.open(sect_file, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
 
 
 def get_section_links(new=False):
@@ -118,13 +119,13 @@ def get_section_links(new=False):
         bot.run()
 
         # Retrieve the links to the sections
-        secs_links = bot.SectionsToLinks
+        o_links = bot.SectionsToLinks
 
-        dump_secs_links(secs_links)
+        dump_secs_links(o_links)
     else:
-        secs_links = old
+        o_links = old
     # ---
-    return secs_links
+    return o_links
 
 
 # ---

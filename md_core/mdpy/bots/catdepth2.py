@@ -15,16 +15,19 @@ import codecs
 import time
 import os
 from datetime import datetime
+
 # ---
 from mdpy.bots import mdwiki_api
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title  # valid_title(title)
+
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -106,7 +109,7 @@ def Get_cat(enlink, print_url=False):
                 tablese['langlinks'] = {fo['lang']: fo['*'] for fo in caca['langlinks']}
             # ---
             table[cate_title] = tablese
-                    # ---
+            # ---
     # ---
     return table
 

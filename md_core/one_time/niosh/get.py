@@ -128,7 +128,7 @@ def run(x, urls):
     # ---
     with open(file2, 'w', encoding='utf-8') as outfile:
         json.dump(by_url, outfile, ensure_ascii=False, indent=4)
-    # ---   
+    # ---
     printe.output(f'wrote {file2}')
     # ---
     write_to_mdwiki(by_title, x)

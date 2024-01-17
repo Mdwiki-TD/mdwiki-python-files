@@ -13,7 +13,6 @@ main_dir = Path(__file__).parent
 
 
 def doo():
-
     with open(os.path.join(str(main_dir), 'images.json'), 'r', encoding='utf-8') as f:
         data = json.load(f)
 
@@ -32,7 +31,7 @@ def doo():
     text += '! # !! Category !! Image set !! Url !! Number of images\n|-\n'
     n = 0
     for x, count in chapters.items():
-        url  = data[x]['url']
+        url = data[x]['url']
 
         x2 = f'{x} (UndergradImaging)'
         n += 1
@@ -51,11 +50,12 @@ def doo():
     page.save(newtext=text, summary='update', nocreate=0, minor='')
     # sort names by count
     names = dict(sorted(names.items(), key=lambda x: x[1], reverse=True))
-    
+
     # print names
     for name, count in names.items():
         if count > 1:
             print(f'{name} {count}')
+
 
 if __name__ == "__main__":
     # Process all subfolders in the specified root folder

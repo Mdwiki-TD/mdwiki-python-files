@@ -81,6 +81,7 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
     # ---
     if pymysql_version < pkg_resources.parse_version('1.0.0'):
         from contextlib import closing
+
         connection = closing(connection)
     # ---
     with connection as conn, conn.cursor() as cursor:
@@ -133,6 +134,7 @@ def resolve_bytes(rows):
         decoded_rows.append(decoded_row)
     # ---
     return decoded_rows
+
 
 def make_sql_connect(query, db='', host='', update=False, Return=[], return_dict=False, values=None):
     # ---

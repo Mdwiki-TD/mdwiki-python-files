@@ -16,6 +16,7 @@ from mdpy.bots import mdwiki_api
 import sys
 from pathlib import Path
 import codecs
+
 # ---
 Dir = Path(__file__).parent
 # ---

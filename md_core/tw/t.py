@@ -22,11 +22,13 @@ import requests
 import random
 import tweepy
 from pathlib import Path
+
 # ---
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 import twet_config
+
 # ---
 # Create variables for each key, secret, token
 consumer_key = twet_config.consumer_key

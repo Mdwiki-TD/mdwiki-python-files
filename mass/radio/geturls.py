@@ -38,6 +38,7 @@ with open(urlsfile, 'r', encoding='utf-8') as f:
     all_urls = json.loads(f.read())
 print(f"lenth of all_urls: {len(all_urls)}")
 
+
 def get_urls(page_num):
     print(f"get_urls {page_num}::")
 
@@ -55,20 +56,21 @@ def get_urls(page_num):
 
     tat = {}
     for link in links:
-        #---
+        # ---
         href = link.get('href').strip()
         href = href.replace('?lang=us', '')
         href = f'https://radiopaedia.org{href}'
-        #---
+        # ---
         title = link.find('h4', class_='search-result-title-text').text.strip()
 
         # print(f"Step 3-4: Href[{href}] = '{title}'")
 
         tat[href] = title
-    #---
+    # ---
     print(f"lenth of tat: {len(tat)}")
 
     return tat
+
 
 def main():
     all_urls = {}
@@ -81,7 +83,6 @@ def main():
         if urls_data:
             all_urls.update(urls_data)
 
-        
         if page_num % 100 == 0:
             # Step 5: Save the dictionary to a JSON file
             with open(urlsfile, 'w', encoding='utf-8') as f:
@@ -92,6 +93,7 @@ def main():
         json.dump(all_urls, f, ensure_ascii=False, indent=4)
 
     print("Step 5: Saved the dictionary to 'jsons/urls.json'.")
+
 
 if __name__ == "__main__":
     main()

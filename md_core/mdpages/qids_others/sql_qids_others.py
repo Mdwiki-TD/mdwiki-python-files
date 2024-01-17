@@ -18,6 +18,7 @@ from mdpy.bots import sql_for_mdwiki
 # sql_for_mdwiki.mdwiki_sql(query, update = False)
 # ---
 
+
 def get_others_qids():
     # ---
     mdtitle_to_qid = {}

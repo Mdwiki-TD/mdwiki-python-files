@@ -27,9 +27,11 @@ if not os.path.exists(cases_file):
 with open(cases_file, 'r', encoding='utf-8') as f:
     cases_in = json.loads(f.read())
 
+
 def geo():
     cases_in = {}
     from new_api.ncc_page import CatDepth
+
     cases = CatDepth('Category:Radiopaedia images by case', sitecode='www', family="nccommons", depth=0, ns="14")
 
     reg = r'^Category:Radiopaedia case (\d+) (.*?)$'
@@ -52,6 +54,7 @@ def geo():
         json.dump(cases_in, f, indent=4, ensure_ascii=False)
 
     print(f'lenth of cases_in: {len(cases_in)} ')
+
 
 if __name__ == "__main__":
     geo()

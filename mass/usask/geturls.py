@@ -19,6 +19,7 @@ import os
 import json
 import sys
 from pathlib import Path
+
 Dir = Path(__file__).parent
 urlsfile = os.path.join(str(Dir), 'urls.json')
 

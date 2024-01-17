@@ -28,12 +28,14 @@ import sys
 import os
 import json
 from pathlib import Path
+
 # ---
 from prior import get_them
 from mdpy import printe
+
 # ---
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 project_js_new = f'{Dir}/json_en/'
 # ---
@@ -120,6 +122,7 @@ class PriorAddOld:
             # ---
             with open(filename, 'w', encoding='utf-8') as file:
                 json.dump(data_new, file)
+
 
 # ---
 pao = PriorAddOld()
