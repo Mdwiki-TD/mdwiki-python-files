@@ -7,12 +7,15 @@ import sys
 import codecs
 import json
 from pathlib import Path
+
 # ---
 from new_api.mdwiki_page import MainPage as md_MainPage
+
 # ---
 section_langs_views = {}
 # ---
 Dir = Path(__file__).parent
+
 
 def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
     lang_text = ''
@@ -53,6 +56,7 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
     # Return the overall formatted string containing view counts for all available languages
     return lang_text
 
+
 def format_x(x):
     if len(x) < 4:
         return x
@@ -62,23 +66,16 @@ def format_x(x):
     # ---
     return "{{abbr|" + f"{x2}|{x}" + "}}"
 
+
 def fo_n(x):
     return f'{x:,}'
+
 
 def make_text(ViewsData):
     """
     Generate formatted text from given section and links.
     """
-    text = (
-        '<div style="height:1500px;width:100%;overflow-x:auto; overflow-y:auto">\n'
-        '{| class="wikitable sortable" style="width:100%;background-color:#dedede"\n'
-        '|- style="position: sticky;top: 0; z-index: 2;"\n'
-        '! #\n'
-        '! style="position: sticky;top: 0;left: 0;" | Title\n'
-        '! Views\n'
-        '! Articles\n'
-        '!\n'
-    )
+    text = '<div style="height:1500px;width:100%;overflow-x:auto; overflow-y:auto">\n' '{| class="wikitable sortable" style="width:100%;background-color:#dedede"\n' '|- style="position: sticky;top: 0; z-index: 2;"\n' '! #\n' '! style="position: sticky;top: 0;left: 0;" | Title\n' '! Views\n' '! Articles\n' '!\n'
     # ---
     langs_keys = [lang for mdtitle, tab in ViewsData.items() for lang in tab.keys()]
     langs_keys = sorted(set(langs_keys))
@@ -140,6 +137,7 @@ def make_text(ViewsData):
     # Return the final formatted text.
     return faf
 
+
 def start():
     # ---
     with codecs.open(f'{Dir}/lists/views.json', 'r', 'utf-8') as f:
@@ -165,6 +163,7 @@ def start():
         # ---
         text = page.get_text()
         save_page = page.save(newtext=ntext, summary='update', nocreate=1, minor='')
+
 
 if __name__ == '__main__':
     start()

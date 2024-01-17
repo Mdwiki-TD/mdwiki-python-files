@@ -22,6 +22,7 @@ from priorviews.lists.creators_to_translators import creators_as_translators
 from priorviews.lists import translators
 from priorviews.lists import words
 from new_api.mdwiki_page import MainPage as md_MainPage
+
 # ---
 Dir = Path(__file__).parent
 # ---
@@ -95,10 +96,7 @@ def make_lang_textso(lang):
     # ---
     for section, links in sects_links_langlinks.items():
         # ---
-        tab = {
-            x: v[lang]
-            for x, v in links.items() if lang in v
-        }
+        tab = {x: v[lang] for x, v in links.items() if lang in v}
         # ---
         all_links += len(links)
         all_links_with_ar += len(tab)

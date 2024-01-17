@@ -7,13 +7,16 @@ import sys
 import json
 import codecs
 from pathlib import Path
+
 # ---
 from new_api.wiki_page import MainPage, change_codes
 from mdpy import printe
 from mdpy.bots import mdwiki_api
+
 # ---
 Dir = Path(__file__).parent
 # ---
+
 
 def get_md_links():
     # ---
@@ -32,6 +35,7 @@ def get_md_links():
         json.dump(all_p, f, ensure_ascii=False, indent=4)
     # ---
     return all_p
+
 
 def get_lang_links(md_links):
     # ---
@@ -105,6 +109,7 @@ def sts():
     md_links = get_md_links()
     # ---
     lang_links = get_lang_links(md_links)
+
 
 if __name__ == '__main__':
     sts()

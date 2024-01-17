@@ -63,10 +63,7 @@ def match_ref_names(r, refnames, lang):
         _tags_[name] += 1
     # ---
     # sort by count
-    _tags_ = {
-        k: v
-        for k, v in sorted(_tags_.items(), key=lambda item: item[1], reverse=True)
-    }
+    _tags_ = {k: v for k, v in sorted(_tags_.items(), key=lambda item: item[1], reverse=True)}
     for k, v in _tags_.items():
         if k in refnames:
             printe.output(f'<<green>> find: {k=} count: {v=}| main: {refnames[k]=}')
@@ -78,7 +75,6 @@ def match_ref_names(r, refnames, lang):
 
 
 class FindInHistory:
-
     def __init__(self, title, lang="en", refname=[], extlinks=[]):
         # ---
         self.lang = lang
@@ -119,10 +115,7 @@ class FindInHistory:
         while continue_params != {} or len(results) == 0:
             # ---
             if continue_params:
-                params = {
-                    **params,
-                    **continue_params
-                }
+                params = {**params, **continue_params}
             # ---
             json1 = self.post_to_json(params)
             # ---
@@ -141,10 +134,7 @@ class FindInHistory:
             if isinstance(results, list):
                 results.extend(data)
             else:
-                results = {
-                    **results,
-                    **data
-                }
+                results = {**results, **data}
         # ---
         return results
 
@@ -178,11 +168,7 @@ class FindInHistory:
 
 def search_history(title, lang, en='', refname=[], extlinks=[]):
     # ---
-    tab = {
-        "lang": lang,
-        "article": title,
-        "needle": ""
-    }
+    tab = {"lang": lang, "article": title, "needle": ""}
     # ---
     if refname == [] or extlinks == []:
         infos = json_langs_by_langs.get(lang, {}).get(title)  # {'extlinks': extlinks, 'refsname': refsname}

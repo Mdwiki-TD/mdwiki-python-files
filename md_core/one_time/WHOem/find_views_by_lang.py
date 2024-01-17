@@ -8,9 +8,11 @@ import json
 import os
 from pathlib import Path
 import codecs
+
 # ---
 from mdpy import printe
 from mdpy.bots import wiki_api
+
 # ---
 TEST = False
 # ---
@@ -27,6 +29,7 @@ with codecs.open(file, 'r', encoding='utf-8') as f:
 # ---
 N_g = 0
 
+
 def dump_data(file, data):
     printe.output(f'<<green>> dump_data() file:{file}.')
     printe.output(f'<<yellow>> dump_data {len(data)} views')
@@ -42,6 +45,7 @@ def dump_data(file, data):
         sys.exit()
     except Exception as e:
         printe.output(f'<<red>> dump Error: {e}')
+
 
 def get_v(lang, links, lang_links_mdtitle_s):
     # ---
@@ -94,6 +98,7 @@ def get_v(lang, links, lang_links_mdtitle_s):
             if N_g % 100 == 0:
                 dump_data(file, ViewsData)
 
+
 def get_lang_links_mdtitles(lang_links):
     # ---
     lang_links_mdtitles = {lang: {} for mdtitle, tab in lang_links.items() for lang in tab['langs'].keys()}
@@ -114,6 +119,7 @@ def get_lang_links_mdtitles(lang_links):
         print(x, len(z))
     # ---
     return lang_links_mdtitles
+
 
 def start():
     # ---
