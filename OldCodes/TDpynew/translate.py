@@ -38,9 +38,9 @@ def put(title, text):
     # ---
     suus = 'from https://mdwiki.org/wiki/' + title.replace(' ', '_')
     # ---
-    title2 = 'User:Mr. Ibrahem/' + title
+    title2 = f'User:Mr. Ibrahem/{title}'
     if wholearticle[1]:
-        title2 = 'User:Mr. Ibrahem/' + title + '/full'
+        title2 = f'User:Mr. Ibrahem/{title}/full'
 
     # ---
     dataa = {
@@ -58,7 +58,7 @@ def put(title, text):
     if 'Success' in str(js):
         print('true')
     else:
-        print(str(js))
+        print(js)
 
 
 def work(title):
@@ -125,9 +125,8 @@ if __name__ == '__main__':
         # ---
         if arg == "-title":
             title = value
-        # ---
-        if arg == "wholearticle":
+        elif arg == "wholearticle":
             wholearticle[1] = True
-        # ---
+    # ---
     if title != '':
         work(title)

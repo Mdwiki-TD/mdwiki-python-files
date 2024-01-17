@@ -38,10 +38,10 @@ def rename_params(temptext):
         if str(name).lower() in temps_okay:
             _temps_.append(temp)
         else:
-            printn(f"*+name ({str([name])}) not in temps_okay .")
-        # ---
+            printn(f"*+name ({[name]}) not in temps_okay .")
+            # ---
     # ---
-    if len(_temps_) == 0:
+    if not _temps_:
         printn("*+_temps_ == 0 .")
         return new_temptext
     # ---
@@ -49,7 +49,7 @@ def rename_params(temptext):
         old_temp = temp.string
         # ---
         if new_temptext.find(old_temp) == -1:
-            printn(f"*+new_temptext find ({str([old_temp])}) == -1 .")
+            printn(f"*+new_temptext find ({[old_temp]}) == -1 .")
             continue
         # ---
         # Replace the old parameter with the new parameter

@@ -48,11 +48,11 @@ def get_word_files():
     # ---
     global json_file, words_n, all_words_n
     # ---
-    json_file[1] = dir2 + '/public_html/Translation_Dashboard/Tables/allwords.json'
+    json_file[1] = f'{dir2}/public_html/Translation_Dashboard/Tables/allwords.json'
     # ---
     all_words_n = json.loads(codecs.open(json_file[1], "r", encoding="utf-8").read())
     # ---
-    json_file[0] = dir2 + '/public_html/Translation_Dashboard/Tables/words.json'
+    json_file[0] = f'{dir2}/public_html/Translation_Dashboard/Tables/words.json'
     # ---
     words_n = json.loads(codecs.open(json_file[0], "r", encoding="utf-8").read())
     # ---
@@ -82,10 +82,7 @@ for arg in sys.argv:
 def mmain():
     # ---
     n = 0
-    # ---
-    limit = 10000
-    if 'limit100' in sys.argv:
-        limit = 100
+    limit = 100 if 'limit100' in sys.argv else 10000
     # ---
     vaild_links = get_valid_Links(words_n)
     # ---

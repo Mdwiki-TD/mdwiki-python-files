@@ -20,9 +20,7 @@ def remove_cite_web(text, resources_get_NLM, line, title):
     # ---
     ioireg = fr"\s*cite web\s*\|\s*url\s*=\s*https\:\/\/druginfo\.nlm\.nih\.gov\/drugportal\/(?:name|category)\/{title2}\s*\|\s*publisher\s*=\s*U\.S\. National Library of Medicine\s*\|\s*work\s*=\s*Drug Information Portal\s*\|\s*title\s*=\s*{title2}\s*"
     ioireg = r"(\*\s*{{" + ioireg + "}})"
-    # ---
-    vavo = re.search(ioireg, new_text, flags=re.IGNORECASE)
-    if vavo:
+    if vavo := re.search(ioireg, new_text, flags=re.IGNORECASE):
         vas = vavo.group(1)
         # الوسيط موجود في القالب
         if line != "" and resources_get_NLM and resources_get_NLM == "":

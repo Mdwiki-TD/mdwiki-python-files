@@ -75,7 +75,7 @@ def get_pages():
                 # استبدال
                 rep += 1
                 # ---
-                printe.output('<<lightyellow>>' + ll.strip())
+                printe.output(f'<<lightyellow>>{ll.strip()}')
                 # ---
                 sql_for_mdwiki.set_title_where_qid(new_title, old_title_qid)
                 # ---
@@ -97,11 +97,11 @@ def get_pages():
     printe.output('replace %d pages. ' % rep)
     printe.output('remove %d pages. ' % remo)
     # ---
-    if len(to_del) > 0:
+    if to_del:
         printe.output(f'delete {len(to_del)} pages. ')
         printe.output(to_del)
     # ---
-    if len(to_add) > 0:
+    if to_add:
         printe.output(f'add {len(to_add)} pages. ')
         printe.output(to_add)
         sql_for_mdwiki.add_titles_to_qids(to_add)

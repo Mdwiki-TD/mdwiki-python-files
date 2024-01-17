@@ -24,15 +24,9 @@ def printn(s):
 
 def add_resources(new_text, drug_resources):
     # ---
-    to_add = ''
-    # ---
     if page_identifier_params == {}:
         return new_text, ''
-    # ---
-    for pa, pap in page_identifier_params.items():
-        # ---
-        to_add += f"| {pa} = {pap}\n"
-        # ---
+    to_add = ''.join(f"| {pa} = {pap}\n" for pa, pap in page_identifier_params.items())
     # ---
     to_add = to_add.replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n")
     to_add = to_add.replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|")
@@ -178,12 +172,9 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         # ---
         new_text = new_text.replace(resources_old, resources_new)
         # ---
-    else:
-        # ---
-        if page_identifier_params != {}:
-            # نقل المعرفات لأسفل
-            new_text, line = add_resources(new_text, drug_resources)
-        # ---
+    elif page_identifier_params != {}:
+        # نقل المعرفات لأسفل
+        new_text, line = add_resources(new_text, drug_resources)
     resources_get_NLM = False
     # ---
     if 'NLM' in resources_params:

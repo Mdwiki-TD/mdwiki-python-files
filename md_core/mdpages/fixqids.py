@@ -27,14 +27,11 @@ def fix_redirects(qs_list):
     # ---
     new_list = list(qs_list.keys())
     # ---
-    numb = 0
-    # ---
     reds = wikidataapi.get_redirects(new_list)
     # ---
     printe.output(f'len of redirects: {len(reds)}')
     # ---
-    for old_q, new_q in reds.items():
-        numb += 1
+    for numb, (old_q, new_q) in enumerate(reds.items(), start=1):
         # ---
         printe.output(f'<<lightblue>> {numb}, old_q: {old_q}, new_q: {new_q}')
         # ---
@@ -56,7 +53,7 @@ def add_to_qids(mdlist):
     # ---
     all_pages = [x for x in all_pages[:] if valid_title(x)]
     # ---
-    all_in = [x for x in mdlist]
+    all_in = list(mdlist)
     # ---
     new_list = {title: '' for title in all_pages if title not in all_in}
     # ---

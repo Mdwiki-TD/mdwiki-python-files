@@ -52,7 +52,7 @@ for wd in wdlist:
 
 def add_missing(newlist):
     # ---
-    print('len of newlist: ' + str(len(newlist)))
+    print(f'len of newlist: {len(newlist)}')
     # ---
     if len(newlist) > 0:
         # ---
@@ -64,10 +64,7 @@ def add_missing(newlist):
             printe.output('<<puruple>> add "add" to sys.argv to add them?')
             return
         # ---
-        n = 0
-        # ---
-        for q, value in newlist.items():
-            n += 1
+        for n, (q, value) in enumerate(newlist.items(), start=1):
             printe.output(f'<<yellow>> q {n} from {len(newlist)}')
             wikidataapi.Claim_API_str(q, 'P11143', value)
 
@@ -133,7 +130,7 @@ def add_q(new_qids):
     # ---
     TD_list = catdepth2.make_cash_to_cats(return_all_pages=True)
     # ---
-    print('len of new_qids: ' + str(len(new_qids)))
+    print(f'len of new_qids: {len(new_qids)}')
     # ---
     if len(new_qids) < 10:
         print("\n".join([f'{k}:{v}' for k, v in new_qids.items()]))
@@ -151,7 +148,7 @@ def add_q(new_qids):
     # ---
     print(f'len of newtitles: {len(newtitles)}, len of delets: {len(delets)}')
     # ---
-    if len(newtitles) > 0:
+    if newtitles:
         printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
         # ---
         if 'addq' not in sys.argv:
