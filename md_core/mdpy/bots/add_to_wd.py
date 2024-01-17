@@ -17,6 +17,7 @@ from mdpy.bots import add_to_wd
 import re
 import os
 import sys
+
 # ---
 from pymysql.converters import escape_string
 from mdpy.bots import sql_for_mdwiki
@@ -25,6 +26,7 @@ from mdpy import printe
 from mdpy.bots import mdwiki_api
 from mdpy.bots import en_to_md
 from mdpy import orred
+
 # ---
 '''CREATE TABLE wddone (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,

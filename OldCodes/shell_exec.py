@@ -5,6 +5,7 @@ python3 shell_exec.py /usr/bin/toolforge jobs run mvn11 --image python3.9 --comm
 import subprocess
 import sys
 
+
 def execute_command(command):
     if command.endswith('.sh'):
         # read the contents of the file
@@ -19,6 +20,7 @@ def execute_command(command):
         print(result.stdout)
     except Exception as e:
         print(e)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

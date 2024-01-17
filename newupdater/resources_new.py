@@ -7,6 +7,7 @@ import sys
 import wikitextparser as wtp
 from bots.Remove import remove_cite_web, portal_remove
 from lists.identifier_params import identifiers_params
+
 # ---
 printn_t = {1: False}
 page_identifier_params = {}
@@ -15,9 +16,11 @@ _lkj_ = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|L
 # ---
 _lkj2_ = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->)"
 
+
 def printn(s):
     if printn_t[1] or 'test' in sys.argv:
         print(s)
+
 
 def add_resources(new_text, drug_resources):
     # ---
@@ -193,4 +196,3 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     new_text = portal_remove(new_text)
     # ---
     return new_text
-

@@ -17,6 +17,7 @@ import os
 import sys
 import time as tttime
 from pymysql.converters import escape_string
+
 # ---
 from mdpy.bots import add_to_wd
 from mdpy.bots import py_tools
@@ -24,8 +25,10 @@ from mdpy import printe
 from api_sql import wiki_sql
 from mdpy.bots import sql_for_mdwiki
 from mdpy.others.fixcat import cat_for_pages
+
 # ---
 from mdpy.sql_bots.add_to_mdwiki import add_to_mdwiki_sql
+
 # ---
 Lang_usr_mdtitle = {}
 targets_done = {}
@@ -99,6 +102,7 @@ query_main = '''
     #and p.page_namespace = 0
     group by p.page_title, a.actor_name, c.comment_text
 '''
+
 
 def dodo_sql():
     # ---
@@ -200,11 +204,11 @@ def start(result, lange):
         # ---
         # printe.output( lis )
         # ---
-        target        = lis['title']
-        co_text       = lis['comment_text']
-        user          = lis['actor_name']
-        pupdate       = lis['rev_timestamp']
-        namespace     = lis['page_namespace']
+        target = lis['title']
+        co_text = lis['comment_text']
+        user = lis['actor_name']
+        pupdate = lis['rev_timestamp']
+        namespace = lis['page_namespace']
         rev_parent_id = lis['rev_parent_id']
         # ---
         # target        = py_tools.Decode_bytes(lis[0])

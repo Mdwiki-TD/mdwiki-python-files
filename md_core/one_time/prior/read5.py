@@ -13,14 +13,17 @@ import os
 import json
 import wikitextparser
 import codecs
+
 # ---
 from new_api.mdwiki_page import MainPage as md_MainPage
 from mdpy import printe
 from prior import text_bot
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 project_json = f'{Dir}/json'
 project_js_new = f'{Dir}/json_langs/'

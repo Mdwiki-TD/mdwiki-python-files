@@ -13,7 +13,6 @@ main_dir = Path(__file__).parent
 
 
 def doo():
-
     with open(os.path.join(str(main_dir), 'jsons/ids.json'), 'r', encoding='utf-8') as f:
         data = json.load(f)
 
@@ -22,9 +21,8 @@ def doo():
     n = 0
 
     for _, tab in data.items():
-
-        caseId  = tab['caseId']
-        title   = tab['title']
+        caseId = tab['caseId']
+        title = tab['title']
         category = f'Radiopaedia case {caseId} {title}'
         n += 1
         text += f'! {n}\n'
@@ -39,6 +37,8 @@ def doo():
     # ---
     page.save(newtext=text, summary='update', nocreate=0, minor='')
     # sort names by count
+
+
 if __name__ == "__main__":
     # Process all subfolders in the specified root folder
     doo()

@@ -77,7 +77,6 @@ def work_in_file(filename):
         json.dump(tab, ee, ensure_ascii=False, indent=4)
 
 
-
 # scan all txt files in Dir and work on them
 for filename in os.listdir(Dird):
     if filename.endswith('.txt'):

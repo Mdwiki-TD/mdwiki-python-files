@@ -11,15 +11,18 @@ import json
 import os
 import codecs
 import pywikibot
+
 # ---
 from new_api.ncc_page import MainPage as ncc_MainPage
 from new_api.mdwiki_page import NEW_API
 from nccommons import api
 from mdpy.bots import mdwiki_api
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 cats = json.load(open(f'{Dir}/mv.json', 'r', encoding='utf-8'))
 # ---

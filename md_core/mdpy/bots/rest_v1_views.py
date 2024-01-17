@@ -17,9 +17,11 @@ import sys
 import urllib.parse
 import datetime
 from datetime import timedelta
+
 # ---
 from pywikibot.comms import http
 from mdpy import printe
+
 
 def get_views_last_30_days(langcode, titles):
     # ---
@@ -28,7 +30,7 @@ def get_views_last_30_days(langcode, titles):
     endDate = datetime.datetime.utcnow() - timedelta(days=1)
     startDate = endDate - timedelta(weeks=4)
     # ---
-    endDate   = endDate.strftime('%Y%m%d%H')
+    endDate = endDate.strftime('%Y%m%d%H')
     startDate = startDate.strftime('%Y%m%d%H')
     # ---
     numb = 0
@@ -72,10 +74,7 @@ def get_views_last_30_days(langcode, titles):
         if not data or data == {}:
             pywikibot.output(url)
         # ---
-        _sadasd = [
-            {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77},
-            {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}
-            ]
+        _sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
         # ---
         numbers[page] = sum(x["views"] for x in data.get('items', []))
     # ---

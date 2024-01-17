@@ -13,14 +13,17 @@ import pywikibot
 import os
 import sys
 from pywikibot.comms import http
+
 # ---
 from mdpy.bots import txtlib2
 from mdpy import printe
 from mdpy.bots import mdwiki_api
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 values = {}
 
@@ -65,7 +68,7 @@ def work(title):
                     param = f'{pp}={vv}'
                     # ---
                     newtext = fix_p(title, newtext, param)
-                                    # ---
+                    # ---
             # ---
             param = param.strip()
             if param not in values:

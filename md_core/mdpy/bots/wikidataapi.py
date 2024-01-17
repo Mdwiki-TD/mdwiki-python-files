@@ -18,10 +18,12 @@ import sys
 import pywikibot
 from datetime import datetime
 import requests
+
 # ---
 from mdpy import printe
 from mdpy.bots import py_tools
 from mdpy.bots import user_account_new
+
 # ---
 menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
 # ---
@@ -359,12 +361,7 @@ def get_redirects(liste):
 
 def new_item(data, summary, returnid=False):
     # ---
-    params = {
-        "action": "wbeditentity",
-        "new": "item",
-        "summary": summary,
-        "data": data
-    }
+    params = {"action": "wbeditentity", "new": "item", "summary": summary, "data": data}
     # ---
     req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---

@@ -22,6 +22,7 @@ ids_file = os.path.join(str(main_dir), 'jsons/ids.json')
 with open(ids_file, 'r', encoding='utf-8') as f:
     ids = json.loads(f.read())
 
+
 def get_author(url):
     studies = []
     try:
@@ -29,7 +30,7 @@ def get_author(url):
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         return '', studies
-    
+
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
@@ -41,9 +42,10 @@ def get_author(url):
     author = soup.find('meta', attrs={'name': 'author'}).get('content')
     return author
 
+
 def main():
     n = 0
-        
+
     with open(authors_file, 'r', encoding='utf-8') as ff:
         authors = json.loads(ff.read())
 
@@ -51,27 +53,28 @@ def main():
         caseId = str(tab['caseId'])
         url = tab['url']
         n += 1
-        #---
+        # ---
         print(f"n: {n}/ {len(ids)}")
-        #---
+        # ---
         if caseId in authors:
             continue
-        #---
+        # ---
         author = get_author(url)
         print(f"caseId:{caseId}, Author: {author}")
-        #---
+        # ---
         authors[caseId] = author
-        #---
+        # ---
         if n % 50 == 0:
             with open(authors_file, 'w', encoding='utf-8') as f:
                 json.dump(authors, f, ensure_ascii=False, indent=4)
-        #---
-    
+        # ---
+
     print("Step 5: Saved the dictionary to 'jsons/authors.json'.")
 
     # Step 5: Save the dictionary to a JSON file
     with open(authors_file, 'w', encoding='utf-8') as f:
         json.dump(authors, f, ensure_ascii=False, indent=4)
+
 
 if __name__ == "__main__":
     main()

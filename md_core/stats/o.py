@@ -8,21 +8,19 @@ import re
 import os
 import sys
 from pathlib import Path
+
 # ---
 from mdpy import printe
 from new_api.mdwiki_page import MainPage as md_MainPage
 from stats.editors import get_editors, validate_ip
-#---
+
+# ---
 Dir = Path(__file__).parent
-sites_dir   = Dir / 'sites'
+sites_dir = Dir / 'sites'
 editors_dir = Dir / 'editors'
-#---
-skip_sites = [
-    'enwiki', 
-    'wikidatawiki', 
-    'commonswiki', 
-    'specieswiki'
-    ]
+# ---
+skip_sites = ['enwiki', 'wikidatawiki', 'commonswiki', 'specieswiki']
+
 
 def filter_editors(editors, site):
     # ---
@@ -39,10 +37,13 @@ def filter_editors(editors, site):
     # ---
     # del Mr. Ibrahem if site != 'arwiki'
     if site != 'ar':
-        if 'Mr._Ibrahem' in editors:    del editors['Mr._Ibrahem']
-        if 'Mr. Ibrahem' in editors:    del editors['Mr. Ibrahem']
+        if 'Mr._Ibrahem' in editors:
+            del editors['Mr._Ibrahem']
+        if 'Mr. Ibrahem' in editors:
+            del editors['Mr. Ibrahem']
     # ---
     return editors
+
 
 def work_in_one_site(site, links):
     # ---
@@ -98,6 +99,7 @@ def work_in_one_site(site, links):
     # ---
     return editors
 
+
 def start():
     # ---
     p_site = ''
@@ -131,6 +133,7 @@ def start():
             links = json.load(f)
         # ---
         work_in_one_site(site, links)
+
 
 if __name__ == "__main__":
     start()

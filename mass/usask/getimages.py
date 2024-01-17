@@ -13,8 +13,10 @@ import json
 from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
+
 # ---
 from new_api import printe
+
 # ---
 
 main_dir = Path(__file__).parent
@@ -26,6 +28,7 @@ def read_json_file(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)
     return data
+
 
 def extract_images_from_url(url):
     # Print the URL being processed
@@ -41,7 +44,7 @@ def extract_images_from_url(url):
 
         # Return an empty dictionary
         return {}
-    
+
     # Parse the HTML content of the response using BeautifulSoup
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -67,7 +70,7 @@ def extract_images_from_url(url):
         if img_tag:
             # Get the value of the 'srcset' attribute of the 'img' tag
             img_srcset = img_tag.get('srcset', '').split(',')[0].split()[0] if img_tag.get('srcset', '') else ''
-            img_src    = img_tag.get('src', '')
+            img_src = img_tag.get('src', '')
             # printe.output(f'\t\t <<yellow>> img_srcset: <<default>> {img_srcset}')
             # printe.output(f'\t\t <<yellow>> img_src: <<default>> {img_src}')
             # Split the 'srcset' value by comma and get the first URL
@@ -75,7 +78,7 @@ def extract_images_from_url(url):
             if not img_srcset:
                 img_url = img_src
                 printe.output(f'\t\t <<red>> no srcset, use src')
-        
+
             # Remove the dimension part from the URL using regex
             img_url = re.sub(r'-\d+x\d+(\.\w+)$', r'\1', img_url)
             printe.output(f'\t\t <<yellow>> img_url: <<default>> {img_url}')
@@ -95,12 +98,7 @@ def main():
 
     # If 'test' is in the command line arguments, replace data with a test value
     if 'test' in sys.argv:
-        data = {
-            "Online DICOM Image Viewer (ODIN): An Introduction and User Manual": {
-                "url": "https://openpress.usask.ca/undergradimaging/chapter/online-dicom-image-viewer-odin-an-introduction-and-user-manual/",
-                "images": {}
-            }
-        }
+        data = {"Online DICOM Image Viewer (ODIN): An Introduction and User Manual": {"url": "https://openpress.usask.ca/undergradimaging/chapter/online-dicom-image-viewer-odin-an-introduction-and-user-manual/", "images": {}}}
 
     # Initialize a counter
     n = 0
@@ -135,7 +133,7 @@ def main():
 
     # print len of all images
     printe.output(f"<<green>> Number of images: {sum([len(v['images']) for k, v in data.items()])}")
-    
+
     if 'test' not in sys.argv:
         # Save the updated data back to the JSON file
         with open(jsonimages, 'w', encoding="utf-8") as file:

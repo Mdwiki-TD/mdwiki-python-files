@@ -377,9 +377,7 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
         Invalid = r4.get("error", {}).get("info", '')
     # ---
     if 'Success' in str(r4):
-        printe.output(
-            f'<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) '
-        )
+        printe.output(f'<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) ')
         printe.output('Save True.. time.sleep(%d) ' % tts)
         time.sleep(tts)
         if return_table:

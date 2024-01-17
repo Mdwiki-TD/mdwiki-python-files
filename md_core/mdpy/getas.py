@@ -19,16 +19,19 @@ import json
 import codecs
 import os
 import sys
+
 # ---
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from mdpy.bots import wiki_api
 from mdpy.bots import catdepth2
 from mdpy import printe
+
 # ---
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -40,9 +43,7 @@ vaild_links = tabe['list']
 # ---
 printe.output(f'len of vaild_links: {len(vaild_links)}')
 # ---
-json_file = {
-    0: f'{dir2}/public_html/Translation_Dashboard/Tables/assessments.json'
-}
+json_file = {0: f'{dir2}/public_html/Translation_Dashboard/Tables/assessments.json'}
 lala = ''
 # ---
 with codecs.open(json_file[0], "r", encoding="utf-8-sig") as listt:

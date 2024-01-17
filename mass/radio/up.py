@@ -44,18 +44,19 @@ pages = CatDepth('Category:UndergradImaging', sitecode='www', family="nccommons"
 time.sleep(1)
 print('time.sleep(1)')
 
+
 def get_image_extension(image_url):
     # Split the URL to get the filename and extension
     _, filename = os.path.split(image_url)
-    
+
     # Split the filename to get the name and extension
     name, extension = os.path.splitext(filename)
-    
+
     # Return the extension (without the dot)
     return extension[1:]
 
+
 def make_file(image_name, image_url):
-    
     image_name = image_name.replace('_', ' ').replace('  ', ' ')
     # base_name = os.path.basename(image_url)
 
@@ -67,6 +68,7 @@ def make_file(image_name, image_url):
     image_name = f'{image_name}.{extension}'
     image_name = image_name.replace('..', '.')
     return image_name
+
 
 def create_set(chapter_name, image_infos):
     title = chapter_name
@@ -82,7 +84,6 @@ def create_set(chapter_name, image_infos):
     # ---
 
     for image_url, image_name in image_infos.items():
-
         # add extension to image_name
         image_name = make_file(image_name, image_url)
 
@@ -102,6 +103,7 @@ def create_set(chapter_name, image_infos):
     # ---
     return new
 
+
 def create_category(chapter_name):
     cat_text = f'* Image set: [[{chapter_name}]]\n[[Category:UndergradImaging]]'
     cat_title = f'Category:{chapter_name}'
@@ -117,6 +119,7 @@ def create_category(chapter_name):
     api.create_Page(cat_text, cat_title)
     # ---
     return cat_title
+
 
 def upload_image(category, image_url, image_name, chapter_url, chapter_name):
     # get image base name
@@ -153,7 +156,6 @@ def upload_image(category, image_url, image_name, chapter_url, chapter_name):
 
 
 def process_folder():
-
     for chapter_name, info_data in data.items():
         images_info = info_data.get("images", {})
         chapter_url = info_data.get("url")
@@ -161,7 +163,7 @@ def process_folder():
         chapter_name2 = f'{chapter_name} (UndergradImaging)'
         print(f'Processing {chapter_name2}')
         # Create category
-        
+
         if images_info:
             category = create_category(chapter_name2)
 
@@ -176,6 +178,7 @@ def process_folder():
             create_set(chapter_name2, images_info)
             if 'break' in sys.argv:
                 break
+
 
 if __name__ == "__main__":
     # Process all subfolders in the specified root folder

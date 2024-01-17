@@ -74,9 +74,6 @@ def match_ref_names(r, refnames, lang):
     return ''
 
 
-# ---
-
-
 class FindInHistory:
     def __init__(self, title, lang="en", refname=[], extlinks=[]):
         # ---
@@ -142,7 +139,19 @@ class FindInHistory:
         return results
 
     def get_revisions(self, title):
-        params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "utf8": 1, "formatversion": "2", "rvprop": "comment|timestamp|user|content|ids", "rvdir": "newer", "rvstart": "2011-01-01T00:00:00.000Z", "rvend": "2018-01-01T00:00:00.000Z", "rvlimit": "max"}
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "revisions",
+            "titles": title,
+            "utf8": 1,
+            "formatversion": "2",
+            "rvprop": "comment|timestamp|user|content|ids",
+            "rvdir": "newer",
+            # "rvstart": "2011-01-01T00:00:00.000Z",
+            # "rvend": "2018-01-01T00:00:00.000Z",
+            "rvlimit": "max",
+        }
         # ---
         pages = self.post_continue(params, "query", "pages", [])
         # ---

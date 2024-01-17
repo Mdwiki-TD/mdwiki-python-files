@@ -11,6 +11,7 @@ import codecs
 import os
 import sys
 import requests
+
 # ---
 try:
     import pywikibot
@@ -20,10 +21,12 @@ except ImportError:
 sys.path.append('/data/project/mdwiki/pybot/md_core/')
 # ---
 from wprefs.helps import print_s
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 SS = {"token": ''}
 session = {}

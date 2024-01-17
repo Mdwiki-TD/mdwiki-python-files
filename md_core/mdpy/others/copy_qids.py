@@ -41,8 +41,9 @@ print(f'len_qids_empty = {len_qids_empty}')
 print(f'len_qids_not_empty = {len_qids_not_empty}')
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 # en_to_md.mdtitle_to_qid
 qids_list = en_to_md.mdtitle_to_qid

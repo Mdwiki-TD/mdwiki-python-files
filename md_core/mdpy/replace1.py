@@ -9,12 +9,15 @@
 #
 import codecs
 import sys
+
 # ---
 from new_api.mdwiki_page import MainPage, NEW_API
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
@@ -104,9 +107,7 @@ def main():
     # ---
     find = codecs.open(f'{public_html}/find/{nn}_find.txt', 'r', 'utf8').read()
     # ---
-    replace = codecs.open(
-        f'{public_html}/find/{nn}_replace.txt', 'r', 'utf8'
-    ).read()
+    replace = codecs.open(f'{public_html}/find/{nn}_replace.txt', 'r', 'utf8').read()
     # ---
     if replace.strip() == "empty":
         replace = ""

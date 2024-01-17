@@ -462,11 +462,7 @@ def _get_page_views_(titles, site='en', days=30):
                 continue
             # ---
             pageviews = kk.get('pageviews', {})
-            all_views = sum(
-                views
-                for date, views in pageviews.items()
-                if isinstance(views, int)
-            )
+            all_views = sum(views for date, views in pageviews.items() if isinstance(views, int))
             # ---
             Main_table[title] = all_views
         # ---
@@ -545,10 +541,7 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         if not data or data == {}:
             pywikibot.output(url)
         # ---
-        sadasd = [
-            {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, 
-            {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}
-            ]
+        sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
         # ---
         number_all = 0
         # ---

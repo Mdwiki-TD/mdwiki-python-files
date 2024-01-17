@@ -16,10 +16,12 @@ from mdpy.bots import wiki_api
 from mdpy.bots import mdwiki_api
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'

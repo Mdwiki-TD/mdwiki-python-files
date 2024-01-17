@@ -8,20 +8,18 @@ import re
 import os
 import sys
 from pathlib import Path
+
 # ---
 from mdpy import printe
 from new_api.mdwiki_page import MainPage as md_MainPage
 from stats.editors import validate_ip
-#---
+
+# ---
 Dir = Path(__file__).parent
 editors_dir = Dir / 'editors'
-#---
-skip_sites = [
-    'enwiki', 
-    'wikidatawiki', 
-    'commonswiki', 
-    'specieswiki'
-    ]
+# ---
+skip_sites = ['enwiki', 'wikidatawiki', 'commonswiki', 'specieswiki']
+
 
 def filter_editors(editors, site):
     # ---
@@ -30,6 +28,7 @@ def filter_editors(editors, site):
             del editors[x]
     # ---
     return editors
+
 
 def work_all(editors):
     # ---
@@ -61,13 +60,7 @@ def work_all(editors):
         # ---
         user = user.replace('_', ' ')
         # ---
-        text += (
-            f'|-\n'
-            f'!{i}\n'
-            f'|[[:w:{wiki}:user:{user}|{user}]]\n'
-            f'|{count:,}\n'
-            f'|{wiki}\n'
-            )
+        text += f'|-\n' f'!{i}\n' f'|[[:w:{wiki}:user:{user}|{user}]]\n' f'|{count:,}\n' f'|{wiki}\n'
         # ---
         if i == 1000:
             break
@@ -84,6 +77,7 @@ def work_all(editors):
         printe.output('<<lightgreen>> no changes')
     # ---
     return editors
+
 
 def start():
     # ---
@@ -114,6 +108,7 @@ def start():
     all_editors = dict(sorted(all_editors.items(), key=lambda x: x[1]['all'], reverse=True))
     # ---
     work_all(all_editors)
+
 
 if __name__ == "__main__":
     start()

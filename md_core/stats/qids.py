@@ -22,6 +22,7 @@ qids_list = {}
 with open(qids_file, 'r', encoding='utf-8') as f:
     qids_list = json.load(f)
 
+
 def get_en_articles():
     # ---
     query = """
@@ -42,13 +43,14 @@ def get_en_articles():
     # ---
     return articles
 
+
 def start():
     # ---
     articles = get_en_articles()
     # ---
     qids_list = list(articles.values())
     # ---
-    # dump 
+    # dump
     with open(qids_file, 'w', encoding='utf-8') as f:
         json.dump(qids_list, f, sort_keys=True)
 

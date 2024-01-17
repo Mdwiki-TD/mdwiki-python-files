@@ -12,10 +12,13 @@ import os
 import sys
 import time as tttime
 from pymysql.converters import escape_string
+
 # ---
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.others.fixcat import cat_for_pages
+
+
 # ---
 def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
@@ -34,8 +37,8 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             # ---
             mdtit = escape_string(mdtitle)
             user2 = escape_string(user)
-            tar   = escape_string(target)
-            word  = 0
+            tar = escape_string(target)
+            word = 0
             # ---
             if str(namespace) != '0':
                 continue
@@ -79,4 +82,3 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             qu = sql_for_mdwiki.mdwiki_sql(uuu, update=True, Prints=False)
             # ---
             printe.output(qu)
-

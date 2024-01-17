@@ -21,15 +21,18 @@ import os
 import json
 import codecs
 import sys
+
 # ---
 from mdpy.bots import mdwiki_api
 from mdpy import printe
 from mdcount.links import get_valid_Links
 from mdcount import lead
+
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
-#print(f'Dir : {Dir}')
+# print(f'Dir : {Dir}')
 # ---
 dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
