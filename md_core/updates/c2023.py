@@ -23,7 +23,7 @@ from new_api.mdwiki_page import NEW_API, MainPage as md_MainPage
 api_new  = NEW_API('www', family='mdwiki')
 # login    = api_new.Login_to_wiki()
 # ---
-limit = 100 if 'test' in sys.argv else 100000
+limit = 500 if 'test' in sys.argv else 100000
 # ---
 pages = mdwiki_api.Get_All_pages('!', namespace='0', limit=limit, limit_all=limit, apfilterredir='nonredirects')
 # ---
