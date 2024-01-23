@@ -38,10 +38,7 @@ def get_en_articles():
     """
     # ---
     result = wiki_sql.sql_new(query, 'enwiki')
-    # ---
-    articles = {x['page_title']: x['pp_value'] for x in result}
-    # ---
-    return articles
+    return {x['page_title']: x['pp_value'] for x in result}
 
 
 def start():

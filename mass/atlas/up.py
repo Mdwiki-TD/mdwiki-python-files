@@ -39,7 +39,6 @@ len_all_images = []
 
 def create_set(disease_name, image_infos):
     title = disease_name
-    text = ''
     # ---
     if 'noset' in sys.argv:
         return
@@ -48,8 +47,7 @@ def create_set(disease_name, image_infos):
     if title in pages:
         printe.output(f'<<lightyellow>>{title} already exists')
         return
-    # ---
-    text += '{{Imagestack\n|width=850\n'
+    text = '' + '{{Imagestack\n|width=850\n'
     text += f'|title={disease_name}\n|align=centre\n|loop=no\n'
     # ---
 
@@ -59,10 +57,7 @@ def create_set(disease_name, image_infos):
         text += f'|File:{image_name}|\n'
     text += '\n}}\n[[Category:Image set]]\n'
     text += f'[[Category:{disease_name}|*]]'
-    # ---
-    new = api.create_Page(text, title)
-    # ---
-    return new
+    return api.create_Page(text, title)
 
 
 def create_category(disease_name):

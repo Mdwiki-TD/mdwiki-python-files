@@ -124,7 +124,7 @@ def main():
                 break
 
     # sort the data by if it has images
-    data = {k: v for k, v in sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True)}
+    data = dict(sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True))
 
     # print how many has images and how many has no images
     printe.output(f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}")
@@ -132,7 +132,7 @@ def main():
     printe.output(f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}")
 
     # print len of all images
-    printe.output(f"<<green>> Number of images: {sum([len(v['images']) for k, v in data.items()])}")
+    printe.output(f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}")
 
     if 'test' not in sys.argv:
         # Save the updated data back to the JSON file

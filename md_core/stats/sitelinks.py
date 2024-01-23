@@ -62,7 +62,7 @@ def get_sitelinks(qs_list, lena=300):
             title = tab.get("title", '')
             site = tab.get("site", '')
             # ---
-            if not site in sitelinks:
+            if site not in sitelinks:
                 sitelinks[site] = []
             # ---
             sitelinks[site].append(title)

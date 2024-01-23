@@ -19,7 +19,7 @@ def expend_infoboxs_and_fix(new_text):
             # ---
             if name.lower() in IMC_params:
                 # ---
-                _params = [x for x in IMC_params[name.lower()]]
+                _params = list(IMC_params[name.lower()])
                 # ---
                 dups = dup_params.get(name.lower(), {})
                 # ---
@@ -33,7 +33,7 @@ def expend_infoboxs_and_fix(new_text):
                     na = str(param.name).strip()
                     na = dups.get(na.lower(), na)
                     # ---
-                    if na.isdigit() and str(param.value).strip() == '':
+                    if na.isdigit() and not str(param.value).strip():
                         continue
                     # ---
                     params[na] = str(param.value)

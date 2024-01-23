@@ -50,9 +50,8 @@ def remove_session_id_from_url(url):
     session_id_pattern = re.compile(r';jsessionid=[^?&]+')
 
     # Use the regular expression to replace the session ID with an empty string
-    cleaned_url = session_id_pattern.sub('', url)
 
-    return cleaned_url
+    return session_id_pattern.sub('', url)
 
 
 # Function to download and save an image

@@ -63,11 +63,7 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
         'use_unicode': True,
         'autocommit': True,
     }
-    # ---
-    params = None
-    # ---
-    if values:
-        params = values
+    params = values if values else None
     # ---
     # connect to the database server without error
     # ---

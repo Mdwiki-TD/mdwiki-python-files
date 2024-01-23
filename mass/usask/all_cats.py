@@ -23,18 +23,15 @@ def doo():
         images_info = info_data.get("images", {})
         chapters[name] = len(images_info.keys())
         for url, name in images_info.items():
-            if not name in names:
+            if name not in names:
                 names[name] = 0
             names[name] += 1
 
-    text = '{| class="wikitable sortable"\n|-\n'
-    text += '! # !! Category !! Image set !! Url !! Number of images\n|-\n'
-    n = 0
-    for x, count in chapters.items():
+    text = '{| class="wikitable sortable"\n|-\n' + '! # !! Category !! Image set !! Url !! Number of images\n|-\n'
+    for n, (x, count) in enumerate(chapters.items(), start=1):
         url = data[x]['url']
 
         x2 = f'{x} (UndergradImaging)'
-        n += 1
         text += f'! {n}\n'
         text += f'| [[:Category:{x2}]]\n'  # + ' ||{{#ifexist:Category:' + x2 + '|1|0}}\n'
         text += f'| [[{x2}]]\n'  # + '|| {{#ifexist:' + x2 + '|1|0}}\n'

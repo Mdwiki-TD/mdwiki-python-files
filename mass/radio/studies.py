@@ -26,11 +26,11 @@ def get_images(url):
     print(f"url: {url}")
 
     response = requests.get(url)
-    studies = []
-
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
+        studies = []
+
         return '', studies
 
     # Step 2: Parse the HTML content
@@ -53,9 +53,7 @@ def get_images(url):
                 for entry in data:
                     # { "id": 21152341, "fullscreen_filename": "https://prod-images-static.radiopaedia.org/images/21152341/f802b27c53bf577c1ab269b3ef526a_big_gallery.jpeg", "public_filename": "https://prod-images-static.radiopaedia.org/images/21152341/f802b27c53bf577c1ab269b3ef526a.png", "plane_projection": "Sagittal", "aux_modality": "T1", "position": 10, "content_type": "image/png", "width": 512, "height": 512, "show_feature": false, "show_pin": false, "show_case_key_image": false, "show_stack_key_image": false, "download_image_url": "/images/21152341/download?layout=false", "crop_pending": false }
 
-                    for image in entry['images']:
-                        image_info.append(image)
-
+                    image_info.extend(iter(entry['images']))
     print(f'len image_info: {len(image_info)}')
 
     return image_info
@@ -68,7 +66,7 @@ def main():
         ids = json.loads(f.read())
 
     n = 0
-    for _, tab in ids.items():
+    for url, tab in ids.items():
         for study in tab['studies']:
             n += 1
             print(f"n: {n}/ f {len(ids)}")

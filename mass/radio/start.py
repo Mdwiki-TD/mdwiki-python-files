@@ -16,11 +16,10 @@ from mass.radio.One_Case import OneCase
 
 main_dir = Path(__file__).parent
 
-# ---
 authors_file = os.path.join(str(main_dir), 'jsons/authors.json')
 with open(authors_file, 'r', encoding='utf-8') as f:
     authors = json.loads(f.read())
-# ---
+
 ids_file = os.path.join(str(main_dir), 'jsons/ids.json')
 with open(ids_file, 'r', encoding='utf-8') as f:
     ids_by_caseId = json.loads(f.read())
@@ -36,7 +35,6 @@ def get_pages():
 
     pages = pages | pages2
     pages = pages | pages3
-
     return pages
 
 

@@ -55,12 +55,10 @@ def work_on_title(title, returntext=False, text_O=""):
     printe.showDiff(text, new_text)
     # ---
     ask = input(f"<<yellow>> save title:{title}? ")
-    # ---
     if ask in ['y', '', 'a']:
         return med.page_put(new_text, title)
-    else:
-        print("not saved")
-        return
+    print("not saved")
+    return
 
 
 def main1():
@@ -99,22 +97,22 @@ def main():
         # ---
         arg = arg.lower()
         # ---
-        if arg == "-limit" or arg == "limit":
+        if arg in ["-limit", "limit"]:
             limite = value
         # ---
-        if arg == "-userlimit" or arg == "userlimit":
+        if arg in ["-userlimit", "userlimit"]:
             user_limit = value
         # ---
-        if arg == "-page" or arg == "page":
+        if arg in ["-page", "page"]:
             pages.append(value)
         # ---
-        if arg == 'newpages' or arg == '-newpages':
+        if arg in ['newpages', '-newpages']:
             newpages = value
         # ---
-        if arg == "-user" or arg == "-usercontribs":
+        if arg in ["-user", "-usercontribs"]:
             user = value
         # ---
-        if arg == 'start' or arg == '-start':
+        if arg in ['start', '-start']:
             starts = value
         # ---
         if arg == "-ns":
@@ -125,8 +123,7 @@ def main():
                 value = searchlist[value]
             # ---
             ccc = NEW_API.Search(value=value, ns="0", srlimit="max")
-            for x in ccc:
-                pages.append(x)
+            pages.extend(iter(ccc))
     # ---
     if starts != '':
         # ---

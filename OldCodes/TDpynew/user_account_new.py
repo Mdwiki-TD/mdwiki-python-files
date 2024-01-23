@@ -8,6 +8,7 @@ lgname_enwiki   = user_account_new.lgname_enwiki
 lgpass_enwiki   = user_account_new.lgpass_enwiki
 # ---
 '''
+
 import os
 import configparser
 
@@ -21,7 +22,7 @@ dir2 = Dir.replace('\\', '/')
 dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
 # ---
 config = configparser.ConfigParser()
-config.read(dir2 + '/confs/user.ini')
+config.read(f'{dir2}/confs/user.ini')
 
 username = config['DEFAULT']['botusername']
 password = config['DEFAULT']['botpassword']

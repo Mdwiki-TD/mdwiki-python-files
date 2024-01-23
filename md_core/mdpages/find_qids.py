@@ -146,7 +146,7 @@ def start():
     printe.output('===================')
     printe.output(f'find qid to {len(to_add)} from {len(noqids)} pages.')
     # ---
-    if len(to_add) > 0:
+    if to_add:
         printe.output('<<lightyellow>>\n'.join([f'{k}\t:\t{v}' for k, v in to_add.items()]))
         # ---
         printe.output('<<purple>> add "addthem" to sys.argv to add them?')
