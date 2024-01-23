@@ -2,7 +2,7 @@
 
 python3 core8/pwb.py mass/radio/cases
 
-python3 core8/pwb.py mass/radio/geturls
+python3 core8/pwb.py mass/radio/geturlsnew
 
 python3 core8/pwb.py mass/radio/to_work
 

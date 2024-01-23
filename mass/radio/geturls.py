@@ -78,11 +78,16 @@ def main():
     with open(urlsfile, 'r', encoding='utf-8') as f:
         all_urls = json.loads(f.read())
 
-    for page_num in range(1, 2841):
+    for page_num in range(200, 400):
         urls_data = get_urls(page_num)
-        if urls_data:
-            all_urls.update(urls_data)
-
+        # ---
+        new = {x:v for x, v in urls_data.items() if x not in all_urls}
+        # ---
+        print(f"new: {len(new)}, urls_data: {len(urls_data)}")
+        # ---
+        if new:
+            all_urls.update(new)
+        # ---
         if page_num % 100 == 0:
             # Step 5: Save the dictionary to a JSON file
             with open(urlsfile, 'w', encoding='utf-8') as f:

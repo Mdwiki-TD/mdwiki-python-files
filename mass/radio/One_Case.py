@@ -4,24 +4,28 @@ from mass.radio.One_Case import OneCase
 import sys
 import os
 from pathlib import Path
-import re
-import requests
 import json
-
 # ---
 from new_api import printe
 from nccommons import api
 from new_api.ncc_page import MainPage as ncc_MainPage
-from mass.radio.studies import get_images
+from mass.radio.studies import get_images_stacks
 from mass.radio.bmp import work_bmp
-
 # ---
 main_dir = Path(__file__).parent
+# --
+infos_file = os.path.join(str(main_dir), 'jsons/infos.json')
+# --
+if not os.path.exists(infos_file):
+    with open(infos_file, 'w', encoding='utf-8') as f:
+        f.write("{}")
+# --
+with open(infos_file, 'r', encoding='utf-8') as f:
+    infos = json.loads(f.read())
 # --
 urls_done = []
 
 
-# --
 def get_image_extension(image_url):
     # Split the URL to get the filename and extension
     _, filename = os.path.split(image_url)
@@ -47,6 +51,14 @@ class OneCase:
         self.studies = {}
         self.set_title = f'Radiopaedia case {self.caseId} {self.title}'
         self.category = f'Category:Radiopaedia case {self.caseId} {self.title}'
+        # ---
+        self.published = ''
+        # ---
+        if self.case_url in infos:
+            self.published = infos[self.case_url]["published"]
+            # ---
+            if not self.author: 
+                self.author = infos[self.case_url]["author"]
 
     def create_category(self):
         text = f'* [{self.case_url} Radiopaedia case: {self.title} ({self.caseId})]\n'
@@ -55,6 +67,10 @@ class OneCase:
         if self.category in self.pages:
             printe.output(f'<<lightyellow>> {self.category} already exists')
             return
+        # ---
+        if self.case_url in infos:
+            system = infos[self.case_url]["system"]
+            text += f"\n[[Category:Radiopaedia cases for {system}]]"
         # ---
         cat = ncc_MainPage(self.category, 'www', family='nccommons')
         # ---
@@ -78,7 +94,8 @@ class OneCase:
                     printe.output(f'{study} : len(ja) = {len(ja)}')
             else:
                 printe.output(f'{study} : not found')
-                images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
+                # images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
+                images = get_images_stacks(self.caseId)
                 with open(st_file, 'w', encoding='utf-8') as f:
                     json.dump(images, f, ensure_ascii=False, indent=4)
                 self.studies[study] = images
@@ -101,7 +118,7 @@ class OneCase:
             f'* Image ID: {image_id}\n'
             f'* Plane projection: {plane}\n'
             f'* modality: {modality}\n'
-            f'|Date = \n'
+            f'|Date = {self.published}\n'
             f'|Source = [{self.case_url} {self.title}]\n'
             f'|Author = {self.author}\n'
             '|Permission = http://creativecommons.org/licenses/by-nc-sa/3.0/\n'
