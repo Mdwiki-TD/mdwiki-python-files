@@ -1,7 +1,7 @@
 # ---
 """
 from new_api.ncc_page import CatDepth
-# cat_members = CatDepth(title, sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
+# cat_members = CatDepth(title, sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], tempyes=[])
 
 from new_api.ncc_page import MainPage as ncc_MainPage
 '''

@@ -65,6 +65,7 @@ def main(ids_tab):
         printe.output('++++++++++++++++++++++++++++++++')
         printe.output(f'<<purple>> case:{n} / {len(ids_tab)}:')
         author = authors.get(str(caseId), '')
+        
         title = tab['title']
 
         studies = [study.split('/')[-1] for study in tab['studies']]
