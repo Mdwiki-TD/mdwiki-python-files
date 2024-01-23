@@ -3,6 +3,8 @@
 
 python3 core8/pwb.py updates/c2023 
 
+tfj run c2023 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py updates/c2023"
+
 """
 #
 # (C) Ibrahem Qasim, 2022

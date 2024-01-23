@@ -18,7 +18,7 @@ with open(urlsfile, 'r', encoding='utf-8') as f:
     all_urls = json.loads(f.read())
 print(f"lenth of all_urls: {len(all_urls)}")
 
-cases_file = os.path.join(str(main_dir), 'jsons/cases.json')
+cases_file = os.path.join(str(main_dir), 'jsons/cases1.json')
 
 with open(cases_file, 'r', encoding='utf-8') as f:
     cases_in = json.loads(f.read())
