@@ -133,7 +133,7 @@ class NEW_API:
             if not data:
                 break
             # ---
-            printe.output(f'post_continue, len:{len(data)}, all: {len(results)}')
+            # printe.output(f'post_continue, len:{len(data)}, all: {len(results)}')
             # ---
             if Max <= len(results) and len(results) > 1:
                 break

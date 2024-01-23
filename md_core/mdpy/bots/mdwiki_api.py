@@ -1060,9 +1060,9 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all
         # ---
         printe.output(f"len of Main_table {len(Main_table)}.")
         # ---
-        if limit_all > 0 and len(Main_table) > limit_all:
+        if limit_all > 0 and len(Main_table) >= limit_all:
             apcontinue = ''
-            printe.output("<<lightgreen>> limit_all > len(Main_table) ")
+            printe.output("<<lightgreen>> limit_all >= len(Main_table) ")
             break
         # ---
     # ---

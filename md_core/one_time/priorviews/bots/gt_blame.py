@@ -129,7 +129,7 @@ class FindInHistory:
             if not data:
                 break
             # ---
-            printe.output(f'post_continue, len:{len(data)}, all: {len(results)}')
+            # printe.output(f'post_continue, len:{len(data)}, all: {len(results)}')
             # ---
             if isinstance(results, list):
                 results.extend(data)
