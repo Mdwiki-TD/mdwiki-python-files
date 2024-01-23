@@ -11,6 +11,7 @@ from newapi.page import NEW_API
 # l_links  = api_new.Get_langlinks_for_list(titles, targtsitecode="", numbes=50)
 # text_w   = api_new.expandtemplates(text)
 # subst    = api_new.Parse_Text('{{subst:page_name}}', title)
+# revisions= api_new.get_revisions(title)
 
 Usage:
 from newapi.page import NEW_API
@@ -514,8 +515,13 @@ class NEW_API:
         links = [x['url'] for x in results]
         return sorted(set(links))
 
-    def get_revisions(self, title):
+    def get_revisions(self, title, rvprop='comment|timestamp|user|content|ids', options={}):
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "utf8": 1, "formatversion": "2", "rvprop": "comment|timestamp|user|content|ids", "rvdir": "newer", "rvlimit": "max"}
+        # ---
+        params["rvprop"] = rvprop or "comment|timestamp|user|content|ids"
+        # ---
+        if options:
+            params.update(options)
         # ---
         results = self.post_continue(params, "query", "pages", [])
         # ---
