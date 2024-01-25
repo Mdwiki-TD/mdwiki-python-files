@@ -70,7 +70,7 @@ def find_redirects(links):
         line = "|".join(group)
         # ---
         params = {"action": "query", "format": "json", "prop": "redirects", "titles": line, "redirects": 1, "converttitles": 1, "utf8": 1, "rdlimit": "max"}
-        if jsone := mdwiki_api.post(params):
+        if jsone := mdwiki_api.post_s(params):
             # ---
             query = jsone.get("query", {})
             # ---

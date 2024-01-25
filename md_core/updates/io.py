@@ -46,7 +46,7 @@ def get_timestamp(titles):
     for page in titles:
         num += 1
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": page, "rvprop": "timestamp", "rvlimit": "1", "rvdir": "newer"}
-        hh = mdwiki_api.post(params)
+        hh = mdwiki_api.post_s(params)
         # ---
         # { "action": "query", "format": "json", "prop": "revisions", "titles": "Etizolam", "utf8": 1, "rvprop": "timestamp", "rvlimit": "1", "rvdir": "newer" }
         # ---

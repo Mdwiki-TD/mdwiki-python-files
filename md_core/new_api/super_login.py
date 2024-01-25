@@ -72,7 +72,7 @@ class Login:
     def Log_to_wiki(self):
         return True
 
-    def make_response(self, params):
+    def make_response(self, params, files=None):
         # ---
         pams2 = params.copy()
         # ---
@@ -92,7 +92,7 @@ class Login:
         # ---
         # handle errors
         try:
-            req0 = seasons_by_lang[self.lang].post(self.endpoint, data=params)
+            req0 = seasons_by_lang[self.lang].post(self.endpoint, data=params, files=files)
             # req0.raise_for_status()
         except Exception:
             pywikibot.output('<<lightred>> Traceback (most recent call last):')
@@ -212,7 +212,7 @@ class Login:
         # ---
         # printe.output(f'<<green>> r3_token: {self.r3_token}')
 
-    def post(self, params, Type='get', addtoken=False, CSRF=True):
+    def post(self, params, Type='get', addtoken=False, CSRF=True, files=None):
         # ---
         # if login_lang[1] != self.lang:
         # printe.output(f'<<red>> login_lang[1]: {login_lang[1]} != self.lang:{self.lang}')
@@ -232,7 +232,7 @@ class Login:
         if 'minor' in params and params['minor'] == '':
             params['minor'] = self.Bot_or_himo
         # ---
-        if addtoken or params["action"] in ["edit", "create"]:
+        if addtoken or params["action"] in ["edit", "create", "upload", "delete"]:
             if self.r3_token == '':
                 warn(warn_err('self.r3_token == "" '), UserWarning)
                 warn(warn_err('self.r3_token == "" '), UserWarning)
@@ -252,7 +252,7 @@ class Login:
         # ---
         params["formatversion"] = params.get("formatversion") or "1"
         # ---
-        data = self.make_response(params)
+        data = self.make_response(params, files=files)
         # ---
         if data == {}:
             return {}

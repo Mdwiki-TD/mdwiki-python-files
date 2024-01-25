@@ -52,7 +52,7 @@ class OneCase:
         if self.case_url in jsons.infos:
             self.published = jsons.infos[self.case_url]["published"]
             # ---
-            if not self.author: 
+            if not self.author:
                 self.author = jsons.infos[self.case_url]["author"]
             # ---
             self.system = jsons.infos[self.case_url]["system"]

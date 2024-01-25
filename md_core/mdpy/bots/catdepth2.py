@@ -74,7 +74,7 @@ def Get_cat(enlink, print_url=False):
         # ---
         continue_v = ''
         # ---
-        api = mdwiki_api.post(params)
+        api = mdwiki_api.post_s(params)
         # ---
         if not api:
             break

@@ -61,7 +61,7 @@ def delete_it(cat):
     # ---
     params = {"action": "delete", "format": "json", "title": cat, "reason": "cat moved to nccommons.org"}  # , "deletetalk": 1}
     # ---
-    doit = mdwiki_api.post(params, addtoken=True)
+    doit = mdwiki_api.post_s(params, addtoken=True)
     # ---
     pywikibot.output(f'doit: {doit}')
 
