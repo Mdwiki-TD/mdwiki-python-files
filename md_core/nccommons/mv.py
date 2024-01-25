@@ -30,7 +30,7 @@ pywikibot.output(f'len of cats: {len(cats)}')
 # ---
 # ---
 api_new = NEW_API('www', family='mdwiki')
-# login   = api_new.Login_to_wiki()
+api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)
 # ---
 exists = {}

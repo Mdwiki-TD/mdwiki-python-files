@@ -21,7 +21,7 @@ import pywikibot
 from new_api.ncc_page import NEW_API
 api_new  = NEW_API('www', family='nccommons')
 # json1    = api_new.post_params(params, addtoken=False)
-# login    = api_new.Login_to_wiki()
+api_new.Login_to_wiki()
 # pages    = api_new.Find_pages_exists_or_not(liste)
 # json1    = api_new.post_params(params, addtoken=False)
 # pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
