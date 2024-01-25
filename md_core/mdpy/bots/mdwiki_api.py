@@ -59,7 +59,7 @@ def post_s(params, addtoken=False, files=None):
     params['format'] = 'json'
     params['utf8'] = 1
     # ---
-    json1 = api_new.post_params(params, addtoken=True, files=files)
+    json1 = api_new.post_params(params, addtoken=addtoken, files=files)
     # ---
     return json1
 
@@ -73,7 +73,7 @@ def outbot(text2):
         try:
             text = json.loads(text2)
         except BaseException:
-            pywikibot.output("error when json loads text2")
+            printe.output("error when json loads text2")
     # ---{'error': {'*': 'See https://mdwiki.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.', 'info': 'Invalid CSRF token.', 'code': 'badtoken'}}
     # {'error': {'info': 'Invalid CSRF token.', '*': 'See https://mdwiki.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.', 'code': 'badtoken'}}
     # ---
@@ -128,7 +128,8 @@ def import_history2(FILE_PATH, title):
     # ---
     for fff in NewList:
         printe.output(f' file:"{fff}"')
-        FILE = {'xml': ('file.xml', open(fff))}
+        with open(fff) as file:
+            FILE = {'xml': ('file.xml', file)}
         # DATA = R.json()
         # print(DATA)
         r4 = post_s(pp, addtoken=True, files=FILE)
@@ -168,7 +169,8 @@ def import_history(FILE_PATH, title):
     # ---
     for fff in NewList:
         printe.output(f' file:"{fff}"')
-        FILE = {'xml': ('file.xml', open(fff))}
+        with open(fff) as file:
+            FILE = {'xml': ('file.xml', file)}
         # DATA = R.json()
         # print(DATA)
         # ---
@@ -222,13 +224,6 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
             return r4
         elif returntrue:
             return True
-    elif Invalid == "Invalid CSRF token.":
-        printe.output('<<lightred>> ** error "Invalid CSRF token.". ')
-        printe.output(r4)
-        # ---
-
-        # ---
-        return page_put_new(NewText, summary, title, time_sleep=time_sleep, family=family, lang=lang, minor=minor, nocreate=nocreate, tags=tags, returntrue=returntrue)
     else:
         outbot(r4)
         if returntrue:
@@ -347,7 +342,7 @@ def create_Page(text, summary, title, ask, sleep=0, family="", duplicate4="", mi
         printe.output(' skip make talk to sandboxes..')
         return False
     # ---
-    if sleep is not False:
+    if sleep and sleep > 0:
         time_sleep = sleep
     # ---
     params = {
@@ -413,7 +408,7 @@ def create_Page(text, summary, title, ask, sleep=0, family="", duplicate4="", mi
     return False
 
 
-def move(From, to, reason, lang='ar', nosleep=False):
+def move(From, to, reason, lang='ar', nosleep=False, retry=True):
     # ---
     printe.output(f'<<lightyellow>> ** move .. [[{lang}:{From}]] to [[{to}]] ')
     Params = {
@@ -458,7 +453,8 @@ def move(From, to, reason, lang='ar', nosleep=False):
             printe.output(r4.text)
             if nosleep:
                 time.sleep(7)
-            return move(From, to, reason, lang=lang)
+            if retry:
+                return move(From, to, reason, lang=lang, retry=False)
         elif "Please choose another name." in r4.text:
             printe.output(r4.text)
             return "Please choose another name."

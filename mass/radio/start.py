@@ -1,6 +1,7 @@
 '''
 
 python3 core8/pwb.py mass/radio/start nodiff test
+python3 core8/pwb.py mass/radio/start nodiff get:55
 
 '''
 import re
@@ -45,7 +46,7 @@ def main(ids_tab):
             num = i//length+1
             tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
-            print(f'tfj run start{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"')
+            print(f'tfj run sta{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"')
 
         for arg in sys.argv:
             arg, _, value = arg.partition(':')
