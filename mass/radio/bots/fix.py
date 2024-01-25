@@ -1,6 +1,6 @@
 '''
 
-python3 core8/pwb.py mass/radio/fix ask
+python3 core8/pwb.py mass/radio/bots/fix ask
 
 '''
 from new_api import printe

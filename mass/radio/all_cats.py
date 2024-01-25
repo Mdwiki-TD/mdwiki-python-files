@@ -3,24 +3,19 @@
 python3 core8/pwb.py mass/radio/all_cats ask
 
 """
-import os
-import json
-from pathlib import Path
 from new_api.ncc_page import MainPage as ncc_MainPage
 
-# Specify the root folder
-main_dir = Path(__file__).parent
-
+# ---
+from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
+# ---
 
 def doo():
-    with open(os.path.join(str(main_dir), 'jsons/ids.json'), 'r', encoding='utf-8') as f:
-        data = json.load(f)
-
     text = '{| class="wikitable sortable"\n|-\n'
     text += '! # !! Category !! Image set\n|-\n'
     n = 0
 
-    for _, tab in data.items():
+    for _, tab in jsons.ids.items():
         caseId = tab['caseId']
         title = tab['title']
         category = f'Radiopaedia case {caseId} {title}'

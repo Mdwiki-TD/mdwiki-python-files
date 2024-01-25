@@ -106,7 +106,7 @@ def test():
 
 # ---
 if __name__ == '__main__':
-    # python3 core8/pwb.py new_api/page
+    # python3 core8/pwb.py new_api/mdwiki_page
     su_page.print_test[1] = True
     su_login.print_test[1] = True
     test()

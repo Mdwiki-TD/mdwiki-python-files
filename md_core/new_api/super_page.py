@@ -26,7 +26,7 @@ page      = MainPage(title, 'ar', family='wikipedia')
 exists    = page.exists()
 if not exists: return
 # ---
-page_edit = page.can_edit()
+page_edit = page.can_edit(script='')
 if not page_edit: return
 # ---
 if page.isRedirect() :  return
@@ -163,8 +163,8 @@ class MainPage:
             # ---
             self.username = self.log.username
 
-    def post_params(self, params, addtoken=False):
-        return self.log.post(params, addtoken=addtoken)
+    def post_params(self, params, addtoken=False, files=None):
+        return self.log.post(params, addtoken=addtoken, files=files)
 
     def get_text(self, redirects=False):
         params = {"action": "query", "prop": "revisions|pageprops|flagged", "titles": self.title, "ppprop": "wikibase_item", "rvprop": "timestamp|content|user|ids", "rvslots": "*"}  # pageprops  # revisions  # revisions

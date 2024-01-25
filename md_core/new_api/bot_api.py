@@ -3,7 +3,7 @@ from newapi.page import NEW_API
 # api_new  = NEW_API('ar', family='wikipedia')
 # login    = api_new.Login_to_wiki()
 # pages    = api_new.Find_pages_exists_or_not(liste)
-# json1    = api_new.post_params(params)
+# json1    = api_new.post_params(params, addtoken=False)
 # pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 # search   = api_new.Search(value='', ns="", offset='', srlimit="max", RETURN_dict=False, addparams={})
 # newpages = api_new.Get_Newpages(limit="max", namespace="0", rcstart="", user='', three_houers=False)
@@ -104,8 +104,8 @@ class NEW_API:
         # ---
         printe.output(f'<<lightred>>{function} ERROR: <<defaut>>info: {err_info}.')
 
-    def post_params(self, params):
-        return self.log.post(params)
+    def post_params(self, params, addtoken=False, files=None):
+        return self.log.post(params, addtoken=addtoken, files=files)
 
     def post_continue(self, params, action, _p_, p_empty, Max=50000):
         # ---
@@ -337,7 +337,7 @@ class NEW_API:
         # ---
         numb = 0
         # ---
-        if limit.isdigit():
+        if (isinstance(limit, str) and limit.isdigit()) or isinstance(limit, int):
             limit = int(limit)
             params['rclimit'] = limit
         else:

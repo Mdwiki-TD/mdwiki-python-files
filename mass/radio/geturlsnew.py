@@ -1,155 +1,181 @@
 '''
 
-write python code to do:
-
-main_dir = Path(__file__).parent
-urlsfile = os.path.join(str(main_dir), 'jsons/urls.json')
-
-1. open urls  https://radiopaedia.org/search?lang=us&page=1&scope=cases&sort=title start at page 1 to 2840
-2. match all <a class="search-result search-result-case" href="*">
-like:(
-    <a class="search-result search-result-case" href="/cases/11-pair-ribs?lang=us">
-        <h4 class="search-result-title-text">13 pairs of ribs and absent radius</h4>
-    </a>
-)
-    
-3. add title and href to dict urls
-5. save urls to json file named urls.json
-
-
-python3 core8/pwb.py mass/radio/geturls
+python3 core8/pwb.py mass/radio/geturlsnew
 
 '''
-import sys
-import os
-from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
-import json
-
-main_dir = Path(__file__).parent
-
-files = {
-    "urls": os.path.join(str(main_dir), 'jsons/urls.json'),
-    "infos": os.path.join(str(main_dir), 'jsons/infos.json'),
+from new_api import printe
+# ---
+from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0, systems=0)
+# ---
+systems = [
+    "Breast", # 50
+    "Cardiac", # 69
+    "Central Nervous System", # 549
+    "Chest", # 344
+    "Forensic", # 16
+    "Gastrointestinal", # 356
+    "Gynaecology", # 110
+    "Haematology", # 23
+    "Head & Neck", # 272
+    "Hepatobiliary", # 139
+    "Interventional", # 30
+    "Musculoskeletal", # 814
+    "Obstetrics", # 45
+    "Oncology", # 208
+    "Paediatrics", # 303
+    "Spine", # 127
+    "Trauma", # 171
+    "Urogenital", # 221
+    "Vascular", # 180
+    "Not Applicable" # 7
+]
+# ---
+lenth_of_systems = {
+    "Breast":50,
+    "Cardiac":69,
+    "Central Nervous System":549,
+    "Chest":344,
+    "Forensic":16,
+    "Gastrointestinal":356,
+    "Gynaecology":110,
+    "Haematology":23,
+    "Head & Neck":272,
+    "Hepatobiliary":139,
+    "Interventional":30,
+    "Musculoskeletal":814,
+    "Obstetrics":45,
+    "Oncology":208,
+    "Paediatrics":303,
+    "Spine":127,
+    "Trauma":171,
+    "Urogenital":221,
+    "Vascular":180,
+    "Not Applicable":7
 }
-
-jsons = {}
-
-for k, v in files.items():
-    if not os.path.exists(v):
-        with open(v, 'w', encoding='utf-8') as f:
-            f.write("{}")
-    with open(v, 'r', encoding='utf-8') as f:
-        jsons[k] = json.loads(f.read())
-
-print(f"lenth of jsons['urls']: {len(jsons['urls'])}")
-
-
-def get_urls_system(system):
+# ---
+def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
     print(f"get_urls system:{system}::")
-
-    url = f'https://radiopaedia.org/search?lang=us&page=1&scope=cases&sort=title&system={system}'
+    # ---
+    sys2 = system
+    # ---
+    if sys2 == "Head & Neck":
+        sys2 = "Head+%26+Neck"
+    # ---
+    sys2 = sys2.replace(" ", "+")
+    # ---
+    # url = f'https://radiopaedia.org/search?lang=us&page=1&scope=cases&sort=title&system={sys2}'
+    # url = f'https://radiopaedia.org/search?lang=us&page=1&scope=cases&sort=date_of_publication&system={sys2}'
+    url = f'https://radiopaedia.org/search?lang=us&page=1&scope=cases&sort=completeness&system={sys2}'
     # ---
     tat = {}
     # ---
+    n = 0
+    # ---
     while url:
+        n += 1
         print(f"get url: {url}")
         response = requests.get(url)
 
         # Check if the request was successful (status code 200)
-        if response.status_code != 200:
-            print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
-            return None
+        if response.status_code == 200:
 
-        # Step 2: Parse the HTML content
-        soup = BeautifulSoup(response.content, 'html.parser')
-        # find  <a class="next_page" aria-label="Next page" rel="next" href="/search?lang=us&amp;page=2&amp;scope=cases&amp;sort=title&amp;system=Spine">Next &#8594;</a>
-        next_page = soup.find('a', class_='next_page')
-        if next_page:
-            url = "https://radiopaedia.org" + next_page.get('href').strip()
-        else:
-            url = None
-        links = soup.find_all('a', class_='search-result search-result-case')
-
-        print(f"lenth of links: {len(links)}, tat: {len(tat)}")
-        for link in links:
+            # Step 2: Parse the HTML content
+            soup = BeautifulSoup(response.content, 'html.parser')
+            # find  <a class="next_page" aria-label="Next page" rel="next" href="/search?lang=us&amp;page=2&amp;scope=cases&amp;sort=title&amp;system=Spine">Next &#8594;</a>
+            next_page = soup.find('a', class_='next_page')
+            if next_page:
+                url = "https://radiopaedia.org" + next_page.get('href').strip()
+            else:
+                url = None
             # ---
-            href = link.get('href').strip()
-            href = href.replace('?lang=us', '')
-            href = f'https://radiopaedia.org{href}'
+            if n == 1 and only_one:
+                # find len of search results
+                # <div role="navigation" aria-label="Pagination" class="pagination clear">
+                pagination = soup.find('div', role='navigation', class_='pagination clear')
+                # ---
+                last_href = 0
+                # ---
+                if pagination:
+                    # get the link before the last one
+                    last_href = pagination.find_all('a')
+                    if len(last_href) > 2:
+                        last_href = last_href[-2].text.strip()
+                # ---
+                print(f"last_href: {last_href}")
+                return last_href
             # ---
-            title = link.find('h4', class_='search-result-title-text').text.strip()
+            links = soup.find_all('a', class_='search-result search-result-case')
             # ---
-            # <div class="search-result-author"><span>Henry Knipe</span></div>
-            author = link.find('div', class_='search-result-author').text.strip()
-            # ---
-            # <span class="published">Published 15 Oct 2015</span>
-            published = link.find('span', class_='published').text.replace('Published ', '').strip()
-            # ---
-            jsons['infos'][href] = {
-                "title": title,
-                "system": system,
-                "author": author,
-                "published": published,
-                "url": href
-            }
-            tat[href] = title
+            for link in links:
+                # ---
+                href = link.get('href').strip()
+                href = href.replace('?lang=us', '')
+                href = f'https://radiopaedia.org{href}'
+                # ---
+                title = link.find('h4', class_='search-result-title-text').text.strip()
+                # ---
+                author = ''
+                # <div class="search-result-author"><span>Henry Knipe</span></div>
+                au = link.find('div', class_='search-result-author')
+                if au:
+                    author = au.text.strip() or ''
+                # ---
+                # <span class="published">Published 15 Oct 2015</span>
+                published = link.find('span', class_='published').text.replace('Published ', '').strip()
+                # ---
+                tab = {
+                    "title": title,
+                    "system": system,
+                    "author": author,
+                    "published": published,
+                    "url": href
+                }
+                # ---
+                jsons.infos[href] = tab
+                # ---
+                if return_tab:
+                    tat[href] = tab
+                else:
+                    tat[href] = title
+        # ---
+        print(f"n:{n}, lenth of links: {len(links)}, tat: {len(tat)}/{len_all}")
     # ---
     print(f"lenth of tat: {len(tat)}")
 
     return tat
 
-def dumps_jsons():
-
-    for k, v in files.items():
-        with open(v, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(jsons[k], ensure_ascii=False, indent=4))
-            print(f"Step 5: Saved the dictionary to '{v}'.")
-
 def main():
     # ---
-    with open(files['urls'], 'r', encoding='utf-8') as f:
-        jsons['urls'] = json.loads(f.read())
+    jsons.systems.update({x:False for x in systems if x not in jsons.systems})
     # ---
-    systems = [
-        "Breast",
-        "Cardiac",
-        "Central Nervous System",
-        "Chest",
-        "Forensic",
-        "Gastrointestinal",
-        "Gynecology",
-        "Hematology",
-        "Head & Neck",
-        "Hepatobiliary",
-        "Interventional",
-        "Musculoskeletal",
-        "Obstetrics",
-        "Oncology",
-        "Pediatrics",
-        "Spine",
-        "Trauma",
-        "Urogenital",
-        "Vascular",
-        "Not Applicable"
-    ]
+    for numb, system in enumerate(systems, start=1):
+        # ---
+        if jsons.systems[system]:
+            printe.output(f"<<green>> system:{system} already in jsons.systems. Skipping.")
+            continue
+        # ---
+        urls_data = get_urls_system(system)
+        # ---
+        if not urls_data:
+            continue
+        # ---
+        new = {x:v for x, v in urls_data.items() if x not in jsons.urls}
+        # ---
+        print(f"new: {len(new)}, urls_data: {len(urls_data)}")
+        # ---
+        if new:
+            jsons.urls.update(new)
+        # ---
+        dumps_jsons(infos=1, urls=1)
+        # ---
+        jsons.systems[system] = True
+        # dump
+        dumps_jsons(systems=1)
     # ---
-    for system in systems:
-        for page_num in range(200, 400):
-            urls_data = get_urls_system(system)
-            # ---
-            new = {x:v for x, v in urls_data.items() if x not in jsons['urls']}
-            # ---
-            print(f"new: {len(new)}, urls_data: {len(urls_data)}")
-            # ---
-            if new:
-                jsons['urls'].update(new)
-            # ---
-            if page_num % 100 == 0:
-                dumps_jsons()
-    # ---
-    dumps_jsons()
+    dumps_jsons(infos=1, urls=1)
 
 if __name__ == "__main__":
     main()

@@ -10,25 +10,22 @@
 # ---
 # import pywikibot
 import sys
-import traceback
 import json
 import time
-import urllib
 import pywikibot
-import urllib.parse
-import requests
-
-from mdpy.bots import user_account_new
-from mdpy import printe
-
 # ---
+from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
+# ---
+from new_api.mdwiki_page import NEW_API
+api_new = NEW_API('www', family='mdwiki')
+api_new.Login_to_wiki()
+# json1   = api_new.post_params(params, addtoken=False)
 # ---
 '''
 # ---
 from mdpy.bots import mdwiki_api
-# mdwiki_api.post(params)
+# mdwiki_api.post_s(params, addtoken=False)
 # mdwiki_api.wordcount(title, srlimit='30')
 # mdwiki_api.purge(title)
 # mdwiki_api.page_put(oldtext='', newtext='', summary='', title='', returntrue=False, diff=True)
@@ -45,156 +42,26 @@ from mdpy.bots import mdwiki_api
 # mdwiki_api.Get_page_links(title, namespace="*", limit="max")
 # mdwiki_api.subcatquery(title, depth=0, ns="all", without_lang="", with_lang="", tempyes=[], limit=0)
 # mdwiki_api.get_redirect(liste)
-# mdwiki_api.
-# mdwiki_api.
 # ---
 '''
 # ---
-maxlag = 3
-ar_lag = {1: maxlag}
-# ---
-
-# ---
-account = {
-    'u': user_account_new.my_username,  # user_account_new.bot_username
-    'p': user_account_new.mdwiki_pass,  # user_account_new.bot_password      #user_account_new.my_password
-}
-# ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
-# ---
-SS = {"ss": requests.Session(), "r3_token": ""}
 # ---
 timesleep = 0
 # ---
-login_not_done = {1: True}
 
 
 def py_input(s):
     return pywikibot.input(s)
 
-
-def get_status(req):
-    try:
-        return req.status_code
-    except Exception:
-        pywikibot.output('<<lightred>> Traceback (most recent call last):')
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
-        return req.status
-
-
-def post_all(params, addtoken=False, **kwargs):
+def post_s(params, addtoken=False, files=None):
     # ---
-    params["format"] = "json"
-    params["utf8"] = 1
+    params['format'] = 'json'
+    params['utf8'] = 1
     # ---
-    if addtoken:
-        params["token"] = SS["r3_token"]
+    json1 = api_new.post_params(params, addtoken=addtoken, files=files)
     # ---
-    if 'printurl' in sys.argv:
-        url = SS["url"] + '?' + urllib.parse.urlencode(params)
-        print(url.replace('&format=json', ''))
-    # ---
-    r4 = False
-    try:
-        r4 = SS["ss"].post(SS["url"], data=params)
-    except Exception:
-        pywikibot.output('<<lightred>> Traceback (most recent call last):')
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
-        return {}
-    # ---
-    jsone = {}
-    try:
-        jsone = r4.json()
-    except Exception as e:
-        pywikibot.output('<<lightred>> Traceback (most recent call last):')
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output(r4.text)
-        pywikibot.output('CRITICAL:')
-        if 'Exception' in sys.argv:
-            raise Exception(e)
-        jsone = {}
-    # ---
-    if r4:
-        status = get_status(r4)
-        if status != 200:
-            pywikibot.output(f" mdAPI: post_s error: {r4.text}")
-            return {}
-    # ---
-    return jsone
-
-
-def Log_to_wiki(family='mdwiki', lang="www"):
-    # ---
-    printe.output(f"mdwiki/mdpy/mdwiki_api.py: log to {lang}.{family}.org user:{account['u']}")
-    SS["family"] = family
-    SS["lang"] = lang
-    SS["url"] = f'https://{lang}.{family}.org/w/api.php'
-    SS["ss"] = requests.Session()
-    # ---
-    r1_params = {'format': 'json', 'action': 'query', 'meta': 'tokens', 'type': 'login'}
-    # ---
-    r22 = {}
-    # if SS:
-    try:
-        r11 = SS["ss"].get(SS["url"], params=r1_params)
-        r11.raise_for_status()
-    except Exception:
-        pywikibot.output('<<lightred>> Traceback (most recent call last):')
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
-        return False
-    # ---
-    r2_params = {
-        'format': 'json',
-        'action': 'login',
-        'lgname': account['u'],
-        'lgpassword': account['p'],
-        'lgtoken': r11.json()['query']['tokens']['logintoken'],
-    }
-    # ---
-    r22 = post_all(r2_params)
-    if r22:
-        if r22['login']['result'] != 'Success':
-            pywikibot.output(r22['login']['reason'])
-        else:
-            printe.output('mdwiki_api.py login Success')
-    else:
-        pywikibot.output('mdwiki_api.py login error')
-        return False
-    # ---
-    # get edit token
-    try:
-        SS["r33"] = SS["ss"].get(
-            SS["url"],
-            params={
-                'format': 'json',
-                'action': 'query',
-                'meta': 'tokens',
-            },
-        )
-    except Exception as e:
-        pywikibot.output(f"mdwiki_api.py: Log_to_wiki error: {e}")
-        return False
-    # ---
-    SS["url"] = f'https://{lang}.{family}.org/w/api.php'
-    # ---
-    SS["r3_token"] = SS["r33"].json()['query']['tokens']['csrftoken']
-    # ---
-    login_not_done[1] = False
-
-
-def post_s(params, addtoken=False, **kwargs):
-    # ---
-    if login_not_done[1]:
-        Log_to_wiki("mdwiki", lang="www")
-    # ---
-    return post_all(params, addtoken=addtoken, **kwargs)
-
-
-def post(p, **kwargs):
-    return post_s(p, **kwargs)
+    return json1
 
 
 def outbot(text2):
@@ -206,7 +73,7 @@ def outbot(text2):
         try:
             text = json.loads(text2)
         except BaseException:
-            pywikibot.output("error when json loads text2")
+            printe.output("error when json loads text2")
     # ---{'error': {'*': 'See https://mdwiki.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.', 'info': 'Invalid CSRF token.', 'code': 'badtoken'}}
     # {'error': {'info': 'Invalid CSRF token.', '*': 'See https://mdwiki.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.', 'code': 'badtoken'}}
     # ---
@@ -217,22 +84,6 @@ def outbot(text2):
     if Invalid == "Invalid CSRF token.":
         pywikibot.output('<<lightred>> ** error "Invalid CSRF token.". ')
         pywikibot.output(text)
-        Log_to_wiki("mdwiki", lang="www")
-    elif 'maxlag' in text:
-        pywikibot.output('<<lightred>> maxlag: sleep for %d secound.' % 3)
-        tabe = text.get("error", {}).get("lag", 0)
-        lagese = int(tabe)
-        if lagese != ar_lag[1]:
-            ar_lag[1] = lagese + 1
-            slee = ar_lag[1] / 4
-            pywikibot.output('<<lightpurple>> maxlag:%d sleep for %d secound.' % (ar_lag[1], slee))
-            time.sleep(slee)
-        else:
-            pywikibot.output('<<lightpurple>> lagese == ar_lag[1] (%d)' % ar_lag[1])
-            time.sleep(3)
-        # ---
-    elif 'تأخير البوتات 3 ساعات' in text:
-        pywikibot.output('<<lightred>> ** تأخير البوتات 3 ساعات. ')
         # ---
     elif 'error' in text:
         pywikibot.output('<<lightred>> ** error. ')
@@ -255,8 +106,6 @@ def import_history2(FILE_PATH, title):
     # ---
     printe.output(f'<<lightpurple>> import_history for page:{title}:')
     # ---
-    if login_not_done[1]:
-        Log_to_wiki("mdwiki", lang="www")
     namespace = 2 if title.lower().startswith('user:') else 0
     # ---
     pp = {
@@ -266,7 +115,6 @@ def import_history2(FILE_PATH, title):
         "fullhistory": 1,
         "namespace": namespace,
         # "assignknownusers": 1,
-        "token": SS["r3_token"],
         "utf8": 1,
     }
     # ---
@@ -280,10 +128,11 @@ def import_history2(FILE_PATH, title):
     # ---
     for fff in NewList:
         printe.output(f' file:"{fff}"')
-        FILE = {'xml': ('file.xml', open(fff))}
+        with open(fff) as file:
+            FILE = {'xml': ('file.xml', file)}
         # DATA = R.json()
         # print(DATA)
-        r4 = SS["ss"].post(url=SS["url"], files=FILE, data=pp)
+        r4 = post_s(pp, addtoken=True, files=FILE)
         # ---
         DATA = r4.json()
         printe.output(DATA)
@@ -298,15 +147,13 @@ def import_history(FILE_PATH, title):
     # ---
     printe.output(f'<<lightpurple>> import_history for page:{title}:')
     # ---
-    if login_not_done[1]:
-        Log_to_wiki("mdwiki", lang="www")
+
     namespace = 2 if title.lower().startswith('user:') else 0
     # ---
     pparams = {
         "action": "import",
         "interwikisource": "wikipedia",
         "interwikipage": title,
-        "token": SS["r3_token"],
         # "summary": "",
         "fullhistory": 1,
         "namespace": namespace,
@@ -322,25 +169,18 @@ def import_history(FILE_PATH, title):
     # ---
     for fff in NewList:
         printe.output(f' file:"{fff}"')
-        FILE = {'xml': ('file.xml', open(fff))}
+        with open(fff) as file:
+            FILE = {'xml': ('file.xml', file)}
         # DATA = R.json()
         # print(DATA)
         # ---
-        try:
-            r4 = SS["ss"].post(url=SS["url"], files=FILE, data=pparams)
-            # ---
-            if 'Success' in r4.text:
-                printe.output('<<lightgreen>> ** true .. . ')
-        except Exception:
-            pywikibot.output('<<lightred>> Traceback (most recent call last):')
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output('CRITICAL:')
-            r4 = {}
+        r4 = post_s(pparams, addtoken=True, files=FILE)
         # ---
-        DATA = r4  # .json()
+        if 'Success' in r4.text:
+            printe.output('<<lightgreen>> ** true .. . ')
+        # ---
+        DATA = r4
         printe.output(DATA)
-        # ---
-        # outbot(r4.text)
 
 
 def import_page(title):
@@ -384,13 +224,6 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
             return r4
         elif returntrue:
             return True
-    elif Invalid == "Invalid CSRF token.":
-        printe.output('<<lightred>> ** error "Invalid CSRF token.". ')
-        printe.output(r4)
-        # ---
-        Log_to_wiki("mdwiki", lang="www")
-        # ---
-        return page_put_new(NewText, summary, title, time_sleep=time_sleep, family=family, lang=lang, minor=minor, nocreate=nocreate, tags=tags, returntrue=returntrue)
     else:
         outbot(r4)
         if returntrue:
@@ -413,7 +246,7 @@ def page_put(oldtext='', newtext='', summary='', title='', time_sleep="", family
             except BaseException:
                 printe.output(' -mdwiki cant showDiff')
         printe.output(f' -Edit summary: {summary}:')
-        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {lang}:{title}.org user:{account['u']}")
+        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {lang}:{title}.org")
         # ---
         if sa == "a":
             printe.output('<<lightgreen>> ---------------------------------')
@@ -452,7 +285,7 @@ def Add_To_Bottom2(aptext, summary, title, poss="", family="", minor=""):
         r4 = post_s(Paramso, addtoken=True)
         # ---
         if 'Success' in r4:
-            printe.output(f"<<lightgreen>>** true .. {SS['family']} : [[{title}]] ")
+            printe.output(f"<<lightgreen>>** true .. [[{title}]] ")
             printe.output('Save True... time.sleep(%d) ' % timesleep)
         else:
             outbot(r4)
@@ -465,19 +298,16 @@ def Add_To_Head(prependtext, summary, title, Ask, minor=""):
         # ---
         printe.output(f' Add_To_Head for Page {title}:')
         # printe.output(prependtext)
-        faso = False
         if Ask or "ask" in sys.argv and "save" not in sys.argv:
             # if Ask:
             # pywikibot.showDiff( "" , prependtext )
             sa = py_input(f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Add_To_Head of page "{title}" ? ([y]es, [N]o):')
             if sa in yes_answer:
-                faso = True
                 Add_To_Bottom2(prependtext, summary, title, poss="Head", minor=minor)
             else:
                 printe.output("wrong answer")
             return sa
         else:
-            faso = True
             Add_To_Bottom2(prependtext, summary, title, poss="Head", minor=minor)
         # ---
     else:
@@ -489,18 +319,15 @@ def Add_To_Bottom(appendtext, summary, title, Ask, family="", minor=""):
         # ---
         printe.output(f' Add_To_Bottom for Page {title}:')
         printe.output(appendtext)
-        faso = False
         if Ask or "ask" in sys.argv and "save" not in sys.argv:
             # if Ask:
             sa = py_input(f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Add_To_Bottom of page "{title}" ? ([y]es, [N]o):')
             if sa in yes_answer:
-                faso = True
                 Add_To_Bottom2(appendtext, summary, title, family=family, minor=minor)
             else:
                 printe.output("wrong answer")
             return sa
         else:
-            faso = True
             Add_To_Bottom2(appendtext, summary, title, family=family, minor=minor)
         # ---
     else:
@@ -515,7 +342,7 @@ def create_Page(text, summary, title, ask, sleep=0, family="", duplicate4="", mi
         printe.output(' skip make talk to sandboxes..')
         return False
     # ---
-    if sleep != False:
+    if sleep and sleep > 0:
         time_sleep = sleep
     # ---
     params = {
@@ -540,7 +367,7 @@ def create_Page(text, summary, title, ask, sleep=0, family="", duplicate4="", mi
         if printtext:
             printe.output(f"<<lightgreen>> {text}")
         printe.output(f" summary: {summary}")
-        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: create {family}:\"{title}\" page ? ([y]es, [N]o):user:{account['u']}")
+        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: create {family}:\"{title}\" page ? ([y]es, [N]o)")
         if sa.strip() in yes_answer:
             # ---
             if sa.strip() == "a":
@@ -581,7 +408,7 @@ def create_Page(text, summary, title, ask, sleep=0, family="", duplicate4="", mi
     return False
 
 
-def move(From, to, reason, lang='ar', nosleep=False):
+def move(From, to, reason, lang='ar', nosleep=False, retry=True):
     # ---
     printe.output(f'<<lightyellow>> ** move .. [[{lang}:{From}]] to [[{to}]] ')
     Params = {
@@ -600,7 +427,7 @@ def move(From, to, reason, lang='ar', nosleep=False):
     JustMove = True
     # ---
     if not Save_2020[1] and "ask" in sys.argv:
-        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you move page:[[{lang}:{From}]] to [[{to}]]? ([y]es, [N]o, [a]ll): user:{account['u']}")
+        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you move page:[[{lang}:{From}]] to [[{to}]]? ([y]es, [N]o, [a]ll)")
         # ---
         if sa == "a":
             printe.output('<<lightgreen>> ---------------------------------')
@@ -626,7 +453,8 @@ def move(From, to, reason, lang='ar', nosleep=False):
             printe.output(r4.text)
             if nosleep:
                 time.sleep(7)
-            return move(From, to, reason, lang=lang)
+            if retry:
+                return move(From, to, reason, lang=lang, retry=False)
         elif "Please choose another name." in r4.text:
             printe.output(r4.text)
             return "Please choose another name."
@@ -762,7 +590,7 @@ def Get_cat(enlink, ns, lllang="", tempyes=[], lang_no='', print_url=True):
             if 'langlinks' in caca:
                 tablese['langlinks'] = {}
                 for fo in caca['langlinks']:
-                    result = fo['*']
+                    # result = fo['*']
                     tablese['langlinks'][fo['lang']] = fo['*']
             # ---
             table[cate_title] = tablese
@@ -919,14 +747,12 @@ def Get_Newpages(limit="max", namespace="0", rcstart="", user=''):
     # ---
     json1 = post_s(params)
     # ---
-    Main_table = []
-    # ---
     if not json1 or json1 == {}:
         return []
     # ---
     newp = json1.get("query", {}).get("recentchanges", {})
     # ---
-    ccc = {"type": "new", "ns": 0, "title": "تشارلز مسيون ريمي", "pageid": 7004776, "revid": 41370093, "old_revid": 0, "rcid": 215347464, "timestamp": "2019-12-15T13:14:34Z"}
+    # ccc = {"type": "new", "ns": 0, "title": "تشارلز مسيون ريمي", "pageid": 7004776, "revid": 41370093, "old_revid": 0, "rcid": 215347464, "timestamp": "2019-12-15T13:14:34Z"}
     return [x["title"] for x in newp]
 
 
@@ -1175,7 +1001,7 @@ def get_redirect(liste):
     redirects = {}
     # ---
     for i in range(0, len(liste), 50):
-        titles = liste[i : i + 50]
+        titles = liste[i: i + 50]
         # ---
         params = {
             "action": "query",
@@ -1203,7 +1029,7 @@ def Find_pages_exists_or_not(liste):
     table = {}
     # ---
     for i in range(0, len(liste), 50):
-        titles = liste[i : i + 50]
+        titles = liste[i: i + 50]
         # ---
         params = {
             "action": "query",

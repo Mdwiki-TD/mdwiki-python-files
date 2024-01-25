@@ -59,7 +59,7 @@ def main():
     # ---
     fop = {"action": "query", "format": "json", "prop": "info", "generator": "querypage", "redirects": 1, "utf8": 1, "gqppage": "DoubleRedirects", "gqplimit": "max"}
     # ---
-    lista = mdwiki_api.post(fop)
+    lista = mdwiki_api.post_s(fop)
     # ---
     redirects = lista.get('query', {}).get('redirects', [])
     # ---

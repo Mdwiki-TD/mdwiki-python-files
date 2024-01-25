@@ -12,16 +12,10 @@ from new_api.ncc_page import MainPage as ncc_MainPage
 from mass.radio.studies import get_images_stacks
 from mass.radio.bmp import work_bmp
 # ---
+from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
+# ---
 main_dir = Path(__file__).parent
-# --
-infos_file = os.path.join(str(main_dir), 'jsons/infos.json')
-# --
-if not os.path.exists(infos_file):
-    with open(infos_file, 'w', encoding='utf-8') as f:
-        f.write("{}")
-# --
-with open(infos_file, 'r', encoding='utf-8') as f:
-    infos = json.loads(f.read())
 # --
 urls_done = []
 
@@ -53,12 +47,19 @@ class OneCase:
         self.category = f'Category:Radiopaedia case {self.caseId} {self.title}'
         # ---
         self.published = ''
+        self.system = ''
         # ---
-        if self.case_url in infos:
-            self.published = infos[self.case_url]["published"]
+        if self.case_url in jsons.infos:
+            self.published = jsons.infos[self.case_url]["published"]
             # ---
-            if not self.author: 
-                self.author = infos[self.case_url]["author"]
+            if not self.author:
+                self.author = jsons.infos[self.case_url]["author"]
+            # ---
+            self.system = jsons.infos[self.case_url]["system"]
+        else:
+            if self.case_url in jsons.url_to_sys:
+                self.system = jsons.url_to_sys[self.case_url]
+        # ---
 
     def create_category(self):
         text = f'* [{self.case_url} Radiopaedia case: {self.title} ({self.caseId})]\n'
@@ -68,9 +69,8 @@ class OneCase:
             printe.output(f'<<lightyellow>> {self.category} already exists')
             return
         # ---
-        if self.case_url in infos:
-            system = infos[self.case_url]["system"]
-            text += f"\n[[Category:Radiopaedia cases for {system}]]"
+        if self.system:
+            text += f"\n[[Category:Radiopaedia cases for {self.system}]]"
         # ---
         cat = ncc_MainPage(self.category, 'www', family='nccommons')
         # ---
@@ -91,7 +91,7 @@ class OneCase:
                 with open(st_file, 'r', encoding='utf-8') as f:
                     ja = json.loads(f.read())
                     self.studies[study] = ja
-                    printe.output(f'{study} : len(ja) = {len(ja)}')
+                    printe.output(f'study:{study} : len(ja) = {len(ja)}')
             else:
                 printe.output(f'{study} : not found')
                 # images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
@@ -99,7 +99,7 @@ class OneCase:
                 with open(st_file, 'w', encoding='utf-8') as f:
                     json.dump(images, f, ensure_ascii=False, indent=4)
                 self.studies[study] = images
-                printe.output(f'{study} : len(images) = {len(images)}')
+                printe.output(f'study:{study} : len(images) = {len(images)}')
 
     def upload_image(self, image_url, image_name, image_id, plane, modality):
         if 'noup' in sys.argv:
@@ -140,7 +140,12 @@ class OneCase:
         modality = ''
 
         for image in images:
-            image_url = image['public_filename']
+            image_url = image.get('public_filename', '')
+            # ---
+            if not image_url:
+                print('no image')
+                print(image)
+                continue
             # ---
             if image_url in urls_done:
                 self.images_count += 1
