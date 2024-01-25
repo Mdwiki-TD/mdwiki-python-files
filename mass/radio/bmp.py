@@ -22,7 +22,8 @@ def convert_bmp_to_jpg(bmp_data):
     try:
         bmp_image.convert("RGB").save(jpg_data, format="JPEG")
         return jpg_data.getvalue()
-    except:
+    except Exception as e:
+        print(f"Error converting BMP to JPEG: {e}")
         return False
 
 

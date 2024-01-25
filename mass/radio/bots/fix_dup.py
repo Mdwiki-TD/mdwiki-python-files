@@ -1,24 +1,16 @@
 '''
-python3 core8/pwb.py mass/radio/fix_dup ask
-tfj run fixdup1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/fix_dup"
+python3 core8/pwb.py mass/radio/bots/fix_dup ask
+tfj run fixdup1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/bots/fix_dup"
 
 '''
-import os
-from pathlib import Path
-import json
-# ---
 from new_api import printe
 from new_api.ncc_page import MainPage as ncc_MainPage, CatDepth
-# ---
-main_dir = Path(__file__).parent
-cases_dup_file = os.path.join(str(main_dir), 'jsons/cases_dup.json')
-# ---
-with open(cases_dup_file, 'r', encoding='utf-8') as f:
-    cases_dup = json.loads(f.read())
+from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 # ---
 empty_cats = []
 # ---
-for n, (idn, cats) in enumerate(cases_dup.items(), start=1):
+for n, (idn, cats) in enumerate(jsons.cases_dup.items(), start=1):
     # ---
     cat1 = cats[0]
     cat2 = cats[1]
@@ -26,7 +18,7 @@ for n, (idn, cats) in enumerate(cases_dup.items(), start=1):
     if cat1 == cat2:
         continue
     # ---
-    printe.output(f'd:s{n}/{len(cases_dup)}<<lightyellow>> {idn} {cat1} {cat2}')
+    printe.output(f'd:s{n}/{len(jsons.cases_dup)}<<lightyellow>> {idn} {cat1} {cat2}')
     # ---
     cat1_page = ncc_MainPage(cat1, 'www', family='nccommons')
     cat2_page = ncc_MainPage(cat2, 'www', family='nccommons')
@@ -77,7 +69,7 @@ for n, (idn, cats) in enumerate(cases_dup.items(), start=1):
     if '[[Category:cats to delete]]' in cc:
         cc.remove('[[Category:cats to delete]]')
     # ---
-    new_main_text = '\n'.join([ line for line in cc if line.strip() ])
+    new_main_text = '\n'.join([line for line in cc if line.strip()])
     # ---
     empty_cats.append(other_title)
     # ---
@@ -104,8 +96,3 @@ for n, (idn, cats) in enumerate(cases_dup.items(), start=1):
         if len(cat_files2) == 0:
             printe.output(f'<<green>> cat {other_title} is empty.. done..')
             other_cat.save(newtext='[[Category:cats to delete]]', summary='empty cat')
-        
-    # ---
-# dump empty_cats
-with open(os.path.join(str(main_dir), 'jsons/empty_cats.json'), 'w', encoding='utf-8') as f:
-    json.dump(empty_cats, f, ensure_ascii=False, indent=4)
