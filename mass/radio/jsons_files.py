@@ -46,17 +46,17 @@ for k, v in files.items():
         data = json.loads(f.read())
         datas[k] = data
 # ---
-jsons.url_to_sys = datas['url_to_sys']
-jsons.authors = datas['authors']
-jsons.cases_dup = datas['cases_dup']
-jsons.cases_in_ids = datas['cases_in_ids']
-jsons.ids = datas['ids']
-jsons.all_ids = datas['all_ids']
-jsons.infos = datas['infos']
-jsons.to_work = datas['to_work']
-jsons.urls = datas['urls']
-jsons.urls_to_get_info = datas['urls_to_get_info']
-jsons.systems = datas['systems']
+jsons.url_to_sys = datas['url_to_sys'].copy()
+jsons.authors = datas['authors'].copy()
+jsons.cases_dup = datas['cases_dup'].copy()
+jsons.cases_in_ids = datas['cases_in_ids'].copy()
+jsons.ids = datas['ids'].copy()
+jsons.all_ids = datas['all_ids'].copy()
+jsons.infos = datas['infos'].copy()
+jsons.to_work = datas['to_work'].copy()
+jsons.urls = datas['urls'].copy()
+jsons.urls_to_get_info = datas['urls_to_get_info'].copy()
+jsons.systems = datas['systems'].copy()
 # ---
 ids_to_urls = {str(v['caseId']): v['url'] for k, v in jsons.all_ids.items()}
 urls_to_ids = {v['url']: str(v['caseId']) for k, v in jsons.all_ids.items()}
@@ -126,3 +126,5 @@ if __name__ == "__main__":
 
     print(f"file: urls_to_ids     len: {len(urls_to_ids):,}")
     print(f"file: ids_to_urls     len: {len(ids_to_urls):,}")
+else:
+    del datas
