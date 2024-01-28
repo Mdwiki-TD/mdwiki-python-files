@@ -3,7 +3,7 @@
 python3 core8/pwb.py priorviews/bot test
 
 """
-from new_api.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import MainPage as md_MainPage
 from priorviews import by_lang
 from priorviews.lists import views
 from priorviews.bots import sections_text

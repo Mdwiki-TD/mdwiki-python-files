@@ -4,7 +4,7 @@ python pwb.py niosh/get write ask
 python3 core8/pwb.py niosh/get write ask
 
 '''
-from new_api.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import MainPage as md_MainPage
 import sys
 from pathlib import Path
 import json

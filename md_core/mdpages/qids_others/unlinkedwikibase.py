@@ -14,7 +14,7 @@ from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---
-from new_api.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import MainPage as md_MainPage
 
 # ---
 qids1 = sql_for_mdwiki.get_all_qids()

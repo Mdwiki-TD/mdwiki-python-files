@@ -3,7 +3,7 @@
 python3 core8/pwb.py mass/radio/bots/fix ask
 
 '''
-from new_api import printe
+from newapi import printe
 from mass.radio.start import ids_by_caseId, main
 
 to_fix = [

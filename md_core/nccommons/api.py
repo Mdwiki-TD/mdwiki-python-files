@@ -18,7 +18,7 @@ import sys
 import time
 import pywikibot
 # ---
-from new_api.ncc_page import NEW_API
+from newapi.ncc_page import NEW_API
 api_new  = NEW_API('www', family='nccommons')
 # json1    = api_new.post_params(params, addtoken=False)
 api_new.Login_to_wiki()

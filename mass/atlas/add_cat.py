@@ -7,8 +7,8 @@ import os
 import json
 from pathlib import Path
 from tqdm import tqdm
-from new_api import printe
-from new_api.ncc_page import MainPage as ncc_MainPage
+from newapi import printe
+from newapi.ncc_page import MainPage as ncc_MainPage
 
 # Specify the root folder
 main_dir = Path(__file__).parent

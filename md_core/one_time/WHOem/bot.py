@@ -9,7 +9,7 @@ import codecs
 from pathlib import Path
 
 # ---
-from new_api.wiki_page import MainPage, change_codes
+from newapi.wiki_page import MainPage, change_codes
 from mdpy import printe
 from mdpy.bots import mdwiki_api
 

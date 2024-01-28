@@ -15,7 +15,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # ---
-from new_api import printe
+from newapi import printe
 
 # ---
 

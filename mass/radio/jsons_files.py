@@ -21,7 +21,7 @@ import os
 from pathlib import Path
 import json
 from collections import namedtuple
-from new_api import printe
+from newapi import printe
 main_dir = Path(__file__).parent
 
 def print_memory():

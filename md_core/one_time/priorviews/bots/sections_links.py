@@ -15,7 +15,7 @@ import codecs
 from mdpy import printe
 
 # ---
-from new_api.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import MainPage as md_MainPage
 
 # ---
 Dir = Path(__file__).parent

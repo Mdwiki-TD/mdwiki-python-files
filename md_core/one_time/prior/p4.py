@@ -13,8 +13,8 @@ import codecs
 
 # ---
 from mdpy import printe
-from new_api.mdwiki_page import MainPage as md_MainPage
-from new_api.wiki_page import MainPage, change_codes
+from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.wiki_page import MainPage, change_codes
 
 # ---
 from prior import get_them
