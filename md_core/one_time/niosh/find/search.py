@@ -9,7 +9,7 @@ import re
 import json
 
 # ---
-from new_api.wiki_page import MainPage, NEW_API
+from newapi.wiki_page import MainPage, NEW_API
 
 # ---
 Dir = Path(__file__).parent

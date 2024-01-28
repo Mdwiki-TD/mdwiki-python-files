@@ -13,8 +13,8 @@ import codecs
 import pywikibot
 
 # ---
-from new_api.ncc_page import MainPage as ncc_MainPage
-from new_api.mdwiki_page import NEW_API
+from newapi.ncc_page import MainPage as ncc_MainPage
+from newapi.mdwiki_page import NEW_API
 from nccommons import api
 from mdpy.bots import mdwiki_api
 

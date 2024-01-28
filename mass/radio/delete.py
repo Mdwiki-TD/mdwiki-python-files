@@ -7,7 +7,7 @@ python3 core8/pwb.py mass/radio/delete
 #
 # ---
 from nccommons import api
-from new_api.ncc_page import CatDepth
+from newapi.ncc_page import CatDepth
 # ---
 cats = CatDepth('Category:Cats to delete', sitecode='www', family="nccommons", depth=0, ns="all")
 # ---

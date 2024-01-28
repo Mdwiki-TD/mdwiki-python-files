@@ -9,7 +9,7 @@ python3 core8/pwb.py updates/Medicine_articles
 import datetime
 
 # ---
-from new_api.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import MainPage as md_MainPage
 from api_sql import wiki_sql
 
 

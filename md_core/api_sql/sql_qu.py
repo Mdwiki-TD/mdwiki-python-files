@@ -24,7 +24,7 @@ import pymysql.cursors
 import pkg_resources
 
 # ---
-from new_api import printe
+from newapi import printe
 
 # ---
 py_v = pymysql.__version__

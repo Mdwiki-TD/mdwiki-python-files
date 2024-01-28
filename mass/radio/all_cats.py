@@ -3,7 +3,7 @@
 python3 core8/pwb.py mass/radio/all_cats ask
 
 """
-from new_api.ncc_page import MainPage as ncc_MainPage
+from newapi.ncc_page import MainPage as ncc_MainPage
 
 # ---
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids

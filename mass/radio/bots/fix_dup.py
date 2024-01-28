@@ -3,8 +3,8 @@ python3 core8/pwb.py mass/radio/bots/fix_dup ask
 tfj run fixdup1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/bots/fix_dup"
 
 '''
-from new_api import printe
-from new_api.ncc_page import MainPage as ncc_MainPage, CatDepth
+from newapi import printe
+from newapi.ncc_page import MainPage as ncc_MainPage, CatDepth
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 # ---

@@ -18,16 +18,10 @@ python3 core8/pwb.py mass/radio/studies
 
 python3 core8/pwb.py mass/radio/start
 
-tfj run start1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:1"
-tfj run start2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:2"
-tfj run start3 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:3"
-tfj run start4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:4"
-tfj run start5 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:5"
-tfj run start6 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:6"
-tfj run start7 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:7"
-tfj run start8 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:8"
-tfj run start9 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:9"
-tfj run start10 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:10"
+tfj run stz1 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:1"
+tfj run stz2 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:2"
+tfj run stz3 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:3"
+tfj run stz4 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:4"
 
 tfj run start --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start"
 tfj run studies --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/get_infos && $HOME/local/bin/python3 core8/pwb.py mass/radio/studies"

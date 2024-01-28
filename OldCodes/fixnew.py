@@ -11,7 +11,7 @@ import sys
 
 # ---
 from mdpy import printe
-from new_api.mdwiki_page import MainPage as md_MainPage, NEW_API
+from newapi.mdwiki_page import MainPage as md_MainPage, NEW_API
 
 # ---
 api_new = NEW_API('www', family='mdwiki')

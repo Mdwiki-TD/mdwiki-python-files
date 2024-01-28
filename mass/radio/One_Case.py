@@ -6,9 +6,9 @@ import os
 from pathlib import Path
 import json
 # ---
-from new_api import printe
+from newapi import printe
 from nccommons import api
-from new_api.ncc_page import MainPage as ncc_MainPage
+from newapi.ncc_page import MainPage as ncc_MainPage
 from mass.radio.studies import get_images_stacks
 from mass.radio.bmp import work_bmp
 # ---

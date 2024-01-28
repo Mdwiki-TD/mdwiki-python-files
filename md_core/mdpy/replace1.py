@@ -11,7 +11,7 @@ import codecs
 import sys
 
 # ---
-from new_api.mdwiki_page import MainPage, NEW_API
+from newapi.mdwiki_page import MainPage, NEW_API
 
 # ---
 from pathlib import Path

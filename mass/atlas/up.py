@@ -17,11 +17,11 @@ import os
 import time
 import json
 from tqdm import tqdm
-from new_api import printe
+from newapi import printe
 from pathlib import Path
 from nccommons import api
 from nccommons import mosab_api
-from new_api.ncc_page import CatDepth
+from newapi.ncc_page import CatDepth
 
 # Specify the root folder
 main_dir = Path(__file__).parent
