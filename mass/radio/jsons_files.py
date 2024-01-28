@@ -14,6 +14,8 @@ from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0, systems=0, url_to_sys=0)
 # ---
 '''
+import pywikibot
+import psutil
 import sys
 import os
 from pathlib import Path
@@ -21,6 +23,15 @@ import json
 from collections import namedtuple
 from new_api import printe
 main_dir = Path(__file__).parent
+
+def print_memory():
+
+    _red_ = "\033[91m%s\033[00m"
+    _blue_ = "\033[94m%s\033[00m"
+    _yellow_ = "\033[93m%s\033[00m"
+
+    usage = psutil.Process(os.getpid()).memory_info().rss
+    pywikibot.output(_red_ % f'memory usage: psutil {usage / 1024 / 1024} MB')
 
 files = {
     "url_to_sys": os.path.join(str(main_dir), 'jsons/url_to_sys.json'),
@@ -126,5 +137,8 @@ if __name__ == "__main__":
 
     print(f"file: urls_to_ids     len: {len(urls_to_ids):,}")
     print(f"file: ids_to_urls     len: {len(ids_to_urls):,}")
+    print_memory()
+    del datas
+    print_memory()
 else:
     del datas
