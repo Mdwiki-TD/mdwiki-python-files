@@ -15,6 +15,8 @@ print(f"lenth of jsons.cases_in: {len(jsons.cases_in_ids)}, lenth of casesin_to_
 # ---
 t_to_work = [url for url in jsons.urls.keys() if url not in casesin_to_urls]
 # ---
+del casesin_to_urls
+# ---
 ids_to_work = {
     urls_to_ids.get(url): jsons.ids.get(urls_to_ids.get(url))
     for url in t_to_work
@@ -28,9 +30,13 @@ rm2 = {x: v for x, v in ids_to_work.items() if jsons.cases_in_ids.get(x)}
 # ---
 print(f"lenth of rm2: {len(rm2)}")
 # ---
+del rm2
+# ---
 if __name__ == '__main__':
     # items in jsons.urls and not in jsons.cases_in_ids
     jsons.to_work = t_to_work
 
     # dump jsons.to_work to to_work.json
     dumps_jsons(to_work=1)
+else:
+    del t_to_work
