@@ -108,8 +108,8 @@ class OneCase:
                 images = get_images_stacks(self.caseId)
                 with open(st_file, 'w', encoding='utf-8') as f:
                     json.dump(images, f, ensure_ascii=False, indent=4)
-                self.studies[study] = images
-                printe.output(f'study:{study} : len(images) = {len(images)}')
+            self.studies[study] = images
+            printe.output(f'study:{study} : len(images) = {len(images)}')
 
     def upload_image(self, image_url, image_name, image_id, plane, modality):
         if 'noup' in sys.argv:
