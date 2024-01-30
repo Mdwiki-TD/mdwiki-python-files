@@ -4,7 +4,9 @@ from mass.radio.One_Case import OneCase
 import sys
 import os
 from pathlib import Path
+import pywikibot
 import json
+import traceback
 # ---
 from newapi import printe
 from nccommons import api
@@ -87,12 +89,20 @@ class OneCase:
         for study in self.studies_ids:
             st_file = os.path.join(str(main_dir), 'studies', f'{study}.json')
             # ---
+            images = {}
+            # ---
             if os.path.exists(st_file):
-                with open(st_file, 'r', encoding='utf-8') as f:
-                    ja = json.loads(f.read())
-                    self.studies[study] = ja
-                    printe.output(f'study:{study} : len(ja) = {len(ja)}')
-            else:
+                try:
+                    with open(st_file, 'r', encoding='utf-8') as f:
+                        images = json.loads(f.read())
+                except Exception as e:
+                    pywikibot.output("<<lightred>> Traceback (most recent call last):")
+                    printe.output(f'{study} : error')
+                    pywikibot.output(e)
+                    pywikibot.output(traceback.format_exc())
+                    pywikibot.output("CRITICAL:")
+            # ---
+            if not images:
                 printe.output(f'{study} : not found')
                 # images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
                 images = get_images_stacks(self.caseId)
