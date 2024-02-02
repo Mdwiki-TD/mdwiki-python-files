@@ -44,7 +44,8 @@ def geo():
     print(f'lenth of new_cases_in: {len(new_cases_in)} ')
 
     # dump
-    jsons.cases_in_ids = new_cases_in
+    # jsons.cases_in_ids = new_cases_in
+    jsons._replace(cases_in_ids = new_cases_in)
     dumps_jsons(cases_in_ids=1)
 
     # sort jsons.cases_dup by lenth if lenth > 1
@@ -53,7 +54,8 @@ def geo():
     print(f'lenth of new_dup: {len(new_dup)} ')
 
     # dump
-    jsons.cases_dup = new_dup
+    # jsons.cases_dup = new_dup
+    jsons._replace(cases_dup = new_dup)
     dumps_jsons(cases_dup=1)
 
 

@@ -19,7 +19,7 @@ for caseId, v in jsons.ids.items():
     all_ids[caseId] = v
     add += 1
 
-jsons.all_ids = all_ids
+jsons._replace(all_ids = all_ids)
 
 print(f"add: {add}")
 
