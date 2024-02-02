@@ -18,10 +18,10 @@ import pywikibot
 import psutil
 import sys
 import os
-from pathlib import Path
 import json
 from collections import namedtuple
 from newapi import printe
+from pathlib import Path
 main_dir = Path(__file__).parent
 
 def print_memory():

@@ -16,26 +16,61 @@ from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # ---
 main_dir = Path(__file__).parent
 
-def get_images_stacks(study_id):
-    new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
-    print(f"study_id: {study_id}, new_url: {new_url}")
-    # ---
-    response = requests.get(new_url)
+def get_images(url):
+    print(f"url: {url}")
 
+    response = requests.get(url)
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
         studies = []
 
         return '', studies
+
+    # Step 2: Parse the HTML content
+    soup = BeautifulSoup(response.content, 'html.parser')
+    # <a class="view-fullscreen-link" href="/cases/97085/studies/117071?lang=us">
+    scripts = soup.find_all('script')
+
+    image_info = []
+
+    for script in scripts:
+        text = script.text.strip()
+        if text.find('stackedImages') != -1:
+            match = re.search(r'var stackedImages = (.*?);', text)
+            print('stackedImages:')
+            if match:
+                data = json.loads(match.group(1))
+                for entry in data:
+                    modality = entry.get('modality')
+                    # { "id": 21152341, "fullscreen_filename": "https://prod-images-static.radiopaedia.org/images/21152341/f802b27c53bf577c1ab269b3ef526a_big_gallery.jpeg", "public_filename": "https://prod-images-static.radiopaedia.org/images/21152341/f802b27c53bf577c1ab269b3ef526a.png", "plane_projection": "Sagittal", "aux_modality": "T1", "position": 10, "content_type": "image/png", "width": 512, "height": 512, "show_feature": false, "show_pin": false, "show_case_key_image": false, "show_stack_key_image": false, "download_image_url": "/images/21152341/download?layout=false", "crop_pending": false }
+                    images = entry.get('images')
+                    for image in images:
+                        if not image.get('modality', '') and modality:
+                            image['modality'] = modality
+                        image_info.append(image)
+
+    print(f'len image_info: {len(image_info)}')
+
+    return image_info
+
+def get_images_stacks(study_id):
+    new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
+    print(f"study_id: {study_id}, new_url: {new_url}")
+    # ---
+    response = requests.get(new_url)
+
+    image_info = []
+
+    # Check if the request was successful (status code 200)
+    if response.status_code != 200:
+        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
+        return image_info
     
     text = response.text
     if not text.startswith('[') and not text.endswith(']'):
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
-        studies = []
-        return '', studies
-
-    image_info = []
+        return image_info
 
     json_data = json.loads(text)
     for entry in json_data:
@@ -87,6 +122,9 @@ def main():
             if not os.path.exists(st_file):
                 # ---
                 ux = get_images_stacks(st_id)
+                # ---
+                if not ux:
+                    ux = get_images(study)
                 # ---
                 with open(st_file, 'w', encoding='utf-8') as f:
                     json.dump(ux, f, ensure_ascii=False, indent=4)
