@@ -11,7 +11,7 @@ import traceback
 from newapi import printe
 from nccommons import api
 from newapi.ncc_page import MainPage as ncc_MainPage
-from mass.radio.studies import get_images_stacks
+from mass.radio.studies import get_images_stacks, get_images
 from mass.radio.bmp import work_bmp
 # ---
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
@@ -35,9 +35,8 @@ def get_image_extension(image_url):
 
 
 class OneCase:
-    def __init__(self, case_url, caseId, title, studies_ids, pages, author):
+    def __init__(self, case_url, caseId, title, studies_ids, author):
         self.author = author
-        self.pages = pages
         self.caseId = caseId
         self.case_url = case_url
         self.title = title
@@ -67,18 +66,17 @@ class OneCase:
         text = f'* [{self.case_url} Radiopaedia case: {self.title} ({self.caseId})]\n'
         text += f'[[Category:Radiopaedia images by case|{self.caseId}]]'
         # ---
-        if self.category in self.pages:
-            printe.output(f'<<lightyellow>> {self.category} already exists')
-            return
-        # ---
         if self.system:
             text += f"\n[[Category:Radiopaedia cases for {self.system}]]"
         # ---
         cat = ncc_MainPage(self.category, 'www', family='nccommons')
         # ---
-        if not cat.exists():
-            new = cat.Create(text=text, summary='')
-            printe.output(f'Category {self.category} created..')
+        if cat.exists():
+            printe.output(f'<<lightyellow>> {self.category} already exists')
+            return
+        # ---
+        new = cat.Create(text=text, summary='')
+        printe.output(f'Category {self.category} created..')
         # else:
         #     if text != cat.get_text():
         #         printe.output(f'<<lightyellow>>{self.category} already exists')
@@ -102,20 +100,32 @@ class OneCase:
                     pywikibot.output(traceback.format_exc())
                     pywikibot.output("CRITICAL:")
             # ---
+            images = [ image for image in images if image ]
+            # ---
             if not images:
                 printe.output(f'{study} : not found')
-                # images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
+                # images = get_images(f'https://radiopaedia.org/cases/167250/studies/167250')
+                # images = get_images(f'https://radiopaedia.org/cases/167250/studies/135974?lang=us')
                 images = get_images_stacks(self.caseId)
+                # ---
+                if not images:
+                    images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
+                # ---
                 with open(st_file, 'w', encoding='utf-8') as f:
                     json.dump(images, f, ensure_ascii=False, indent=4)
+            # ---
             self.studies[study] = images
-            printe.output(f'study:{study} : len(images) = {len(images)}')
+            printe.output(f'study:{study} : len(images) = {len(images)}, st_file:{st_file}')
 
     def upload_image(self, image_url, image_name, image_id, plane, modality):
         if 'noup' in sys.argv:
             return image_name
         # ---
-        if f'File:{image_name}' in self.pages:
+        file_title = f'File:{image_name}'
+        # ---
+        file_page = ncc_MainPage(file_title, 'www', family='nccommons')
+        # ---
+        if file_page.exists():
             printe.output(f'<<lightyellow>> File:{image_name} already exists')
             return image_name
         # ---

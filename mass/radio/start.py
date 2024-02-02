@@ -7,25 +7,35 @@ python3 core8/pwb.py mass/radio/start nodiff get:55
 import re
 import sys
 import psutil
+import json
 import os
 import pywikibot
-
+from pathlib import Path
+# ---
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from mass.radio.One_Case import OneCase
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+# from mass.radio.jsons_files import jsons#, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 
+main_dir = Path(__file__).parent
 # ---
-authors = jsons.authors
-infos = jsons.infos
-cases_in_ids = jsons.cases_in_ids
-ids_by_caseId = { x:v for x,v in jsons.ids.items() if not x in cases_in_ids }
+with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-8') as f:
+    authors = json.load(f)
 # ---
-del jsons
+with open(os.path.join(str(main_dir), 'jsons/infos.json'), 'r', encoding='utf-8') as f:
+    infos = json.load(f)
 # ---
-pages_all = {}
-cases_in_ids = []
+with open(os.path.join(str(main_dir), 'jsons/ids.json'), 'r', encoding='utf-8') as f:
+    ids = json.load(f)
+# ---
+# cases_in_ids = []
+# ---
+with open(os.path.join(str(main_dir), 'jsons/cases_in_ids.json'), 'r', encoding='utf-8') as f:
+    cases_in_ids = json.load(f)
+# ---
+ids_by_caseId = { x:v for x,v in ids.items() if not x in cases_in_ids }
+# ---
 
 def print_memory():
 
@@ -38,13 +48,8 @@ def print_memory():
 
 def get_pages():
     printe.output('<<purple>> start.py get_pages:')
-    pages = CatDepth('Category:Uploads by Mr. Ibrahem', sitecode='www', family="nccommons", depth=0, ns="all")
-    pages3 = CatDepth('Category:Radiopaedia sets', sitecode='www', family="nccommons", depth=0, ns="all")
-
+    # ---
     pages2 = CatDepth('Category:Radiopaedia images by case', sitecode='www', family="nccommons", depth=0, ns="all")
-
-    pages = pages | pages2
-    pages = pages | pages3
     # ---
     reg = r'^Category:Radiopaedia case (\d+) (.*?)$'
     # ---
@@ -52,15 +57,12 @@ def get_pages():
         match = re.match(reg, cat)
         if match:
             cases_in_ids.append(str(match.group(1)))
-    # ---
-    del pages2, pages3
-    # ---
-    return pages
 
 def main(ids_tab):
-    global pages_all
     printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
-
+    # ---
+    print_memory()
+    # ---
     if 'test' not in sys.argv:
         tabs = {}
         print(f'all cases: {len(ids_tab)}')
@@ -70,7 +72,7 @@ def main(ids_tab):
             tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
             print(f'tfj run sta{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"')
-
+        
         for arg in sys.argv:
             arg, _, value = arg.partition(':')
             if arg == 'get':
@@ -78,13 +80,7 @@ def main(ids_tab):
                 print(f'work in {len(ids_tab)} cases')
         del tabs
     # ---
-    if pages_all == {}:
-        pages_all = get_pages()
-    # ---
-    printe.output(f'<<purple>> pages_all: {len(pages_all)}:')
     printe.output(f'<<purple>> cases_in_ids: {len(cases_in_ids)}:')
-    # ---
-    print_memory()
     # ---
     n = 0
     for k, tab in ids_tab.items():
@@ -96,11 +92,7 @@ def main(ids_tab):
         printe.output('++++++++++++++++++++++++++++++++')
         printe.output(f'<<purple>> case:{n} / {len(ids_tab)}, caseId:{caseId}')
         # ---
-        if caseId in cases_in_ids:
-            printe.output(f'<<purple>> caseId {caseId} already in cases_in_ids')
-            continue
-        # ---
-        if str(caseId) in cases_in_ids:
+        if caseId in cases_in_ids or str(caseId) in cases_in_ids:
             printe.output(f'<<purple>> caseId {caseId} already in cases_in_ids')
             continue
         # ---
@@ -116,11 +108,13 @@ def main(ids_tab):
         # ---
         studies = [study.split('/')[-1] for study in tab['studies']]
         # ---
-        bot = OneCase(case_url, caseId, title, studies, pages_all, author)
+        bot = OneCase(case_url, caseId, title, studies, author)
         bot.start()
         # ---
         print(f'processed {n} cases')
         print_memory()
+        # ---
+        del bot, author, title, studies
 
 if __name__ == "__main__":
     # ---
