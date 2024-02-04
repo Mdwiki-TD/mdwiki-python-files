@@ -46,8 +46,8 @@ def get_cats_and_pages():
                 catlen[cat] += 1
         # ---
     # ---
-    for cat, len in catlen.items():
-        printe.output(f'cat: {cat} , len: {len}')
+    for cat, lena in catlen.items():
+        printe.output(f'cat: {cat} , len: {lena}')
     # ---
     printe.output(f'<<lightyellow>> RTT_dpl: {RTT_dpl}')
 

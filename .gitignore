@@ -35,5 +35,4 @@ tw/twet_config.py
 w.xml
 *.json1
 md_core/newapi/**
-md_core/newapi
 md_core/newapi_/

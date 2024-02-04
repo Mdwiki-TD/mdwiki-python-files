@@ -28,12 +28,10 @@ from after_translate.bots.fixcat import cat_for_pages
 from mdpy.bots import py_tools
 from mdpy.bots import sql_for_mdwiki
 from api_sql import wiki_sql
-
 # ---
-Lang_usr_mdtitle = {}
 targets_done = {}
-Langs_to_title_and_user = {}
-to_update_lang_user_mdtitle = {}
+langs_to_t_u = {}
+to_update = {}
 # ---
 skip_langs = ["zh-yue", "ceb"]
 # ---
@@ -116,7 +114,7 @@ def get_pages_from_db():
         arg, _, value = arg.partition(":")
         if arg in ["lang", "-lang"]:
             lang_o = value
-            Langs_to_title_and_user[value] = {}
+            langs_to_t_u[value] = {}
         # ---
     # ---
     que = "select title, user, lang, target from pages "
@@ -145,29 +143,21 @@ def get_pages_from_db():
         tul = mdtitle + user + lang
         tit_user_lang[tul] = target
         # ---
-        if lang not in Lang_usr_mdtitle:
-            Lang_usr_mdtitle[lang] = {}
+        if lang not in langs_to_t_u:
+            langs_to_t_u[lang] = {}
         # ---
-        if user not in Lang_usr_mdtitle[lang]:
-            Lang_usr_mdtitle[lang][user] = []
+        if lang not in to_update:
+            to_update[lang] = {}
         # ---
-        Lang_usr_mdtitle[lang][user].append(mdtitle)
-        # ---
-        if lang not in Langs_to_title_and_user:
-            Langs_to_title_and_user[lang] = {}
-        # ---
-        if lang not in to_update_lang_user_mdtitle:
-            to_update_lang_user_mdtitle[lang] = {}
-        # ---
-        if user not in to_update_lang_user_mdtitle[lang]:
-            to_update_lang_user_mdtitle[lang][user] = []
+        if user not in to_update[lang]:
+            to_update[lang][user] = []
         # ---
         if target == "":
             len_no_target += 1
             # ---
-            Langs_to_title_and_user[lang][mdtitle] = user
+            langs_to_t_u[lang][mdtitle] = user
             # ---
-            to_update_lang_user_mdtitle[lang][user].append(mdtitle)
+            to_update[lang][user].append(mdtitle)
             # ---
         else:
             # ---
@@ -177,13 +167,7 @@ def get_pages_from_db():
             target = target.replace("_", " ")
             target2 = py_tools.ec_de_code(target, "encode")
             # ---
-            # printe.output('done. <<lightgreen>> target:%s for mdtit:%s, user:%s' % (target.ljust(40), mdtitle.ljust(30), user))
-            # ---
             len_done_target += 1
-            # ---
-            # targets_done[lang][mdtitle] = { "user" : user , "target" : target }
-            # targets_done[lang][mdtitle] = { "user" : user , "target" : target }
-            # targets_done[lang][py_tools.ec_de_code(target , 'encode')] = { "user" : user , "target" : target }
             # ---
             targets_done[lang][target] = {"user": user, "target": target}
             targets_done[lang][target2] = {"user": user, "target": target}
@@ -191,7 +175,7 @@ def get_pages_from_db():
     printe.output(f"<<lightyellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
     # ---
     if "print" in sys.argv:
-        printe.output(Langs_to_title_and_user)
+        printe.output(langs_to_t_u)
     # ---
     time.sleep(3)
 
@@ -275,10 +259,9 @@ def main():
     get_pages_from_db()
     # ---
     numb_lang = 0
-    lnn = len(Langs_to_title_and_user.keys())
+    lnn = len(langs_to_t_u.keys())
     # ---
-    # for lange,lal in Langs_to_title_and_user.items():
-    for lange in Langs_to_title_and_user:
+    for lange in langs_to_t_u:
         # ---
         tab_by_lang[lange] = {}
         # ---
@@ -316,7 +299,7 @@ def main():
         # ---
         add_to_wd.add_tab_to_wd({lange: tab_by_lang[lange]})
         # ---
-        add_to_mdwiki_sql({lange: tab_by_lang[lange]}, to_update_lang_user_mdtitle)
+        add_to_mdwiki_sql({lange: tab_by_lang[lange]}, to_update)
 
 
 if __name__ == "__main__":
