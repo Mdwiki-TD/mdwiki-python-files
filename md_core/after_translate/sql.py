@@ -2,33 +2,29 @@
 """
 بوت قواعد البيانات
 
-python3 core8/pwb.py mdpy/sql justsql break
-python3 core8/pwb.py mdpy/sql justsql
-python3 core8/pwb.py mdpy/sql
+python3 core8/pwb.py after_translate/sql justsql break
+python3 core8/pwb.py after_translate/sql justsql
+python3 core8/pwb.py after_translate/sql
 
 """
 
 #
-# (C) Ibrahem Qasim, 2022
+# (C) Ibrahem Qasim, 2024
 #
 #
 import re
-import os
 import sys
-import time as tttime
-from pymysql.converters import escape_string
-
+import time
 # ---
-from mdpy.bots import add_to_wd
+from newapi import printe
+# ---
+from after_translate.bots import add_to_wd
+from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
+from after_translate.bots.fixcat import cat_for_pages
+# ---
 from mdpy.bots import py_tools
-from mdpy import printe
-from api_sql import wiki_sql
 from mdpy.bots import sql_for_mdwiki
-from mdpy.others.fixcat import cat_for_pages
-
-# ---
-from mdpy.sql_bots.add_to_mdwiki import add_to_mdwiki_sql
-
+from api_sql import wiki_sql
 # ---
 Lang_usr_mdtitle = {}
 targets_done = {}
@@ -65,7 +61,6 @@ Skip_titles = {
 Skip_titles_global = ['جامعة نورث كارولاينا', 'جامعة ولاية كارولينا الشمالية إيه آند تي', 'نيشان راجاميترابورن', 'موميتازون']
 # ---
 tit_user_lang = {}
-printsql = {1: False}
 # ---
 query_main_old = '''
     select DISTINCT p.page_title, c.comment_text , a.actor_name , r.rev_timestamp
@@ -103,8 +98,7 @@ query_main = '''
     group by p.page_title, a.actor_name, c.comment_text
 '''
 
-
-def dodo_sql():
+def get_pages_from_db():
     # ---
     lang_o = ''
     # ---
@@ -114,8 +108,6 @@ def dodo_sql():
             lang_o = value
             Langs_to_title_and_user[value] = {}
         # ---
-        if arg == 'printsql':
-            printsql[1] = True
     # ---
     que = 'select title, user, lang, target from pages '
     # ---
@@ -133,9 +125,9 @@ def dodo_sql():
     # ---
     for tab in sq:
         mdtitle = tab['title']
-        user = tab['user']
-        target = tab['target']
-        lang = tab['lang'].lower()
+        user    = tab['user']
+        target  = tab['target']
+        lang    = tab['lang'].lower()
         # ---
         if lang_o != '' and lang != lang_o.strip():
             continue
@@ -145,6 +137,7 @@ def dodo_sql():
         # ---
         if lang not in Lang_usr_mdtitle:
             Lang_usr_mdtitle[lang] = {}
+        # ---
         if user not in Lang_usr_mdtitle[lang]:
             Lang_usr_mdtitle[lang][user] = []
         # ---
@@ -152,6 +145,7 @@ def dodo_sql():
         # ---
         if lang not in Langs_to_title_and_user:
             Langs_to_title_and_user[lang] = {}
+        # ---
         if lang not in to_update_lang_user_mdtitle:
             to_update_lang_user_mdtitle[lang] = {}
         # ---
@@ -173,10 +167,7 @@ def dodo_sql():
             target = target.replace("_", " ")
             target2 = py_tools.ec_de_code(target, 'encode')
             # ---
-            lineout = 'done. <<lightgreen>> target:%s for mdtit:%s, user:%s'
-            laloly = lineout % (target.ljust(40), mdtitle.ljust(30), user)
-            # ---
-            # printe.output(laloly)
+            # printe.output('done. <<lightgreen>> target:%s for mdtit:%s, user:%s' % (target.ljust(40), mdtitle.ljust(30), user))
             # ---
             len_done_target += 1
             # ---
@@ -192,7 +183,7 @@ def dodo_sql():
     if 'print' in sys.argv:
         printe.output(Langs_to_title_and_user)
     # ---
-    tttime.sleep(3)
+    time.sleep(3)
 
 
 def start(result, lange):
@@ -209,14 +200,7 @@ def start(result, lange):
         user = lis['actor_name']
         pupdate = lis['rev_timestamp']
         namespace = lis['page_namespace']
-        rev_parent_id = lis['rev_parent_id']
-        # ---
-        # target        = py_tools.Decode_bytes(lis[0])
-        # co_text       = py_tools.Decode_bytes(lis[1])
-        # user          = py_tools.Decode_bytes(lis[2])
-        # pupdate       = py_tools.Decode_bytes(lis[3])
-        # namespace     = py_tools.Decode_bytes(lis[4])
-        # rev_parent_id = py_tools.Decode_bytes(lis[5])
+        # rev_parent_id = lis['rev_parent_id']
         # ---
         namespace = str(namespace)
         pupdate = pupdate[:8]
@@ -239,7 +223,7 @@ def start(result, lange):
         # ---
         Taba2 = {"mdtitle": md_title, "target": target, "user": user, "lang": lange, "pupdate": pupdate, "namespace": namespace}
         # ---
-        laloly = f'<<lightyellow>> target:{lange}:{target.ljust(40)}, ns:{namespace.ljust(3)} for mdtit:<<lightyellow>>{md_title.ljust(30)}, user:<<lightyellow>>{user}'
+        laox = f'<<lightyellow>> target:{lange}:{target.ljust(40)}, ns:{namespace.ljust(3)} for mdtit:<<lightyellow>>{md_title.ljust(30)}, user:<<lightyellow>>{user}'
         # ---
         tgd = targets_done.get(lange, {})
         # ---
@@ -252,7 +236,7 @@ def start(result, lange):
         # ---
         if namespace != '0':
             if 'ns' in sys.argv and tul_target == '' and cattest:
-                printe.output(laloly)
+                printe.output(laox)
             continue
         # ---
         # للتأكد من الصفحات غير المنشورة
@@ -260,7 +244,7 @@ def start(result, lange):
             # ---
             if tul_target == '':
                 New_Table_by_lang[lange][md_title] = Taba2
-                printe.output(laloly)
+                printe.output(laox)
             elif tul_target == target:
                 printe.output(f'target already in, {target}')
             else:
@@ -269,7 +253,7 @@ def start(result, lange):
 
 def main():
     # ---
-    dodo_sql()
+    get_pages_from_db()
     # ---
     numb_lang = 0
     lnn = len(Langs_to_title_and_user.keys())
@@ -282,7 +266,7 @@ def main():
         numb_lang += 1
         # ---
         printe.output(' \\/\\/\\/\\/\\/ ')
-        printe.output('mdwiki/mdpy/sql.py: %d Lang from %s : "%s"' % (numb_lang, lnn, lange))
+        printe.output('mdwiki/after_translate/sql.py: %d Lang from %s : "%s"' % (numb_lang, lnn, lange))
         # ---
         result = {}
         # ---

@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """
 بوت فرعي من
-mdpy/sql.py
+after_translate/sql.py
 
 # ---
-from mdpy.bots import add_to_wd
+from after_translate.bots import add_to_wd
 # add_to_wd.add_tab_to_wd(New_Table_by_lang)
 # ---
 
@@ -15,20 +15,18 @@ from mdpy.bots import add_to_wd
 #
 #
 import re
-import os
 import sys
-
 # ---
 from pymysql.converters import escape_string
+from newapi import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import wiki_api
-from mdpy import printe
 from mdpy.bots import mdwiki_api
 from mdpy.bots import en_to_md
+from mdpy.bots import wikidataapi
 from mdpy import orred
-
 # ---
-'''CREATE TABLE wddone (
+wddone_table = '''CREATE TABLE wddone (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     mdtitle VARCHAR(120) NOT NULL,
     target VARCHAR(120) NOT NULL,
@@ -55,10 +53,6 @@ for tab in sq_dd:
     # ---
     wddone_by_u_t.append((user, target))
     wddone_by_u_l_mdt.append((user, lang, mdtitle))
-    # ---
-from mdpy.bots import wikidataapi
-
-wikidataurl = "https://www.wikidata.org/w/api.php"
 
 
 def work_with_2_qids(oldq, new_q):
@@ -81,7 +75,7 @@ def work_with_2_qids(oldq, new_q):
     # ---
     if en.startswith('User:Mr. Ibrahem'):
         printe.output(f'<<lightblue>> remove sitelink {en}')
-        remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, apiurl=wikidataurl, token=True)
+        remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, token=True)
         if 'success' in remove:
             len_sites -= 1
             printe.output('<<lightgreen>> **remove sitelink true.')
@@ -89,7 +83,7 @@ def work_with_2_qids(oldq, new_q):
             printe.output('<<lightred>> **remove sitelink false.')
             printe.output(remove)
         # ---
-        remove2 = wikidataapi.post({"action": "wbsetlabel", "id": oldq, "language": "en", "value": ""}, apiurl=wikidataurl, token=True)
+        remove2 = wikidataapi.post({"action": "wbsetlabel", "id": oldq, "language": "en", "value": ""}, token=True)
         if 'success' in remove2:
             len_sites -= 1
             printe.output('<<lightgreen>> **remove2 label true.')
@@ -119,7 +113,7 @@ def add_wd(qid, enlink, lang, target):
         params['title'] = enlink
         params['site'] = 'enwiki'
     # ---
-    ss = wikidataapi.post(params, apiurl=wikidataurl, token=True)
+    ss = wikidataapi.post(params, token=True)
     # ---
     printe.output(ss)
     # ---
@@ -131,7 +125,7 @@ def add_wd(qid, enlink, lang, target):
     if not isinstance(ss, dict):
         return False
     # ---
-    error = ss.get('error', {}).get('code', {})
+    # error = ss.get('error', {}).get('code', {})
     # ---
     if 'wikibase-validator-sitelink-conflict' in str(ss):
         qii = re.match(r'.*\"\>(Q\d+)\<\/a.*', str(ss))
@@ -141,7 +135,7 @@ def add_wd(qid, enlink, lang, target):
             if qid == "":
                 qids_from_wiki = wiki_api.Get_page_qids("en", [enlink])
                 # ---
-                for x, tab in qids_from_wiki.items():
+                for _, tab in qids_from_wiki.items():
                     qid = tab.get('q', '')
                     break
             return work_with_2_qids(qid2, qid)
@@ -156,7 +150,7 @@ def Add_to_wikidata(mdtitle, lang, target, user):
     # ---
     ss = add_wd(qid, enlink, lang, target)
     # ---
-    if ss == True:
+    if ss is True:
         # ---
         mdtit = escape_string(mdtitle)
         tar = escape_string(target)
@@ -175,7 +169,7 @@ def Add_to_wikidata(mdtitle, lang, target, user):
         printe.output('**************')
         printe.output(done_qua)
         printe.output('**************')
-        vfg = sql_for_mdwiki.mdwiki_sql(done_qua, update=True)
+        sql_for_mdwiki.mdwiki_sql(done_qua, update=True)
     # ---
     tat = mdwiki_api.GetPageText(mdtitle)
     # ---
@@ -194,7 +188,7 @@ def add_tab_to_wd(table):
     if 'justsql' in sys.argv:
         return ''
     # ---
-    for lane, tab in table.items():
+    for _, tab in table.items():
         # ---
         number = 0
         # ---

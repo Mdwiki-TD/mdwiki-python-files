@@ -129,6 +129,9 @@ def get_status(req):
 
 def post(params, apiurl='', token=True):
     # ---
+    if not apiurl:
+        apiurl = "https://www.wikidata.org/w/api.php"
+    # ---
     Log_to_wiki(url=apiurl)
     # ---
     # r4 = SS["ss"].post(SS["url"], data = params )

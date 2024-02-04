@@ -1,29 +1,23 @@
 #!/usr/bin/python3
 """
 
-from mdpy.sql_bots.add_to_mdwiki import add_to_mdwiki_sql
+from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 """
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
-import re
-import os
-import sys
-import time as tttime
+import time
 from pymysql.converters import escape_string
-
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import sql_for_mdwiki
-from mdpy.others.fixcat import cat_for_pages
-
-
+from after_translate.bots.fixcat import cat_for_pages
 # ---
 def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
-    for lane, tab in table.items():
+    for _, tab in table.items():
         for tt in tab:
             tabe = tab[tt]
             mdtitle = tabe['mdtitle']
@@ -43,14 +37,14 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             if str(namespace) != '0':
                 continue
             # ---
-            tata = to_update_lang_user_mdtitle_x.get(lang, {}).get(user, [])
+            date1x = to_update_lang_user_mdtitle_x.get(lang, {}).get(user, [])
             # ---
             uuu = ''
             # ---
             # date now format like 2023-01-01
-            add_date = tttime.strftime("%Y-%m-%d")
+            add_date = time.strftime("%Y-%m-%d")
             # ---
-            update_qua = f'''UPDATE pages 
+            update_qua = f'''UPDATE pages
             SET 
                 target='{tar}', 
                 pupdate="{pupdate}", 
@@ -70,7 +64,7 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             # ---
             printe.output('______ \\/\\/\\/ _______')
             # find if to update or to insert
-            if mdtitle in tata:
+            if mdtitle in date1x:
                 printe.output(f'to update: title:{mdtitle}, user:{user} ')
                 uuu = update_qua
             else:
