@@ -34,7 +34,7 @@ for f in urls_files:
     for url, _ in data.items():
         urls_to_system[url] = system
 # ---
-jsons.url_to_sys = urls_to_system
+jsons._replace(url_to_sys = urls_to_system)
 # ---
 print(f'len of jsons.url_to_sys: {len(jsons.url_to_sys)}')
 # ---
