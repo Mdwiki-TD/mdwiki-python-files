@@ -19,7 +19,6 @@ python3 core8/pwb.py wprefs/bot ask
 #
 import os
 import sys
-
 # ---
 sys.path.append('/data/project/mdwiki/pybot/md_core/')
 # ---
@@ -30,13 +29,10 @@ from wprefs.api import log, GetPageText, missingtitles, page_put
 from wprefs.helps import print_s, ec_de_code
 from wprefs.files import reffixed_list, setting, append_reffixed_file, save_wprefcash
 from wprefs.wpref_text import fix_page
-
 # ---
 move_dot = {1: False}
 expend_infobox = {1: False}
 
-
-# ---
 def fix_page_here(text, title, langcode):
     newtext = text
     # ---
@@ -116,15 +112,35 @@ def work_one_lang(list_, lang):
         append_reffixed_file(lang, '', dns)
 
 
-# ---
-for arg in sys.argv:
-    arg, _, value = arg.partition(':')
-    arg = arg[1:] if arg.startswith("-") else arg
+def work_sql_result(lange, nolange, year=2024):
+    newtable = {}
+    que = f'''
+        select lang, target from pages
+        where target != ""
+        and lang != ""
+        and lang != "ar"
+        and date like "{year}-%"
+        ;
+    '''
     # ---
-    if arg == 'infobox':
-        expend_infobox[1] = True
-    if arg == 'movedots':
-        move_dot[1] = True
+    if nolange != '':
+        que = que.replace('and lang != ""', f'and lang != "{nolange}"')
+    elif lange != '':
+        que = f'select lang, target from pages where target != "" and lang = "{lange}" and date like "{year}-%";'
+    # ---
+    print_s(que)
+    # ---
+    sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
+    # ---
+    for tab in sq:
+        lang = tab['lang']
+        target = tab['target']
+        # ---
+        if lang not in newtable:
+            newtable[lang] = []
+        if target not in newtable[lang]:
+            newtable[lang].append(target)
+    return newtable
 
 
 def maine():
@@ -135,8 +151,12 @@ def maine():
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(':')
-        # remove the - from the argument
         arg = arg[1:] if arg.startswith("-") else arg
+        # ---
+        if arg == 'infobox':
+            expend_infobox[1] = True
+        if arg == 'movedots':
+            move_dot[1] = True
         # ---
         if arg == 'nolang':
             nolange = value
@@ -177,38 +197,16 @@ def maine():
     # ---
     if page == "":
         # ---
-        que = 'select lang, target from pages where target != "" and lang != "" and lang != "ar";'
-        # ---
-        if nolange != '':
-            que = que.replace('and lang != ""', f'and lang != "{nolange}"')
-        elif lange != '':
-            que = f'select lang, target from pages where target != "" and lang = "{lange}";'
-        # ---
-        print_s(que)
-        # ---
-        sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
-        # ---
-        for tab in sq:
-            lang = tab['lang']
-            target = tab['target']
-            # ---
-            if lang not in newtable:
-                newtable[lang] = []
-            if target not in newtable[lang]:
-                newtable[lang].append(target)
+        newtable = work_sql_result(lange, nolange)
     # ---
-    for lang in newtable:
-        work_one_lang(newtable[lang], lang)
+    for lang, tab in newtable.items():
+        work_one_lang(tab, lang)
     # ---
     if 'returnfile' not in sys.argv:
         print_s(f'find {len(missingtitles)} pages in missingtitles')
         for x, lang in missingtitles.items():
             print_s(f'lang: {lang}, title: {x}')
 
-    # ---
 
-
-# ---
 if __name__ == '__main__':
     maine()
-# ---
