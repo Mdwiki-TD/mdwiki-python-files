@@ -2,7 +2,7 @@
 """
 بوت إضافة التصنيف للمقالات بدون تصنيف في قواعد البيانات
 
-python3 core8/pwb.py mdpy/fixcat
+python3 core8/pwb.py after_translate/bots/fixcat
 
 """
 #
@@ -10,18 +10,10 @@ python3 core8/pwb.py mdpy/fixcat
 #
 #
 import sys
-
-# ---
 from pymysql.converters import escape_string
-
-# ---
 from mdpy.bots import sql_for_mdwiki
-
-# sql_for_mdwiki.mdwiki_sql(query , update = False)
-# ---
 from mdpy.bots import mdwiki_api
-from mdpy import printe
-
+from newapi import printe
 # ---
 cat_for_pages = {}
 

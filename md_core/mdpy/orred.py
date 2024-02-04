@@ -86,12 +86,7 @@ def create_redirect(target, mdtitle):
 
 def dodo_sql():
     # ---
-    que = '''
-select title, target from pages
-where target != ""
-and lang = "or"
-;
-'''
+    que = '''select title, target from pages where target != "" and lang = "or";'''
     # ---
     sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
     # ---
@@ -103,10 +98,5 @@ and lang = "or"
         # ---
         create_redirect(target, mdtitle)
 
-
-# ---
-# python3 core8/pwb.py mdpy/orred
-# ---
 if __name__ == "__main__":
     dodo_sql()
-# ---

@@ -18,7 +18,6 @@ from mdpy.bots import sql_for_mdwiki
 #
 #
 import sys
-import os
 from pymysql.converters import escape_string
 import pkg_resources
 import pymysql.cursors
