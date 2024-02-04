@@ -15,42 +15,46 @@ python3 core8/pwb.py after_translate/sql
 import re
 import sys
 import time
+
 # ---
 from newapi import printe
+
 # ---
 from after_translate.bots import add_to_wd
 from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 from after_translate.bots.fixcat import cat_for_pages
+
 # ---
 from mdpy.bots import py_tools
 from mdpy.bots import sql_for_mdwiki
 from api_sql import wiki_sql
+
 # ---
 Lang_usr_mdtitle = {}
 targets_done = {}
 Langs_to_title_and_user = {}
 to_update_lang_user_mdtitle = {}
 # ---
-skip_langs = ['zh-yue', 'ceb']
+skip_langs = ["zh-yue", "ceb"]
 # ---
-New_Table_by_lang = {}
+tab_by_lang = {}
 # ---
 Skip_titles = {
-    'Mr. Ibrahem': {
-        'targets': [
-            'جامعة نورث كارولاينا',
-            'جامعة ولاية كارولينا الشمالية إيه آند تي',
-            'نيشان راجاميترابورن',
+    "Mr. Ibrahem": {
+        "targets": [
+            "جامعة نورث كارولاينا",
+            "جامعة ولاية كارولينا الشمالية إيه آند تي",
+            "نيشان راجاميترابورن",
         ],
-        'mdtitles': [],
+        "mdtitles": [],
     },
-    'Avicenno': {
-        'targets': ['ألم فرجي', 'لقاح المكورة السحائية', 'استئصال اللوزتين'],
-        'mdtitles': [],
+    "Avicenno": {
+        "targets": ["ألم فرجي", "لقاح المكورة السحائية", "استئصال اللوزتين"],
+        "mdtitles": [],
     },
-    'Subas Chandra Rout': {
-        'targets': [],
-        'mdtitles': [
+    "Subas Chandra Rout": {
+        "targets": [],
+        "mdtitles": [
             "Wilms' tumor",
             "Sheehan's syndrome",
             "Membranous nephropathy",
@@ -58,11 +62,16 @@ Skip_titles = {
     },
 }
 # ---
-Skip_titles_global = ['جامعة نورث كارولاينا', 'جامعة ولاية كارولينا الشمالية إيه آند تي', 'نيشان راجاميترابورن', 'موميتازون']
+Skip_titles_global = [
+    "جامعة نورث كارولاينا",
+    "جامعة ولاية كارولينا الشمالية إيه آند تي",
+    "نيشان راجاميترابورن",
+    "موميتازون",
+]
 # ---
 tit_user_lang = {}
 # ---
-query_main_old = '''
+query_main_old = """
     select DISTINCT p.page_title, c.comment_text , a.actor_name , r.rev_timestamp
     from change_tag t
     INNER JOIN change_tag_def ctd on ctd.ctd_id = t.ct_tag_id
@@ -78,9 +87,9 @@ query_main_old = '''
     and comment_text like "%User:Mr. Ibrahem/%"
     and p.page_namespace = 0
     #limit 10
-'''
+"""
 # ---
-query_main = '''
+query_main = """
     select DISTINCT p.page_title as title,
     SUBSTRING_INDEX(SUBSTRING_INDEX(c.comment_text, 'Ibrahem/', -1), ']]', 1) as comment_text,
     a.actor_name, r.rev_timestamp, p.page_namespace, r.rev_parent_id
@@ -96,25 +105,26 @@ query_main = '''
     and comment_text like "%User:Mr. Ibrahem/%"
     #and p.page_namespace = 0
     group by p.page_title, a.actor_name, c.comment_text
-'''
+"""
+
 
 def get_pages_from_db():
     # ---
-    lang_o = ''
+    lang_o = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
-        if arg in ['lang', '-lang']:
+        arg, _, value = arg.partition(":")
+        if arg in ["lang", "-lang"]:
             lang_o = value
             Langs_to_title_and_user[value] = {}
         # ---
     # ---
-    que = 'select title, user, lang, target from pages '
+    que = "select title, user, lang, target from pages "
     # ---
-    if lang_o != '':
+    if lang_o != "":
         que += f' where lang = "{lang_o}"'
     # ---
-    que += ' ;'
+    que += " ;"
     # ---
     printe.output(que)
     # ---
@@ -124,12 +134,12 @@ def get_pages_from_db():
     len_done_target = 0
     # ---
     for tab in sq:
-        mdtitle = tab['title']
-        user    = tab['user']
-        target  = tab['target']
-        lang    = tab['lang'].lower()
+        mdtitle = tab["title"]
+        user = tab["user"]
+        target = tab["target"]
+        lang = tab["lang"].lower()
         # ---
-        if lang_o != '' and lang != lang_o.strip():
+        if lang_o != "" and lang != lang_o.strip():
             continue
         # ---
         tul = mdtitle + user + lang
@@ -165,7 +175,7 @@ def get_pages_from_db():
                 targets_done[lang] = {}
             # ---
             target = target.replace("_", " ")
-            target2 = py_tools.ec_de_code(target, 'encode')
+            target2 = py_tools.ec_de_code(target, "encode")
             # ---
             # printe.output('done. <<lightgreen>> target:%s for mdtit:%s, user:%s' % (target.ljust(40), mdtitle.ljust(30), user))
             # ---
@@ -178,9 +188,9 @@ def get_pages_from_db():
             targets_done[lang][target] = {"user": user, "target": target}
             targets_done[lang][target2] = {"user": user, "target": target}
     # ---
-    printe.output(f'<<lightyellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ')
+    printe.output(f"<<lightyellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
     # ---
-    if 'print' in sys.argv:
+    if "print" in sys.argv:
         printe.output(Langs_to_title_and_user)
     # ---
     time.sleep(3)
@@ -195,16 +205,16 @@ def start(result, lange):
         # ---
         # printe.output( lis )
         # ---
-        target = lis['title']
-        co_text = lis['comment_text']
-        user = lis['actor_name']
-        pupdate = lis['rev_timestamp']
-        namespace = lis['page_namespace']
+        target = lis["title"]
+        co_text = lis["comment_text"]
+        user = lis["actor_name"]
+        pupdate = lis["rev_timestamp"]
+        namespace = lis["page_namespace"]
         # rev_parent_id = lis['rev_parent_id']
         # ---
         namespace = str(namespace)
         pupdate = pupdate[:8]
-        pupdate = re.sub(r'^(\d\d\d\d)(\d\d)(\d\d)$', r'\g<1>-\g<2>-\g<3>', pupdate)
+        pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>", pupdate)
         # ---
         md_title = co_text.replace("_", " ").strip()
         md_title = re.sub("/full$", "", co_text)
@@ -215,40 +225,49 @@ def start(result, lange):
         # ---
         if target in Skip_titles_global:
             continue
-        if target in Skip_titles.get(user, {}).get('targets', []):
+        if target in Skip_titles.get(user, {}).get("targets", []):
             continue
         # ---
-        if md_title in Skip_titles.get(user, {}).get('mdtitles', []):
+        if md_title in Skip_titles.get(user, {}).get("mdtitles", []):
             continue
         # ---
-        Taba2 = {"mdtitle": md_title, "target": target, "user": user, "lang": lange, "pupdate": pupdate, "namespace": namespace}
+        Taba2 = {
+            "mdtitle": md_title,
+            "target": target,
+            "user": user,
+            "lang": lange,
+            "pupdate": pupdate,
+            "namespace": namespace,
+        }
         # ---
-        laox = f'<<lightyellow>> target:{lange}:{target.ljust(40)}, ns:{namespace.ljust(3)} for mdtit:<<lightyellow>>{md_title.ljust(30)}, user:<<lightyellow>>{user}'
+        laox = f"<<lightyellow>> target:{lange}:{target.ljust(40)}, ns:{namespace.ljust(3)} for mdtit:<<lightyellow>>{md_title.ljust(30)}, user:<<lightyellow>>{user}"
         # ---
         tgd = targets_done.get(lange, {})
         # ---
-        target2 = py_tools.ec_de_code(target, 'encode')
+        target2 = py_tools.ec_de_code(target, "encode")
         # ---
         tul = md_title + user + lange
-        tul_target = tit_user_lang.get(tul, '')
+        tul_target = tit_user_lang.get(tul, "")
         # ---
-        cattest = cat_for_pages.get(md_title, '')
+        cattest = cat_for_pages.get(md_title, "")
         # ---
-        if namespace != '0':
-            if 'ns' in sys.argv and tul_target == '' and cattest:
+        if namespace != "0":
+            if "ns" in sys.argv and tul_target == "" and cattest:
                 printe.output(laox)
             continue
         # ---
         # للتأكد من الصفحات غير المنشورة
         if target2 not in tgd and target not in tgd:
             # ---
-            if tul_target == '':
-                New_Table_by_lang[lange][md_title] = Taba2
+            if tul_target == "":
+                tab_by_lang[lange][md_title] = Taba2
                 printe.output(laox)
             elif tul_target == target:
-                printe.output(f'target already in, {target}')
+                printe.output(f"target already in, {target}")
             else:
-                printe.output(f'puplished target: {tul_target} != target to add: {target}')
+                printe.output(
+                    f"puplished target: {tul_target} != target to add: {target}"
+                )
 
 
 def main():
@@ -261,18 +280,18 @@ def main():
     # for lange,lal in Langs_to_title_and_user.items():
     for lange in Langs_to_title_and_user:
         # ---
-        New_Table_by_lang[lange] = {}
+        tab_by_lang[lange] = {}
         # ---
         numb_lang += 1
         # ---
-        printe.output(' \\/\\/\\/\\/\\/ ')
-        printe.output('mdwiki/after_translate/sql.py: %d Lang from %s : "%s"' % (numb_lang, lnn, lange))
+        printe.output(" \\/\\/\\/\\/\\/ ")
+        printe.output(f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"')
         # ---
         result = {}
         # ---
         qua = query_main
         # ---
-        if lange == 'ar':
+        if lange == "ar":
             qua += """
                 and p.page_title not in (
                     'جامعة_نورث_كارولاينا',
@@ -281,25 +300,24 @@ def main():
                 )
             """
         # ---
-        qua += '\n;'
+        qua += "\n;"
         # ---
         if lange in skip_langs:
-            printe.output(f'skip lang:{lange}')
+            printe.output(f"skip lang:{lange}")
             continue
         # ---
-        if 'printquery' in sys.argv:
+        if "printquery" in sys.argv:
             print(qua)
         # ---
-        # result = wiki_sql.Make_sql_many_rows(qua, wiki=str(lange))
         result = wiki_sql.sql_new(qua, str(lange))
         # ---
         if result != {}:
             start(result, lange)
         # ---
-        add_to_wd.add_tab_to_wd({lange: New_Table_by_lang[lange]})
+        add_to_wd.add_tab_to_wd({lange: tab_by_lang[lange]})
         # ---
-        add_to_mdwiki_sql({lange: New_Table_by_lang[lange]}, to_update_lang_user_mdtitle)
+        add_to_mdwiki_sql({lange: tab_by_lang[lange]}, to_update_lang_user_mdtitle)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
