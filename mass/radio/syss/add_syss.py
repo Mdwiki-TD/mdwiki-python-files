@@ -10,7 +10,7 @@ import os
 import json
 from pathlib import Path
 from newapi import printe
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, dumps_jsons, dump_json_file, urls_to_ids
 from mass.radio.geturlsnew import lenth_of_systems
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 # ---
@@ -52,7 +52,7 @@ print(f"len of new_urls: {len(new_urls)}, jsons.urls: {len(jsons.urls)}")
 # ---
 jsons.urls.update(new_urls)
 # ---
-dumps_jsons(urls=1)
+dump_json_file('jsons/urls.json', jsons.urls, False)
 # ---
 
 
@@ -79,4 +79,4 @@ print(f"len of new_infos: {len(new_infos)}, jsons.infos: {len(jsons.infos)}")
 # ---
 jsons.infos.update(new_infos)
 # ---
-dumps_jsons(infos=1)
+dump_json_file('jsons/infos.json', jsons.infos, False)

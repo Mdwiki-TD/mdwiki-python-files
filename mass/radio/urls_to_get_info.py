@@ -6,7 +6,7 @@ python3 core8/pwb.py mass/radio/urls_to_get_info
 
 import os
 import psutil
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, dump_json_file, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 
 # Step 1: Calculate the difference between jsons.urls and urls_to_ids
@@ -29,8 +29,8 @@ urls_to_get_info -= already_done_urls
 print(f"Already done: {already_done}, Length of urls_to_get_info: {len(urls_to_get_info)}")
 
 # Step 4: Save the dictionary to a JSON file
-jsons._replace(urls_to_get_info = list(urls_to_get_info))
-dumps_jsons(urls_to_get_info=1)
+dump_json_file('jsons/urls_to_get_info.json', list(urls_to_get_info), False)
+# dumps_jsons(urls_to_get_info=1)
 
 print("Step 5: Saved urls_to_get_info dictionary to jsons.")
 
