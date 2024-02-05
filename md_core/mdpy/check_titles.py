@@ -11,11 +11,13 @@ python3 core8/pwb.py mdpy/check_titles test
 #
 
 import sys
+import tqdm
 # ---
 from newapi import printe
 from mdpy.bots import sql_for_mdwiki
 from newapi.wiki_page import MainPage, NEW_API
 # api_new  = NEW_API('ar', family='wikipedia')
+# infos  = Find_pages_exists_or_not(titles)
 
 def get_langs_tabs():
     # ---
@@ -35,6 +37,8 @@ def get_langs_tabs():
 
 def get_new_target_log(lang, target):
     # ---
+    done = []
+    # ---
     to_check = target
     # ---
     api_new = NEW_API(lang, family='wikipedia')
@@ -42,6 +46,11 @@ def get_new_target_log(lang, target):
     printe.output(f'get_new_target_log() lang:{lang}, target:{target}')
     # ---
     while to_check != '':
+        # ---
+        if to_check in done:
+            printe.output(f'to_check:{to_check} in done')
+            break
+        # ---
         logs     = api_new.get_logs(to_check)
         # ---
         new = ''
@@ -56,6 +65,7 @@ def get_new_target_log(lang, target):
         if new:
             printe.output(f'> title:{to_check} moved to:{new}')
             to_check = new
+            done.append(to_check)
         else:
             break
     # ---
@@ -70,24 +80,39 @@ def start():
     langs = get_langs_tabs()
     # ---
     for lang, tabs in langs.items():
-        for tab in tabs:
+        # ---
+        printe.output(f'<<green>> lang:{lang}, has {len(tabs)} tabs')
+        # ---
+        titles = [ x['target'] for x in tabs ]
+        # ---
+        api_new  = NEW_API(lang, family='wikipedia')
+        pages    = api_new.Find_pages_exists_or_not(titles, get_redirect=False)
+        # ---
+        missing   = [ x for x, v in pages.items() if not v ]
+        redirects = [ x for x, v in pages.items() if v == 'redirect' ]
+        # ---
+        printe.output(f'lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}')
+        # ---
+        new_tabs = [ tab for tab in tabs if tab['target'] in missing or tab['target'] in redirects ]
+        # ---
+        printe.output(f'lang:{lang}, has {len(new_tabs)} new tabs')
+        # ---
+        for tab in tqdm.tqdm(new_tabs):
             iid, lang, target = tab["id"], tab["lang"], tab["target"]
             # ---
             new_target = ''
             # ---
-            page      = MainPage(target, lang, family='wikipedia')
-            # ---
-            exists    = page.exists()
-            if not exists:
-                printe.output(f'page "{target}" not exists in {lang}:{page.family}')
+            if target in missing:
+                printe.output(f'<<red>> page "{target}" not exists in {lang}')
                 new_target = get_new_target_log(lang, target)
-            elif page.isRedirect() :
+            elif target in redirects:
+                page      = MainPage(target, lang, family='wikipedia')
                 new_target = page.get_redirect_target()
             # ---
             if new_target:
                 page2 = MainPage(new_target, lang, family='wikipedia')
                 # ---
-                if page2.exists() and not page.isRedirect() :
+                if page2.exists() and not page2.isRedirect() :
                     printe.output(f'<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}')
                     text.append([target, lang, new_target])
                     # sql_for_mdwiki.set_target_where_id(new_target, iid)
@@ -103,6 +128,7 @@ def start():
 
 if __name__ == "__main__":
     if 'test' in sys.argv:
-        get_new_target_log("ar", "الحكَّة المهبلية")
+        # get_new_target_log("ar", "الحكَّة المهبلية")
+        get_new_target_log("fr", "L'encéphalite à tiques")
     else:
         start()
