@@ -7,7 +7,7 @@ python3 core8/pwb.py mass/radio/cases_in_ids
 import re
 from newapi.ncc_page import CatDepth
 # ---
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, dumps_jsons, dump_json_file
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 
 
@@ -45,8 +45,9 @@ def geo():
 
     # dump
     # jsons.cases_in_ids = new_cases_in
-    jsons._replace(cases_in_ids = new_cases_in)
-    dumps_jsons(cases_in_ids=1)
+    # jsons._replace(cases_in_ids = new_cases_in)
+    # dumps_jsons(cases_in_ids=1)
+    dump_json_file('jsons/cases_in_ids.json', new_cases_in, False)
 
     # sort jsons.cases_dup by lenth if lenth > 1
     new_dup = {k: v for k, v in sorted(new_dup.items(), key=lambda item: len(item[1]), reverse=True) if len(v) > 1}
@@ -55,8 +56,8 @@ def geo():
 
     # dump
     # jsons.cases_dup = new_dup
-    jsons._replace(cases_dup = new_dup)
-    dumps_jsons(cases_dup=1)
+    # jsons._replace(cases_dup = new_dup)
+    dump_json_file('jsons/cases_dup.json', new_dup, False)
 
 
 if __name__ == "__main__":

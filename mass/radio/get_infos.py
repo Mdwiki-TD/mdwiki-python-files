@@ -7,7 +7,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 # ---
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, dump_json_file, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 
 def get_ids(url):
@@ -96,12 +96,14 @@ def mainnew():
         jsons.ids[str(case_id)] = case_tab
         # ---
         if n % 100 == 0:
-            dumps_jsons(ids=1)
+            # dumps_jsons(ids=1)
+            dump_json_file('jsons/ids.json', jsons.ids, False)
     # ---
     print("Step 5: Saved ids dictionary to jsons.")
 
     # Step 5: Save the dictionary to a JSON file
-    dumps_jsons(ids=1)
+    # dumps_jsons(ids=1)
+    dump_json_file('jsons/ids.json', jsons.ids, False)
 
 
 if __name__ == "__main__":

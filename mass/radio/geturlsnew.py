@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from newapi import printe
 # ---
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, dump_json_file, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0, systems=0)
 # ---
 systems = [
@@ -169,13 +169,16 @@ def main():
         if new:
             jsons.urls.update(new)
         # ---
-        dumps_jsons(infos=1, urls=1)
+        dump_json_file('jsons/urls.json', jsons.urls, False)
+        dump_json_file('jsons/infos.json', jsons.infos, False)
         # ---
         jsons.systems[system] = True
         # dump
-        dumps_jsons(systems=1)
+        dump_json_file('jsons/systems.json', jsons.systems, False)
     # ---
-    dumps_jsons(infos=1, urls=1)
+    dump_json_file('jsons/urls.json', jsons.urls, False)
+    dump_json_file('jsons/infos.json', jsons.infos, False)
+    # ---
 
 if __name__ == "__main__":
     main()

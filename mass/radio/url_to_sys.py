@@ -8,7 +8,7 @@ import os
 import json
 from pathlib import Path
 # ---
-from mass.radio.jsons_files import jsons, dumps_jsons
+from mass.radio.jsons_files import jsons, dump_json_file
 # jsons.url_to_sys
 # dumps_jsons(url_to_sys=0)
 # ---
@@ -34,8 +34,9 @@ for f in urls_files:
     for url, _ in data.items():
         urls_to_system[url] = system
 # ---
-jsons._replace(url_to_sys = urls_to_system)
+dump_json_file('jsons/url_to_sys.json', urls_to_system, False)
 # ---
 print(f'len of jsons.url_to_sys: {len(jsons.url_to_sys)}')
 # ---
-dumps_jsons(url_to_sys=1)
+# dumps_jsons(url_to_sys=1)
+dump_json_file('jsons/url_to_sys.json', jsons.url_to_sys, False)
