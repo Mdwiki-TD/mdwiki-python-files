@@ -4,12 +4,13 @@ python3 core8/pwb.py mdpy/sql_for_mdwiki
 
 # ---
 from mdpy.bots import sql_for_mdwiki
-# sql_for_mdwiki.mdwiki_sql(query, update = False)
+# sql_for_mdwiki.mdwiki_sql(query, return_dict=False, values=None)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
 # pages = sql_for_mdwiki.get_all_pages()
 # cats = sql_for_mdwiki.get_db_categories() # title:depth
 # sql_for_mdwiki.add_titles_to_qids(tab, add_empty_qid=False)
 # sql_for_mdwiki.set_title_where_qid(new_title, qid)
+# sql_for_mdwiki.set_target_where_id(new_target, iid)
 # ---
 
 """
@@ -69,18 +70,17 @@ if 'localhost' in sys.argv or dir2 == 'I:/mdwiki':
     credentials = {'user': 'root', 'password': 'root11'}
 
 
-def sql_connect_pymysql(query, return_dict=False):
+def sql_connect_pymysql(query, return_dict=False, values=None):
     # ---
     # print('start sql_connect_pymysql:')
     # ---
     args = dict(main_args.items())
     # ---
-    params = None
-    Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
+    args['cursorclass'] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
-    args['cursorclass'] = Typee
+    params = values if values else None
     # ---
-    connection = pymysql.connect(**args, **credentials)
+    # connection = pymysql.connect(**args, **credentials)
     try:
         connection = pymysql.connect(**args, **credentials)
 
@@ -122,7 +122,7 @@ def sql_connect_pymysql(query, return_dict=False):
         return results
 
 
-def mdwiki_sql(query, return_dict=False, **kwargs):
+def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
     # ---
     if not can_use_sql_db[1]:
         print('no mysql')
@@ -133,7 +133,7 @@ def mdwiki_sql(query, return_dict=False, **kwargs):
         return {}
     # ---
     # print('<<lightyellow>> newsql::')
-    return sql_connect_pymysql(query, return_dict=return_dict)
+    return sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
 def get_all_qids():
@@ -175,6 +175,17 @@ def set_title_where_qid(new_title, qid):
     printe.output(f'<<yellow>> set_title_where_qid()  new_title:{new_title}, qid:{qid}')
     # ---
     return mdwiki_sql(qua, return_dict=True)
+
+
+def set_target_where_id(new_target, iid):
+    query = """UPDATE pages set target = ? where id = ?;"""
+    # ---
+    printe.output(f'<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}')
+    # ---
+    if new_target == '' or iid == '':
+        return
+    # ---
+    return mdwiki_sql(query, return_dict=True, values=[new_target, iid])
 
 
 def add_titles_to_qids(tab, add_empty_qid=False):
