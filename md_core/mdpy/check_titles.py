@@ -86,7 +86,7 @@ def start():
         titles = [ x['target'] for x in tabs ]
         # ---
         api_new  = NEW_API(lang, family='wikipedia')
-        pages    = api_new.Find_pages_exists_or_not(titles, get_redirect=False)
+        pages    = api_new.Find_pages_exists_or_not(titles, get_redirect=True)
         # ---
         missing   = [ x for x, v in pages.items() if not v ]
         redirects = [ x for x, v in pages.items() if v == 'redirect' ]
@@ -102,7 +102,7 @@ def start():
             # ---
             new_target = ''
             # ---
-            if target in missing:
+            if target in missing and 'onlyredirect' not in sys.argv:
                 printe.output(f'<<red>> page "{target}" not exists in {lang}')
                 new_target = get_new_target_log(lang, target)
             elif target in redirects:
@@ -114,13 +114,13 @@ def start():
                 # ---
                 if page2.exists() and not page2.isRedirect() :
                     printe.output(f'<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}')
-                    text.append([target, lang, new_target])
-                    # sql_for_mdwiki.set_target_where_id(new_target, iid)
+                    sql_for_mdwiki.set_target_where_id(new_target, iid)
+                    text.append([lang, target, new_target])
     # ---
-    wikitext = '{|\n|-! target !! lang !! new_target\n|-\n'
+    wikitext = '{|\n|-\n! lang !! target !! new_target\n|-\n'
     # ---
     for x in text:
-        wikitext += f'|-\n| {x[0]} || {x[1]} || {x[2]}\n'
+        wikitext += f'|-\n| {x[0]} || [[:{x[0]}:{x[1]}]] || [[:{x[0]}:{x[2]}]]\n'
     # ---
     wikitext += '|}'
     # ---
