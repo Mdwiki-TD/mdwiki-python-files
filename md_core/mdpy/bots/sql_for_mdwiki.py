@@ -178,14 +178,16 @@ def set_title_where_qid(new_title, qid):
 
 
 def set_target_where_id(new_target, iid):
-    query = """UPDATE pages set target = ? where id = ?;"""
+    title2 = escape_string(new_target)
+    query = f"""UPDATE pages set target = '{title2}' where id = {iid};"""
     # ---
     printe.output(f'<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}')
     # ---
     if new_target == '' or iid == '':
         return
     # ---
-    return mdwiki_sql(query, return_dict=True, values=[new_target, iid])
+    # return mdwiki_sql(query, return_dict=True, values=[new_target, iid])
+    return mdwiki_sql(query, return_dict=True)
 
 
 def add_titles_to_qids(tab, add_empty_qid=False):
