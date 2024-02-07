@@ -7,6 +7,8 @@ python3 /data/project/mdwiki/pybot/md_core/mdcount/countref.py newpages
 
 python3 core8/pwb.py mdcount/countref newpages
 
+python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
+
 """
 
 #
@@ -23,7 +25,7 @@ from mdcount import ref
 from mdpy.bots import mdwiki_api
 from mdpy import printe
 from mdpy.bots import catdepth2
-
+from mdcount.regex_scanner import RegexScanner
 # ---
 from pathlib import Path
 
@@ -59,31 +61,15 @@ list_fu = list(set(all_ref.keys()) & set(lead_ref.keys()))
 list_fu = list(set(list_fu))
 list_ma = {1: [x for x in list_fu if (x in all_ref and x in lead_ref)]}
 
-
-def count_ref_from_text(text, get_short=False):
-    # ---
-    short_ref = re.compile(r'<ref\s*name\s*\=\s*(?P<name>[^>]*)\s*\/\s*>', re.IGNORECASE | re.DOTALL)
-    # ---
+def get_refs_new(text):
     ref_list = []
     # ---
-    # count = 0
+    scanner = RegexScanner(r'(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>', text)
     # ---
-    if get_short:
-        for m in short_ref.finditer(text):
-            name = m.group('name')
-            if name.strip() != '':
-                if name.strip() not in ref_list:
-                    ref_list.append(name.strip())
-    # ---
-    # refreg = re.compile(r'(<ref[^>]*>[^<>]+</ref>|<ref[^>]*\/\s*>)')
-    refreg = re.compile(r'(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>', re.IGNORECASE | re.DOTALL)
-    # ---
-    for m in refreg.finditer(text):
-        # content = m.group('content')
-        # if content.strip() != '' : if not content.strip() in ref_list : ref_list.append(content.strip())
+    for m in scanner.requests:
         # ---
-        name = m.group('name')
-        content = m.group('content')
+        name = m.get('name', '')
+        content = m.get('content', '')
         # ---
         if name.strip() != '':
             if name.strip() not in ref_list:
@@ -91,15 +77,44 @@ def count_ref_from_text(text, get_short=False):
         elif content.strip() != '':
             if content.strip() not in ref_list:
                 ref_list.append(content.strip())
-            # count += 1
-    return len(ref_list)
+    # ---
+    printe.output(f'len of get_refs_new : {len(ref_list)}')
+    # ---
+    return ref_list
 
+def get_short_refs(text):
+    # ---
+    scanner = RegexScanner(r'<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>', text)
+    # ---
+    ref_list = scanner.attr_scan('name')
+    # ---
+    printe.output(f'len of get_short_refs : {len(ref_list)}')
+    # ---
+    return ref_list
+
+def count_ref_from_text(text, get_short=False):
+    # ---
+    ref_list = []
+    # ---
+    short_list = get_short_refs(text)
+    # ---
+    if get_short:
+        short_list = get_short_refs(text)
+        ref_list.extend(short_list)
+    # ---
+    refs = get_refs_new(text)
+    # ---
+    ref_list.extend(refs)
+    # ---
+    return len(ref_list)
 
 def count_refs(title):
     # ---
     text = mdwiki_api.GetPageText(title)
     # ---
-    text2 = ref.fix_ref(text, text)
+    # extend short refs
+    text2 = text
+    # text2 = ref.fix_ref(text, text)
     # ---
     all_c = count_ref_from_text(text2)
     all_ref[title] = all_c
@@ -147,18 +162,18 @@ def mai():
     # ---
     numb = 0
     # ---
-    vaild_links[1] = get_links()
     limit = 100 if 'limit100' in sys.argv else 10000
     # ---
-    # python pwb.py mdwiki/public_html/Translation_Dashboard/countref test1 local -title:Testosterone_\(medication\)
-    # python3 core8/pwb.py /data/project/mdwiki/mdpy/countref test1 -title:Testosterone_\(medication\)
+    # python3 core8/pwb.py mdcount/countref -title:Testosterone_\(medication\)
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(':')
         # ---
         if arg == "-title":
-            vaild_links[1].append(value.replace('_', ' '))
-        # ---
+            vaild_links[1] = [ value.replace('_', ' ') ]
+    # ---
+    if not vaild_links[1]:
+        vaild_links[1] = get_links()
     # ---
     for x in vaild_links[1]:
         # ---
