@@ -78,6 +78,17 @@ def add_tag():
     # ---
     printe.output(f"len of pages_has: {len(pages_has)}")
     # ---
+    for n, x in enumerate(pages_has):
+        printe.output(f"p:{n}/{len(pages_has)}: t:{x}::")
+        # ---
+        qid = qids.get(x)
+        # ---
+        if not qid:
+            printe.output("no qid")
+            continue
+        # ---
+        work_page(x, qid)
+    # ---
     for n, x in enumerate(all_pages):
         printe.output(f"p:{n}/{len(all_pages)}: t:{x}::")
         # ---

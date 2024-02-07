@@ -9,7 +9,7 @@ python3 core8/pwb.py mdpages/P11143
 #
 #
 import sys
-
+import time
 # ---
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import catdepth2
@@ -67,6 +67,9 @@ def add_missing(newlist):
         for n, (q, value) in enumerate(newlist.items(), start=1):
             printe.output(f'<<yellow>> q {n} from {len(newlist)}')
             wikidataapi.Claim_API_str(q, 'P11143', value)
+            if n % 30 == 0:
+                printe.output(f'<<yellow>> n: {n}')
+                time.sleep(5)
 
 
 def fix(merge_qids):

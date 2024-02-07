@@ -5,8 +5,8 @@ Usage:
 python3 core8/pwb.py mdpages/qids_others/P11143
 
 """
+import time
 import sys
-
 # ---
 from mdpages.qids_others import sql_qids_others
 from mdpy.bots import wikidataapi
@@ -45,7 +45,7 @@ for wd in wdlist:
 
 def add_missing(newlist):
     # ---
-    print('len of newlist: ' + str(len(newlist)))
+    print(f'len of newlist: {len(newlist)}')
     # ---
     if len(newlist) > 0:
         # ---
@@ -53,17 +53,16 @@ def add_missing(newlist):
         if len(newlist.items()) < 100:
             print("\n".join([f'{k}\t:\t{v}' for k, v in newlist.items()]))
         # ---
-        # ---
         if 'add' not in sys.argv:
             printe.output('<<puruple>> add "add" to sys.argv to add them?')
             return
         # ---
-        n = 0
-        # ---
-        for q, value in newlist.items():
-            n += 1
+        for n, (q, value) in enumerate(newlist.items(), start=1):
             printe.output(f'<<yellow>> q {n} from {len(newlist)}')
             wikidataapi.Claim_API_str(q, 'P11143', value)
+            if n % 30 == 0:
+                printe.output(f'<<yellow>> n: {n}')
+                time.sleep(5)
 
 
 def fix(merge_qids):

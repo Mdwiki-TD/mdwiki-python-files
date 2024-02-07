@@ -33,7 +33,7 @@ def add_sql(o_qids):
     # ---
     same = [x for x in o_qids if x in others_in and others_in[x] == o_qids[x]]
     # ---
-    diff = [x for x in o_qids if x in others_in and others_in[x] != o_qids[x] and o_qids[x] != '']
+    diff = [x for x in o_qids if x in others_in and others_in[x] != o_qids[x] and o_qids[x] != '' and others_in[x] != '']
     # ---
     printe.output(f'len of same: {len(same)}')
     printe.output(f'len of diff: {len(diff)}')
@@ -44,7 +44,7 @@ def add_sql(o_qids):
     for x in diff:
         printe.output(f'x: {x}, qid_in: {others_in[x]} != new qid: {o_qids[x]}')
     # ---
-    printe.output(f'<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}')
+    printe.output(f'<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}, add "add" to sys.argv to add to sql')
     # ---
     len_empty = [x for x in o_qids_new if o_qids_new[x] == '']
     printe.output(f'<<lightgreen>> new len of len_empty:{len(len_empty)}')
