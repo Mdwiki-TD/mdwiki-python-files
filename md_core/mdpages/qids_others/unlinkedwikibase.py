@@ -72,13 +72,17 @@ def add_tag():
     # ---
     all_pages = [x for x in all_pages if valid_title(x)]
     # ---
-    printe.output(f"len of all_pages: {len(all_pages)}")
-    # ---
     pages_has = api_new.Search(value='{{#unlinkedwikibase:id=', ns="0")
     # ---
-    printe.output(f"len of pages_has: {len(pages_has)}")
+    pages_has_to_work = [page for page in pages_has if page in qids]
     # ---
-    for n, x in enumerate(pages_has):
+    printe.output(f"len of pages_has: {len(pages_has)}, pages_has_to_work: {len(pages_has_to_work)}")
+    # ---
+    pages_to_work = [page for page in all_pages if page in qids]
+    # ---
+    printe.output(f"len of all_pages: {len(all_pages)}, pages_to_work: {len(pages_to_work)}")
+    # ---
+    for n, x in enumerate(pages_has_to_work):
         printe.output(f"p:{n}/{len(pages_has)}: t:{x}::")
         # ---
         qid = qids.get(x)
@@ -89,8 +93,8 @@ def add_tag():
         # ---
         work_page(x, qid)
     # ---
-    for n, x in enumerate(all_pages):
-        printe.output(f"p:{n}/{len(all_pages)}: t:{x}::")
+    for n, x in enumerate(pages_to_work):
+        printe.output(f"p:{n}/{len(pages_to_work)}: t:{x}::")
         # ---
         qid = qids.get(x)
         # ---
