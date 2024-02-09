@@ -2,6 +2,8 @@
 """
 التحقق من المقالات التحويلات أو المحذوفة
 
+python3 core8/pwb.py mdpy/check_titles -lang:ur
+
 python3 core8/pwb.py mdpy/check_titles test
 
 """
@@ -12,16 +14,24 @@ python3 core8/pwb.py mdpy/check_titles test
 
 import sys
 import tqdm
+import time
 # ---
 from newapi import printe
 from mdpy.bots import sql_for_mdwiki
 from newapi.wiki_page import MainPage, NEW_API
+from newapi.mdwiki_page import MainPage as md_MainPage
 # api_new  = NEW_API('ar', family='wikipedia')
 # infos  = Find_pages_exists_or_not(titles)
 
 def get_langs_tabs():
     # ---
     que = 'select id, title, lang, target from pages where target != "";'
+    # ---
+    lang_to_get = ''
+    for arg in sys.argv:
+        arg, _, value = arg.partition(":")
+        if arg == "-lang":
+            lang_to_get = value
     # ---
     langs = {}
     # ---
@@ -32,6 +42,9 @@ def get_langs_tabs():
         if not lang in langs:
             langs[lang] = []
         langs[lang].append(tab)
+    # ---
+    if lang_to_get in langs:
+        langs = { lang_to_get : langs[lang_to_get] }
     # ---
     return langs
 
@@ -45,11 +58,13 @@ def get_new_target_log(lang, target):
     # ---
     printe.output(f'get_new_target_log() lang:{lang}, target:{target}')
     # ---
+    n = 0
+    # ---
     while to_check != '':
         # ---
-        if to_check in done:
-            printe.output(f'to_check:{to_check} in done')
-            break
+        n += 1
+        # ---
+        printe.output(f'<<blue>> get_new_target_log({n}) lang:{lang}, target:{target}')
         # ---
         logs     = api_new.get_logs(to_check)
         # ---
@@ -63,15 +78,44 @@ def get_new_target_log(lang, target):
                 break
         # ---
         if new:
+            done.append(to_check)
             printe.output(f'> title:{to_check} moved to:{new}')
             to_check = new
-            done.append(to_check)
         else:
+            break
+        # ---
+        if to_check in done:
+            printe.output(f'to_check:{to_check} in done')
             break
     # ---
     printe.output(f'get_new_target_log() lang:{lang}, target:{target}, new:{to_check}')
     # ---
     return to_check
+
+def add_text(tab):
+    # ---
+    if not tab:
+        return
+    # ---
+    date = time.strftime("%Y-%m-%d", time.gmtime())
+    # ---
+    wikitext = f'== {date} ==\n'
+    wikitext += '{|\n|-\n! lang !! target !! new_target\n|-\n'
+    # ---
+    for x in tab:
+        wikitext += f'|-\n| {x[0]} || [[:{x[0]}:{x[1]}]] || [[:{x[0]}:{x[2]}]]\n'
+    # ---
+    wikitext += '|}\n'
+    # ---
+    printe.output(wikitext)
+    itle = 'User:Mr. Ibrahem/tofix'
+    # ---
+    page = md_MainPage(itle, 'www', family='mdwiki')
+    # ---
+    text = page.get_text()
+    newtext = f"{wikitext}\n{text}"
+    # ---
+    page.save(newtext=newtext, summary="update", nocreate=0)
 
 def start():
     # ---
@@ -117,14 +161,8 @@ def start():
                     sql_for_mdwiki.set_target_where_id(new_target, iid)
                     text.append([lang, target, new_target])
     # ---
-    wikitext = '{|\n|-\n! lang !! target !! new_target\n|-\n'
-    # ---
-    for x in text:
-        wikitext += f'|-\n| {x[0]} || [[:{x[0]}:{x[1]}]] || [[:{x[0]}:{x[2]}]]\n'
-    # ---
-    wikitext += '|}'
-    # ---
-    printe.output(wikitext)
+    if text:
+        add_text(text)
 
 if __name__ == "__main__":
     if 'test' in sys.argv:
