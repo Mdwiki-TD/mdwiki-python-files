@@ -1,12 +1,13 @@
 '''
 
-python3 core8/pwb.py mass/radio/start nodiff test
-python3 core8/pwb.py mass/radio/start nodiff get:55
+python3 core8/pwb.py mass/radio/start2 nodiff test
+python3 core8/pwb.py mass/radio/start2 nodiff get:55
 
 '''
 import re
 import sys
 import psutil
+import time
 import json
 import os
 import pywikibot
@@ -14,7 +15,10 @@ from pathlib import Path
 # ---
 from newapi import printe
 from newapi.ncc_page import CatDepth
+
+from multiprocessing import Pool
 from mass.radio.One_Case import OneCase
+
 # from mass.radio.jsons_files import jsons#, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
 
@@ -58,23 +62,26 @@ def get_pages():
         if match:
             cases_in_ids.append(str(match.group(1)))
 
-def de_work(tab):
-    for va in tab:
-        case_url = va['case_url']
-        caseId = va['caseId']
-        title = va['title']
-        studies = va['studies']
-        author = va['author']
-        # ---
-        bot = OneCase(case_url, caseId, title, studies, author)
-        bot.start()
-        # ---
-        # print(f'processed {n} cases')
-        print_memory()
-        # ---
-        del bot, author, title, studies
+def do_it(va):
+    case_url = va['case_url']
+    caseId = va['caseId']
+    title = va['title']
+    studies = va['studies']
+    author = va['author']
     # ---
-    
+    bot = OneCase(case_url, caseId, title, studies, author)
+    bot.start()
+    # ---
+    time.sleep(1)
+    # ---
+    print_memory()
+
+
+def multi_work(tab):
+    pool = Pool(processes=5)
+    pool.map(do_it, tab)
+    pool.terminate()
+
 def main(ids_tab):
     printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
     # ---
@@ -88,7 +95,7 @@ def main(ids_tab):
             num = i//length+1
             tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
-            print(f'tfj run sta{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"')
+            print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start2 nodiff get:{num} {len(tabs[str(num)])}"')
         
         for arg in sys.argv:
             arg, _, value = arg.partition(':')
@@ -99,23 +106,20 @@ def main(ids_tab):
     # ---
     printe.output(f'<<purple>> cases_in_ids: {len(cases_in_ids)}:')
     # ---
-    tabe = []
+    tab = []
     # ---
     n = 0
-    for k, tab in ids_tab.items():
+    for k, va in ids_tab.items():
         n += 1
         # ---
-        caseId   = tab['caseId']
-        case_url = tab['url']
-        # ---
-        printe.output('++++++++++++++++++++++++++++++++')
-        printe.output(f'<<purple>> case:{n} / {len(ids_tab)}, caseId:{caseId}')
+        caseId   = va['caseId']
+        case_url = va['url']
         # ---
         if caseId in cases_in_ids or str(caseId) in cases_in_ids:
             printe.output(f'<<purple>> caseId {caseId} already in cases_in_ids')
             continue
         # ---
-        author = tab.get('author', '')
+        author = va.get('author', '')
         # ---
         if not author:
             author = infos.get(case_url, {}).get(str(caseId), '')
@@ -123,13 +127,13 @@ def main(ids_tab):
         if not author:
             author = authors.get(str(caseId), '')
         # ---
-        title = tab['title']
+        title = va['title']
         # ---
-        studies = [study.split('/')[-1] for study in tab['studies']]
+        studies = [study.split('/')[-1] for study in va['studies']]
         # ---
-        tabe.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': author})
+        tab.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': author})
     # ---
-    de_work(tabe)
+    multi_work(tab)
 
 if __name__ == "__main__":
     # ---
