@@ -160,7 +160,7 @@ class OneCase:
         planes = {}
         modality = ''
 
-        for image in images:
+        for i, image in enumerate(images, 1):
             image_url = image.get('public_filename', '')
             # ---
             if not image_url:
@@ -200,6 +200,8 @@ class OneCase:
             # ---
             # fix BadFileName
             file_name = file_name.replace(':', '.').replace('/', '.')
+            # ---
+            printe.output(f'file: {i}/{len(images)} :')
             # ---
             new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
             # ---
