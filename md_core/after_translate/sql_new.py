@@ -2,6 +2,7 @@
 """
 بوت قواعد البيانات
 
+python3 core8/pwb.py after_translate/sql justsql break
 python3 core8/pwb.py after_translate/sql justsql
 python3 core8/pwb.py after_translate/sql
 
@@ -64,36 +65,46 @@ Skip_titles_global = [
 ]
 # ---
 query_main = """
-    select DISTINCT p.page_title as title,
-    SUBSTRING_INDEX(SUBSTRING_INDEX(c.comment_text, 'Ibrahem/', -1), ']]', 1) as comment_text,
-    a.actor_name, r.rev_timestamp, p.page_namespace, r.rev_parent_id
-    from change_tag t
-    INNER JOIN change_tag_def ctd on ctd.ctd_id = t.ct_tag_id
-    INNER JOIN revision r on r.rev_id = t.ct_rev_id
-    INNER JOIN actor a ON r.rev_actor = a.actor_id
-    inner join comment c on c.comment_id = r.rev_comment_id
-    INNER JOIN page p on r.rev_page=p.page_id
-    where ctd.ctd_name in ("contenttranslation", "contenttranslation-v2") #id = 3 # id = 120
-    #and r.rev_parent_id = 0
-    # AND r.rev_timestamp > 20210101000000
-    AND r.rev_timestamp > 20240101000000
-    and comment_text like "%User:Mr. Ibrahem/%"
-    #and p.page_namespace = 0
-    group by p.page_title, a.actor_name, c.comment_text
-"""
+    SELECT
+        DISTINCT p.page_title AS title,
+        SUBSTRING_INDEX(SUBSTRING_INDEX(c.comment_text, 'Ibrahem/', -1), ']]', 1) AS comment_text,
+        a.actor_name,
+        r.rev_timestamp,
+        p.page_namespace,
+        r.rev_parent_id
+    FROM
+        change_tag t
+        INNER JOIN change_tag_def ctd ON ctd.ctd_id = t.ct_tag_id
+        INNER JOIN revision r ON r.rev_id = t.ct_rev_id
+        INNER JOIN actor a ON r.rev_actor = a.actor_id
+        INNER JOIN comment c ON c.comment_id = r.rev_comment_id
+        INNER JOIN page p ON r.rev_page = p.page_id
+    WHERE
+        ctd.ctd_name in (
+            "contenttranslation",
+            "contenttranslation-v2"
+        ) #id = 3 # id = 120
+        #AND r.rev_parent_id = 0 # AND r.rev_timestamp > 20210101000000
+        AND r.rev_timestamp > 20240101000000
+        AND comment_text like "%User:Mr. Ibrahem/%" #AND p.page_namespace = 0
+    GROUP BY
+        p.page_title,
+        a.actor_name,
+        c.comment_text
+    """
+
 
 def start(result, lange, tgd, tit_user_lang):
     printe.output(f'sql.py len(result) = "{len( result )}"')
     # ---
     for lis in result:
         # ---
-        target = lis["title"]
+        target  = lis["title"]
         co_text = lis["comment_text"]
-        user = lis["actor_name"]
+        user    = lis["actor_name"]
         pupdate = lis["rev_timestamp"]
-        ns = lis["page_namespace"]
+        ns      = str(lis["page_namespace"])
         # ---
-        ns = str(ns)
         pupdate = pupdate[:8]
         pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>", pupdate)
         # ---
@@ -147,6 +158,19 @@ def start(result, lange, tgd, tit_user_lang):
                 printe.output(f"puplished target: {tul_target} != target to add: {target}")
 
 
+def sql_results(lang):
+    # ---
+    qua = query_main
+    # ---
+    qua += "\n;"
+    # ---
+    if "printquery" in sys.argv:
+        print(qua)
+    # ---
+    result = wiki_sql.sql_new(qua, str(lang))
+    return result
+
+
 def main():
     # ---
     lang_o = ""
@@ -173,29 +197,11 @@ def main():
         printe.output(" \\/\\/\\/\\/\\/ ")
         printe.output(f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"')
         # ---
-        result = {}
-        # ---
-        qua = query_main
-        # ---
-        if lange == "ar":
-            qua += """
-                and p.page_title not in (
-                    'جامعة_نورث_كارولاينا',
-                    'جامعة_ولاية_كارولينا_الشمالية_إيه_آند_تي',
-                    'نيشان_راجاميترابورن'
-                )
-            """
-        # ---
-        qua += "\n;"
-        # ---
         if lange in skip_langs:
             printe.output(f"skip lang:{lange}")
             continue
         # ---
-        if "printquery" in sys.argv:
-            print(qua)
-        # ---
-        result = wiki_sql.sql_new(qua, str(lange))
+        result = sql_results(lange)
         # ---
         tgd = targets_done.get(lange, {})
         # ---
