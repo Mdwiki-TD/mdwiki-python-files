@@ -7,6 +7,7 @@ from newapi import printe
 from mdpy.bots import py_tools
 from mdpy.bots import sql_for_mdwiki
 # ---
+targets_done_by_mdtitle = {}
 targets_done = {}
 tit_user_lang = {}
 langs_to_t_u = {}
@@ -57,17 +58,22 @@ def get_pages_from_db(lang_o):
             # ---
             to_update[lang][user].append(mdtitle)
         else:
-            if lang not in targets_done:
-                targets_done[lang] = {}
-            # ---
             target = target.replace("_", " ")
             target2 = py_tools.ec_de_code(target, "encode")
             # ---
             len_done_target += 1
             # ---
+            if lang not in targets_done:
+                targets_done[lang] = {}
+            # ---
             targets_done[lang][target] = {"user": user, "target": target}
             targets_done[lang][target2] = {"user": user, "target": target}
+            # ---
+            if lang not in targets_done_by_mdtitle:
+                targets_done_by_mdtitle[lang] = {}
+            # ---
+            targets_done_by_mdtitle[lang][mdtitle] = target
     # ---
     printe.output(f"<<lightyellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
     # ---
-    return to_update, langs_to_t_u, targets_done, tit_user_lang
+    return to_update, langs_to_t_u, targets_done, tit_user_lang, targets_done_by_mdtitle

@@ -36,7 +36,7 @@ api_new.Login_to_wiki()
 exists = {}
 # exists = api_new.Find_pages_exists_or_not(cats)
 # ---
-to_create = [x for x, t in exists.items() if t == False]
+to_create = [x for x, t in exists.items() if t is False]
 # ---
 pywikibot.output(f'len of to_create: {len(to_create)}')
 # ---
@@ -48,7 +48,7 @@ for cat in to_create:
     text = mdwiki_api.GetPageText(cat)
     new = api.create_Page(text, cat, summary='Copy categories from mdwiki')
 # ---
-to_update = [x for x, t in exists.items() if t == True]
+to_update = [x for x, t in exists.items() if t is True]
 to_update = cats
 # ---
 # ---

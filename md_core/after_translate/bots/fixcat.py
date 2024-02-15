@@ -46,13 +46,12 @@ def get_cats_and_pages():
                 catlen[cat] += 1
         # ---
     # ---
-    for cat, lena in catlen.items():
-        printe.output(f'cat: {cat} , len: {lena}')
+    # for cat, lena in catlen.items():
+        # printe.output(f'cat: {cat} , len: {lena}')
     # ---
     printe.output(f'<<lightyellow>> RTT_dpl: {RTT_dpl}')
 
 
-# ---
 get_cats_and_pages()
 
 
@@ -68,7 +67,6 @@ def get_pages_with_no_cat():
         cat = cat_for_pages.get(title, '')
         if cat != '':
             add_cat[title] = cat
-        # ---
     # ---
     for tit, cat in add_cat.items():
         # ---
@@ -85,7 +83,5 @@ def get_pages_with_no_cat():
             printe.output(qu)
 
 
-# ---
 if __name__ == '__main__':
     get_pages_with_no_cat()
-# ---

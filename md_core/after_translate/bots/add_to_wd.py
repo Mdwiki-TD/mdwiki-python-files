@@ -185,9 +185,6 @@ def Add_to_wikidata(mdtitle, lang, target, user):
 
 def add_tab_to_wd(table):
     # ---
-    if 'justsql' in sys.argv:
-        return ''
-    # ---
     for _, tab in table.items():
         # ---
         number = 0

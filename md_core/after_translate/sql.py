@@ -314,9 +314,10 @@ def main():
         if result != {}:
             start(result, lange)
         # ---
-        add_to_wd.add_tab_to_wd({lange: tab_by_lang[lange]})
+        if 'justsql' not in sys.argv:
+            add_to_wd.add_tab_to_wd({lange: tab_by_lang[lange]})
         # ---
-        add_to_mdwiki_sql({lange: tab_by_lang[lange]}, to_update_lang_user_mdtitle)
+        add_to_mdwiki_sql({lange: tab_by_lang[lange]}, to_update_lang_user_mdtitle.get(lange, {}))
 
 
 if __name__ == "__main__":
