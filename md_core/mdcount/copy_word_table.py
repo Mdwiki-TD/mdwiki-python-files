@@ -114,7 +114,7 @@ if UPDATE != []:
                 # ---
                 printe.output(tt)
                 # ---
-                vfg = sql_for_mdwiki.mdwiki_sql(tt, update=True, Prints=True)
+                vfg = sql_for_mdwiki.mdwiki_sql(tt, update=True)
                 # ---
                 texts = []
                 # ---
@@ -128,7 +128,7 @@ if INSERT != []:
         # ---
         qu = 'INSERT INTO words (w_title, w_lead_words, w_all_words) values\n' + insert_line
         printe.output(qu)
-        vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True, Prints=True)
+        vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True)
     else:
         printe.output('add "insert" to sys.argv to insert new words.')
 # ---

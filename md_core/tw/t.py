@@ -197,7 +197,7 @@ def start_md():
     # ---
     u = auth(tweet, link=link)
     # ---
-    if u == True:
+    if u is True:
         done.append(article)
         with codecs.open(json_file, "w", encoding="utf-8") as ii:
             json.dump(done, ii)

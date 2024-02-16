@@ -77,14 +77,14 @@ for title, qid in qids_list.items():
     if num % 300 == 0:
         if texts != '':
             print(texts)
-            vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True, Prints=False)
+            vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True)
             texts = ''
             # ---
             # if 'break' in sys.argv: break
 # ---
 if texts != '':
     print(texts)
-    vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True, Prints=False)
+    vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True)
 # ---
 # log all_texts
 with open(f'{Dir}/copy_qids.txt', 'w', encoding='utf-8') as f:

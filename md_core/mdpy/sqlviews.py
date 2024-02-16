@@ -151,7 +151,7 @@ def insert_to_sql(lang, table):
         # ---
         print('INSERT:')
         # ---
-        qu = sql_for_mdwiki.mdwiki_sql(qu, update=True, Prints=True)
+        qu = sql_for_mdwiki.mdwiki_sql(qu, update=True)
 
 
 def get_targets(lang_o):

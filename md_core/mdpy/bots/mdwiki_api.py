@@ -212,9 +212,9 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
     # ---
     r4 = post_s(pparams, addtoken=True)
     # ---
-    Invalid = ''
-    if isinstance(r4.get("error", {}), dict):
-        Invalid = r4.get("error", {}).get("info", '')
+    # Invalid = ''
+    # if isinstance(r4.get("error", {}), dict):
+        # Invalid = r4.get("error", {}).get("info", '')
     # ---
     if 'Success' in str(r4):
         printe.output(f'<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) ')

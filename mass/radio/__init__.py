@@ -3,6 +3,8 @@
 tfj run chsh --image mariadb --command "$HOME/ch.sh"
 
 python3 core8/pwb.py mass/radio/cases_in_ids
+python3 core8/pwb.py mass/radio/to_work
+
 
 tfj run getnewurls --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/geturlsnew"
 

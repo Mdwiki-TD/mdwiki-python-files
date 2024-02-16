@@ -63,7 +63,7 @@ def create_redirect(target, mdtitle):
     Worrk = False
     # ---
     for tit, o in exists.items():
-        if o == False:
+        if o is False:
             if tit.lower() == target.lower():
                 printe.output(f" target:{target} not exists in orwiki.")
                 return ""

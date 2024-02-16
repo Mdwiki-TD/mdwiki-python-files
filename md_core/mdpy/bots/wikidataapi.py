@@ -509,7 +509,7 @@ def sparql_generator_url(quary, printq=False, add_date=True):
     if add_date:
         quary = quary + '\n#' + str(menet)
     # ---
-    if printq == True:
+    if printq is True:
         printe.output(quary)
     # ---
     fao = py_tools.quoteurl(quary)
