@@ -30,6 +30,12 @@ def add_to_mdwiki_sql_users(lista):
         user      = tabe['user']
         pupdate   = tabe['pupdate']
         # ---
+        cat = cat_for_pages.get(mdtitle, '')
+        # ---
+        if not cat:
+            printe.output(f'cat_for_pages.get({mdtitle}) = {cat}')
+            continue
+        # ---
         mdtit = escape_string(mdtitle)
         user2 = escape_string(user)
         tar   = escape_string(target)
