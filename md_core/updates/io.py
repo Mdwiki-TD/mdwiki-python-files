@@ -4,7 +4,7 @@
 إيجاد الصفحات القديمة
 تحديث صفحة User:Mr. Ibrahem/pages
 
-python3 mdpy/io.py test
+python3 c8/pwb.py updates/io
 
 """
 #
@@ -59,12 +59,10 @@ def get_timestamp(titles):
             print('page:%d:%s,timestamp:%s' % (num, page, timestamp))
 
         # ---
-
-
 # ---
 get_timestamp(listo)
 # ---
-laly = [[int(io.split('T')[0].replace('-', '')), x] for x, io in NewList.items()]
+laly = [[int(io.split('T')[0].replace('-', '')), x] for x, io in NewList.items() if io.split('T')[0].replace('-', '')]
 laly.sort(reverse=True)
 # ---
 print(f'has {len(laly)} pages. ')

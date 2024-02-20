@@ -10,12 +10,15 @@ import traceback
 # ---
 from newapi import printe
 from nccommons import api
-from newapi.ncc_page import MainPage as ncc_MainPage
+from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
 from mass.radio.studies import get_images_stacks, get_images
 from mass.radio.bmp import work_bmp
 # ---
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
+# ---
+api_new  = NEW_API('www', family='nccommons')
+api_new.Login_to_wiki()
 # ---
 main_dir = Path(__file__).parent
 # --
@@ -33,6 +36,10 @@ def get_image_extension(image_url):
     ext = extension[1:]
     return ext if ext else 'jpeg'
 
+def printt(s):
+    if 'nopr' in sys.argv:
+        return
+    printe.output(s)
 
 class OneCase:
     def __init__(self, case_url, caseId, title, studies_ids, author):
@@ -62,6 +69,22 @@ class OneCase:
                 self.system = jsons.url_to_sys[self.case_url]
         # ---
 
+    def title_exists(self, title):
+        # ---
+        pages = api_new.Find_pages_exists_or_not([title], noprint=True)
+        # ---
+        if pages.get(title):
+            printt(f'<<lightyellow>> api_new {title} already exists')
+            return True
+        # ---
+        # file_page = ncc_MainPage(title, 'www', family='nccommons')
+        # # ---
+        # if file_page.exists():
+        #     printt(f'<<lightyellow>> File:{title} already exists')
+        #     return True
+        # ---
+        return False
+
     def create_category(self):
         text = f'* [{self.case_url} Radiopaedia case: {self.title} ({self.caseId})]\n'
         text += f'[[Category:Radiopaedia images by case|{self.caseId}]]'
@@ -69,17 +92,20 @@ class OneCase:
         if self.system:
             text += f"\n[[Category:Radiopaedia cases for {self.system}]]"
         # ---
+        if self.title_exists(self.category):
+            return
+        # ---
         cat = ncc_MainPage(self.category, 'www', family='nccommons')
         # ---
         if cat.exists():
-            printe.output(f'<<lightyellow>> {self.category} already exists')
+            printt(f'<<lightyellow>> {self.category} already exists')
             return
         # ---
         new = cat.Create(text=text, summary='')
-        printe.output(f'Category {self.category} created..')
+        printt(f'Category {self.category} created..')
         # else:
         #     if text != cat.get_text():
-        #         printe.output(f'<<lightyellow>>{self.category} already exists')
+        #         printt(f'<<lightyellow>>{self.category} already exists')
         #         new = cat.save(newtext=text, summary='update', nocreate=0, minor='')
         # ---
 
@@ -95,7 +121,7 @@ class OneCase:
                         images = json.loads(f.read())
                 except Exception as e:
                     pywikibot.output("<<lightred>> Traceback (most recent call last):")
-                    printe.output(f'{study} : error')
+                    printt(f'{study} : error')
                     pywikibot.output(e)
                     pywikibot.output(traceback.format_exc())
                     pywikibot.output("CRITICAL:")
@@ -103,7 +129,7 @@ class OneCase:
             images = [ image for image in images if image ]
             # ---
             if not images:
-                printe.output(f'{study} : not found')
+                printt(f'{study} : not found')
                 # images = get_images(f'https://radiopaedia.org/cases/167250/studies/167250')
                 # images = get_images(f'https://radiopaedia.org/cases/167250/studies/135974?lang=us')
                 images = get_images_stacks(self.caseId)
@@ -115,7 +141,7 @@ class OneCase:
                     json.dump(images, f, ensure_ascii=False, indent=4)
             # ---
             self.studies[study] = images
-            printe.output(f'study:{study} : len(images) = {len(images)}, st_file:{st_file}')
+            printt(f'study:{study} : len(images) = {len(images)}, st_file:{st_file}')
 
     def upload_image(self, image_url, image_name, image_id, plane, modality):
         if 'noup' in sys.argv:
@@ -123,10 +149,7 @@ class OneCase:
         # ---
         file_title = f'File:{image_name}'
         # ---
-        file_page = ncc_MainPage(file_title, 'www', family='nccommons')
-        # ---
-        if file_page.exists():
-            printe.output(f'<<lightyellow>> File:{image_name} already exists')
+        if self.title_exists(file_title):
             return image_name
         # ---
         image_text = '== {{int:summary}} ==\n'
@@ -152,20 +175,22 @@ class OneCase:
 
         file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True)
 
-        printe.output(f"upload result: {file_name}")
+        printt(f"upload result: {file_name}")
         return file_name
 
     def upload_images(self, study, images):
         sets = []
         planes = {}
         modality = ''
-
+        # ---
+        to_up = {}
+        # ---
         for i, image in enumerate(images, 1):
             image_url = image.get('public_filename', '')
             # ---
             if not image_url:
-                print('no image')
-                print(image)
+                printt('no image')
+                printt(image)
                 continue
             # ---
             if image_url in urls_done:
@@ -178,9 +203,6 @@ class OneCase:
             if extension == '':
                 # extension = get_image_extension(image['fullscreen_filename'])
                 extension = image['fullscreen_filename'].split(".")[-1].lower()
-            # ---
-            if extension != "bmp" and 'bmp' in sys.argv:
-                continue
             # ---
             if extension == "bmp":
                 image_url, extension = work_bmp(image_url)
@@ -201,7 +223,30 @@ class OneCase:
             # fix BadFileName
             file_name = file_name.replace(':', '.').replace('/', '.')
             # ---
-            printe.output(f'file: {i}/{len(images)} :')
+            to_up[f'File:{file_name}'] = (image_url, file_name, image_id, plane, modality)
+        # ---
+        to_c = list(to_up.keys())
+        # ---
+        pages = api_new.Find_pages_exists_or_not(to_c)
+        # ---
+        # print(pages)
+        # ---
+        already_in = [k for k in to_up.keys() if pages.get(k) ]
+        # ---
+        printt(f'already_in: {len(already_in)}')
+        # ---
+        for fa in already_in:
+            if fa not in sets:
+                self.images_count += 1
+                sets.append(fa)
+        # ---
+        not_in     = {k:v for k, v in to_up.items() if not pages.get(k)}
+        # ---
+        printt(f'not_in: {len(not_in)}')
+        # ---
+        for i, (image_url, file_name, image_id, plane, modality) in enumerate(not_in.values(), 1):
+            # ---
+            printt(f'file: {i}/{len(images)} :')
             # ---
             new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
             # ---
@@ -210,9 +255,9 @@ class OneCase:
             if file_n not in sets:
                 self.images_count += 1
                 sets.append(file_n)
-
+        # ---
         set_title = f'Radiopaedia case {self.title} id: {self.caseId} study: {study}'
-
+        # ---
         if self.images_count > 1:
             self.create_set(set_title, sets)
 
@@ -220,13 +265,13 @@ class OneCase:
         self.get_studies()
 
         for study, images in self.studies.items():
-            printe.output(f'{study} : len(images) = {len(images)}')
+            printt(f'{study} : len(images) = {len(images)}')
             self.upload_images(study, images)
 
-        printe.output(f'Images count: {self.images_count}')
+        printt(f'Images count: {self.images_count}')
 
         if self.images_count == 0:
-            printe.output('no category created')
+            printt('no category created')
             return
 
         self.create_category()
@@ -235,6 +280,9 @@ class OneCase:
         text = ''
         # ---
         if 'noset' in sys.argv:
+            return
+        # ---
+        if self.title_exists(set_title):
             return
         # ---
         text += '{{Imagestack\n|width=850\n'
@@ -254,7 +302,7 @@ class OneCase:
             return new
         # ---
         # if text != page.get_text():
-        #     printe.output(f'<<lightyellow>>{set_title} already exists')
+        #     printt(f'<<lightyellow>>{set_title} already exists')
         p_text = page.get_text()
         # ---
         if p_text.find('.bmp') != -1:
@@ -264,7 +312,7 @@ class OneCase:
 
         elif 'fix' in sys.argv:
             if text == p_text:
-                printe.output('<<lightyellow>> no changes')
+                printt('<<lightyellow>> no changes')
                 return True
             ssa = page.save(newtext=text, summary='update', nocreate=0, minor='')
             return ssa
