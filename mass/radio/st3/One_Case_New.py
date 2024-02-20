@@ -1,5 +1,5 @@
 '''
-from mass.radio.One_Case import OneCase
+from mass.radio.st3.One_Case_New import OneCase
 '''
 import sys
 import os
@@ -20,7 +20,7 @@ from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 api_new  = NEW_API('www', family='nccommons')
 api_new.Login_to_wiki()
 # ---
-main_dir = Path(__file__).parent
+main_dir = Path(__file__).parent.parent
 # --
 urls_done = []
 

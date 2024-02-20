@@ -1,6 +1,7 @@
 '''
 
-python3 core8/pwb.py mass/radio/start3 test
+python3 core8/pwb.py mass/radio/st2/start2 nodiff test
+python3 core8/pwb.py mass/radio/st2/start2 nodiff get:55
 
 '''
 import sys
@@ -12,9 +13,9 @@ from pathlib import Path
 from multiprocessing import Pool
 # ---
 from newapi import printe
-from mass.radio.One_Case import OneCase
+from mass.radio.st2.One_Case import OneCase
 # ---
-main_dir = Path(__file__).parent
+main_dir = Path(__file__).parent.parent
 # ---
 with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-8') as f:
     authors = json.load(f)
@@ -57,23 +58,16 @@ def do_it(va):
     # ---
     del bot, author, title, studies
 
-def multi_work(tab, numb=10):
+def multi_work(tab):
     done = 0
-    for i in range(0, len(tab), numb):
-        group = tab[i:i+numb]
-        # ---    
-        done += numb
-        printe.output(f'<<purple>> done: {done}:')
-        # ---
-        print_memory()
-        # ---
-        if 'nomulti' in sys.argv:
-            for x in group:
-                do_it(x)
-        else:
-            pool = Pool(processes=5)
-            pool.map(do_it, group)
-            pool.terminate()
+    pool = Pool(processes=5)
+    pool.map(do_it, tab)
+    pool.terminate()
+    # ---
+    done += len(tab)
+    print_memory()
+    # ---
+    printe.output(f'<<purple>> done: {done}:')
 
 def main(ids_tab):
     printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
@@ -88,7 +82,7 @@ def main(ids_tab):
             num = i//length+1
             tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
-            print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start2 nodiff get:{num} {len(tabs[str(num)])}"')
+            print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st2/start2 nodiff get:{num} {len(tabs[str(num)])}"')
         
         for arg in sys.argv:
             arg, _, value = arg.partition(':')
