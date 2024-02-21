@@ -246,7 +246,7 @@ class OneCase:
         # ---
         for i, (image_url, file_name, image_id, plane, modality) in enumerate(not_in.values(), 1):
             # ---
-            printt(f'file: {i}/{len(images)} :')
+            printt(f'file: {i}/{len(not_in)} :')
             # ---
             new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
             # ---
