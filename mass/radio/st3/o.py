@@ -7,7 +7,7 @@ for arg in sys.argv:
   if arg.isdigit():
     ta = ids_by_caseId.get(arg) or ids_by_caseId.get(int(arg))
     if ta:
-      aa = { arg : ta }
+      aa[arg] = ta
 #---
 print(aa.keys())
 main(aa)
