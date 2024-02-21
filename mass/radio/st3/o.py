@@ -1,5 +1,5 @@
 import sys
-from mass.radio.st3.start3 import ids_by_caseId
+from mass.radio.st3.start3 import ids_by_caseId, main
 
 # Parsing arguments
 lookup_dict = {}
