@@ -83,7 +83,7 @@ def main(ids_tab):
     if 'test' not in sys.argv:
         tabs = {}
         print(f'all cases: {len(ids_tab)}')
-        length = len(ids_tab) // 13
+        length = (len(ids_tab) // 13) +1
         for i in range(0, len(ids_tab), length):
             num = i//length+1
             tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
