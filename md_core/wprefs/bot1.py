@@ -191,7 +191,9 @@ def maine():
             return ''
         # ---
         if 'save' in sys.argv:
-            page_put(text, newtext, 'Fix references, Expend infobox mdwiki.toolforge.org.', title, lange)
+            a = page_put(text, newtext, 'Fix references, Expend infobox mdwiki.toolforge.org.', title, lange)
+            if a:
+                print('ok')
         else:
             filee = save_wprefcash(title, newtext)
             print(filee)
