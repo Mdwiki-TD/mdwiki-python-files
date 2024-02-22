@@ -194,6 +194,7 @@ def maine():
             a = page_put(text, newtext, 'Fix references, Expend infobox mdwiki.toolforge.org.', title, lange)
             if a:
                 print('ok')
+                return ''
         else:
             filee = save_wprefcash(title, newtext)
             print(filee)
