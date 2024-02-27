@@ -25,7 +25,7 @@ new_qids = {x : qids_others[x] for x in to_work if x in qids_others}
 printe.output('<<green>> new_qids list: {len(new_qids)}')
 # ---
 
-def start():
+def doo():
     # ---
     if len(to_work) == 0:
         printe.output('<<green>> to_work list is empty. return "".')
@@ -39,4 +39,4 @@ def start():
 
 
 if __name__ == '__main__':
-    start()
+    doo()
