@@ -19,10 +19,10 @@ qids_others = sql_qids_others.get_others_qids()
 qids = sql_for_mdwiki.get_all_qids()
 # ---
 to_work = [title for title, q in qids.items() if q == '' and valid_title(title)]
-printe.output('<<green>> to_work list: {len(to_work)}')
+printe.output(f'<<green>> to_work list: {len(to_work)}')
 # ---
 new_qids = {x : qids_others[x] for x in to_work if x in qids_others}
-printe.output('<<green>> new_qids list: {len(new_qids)}')
+printe.output(f'<<green>> new_qids list: {len(new_qids)}')
 # ---
 
 def doo():
