@@ -7,11 +7,9 @@ python3 core8/pwb.py mdpages/qids_others/fix_qids
 #
 # ---
 import sys
-from mdpy.bots import catdepth2
 from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
-from mdpy.bots.check_title import valid_title
 from mdpages.qids_others import sql_qids_others
 # ---
 qids_others = sql_qids_others.get_others_qids()
