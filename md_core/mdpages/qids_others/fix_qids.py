@@ -20,10 +20,10 @@ qids_to_title = { q : t for t, q in qids_others.items() }
 to_work = [q for q in qids_others.values() if q != '']
 
 def work_un(tab):
-    for numb, (old_q, new_q) in enumerate(reds.items(), start=1):
+    for numb, (old_q, new_q) in enumerate(tab.items(), start=1):
         # ---
         title = qids_to_title.get(old_q)
-        printe.output(f'<<lightblue>> {numb}, {title=}, {old_q=}, {new_q=}')
+        printe.output(f'<<yellow>> {numb}, {title=}, {old_q=}, {new_q=}')
         # ---
         work_page(title, new_q)
 
