@@ -69,7 +69,7 @@ def log(lang):
             'action': 'query',
             'meta': 'tokens',
             'type': 'login',
-        },
+        }, timeout=10
     )
     r1.raise_for_status()
     # ---
@@ -81,7 +81,7 @@ def log(lang):
             'lgname': 'Mr. Ibrahem',
             'lgpassword': 'Mr._Ibrahem@9usrv463ql983qrulnani14t3hqs1g27',
             'lgtoken': r1.json()['query']['tokens']['logintoken'],
-        },
+        }, timeout=10
     )
     # ---
     print_s(r2)
@@ -101,7 +101,7 @@ def log(lang):
             'format': 'json',
             'action': 'query',
             'meta': 'tokens',
-        },
+        }, timeout=10
     )
     # ---
     token = r3.json()['query']['tokens']['csrftoken']
@@ -126,9 +126,9 @@ def submitAPI(params, lang='', Type='post'):
     # ---
     try:
         if Type == 'post':
-            r4 = session[1].post(session["url"], data=params)
+            r4 = session[1].post(session["url"], data=params, timeout=10)
         else:
-            r4 = session[1].get(session["url"], data=params)
+            r4 = session[1].get(session["url"], data=params, timeout=10)
         # ---
         r4_text = r4.text
     except Exception as e:
