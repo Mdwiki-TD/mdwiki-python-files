@@ -23,7 +23,7 @@ from mdpy.bots import wiki_api
 from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
+from mdpages.qids_others.unlinkedwikibase import work_page#(title, qid)
 # ---
 qids = sql_for_mdwiki.get_all_qids()
 # ---
@@ -96,6 +96,13 @@ def get_qids(noqids_list):
     # ---
     return new_title_qids
 
+def work_un(tab):
+    for numb, (title, new_q) in enumerate(tab.items(), start=1):
+        # ---
+        printe.output(f'<<yellow>> {numb}, {title=}, {new_q=}')
+        # ---
+        if new_q:
+            work_page(title, new_q)
 
 def start():
     # ---
@@ -153,6 +160,8 @@ def start():
         # ---
         if 'addthem' in sys.argv:
             sql_for_mdwiki.add_titles_to_qids(to_add)
+        # ----
+        work_un(to_add)
 
 
 if __name__ == '__main__':
