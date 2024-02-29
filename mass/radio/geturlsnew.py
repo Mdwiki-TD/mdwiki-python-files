@@ -77,7 +77,7 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
     while url:
         n += 1
         print(f"get url: {url}")
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
 
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
