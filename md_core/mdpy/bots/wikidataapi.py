@@ -83,13 +83,13 @@ def Log_to_wiki(url=''):
     # ---
     if SS:
         # try:
-        r11 = SS["ss"].get(SS["url"], params=r1_params)
+        r11 = SS["ss"].get(SS["url"], params=r1_params, timeout=10)
         r11.raise_for_status()
         # except:
         # printe.output( "wikidataapi.py: Can't log in . ")
         # log in
         r2_params['lgtoken'] = r11.json()['query']['tokens']['logintoken']
-        r22 = SS["ss"].post(SS["url"], data=r2_params)
+        r22 = SS["ss"].post(SS["url"], data=r2_params, timeout=10)
     # except:
     else:
         printe.output("wikidataapi.py: Can't log in . ")
@@ -108,7 +108,7 @@ def Log_to_wiki(url=''):
             'format': 'json',
             'action': 'query',
             'meta': 'tokens',
-        },
+        }, timeout=10
     )
     # ---
     SS["url"] = url
@@ -134,7 +134,7 @@ def post(params, apiurl='', token=True):
     # ---
     Log_to_wiki(url=apiurl)
     # ---
-    # r4 = SS["ss"].post(SS["url"], data = params )
+    # r4 = SS["ss"].post(SS["url"], data = params, timeout=10)
     # post to API without error handling
     # ---
     if token:
@@ -144,7 +144,7 @@ def post(params, apiurl='', token=True):
     # ---
     jsone = {}
     try:
-        r4 = SS["ss"].post(SS["url"], data=params)
+        r4 = SS["ss"].post(SS["url"], data=params, timeout=10)
         jsone = r4.json()
     except Exception:
         pywikibot.output('Traceback (most recent call last):')
@@ -176,7 +176,7 @@ def post_to_qs(data):
             'username': "Mr. Ibrahem",
             'token': user_account_new.qs_token,
             'data': data,
-        },
+        }, timeout=10
     )
     # ---
     if not r2 or r2 == {}:
