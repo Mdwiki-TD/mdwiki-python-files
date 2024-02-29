@@ -59,7 +59,7 @@ def login():
             "action": "query",
             "meta": "tokens",
             "type": "login",
-        },
+        }, timeout=10
     )
     r11.raise_for_status()
     # log in
@@ -72,7 +72,7 @@ def login():
             "lgname": username,
             "lgtoken": r11.json()["query"]["tokens"]["logintoken"],
             "lgpassword": password,
-        },
+        }, timeout=10
     )
     # ---
     # get edit token
@@ -82,7 +82,7 @@ def login():
             "format": "json",
             "action": "query",
             "meta": "tokens",
-        },
+        }, timeout=10
     )
     # ---
     SS["r3_token"] = SS["r33"].json()["query"]["tokens"]["csrftoken"]
@@ -99,7 +99,7 @@ def GetPageText(title):
     r4 = {}
     # ---
     try:
-        r4 = SS["ss"].post(SS["url"], data=params).json()
+        r4 = SS["ss"].post(SS["url"], data=params, timeout=10).json()
     except Exception as e:
         print_new(e)
         r4 = {}
@@ -122,7 +122,7 @@ def page_put(NewText, title):
     r4 = {}
     # ---
     try:
-        r4 = SS["ss"].post(SS["url"], data=pparams).json()
+        r4 = SS["ss"].post(SS["url"], data=pparams, timeout=10).json()
     except Exception as e:
         print(f"save error: {str(e)}")
         return

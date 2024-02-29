@@ -37,7 +37,7 @@ class classgetURL:
 
         try:
             # req = comms.http.fetch(self.url)
-            req = requests.get(self.url)
+            req = requests.get(self.url, timeout=10)
             # ---
             if 500 <= req.status_code < 600:
                 printe.output(f'received {req.status_code} status from {req.url}')

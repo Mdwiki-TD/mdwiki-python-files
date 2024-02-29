@@ -19,7 +19,7 @@ main_dir = Path(__file__).parent
 def get_images(url):
     print(f"url: {url}")
 
-    response = requests.get(url)
+    response = requests.get(url, timeout=10)
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
@@ -58,7 +58,7 @@ def get_images_stacks(study_id):
     new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
     print(f"study_id: {study_id}, new_url: {new_url}")
     # ---
-    response = requests.get(new_url)
+    response = requests.get(new_url, timeout=10)
 
     image_info = []
 

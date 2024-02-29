@@ -47,7 +47,7 @@ def work_bmp(url):
     if not os.path.exists(img_path):
         print(f"Downloading image from ({url})...")
         # ---
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         image_data = response.content
         # ---
         jpg_data = convert_bmp_to_jpg(image_data)

@@ -73,7 +73,7 @@ def log(api_urle):
             'action': 'query',
             'meta': 'tokens',
             'type': 'login',
-        },
+        }, timeout=10
     )
     r1.raise_for_status()
     # log in
@@ -87,7 +87,7 @@ def log(api_urle):
             'lgname': lgname,
             'lgpassword': lgpassword,
             'lgtoken': r1.json()['query']['tokens']['logintoken'],
-        },
+        }, timeout=10
     )
     # ---
     if r2.json()['login']['result'] != 'Success':
@@ -105,7 +105,7 @@ def log(api_urle):
             'format': 'json',
             'action': 'query',
             'meta': 'tokens',
-        },
+        }, timeout=10
     )
     # ---
     token = r3.json()['query']['tokens']['csrftoken']
@@ -150,7 +150,7 @@ def submitAPI_token(params, apiurl='', returnjson=False):
     params["token"] = session["token"]
     params["format"] = "json"
     # ---
-    r4 = session[1].post(session["url"], data=params)
+    r4 = session[1].post(session["url"], data=params, timeout=10)
     # ---
     if returnjson:
         return r4
@@ -184,7 +184,7 @@ def submitAPI(params, apiurl='', returnjson=False):
     # ---
     params["format"] = "json"
     # ---
-    r4 = session[1].post(session["url"], data=params)
+    r4 = session[1].post(session["url"], data=params, timeout=10)
     # ---
     if returnjson:
         return r4
