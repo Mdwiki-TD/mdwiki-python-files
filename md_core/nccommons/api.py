@@ -94,7 +94,7 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False):
     duplicate = upload_result.get("warnings", {}).get("duplicate", [''])[0].replace("_", " ")
     # ---
     if success:
-        pywikibot.output(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
+        print(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
         return True if not return_file_name else file_name
 
     elif duplicate and return_file_name:
