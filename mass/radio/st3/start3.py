@@ -1,6 +1,7 @@
 '''
 
-python3 core8/pwb.py mass/radio/st3/start3 test
+python3 core8/pwb.py mass/radio/st3/start3 test nomulti
+python3 /data/project/mdwiki/pybot/mass/radio/st3/start3.py test
 
 '''
 import sys
@@ -73,6 +74,7 @@ def multi_work(tab, numb=10):
         else:
             pool = Pool(processes=5)
             pool.map(do_it, group)
+            pool.close()
             pool.terminate()
 
 def main(ids_tab):
@@ -128,16 +130,16 @@ if __name__ == "__main__":
     # ---
     if 'test' in sys.argv:
         ids_by_caseId = {
-            "98997": {
-                "caseId": 98997,
-                "title": "C6-C7 fracture dislocation",
+            "161846": {
+                "url": "https://radiopaedia.org/cases/cholangiocarcinoma-25",
+                "caseId": 161846,
+                "title": "Cholangiocarcinoma",
                 "studies": [
-                    "https://radiopaedia.org/cases/98997/studies/120238"
+                    "https://radiopaedia.org/cases/161846/studies/132257"
                 ],
-                "url": "https://radiopaedia.org/cases/c6-c7-fracture-dislocation",
-                "system": "Musculoskeletal",
-                "author": "Bahman Rasuli",
-                "published": "18 Apr 2022"
+                "author": "Mohammadtaghi Niknejad",
+                "system": "Hepatobiliary",
+                "published": "19 Feb 2023"
             }
         }
     # ---

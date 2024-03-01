@@ -27,11 +27,21 @@ def convert_bmp_to_jpg(bmp_data):
         return False
 
 
-def save_image(image_data, pathh):
-    print(f"Saving image to {pathh}...")
-    with open(pathh, "wb") as file:
-        file.write(image_data)
-
+def save_image(image_data, file_name):
+    img_path = os.path.join(directory_path, file_name)
+    # ---
+    print(f"Saving image to {img_path}...")
+    try:
+        with open(img_path, "wb") as file:
+            file.write(image_data)
+        return file_name
+    except Exception as e:
+        print(f"Error saving image: {e}")
+        file_name = f"1_{file_name}"
+        img_path = os.path.join(directory_path, file_name)
+        with open(img_path, "wb") as file:
+            file.write(image_data)
+        return file_name
 
 def work_bmp(url):
     extension = url.split(".")[-1].lower()
@@ -53,7 +63,7 @@ def work_bmp(url):
         jpg_data = convert_bmp_to_jpg(image_data)
         # ---
         if jpg_data:
-            save_image(jpg_data, img_path)
+            file_name = save_image(jpg_data, file_name)
     else:
         print(f"Image already exists at {img_path}. continue...")
     # ---

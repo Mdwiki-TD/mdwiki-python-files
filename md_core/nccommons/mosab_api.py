@@ -18,11 +18,11 @@ import time
 import urllib
 import urllib.parse
 import os
-import pywikibot
 import configparser
 import requests
 
 # ---
+from newapi import printe
 from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
@@ -37,7 +37,7 @@ config.read(dir2 + "/confs/nccommons_user.ini")
 username = config["MOSSAB"]["username"].strip()
 password = config["MOSSAB"]["password"].strip()
 # ---
-pywikibot.output(f"username: {username}")
+printe.output(f"username: {username}")
 # ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
 # ---
@@ -53,7 +53,7 @@ SS["login_not_done"] = True
 
 
 def py_input(s):
-    pywikibot.output(s)
+    printe.output(s)
     sa = input()
     # ---
     return sa
@@ -63,7 +63,7 @@ def Log_to_wiki(family="nccommons", lang="www"):
     # ---
     user = r2_params["lgname"]
     # ---
-    pywikibot.output(f"nccommons.py: log to {lang}.{family}.org user:{user}")
+    printe.output(f"nccommons.py: log to {lang}.{family}.org user:{user}")
     # ---
     SS["family"] = family
     SS["lang"] = lang
@@ -77,12 +77,12 @@ def Log_to_wiki(family="nccommons", lang="www"):
     r22 = SS["ss"].post(SS["url"], data=r2_params)
     # ---
     if r22.json()["login"]["result"] != "Success":
-        pywikibot.output(f"nccommons.py: login failed, reason: {r22.json()['login']['reason']}")
+        printe.output(f"nccommons.py: login failed, reason: {r22.json()['login']['reason']}")
         # sys.exit(1)
         SS["login_not_done"] = True
         return False
     else:
-        pywikibot.output("com.py login Success")
+        printe.output("com.py login Success")
     # ---
     SS["r33"] = SS["ss"].get(SS["url"], params={"format": "json", "action": "query", "meta": "tokens"})
     # ---
@@ -106,12 +106,12 @@ def post_s(params, addtoken=False):
     url = SS["url"] + '?' + urllib.parse.urlencode(params)
     # ---
     if 'printurl' in sys.argv:
-        pywikibot.output(url.replace('&format=json', ''))
+        printe.output(url.replace('&format=json', ''))
     # ---
     try:
         r4 = SS["ss"].post(SS["url"], data=params)
     except Exception as e:
-        pywikibot.output(f"nccommons.py: {e}")
+        printe.output(f"nccommons.py: {e}")
         SS["login_not_done"] = True
         return {}
     # ---
@@ -123,8 +123,8 @@ def post_s(params, addtoken=False):
         if text.find('<!DOCTYPE html>') != -1:
             text = "<!DOCTYPE html>"
         # ---
-        pywikibot.output("error r4.json()")
-        pywikibot.output(f"r4.text: {text}")
+        printe.output("error r4.json()")
+        printe.output(f"r4.text: {text}")
         SS["login_not_done"] = True
     # ---
     return jj
@@ -132,7 +132,7 @@ def post_s(params, addtoken=False):
 
 def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all=0):
     # ---
-    pywikibot.output(f'Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}')
+    printe.output(f'Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}')
     # ---
     numb = 0
     # ---
@@ -159,7 +159,7 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all
         # ---
         numb += 1
         # ---
-        pywikibot.output(f'Get_All_pages {numb}, apcontinue:{apcontinue}..')
+        printe.output(f'Get_All_pages {numb}, apcontinue:{apcontinue}..')
         # ---
         if apcontinue != 'x':
             params['apcontinue'] = apcontinue
@@ -172,24 +172,24 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all
         apcontinue = json1.get("continue", {}).get("apcontinue", '')
         # ---
         newp = json1.get("query", {}).get("allpages", [])
-        pywikibot.output(f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
+        printe.output(f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
         # ---
         for x in newp:
             if x["title"] not in Main_table:
                 Main_table.append(x["title"])
         # ---
-        pywikibot.output(f"len of Main_table {len(Main_table)}.")
+        printe.output(f"len of Main_table {len(Main_table)}.")
         # ---
         if limit_all > 0 and len(Main_table) > limit_all:
             apcontinue = ''
-            pywikibot.output("<<lightgreen>> limit_all > len(Main_table) ")
+            printe.output("<<lightgreen>> limit_all > len(Main_table) ")
             break
         # ---
     # ---
     if numb > 0 and apcontinue == '':
-        pywikibot.output("<<lightgreen>> apcontinue == '' ")
+        printe.output("<<lightgreen>> apcontinue == '' ")
     # ---
-    pywikibot.output(f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
+    printe.output(f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
     # ---
     return Main_table
 
@@ -203,17 +203,17 @@ def upload_by_url(file_name, text, url, comment=''):
     # ---
     if not upload_all[1] and "ask" in sys.argv:
         if 'nodiff' not in sys.argv:
-            pywikibot.output(text)
+            printe.output(text)
         sa = py_input(f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o):user:{r2_params['lgname']}")
         # ---
         if sa.strip() not in yes_answer:
-            pywikibot.output("<<lightred>> wrong answer")
+            printe.output("<<lightred>> wrong answer")
             return False
         # ---
         if sa.strip() == "a":
-            pywikibot.output("---------------------------------------------")
-            pywikibot.output("nccommons.py upload_by_url save all without asking.")
-            pywikibot.output("---------------------------------------------")
+            printe.output("---------------------------------------------")
+            printe.output("nccommons.py upload_by_url save all without asking.")
+            printe.output("---------------------------------------------")
             upload_all[1] = True
         # ---
     # ---
@@ -229,37 +229,37 @@ def upload_by_url(file_name, text, url, comment=''):
     error_code = result.get("error", {}).get("code", '')
     # ---
     if success:
-        pywikibot.output(f"<<lightgreen>> ** true ..  {SS['family']} : [[File:{file_name}]] ")
+        printe.output(f"<<lightgreen>> ** true ..  {SS['family']} : [[File:{file_name}]] ")
         return True
     elif error != {}:
-        pywikibot.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
-        pywikibot.output(error)
+        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(error)
     else:
-        pywikibot.output(result)
+        printe.output(result)
         return False
     # ---
     return False
 
 
 def create_Page(text, title, summary="create page"):
-    pywikibot.output(f" create Page {title}:")
+    printe.output(f" create Page {title}:")
     time_sleep = 0
     # ---
     params = {"action": "edit", "title": title, "text": text, "summary": summary, "notminor": 1, "createonly": 1}
     # ---
     if not Save_all[1] and ("ask" in sys.argv and "save" not in sys.argv):
         if 'nodiff' not in sys.argv:
-            pywikibot.output(text)
+            printe.output(text)
         sa = py_input(f"<<lightyellow>> nccommons.py: create:\"{title}\" page ? ([y]es, [N]o):user:{r2_params['lgname']}")
         # ---
         if sa.strip() not in yes_answer:
-            pywikibot.output("<<lightred>> wrong answer")
+            printe.output("<<lightred>> wrong answer")
             return False
         # ---
         if sa.strip() == "a":
-            pywikibot.output("---------------------------------------------")
-            pywikibot.output("nccommons.py create_Page save all without asking.")
-            pywikibot.output("---------------------------------------------")
+            printe.output("---------------------------------------------")
+            printe.output("nccommons.py create_Page save all without asking.")
+            printe.output("---------------------------------------------")
             Save_all[1] = True
         # ---
     # ---
@@ -272,18 +272,18 @@ def create_Page(text, title, summary="create page"):
     error_code = result.get("error", {}).get("code", '')
     # ---
     if success:
-        pywikibot.output(f"** true ..  {SS['family']} : [[{title}]] ")
-        pywikibot.output("Done True... time.sleep(%d) " % time_sleep)
+        printe.output(f"** true ..  {SS['family']} : [[{title}]] ")
+        printe.output("Done True... time.sleep(%d) " % time_sleep)
         time.sleep(time_sleep)
         return True
     elif error != {}:
-        pywikibot.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
-        pywikibot.output(error)
+        printe.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
+        printe.output(error)
     else:
-        pywikibot.output(result)
+        printe.output(result)
         return False
     # ---
-    # pywikibot.output("end of create_Page def return False title:(%s)" % title)
+    # printe.output("end of create_Page def return False title:(%s)" % title)
     # ---
     return False
 
@@ -303,7 +303,7 @@ def Find_pages_exists_or_not(liste):
         # ---
         done += len(titles)
         # ---
-        pywikibot.output(f"Find_pages_exists_or_not : {done}/{len(liste)}")
+        printe.output(f"Find_pages_exists_or_not : {done}/{len(liste)}")
         # ---
         params = {
             "action": "query",
@@ -315,7 +315,7 @@ def Find_pages_exists_or_not(liste):
         json1 = post_s(params)
         # ---
         if not json1 or json1 == {}:
-            pywikibot.output("<<lightred>> error when Find_pages_exists_or_not")
+            printe.output("<<lightred>> error when Find_pages_exists_or_not")
             return table
         # ---
         query = json1.get("query", {})
@@ -339,7 +339,7 @@ def Find_pages_exists_or_not(liste):
                 else:
                     exists += 1
     # ---
-    pywikibot.output(f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}")
+    printe.output(f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}")
     # ---
     return table
 
