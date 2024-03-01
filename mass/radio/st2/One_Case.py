@@ -4,7 +4,6 @@ from mass.radio.st2.One_Case import OneCase
 import sys
 import os
 from pathlib import Path
-import pywikibot
 import json
 import traceback
 # ---
@@ -13,6 +12,12 @@ from nccommons import api
 from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
 from mass.radio.studies import get_images_stacks, get_images
 from mass.radio.bmp import work_bmp
+# ---
+try:
+    import pywikibot
+    pywikibotoutput = pywikibot.output
+except ImportError:
+    pywikibotoutput = print
 # ---
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
@@ -34,7 +39,7 @@ def get_image_extension(image_url):
 
     # Return the extension (without the dot)
     ext = extension[1:]
-    return ext if ext else 'jpeg'
+    return ext or 'jpeg'
 
 def printt(s):
     if 'nopr' in sys.argv:
@@ -120,11 +125,11 @@ class OneCase:
                     with open(st_file, 'r', encoding='utf-8') as f:
                         images = json.loads(f.read())
                 except Exception as e:
-                    pywikibot.output("<<lightred>> Traceback (most recent call last):")
+                    pywikibotoutput("<<lightred>> Traceback (most recent call last):")
                     printt(f'{study} : error')
-                    pywikibot.output(e)
-                    pywikibot.output(traceback.format_exc())
-                    pywikibot.output("CRITICAL:")
+                    pywikibotoutput(e)
+                    pywikibotoutput(traceback.format_exc())
+                    pywikibotoutput("CRITICAL:")
             # ---
             images = [ image for image in images if image ]
             # ---

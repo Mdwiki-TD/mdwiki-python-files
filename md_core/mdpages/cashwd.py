@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #   himo
 """
-python3 core8/pwb.py mdpy/cashwd
+python3 core8/pwb.py mdpages/cashwd
 
 """
 
@@ -15,7 +15,7 @@ import os
 import traceback
 from datetime import datetime
 import pywikibot
-
+from pathlib import Path
 # ---
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
@@ -23,11 +23,7 @@ from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_md
 from mdpy.bots import mdwiki_api
 from mdpy.bots import wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
 # ---
-# ---
-from pathlib import Path
-
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
@@ -178,7 +174,7 @@ def cash_wd():
     # ---
     for cat, dep in cac.items():
         # ---
-        mdwiki_pages = mdwiki_api.subcatquery(cat, depth=dep, ns='all')
+        mdwiki_pages = mdwiki_api.subcatquery(cat, depth=dep, ns='0')
         # ---
         for dd in mdwiki_pages:
             if not valid_title(dd):
@@ -213,24 +209,24 @@ def cash_wd():
     # ---
     # json.dump( table_to_log, open( Dashboard_path + '/Tables/qid_redirects_missing.json' , 'w', encoding="utf-8") )
     # ---
-    for site, liste in main_table_sites.items():
-        # printe.output('<<lightblue>> main_table_sites:%s, len:%d.' % (site, len(liste)) )
+    for site, miss_list in main_table_sites.items():
+        # printe.output('<<lightblue>> main_table_sites:%s, len:%d.' % (site, len(miss_list)) )
         # ---
         # remove duplicates
-        liste = list(set(liste))
+        miss_list = list(set(miss_list))
         # ---
-        leeen = len(titles) - len(liste)
-        missing['langs'][site] = {'missing': leeen, 'exists': len(liste)}
+        leeen = len(titles) - len(miss_list)
+        missing['langs'][site] = {'missing': leeen, 'exists': len(miss_list)}
         # ---
         json_file = f'{Dashboard_path}/cash_exists/{site}.json'
         # ---
         if not os.path.exists(json_file):
             printe.output(f'.... <<lightred>> file:"{site}.json not exists ....')
         # ---
-        # dump liste to json_file
+        # dump miss_list to json_file
         try:
             with codecs.open(json_file, 'w', encoding="utf-8") as aa:
-                json.dump(liste, aa, ensure_ascii=False, indent=4)
+                json.dump(miss_list, aa, ensure_ascii=False, indent=4)
             printe.output(f'<<lightgreenn>>dump to cash_exists/{site}.json done..')
         except Exception:
             pywikibot.output('Traceback (most recent call last):')
@@ -261,8 +257,7 @@ def cash_wd():
     with codecs.open(f'{Dashboard_path}/Tables/missing.json', 'w', encoding="utf-8") as xx:
         json.dump(missing, xx)
     printe.output(' log to missing.json true.... ')
-
-    # ---
+    printe.output(f"{missing['all']=}")
 
 
 if __name__ == '__main__':

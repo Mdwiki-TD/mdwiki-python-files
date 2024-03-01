@@ -9,7 +9,6 @@ import sys
 import psutil
 import json
 import os
-import pywikibot
 from pathlib import Path
 # ---
 from newapi import printe
@@ -44,7 +43,7 @@ def print_memory():
     _yellow_ = "\033[93m%s\033[00m"
 
     usage = psutil.Process(os.getpid()).memory_info().rss
-    pywikibot.output(_red_ % f'memory usage: psutil {usage / 1024 / 1024} MB')
+    print(_red_ % f'memory usage: psutil {usage / 1024 / 1024} MB')
 
 def get_pages():
     printe.output('<<purple>> start.py get_pages:')

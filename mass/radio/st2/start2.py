@@ -62,6 +62,7 @@ def multi_work(tab):
     done = 0
     pool = Pool(processes=5)
     pool.map(do_it, tab)
+    pool.close()
     pool.terminate()
     # ---
     done += len(tab)

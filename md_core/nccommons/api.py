@@ -16,8 +16,8 @@ from nccommons import api
 # ---
 import sys
 import time
-import pywikibot
 # ---
+from newapi import printe
 from newapi.ncc_page import NEW_API
 api_new  = NEW_API('www', family='nccommons')
 # json1    = api_new.post_params(params, addtoken=False)
@@ -39,7 +39,7 @@ Save_all = {1: False}
 upload_all = {1: False}
 # ---
 def py_input(s):
-    pywikibot.output(s)
+    print(s)
     sa = input()
     # ---
     return sa
@@ -65,17 +65,17 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False):
     # ---
     if not upload_all[1] and "ask" in sys.argv:
         if 'nodiff' not in sys.argv:
-            pywikibot.output(text)
+            printe.output(text)
         sa = py_input(f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o)")
         # ---
         if sa.strip() not in yes_answer:
-            pywikibot.output("<<lightred>> wrong answer")
+            printe.output("<<lightred>> wrong answer")
             return file_name
         # ---
         if sa.strip() == "a":
-            pywikibot.output("---------------------------------------------")
-            pywikibot.output("nccommons.py upload_by_url save all without asking.")
-            pywikibot.output("---------------------------------------------")
+            printe.output("---------------------------------------------")
+            printe.output("nccommons.py upload_by_url save all without asking.")
+            printe.output("---------------------------------------------")
             upload_all[1] = True
         # ---
     # ---
@@ -94,39 +94,39 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False):
     duplicate = upload_result.get("warnings", {}).get("duplicate", [''])[0].replace("_", " ")
     # ---
     if success:
-        print(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
+        printe.output(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
         return True if not return_file_name else file_name
 
     elif duplicate and return_file_name:
-        pywikibot.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
+        printe.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
         return f'{duplicate}' if return_file_name else True
     elif error != {}:
-        pywikibot.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
-        pywikibot.output(error)
+        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(error)
     # ---
-    pywikibot.output(result)
+    printe.output(result)
     return False if not return_file_name else ''
 
 
 def create_Page(text, title, summary="create page"):
-    pywikibot.output(f" create Page {title}:")
+    printe.output(f" create Page {title}:")
     time_sleep = 0
     # ---
     params = {"action": "edit", "title": title, "text": text, "summary": summary, "notminor": 1, "createonly": 1}
     # ---
     if not Save_all[1] and ("ask" in sys.argv and "save" not in sys.argv):
         if 'nodiff' not in sys.argv:
-            pywikibot.output(text)
+            printe.output(text)
         sa = py_input(f"<<lightyellow>> nccommons.py: create:\"{title}\" page ? ([y]es, [N]o)")
         # ---
         if sa.strip() not in yes_answer:
-            pywikibot.output("<<lightred>> wrong answer")
+            printe.output("<<lightred>> wrong answer")
             return False
         # ---
         if sa.strip() == "a":
-            pywikibot.output("---------------------------------------------")
-            pywikibot.output("nccommons.py create_Page save all without asking.")
-            pywikibot.output("---------------------------------------------")
+            printe.output("---------------------------------------------")
+            printe.output("nccommons.py create_Page save all without asking.")
+            printe.output("---------------------------------------------")
             Save_all[1] = True
         # ---
     # ---
@@ -139,18 +139,18 @@ def create_Page(text, title, summary="create page"):
     error_code = result.get("error", {}).get("code", '')
     # ---
     if success:
-        pywikibot.output(f"** true ..  [[{title}]] ")
-        pywikibot.output("Done True... time.sleep(%d) " % time_sleep)
+        printe.output(f"** true ..  [[{title}]] ")
+        printe.output("Done True... time.sleep(%d) " % time_sleep)
         time.sleep(time_sleep)
         return True
     elif error != {}:
-        pywikibot.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
-        pywikibot.output(error)
+        printe.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
+        printe.output(error)
     else:
-        pywikibot.output(result)
+        printe.output(result)
         return False
     # ---
-    # pywikibot.output("end of create_Page def return False title:(%s)" % title)
+    # printe.output("end of create_Page def return False title:(%s)" % title)
     # ---
     return False
 
