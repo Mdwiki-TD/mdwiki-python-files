@@ -46,8 +46,6 @@ def do_it(va):
 def main(ids_tab):
     printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
     # ---
-    print_memory()
-    # ---
     tab = []
     # ---
     n = 0
@@ -66,4 +64,4 @@ def main(ids_tab):
     for x in tab:
         do_it(x)
     # ---
-print(f"{All.images=}")
+    print(f"{All.images=}")
