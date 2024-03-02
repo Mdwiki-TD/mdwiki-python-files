@@ -171,57 +171,7 @@ def cash_wd():
     # ---
     cac = sql_for_mdwiki.get_db_categories()
     # ---
-    for cat, dep in cac.items():
-        # ---
-        mdwiki_pages = mdwiki_api.subcatquery(cat, depth=dep, ns='0')
-        # ---
-        titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
-    # ---
-    printe.output(f'<<lightgreen>> len of mdwiki_api.subcatquery:RTT:{len(titles)}.')
-    # ---
-    qids_list = {}
-    # ---
-    missing['all'] = len(titles)
-    # ---
-    for x in titles:
-        # ---
-        qid = en_to_md.mdtitle_to_qid.get(x, '')
-        # ---
-        if qid != '':
-            qids_list[qid] = x
-    # ---
-    lists, _table_l = get_qids_sitelinks(qids_list)
-    # ---
-    with open(f'{Dashboard_path}/Tables/sitelinks.json', 'w', encoding='utf-8') as aa:
-        json.dump(lists, aa)
-    # ---
-    # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w', encoding="utf-8"), ensure_ascii=False, indent=4 )
-    # ---
-    # table_to_log = { "redirects": redirects_qids, "missing": mis_qids }
-    # ---
-    # json.dump( table_to_log, open( Dashboard_path + '/Tables/qid_redirects_missing.json' , 'w', encoding="utf-8") )
-    # ---
-    for site, miss_list in main_table_sites.items():
-        # printe.output('<<lightblue>> main_table_sites:%s, len:%d.' % (site, len(miss_list)) )
-        # ---
-        # remove duplicates
-        miss_list = list(set(miss_list))
-        # ---
-        leeen = len(titles) - len(miss_list)
-        missing['langs'][site] = {'missing': leeen, 'exists': len(miss_list)}
-        # ---
-        json_file = f'{Dashboard_path}/cash_exists/{site}.json'
-        # ---
-        if not os.path.exists(json_file):
-            printe.output(f'.... <<lightred>> file:"{site}.json not exists ....')
-        # ---
-        # dump miss_list to json_file
-        try:
-            with open(json_file, 'w', encoding="utf-8") as aa:
-                json.dump(miss_list, aa, ensure_ascii=False, indent=4)
-            printe.output(f'<<lightgreenn>>dump to cash_exists/{site}.json done..')
-        except Exception:
-            pywikibot.output('Traceback (most recent call last):')
+    dump_sitelinks_to_json(lists)
             pywikibot.output(traceback.format_exc())
             pywikibot.output('CRITICAL:')
             continue
