@@ -53,7 +53,8 @@ def get_studies(studies_ids, caseId):
 
     return images_count
 
-def sa():
+@pytest.mark.testable
+def start():
     text = ""
     
     text += f"* All Cases: {len(ids):,}\n"
