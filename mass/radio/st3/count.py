@@ -4,6 +4,7 @@ python3 core8/pwb.py mass/radio/st3/count
 
 """
 import os
+import sys
 import json
 import tqdm
 from pathlib import Path
@@ -64,8 +65,9 @@ def sa():
     
 def start():
     print(f"<<purple>> start.py all: {len(ids_tab)}:")
-
+    n = 0
     for _, va in tqdm.tqdm(ids_tab.items()):
+        n += 1
         caseId = va["caseId"]
 
         studies = [study.split("/")[-1] for study in va["studies"]]
@@ -73,7 +75,10 @@ def start():
 
         images = get_studies(studies, caseId)
         All.images += images
-        
+
+        if "test" in sys.argv and n == 1000:
+            break
+    
     sa()
 
 if __name__ == '__main__':
