@@ -6,12 +6,7 @@ import os
 from pathlib import Path
 import json
 from mass.radio.studies import get_images_stacks, get_images
-# ---
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
-# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
-# ---
-api_new  = NEW_API('www', family='nccommons')
-api_new.Login_to_wiki()
+# from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # ---
 main_dir = Path(__file__).parent.parent
 # --
