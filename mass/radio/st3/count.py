@@ -21,6 +21,8 @@ with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
 
 ids_tab = {x: v for x, v in ids.items() if x not in cases_in_ids}
 
+cases_done = len(ids) - len(ids_tab)
+
 class All:
     cases = 0
     images = 0
@@ -53,7 +55,7 @@ def sa():
     text = ""
     
     text += f"* All Cases: {len(ids):,}\n"
-    text += f"* Cases done: {len(cases_in_ids):,}\n\n"
+    text += f"* Cases done: {cases_done:,}\n\n"
     text += f";Remaining:\n"
     text += f"* Cases: {All.cases:,}\n"
     text += f"* Images: {All.images:,}\n"
