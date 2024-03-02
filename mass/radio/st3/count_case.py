@@ -35,14 +35,10 @@ def printt(s):
     printe.output(s)
 
 class OneCase:
-    def __init__(self, case_url, caseId, title, studies_ids):
+    def __init__(self, caseId, studies_ids):
         self.caseId = caseId
-        self.case_url = case_url
-        self.title = title
         self.studies_ids = studies_ids
         self.images_count = 0
-        self.studies_count = len(studies_ids)
-
 
     def get_studies(self):
         for study in self.studies_ids:
@@ -64,14 +60,11 @@ class OneCase:
             images = [ image for image in images if image ]
             # ---
             if not images:
-                printt(f'{study} : not found')
-                # images = get_images(f'https://radiopaedia.org/cases/167250/studies/167250')
-                # images = get_images(f'https://radiopaedia.org/cases/167250/studies/135974?lang=us')
                 images = get_images_stacks(self.caseId)
-                # ---
-                if not images:
-                    images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
-                # ---
+            # ---
+            if not images:
+                images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
+            # ---
             self.studies[study] = images
             printt(f'study:{study} : len(images) = {len(images)}, st_file:{st_file}')
 
@@ -86,4 +79,3 @@ class OneCase:
 
     def images(self):
         return self.images_count
-    
