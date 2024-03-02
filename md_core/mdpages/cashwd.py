@@ -59,7 +59,8 @@ change_codes = {
 
 
 def get_qids_sitelinks(qidslist):
-    # ---
+    get_qids_sitelinks(qids_list)
+    table_d, _table_l = get_qids_sitelinks(qids_list)
     qs_list = list(qidslist.keys())
     # ---
     params_wd = {
@@ -82,7 +83,7 @@ def get_qids_sitelinks(qidslist):
     all_entities = {}
     # ---
     for i in range(0, len(qs_list), 100):
-        # ---
+        dump_sitelinks_to_json(lists)
         qids = qs_list[i : i + 100]
         # ---
         params_wd["ids"] = '|'.join(qids)
@@ -98,7 +99,7 @@ def get_qids_sitelinks(qidslist):
             all_entities = {**all_entities, **entities}
         # ---
         for _qid_1, kk in all_entities.items():
-            # ---
+            print_redirects_qids(redirects_qids)
             numb += 1
             if "missing" in kk:
                 # ---
