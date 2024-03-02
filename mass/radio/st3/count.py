@@ -36,6 +36,7 @@ for _, va in tqdm.tqdm(ids_tab.items()):
     All.studies += len(studies)
     # ---
     bot = OneCase(caseId, studies)
+    bot.start()
     images = bot.images()
     All.images += images
 
