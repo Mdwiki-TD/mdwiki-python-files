@@ -19,7 +19,7 @@ with open(os.path.join(str(main_dir), 'jsons/ids.json'), 'r', encoding='utf-8') 
 with open(os.path.join(str(main_dir), 'jsons/cases_in_ids.json'), 'r', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = { x:v for x,v in ids.items() if x not in cases_in_ids }
+ids_tab = { x:v for x,v in ids.items() if x not in cases_in_ids }
 # ---
 class All:
     pass
