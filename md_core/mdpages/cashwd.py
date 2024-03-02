@@ -59,6 +59,21 @@ change_codes = {
 
 
 def get_qids_sitelinks(qidslist):
+    """
+    Retrieves sitelinks for a list of Wikidata QIDs.
+
+    Args:
+        qidslist (dict): A dictionary containing QIDs as keys and mdwiki titles as values.
+
+    Returns:
+        dict, dict: Two dictionaries representing the sitelinks for each QID, one using mdtitle as keys and the other using sitelinks as keys.
+
+    Raises:
+        No explicit exceptions are raised.
+
+    Details:
+        This function processes QIDs in batches of 100, retrieves sitelinks from Wikidata, and organizes the results into two dictionaries with headers and QIDs as keys.
+    """
     # ---
     qs_list = list(qidslist.keys())
     # ---
