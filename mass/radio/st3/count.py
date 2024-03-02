@@ -3,7 +3,6 @@
 python3 core8/pwb.py mass/radio/st3/count
 '''
 import sys
-import psutil
 import tqdm
 import json
 import os
@@ -14,13 +13,8 @@ from mass.radio.st3.count_case import OneCase
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(os.path.join(str(main_dir), 'jsons/infos.json'), 'r', encoding='utf-8') as f:
-    infos = json.load(f)
-# ---
 with open(os.path.join(str(main_dir), 'jsons/ids.json'), 'r', encoding='utf-8') as f:
     ids = json.load(f)
-# ---
-# cases_in_ids = []
 # ---
 with open(os.path.join(str(main_dir), 'jsons/cases_in_ids.json'), 'r', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
@@ -29,17 +23,14 @@ ids_by_caseId = { x:v for x,v in ids.items() if x not in cases_in_ids }
 # ---
 class All:
     pass
+
 All.images = 0
-# ---
-def do_it(va):
+All.studies = 0
+
+def do_it(caseId, studies):
+    All.studies += len(studies)
     # ---
-    case_url = va['case_url']
-    caseId   = va['caseId']
-    title        = va['title']
-    studies  = va['studies']
-    author   = va['author']
-    # ---
-    bot = OneCase(case_url, caseId, title, studies, author)
+    bot = OneCase(caseId, studies)
     images = bot.images()
     All.images += images
 
@@ -53,15 +44,9 @@ def main(ids_tab):
         n += 1
         # ---
         caseId   = va['caseId']
-        case_url = va['url']
-        # ---
-        title = va['title']
-        # ---
         studies = [study.split('/')[-1] for study in va['studies']]
         # ---
-        tab.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': ''})
-    # ---
-    for x in tab:
-        do_it(x)
+        do_it(caseId, studies)
     # ---
     print(f"{All.images=}")
+    print(f"{All.studies=}")
