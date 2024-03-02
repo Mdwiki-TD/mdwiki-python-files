@@ -241,6 +241,12 @@ def cash_wd():
             pywikibot.output('CRITICAL:')
             continue
     # ---
+        """
+    Retrieves Wikidata QIDs for a list of mdwiki titles, obtains sitelinks for each QID, and saves the results in JSON files.
+    
+    Returns:
+        None
+    """
     # email_address = "ibrahem.al-radaei@outlook.com"
     # send aleart email to email_address
     # ---
