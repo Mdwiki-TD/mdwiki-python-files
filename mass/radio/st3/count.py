@@ -1,7 +1,7 @@
 """
 
 python3 core8/pwb.py mass/radio/st3/count
-
+tfj run countca --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/count"
 """
 import os
 import sys
