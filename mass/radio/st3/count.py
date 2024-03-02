@@ -27,26 +27,19 @@ class All:
 All.images = 0
 All.studies = 0
 
-def do_it(caseId, studies):
+printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
+# ---
+for _, va in tqdm.tqdm(ids_tab.items()):
+    caseId   = va['caseId']
+    studies = [study.split('/')[-1] for study in va['studies']]
+    # ---
     All.studies += len(studies)
     # ---
     bot = OneCase(caseId, studies)
     images = bot.images()
     All.images += images
 
-def main(ids_tab):
-    printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
-    # ---
-    tab = []
-    # ---
-    n = 0
-    for _, va in tqdm.tqdm(ids_tab.items()):
-        n += 1
-        # ---
-        caseId   = va['caseId']
-        studies = [study.split('/')[-1] for study in va['studies']]
-        # ---
-        do_it(caseId, studies)
-    # ---
-    print(f"{All.images=}")
-    print(f"{All.studies=}")
+print(f"{All.images=}")
+print(f"{All.studies=}")
+
+
