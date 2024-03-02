@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 # ---
 from newapi import printe
-from mass.radio.st3.One_Case_New import OneCase
+from mass.radio.st3.count_case import OneCase
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
@@ -27,6 +27,10 @@ with open(os.path.join(str(main_dir), 'jsons/cases_in_ids.json'), 'r', encoding=
 # ---
 ids_by_caseId = { x:v for x,v in ids.items() if x not in cases_in_ids }
 # ---
+class All:
+    pass
+All.images = 0
+# ---
 def do_it(va):
     # ---
     case_url = va['case_url']
@@ -36,7 +40,8 @@ def do_it(va):
     author   = va['author']
     # ---
     bot = OneCase(case_url, caseId, title, studies, author)
-    bot.start()
+    images = bot.images()
+    All.images += images
 
 def main(ids_tab):
     printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
@@ -57,5 +62,8 @@ def main(ids_tab):
         studies = [study.split('/')[-1] for study in va['studies']]
         # ---
         tab.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': ''})
+    # ---
     for x in tab:
         do_it(x)
+    # ---
+print(f"{All.images=}")
