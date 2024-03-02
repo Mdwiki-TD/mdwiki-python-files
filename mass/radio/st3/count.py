@@ -76,7 +76,7 @@ def start():
         images = get_studies(studies, caseId)
         All.images += images
 
-        if "test" in sys.argv and n == 1000:
+        if "test" in sys.argv and n == 100:
             break
     
     sa()
