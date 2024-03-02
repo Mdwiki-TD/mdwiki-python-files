@@ -51,16 +51,20 @@ def get_studies(studies_ids, caseId):
 
     return images_count
 
-printe.output(f"<<purple>> start.py all: {len(ids_tab)}:")
-# ---
-for _, va in tqdm.tqdm(ids_tab.items()):
-    caseId = va["caseId"]
-    studies = [study.split("/")[-1] for study in va["studies"]]
+def start():
+    print(f"<<purple>> start.py all: {len(ids_tab)}:")
     # ---
-    All.studies += len(studies)
-    # ---
-    images = get_studies(studies, caseId)
-    All.images += images
+    for _, va in tqdm.tqdm(ids_tab.items()):
+        caseId = va["caseId"]
+        studies = [study.split("/")[-1] for study in va["studies"]]
+        # ---
+        All.studies += len(studies)
+        # ---
+        images = get_studies(studies, caseId)
+        All.images += images
 
-print(f"{All.images=}")
-print(f"{All.studies=}")
+    print(f"{All.images=}")
+    print(f"{All.studies=}")
+
+if __name__ == '__main__':
+    start()
