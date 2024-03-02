@@ -10,7 +10,6 @@ python3 core8/pwb.py mdpages/cashwd
 #
 #
 import json
-import codecs
 import os
 import traceback
 from datetime import datetime
@@ -176,14 +175,7 @@ def cash_wd():
         # ---
         mdwiki_pages = mdwiki_api.subcatquery(cat, depth=dep, ns='0')
         # ---
-        for dd in mdwiki_pages:
-            if not valid_title(dd):
-                continue
-            # ---
-            if dd in titles:
-                continue
-            # ---
-            titles.append(dd)
+        titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
     # ---
     printe.output(f'<<lightgreen>> len of mdwiki_api.subcatquery:RTT:{len(titles)}.')
     # ---
@@ -225,7 +217,7 @@ def cash_wd():
         # ---
         # dump miss_list to json_file
         try:
-            with codecs.open(json_file, 'w', encoding="utf-8") as aa:
+            with open(json_file, 'w', encoding="utf-8") as aa:
                 json.dump(miss_list, aa, ensure_ascii=False, indent=4)
             printe.output(f'<<lightgreenn>>dump to cash_exists/{site}.json done..')
         except Exception:
@@ -254,7 +246,7 @@ def cash_wd():
     printe.output(f' len of redirects_qids:  {len(redirects_qids.keys())}')
     printe.output(f' len of missing_qids:    {len(mis_qids)}')
     # ---
-    with codecs.open(f'{Dashboard_path}/Tables/missing.json', 'w', encoding="utf-8") as xx:
+    with open(f'{Dashboard_path}/Tables/missing.json', 'w', encoding="utf-8") as xx:
         json.dump(missing, xx)
     printe.output(' log to missing.json true.... ')
     printe.output(f"{missing['all']=}")
