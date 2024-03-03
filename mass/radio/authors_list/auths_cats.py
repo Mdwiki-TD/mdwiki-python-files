@@ -12,6 +12,8 @@ import os
 from pathlib import Path
 from newapi import printe
 from newapi.ncc_page import CatDepth
+from newapi.ncc_page import MainPage as ncc_MainPage
+
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
@@ -39,10 +41,21 @@ def cases_cats():
   
     return id2cat
 
+def create_cat(cat, text):
+    page = ncc_MainPage(cat, 'www', family='nccommons')
 
+    if page.exists():
+        page.save(newtext=text, summary='create')
+    else:
+        page.Create(text=text, summary='create')
+        
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
-
+    # ---
+    cat  = f"Category:Radiopaedia cases by {auth}"
+    text = f"[[Category:Radiopaedia cases by author|{auth}]]"
+    # ---
+    create_cat(cat, text)
 
 def start():
     # ---
