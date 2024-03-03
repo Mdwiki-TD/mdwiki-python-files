@@ -75,7 +75,7 @@ def add(da=[], title="", cat=""):
     page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
 
 def mu(tab):
-    pool = Pool(processes=5)
+    pool = Pool(processes=3)
     pool.map(add, tab)
     pool.close()
     pool.terminate()
