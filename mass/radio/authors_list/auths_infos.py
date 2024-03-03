@@ -1,4 +1,5 @@
 '''
+"""This module contains functions for retrieving author information from Radiopaedia."""
 
 from mass.radio.authors_list.auths_infos import get_author_infos
 
@@ -34,6 +35,11 @@ def get_soup(url):
     # ---
     return soup
 def get_user_infos(url):
+    """Retrieve user information from a given URL."""
+    """Parameters:
+        - url: The URL to retrieve the user information from."""
+    """Return:
+        - user_info: A dictionary containing the user's URL and location."""
     # ---
     user_info = {"url": "", "location": "", "cases": 0}
     # ---
@@ -73,6 +79,12 @@ def get_user_infos(url):
     return user_info
 
 def get_author_infos(auth, first_case_url):
+    """Retrieve author information for a given author and first case URL."""
+    """Parameters:
+        - auth: The author's ID.
+        - first_case_url: The URL of the first case contributed by the author."""
+    """Return:
+        - info: A dictionary containing the author's URL and location."""
     # ---
     printe.output(f"<<yellow>> get_author_infos:{auth=}, {first_case_url=}")
     # ---
