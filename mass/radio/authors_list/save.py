@@ -1,6 +1,7 @@
 '''
 
-$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/save
+if __name__ == '__main__':
+    sa(authors_infos)
 
 '''
 import re
