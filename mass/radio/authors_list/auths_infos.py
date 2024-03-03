@@ -41,7 +41,10 @@ def get_user_infos(url):
     """Return:
         - user_info: A dictionary containing the user's URL and location."""
     # ---
-    user_info = {"url": "", "location": ""}
+    user_info = {"url": "", "location": "", "cases": 0}
+    # ---
+    if "empty" in sys.argv:
+        return user_info
     # ---
     location = ""
     # ---
@@ -87,7 +90,8 @@ def get_author_infos(auth, first_case_url):
     # ---
     info = {
         "url" : "",
-        "location" : ""
+        "location" : "",
+        "cases" : 0
     }
     # ---
     na = get_user_infos(first_case_url)
