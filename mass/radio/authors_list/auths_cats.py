@@ -48,7 +48,24 @@ def create_cat(cat, text):
         page.save(newtext=text, summary='create')
     else:
         page.Create(text=text, summary='create')
-        
+
+def add_cat(pages, cat):
+    for title in pages:
+        page = ncc_MainPage(title, 'www', family='nccommons')
+
+        if not page.exists():
+            continue
+    
+        text = page.get_text()
+        # ---
+        if text.find(cat) != -1:
+            printe.output(f"cat {title} already has it.")
+            continue
+        # ---
+        newtext = f"\n[[{cat}]]"
+        # ---
+        page.save(newtext=newtext, summary=f'Bot: added [[:{cat]]')
+
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
     # ---
