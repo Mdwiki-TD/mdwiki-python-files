@@ -167,6 +167,11 @@ class OneCase:
         if auth_url:
             auth_line = f'[{auth_url} {self.author}]'
         # ---
+        usa_license = ""
+        # ---
+        if auth_location.lower().find('united states') != -1:
+            usa_license = "{{PD-medical}}"
+        # ---
         image_text = '== {{int:summary}} ==\n'
 
         image_text += (
@@ -185,6 +190,7 @@ class OneCase:
             '}}\n'
             '== {{int:license}} ==\n'
             '{{CC-BY-NC-SA-3.0}}\n'
+            f'{usa_license}\n'
             f'[[{self.category}]]\n'
             '[[Category:Uploads by Mr. Ibrahem]]'
         )
