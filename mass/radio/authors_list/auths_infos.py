@@ -35,7 +35,10 @@ def get_soup(url):
     return soup
 def get_user_infos(url):
     # ---
-    user_info = {"url": "", "location": ""}
+    user_info = {"url": "", "location": "", "cases": 0}
+    # ---
+    if "empty" in sys.argv:
+        return user_info
     # ---
     location = ""
     # ---
@@ -75,7 +78,8 @@ def get_author_infos(auth, first_case_url):
     # ---
     info = {
         "url" : "",
-        "location" : ""
+        "location" : "",
+        "cases" : 0
     }
     # ---
     na = get_user_infos(first_case_url)
