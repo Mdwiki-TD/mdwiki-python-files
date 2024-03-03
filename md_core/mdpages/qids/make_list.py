@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
 بوت يجمع بين وظيفة بوتين:
-* mdpy/get_md_to_en
-* mdpy/find_qids
+* mdpages/get_md_to_en
+* mdpages/find_qids
 
 """
 # python3 core8/pwb.py mdpages/qids/make_list
@@ -10,14 +10,13 @@
 # python3 core8/pwb.py mdpages/qids/make_list add_sql add
 import sys
 import os
-
 # ---
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import catdepth2
 from mdpy.bots import wiki_api
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
+from mdpages.qids_others.unlinkedwikibase import work_page#(title, qid)
 # ---
 medwiki_to_enwiki_conflic = {}
 medwiki_to_enwiki = {}
@@ -26,16 +25,24 @@ medwiki_to_enwiki = {}
 # sql_for_mdwiki.add_titles_to_qids(tab, add_empty_qid=False)
 # sql_for_mdwiki.set_title_where_qid(new_title, qid)
 
-
+def work_un(tab):
+    for numb, (title, new_q) in enumerate(tab.items(), start=1):
+        # ---
+        printe.output(f'<<yellow>> work_un: {numb}, {title=}, {new_q=}')
+        # ---
+        if new_q:
+            work_page(title, new_q)
+        
 def add_sql(o_qids):
     printe.output('write to sql')
     # ---
-    all_in = sql_for_mdwiki.get_all_qids()
-    # all_in = { x: y for x, y in all_in.items() if y != ''}
+    t_qids_in = sql_for_mdwiki.get_all_qids()
+    # t_qids_in = { x: y for x, y in t_qids_in.items() if y != ''}
     # ---
-    same = [x for x in o_qids if x in all_in and all_in[x] == o_qids[x]]
+    same = [x for x in o_qids if x in t_qids_in and t_qids_in[x] == o_qids[x]]
     # ---
-    diff = [x for x in o_qids if x in all_in and all_in[x] != o_qids[x] and o_qids[x] != '']
+    # diff = [x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x] and o_qids[x] != '']
+    diff = [x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x] and o_qids[x] != '' and t_qids_in[x] != '']
     # ---
     printe.output(f'len of same: {len(same)}')
     printe.output(f'len of diff: {len(diff)}')
@@ -43,19 +50,29 @@ def add_sql(o_qids):
     # del all same from o_qids
     o_qids_new = {x: y for x, y in o_qids.items() if x not in same and x not in diff}
     # ---
-    for x in diff:
-        printe.output(f'x: {x}, qid_in: {all_in[x]} != new qid: {o_qids[x]}')
-    # ---
-    printe.output(f'<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}')
-    # ---
-    len_empty = [x for x in o_qids_new if o_qids_new[x] == '']
+    len_empty = [x for x in o_qids_new if o_qids_new[x] == '' and t_qids_in.get(x) == '']
     printe.output(f'<<lightgreen>> new len of len_empty:{len(len_empty)}')
+    # ---
+    # del empty qids but not empty in get_all_qids
+    for ti, q in o_qids_new.copy().items():
+        if q == '' and t_qids_in.get(ti) != '':
+            del o_qids_new[ti]
+    # ---
+    for x in diff:
+        printe.output(f'x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}')
+    # ---
+    printe.output(f'<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}, add "add" to sys.argv to add to sql')
     # ---
     if 'add' in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(o_qids_new, add_empty_qid=True)
+    # ---
+    work_un(o_qids_new)
 
 
 def check():
+    """
+    function retrieves QIDs for a list of items. It uses the MediaWiki API to query for page properties and extracts the Wikidata item property. The function handles redirects and normalizes the titles. It also groups the items into batches of 50 to avoid exceeding the API's limit for the number of titles in a single request. This is a good practice for working with APIs.
+    """
     # ---
     sames = []
     missing_in_enwiki = []
@@ -70,28 +87,33 @@ def check():
     # ---
     Listo = [x for x in Listo if valid_title(x)]
     # ---
+    params = {
+        "action": "query",
+        "format": "json",
+        # "redirects": 1,
+        "prop": "pageprops",
+        "ppprop": "wikibase_item",
+        "converttitles": 1,
+        "utf8": 1,
+    }
+    # ---
+    if 'redirects' in sys.argv:
+        params["redirects"] = 1
+    # ---
+    num = 0
+    # ---
     for i in range(0, len(Listo), 100):
         # ---
-        newlist = Listo[i : i + 100]
+        group = Listo[i : i + 100]
         # ---
-        line = "|".join(newlist)
+        params["titles"] = '|'.join(group)
         # ---
-        params = {
-            "action": "query",
-            "format": "json",
-            "prop": "pageprops",
-            "ppprop": "wikibase_item",
-            "titles": line,
-            "redirects": 1,
-            "converttitles": 1,
-            "utf8": 1,
-        }
-        # ---
-        jsone = wiki_api.submitAPI(params, apiurl='https://' + 'en.wikipedia.org/w/api.php', returnjson=False)
+        jsone = wiki_api.submitAPI(params, apiurl='https://en.wikipedia.org/w/api.php', returnjson=False)
         # ---
         if jsone and 'batchcomplete' in jsone:
-            # ---
             query = jsone.get("query", {})
+            # ---
+            redirects_x = {x['to']: x['from'] for x in query.get("redirects", [])}
             # ---
             # "redirects": [{"from": "Acetylsalicylic acid","to": "Aspirin"}]
             Redirects = query.get("redirects", [])
@@ -101,31 +123,25 @@ def check():
                 else:
                     medwiki_to_enwiki_conflic[red["from"]] = red["to"]
             # ---
-            redirects_x = {x['to']: x['from'] for x in Redirects}
-            # ---
             # "pages": { "4195": {"pageid": 4195,"ns": 0,"title": "Aspirin","redirects": [{"pageid": 4953,"ns": 0,"title": "Acetylsalicylic acid"}]} }
             pages = query.get("pages", {})
             # ---
             # { "-1": { "ns": 0, "title": "Fsdfdsf", "missing": "" }, "2767": { "pageid": 2767, "ns": 0, "title": "ACE inhibitor" } }
             # ---
-            for page in pages:
+            for _, kk in pages.items():
                 # ---
-                tab = pages[page]
-                title = tab['title']
+                num += 1
                 # ---
-                if 'missing' in tab:
+                title = kk.get("title", "")
+                qid = kk.get("pageprops", {}).get("wikibase_item", "")
+                # ---
+                title = redirects_x.get(title, title)
+                # ---
+                if 'missing' in kk:
                     missing_in_enwiki.append(title)
                 else:
-                    title = redirects_x.get(title, title)
-                    # printe.output('<<lightyellow>> title["%s"] sames' % title )
-                    qid = tab.get("pageprops", {}).get("wikibase_item", "")
                     o_qids[title] = qid
                     sames.append(title)
-            # ---
-        else:
-            printe.output("<<lightred>> check.py no jsone")
-            printe.output(jsone)
-        # ---
     # ---
     numb = 0
     for fromm, to in medwiki_to_enwiki.items():

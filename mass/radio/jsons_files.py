@@ -7,9 +7,8 @@ from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 #  jsons.cases_in_ids
 #  jsons.cases_dup
 #  jsons.to_work
-#  jsons.ids
 #  jsons.all_ids
-# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0, systems=0, url_to_sys=0)
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0, systems=0, url_to_sys=0)
 
 '''
 import psutil

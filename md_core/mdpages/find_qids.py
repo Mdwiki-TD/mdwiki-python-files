@@ -7,7 +7,7 @@ The script checks if the project directory exists and changes the path if it doe
 The script retrieves all Wikidata identifiers (QIDs) and filters them based on whether they are empty or not.
 
 Usage:
-python3 core8/pwb.py mdpy/find_qids
+python3 core8/pwb.py mdpages/find_qids
 
 """
 #
@@ -58,6 +58,7 @@ def get_qids(noqids_list):
     # ---
     params = {
         "action": "query",
+        "format": "json",
         # "redirects": 1,
         "prop": "pageprops",
         "ppprop": "wikibase_item",
@@ -70,18 +71,25 @@ def get_qids(noqids_list):
     # ---
     num = 0
     # ---
-    for i in range(0, len(noqids_list), 50):
-        group = noqids_list[i : i + 50]
+    for i in range(0, len(noqids_list), 100):
+        # ---
+        group = noqids_list[i : i + 100]
         # ---
         params["titles"] = '|'.join(group)
         # ---
-        json1 = wiki_api.submitAPI(params, apiurl='https://en.wikipedia.org/w/api.php')
+        jsone = wiki_api.submitAPI(params, apiurl='https://en.wikipedia.org/w/api.php')
         # ---
-        if json1:
-            redirects = json1.get("query", {}).get("redirects", [])
-            redirects = {x['to']: x['from'] for x in redirects}
+        if jsone and 'batchcomplete' in jsone:
+            query = jsone.get("query", {})
             # ---
-            pages = json1.get("query", {}).get("pages", {})
+            redirects_x = {x['to']: x['from'] for x in query.get("redirects", [])}
+            # ---
+            # "redirects": [{"from": "Acetylsalicylic acid","to": "Aspirin"}]
+            # ---
+            # "pages": { "4195": {"pageid": 4195,"ns": 0,"title": "Aspirin","redirects": [{"pageid": 4953,"ns": 0,"title": "Acetylsalicylic acid"}]} }
+            pages = query.get("pages", {})
+            # ---
+            # { "-1": { "ns": 0, "title": "Fsdfdsf", "missing": "" }, "2767": { "pageid": 2767, "ns": 0, "title": "ACE inhibitor" } }
             # ---
             for _, kk in pages.items():
                 # ---
@@ -90,7 +98,7 @@ def get_qids(noqids_list):
                 title = kk.get("title", "")
                 qid = kk.get("pageprops", {}).get("wikibase_item", "")
                 # ---
-                title = redirects.get(title, title)
+                title = redirects_x.get(title, title)
                 # ---
                 new_title_qids[title] = qid
     # ---

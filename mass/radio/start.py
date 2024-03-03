@@ -15,7 +15,7 @@ from newapi import printe
 from newapi.ncc_page import CatDepth
 from mass.radio.st2.One_Case import OneCase
 # from mass.radio.jsons_files import jsons#, dumps_jsons, ids_to_urls, urls_to_ids
-# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 
 main_dir = Path(__file__).parent
 # ---
@@ -25,15 +25,15 @@ with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-
 with open(os.path.join(str(main_dir), 'jsons/infos.json'), 'r', encoding='utf-8') as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/ids.json'), 'r', encoding='utf-8') as f:
-    ids = json.load(f)
+with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), 'r', encoding='utf-8') as f:
+    all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
 with open(os.path.join(str(main_dir), 'jsons/cases_in_ids.json'), 'r', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = { x:v for x,v in ids.items() if not x in cases_in_ids }
+ids_by_caseId = { x:v for x,v in all_ids.items() if not x in cases_in_ids }
 # ---
 
 def print_memory():
