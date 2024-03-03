@@ -62,7 +62,8 @@ def add_cat(pages, cat):
             printe.output(f"cat {title} already has it.")
             continue
         # ---
-        newtext = f"\n[[{cat}]]"
+        newtext = text
+        newtext += f"\n[[{cat}]]"
         # ---
         page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
 
