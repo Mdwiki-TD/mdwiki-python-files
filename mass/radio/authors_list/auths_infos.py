@@ -39,6 +39,8 @@ def get_user_infos(url):
     # ---
     location = ""
     # ---
+    user_info = {"url": "", "location": ""}
+    location = ""
     soup = get_soup(url)
     # ---
     if not soup:
@@ -61,6 +63,7 @@ def get_user_infos(url):
     # ---
     soup = get_soup(url)
     # ---
+    if not soup:
     if not soup:
         return user_info
     # ---
@@ -90,14 +93,87 @@ def get_user_infos(url):
     return user_info
 
 def get_author_infos(auth, first_case_url):
-    # ---
     printe.output(f"<<yellow>> get_author_infos:{auth=}, {first_case_url=}")
-    # ---
     info = {
         "url" : "",
+        "location" : ""
+    }
+    response = requests.get(first_case_url, timeout=10)
+    soup = parse_html_content(response, soup)
+    na = get_user_infos(first_case_url)
+    return na
         "location" : ""
     }
     # ---
     na = get_user_infos(first_case_url)
     # ---
     return na
+def parse_html_content(response, soup):
+    user_info = {"url": "", "location": ""}
+    location = ""
+    if not soup:
+        return user_info
+    user_url = ""
+    div = soup.find('div', class_='author-info')
+    if div:
+        a = div.find('a')
+        if a:
+            user_url = a.get('href')
+            if user_url and user_url.startswith("/"):
+                user_url = "https://radiopaedia.org" + user_url
+    if user_url:
+        soup2 = get_soup(user_url)
+        if soup2:
+            dd = soup2.find('dd', class_='institution-and-location')
+            if dd:
+                location = dd.text.strip()
+    user_info["location"] = location
+    user_info["url"] = user_url
+    print(f" {location=}, {user_url=}")
+    return user_info
+def parse_html_content(response, soup):
+    user_info = {"url": "", "location": ""}
+    location = ""
+    if not soup:
+        return user_info
+    user_url = ""
+    div = soup.find('div', class_='author-info')
+    if div:
+        a = div.find('a')
+        if a:
+            user_url = a.get('href')
+            if user_url and user_url.startswith("/"):
+                user_url = "https://radiopaedia.org" + user_url
+    if user_url:
+        soup2 = get_soup(user_url)
+        if soup2:
+            dd = soup2.find('dd', class_='institution-and-location')
+            if dd:
+                location = dd.text.strip()
+    user_info["location"] = location
+    user_info["url"] = user_url
+    print(f" {location=}, {user_url=}")
+    return user_info
+def parse_html_content(response, soup):
+    user_info = {"url": "", "location": ""}
+    location = ""
+    if not soup:
+        return user_info
+    user_url = ""
+    div = soup.find('div', class_='author-info')
+    if div:
+        a = div.find('a')
+        if a:
+            user_url = a.get('href')
+            if user_url and user_url.startswith("/"):
+                user_url = "https://radiopaedia.org" + user_url
+    if user_url:
+        soup2 = get_soup(user_url)
+        if soup2:
+            dd = soup2.find('dd', class_='institution-and-location')
+            if dd:
+                location = dd.text.strip()
+    user_info["location"] = location
+    user_info["url"] = user_url
+    print(f" {location=}, {user_url=}")
+    return user_info
