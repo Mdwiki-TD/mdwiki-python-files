@@ -1,9 +1,8 @@
 '''
 
-python3 core8/pwb.py mass/radio/authors_list/bot1 nodump
-python3 core8/pwb.py mass/radio/authors_list/bot1
+python3 core8/pwb.py mass/radio/authors_list/auths_cats
 
-tfj run auths --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/bot1 && $HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/save"
+tfj run authscats --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/auths_cats"
 
 '''
 import re
@@ -41,18 +40,26 @@ def cases_cats():
     return id2cat
 
 
-def one_auth(auth, cases_ids, cats):
-    # 
+def one_auth(auth, cat_list):
+    printe.output(f"Author: {auth}, {len(cat_list)=}")
+
+
 def start():
     # ---
     cats = cases_cats()
+    # ---
     for numb, (x, x_cases) in enumerate(authors_to_cases.items(), start=1):
         # ---
         printe.output(f"{x=}, cases: {len(x_cases)=}")
         # ---
-        one_auth(auth, cases_ids, cats)
+        cat_list = [cats[c] for c in x_cats if c in cats]
+        cat_no_list = [c for c in x_cats if c not in cats]
         # ---
-        if "break" in sys.argv:
+        printe.output(f"<<red>> {len(cat_no_list)=}")
+        # ---
+        one_auth(auth, cat_list)
+        # ---
+        if "break" in sys.argv and numb % 10 == 0:
             break
     
 if __name__ == '__main__':
