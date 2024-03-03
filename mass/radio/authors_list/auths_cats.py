@@ -54,7 +54,10 @@ def create_cat(cat, text):
     else:
         page.Create(text=text, summary='create')
 
-def add(title, cat):
+def add(da=[], title="", cat=""):
+    if da:
+        title, cat = da[0], da[1]
+    # ---
     page = ncc_MainPage(title, 'www', family='nccommons')
 
     if not page.exists():
@@ -79,11 +82,11 @@ def mu(tab):
 
 def add_cat(pages, cat):
     if "multi" in sys.argv:
-        tab = [(x, cat) for x in pages]
+        tab = [[x, cat] for x in pages]
         mu(tab)
     else:
         for title in pages:
-            add(title, cat)
+            add(title=title, cat=cat)
 
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
