@@ -10,6 +10,7 @@ import sys
 import json
 import os
 from pathlib import Path
+from multiprocessing import Pool
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
@@ -49,24 +50,36 @@ def create_cat(cat, text):
     else:
         page.Create(text=text, summary='create')
 
-def add_cat(pages, cat):
-    for title in pages:
-        page = ncc_MainPage(title, 'www', family='nccommons')
+def add(title, cat):
+    page = ncc_MainPage(title, 'www', family='nccommons')
 
-        if not page.exists():
-            continue
+    if not page.exists():
+        return
     
-        text = page.get_text()
-        # ---
-        if text.find(cat) != -1:
-            printe.output(f"cat {title} already has it.")
-            continue
-        # ---
-        newtext = text
-        newtext += f"\n[[{cat}]]"
-        # ---
-        page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
+    text = page.get_text()
+    # ---
+    if text.find(cat) != -1:
+        printe.output(f"cat {title} already has it.")
+        return
+    # ---
+    newtext = text
+    newtext += f"\n[[{cat}]]"
+    # ---
+    page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
 
+def mu(tab):
+    pool = Pool(processes=5)
+    pool.map(add, tab)
+    pool.close()
+    pool.terminate()
+
+def add_cat(pages, cat):
+    if "multi" in sys.argv:
+        tab = [(x, cat) for x in pages]
+        mu(tab)
+    else:
+        for title in pages:
+            add(title, cat)
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
     # ---
