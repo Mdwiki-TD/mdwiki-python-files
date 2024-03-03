@@ -15,15 +15,15 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 
 main_dir = Path(__file__).parent.parent
 
-with open(main_dir / "jsons/ids.json", "r", encoding="utf-8") as f:
-    ids = json.load(f)
+with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
+    all_ids = json.load(f)
 
 with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 
-ids_tab = {x: v for x, v in ids.items() if x not in cases_in_ids}
+ids_tab = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
 
-cases_done = len(ids) - len(ids_tab)
+cases_done = len(all_ids) - len(ids_tab)
 
 class All:
     cases = 0
@@ -56,7 +56,7 @@ def get_studies(studies_ids, caseId):
 def sa():
     text = ""
     
-    text += f"* All Cases: {len(ids):,}\n"
+    text += f"* All Cases: {len(all_ids):,}\n"
     text += f"* Cases done: {cases_done:,}\n\n"
     text += f";Remaining:\n"
     text += f"* Cases: {All.cases:,}\n"
