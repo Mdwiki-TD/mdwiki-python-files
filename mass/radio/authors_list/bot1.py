@@ -11,19 +11,26 @@ import sys
 import json
 import os
 from pathlib import Path
+import sys
+import json
+import os
+from pathlib import Path
 from newapi import printe
 from mass.radio.authors_list.auths_infos import get_author_infos
 # ---
-main_dir = Path(__file__).parent.parent
+main_dir = Path(__file__).parent.parent.parent
 # ---
 with open(os.path.join(str(main_dir), 'authors_list/authors_to_cases.json'), 'r', encoding='utf-8') as f:
     authors_to_cases = json.load(f)
+    print(f"Length of authors_to_cases: {len(authors_to_cases)}")
 # ---
 with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', encoding='utf-8') as f:
     authors_infos = json.load(f)
+    print(f"Length of authors_infos: {len(authors_infos)}")
 # ---
 with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), 'r', encoding='utf-8') as f:
     all_ids = json.load(f)
+    print(f"Length of all_ids: {len(all_ids)}")
 # ---
 print(f"Length of all_ids: {len(all_ids)}")
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")
@@ -57,7 +64,12 @@ def make_authors_infos():
 
 def start():
     make_authors_infos()
+    print(f"Length of authors_to_cases: {len(authors_to_cases)}")
+    print(f"Length of authors_infos: {len(authors_infos)}")
+    print(f"Length of all_ids: {len(all_ids)}")
     
 
+if __name__ == '__main__':
+    start()
 if __name__ == '__main__':
     start()
