@@ -17,18 +17,18 @@ from mass.radio.st3.One_Case_New import OneCase
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/authors.json', 'r', encoding='utf-8') as f:
     authors = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/infos.json'), 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/infos.json', 'r', encoding='utf-8') as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
-with open(os.path.join(str(main_dir), 'jsons/cases_in_ids.json'), 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/cases_in_ids.json', 'r', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
 # ---
 ids_by_caseId = { x:v for x,v in all_ids.items() if x not in cases_in_ids }
