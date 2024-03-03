@@ -57,7 +57,7 @@ def start():
         # ---
         printe.output(f"<<red>> {len(cat_no_list)=}")
         # ---
-        one_auth(auth, cat_list)
+        one_auth(x, cat_list)
         # ---
         if "break" in sys.argv and numb % 10 == 0:
             break
