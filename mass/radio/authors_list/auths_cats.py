@@ -46,6 +46,10 @@ def create_cat(cat, text):
     page = ncc_MainPage(cat, 'www', family='nccommons')
 
     if page.exists():
+        pa_text = page.get_text()
+        if pa_text == text:
+            print("no different")
+            return
         page.save(newtext=text, summary='create')
     else:
         page.Create(text=text, summary='create')
