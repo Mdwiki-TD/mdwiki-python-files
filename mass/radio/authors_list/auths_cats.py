@@ -64,7 +64,7 @@ def add_cat(pages, cat):
         # ---
         newtext = f"\n[[{cat}]]"
         # ---
-        page.save(newtext=newtext, summary=f'Bot: added [[:{cat]]')
+        page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
 
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
