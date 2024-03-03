@@ -35,7 +35,10 @@ def get_soup(url):
     return soup
 def get_user_infos(url):
     # ---
-    user_info = {"url": "", "location": ""}
+    user_info = {"url": "", "location": "", "cases": 0}
+    # ---
+    if "empty" in sys.argv:
+        return user_info
     # ---
     location = ""
     # ---
@@ -96,7 +99,8 @@ def get_author_infos(auth, first_case_url):
     printe.output(f"<<yellow>> get_author_infos:{auth=}, {first_case_url=}")
     info = {
         "url" : "",
-        "location" : ""
+        "location" : "",
+        "cases" : 0
     }
     response = requests.get(first_case_url, timeout=10)
     soup = parse_html_content(response, soup)

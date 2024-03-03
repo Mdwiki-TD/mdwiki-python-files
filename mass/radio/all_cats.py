@@ -32,7 +32,7 @@ def doo():
     text += '|}'
     text += '\n[[Category:Radiopaedia|*]]'
 
-    page = ncc_MainPage('User:Mr._Ibrahem/Radiopaedia', 'www', family='nccommons')
+    page = ncc_MainPage('User:Mr._Ibrahem/Radiopaedia_cats', 'www', family='nccommons')
     # ---
     page.save(newtext=text, summary='update', nocreate=0, minor='')
     # sort names by count
