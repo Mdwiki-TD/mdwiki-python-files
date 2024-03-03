@@ -21,6 +21,9 @@ main_dir = Path(__file__).parent.parent
 with open(main_dir / 'authors_list' / 'authors_to_cases.json', 'r', encoding='utf-8') as f:
     authors_to_cases = json.load(f)
 # ---
+with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', encoding='utf-8') as f:
+    authors_infos = json.load(f)
+# ---
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")
 # ---
 
@@ -97,8 +100,18 @@ def add_cat(pages, cat):
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
     # ---
-    cat = f"Category:Radiopaedia cases by {auth}"
-    text = f"[[Category:Radiopaedia cases by author|{auth}]]"
+    cat  = f"Category:Radiopaedia cases by {auth}"
+    text = ""
+    # ---
+    url      = authors_infos.get(auth, {}).get('url')
+    location = authors_infos.get(auth, {}).get('location')
+    # ---
+    if url:
+        text += f"* Author: [{url} {auth}]\n"
+    else:
+        text += f"* Author: {auth}\n"
+    # ---
+    text += f"[[Category:Radiopaedia cases by author|{auth}]]"
     # ---
     create_cat(cat, text)
     # ---
@@ -115,7 +128,10 @@ def start():
     # ---
     cats = cases_cats()
     # ---
-    for numb, (x, x_cases) in enumerate(authors_to_cases.items(), start=1):
+    # auths in authors_to_cases with > 10 cases
+    authors_cases = {k: v for k, v in authors_to_cases.items() if len(v) > 10}
+    # ---
+    for numb, (x, x_cases) in enumerate(authors_cases.items(), start=1):
         # ---
         printe.output(f"{x=}, cases: {len(x_cases)=}")
         # ---
