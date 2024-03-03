@@ -105,7 +105,7 @@ def get_author_infos(auth, first_case_url):
         "location" : ""
     }
     # ---
-    na = get_user_infos(first_case_url)
+    na = extract_user_info(first_case_url)
     # ---
     return na
 
