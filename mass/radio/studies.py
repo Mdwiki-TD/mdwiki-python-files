@@ -12,7 +12,7 @@ import requests
 import json
 # ---
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
-# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
 main_dir = Path(__file__).parent
 
@@ -89,7 +89,7 @@ def get_images_stacks(study_id):
 def main():
     n = 0
     # ---
-    # ids_to_work = jsons.ids
+    # ids_to_work = jsons.all_ids
     ids_to_work = {}
     # ---
     no_id = 0
@@ -104,8 +104,8 @@ def main():
         no_id += 1 if not caseid else 0
         # ---
         tab = {'url': url, 'studies': []}
-        if caseid and jsons.ids.get(caseid):
-            tab.update(jsons.ids[caseid])
+        if caseid and jsons.all_ids.get(caseid):
+            tab.update(jsons.all_ids[caseid])
         # ---
         ids_to_work[url] = tab
     # ---

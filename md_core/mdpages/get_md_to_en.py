@@ -3,9 +3,9 @@
 
 
 """
-# python3 core8/pwb.py mdpy/get_md_to_en nodump
-# python3 core8/pwb.py mdpy/get_md_to_en other
-# python3 core8/pwb.py mdpy/get_md_to_en other nodump
+# python3 core8/pwb.py mdpages/get_md_to_en nodump
+# python3 core8/pwb.py mdpages/get_md_to_en other
+# python3 core8/pwb.py mdpages/get_md_to_en other nodump
 import json
 import sys
 import os

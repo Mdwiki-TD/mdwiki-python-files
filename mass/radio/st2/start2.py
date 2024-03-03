@@ -23,18 +23,18 @@ with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-
 with open(os.path.join(str(main_dir), 'jsons/infos.json'), 'r', encoding='utf-8') as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/ids.json'), 'r', encoding='utf-8') as f:
-    ids = json.load(f)
+with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), 'r', encoding='utf-8') as f:
+    all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
 with open(os.path.join(str(main_dir), 'jsons/cases_in_ids.json'), 'r', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = { x:v for x,v in ids.items() if x not in cases_in_ids }
+ids_by_caseId = { x:v for x,v in all_ids.items() if x not in cases_in_ids }
 # ---
 del cases_in_ids
-del ids
+del all_ids
 
 def print_memory():
 

@@ -5,7 +5,7 @@ python3 core8/pwb.py mass/radio/to_work
 from mass.radio.to_work import ids_to_work
 '''
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids, dump_json_file
-# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, ids=0, all_ids=0, urls_to_get_info=0)
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 
 cases_in_ids = set(jsons.cases_in_ids.keys())
 urls_set = set(jsons.urls.keys())
@@ -15,9 +15,9 @@ casesin_to_urls = [ids_to_urls.get(str(ca_id)) for ca_id in cases_in_ids if ids_
 t_to_work = urls_set - set(casesin_to_urls)
 
 ids_to_work = {
-    urls_to_ids.get(url): jsons.ids.get(urls_to_ids.get(url))
+    urls_to_ids.get(url): jsons.all_ids.get(urls_to_ids.get(url))
     for url in t_to_work
-    if urls_to_ids.get(url) and jsons.ids.get(urls_to_ids.get(url))
+    if urls_to_ids.get(url) and jsons.all_ids.get(urls_to_ids.get(url))
 }
 
 rm2 = {x: v for x, v in ids_to_work.items() if x in cases_in_ids}
