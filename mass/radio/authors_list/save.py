@@ -46,5 +46,7 @@ def sa(au_infos):
     else:
         page.Create(text=text, summary='update')
 
+from mass.radio.authors_list.save import sa
+
 if __name__ == '__main__':
     sa(authors_infos)
