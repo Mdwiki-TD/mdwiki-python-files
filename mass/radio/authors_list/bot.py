@@ -28,20 +28,20 @@ print(f"Length of all_ids: {len(all_ids)}")
 def get_missing_authors():
     printe.output("<<yellow>> get_missing_authors:")
     # ---
-    authors_n = authors.copy()
+    updated_authors = authors.copy()
     # ---
     add = 0
     add_from_info = 0
     # ---
     for x, ta in all_ids.items():
-        auther_in = authors.get(x)
+        author_exists = authors.get(x)
         # ---
-        if auther_in:
+        if author_exists:
             continue
         # ---
         url = ta.get('url', None)
         # ---
-        if not x or x in authors_n:
+        if not x or x in updated_authors:
             continue
         # ---
         author = ta.get('author', "")
@@ -51,25 +51,25 @@ def get_missing_authors():
             if author:
                 add_from_info += 1
         # ---
-        authors_n[x] = author
+        updated_authors[x] = author
         # ---
         add += 1
     # ---
     print(f"Added from all_ids: {add:,}")
     print(f"add_from_info: {add_from_info:,}")
     # ---
-    # sort authors_n by int(k)
-    authors_n = dict(sorted(authors_n.items(), key=lambda x: int(x[0])))
+    # sort updated_authors by int(k)
+    updated_authors = dict(sorted(updated_authors.items(), key=lambda x: int(x[0])))
     # ---
     if "nodump" not in sys.argv:
         # with open(os.path.join(str(main_dir), 'authors_list/authors_new.json'), 'w', encoding='utf-8') as f:
         with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'w', encoding='utf-8') as f:
-            json.dump(authors_n, f, ensure_ascii=False, indent=4)
+            json.dump(updated_authors, f, ensure_ascii=False, indent=4)
     # ---
     # len of empty authors
-    print("empty authors:", len([x for x, v in authors_n.items() if not v]))
+    print("empty authors:", len([x for x, v in updated_authors.items() if not v]))
     # ---
-    return authors_n
+    return updated_authors
 
 def make_authors_list(authors_n):
     printe.output("<<yellow>> make_authors_list:")

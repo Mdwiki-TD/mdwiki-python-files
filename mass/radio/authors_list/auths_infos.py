@@ -26,7 +26,11 @@ def get_soup(url):
         return
     # ---
     # Step 2: Parse the HTML content
-    soup = BeautifulSoup(response.content, 'html.parser')
+    try:
+        soup = BeautifulSoup(response.content, 'html.parser')
+    except Exception as e:
+        print(f"Error parsing HTML content: {e}")
+        return
     # ---
     return soup
 def get_user_infos(url):
