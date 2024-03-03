@@ -52,8 +52,8 @@ def start():
         # ---
         printe.output(f"{x=}, cases: {len(x_cases)=}")
         # ---
-        cat_list = [cats[c] for c in x_cats if c in cats]
-        cat_no_list = [c for c in x_cats if c not in cats]
+        cat_list = [cats[c] for c in x_cases if c in cats]
+        cat_no_list = [c for c in x_cases if c not in cats]
         # ---
         printe.output(f"<<red>> {len(cat_no_list)=}")
         # ---
