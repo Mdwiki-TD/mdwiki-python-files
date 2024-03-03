@@ -100,7 +100,7 @@ def get_author_infos(auth, first_case_url):
     }
     response = requests.get(first_case_url, timeout=10)
     soup = parse_html_content(response, soup)
-    na = get_user_infos(first_case_url)
+    location, user_url = extract_user_info(first_case_url)
     return na
         "location" : ""
     }
@@ -108,7 +108,7 @@ def get_author_infos(auth, first_case_url):
     na = get_user_infos(first_case_url)
     # ---
     return na
-def parse_html_content(response, soup):
+
     user_info = {"url": "", "location": ""}
     location = ""
     if not soup:
@@ -131,7 +131,7 @@ def parse_html_content(response, soup):
     user_info["url"] = user_url
     print(f" {location=}, {user_url=}")
     return user_info
-def parse_html_content(response, soup):
+
     user_info = {"url": "", "location": ""}
     location = ""
     if not soup:
@@ -154,7 +154,7 @@ def parse_html_content(response, soup):
     user_info["url"] = user_url
     print(f" {location=}, {user_url=}")
     return user_info
-def parse_html_content(response, soup):
+
     user_info = {"url": "", "location": ""}
     location = ""
     if not soup:
