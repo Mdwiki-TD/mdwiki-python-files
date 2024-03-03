@@ -38,5 +38,6 @@ sandbox:
   install:
     - trunk init
   check:
+    - Update README.md with new feature information
     - trunk fmt {file_path}
     - trunk check --fix {file_path}
