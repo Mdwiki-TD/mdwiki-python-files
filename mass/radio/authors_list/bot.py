@@ -11,6 +11,10 @@ import sys
 import json
 import os
 from pathlib import Path
+from mass.radio.authors_list.bot import make_authors_infos
+
+from mass.radio.authors_list.bot import make_authors_infos
+
 from newapi import printe
 from mass.radio.authors_list.auths_infos import get_author_infos
 # ---
