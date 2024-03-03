@@ -39,7 +39,7 @@ from pathlib import Path
 import json
 
 main_dir = Path(__file__).parent
-main_dir = os.path.join(str(main_dir), 'images')
+main_dir = main_dir / 'images'
 
 if not os.path.exists(main_dir):
     os.makedirs(main_dir)
