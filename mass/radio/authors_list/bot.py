@@ -37,9 +37,7 @@ def get_missing_authors():
     # ---
     for x, ta in all_ids.items():
         author_exists = authors.get(x)
-        # ---
-        if author_exists:
-            continue
+    # Remove the commented-out function "make_authors_infos"
         # ---
         url = ta.get('url', None)
         # ---
