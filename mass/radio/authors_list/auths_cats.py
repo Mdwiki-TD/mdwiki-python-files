@@ -80,6 +80,7 @@ def add_cat(pages, cat):
     else:
         for title in pages:
             add(title, cat)
+
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
     # ---
@@ -87,7 +88,14 @@ def one_auth(auth, cat_list):
     text = f"[[Category:Radiopaedia cases by author|{auth}]]"
     # ---
     create_cat(cat, text)
-    add_cat(cat_list, cat)
+    # ---
+    done = CatDepth(cat, sitecode='www', family="nccommons", depth=0, ns="14")
+    # ---
+    new_cat_list = [ x for x in cat_list if x not in done]
+    # ---
+    printe.output(f"{len(done)=}, {len(new_cat_list)=}")
+    # ---
+    add_cat(new_cat_list, cat)
 
 def start():
     # ---
