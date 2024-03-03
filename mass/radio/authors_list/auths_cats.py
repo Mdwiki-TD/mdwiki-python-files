@@ -18,7 +18,7 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(os.path.join(str(main_dir), 'authors_list/authors_to_cases.json'), 'r', encoding='utf-8') as f:
+with open(main_dir / 'authors_list' / 'authors_to_cases.json', 'r', encoding='utf-8') as f:
     authors_to_cases = json.load(f)
 # ---
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")
