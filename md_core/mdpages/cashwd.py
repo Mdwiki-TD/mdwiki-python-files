@@ -72,7 +72,7 @@ def get_qids_sitelinks(qidslist):
         No explicit exceptions are raised.
 
     Details:
-        This function processes QIDs in batches of 100, retrieves sitelinks from Wikidata, and organizes the results into two dictionaries with headers and QIDs as keys.
+        This function retrieves sitelinks from Wikidata for a list of QIDs. It processes the QIDs in batches of 100 and organizes the results into two dictionaries, one using mdtitle as keys and the other using sitelinks as keys.
     """
     # ---
     qs_list = list(qidslist.keys())
