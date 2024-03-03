@@ -32,7 +32,7 @@ def sa(au_infos):
     for numb, (x, ta) in enumerate(au_infos.items(), 1):
         text += '|-\n'
         text += f'! {numb}\n'
-        text += f'| {x}\n'
+        text += f'| [[:Category:Radiopaedia cases by {x}|{x}]]\n'
         text += f'| {ta["cases"]:,}\n'
         text += f'| {ta["url"]}\n'
         text += f'| {ta["location"]}\n'
