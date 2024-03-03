@@ -54,6 +54,26 @@ def get_user_infos(url):
             if user_url and user_url.startswith("/"):
                 user_url = "https://radiopaedia.org" + user_url
     # ---
+    # ---
+    user_info = {"url": "", "location": ""}
+    # ---
+    location = ""
+    # ---
+    soup = get_soup(url)
+    # ---
+    if not soup:
+        return user_info
+    # ---
+    # <div class="author-info">Case contributed by <a href="/users/frank?lang=us">Frank Gaillard</a>        </div>
+    user_url = ""
+    div = soup.find('div', class_='author-info')
+    if div:
+        a = div.find('a')
+        if a:
+            user_url = a.get('href')
+            if user_url and user_url.startswith("/"):
+                user_url = "https://radiopaedia.org" + user_url
+    # ---
     if user_url:
         soup2 = get_soup(user_url)
         if soup2:
