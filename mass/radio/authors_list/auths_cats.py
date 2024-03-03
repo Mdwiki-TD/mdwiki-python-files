@@ -73,6 +73,7 @@ def one_auth(auth, cat_list):
     text = f"[[Category:Radiopaedia cases by author|{auth}]]"
     # ---
     create_cat(cat, text)
+    add_cat(cat_list, cat)
 
 def start():
     # ---
