@@ -3,6 +3,8 @@
 python3 core8/pwb.py mass/radio/authors_list/bot nodump
 python3 core8/pwb.py mass/radio/authors_list/bot
 
+tfj run auths --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/bot && $HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/save"
+
 '''
 import re
 import sys
@@ -104,29 +106,11 @@ def make_authors_list(authors_n):
     # ---
     return new_authors
 
-def make_authors_infos(auths):
-    # ---
-    auths_infos = {x: {} for x in auths.keys()}
-    # ---
-    for x in auths.keys():
-        first_case = auths[x][0]
-        first_case_url = all_ids.get(first_case, {}).get('url', None)
-        auths_infos[x] = get_author_infos(x, first_case_url)
-        # ---
-        if "break" in sys.argv:
-            break
-    # ---
-    if "nodump" not in sys.argv:
-        with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'w', encoding='utf-8') as f:
-            json.dump(auths_infos, f, ensure_ascii=False, indent=4)
-    # ---
 def start():
     authors_n = get_missing_authors()
 
     new = make_authors_list(authors_n)
 
-    make_authors_infos(new)
-    
 
 if __name__ == '__main__':
     start()
