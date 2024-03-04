@@ -1,4 +1,4 @@
-'''
+'''\n# Script for dealing with Radiopaedia case operations
 from mass.radio.st3.One_Case_New import OneCase
 '''
 import sys
@@ -22,6 +22,7 @@ except ImportError:
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
+# Define the base directory where the script is located
 main_dir = Path(__file__).parent.parent
 # --
 with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', encoding='utf-8') as f:
