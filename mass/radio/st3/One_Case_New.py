@@ -1,4 +1,5 @@
-'''\n# Script for dealing with Radiopaedia case operations
+'''
+Script for dealing with Radiopaedia case operations
 from mass.radio.st3.One_Case_New import OneCase
 '''
 import sys
