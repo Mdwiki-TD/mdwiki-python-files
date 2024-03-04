@@ -1,6 +1,6 @@
 '''
 Script for dealing with Radiopaedia case operations
-from mass.radio.st3.One_Case_New import OneCase
+from mass.radio.st3.One_Case_New import One_Case_New
 '''
 import sys
 import os
@@ -52,6 +52,11 @@ def printt(s):
     printe.output(s)
 
 class OneCase:
+    """
+    Class representing a Radiopaedia case and its related operations.
+
+    This class handles the operations related to Radiopaedia cases by providing methods to retrieve and upload images, verify file existence, create categories, and handle case information.
+    """
     def __init__(self, case_url, caseId, title, studies_ids, author):
         self.author = author
         self.caseId = caseId
