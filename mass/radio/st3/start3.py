@@ -62,7 +62,9 @@ def multi_work(tab, numb=10):
     done = 0
     for i in range(0, len(tab), numb):
         group = tab[i:i+numb]
-        # ---    
+        # New Feature: Extracted from start3.py file
+# Executing batch processes for case extraction and memory monitoring.
+# ---    
         done += numb
         printe.output(f'<<purple>> done: {done}:')
         # ---
