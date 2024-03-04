@@ -86,7 +86,8 @@ def sa():
     
 def start():
     images_count = cases_counts()
-    
+    print(f"{len(images_count)=}")
+    # ---
     print(f"<<purple>> start.py all: {len(ids_tab)}:")
     n = 0
     for _, va in tqdm.tqdm(ids_tab.items()):
@@ -95,9 +96,9 @@ def start():
 
         studies = [study.split("/")[-1] for study in va["studies"]]
         All.studies += len(studies)
-        
-        if caseId in images_count:
-            images = images_count[caseId]
+        da = images_count.get(caseId) or images_count.get(str(caseId))
+        if da:
+            images = da
         else:
             images = get_studies(studies, caseId)
             images_count[caseId] = images
