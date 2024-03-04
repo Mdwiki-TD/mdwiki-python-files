@@ -124,7 +124,8 @@ def one_auth(auth, cat_list):
     # ---
     printe.output(f"{len(done)=}, {len(new_cat_list)=}")
     # ---
-    add_cat(new_cat_list, cat)
+    if "noadd" not in sys.argv:
+        add_cat(new_cat_list, cat)
 
 
 def start():
