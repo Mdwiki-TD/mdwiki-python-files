@@ -1,6 +1,12 @@
 """
 python3 core8/pwb.py mass/radio/st3/o 11171
 """
+"""Script for dealing with Radiopaedia case operations
+
+This script is used to handle operations related to Radiopaedia cases.
+"""
+
+# Script for handling Radiopaedia operation tasks
 import sys
 import json
 import os
