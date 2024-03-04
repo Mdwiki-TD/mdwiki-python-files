@@ -1,6 +1,11 @@
 '''
 
 python3 core8/pwb.py mass/radio/start nodiff test
+# New Feature
+
+**New Feature**: Extracted from start.py file
+- Feature description: Add a brief description of the new feature here
+- Commands: Add any new commands that have been added.
 python3 core8/pwb.py mass/radio/start nodiff get:55
 
 '''
@@ -77,6 +82,8 @@ def main(ids_tab):
     printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
     # ---
     print_memory()
+# New Feature: Extracted from start.py file
+# - Extracted feature description here
     # ---
     if 'test' not in sys.argv:
         tabs = {}
