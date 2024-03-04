@@ -16,13 +16,13 @@ from mass.radio.authors_list.auths_infos import get_author_infos
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(os.path.join(str(main_dir), 'jsons/infos.json'), 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/infos.json', 'r', encoding='utf-8') as f:
     infos = json.load(f)
 # ---
 with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-8') as f:
     authors = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
     all_ids = json.load(f)
 # ---
 print(f"Length of all_ids: {len(all_ids)}")
