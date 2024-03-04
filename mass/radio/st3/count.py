@@ -44,6 +44,7 @@ def cases_counts():
     return cases_count
 
 def get_studies(studies_ids, caseId):
+    print(f"get_studies {caseId=}")
     images_count = 0
     for study in studies_ids:
         st_file = main_dir / "studies" / f"{study}.json"
