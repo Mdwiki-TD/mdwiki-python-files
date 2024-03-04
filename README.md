@@ -1,3 +1,3 @@
 # New Feature
 
-For a detailed description, refer to [this new_feature.md file](docs/new_feature.md)
+For a detailed description of the new feature and any new commands, please refer to the [new_feature.md](docs/new_feature.md) file.
