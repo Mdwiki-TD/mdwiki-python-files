@@ -31,6 +31,12 @@ def read_json_file(file_path):
 
 
 def extract_images_from_url(url):
+    '''
+    # New Feature
+    Add a detailed description of the new feature here.
+
+    ## New Commands
+    Add any new commands that have been added here.'''
     # Print the URL being processed
     printe.output(f"\t Processing URL: {url}")
 
