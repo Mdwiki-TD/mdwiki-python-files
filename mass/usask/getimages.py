@@ -20,8 +20,8 @@ from newapi import printe
 # ---
 
 main_dir = Path(__file__).parent
-jsonfile = os.path.join(str(main_dir), 'urls.json')
-jsonimages = os.path.join(str(main_dir), 'images.json')
+jsonfile = main_dir / 'urls.json'
+jsonimages = main_dir / 'images.json'
 
 
 def read_json_file(file_path):
@@ -50,7 +50,6 @@ def extract_images_from_url(url):
 
     # Create a dictionary to store the image URLs and their captions
     images_info = {}
-
     # Find all 'figure' tags in the HTML
     figure_tags = soup.find_all('figure')
 
