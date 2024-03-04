@@ -22,11 +22,14 @@ except ImportError:
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
+main_dir = Path(__file__).parent.parent
+# --
+with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', encoding='utf-8') as f:
+    authors_infos = json.load(f)
+# ---
 api_new  = NEW_API('www', family='nccommons')
 api_new.Login_to_wiki()
 # ---
-main_dir = Path(__file__).parent.parent
-# --
 urls_done = []
 
 
@@ -157,6 +160,18 @@ class OneCase:
         if self.title_exists(file_title):
             return image_name
         # ---
+        auth_line = f'{self.author}'
+        # ---
+        auth_url = authors_infos.get(self.author, {}).get('url', '')
+        auth_location = authors_infos.get(self.author, {}).get('location', '')
+        if auth_url:
+            auth_line = f'[{auth_url} {self.author}]'
+        # ---
+        usa_license = ""
+        # ---
+        if auth_location.lower().find('united states') != -1:
+            usa_license = "{{PD-medical}}"
+        # ---
         image_text = '== {{int:summary}} ==\n'
 
         image_text += (
@@ -167,13 +182,15 @@ class OneCase:
             f'* Image ID: [{image_url} {image_id}]\n'
             f'* Plane projection: {plane}\n'
             f'* modality: {modality}\n'
+            f'* Author location: {auth_location}\n'
             f'|Date = {self.published}\n'
             f'|Source = [{self.case_url} {self.title}]\n'
-            f'|Author = {self.author}\n'
+            f'|Author = {auth_line}\n'
             '|Permission = http://creativecommons.org/licenses/by-nc-sa/3.0/\n'
             '}}\n'
             '== {{int:license}} ==\n'
             '{{CC-BY-NC-SA-3.0}}\n'
+            f'{usa_license}\n'
             f'[[{self.category}]]\n'
             '[[Category:Uploads by Mr. Ibrahem]]'
         )
