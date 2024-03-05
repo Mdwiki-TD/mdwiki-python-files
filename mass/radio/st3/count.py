@@ -20,7 +20,7 @@ with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
 
 with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
-
+    
 ids_tab = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
 
 cases_done = len(all_ids) - len(ids_tab)
@@ -31,8 +31,20 @@ class All:
     studies = 0
     
 All.cases = len(ids_tab)
+cases_count_file = main_dir / "jsons/cases_count.json"
+
+def cases_counts():
+    if not os.path.exists(cases_count_file):
+        with open(cases_count_file, 'w', encoding='utf-8') as f:
+            f.write("{}")
+        
+    with open(cases_count_file, "r", encoding="utf-8") as f:
+        cases_count = json.load(f)
+        
+    return cases_count
 
 def get_studies(studies_ids, caseId):
+    print(f"get_studies {caseId=}")
     images_count = 0
     for study in studies_ids:
         st_file = main_dir / "studies" / f"{study}.json"
@@ -73,6 +85,9 @@ def sa():
         page.Create(text=text, summary='update')
     
 def start():
+    images_count = cases_counts()
+    print(f"{len(images_count)=}")
+    # ---
     print(f"<<purple>> start.py all: {len(ids_tab)}:")
     n = 0
     for _, va in tqdm.tqdm(ids_tab.items()):
@@ -81,14 +96,22 @@ def start():
 
         studies = [study.split("/")[-1] for study in va["studies"]]
         All.studies += len(studies)
-
-        images = get_studies(studies, caseId)
+        da = images_count.get(caseId) or images_count.get(str(caseId))
+        if da:
+            images = da
+        else:
+            images = get_studies(studies, caseId)
+            images_count[caseId] = images
+            
         All.images += images
 
         if "test" in sys.argv and n == 100:
             break
     
     sa()
+    
+    with open(cases_count_file, 'w', encoding='utf-8') as f:
+        json.dump(images_count, f, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
     start()

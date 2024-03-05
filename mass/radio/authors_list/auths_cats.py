@@ -2,7 +2,10 @@
 
 python3 core8/pwb.py mass/radio/authors_list/auths_cats
 
-tfj run authscats --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/auths_cats"
+tfj run aucts --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/auths_cats"
+
+logs in page:
+https://nccommons.org/wiki/User:Mr._Ibrahem/Radiopaedia_authors
 
 '''
 import re
@@ -121,7 +124,8 @@ def one_auth(auth, cat_list):
     # ---
     printe.output(f"{len(done)=}, {len(new_cat_list)=}")
     # ---
-    add_cat(new_cat_list, cat)
+    if "noadd" not in sys.argv:
+        add_cat(new_cat_list, cat)
 
 
 def start():
