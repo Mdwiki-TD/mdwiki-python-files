@@ -66,7 +66,7 @@ def get_studies(studies_ids, caseId):
     return images_count
 
 def sa():
-    text = ""
+    text = "--~~~\n"
     
     text += f"* All Cases: {len(all_ids):,}\n"
     text += f"* Cases done: {cases_done:,}\n\n"
