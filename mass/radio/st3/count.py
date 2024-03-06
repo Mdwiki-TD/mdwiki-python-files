@@ -9,7 +9,10 @@ import os
 import sys
 import json
 import tqdm
+import time
 from pathlib import Path
+from datetime import datetime
+
 from mass.radio.studies import get_images_stacks, get_images
 from newapi.ncc_page import MainPage as ncc_MainPage
 
@@ -66,7 +69,9 @@ def get_studies(studies_ids, caseId):
     return images_count
 
 def sa():
-    text = ""
+    day = datetime.now().strftime("%Y-%b-%d %H:%M:%S")
+    #text = f"{day}\n"
+    text = f"* --~~~~\n"
     
     text += f"* All Cases: {len(all_ids):,}\n"
     text += f"* Cases done: {cases_done:,}\n\n"
