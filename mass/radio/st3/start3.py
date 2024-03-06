@@ -1,9 +1,9 @@
-'''
+"""
 
 python3 core8/pwb.py mass/radio/st3/start3 test nomulti
 python3 /data/project/mdwiki/pybot/mass/radio/st3/start3.py test
 
-'''
+"""
 import sys
 import psutil
 import tqdm
@@ -11,64 +11,68 @@ import json
 import os
 from pathlib import Path
 from multiprocessing import Pool
+
 # ---
 from newapi import printe
 from mass.radio.st3.One_Case_New import OneCase
+
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / 'jsons/authors.json', 'r', encoding='utf-8') as f:
+with open(main_dir / "jsons/authors.json", "r", encoding="utf-8") as f:
     authors = json.load(f)
 # ---
-with open(main_dir / 'jsons/infos.json', 'r', encoding='utf-8') as f:
+with open(main_dir / "jsons/infos.json", "r", encoding="utf-8") as f:
     infos = json.load(f)
 # ---
-with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
+with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
-with open(main_dir / 'jsons/cases_in_ids.json', 'r', encoding='utf-8') as f:
+with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = { x:v for x,v in all_ids.items() if x not in cases_in_ids }
+ids_by_caseId = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
 # ---
 del cases_in_ids
 del all_ids
 
-def print_memory():
 
+def print_memory():
     _red_ = "\033[91m%s\033[00m"
 
     usage = psutil.Process(os.getpid()).memory_info().rss
     usage = usage / 1024 // 1024
-    
-    print(_red_ % f'memory usage: psutil {usage} MB')
+
+    print(_red_ % f"memory usage: psutil {usage} MB")
+
 
 def do_it(va):
     # ---
-    case_url = va['case_url']
-    caseId   = va['caseId']
-    title    = va['title']
-    studies  = va['studies']
-    author   = va['author']
+    case_url = va["case_url"]
+    caseId = va["caseId"]
+    title = va["title"]
+    studies = va["studies"]
+    author = va["author"]
     # ---
     bot = OneCase(case_url, caseId, title, studies, author)
     bot.start()
     # ---
     del bot, author, title, studies
 
+
 def multi_work(tab, numb=10):
     done = 0
     for i in range(0, len(tab), numb):
-        group = tab[i:i+numb]
-        # ---    
+        group = tab[i : i + numb]
+        # ---
         done += numb
-        printe.output(f'<<purple>> done: {done}:')
+        printe.output(f"<<purple>> done: {done}:")
         # ---
         print_memory()
         # ---
-        if 'nomulti' in sys.argv:
+        if "nomulti" in sys.argv:
             for x in group:
                 do_it(x)
         else:
@@ -77,27 +81,35 @@ def multi_work(tab, numb=10):
             pool.close()
             pool.terminate()
 
+
+def ddo(taba):
+    ids_tabs = taba
+    tabs = {}
+    print(f"all cases: {len(ids_tabs)}")
+    length = (len(ids_tabs) // 6) + 1
+    for i in range(0, len(ids_tabs), length):
+        num = i // length + 1
+        tabs[str(num)] = dict(list(ids_tabs.items())[i : i + length])
+        # print(f'tab {num} : {len(tabs[str(num)])}')
+        print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 nodiff get:{num} {len(tabs[str(num)])}"')
+
+    for arg in sys.argv:
+        arg, _, value = arg.partition(":")
+        if arg == "get":
+            ids_tabs = tabs[value]
+            print(f"work in {len(ids_tabs)} cases")
+    del tabs
+
+    return ids_tabs
+
+
 def main(ids_tab):
-    printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
+    printe.output(f"<<purple>> start.py all: {len(ids_tab)}:")
     # ---
     print_memory()
     # ---
-    if 'test' not in sys.argv:
-        tabs = {}
-        print(f'all cases: {len(ids_tab)}')
-        length = (len(ids_tab) // 13) +1
-        for i in range(0, len(ids_tab), length):
-            num = i//length+1
-            tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
-            # print(f'tab {num} : {len(tabs[str(num)])}')
-            print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 nodiff get:{num} {len(tabs[str(num)])}"')
-        
-        for arg in sys.argv:
-            arg, _, value = arg.partition(':')
-            if arg == 'get':
-                ids_tab = tabs[value]
-                print(f'work in {len(ids_tab)} cases')
-        del tabs
+    if "test" not in sys.argv:
+        ids_tab = ddo(ids_tab)
     # ---
     tab = []
     # ---
@@ -105,44 +117,33 @@ def main(ids_tab):
     for _, va in tqdm.tqdm(ids_tab.items()):
         n += 1
         # ---
-        caseId   = va['caseId']
-        case_url = va['url']
+        caseId = va["caseId"]
+        case_url = va["url"]
         # ---
-        author = va.get('author', '')
-        # ---
-        if not author:
-            author = infos.get(case_url, {}).get(str(caseId), '')
+        author = va.get("author", "")
         # ---
         if not author:
-            author = authors.get(str(caseId), '')
+            author = infos.get(case_url, {}).get(str(caseId), "")
         # ---
-        title = va['title']
+        if not author:
+            author = authors.get(str(caseId), "")
         # ---
-        studies = [study.split('/')[-1] for study in va['studies']]
+        title = va["title"]
         # ---
-        tab.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': author})
+        studies = [study.split("/")[-1] for study in va["studies"]]
+        # ---
+        tab.append({"caseId": caseId, "case_url": case_url, "title": title, "studies": studies, "author": author})
     # ---
     del ids_tab
     # ---
     multi_work(tab)
 
+
 if __name__ == "__main__":
     # ---
-    if 'test' in sys.argv:
-        ids_by_caseId = {
-            "161846": {
-                "url": "https://radiopaedia.org/cases/cholangiocarcinoma-25",
-                "caseId": 161846,
-                "title": "Cholangiocarcinoma",
-                "studies": [
-                    "https://radiopaedia.org/cases/161846/studies/132257"
-                ],
-                "author": "Mohammadtaghi Niknejad",
-                "system": "Hepatobiliary",
-                "published": "19 Feb 2023"
-            }
-        }
+    if "test" in sys.argv:
+        ids_by_caseId = {"161846": {"url": "https://radiopaedia.org/cases/cholangiocarcinoma-25", "caseId": 161846, "title": "Cholangiocarcinoma", "studies": ["https://radiopaedia.org/cases/161846/studies/132257"], "author": "Mohammadtaghi Niknejad", "system": "Hepatobiliary", "published": "19 Feb 2023"}}
     # ---
-    print('ids_by_caseId: ', len(ids_by_caseId))
+    print("ids_by_caseId: ", len(ids_by_caseId))
     # ---
     main(ids_by_caseId)
