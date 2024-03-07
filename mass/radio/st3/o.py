@@ -13,9 +13,21 @@ from mass.radio.st3.start3 import main_by_ids
 # ---
 from mass.radio.st3.start3 import main_by_ids
 # ---
-ids = [arg for arg in sys.argv[1:] if arg.isdigit()]
+def parse_arguments():
+    return [arg for arg in sys.argv[1:] if arg.isdigit()]
 # ---
 print(f"len ids: {len(ids)}")
 # ---
 main_by_ids(ids)
 # ---
+def main():
+    def parse_arguments():
+        return [arg for arg in sys.argv[1:] if arg.isdigit()]
+    main_by_ids(ids)
+    
+main()
+def main():
+    ids = parse_arguments()
+    main_by_ids(ids)
+    
+main()
