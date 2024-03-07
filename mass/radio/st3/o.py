@@ -1,3 +1,4 @@
+from mass.radio.st3.o import ids
 """
 python3 core8/pwb.py mass/radio/st3/o 176190
 """
@@ -16,15 +17,18 @@ from mass.radio.st3.start3 import main_by_ids
 def parse_arguments():
     return [arg for arg in sys.argv[1:] if arg.isdigit()]
 # ---
-print(f"len ids: {len(ids)}")
+print_ids_length(ids)
 # ---
 main_by_ids(ids)
 # ---
+def print_ids_length(ids):
+    print(f"len ids: {len(ids)}")
+
 def main():
-    def parse_arguments():
-        return [arg for arg in sys.argv[1:] if arg.isdigit()]
-    main_by_ids(ids)
-    
+    ids = parse_arguments()
+print_ids_length(ids)
+main_by_ids(ids)
+
 main()
 def main():
     ids = parse_arguments()
