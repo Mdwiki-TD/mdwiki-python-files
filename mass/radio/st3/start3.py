@@ -48,8 +48,6 @@ def ddo(taba):
     del tabs
 
     return ids_tabs
-
-
 def main(ids_tab):
     printe.output(f"<<purple>> start.py all: {len(ids_tab)}:")
     # ---
