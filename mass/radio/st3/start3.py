@@ -36,7 +36,6 @@ with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
 ids_by_caseId = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
 # ---
 del cases_in_ids
-del all_ids
 
 
 def print_memory():
@@ -72,7 +71,7 @@ def multi_work(tab, numb=10):
         # ---
         print_memory()
         # ---
-        if "nomulti" in sys.argv:
+        if "nomulti" in sys.argv or len(tab) < 10:
             for x in group:
                 do_it(x)
         else:
@@ -108,7 +107,7 @@ def main(ids_tab):
     # ---
     print_memory()
     # ---
-    if "test" not in sys.argv:
+    if "test" not in sys.argv and len(ids_tab) > 100:
         ids_tab = ddo(ids_tab)
     # ---
     tab = []
@@ -138,6 +137,16 @@ def main(ids_tab):
     # ---
     multi_work(tab)
 
+def main_by_ids(ids):
+    printe.output(f"<<purple>> start.py main_by_ids: {len(ids)=}:")
+    # ---
+    ids_tab = {caseId: all_ids[caseId] for caseId in ids if caseId in all_ids}
+    # ---
+    not_in = [c for c in ids if c not in all_ids]
+    # ---
+    print(f"main_by_ids caseId not in all_ids: {len(not_in)}")
+    # ---
+    main(ids_tab)
 
 if __name__ == "__main__":
     # ---
