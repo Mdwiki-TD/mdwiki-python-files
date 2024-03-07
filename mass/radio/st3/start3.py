@@ -8,66 +8,14 @@ import sys
 import psutil
 import tqdm
 import json
-import os
-from pathlib import Path
-from multiprocessing import Pool
-
-# ---
-from newapi import printe
-from mass.radio.st3.One_Case_New import OneCase
-
-# ---
-main_dir = Path(__file__).parent.parent
-# ---
-with open(main_dir / "jsons/authors.json", "r", encoding="utf-8") as f:
-    authors = json.load(f)
-# ---
-with open(main_dir / "jsons/infos.json", "r", encoding="utf-8") as f:
-    infos = json.load(f)
-# ---
-with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
-    all_ids = json.load(f)
-# ---
-# cases_in_ids = []
-# ---
-with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
-    cases_in_ids = json.load(f)
-# ---
-ids_by_caseId = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
-# ---
-del cases_in_ids
-
-
-def print_memory():
-    _red_ = "\033[91m%s\033[00m"
-
-    usage = psutil.Process(os.getpid()).memory_info().rss
-    usage = usage / 1024 // 1024
-
-    print(_red_ % f"memory usage: psutil {usage} MB")
-
-
-def do_it(va):
-    # ---
-    case_url = va["case_url"]
-    caseId = va["caseId"]
-    title = va["title"]
-    studies = va["studies"]
-    author = va["author"]
-    # ---
-    bot = OneCase(case_url, caseId, title, studies, author)
-    bot.start()
-    # ---
-    del bot, author, title, studies
-
-
-def multi_work(tab, numb=10):
-    done = 0
-    for i in range(0, len(tab), numb):
-        group = tab[i : i + numb]
-        # ---
-        done += numb
-        printe.output(f"<<purple>> done: {done}:")
+if "nomulti" in sys.argv or len(tab) < 10:
+    for x in group:
+        do_it(x)
+else:
+    pool = Pool(processes=5)
+    pool.map(do_it, group)
+    pool.close()
+    pool.terminate()
         # ---
         print_memory()
         # ---
