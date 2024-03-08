@@ -1,11 +1,8 @@
 '''
 
-python3 core8/pwb.py mass/radio/authors_list/auths_cats
+python3 core8/pwb.py mass/radio/st3/files
 
 tfj run aucts --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/auths_cats"
-
-logs in page:
-https://nccommons.org/wiki/User:Mr._Ibrahem/Radiopaedia_authors
 
 '''
 import re
@@ -31,8 +28,8 @@ def cases_cats():
             # ---
             id2cat[case_id] = cat
     # ---
-    print(f'lenth of members: {len(members)} ')
-    print(f'lenth of id2cat: {len(id2cat)} ')
+    print(f'cases_cats, lenth of members: {len(members)} ')
+    print(f'cases_cats, lenth of id2cat: {len(id2cat)} ')
 
     return id2cat
 
@@ -50,7 +47,7 @@ def images_to_cats():
             tab[file] = case_id
     # ---
     print(f'images_to_cats, lenth of members: {len(members)} ')
-    print(f'images_to_cats, lenth of id2cat: {len(id2cat)} ')
+    print(f'images_to_cats, lenth of tab: {len(tab)} ')
 
     return tab
 
