@@ -106,7 +106,7 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
         # ---
         if do_ext and error_code == "verification-error":
         	new_file_name = ext.get_new_ext(error, file_name)
-            return upload_by_url(file_name, text, url, comment=comment, return_file_name=return_file_name)
+            return upload_by_url(new_file_name, text, url, comment=comment, return_file_name=return_file_name)
         	#---
         printe.output(error)
     # ---
