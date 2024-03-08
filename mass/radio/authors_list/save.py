@@ -33,7 +33,7 @@ def sa(au_infos):
         text += '|-\n'
         text += f'! {numb}\n'
         text += f'| [[:Category:Radiopaedia cases by {x}|{x}]]\n'
-        text += f'| {{PAGESINCATEGORY:Radiopaedia cases by {x}}}\n'
+        text += f'| {{{{PAGESINCATEGORY:Radiopaedia cases by {x}}}}}\n'
         text += f'| {ta["cases"]:,}\n'
         text += f'| {ta["url"]}\n'
         text += f'| {ta["location"]}\n'
