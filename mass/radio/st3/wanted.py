@@ -1,4 +1,5 @@
 """
+tfj run wanted --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/wanted nomulti unused"
 
 python3 core8/pwb.py mass/radio/st3/wanted nomulti unused ask
 python3 core8/pwb.py mass/radio/st3/wanted nomulti ask
