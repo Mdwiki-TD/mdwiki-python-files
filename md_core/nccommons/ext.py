@@ -8,7 +8,7 @@ def get_new_ext(error, file_name):
     استخراج الامتداد الصحيح من رسالة الخطأ باستخدام وحدة pathlib
     """
     # استخراج نوع MIME من رسالة mimetypes
-    mime_type = re.findall(r'MIME type of the file \((.*?)\)', error)[0]
+    mime_type = re.findall(r'MIME type of the file \((.*?)\)', error["info"])[0]
 
     # استخراج الامتداد الحالي من اسم الملف
     current_ext = Path(file_name).suffix
