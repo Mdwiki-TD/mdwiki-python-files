@@ -111,13 +111,8 @@ class OneCase:
             printt(f'<<lightyellow>> {self.category} already exists')
             return
         # ---
-        new = cat.Create(text=text, summary='')
+        new = cat.Create(text=text, summary='create')
         printt(f'Category {self.category} created..')
-        # else:
-        #     if text != cat.get_text():
-        #         printt(f'<<lightyellow>>{self.category} already exists')
-        #         new = cat.save(newtext=text, summary='update', nocreate=0, minor='')
-        # ---
 
     def get_studies(self):
         for study in self.studies_ids:
@@ -200,6 +195,9 @@ class OneCase:
         file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True)
 
         printt(f"upload result: {file_name}")
+        if file_name and file_name != image_name:
+            self.add_category(file_name)
+
         return file_name
 
     def upload_images(self, study, images):
@@ -339,4 +337,26 @@ class OneCase:
                 printt('<<lightyellow>> no changes')
                 return True
             ssa = page.save(newtext=text, summary='update', nocreate=0, minor='')
+            return ssa
+
+    def add_category(self, file_name):
+        # ---
+        if "add_category" not in sys.argv:
+            return
+        # ---
+        add_text = f'\n[[{self.category}]]'
+        # ---
+        file_title = f'File:{file_name}'
+        # ---
+        page = ncc_MainPage(file_title, 'www', family='nccommons')
+        # ---
+        p_text = page.get_text()
+        # ---
+        if p_text.find("[[Category:Radiopaedia case") != -1:
+            printe.output(f'<<lightyellow>>{file_title} has cat:')
+            printe.output(p_text)
+        # ---
+        if p_text.find(self.category) == -1:
+            new_text = p_text + add_text
+            ssa = page.save(newtext=new_text, summary=f'Bot: added [[:{self.category}]]')
             return ssa

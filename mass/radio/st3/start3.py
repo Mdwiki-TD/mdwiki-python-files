@@ -1,7 +1,15 @@
 """
 
+python3 core8/pwb.py mass/radio/st3/start3 get:500
 python3 core8/pwb.py mass/radio/st3/start3 test nomulti
 python3 /data/project/mdwiki/pybot/mass/radio/st3/start3.py test
+
+tfj run mnx1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:1 157"
+tfj run mnx2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:2 157"
+tfj run mnx3 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:3 157"
+tfj run mnx4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:4 157"
+tfj run gnr5 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:5 mdwiki"
+tfj run gnr6 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:6 mdwiki"
 
 """
 import sys
@@ -90,7 +98,7 @@ def ddo(taba):
         num = i // length + 1
         tabs[str(num)] = dict(list(ids_tabs.items())[i : i + length])
         # print(f'tab {num} : {len(tabs[str(num)])}')
-        print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 nodiff get:{num} {len(tabs[str(num)])}"')
+        print(f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:{num} {len(tabs[str(num)])}"')
 
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
