@@ -87,6 +87,8 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
     upload_result = result.get("upload", {})
     # ---
     success = upload_result.get("result") == "Success"
+    error_info = result.get("error", {}).get("info", '')
+    # ---
     error = result.get("error", {})
     error_code = result.get("error", {}).get("code", '')
     error_info = result.get("error", {}).get("info", '')
@@ -107,7 +109,8 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
         # ---
         printe.output(error)
         # ----
-        if do_ext and error_code == "verification-error" and error_info:
+        if do_ext and error_code == "verification-error" and error_info: 
+        # Update the docstring or comments to include the new parameter 'new_param'
             new_file_name = ext.get_new_ext(error_info, file_name)
             if new_file_name:
                 return upload_by_url(new_file_name, text, url, comment=comment, return_file_name=return_file_name)
