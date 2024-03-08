@@ -3,7 +3,7 @@
 
 python3 core8/pwb.py mass/radio/st3/files
 
-tfj run aucts --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/files"
+tfj run files --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/files"
 
 '''
 import re
