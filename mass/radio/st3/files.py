@@ -63,7 +63,7 @@ def add(da=[], title="", cat=""):
 
     text = page.get_text()
     # ---
-    if text.find(cat) != -1:
+    if text.find(cat) != -1 or text.find("[[Category:Radiopaedia case") != -1:
         printe.output(f"cat {title} already has it.")
         return
     # ---
