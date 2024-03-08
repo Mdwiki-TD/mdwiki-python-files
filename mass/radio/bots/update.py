@@ -1,6 +1,12 @@
 import re
 from newapi.ncc_page import MainPage as ncc_MainPage
 
+def get_ta(text, ta):
+    res = re.findall(rf"\* {ta}: (.*?)\n", text)
+    if res:
+        res = res[0]
+    return res
+    
 def update_text(title, text):
     # ---
     page = ncc_MainPage(title, "www", family="nccommons")
@@ -8,18 +14,18 @@ def update_text(title, text):
     p_text = page.get_text()
     # ---
     # get * Findings: CT
-    Findings = re.findall(r"\* Findings: (.*?)\n", p_text)
-    if Findings:
-        Findings = Findings[0]
-        if Findings != '':
-            text = text.replace("* Author location:", f"* Findings: {Findings}\n* Author location:")
+    Findings = get_ta(p_text, "Findings")
+    if Findings != '':
+        text = text.replace("* Author location:", f"* Findings: {Findings}\n* Author location:")
     # ---
-    # get * Modality: CT
-    Modality = re.findall(r"\* Modality: (.*?)\n", p_text)
-    if Modality:
-        Modality = Modality[0]
-        if Modality != '':
-            text = text.replace("* Modality: ", f"* Modality: {Modality}")
+    # get * Study findings:
+    Study_findings = get_ta(p_text, "Study findings")
+    if Study_findings != '':
+        text = text.replace("* Author location:", f"* Study findings: {Study_findings}\n* Author location:")
+    # ---
+    Modality = get_ta(p_text, "Modality")
+    if Modality != '':
+        text = text.replace("* Modality: ", f"* Modality: {Modality}")
     # ---
     if p_text.find("Category:Uploads by Fæ") != -1:
         text = text.replace("[[Category:Uploads by Mr. Ibrahem", "[[Category:Uploads by Fæ")
