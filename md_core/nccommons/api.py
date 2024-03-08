@@ -39,7 +39,7 @@ Save_all = {1: False}
 upload_all = {1: False}
 # ---
 def py_input(s):
-    print(s)
+    printe.output(s)
     sa = input()
     # ---
     return sa

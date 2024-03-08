@@ -1,6 +1,8 @@
 """
 
+python3 core8/pwb.py mass/radio/st3/wanted nomulti unused ask
 python3 core8/pwb.py mass/radio/st3/wanted nomulti ask
+python3 core8/pwb.py mass/radio/st3/wanted nomulti add_category
 
 """
 import sys
@@ -33,7 +35,7 @@ if "unused" in sys.argv:
 # Unusedcategories: { "ns": 14, "title": "Category:Radiopaedia case 10033 Congenital diaphragmatic hernia" }
 # Wantedcategories:{'value': '823', 'ns': 14, 'title': 'Category:Radiopaedia case 154144 Primary CNS lymphoma-atypical cortical location'}
 # ---
-cats = api_new.querypage_list(qppage=prop, max=5000)
+cats = api_new.querypage_list(qppage=prop, Max=5000)
 # ---
 cats = [ x['title'] for x in cats ]
 # ---
