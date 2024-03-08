@@ -3,12 +3,13 @@ import mimetypes
 
 import re
 
-def get_new_ext(error, file_name):
+def get_new_ext(error_info, file_name):
     """
     استخراج الامتداد الصحيح من رسالة الخطأ باستخدام وحدة pathlib
     """
+    
     # استخراج نوع MIME من رسالة mimetypes
-    mime_type = re.findall(r'MIME type of the file \((.*?)\)', error["info"])
+    mime_type = re.findall(r'MIME type of the file \((.*?)\)', error_info)
     if len(mime_type) > 0:
         mime_type = mime_type[0]
     
