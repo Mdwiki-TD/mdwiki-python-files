@@ -89,6 +89,7 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
     error_code = result.get("error", {}).get("code", '')
+    error_info = result.get("error", {}).get("info", '')
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
@@ -104,11 +105,12 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
     elif error != {}:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         # ---
-        if do_ext and error_code == "verification-error":
-        	new_file_name = ext.get_new_ext(error, file_name)
-            return upload_by_url(new_file_name, text, url, comment=comment, return_file_name=return_file_name)
-        	#---
         printe.output(error)
+        # ----
+        if do_ext and error_code == "verification-error" and error_info:
+            new_file_name = ext.get_new_ext(error_info, file_name)
+            if new_file_name:
+                return upload_by_url(new_file_name, text, url, comment=comment, return_file_name=return_file_name)
     # ---
     printe.output(result)
     return False if not return_file_name else ''
