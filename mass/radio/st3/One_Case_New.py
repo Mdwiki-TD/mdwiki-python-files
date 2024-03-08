@@ -211,6 +211,8 @@ class OneCase:
 
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
+            if "updatetext" in sys.argv:
+                update_text(f"File:{file_name}", image_text)
             self.add_category(file_name)
 
         return file_name
@@ -303,8 +305,9 @@ class OneCase:
         # ---
         set_title = f"Radiopaedia case {self.title} id: {self.caseId} study: {study}"
         # ---
-        if self.images_count > 1:
-            self.create_set(set_title, sets)
+        if "updatetext" not in sys.argv:
+            if self.images_count > 1:
+                self.create_set(set_title, sets)
 
     def start(self):
         self.get_studies()
