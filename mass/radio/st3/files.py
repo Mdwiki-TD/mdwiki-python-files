@@ -1,24 +1,19 @@
-
-'''
+"""
 
 python3 core8/pwb.py mass/radio/st3/files
 
 tfj run files --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/files"
 
-'''
+"""
 import re
-import sys
-import json
-import os
-from pathlib import Path
-from multiprocessing import Pool
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
 
+
 def cases_cats():
-    members = CatDepth('Category:Radiopaedia images by case', sitecode='www', family="nccommons", depth=0, ns="14")
-    reg = r'^Category:Radiopaedia case (\d+) (.*?)$'
+    members = CatDepth("Category:Radiopaedia images by case", sitecode="www", family="nccommons", depth=0, ns="14")
+    reg = r"^Category:Radiopaedia case (\d+) (.*?)$"
     # ---
     id2cat = {}
     # ---
@@ -29,14 +24,15 @@ def cases_cats():
             # ---
             id2cat[case_id] = cat
     # ---
-    print(f'cases_cats, lenth of members: {len(members)} ')
-    print(f'cases_cats, lenth of id2cat: {len(id2cat)} ')
+    print(f"cases_cats, lenth of members: {len(members)} ")
+    print(f"cases_cats, lenth of id2cat: {len(id2cat)} ")
 
     return id2cat
 
+
 def images_to_cats():
-    members = CatDepth('Category:Radiopaedia_images_by_system', sitecode='www', family="nccommons", depth=1, ns="10")
-    reg = r'^File:.*? \(Radiopaedia (\d+)\)\.\w+$'
+    members = CatDepth("Category:Radiopaedia_images_by_system", sitecode="www", family="nccommons", depth=1, ns="10")
+    reg = r"^File:.*? \(Radiopaedia (\d+)\)\.\w+$"
     # ---
     tab = {}
     # ---
@@ -47,16 +43,17 @@ def images_to_cats():
             # ---
             tab[file] = case_id
     # ---
-    print(f'images_to_cats, lenth of members: {len(members)} ')
-    print(f'images_to_cats, lenth of tab: {len(tab)} ')
+    print(f"images_to_cats, lenth of members: {len(members)} ")
+    print(f"images_to_cats, lenth of tab: {len(tab)} ")
 
     return tab
+
 
 def add(da=[], title="", cat=""):
     if da:
         title, cat = da[0], da[1]
     # ---
-    page = ncc_MainPage(title, 'www', family='nccommons')
+    page = ncc_MainPage(title, "www", family="nccommons")
 
     if not page.exists():
         return
@@ -70,14 +67,15 @@ def add(da=[], title="", cat=""):
     newtext = text
     newtext += f"\n[[{cat}]]"
     # ---
-    page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
+    page.save(newtext=newtext, summary=f"Bot: added [[:{cat}]]")
+
 
 def start():
     # ---
     cats = cases_cats()
     imgs = images_to_cats()
     # ---
-    new = { x: cats[v] for x, v in imgs.items() if v in cats }
+    new = {x: cats[v] for x, v in imgs.items() if v in cats}
     # ---
     print(f"{len(new)=}")
     for numb, (file, cat) in enumerate(new.items(), start=1):
@@ -87,5 +85,5 @@ def start():
         add(title=file, cat=cat)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()
