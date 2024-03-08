@@ -12,7 +12,7 @@ from newapi import printe
 from nccommons import api
 from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
 from mass.radio.studies import get_images_stacks, get_images
-from mass.radio.bmp import work_bmp
+from mass.radio.bots.bmp import work_bmp
 # ---
 try:
     import pywikibot

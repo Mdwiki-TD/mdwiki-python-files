@@ -133,7 +133,7 @@ def start():
     cats = cases_cats()
     # ---
     # auths in authors_to_cases with > 10 cases
-    authors_cases = {k: v for k, v in authors_to_cases.items() if len(v) > 10}
+    authors_cases = {k: v for k, v in authors_to_cases.items() if len(v) > 1}
     # ---
     for numb, (x, x_cases) in enumerate(authors_cases.items(), start=1):
         # ---
