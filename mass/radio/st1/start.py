@@ -1,7 +1,7 @@
 '''
 
-python3 core8/pwb.py mass/radio/start nodiff test
-python3 core8/pwb.py mass/radio/start nodiff get:55
+python3 core8/pwb.py mass/radio/st1/start nodiff test
+python3 core8/pwb.py mass/radio/st1/start nodiff get:55
 
 '''
 import re
