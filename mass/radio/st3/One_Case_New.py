@@ -13,6 +13,7 @@ from newapi import printe
 from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
 from mass.radio.studies import get_images_stacks, get_images
 from mass.radio.bots.bmp import work_bmp
+from mass.radio.bots.update import update_text
 from mass.radio.jsons_files import jsons  # , dumps_jsons, ids_to_urls, urls_to_ids
 # ---
 try:
@@ -152,25 +153,6 @@ class OneCase:
             self.studies[study] = images
             printt(f"study:{study} : len(images) = {len(images)}, st_file:{st_file}")
 
-    def update_text(self, title, text):
-        # ---
-        page = ncc_MainPage(title, "www", family="nccommons")
-        # ---
-        p_text = page.get_text()
-        # ---
-        # get * Modality: CT
-        Modality = re.findall(r"\* Modality: (.*?)\n", p_text)
-        if Modality:
-            Modality = Modality[0]
-            if Modality != '':
-                text = text.replace("* Modality: ", f"* Modality: {Modality}")
-        # ---
-        if p_text.find("Category:Uploads by Fæ") != -1:
-            text = text.replace("[[Category:Uploads by Mr. Ibrahem", "[[Category:Uploads by Fæ")
-        # ---
-        if p_text != text:
-            page.save(newtext=text, summary="update")
-
     def make_image_text(self, image_url, image_id, plane, modality, study_id):
         auth_line = f"{self.author}"
         # ---
@@ -300,7 +282,8 @@ class OneCase:
                 if fa in to_up:
                     image_url, file_name, image_id, plane, modality, study_id = to_up[fa]
                     image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
-                    self.update_text(f"File:{file_name}", image_text)
+                    # ---
+                    update_text(f"File:{file_name}", image_text)
         # ---
         not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
         # ---
@@ -342,6 +325,11 @@ class OneCase:
         text = ""
         # ---
         if "noset" in sys.argv:
+            return
+        # ---
+        sets = [ x.strip() for x in sets if x.strip() ]
+        # ---
+        if len(sets) < 2:
             return
         # ---
         if self.title_exists(set_title):

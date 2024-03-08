@@ -31,7 +31,7 @@ def sa(au_infos):
     print(f"len tab: {len(tab)}")
 
     # sort by number of cases
-    tab = dict(sorted(tab.items(), key=lambda item: len(item[1]), reverse=True))
+    tab = dict(sorted(tab.items(), key=lambda item: len(item[1]), reverse=False))
 
     
     for numb, (author, ids) in enumerate(tab.items(), 1):
