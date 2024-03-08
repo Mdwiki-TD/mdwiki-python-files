@@ -25,7 +25,10 @@ def get_new_ext(error_info, file_name):
 
     # استبدال الامتداد في اسم الملف
     new_file_name = Path(file_name).with_suffix(correct_ext)
-
+    new_file_name = str(new_file_name)
+    
+    print(f"{new_file_name=}")
+    
     return new_file_name
 
 error = {
