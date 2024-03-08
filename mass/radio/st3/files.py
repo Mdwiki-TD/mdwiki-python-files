@@ -1,8 +1,9 @@
+
 '''
 
 python3 core8/pwb.py mass/radio/st3/files
 
-tfj run aucts --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/auths_cats"
+tfj run aucts --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/files"
 
 '''
 import re
@@ -51,20 +52,6 @@ def images_to_cats():
 
     return tab
 
-
-def create_cat(cat, text):
-    page = ncc_MainPage(cat, 'www', family='nccommons')
-
-    if page.exists():
-        pa_text = page.get_text()
-        if pa_text == text:
-            print("no different")
-            return
-        page.save(newtext=text, summary='create')
-    else:
-        page.Create(text=text, summary='create')
-
-
 def add(da=[], title="", cat=""):
     if da:
         title, cat = da[0], da[1]
@@ -85,71 +72,19 @@ def add(da=[], title="", cat=""):
     # ---
     page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
 
-
-def mu(tab):
-    pool = Pool(processes=3)
-    pool.map(add, tab)
-    pool.close()
-    pool.terminate()
-
-
-def add_cat(pages, cat):
-    if "multi" in sys.argv:
-        tab = [[x, cat] for x in pages]
-        mu(tab)
-    else:
-        for title in pages:
-            add(title=title, cat=cat)
-
-
-def one_auth(auth, cat_list):
-    printe.output(f"Author: {auth}, {len(cat_list)=}")
-    # ---
-    cat  = f"Category:Radiopaedia cases by {auth}"
-    text = ""
-    # ---
-    url      = authors_infos.get(auth, {}).get('url')
-    location = authors_infos.get(auth, {}).get('location')
-    # ---
-    if url:
-        text += f"* Author: [{url} {auth}]\n"
-    else:
-        text += f"* Author: {auth}\n"
-    # ---
-    text += f"[[Category:Radiopaedia cases by author|{auth}]]"
-    # ---
-    create_cat(cat, text)
-    # ---
-    done = CatDepth(cat, sitecode='www', family="nccommons", depth=0, ns="14")
-    # ---
-    new_cat_list = [x for x in cat_list if x not in done]
-    # ---
-    printe.output(f"{len(done)=}, {len(new_cat_list)=}")
-    # ---
-    if "noadd" not in sys.argv:
-        add_cat(new_cat_list, cat)
-
-
 def start():
     # ---
     cats = cases_cats()
+    imgs = images_to_cats()
     # ---
-    # auths in authors_to_cases with > 10 cases
-    authors_cases = {k: v for k, v in authors_to_cases.items() if len(v) > 1}
+    new = { x: cats[v] for x, v in imgs if v in cats }
     # ---
-    for numb, (x, x_cases) in enumerate(authors_cases.items(), start=1):
+    print(f"{len(new)=}")
+    for numb, (file, cat) in enumerate(new.items(), start=1):
         # ---
-        printe.output(f"{x=}, cases: {len(x_cases)=}")
+        printe.output(f"{file=}: {cat=}")
         # ---
-        cat_list = [cats[c] for c in x_cases if c in cats]
-        cat_no_list = [c for c in x_cases if c not in cats]
-        # ---
-        printe.output(f"<<red>> {len(cat_no_list)=}")
-        # ---
-        one_auth(x, cat_list)
-        # ---
-        if "break" in sys.argv and numb % 10 == 0:
-            break
+        add(title=file, cat=cat)
 
 
 if __name__ == '__main__':
