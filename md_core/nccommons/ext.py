@@ -41,9 +41,9 @@ error = {
  ],
 "*": "See ..."
 }
+if __name__ == '__main__':
+    file_name = "Duplicated inferior vena cava (Radiopaedia 13327-13331 Axial 1).jpg"
 
-file_name = "Duplicated inferior vena cava (Radiopaedia 13327-13331 Axial 1).jpg"
+    new_file_name = get_new_ext(error["info"], file_name)
 
-new_file_name = get_new_ext(error["info"], file_name)
-
-print(new_file_name)
+    print(new_file_name)
