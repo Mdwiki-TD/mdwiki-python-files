@@ -77,7 +77,7 @@ def start():
     cats = cases_cats()
     imgs = images_to_cats()
     # ---
-    new = { x: cats[v] for x, v in imgs if v in cats }
+    new = { x: cats[v] for x, v in imgs.items() if v in cats }
     # ---
     print(f"{len(new)=}")
     for numb, (file, cat) in enumerate(new.items(), start=1):
