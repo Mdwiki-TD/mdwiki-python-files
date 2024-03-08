@@ -1,3 +1,6 @@
+"""
+python3 core8/pwb.py md_core/nccommons/ext
+"""
 from pathlib import Path
 import mimetypes
 
@@ -17,8 +20,13 @@ def get_new_ext(error_info, file_name):
         print("MIME type could not be extracted from the error message.")
         return file_name
 
+    print(f"{mime_type=}")
+
     # استخراج الامتداد الصحيح من نوع MIME
     correct_ext = mimetypes.guess_extension(mime_type)
+    if not correct_ext and mime_type == 'image/x-bmp':
+        correct_ext = '.bmp'
+    
     if not correct_ext:
         print("Could not determine the correct file extension for the MIME type.")
         return file_name
@@ -31,18 +39,19 @@ def get_new_ext(error_info, file_name):
     
     return new_file_name
 
-error = {
-"code": "verification-error",
-"info": "File extension \".jpg\" does not match the detected MIME type of the file (image/png).",
-"details": [
-  "filetype-mime-mismatch",
-  "jpg",
-  "image/png"
- ],
-"*": "See ..."
-}
 if __name__ == '__main__':
-    file_name = "Duplicated inferior vena cava (Radiopaedia 13327-13331 Axial 1).jpg"
+    error = {
+    "code": "verification-error",
+    # "info": "File extension \".jpg\" does not match the detected MIME type of the file (image/png).",
+    "info": "File extension \".jpg\" does not match the detected MIME type of the file (image/x-bmp).",
+    "details": [
+    "filetype-mime-mismatch",
+    "jpg",
+    "image/png"
+    ],
+    "*": "See ..."
+    }
+    file_name = "VACTERL (Radiopaedia 22547-22573 None 1).jpg"
 
     new_file_name = get_new_ext(error["info"], file_name)
 

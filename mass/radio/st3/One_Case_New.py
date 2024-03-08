@@ -135,7 +135,8 @@ class OneCase:
                 printt(f'{study} : not found')
                 # images = get_images(f'https://radiopaedia.org/cases/167250/studies/167250')
                 # images = get_images(f'https://radiopaedia.org/cases/167250/studies/135974?lang=us')
-                images = get_images_stacks(self.caseId)
+                # images = get_images_stacks(self.caseId)
+                images = get_images_stacks(study)
                 # ---
                 if not images:
                     images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
@@ -146,13 +147,24 @@ class OneCase:
             self.studies[study] = images
             printt(f'study:{study} : len(images) = {len(images)}, st_file:{st_file}')
 
-    def upload_image(self, image_url, image_name, image_id, plane, modality):
+    def update_text(self, title, text):
+        # ---        
+        page = ncc_MainPage(title, 'www', family='nccommons')
+        # ---
+        p_text = page.get_text()
+        # ---
+        page.save(newtext=text, summary='update')
+
+
+    def upload_image(self, image_url, image_name, image_id, plane, modality, study_id):
         if 'noup' in sys.argv:
             return image_name
         # ---
         file_title = f'File:{image_name}'
         # ---
-        if self.title_exists(file_title):
+        exists = self.title_exists(file_title)
+        # ---
+        if exists and "updatetext" not in sys.argv:
             return image_name
         # ---
         auth_line = f'{self.author}'
@@ -167,6 +179,8 @@ class OneCase:
         if auth_location.lower().find('united states') != -1:
             usa_license = "{{PD-medical}}"
         # ---
+        study_url = f"https://radiopaedia.org/cases/{self.caseId}/studies/{study_id}"
+        # ---
         image_text = '== {{int:summary}} ==\n'
 
         image_text += (
@@ -174,6 +188,7 @@ class OneCase:
             f'|Description = \n'
             f'* Radiopaedia case ID: [{self.case_url} {self.caseId}]\n'
             # f'* Image ID: {image_id}\n'
+            f'* Study ID: [{study_url} {study_id}]\n'
             f'* Image ID: [{image_url} {image_id}]\n'
             f'* Plane projection: {plane}\n'
             f'* modality: {modality}\n'
@@ -189,7 +204,10 @@ class OneCase:
             f'[[{self.category}]]\n'
             '[[Category:Uploads by Mr. Ibrahem]]'
         )
-
+        
+        if exists and "updatetext" in sys.argv:
+            self.update_text(file_title, image_text)
+            return
         file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True, do_ext=True)
 
         printt(f"upload result: {file_name}")
@@ -243,7 +261,7 @@ class OneCase:
             # fix BadFileName
             file_name = file_name.replace(':', '.').replace('/', '.')
             # ---
-            to_up[f'File:{file_name}'] = (image_url, file_name, image_id, plane, modality)
+            to_up[f'File:{file_name}'] = (image_url, file_name, image_id, plane, modality, study)
         # ---
         to_c = list(to_up.keys())
         # ---
@@ -259,16 +277,20 @@ class OneCase:
             if fa not in sets:
                 self.images_count += 1
                 sets.append(fa)
+                if "updatetext" in sys.argv and fa in to_up:
+                    image_url, file_name, image_id, plane, modality, study = to_up[fa]
+                    self.upload_image(image_url, file_name, image_id, plane, modality, study)
+
         # ---
         not_in     = {k:v for k, v in to_up.items() if not pages.get(k)}
         # ---
         printt(f'not_in: {len(not_in)}')
         # ---
-        for i, (image_url, file_name, image_id, plane, modality) in enumerate(not_in.values(), 1):
+        for i, (image_url, file_name, image_id, plane, modality, study) in enumerate(not_in.values(), 1):
             # ---
             printt(f'file: {i}/{len(not_in)} :')
             # ---
-            new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
+            new_name = self.upload_image(image_url, file_name, image_id, plane, modality, study)
             # ---
             file_n = f'File:{new_name}' if new_name else f'File:{file_name}'
             # ---
