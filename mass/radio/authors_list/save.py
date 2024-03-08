@@ -24,7 +24,7 @@ def sa(au_infos):
     
     text += '{| class="wikitable sortable"\n'
     text += '|-\n'
-    text += '! # !! Author !! Cases !! Url !! Location\n'
+    text += '! # !! Author !! cats !! Cases !! Url !! Location\n'
 
     # sort au_infos by cases
     au_infos = dict(sorted(au_infos.items(), key=lambda x: x[1]["cases"], reverse=True))
@@ -33,6 +33,7 @@ def sa(au_infos):
         text += '|-\n'
         text += f'! {numb}\n'
         text += f'| [[:Category:Radiopaedia cases by {x}|{x}]]\n'
+        text += f'| {{PAGESINCATEGORY:Radiopaedia cases by {x}}}\n'
         text += f'| {ta["cases"]:,}\n'
         text += f'| {ta["url"]}\n'
         text += f'| {ta["location"]}\n'
