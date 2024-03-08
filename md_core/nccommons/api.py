@@ -105,12 +105,12 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
     elif error != {}:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         # ---
+        printe.output(error)
+        # ----
         if do_ext and error_code == "verification-error" and error_info:
-        	new_file_name = ext.get_new_ext(error_info, file_name)
+            new_file_name = ext.get_new_ext(error_info, file_name)
             if new_file_name:
                 return upload_by_url(new_file_name, text, url, comment=comment, return_file_name=return_file_name)
-        	#---
-        printe.output(error)
     # ---
     printe.output(result)
     return False if not return_file_name else ''
