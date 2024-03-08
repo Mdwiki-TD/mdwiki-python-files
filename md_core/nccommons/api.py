@@ -17,6 +17,7 @@ from nccommons import api
 import sys
 import time
 # ---
+from nccommons import ext
 from newapi import printe
 from newapi.ncc_page import NEW_API
 api_new  = NEW_API('www', family='nccommons')
@@ -56,7 +57,7 @@ def post_s(params, addtoken=False):
 def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all=0):
     return api_new.Get_All_pages(start=start, namespace=namespace, limit=limit, apfilterredir=apfilterredir, limit_all=limit_all)
 
-def upload_by_url(file_name, text, url, comment='', return_file_name=False):
+def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_ext=False):
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
@@ -102,6 +103,11 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False):
         return f'{duplicate}' if return_file_name else True
     elif error != {}:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        # ---
+        if do_ext and error_code == "verification-error":
+        	new_file_name = ext.get_new_ext(error, file_name)
+            return upload_by_url(new_file_name, text, url, comment=comment, return_file_name=return_file_name)
+        	#---
         printe.output(error)
     # ---
     printe.output(result)

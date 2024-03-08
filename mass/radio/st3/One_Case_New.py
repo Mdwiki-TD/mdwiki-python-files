@@ -192,7 +192,7 @@ class OneCase:
             '[[Category:Uploads by Mr. Ibrahem]]'
         )
 
-        file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True)
+        file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True, do_ext=True)
 
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
