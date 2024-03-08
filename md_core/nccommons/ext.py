@@ -5,10 +5,10 @@ import re
 
 def get_new_ext(error_info, file_name):
     """
-    استخراج الامتداد الصحيح من رسالة الخطأ باستخدام وحدة pathlib
+    Extract the correct extension from the error message using the pathlib module
     """
     
-    # استخراج نوع MIME من رسالة mimetypes
+    # Extract MIME type from the error message using mimetypes
     mime_type = re.findall(r'MIME type of the file \((.*?)\)', error_info)
     if len(mime_type) > 0:
         mime_type = mime_type[0]
