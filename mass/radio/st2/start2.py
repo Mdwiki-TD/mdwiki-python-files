@@ -13,7 +13,7 @@ from pathlib import Path
 from multiprocessing import Pool
 # ---
 from newapi import printe
-from mass.radio.st2.One_Case import OneCase
+from mass.radio.st3.One_Case_Refactored import OneCase
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
