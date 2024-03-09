@@ -5,7 +5,8 @@ def get_ta(text, ta):
     res = re.findall(rf"\* {ta}: (.*?)\n", text)
     if res:
         res = res[0]
-    return res
+        return res
+    return ""
     
 def update_text(title, text):
     # ---
@@ -27,8 +28,10 @@ def update_text(title, text):
     if Modality != '':
         text = text.replace("* Modality: ", f"* Modality: {Modality}")
     # ---
+    ASK = "Category:Uploads by Fæ" in p_text 
+    # ---
     if p_text.find("Category:Uploads by Fæ") != -1:
         text = text.replace("[[Category:Uploads by Mr. Ibrahem", "[[Category:Uploads by Fæ")
-    # ---
+    # ---    
     if p_text != text:
-        page.save(newtext=text, summary="update")
+        page.save(newtext=text, summary="update", ASK=ASK)
