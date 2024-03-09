@@ -83,19 +83,10 @@ class OneCase:
         # ---
 
     def title_exists(self, title):
-        # ---
         pages = api_new.Find_pages_exists_or_not([title], noprint=True)
-        # ---
         if pages.get(title):
             printt(f"<<lightyellow>> api_new {title} already exists")
             return True
-        # ---
-        # file_page = ncc_MainPage(title, 'www', family='nccommons')
-        # # ---
-        # if file_page.exists():
-        #     printt(f'<<lightyellow>> File:{title} already exists')
-        #     return True
-        # ---
         return False
 
     def create_category(self):
@@ -106,7 +97,12 @@ class OneCase:
             text += f"\n[[Category:Radiopaedia cases for {self.system}]]"
         # ---
         if self.title_exists(self.category):
-            return
+            text = f"\n[[{self.category}]]"
+            cat = ncc_MainPage(self.category, "www", family="nccommons")
+            if cat.exists():
+                printt(f"<<lightyellow>> {self.category} already exists")
+                return
+            new = cat.Create(text=text, summary="create")
         # ---
         cat = ncc_MainPage(self.category, "www", family="nccommons")
         # ---
