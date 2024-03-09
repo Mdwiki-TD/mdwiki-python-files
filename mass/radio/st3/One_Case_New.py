@@ -122,13 +122,13 @@ new line(s) to replace
         usa_license = ""
         # ---
         if auth_location.lower().find("united states") != -1:
-            usa_license = "{{PD-medical}}"
+    
         # ---
         study_url = f"https://radiopaedia.org/cases/{self.caseId}/studies/{study_id}"
         # ---
         image_text = "== {{int:summary}} ==\n"
 
-        image_text += (
+        image_text = f"{{Information\n"
             "{{Information\n"
             f"|Description = \n"
             f"* Radiopaedia case ID: [{self.case_url} {self.caseId}]\n"
