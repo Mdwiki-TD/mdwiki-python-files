@@ -167,4 +167,4 @@ def Find_pages_exists_or_not(liste):
     return api_new.Find_pages_exists_or_not(liste)
 
 if __name__ == '__main__':
-    Get_All_pages('', limit='10', limit_all=10)
+    print(Get_All_pages('', limit='10', limit_all=10))
