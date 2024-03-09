@@ -2,7 +2,8 @@
 
 $HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa nomulti updatetext ask
 
-tfj run usa --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa nomulti up updatetext"
+tfj run usa2 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa nomulti up updatetext"
+tfj run usa3 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa nomulti up updatetext reverse"
 
 '''
 import re
