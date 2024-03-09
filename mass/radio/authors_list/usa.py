@@ -2,6 +2,8 @@
 
 $HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa nomulti updatetext ask
 
+tfj run usa --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa nomulti up updatetext"
+
 '''
 import re
 import sys
@@ -31,7 +33,8 @@ def sa(au_infos):
     print(f"len tab: {len(tab)}")
 
     # sort by number of cases
-    tab = dict(sorted(tab.items(), key=lambda item: len(item[1]), reverse=False))
+    Reverse = "reverse" in sys.argv
+    tab = dict(sorted(tab.items(), key=lambda item: len(item[1]), reverse=Reverse))
 
     
     for numb, (author, ids) in enumerate(tab.items(), 1):
