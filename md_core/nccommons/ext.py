@@ -11,7 +11,7 @@ def get_new_ext(error_info, file_name):
     استخراج الامتداد الصحيح من رسالة الخطأ باستخدام وحدة pathlib
     """
     
-    # استخراج نوع MIME من رسالة mimetypes
+    # Extract MIME type from the error message using mimetypes
     mime_type = re.findall(r'MIME type of the file \((.*?)\)', error_info)
     if len(mime_type) > 0:
         mime_type = mime_type[0]
@@ -22,7 +22,7 @@ def get_new_ext(error_info, file_name):
 
     print(f"{mime_type=}")
 
-    # استخراج الامتداد الصحيح من نوع MIME
+    # Extract the correct extension from the MIME type
     correct_ext = mimetypes.guess_extension(mime_type)
     if not correct_ext and mime_type == 'image/x-bmp':
         correct_ext = '.bmp'
@@ -32,8 +32,7 @@ def get_new_ext(error_info, file_name):
         return file_name
 
     # استبدال الامتداد في اسم الملف
-    new_file_name = Path(file_name).with_suffix(correct_ext)
-    new_file_name = str(new_file_name)
+    new_file_name = str(Path(file_name).with_suffix(correct_ext))
     
     print(f"{new_file_name=}")
     
