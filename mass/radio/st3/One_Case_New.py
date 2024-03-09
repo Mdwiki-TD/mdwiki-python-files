@@ -126,13 +126,10 @@ new line(s) to replace
         # ---
         study_url = f"https://radiopaedia.org/cases/{self.caseId}/studies/{study_id}"
         # ---
-        image_text = "== {{int:summary}} ==\n"
-
         image_text = f"{{Information\n"
             "{{Information\n"
             f"|Description = \n"
             f"* Radiopaedia case ID: [{self.case_url} {self.caseId}]\n"
-            # f'* Image ID: {image_id}\n'
             f"* Study ID: [{study_url} {study_id}]\n"
             f"* Image ID: [{image_url} {image_id}]\n"
             f"* Plane projection: {plane}\n"
