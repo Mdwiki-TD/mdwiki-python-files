@@ -87,21 +87,13 @@ new line(s) to replace
     def get_studies(self):
         for study in self.studies_ids:
             st_file = os.path.join(str(main_dir), "studies", f"{study}.json")
-            # ---
-            images = {}
-            # ---
             if os.path.exists(st_file):
-                try:
-                    with open(st_file, "r", encoding="utf-8") as f:
-                        images = json.loads(f.read())
-                except Exception as e:
-                    pywikibotoutput("<<lightred>> Traceback (most recent call last):")
-                    printt(f"{study} : error")
-                    pywikibotoutput(e)
-                    pywikibotoutput(traceback.format_exc())
-                    pywikibotoutput("CRITICAL:")
-            # ---
-            images = [image for image in images if image]
+                with open(st_file, "r", encoding="utf-8") as f:
+                    images = json.loads(f.read())
+            else:
+                pywikibotoutput("<<lightred>> Traceback (most recent call last):")
+                printt(f"{study} : error")
+                pywikibotoutput("CRITICAL:")
             # ---
             if not images:
                 printt(f"{study} : not found")
