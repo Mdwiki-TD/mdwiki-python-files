@@ -70,37 +70,7 @@ class OneCase:
         self.published = ""
         self.system = ""
         # ---
-        if self.case_url in jsons.infos:
-            self.published = jsons.infos[self.case_url]["published"]
-            # ---
-            if not self.author:
-                self.author = jsons.infos[self.case_url]["author"]
-            # ---
-            self.system = jsons.infos[self.case_url]["system"]
-        else:
-            if self.case_url in jsons.url_to_sys:
-                self.system = jsons.url_to_sys[self.case_url]
-        # ---
-
-    def title_exists(self, title):
-        pages = api_new.Find_pages_exists_or_not([title], noprint=True)
-        if pages.get(title):
-            printt(f"<<lightyellow>> api_new {title} already exists")
-            return True
-        return False
-
-    def create_category(self):
-        text = f"* [{self.case_url} Radiopaedia case: {self.title} ({self.caseId})]\n"
-        text += f"[[Category:Radiopaedia images by case|{self.caseId}]]"
-        # ---
-        if self.system:
-            text += f"\n[[Category:Radiopaedia cases for {self.system}]]"
-        # ---
-        if self.title_exists(self.category):
-            text = f"\n[[{self.category}]]"
-            cat = ncc_MainPage(self.category, "www", family="nccommons")
-            if cat.exists():
-                printt(f"<<lightyellow>> {self.category} already exists")
+new line(s) to replace
                 return
             new = cat.Create(text=text, summary="create")
         # ---
