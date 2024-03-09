@@ -326,23 +326,11 @@ new line(s) to replace
             return ssa
 
     def add_category(self, file_name):
-        # ---
         if "add_category" not in sys.argv:
             return
-        # ---
         add_text = f"\n[[{self.category}]]"
-        # ---
         file_title = f"File:{file_name}"
-        # ---
         page = ncc_MainPage(file_title, "www", family="nccommons")
-        # ---
-        p_text = page.get_text()
-        # ---
-        if p_text.find("[[Category:Radiopaedia case") != -1:
-            printe.output(f"<<lightyellow>>{file_title} has cat:")
-            printe.output(p_text)
-        # ---
-        if p_text.find(self.category) == -1:
-            new_text = p_text + add_text
-            ssa = page.save(newtext=new_text, summary=f"Bot: added [[:{self.category}]]")
-            return ssa
+        new_text = page.get_text() + add_text
+        ssa = page.save(newtext=new_text, summary=f"Bot: added [[:{self.category}]]")
+        return ssa
