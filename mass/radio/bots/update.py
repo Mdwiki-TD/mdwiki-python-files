@@ -1,5 +1,10 @@
+import sys
 import re
 from newapi.ncc_page import MainPage as ncc_MainPage
+
+skips = [
+    "File:Benign enlargement of subarachnoid spaces (Radiopaedia 25801-25990 Coronal 1).jpg"
+]
 
 def get_ta(text, ta):
     res = re.findall(rf"\* {ta}: (.*?)\n", text)
@@ -7,8 +12,11 @@ def get_ta(text, ta):
         res = res[0]
         return res
     return ""
-    
+
 def update_text(title, text):
+    # ---
+    if title in skips:
+        return
     # ---
     page = ncc_MainPage(title, "www", family="nccommons")
     # ---
@@ -28,7 +36,7 @@ def update_text(title, text):
     if Modality != '':
         text = text.replace("* Modality: ", f"* Modality: {Modality}")
     # ---
-    ASK = "Category:Uploads by Fæ" in p_text 
+    ASK = "Category:Uploads by Fæ" in p_text and "askusa" in sys.argv
     # ---
     if p_text.find("Category:Uploads by Fæ") != -1:
         text = text.replace("[[Category:Uploads by Mr. Ibrahem", "[[Category:Uploads by Fæ")
