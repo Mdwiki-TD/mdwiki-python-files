@@ -11,10 +11,12 @@ langs = [
     "test"
 ]
 
+
 def start():
     for code in langs:
         pages = get_pages(code)
         work_on_pages(code, pages)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     start()
