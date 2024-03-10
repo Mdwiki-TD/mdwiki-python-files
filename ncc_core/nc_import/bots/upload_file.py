@@ -111,7 +111,7 @@ def upload_by_url(file_name, text, url, comment="", code="en", family="wikipedia
 
     if error:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
-        # printe.output(error)
+        printe.output(error_info)
     
     if error_info == "Uploads by URL are not allowed from this domain.":
         return upload_by_file(file_name, text, url, comment=comment, code=code, family=family)
