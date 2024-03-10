@@ -8,7 +8,7 @@ from nc_import.bots.wrk_pages import work_on_pages
 
 langs = [
     # "af",
-    "ar"
+    "test"
 ]
 
 def start():
