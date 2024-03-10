@@ -16,10 +16,13 @@ import requests
 import urllib.request
 import tempfile
 import os
+import sys
 # ---
-
 from newapi import printe
-from newapi.ncc_page import NEW_API
+# ---
+sys.argv.append("botuser")
+# ---
+from newapi.wiki_page import NEW_API
 # api_new  = NEW_API('www', family='nccommons')
 # api_new.Login_to_wiki()
 # json1    = api_new.post_params(params, addtoken=False)
