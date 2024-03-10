@@ -108,12 +108,15 @@ def upload_by_url(file_name, text, url, comment="", code="en", family="wikipedia
 
     if duplicate:
         printe.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
-
+    
     if error:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error_info)
-    
-    if error_info == "Uploads by URL are not allowed from this domain.":
+    errors = [
+        "copyuploadbaddomain",
+        "copyuploaddisabled"
+    ]
+    if error_code in errors or " url " in error_info.lower():
         return upload_by_file(file_name, text, url, comment=comment, code=code, family=family)
     # ----
     return False
