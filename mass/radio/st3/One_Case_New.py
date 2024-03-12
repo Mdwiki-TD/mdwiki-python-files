@@ -26,7 +26,13 @@ except ImportError:
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
 main_dir = Path(__file__).parent.parent
-# --
+# ---
+studies_dir = '/data/project/mdwiki/studies'
+# ---
+if not os.path.exists(studies_dir):
+    printe.output(f'<<red>> studies_dir {studies_dir} not found')
+    studies_dir = main_dir / 'studies'
+# ---
 with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), "r", encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
@@ -120,7 +126,7 @@ class OneCase:
 
     def get_studies(self):
         for study in self.studies_ids:
-            st_file = os.path.join(str(main_dir), "studies", f"{study}.json")
+            st_file = studies_dir / f"{study}.json"
             # ---
             images = {}
             # ---
