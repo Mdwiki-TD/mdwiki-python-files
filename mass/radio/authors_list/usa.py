@@ -19,7 +19,9 @@ main_dir = Path(__file__).parent
 with open(main_dir / 'authors_infos.json', 'r', encoding='utf-8') as f:
     authors_infos = json.load(f)
 # ---
+# Read the contents of the authors_to_cases.json file
 with open(main_dir / 'authors_to_cases.json', 'r', encoding='utf-8') as f:
+    authors_to_cases = json.load(f)
     authors_to_cases = json.load(f)
 # ---
 def work(tab):
@@ -55,6 +57,8 @@ def sa(au_infos):
         work(tab1)
     elif "tab2" in sys.argv:
         work(tab2)
+    else:
+        work(tab)
     else:
         work(tab)
 
