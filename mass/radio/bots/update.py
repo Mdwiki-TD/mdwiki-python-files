@@ -40,6 +40,8 @@ def update_text(title, text):
     # ---
     if p_text.find("Category:Uploads by Fæ") != -1:
         text = text.replace("[[Category:Uploads by Mr. Ibrahem", "[[Category:Uploads by Fæ")
-    # ---    
+    # ---
     if p_text != text:
         page.save(newtext=text, summary="update", ASK=ASK)
+    # ---
+    skips.append(title)

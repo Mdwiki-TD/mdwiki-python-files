@@ -221,8 +221,10 @@ class OneCase:
 
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
-            if "updatetext" in sys.argv:
+            # ---
+            if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages
                 update_text(f"File:{file_name}", image_text)
+            # ---
             self.add_category(file_name)
 
         return file_name
@@ -291,14 +293,12 @@ class OneCase:
         # ---
         if "updatetext" in sys.argv:
             # ---
-            new_tits = [ x for x in already_in if x in to_up]
-            tits2 = [ x for x in new_tits if f"File:{x}" not in PD_medical_pages]
+            tits1 = [ x for x in already_in if x in to_up]
+            tits2 = [ x for x in tits1 if f"File:{x}" not in PD_medical_pages]
             # ---
-            printt(f"{len(new_tits)=}, {len(tits2)=}")
+            printt(f"{len(tits1)=}, {len(tits2)=}")
             # ---
-
-            # ---
-            for fa in new_tits:
+            for fa in tits2:
                 image_url, file_name, image_id, plane, modality, study_id = to_up[fa]
                 image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
                 # ---
