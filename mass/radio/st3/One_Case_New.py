@@ -27,7 +27,7 @@ except ImportError:
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-studies_dir = '/data/project/mdwiki/studies'
+studies_dir = Path('/data/project/mdwiki/studies')
 # ---
 if not os.path.exists(studies_dir):
     printe.output(f'<<red>> studies_dir {studies_dir} not found')
@@ -222,7 +222,7 @@ class OneCase:
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
             # ---
-            if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages
+            if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages:
                 update_text(f"File:{file_name}", image_text)
             # ---
             self.add_category(file_name)
