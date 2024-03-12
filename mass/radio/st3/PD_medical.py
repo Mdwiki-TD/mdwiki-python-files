@@ -4,6 +4,14 @@
 Usage:
 from mass.radio.st3.PD_medical import PD_medical_pages
 
+New Features:
+- Feature 1: Description of feature 1.
+- Feature 2: Description of feature 2.
+
+New Commands:
+- Command 1: Description of command 1.
+- Command 2: Description of command 2.
+
 """
 import json
 import os
