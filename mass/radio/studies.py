@@ -1,8 +1,3 @@
-"""
-
-python3 core8/pwb.py mass/radio/studies test
-
-"""
 import sys
 import os
 from pathlib import Path
