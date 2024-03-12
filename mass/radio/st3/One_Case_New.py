@@ -1,5 +1,5 @@
 """
-from mass.radio.st3.One_Case_New import OneCase
+from mass.radio.st3.One_Case_New import OneCase, update_readme
 """
 import sys
 import re
