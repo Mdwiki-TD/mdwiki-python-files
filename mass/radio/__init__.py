@@ -18,7 +18,7 @@ tfj run getids10 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.
 
 python3 core8/pwb.py mass/radio/to_work
 
-python3 core8/pwb.py mass/radio/studies
+python3 core8/pwb.py mass/radio/get_studies
 
 python3 core8/pwb.py mass/radio/start
 
@@ -39,7 +39,7 @@ tfj run rad14 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 cor
 
 
 tfj run radrt --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start"
-tfj run studies --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/get_infos && $HOME/local/bin/python3 core8/pwb.py mass/radio/studies"
+tfj run studies --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/get_infos && $HOME/local/bin/python3 core8/pwb.py mass/radio/get_studies"
 
 
 '''

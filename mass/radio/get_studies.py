@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py mass/radio/studies test
+python3 core8/pwb.py mass/radio/get_studies test
 
 """
 import sys
@@ -26,7 +26,6 @@ if not os.path.exists(studies_dir):
     studies_dir = main_dir / "studies"
 
 
-# ---
 def get_images(url):
     print(f"url: {url}")
 

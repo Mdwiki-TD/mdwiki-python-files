@@ -11,7 +11,7 @@ import traceback
 from nccommons import api
 from newapi import printe
 from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
-from mass.radio.studies import get_images_stacks, get_images
+from mass.radio.get_studies import get_images_stacks, get_images
 from mass.radio.bots.bmp import work_bmp
 from mass.radio.bots.update import update_text
 from mass.radio.jsons_files import jsons  # , dumps_jsons, ids_to_urls, urls_to_ids
@@ -27,7 +27,7 @@ except ImportError:
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-studies_dir = '/data/project/mdwiki/studies'
+studies_dir = Path('/data/project/mdwiki/studies')
 # ---
 if not os.path.exists(studies_dir):
     printe.output(f'<<red>> studies_dir {studies_dir} not found')
@@ -40,6 +40,10 @@ api_new = NEW_API("www", family="nccommons")
 api_new.Login_to_wiki()
 # ---
 urls_done = []
+# ---
+PD_medical_pages = []
+if "updatetext" in sys.argv:
+    from mass.radio.st3.PD_medical import PD_medical_pages
 
 
 def get_image_extension(image_url):
@@ -217,8 +221,10 @@ class OneCase:
 
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
-            if "updatetext" in sys.argv:
+            # ---
+            if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages:
                 update_text(f"File:{file_name}", image_text)
+            # ---
             self.add_category(file_name)
 
         return file_name
@@ -286,12 +292,19 @@ class OneCase:
                 sets.append(fa)
         # ---
         if "updatetext" in sys.argv:
-            for fa in already_in:
-                if fa in to_up:
-                    image_url, file_name, image_id, plane, modality, study_id = to_up[fa]
-                    image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
-                    # ---
-                    update_text(f"File:{file_name}", image_text)
+            # ---
+            tits1 = [ x for x in already_in if x in to_up]
+            tits2 = [ x for x in tits1 if f"File:{x}" not in PD_medical_pages]
+            # ---
+            printt(f"{len(tits1)=}, {len(tits2)=}")
+            # ---
+            for fa in tits2:
+                image_url, file_name, image_id, plane, modality, study_id = to_up[fa]
+                image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
+                # ---
+                file_title = f"File:{file_name}"
+                # ---
+                update_text(file_title, image_text)
         # ---
         not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
         # ---

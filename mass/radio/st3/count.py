@@ -13,7 +13,7 @@ import time
 from pathlib import Path
 from datetime import datetime
 
-from mass.radio.studies import get_images_stacks, get_images
+from mass.radio.get_studies import get_images_stacks, get_images
 from newapi.ncc_page import MainPage as ncc_MainPage
 
 main_dir = Path(__file__).parent.parent
@@ -24,7 +24,7 @@ with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
 with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
-studies_dir = "/data/project/mdwiki/studies"
+studies_dir = Path("/data/project/mdwiki/studies")
 # ---
 if not os.path.exists(studies_dir):
     studies_dir = main_dir / "studies"
