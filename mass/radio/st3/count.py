@@ -45,6 +45,8 @@ cases_count_file = main_dir / "jsons/cases_count.json"
 
 
 def cases_counts():
+# Call the function to update the README.md file
+update_readme()
     if not os.path.exists(cases_count_file):
         with open(cases_count_file, "w", encoding="utf-8") as f:
             f.write("{}")
