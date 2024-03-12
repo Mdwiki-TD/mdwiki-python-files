@@ -13,7 +13,7 @@ import time
 from pathlib import Path
 from datetime import datetime
 
-from mass.radio.studies import get_images_stacks, get_images
+from mass.radio.get_studies import get_images_stacks, get_images
 from newapi.ncc_page import MainPage as ncc_MainPage
 
 main_dir = Path(__file__).parent.parent
