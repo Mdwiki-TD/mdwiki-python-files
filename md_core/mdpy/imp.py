@@ -60,7 +60,7 @@ def work(title, num, lenth, From=''):
     # ---
     ing = mdwiki_api.import_page(title)
     # ---
-    if text and text != "":
+    if text:
         printe.output(ing)
     # ---
     if "test" in sys.argv:

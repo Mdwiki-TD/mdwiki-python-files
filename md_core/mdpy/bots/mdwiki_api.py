@@ -627,13 +627,13 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False, without_lang="", 
         vaild = True
         # ---
         # البحث عن وصلة لغة غير مرغوب بوجودها
-        if without_lang and without_lang != "":
+        if without_lang:
             no_langs = tablemember[x].get('langlinks', {}).get(without_lang, '')
-            if no_langs and no_langs != "":
+            if no_langs:
                 vaild = False
         # ---
         # البحث عن وصلة لغة مرغوب بوجودها
-        if with_lang and with_lang != "":
+        if with_lang:
             langs = tablemember[x].get('langlinks', {}).get(with_lang, '')
             vaild = langs != ""
         # ---
@@ -671,13 +671,13 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False, without_lang="", 
                     vaild = True
                     # ---
                     # البحث عن وصلة لغة غير مرغوب بوجودها
-                    if without_lang and without_lang != "":
+                    if without_lang:
                         no_langs = table2[x].get('langlinks', {}).get(without_lang, '')
-                        if no_langs and no_langs != "":
+                        if no_langs:
                             vaild = False
                     # ---
                     # البحث عن وصلة لغة مرغوب بوجودها
-                    if with_lang and with_lang != "":
+                    if with_lang:
                         langs = table2[x].get('langlinks', {}).get(with_lang, '')
                         vaild = langs != ""
                     # ---
