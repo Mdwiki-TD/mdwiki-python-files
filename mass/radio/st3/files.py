@@ -9,26 +9,7 @@ import re
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
-
-
-def cases_cats():
-    members = CatDepth("Category:Radiopaedia images by case", sitecode="www", family="nccommons", depth=0, ns="14")
-    reg = r"^Category:Radiopaedia case (\d+) (.*?)$"
-    # ---
-    id2cat = {}
-    # ---
-    for cat in members:
-        match = re.match(reg, cat)
-        if match:
-            case_id = match.group(1)
-            # ---
-            id2cat[case_id] = cat
-    # ---
-    print(f"cases_cats, lenth of members: {len(members)} ")
-    print(f"cases_cats, lenth of id2cat: {len(id2cat)} ")
-
-    return id2cat
-
+from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
 
 def images_to_cats():
     members = CatDepth("Category:Radiopaedia_images_by_system", sitecode="www", family="nccommons", depth=1, ns="10")
