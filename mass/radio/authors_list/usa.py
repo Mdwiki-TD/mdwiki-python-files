@@ -5,6 +5,9 @@ $HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa nomulti updatet
 tfj run tab1 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa up updatetext tab1 mdwiki"
 tfj run tab2 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa up updatetext tab2 mdwiki"
 
+from mass.radio.authors_list.usa import get_usa_auths()
+# usa_auths = get_usa_auths()
+
 '''
 import re
 import sys
@@ -34,13 +37,18 @@ def work(tab):
         if ids:
             main_by_ids(ids)
 
-def sa(au_infos):
-    print(f"len all authors: {len(au_infos)}")
+def get_usa_auths():
+    usa_auths = [ k for k, v in authors_infos.items() if 'united states' in v['location'].lower()]
+    print(f"len usa_auths: {len(usa_auths)}")
+    # ---
+    return usa_auths
+
+def sa(authors_infos):
+    print(f"len all authors: {len(authors_infos)}")
 
     # filter only authors with location contains "united states"
-    usa_auths = [ k for k, v in au_infos.items() if 'united states' in v['location'].lower()]
-    print(f"len usa_auths: {len(usa_auths)}")
-
+    usa_auths = get_usa_auths()
+    
     tab = { au : authors_to_cases.get(au, []) for au in usa_auths if au in authors_to_cases}
     print(f"len tab: {len(tab)}")
 
@@ -59,4 +67,4 @@ def sa(au_infos):
         work(tab)
 
 if __name__ == '__main__':
-    sa(authors_infos)
+    sa()

@@ -1,11 +1,14 @@
 '''
 
-python3 core8/pwb.py mass/radio/authors_list/auths_cats
+python3 core8/pwb.py mass/radio/authors_list/auths_cats break
 
 tfj run aucts --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/auths_cats"
 
 logs in page:
 https://nccommons.org/wiki/User:Mr._Ibrahem/Radiopaedia_authors
+
+from mass.radio.authors_list import auths_cats
+# auth_cats = auths_cats.get_auth_cats(id2cat, auth)
 
 '''
 import re
@@ -17,7 +20,7 @@ from multiprocessing import Pool
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
-
+from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
@@ -29,26 +32,6 @@ with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', e
 # ---
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")
 # ---
-
-
-def cases_cats():
-    members = CatDepth('Category:Radiopaedia images by case', sitecode='www', family="nccommons", depth=0, ns="14")
-    reg = r'^Category:Radiopaedia case (\d+) (.*?)$'
-    # ---
-    id2cat = {}
-    # ---
-    for cat in members:
-        match = re.match(reg, cat)
-        if match:
-            case_id = match.group(1)
-            # ---
-            id2cat[case_id] = cat
-    # ---
-    print(f'lenth of members: {len(members)} ')
-    print(f'lenth of id2cat: {len(id2cat)} ')
-
-    return id2cat
-
 
 def create_cat(cat, text):
     page = ncc_MainPage(cat, 'www', family='nccommons')
@@ -127,6 +110,13 @@ def one_auth(auth, cat_list):
     if "noadd" not in sys.argv:
         add_cat(new_cat_list, cat)
 
+
+def get_auth_cats(cats, auth):
+    cat_list = [cats[c] for c in authors_to_cases.get(auth, []) if c in cats]
+    # ---
+    printe.output(f"get_auth_cats: {auth=}, {len(cat_list)=}")
+    # ---
+    return cat_list
 
 def start():
     # ---

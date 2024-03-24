@@ -45,3 +45,40 @@ def update_text(title, text):
         page.save(newtext=text, summary="update", ASK=ASK)
     # ---
     skips.append(title)
+
+def update_text_new(title):
+    # ---
+    if title in skips:
+        return
+    # ---
+    pd_temp = "{{PD-medical}}"
+    # ---
+    page = ncc_MainPage(title, "www", family="nccommons")
+    # ---
+    p_text = page.get_text()
+    # ---
+    if pd_temp in p_text:
+        return
+    # ---
+    new_text = p_text
+    # ---
+    add_after = [
+        "{{CC-BY-NC-SA-3.0}}",
+        "== {{int:license}} =="
+    ]
+    # ---
+    for add in add_after:
+        if add in p_text:
+            new_text = new_text.replace(add, f"{add}\n{pd_temp}")
+            break
+    # ---
+    if new_text == p_text:
+        new_text = new_text.replace("[[Category:", f"{pd_temp}\n[[Category:", 1)
+    # ---
+    if new_text == p_text:
+        new_text = new_text + f"\n{pd_temp}"
+    # ---
+    if new_text != p_text:
+        page.save(newtext=new_text, summary=f"Bot: add {pd_temp}")
+    # ---
+    skips.append(title)

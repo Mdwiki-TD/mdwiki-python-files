@@ -13,7 +13,7 @@ from newapi import printe
 from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
 from mass.radio.get_studies import get_images_stacks, get_images
 from mass.radio.bots.bmp import work_bmp
-from mass.radio.bots.update import update_text
+from mass.radio.bots.update import update_text, update_text_new
 from mass.radio.jsons_files import jsons  # , dumps_jsons, ids_to_urls, urls_to_ids
 # ---
 try:
@@ -43,8 +43,8 @@ urls_done = []
 # ---
 PD_medical_pages = []
 if "updatetext" in sys.argv:
-    from mass.radio.st3.PD_medical import PD_medical_pages
-
+    from mass.radio.lists.PD_medical import PD_medical_pages_def
+    PD_medical_pages = PD_medical_pages_def()
 
 def get_image_extension(image_url):
     # Split the URL to get the filename and extension
@@ -223,7 +223,7 @@ class OneCase:
         if file_name and file_name != image_name:
             # ---
             if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages:
-                update_text(f"File:{file_name}", image_text)
+                update_text_new(f"File:{file_name}")
             # ---
             self.add_category(file_name)
 
@@ -304,7 +304,8 @@ class OneCase:
                 # ---
                 file_title = f"File:{file_name}"
                 # ---
-                update_text(file_title, image_text)
+                # update_text(file_title, image_text)
+                update_text_new(file_title)
         # ---
         not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
         # ---
