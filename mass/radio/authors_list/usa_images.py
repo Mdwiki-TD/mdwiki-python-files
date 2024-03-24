@@ -5,13 +5,15 @@
 
 python3 core8/pwb.py mass/radio/authors_list/usa_images test
 
+tfj run usaimages1 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/usa_images"
+
 """
 import sys
 from mass.radio.authors_list.usa import get_usa_auths
-from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
-from mass.radio.authors_list import auths_cats
+# from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
+# from mass.radio.authors_list import auths_cats
 
-from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
+from newapi.ncc_page import MainPage as ncc_MainPage
 from newapi.ncc_page import CatDepth
 from newapi import printe
 # from mass.radio.lists.PD_medical import PD_medical_pages_def
@@ -78,6 +80,8 @@ def one_auth_wrk(auth : str, auth_cats : list) -> None:
     """
     work on one author cats
     """
+    printe.output(f"\tProcessing author {auth} with categories {auth_cats}")
+
     all_auth_images = get_cats_images(auth_cats)
     printe.output(f"\tall_auth_images: {len(all_auth_images)}")
     # print(all_auth_images)

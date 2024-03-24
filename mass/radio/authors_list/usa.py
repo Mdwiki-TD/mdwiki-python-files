@@ -43,7 +43,7 @@ def get_usa_auths():
     # ---
     return usa_auths
 
-def sa(authors_infos):
+def sa():
     print(f"len all authors: {len(authors_infos)}")
 
     # filter only authors with location contains "united states"
