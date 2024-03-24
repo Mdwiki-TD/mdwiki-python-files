@@ -69,7 +69,7 @@ def merge_references(text):
             if Group is None:
                 if quote == '' or quote is None:
                     name2 = get_html_attributes_value(params, 'name')
-                    if name2 and name2 != "":
+                    if name2:
                         name = name2
                         # printe.output("get the name again:%s" % name )
             # ---
