@@ -48,7 +48,7 @@ def PD_medical_pages_def():
     today = datetime.today().strftime('%Y-%m-%d')
     # ---
     if date != today or not PD_medical_pages:
-        printe.output(f"<<purple>> last modified: {date} , today: {today}, len: {len(PD_medical_pages)} ")
+        printe.output(f"<<purple>> PD medical pages last modified: {date}, today: {today}, current length: {len(PD_medical_pages)}")
         PD_medical_pages = new_list()
     # ---
     return PD_medical_pages

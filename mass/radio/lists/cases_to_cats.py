@@ -56,7 +56,7 @@ def cases_cats():
     today = datetime.today().strftime('%Y-%m-%d')
     # ---
     if date != today or not cases_cats_list:
-        printe.output(f"<<purple>> last modified: {date} , today: {today}, len: {len(cases_cats_list)} ")
+        printe.output(f"<<purple>> Cases to categories last modified: {date}, today: {today}, current length: {len(cases_cats_list)}")
         cases_cats_list = new_list()
     # ---
     return cases_cats_list
