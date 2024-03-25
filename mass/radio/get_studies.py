@@ -3,17 +3,18 @@
 python3 core8/pwb.py mass/radio/get_studies test
 
 """
-import sys
-import os
-from pathlib import Path
-from bs4 import BeautifulSoup
-import re
-import requests
+
 import json
+import os
+import re
+from pathlib import Path
+
+import requests
+from bs4 import BeautifulSoup
 from newapi import printe
 
 # ---
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, urls_to_ids
 
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
@@ -32,7 +33,9 @@ def get_images(url):
     response = requests.get(url, timeout=10)
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
-        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
+        print(
+            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
+        )
         studies = []
 
         return "", studies
@@ -75,12 +78,16 @@ def get_images_stacks(study_id):
 
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
-        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
+        print(
+            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
+        )
         return image_info
 
     text = response.text
     if not text.startswith("[") and not text.endswith("]"):
-        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
+        print(
+            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
+        )
         return image_info
 
     json_data = json.loads(text)

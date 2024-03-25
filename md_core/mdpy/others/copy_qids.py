@@ -7,19 +7,16 @@ delete from qids q1 WHERE q1.qid = '' and EXISTS  (SELECT 1 FROM qids q2 WHERE q
 
 """
 
+import sys
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 # ---
-from mdpy.bots import en_to_md
-import codecs
-import os
-import sys
+from pathlib import Path
 
 # ---
-from mdpy.bots import sql_for_mdwiki
-
+from mdpy.bots import en_to_md, sql_for_mdwiki
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
 # sql_for_mdwiki.add_titles_to_qids(tab)
@@ -31,16 +28,15 @@ from pymysql.converters import escape_string
 # ---
 in_qids = sql_for_mdwiki.get_all_qids()
 # ---
-if 'rr' in sys.argv:
+if "rr" in sys.argv:
     sys.exit()
 # ---
-len_qids_empty = len([x for x in in_qids if in_qids[x].find('Q') == -1])
-len_qids_not_empty = len([x for x in in_qids if in_qids[x] != ''])
+len_qids_empty = len([x for x in in_qids if in_qids[x].find("Q") == -1])
+len_qids_not_empty = len([x for x in in_qids if in_qids[x] != ""])
 # ---
-print(f'len_qids_empty = {len_qids_empty}')
-print(f'len_qids_not_empty = {len_qids_not_empty}')
+print(f"len_qids_empty = {len_qids_empty}")
+print(f"len_qids_not_empty = {len_qids_not_empty}")
 # ---
-from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
@@ -50,14 +46,14 @@ qids_list = en_to_md.mdtitle_to_qid
 # ---
 num = 0
 # ---
-all_texts = ''
-texts = ''
+all_texts = ""
+texts = ""
 # ---
-print(f'len(qids_list) = {len(qids_list)}')
+print(f"len(qids_list) = {len(qids_list)}")
 # ---
 for title, qid in qids_list.items():
     # ---
-    qid_in = in_qids.get(title, '')
+    qid_in = in_qids.get(title, "")
     # ---
     title2 = escape_string(title)
     qua = f"""INSERT INTO qids (title, qid) SELECT '{title2}', '{qid}';"""
@@ -65,28 +61,28 @@ for title, qid in qids_list.items():
     if title in in_qids:
         qua = f"""UPDATE qids set qid = '{qid}' where title = '{title2}';"""
         if qid == qid_in:
-            qua = ''
+            qua = ""
     # ---
-    if qua != '':
+    if qua != "":
         num += 1
         # ---
         # print(qua)
         # ---
-        all_texts += f'\n{qua}'
-        texts += f'\n{qua}'
+        all_texts += f"\n{qua}"
+        texts += f"\n{qua}"
     if num % 300 == 0:
-        if texts != '':
+        if texts != "":
             print(texts)
             vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True)
-            texts = ''
+            texts = ""
             # ---
             # if 'break' in sys.argv: break
 # ---
-if texts != '':
+if texts != "":
     print(texts)
     vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True)
 # ---
 # log all_texts
-with open(f'{Dir}/copy_qids.txt', 'w', encoding='utf-8') as f:
+with open(f"{Dir}/copy_qids.txt", "w", encoding="utf-8") as f:
     f.write(all_texts)
 # ---

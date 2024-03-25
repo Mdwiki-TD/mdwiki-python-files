@@ -4,17 +4,19 @@
 python3 I:/mdwiki/pybot/md_core/getall2.py
 
 """
+
 import os
 import re
+
 import chardet
 
 
 def printe(color, text):
     color_table = {
-        'red': "\033[91m%s\033[00m",
-        'green': "\033[92m%s\033[00m",
-        'yellow': "\033[93m%s\033[00m",
-        'blue': "\033[94m%s\033[00m",
+        "red": "\033[91m%s\033[00m",
+        "green": "\033[92m%s\033[00m",
+        "yellow": "\033[93m%s\033[00m",
+        "blue": "\033[94m%s\033[00m",
     }
     # ---
     if color in color_table:
@@ -27,16 +29,16 @@ def get_text(file_path):
     # ---
     # find out what encoding the file is
     # ---
-    enc = ''
+    enc = ""
     # ---
-    with open(file_path, 'rb') as f:
+    with open(file_path, "rb") as f:
         raw = f.read()
-        enc = chardet.detect(raw)['encoding']
+        enc = chardet.detect(raw)["encoding"]
     # ---
     if enc and enc.startswith("ISO-8859"):
         enc = "windows-1256"
     # ---
-    text = ''
+    text = ""
     # ---
     try:
         text = open(file_path, encoding=enc).read()
@@ -68,15 +70,15 @@ for pyfile in os.listdir(drivepath):
     # ---
     printe("blue", pyfile)
     # ---
-    pyfilepath = drivepath + '/' + pyfile
+    pyfilepath = drivepath + "/" + pyfile
     # ---
-    if os.path.isfile(pyfilepath) and pyfile.endswith('.py'):
+    if os.path.isfile(pyfilepath) and pyfile.endswith(".py"):
         # printe( "red" , "%s found in: %s" % (pyfile,floder) )
         # ---
         text, enc = get_text(pyfilepath)
         # ---
         # match all defs
-        rec = re.compile(r'def\s+([^\(\)]+)\s*\(.*?\)\s*\:')
+        rec = re.compile(r"def\s+([^\(\)]+)\s*\(.*?\)\s*\:")
         for def_ in rec.finditer(text):
             # ---
             Def = def_.group()

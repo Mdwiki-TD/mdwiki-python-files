@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :write python code to do:
 1. Import necessary libraries for web scraping and file manipulation, such as os, requests, BeautifulSoup, json, and pathlib.

@@ -10,17 +10,20 @@ from nccommons import api
 # upload = api.upload_by_url(file_name, text, url, comment='')
 # ---
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
 # ---
 import sys
 import time
+
 # ---
 from nccommons import ext
 from newapi import printe
 from newapi.ncc_page import NEW_API
-api_new  = NEW_API('www', family='nccommons')
+
+api_new = NEW_API("www", family="nccommons")
 # json1    = api_new.post_params(params, addtoken=False)
 api_new.Login_to_wiki()
 # pages    = api_new.Find_pages_exists_or_not(liste)
@@ -38,6 +41,8 @@ yes_answer = ["y", "a", "", "Y", "A", "all"]
 # ---
 Save_all = {1: False}
 upload_all = {1: False}
+
+
 # ---
 def py_input(s):
     printe.output(s)
@@ -45,29 +50,56 @@ def py_input(s):
     # ---
     return sa
 
+
 def post_s(params, addtoken=False):
     # ---
-    params['format'] = 'json'
-    params['utf8'] = 1
+    params["format"] = "json"
+    params["utf8"] = 1
     # ---
     json1 = api_new.post_params(params, addtoken=True)
     # ---
     return json1
 
-def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all=0):
-    return api_new.Get_All_pages(start=start, namespace=namespace, limit=limit, apfilterredir=apfilterredir, limit_all=limit_all)
 
-def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_ext=False):
+def Get_All_pages(start,
+                  namespace="0",
+                  limit="max",
+                  apfilterredir="",
+                  limit_all=0):
+    return api_new.Get_All_pages(
+        start=start,
+        namespace=namespace,
+        limit=limit,
+        apfilterredir=apfilterredir,
+        limit_all=limit_all,
+    )
+
+
+def upload_by_url(file_name,
+                  text,
+                  url,
+                  comment="",
+                  return_file_name=False,
+                  do_ext=False):
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
     # ---
-    params = {'action': 'upload', 'format': 'json', 'filename': file_name, 'url': url, 'comment': comment, 'text': text}
+    params = {
+        "action": "upload",
+        "format": "json",
+        "filename": file_name,
+        "url": url,
+        "comment": comment,
+        "text": text,
+    }
     # ---
     if not upload_all[1] and "ask" in sys.argv:
-        if 'nodiff' not in sys.argv:
+        if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o)")
+        sa = py_input(
+            f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o)"
+        )
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -75,7 +107,8 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
         # ---
         if sa.strip() == "a":
             printe.output("---------------------------------------------")
-            printe.output("nccommons.py upload_by_url save all without asking.")
+            printe.output(
+                "nccommons.py upload_by_url save all without asking.")
             printe.output("---------------------------------------------")
             upload_all[1] = True
         # ---
@@ -88,12 +121,14 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
     # ---
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
-    error_code = result.get("error", {}).get("code", '')
-    error_info = result.get("error", {}).get("info", '')
+    error_code = result.get("error", {}).get("code", "")
+    error_info = result.get("error", {}).get("info", "")
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
-    duplicate = upload_result.get("warnings", {}).get("duplicate", [''])[0].replace("_", " ")
+    duplicate = (upload_result.get("warnings",
+                                   {}).get("duplicate",
+                                           [""])[0].replace("_", " "))
     # ---
     if success:
         printe.output(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
@@ -101,31 +136,47 @@ def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_e
 
     elif duplicate and return_file_name:
         printe.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
-        return f'{duplicate}' if return_file_name else True
+        return f"{duplicate}" if return_file_name else True
     elif error != {}:
-        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(
+            f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         # ---
         printe.output(error)
         # ----
         if do_ext and error_code == "verification-error" and error_info:
             new_file_name = ext.get_new_ext(error_info, file_name)
             if new_file_name:
-                return upload_by_url(new_file_name, text, url, comment=comment, return_file_name=return_file_name)
+                return upload_by_url(
+                    new_file_name,
+                    text,
+                    url,
+                    comment=comment,
+                    return_file_name=return_file_name,
+                )
     # ---
     printe.output(result)
-    return False if not return_file_name else ''
+    return False if not return_file_name else ""
 
 
 def create_Page(text, title, summary="create page"):
     printe.output(f" create Page {title}:")
     time_sleep = 0
     # ---
-    params = {"action": "edit", "title": title, "text": text, "summary": summary, "notminor": 1, "createonly": 1}
+    params = {
+        "action": "edit",
+        "title": title,
+        "text": text,
+        "summary": summary,
+        "notminor": 1,
+        "createonly": 1,
+    }
     # ---
     if not Save_all[1] and ("ask" in sys.argv and "save" not in sys.argv):
-        if 'nodiff' not in sys.argv:
+        if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(f"<<lightyellow>> nccommons.py: create:\"{title}\" page ? ([y]es, [N]o)")
+        sa = py_input(
+            f'<<lightyellow>> nccommons.py: create:"{title}" page ? ([y]es, [N]o)'
+        )
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -144,7 +195,7 @@ def create_Page(text, title, summary="create page"):
     # ---
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
-    error_code = result.get("error", {}).get("code", '')
+    error_code = result.get("error", {}).get("code", "")
     # ---
     if success:
         printe.output(f"** true ..  [[{title}]] ")
@@ -152,7 +203,8 @@ def create_Page(text, title, summary="create page"):
         time.sleep(time_sleep)
         return True
     elif error != {}:
-        printe.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
+        printe.output(
+            f"<<lightred>> error when create_Page, error_code:{error_code}")
         printe.output(error)
     else:
         printe.output(result)
@@ -166,5 +218,6 @@ def create_Page(text, title, summary="create page"):
 def Find_pages_exists_or_not(liste):
     return api_new.Find_pages_exists_or_not(liste)
 
-if __name__ == '__main__':
-    print(Get_All_pages('', limit='10', limit_all=10))
+
+if __name__ == "__main__":
+    print(Get_All_pages("", limit="10", limit_all=10))

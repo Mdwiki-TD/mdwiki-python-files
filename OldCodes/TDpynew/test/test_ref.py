@@ -1,5 +1,5 @@
-from ref import fix_ref
 import pywikibot
+from ref import fix_ref
 
 # ---
 ff = """{{Infobox medical condition (new)
@@ -113,7 +113,7 @@ There are few treatments which increase prolactin levels in humans. Treatment di
 
 """
 # ---
-ff = ff.replace('<ref', '\n<ref')
+ff = ff.replace("<ref", "\n<ref")
 # ---
 new = fix_ref(ff, all)
 pywikibot.showDiff(ff, new)

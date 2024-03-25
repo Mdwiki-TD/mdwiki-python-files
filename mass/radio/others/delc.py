@@ -4,10 +4,12 @@ python3 core8/pwb.py mass/radio/delc ask diff
 
 
 """
+
 import re
+
 from newapi.ncc_page import MainPage as ncc_MainPage
 
-cats = '''
+cats = """
     Category:Radiopaedia case 9951 Negative ulnar variance
     Category:Radiopaedia case 11146 Abdominal CSF pseudocyst
     Category:Radiopaedia case 11159 Achilles tendon rupture
@@ -41,10 +43,10 @@ cats = '''
     Category:Radiopaedia case 80949 Normal wrist alignment, dorsal and volar intercalated segmental instability (illustration)
     Category:Radiopaedia case 90395 Cerebellar vermis (illustration)
     Category:Radiopaedia case 11276 Cardiac pacemaker
-    '''
-#---
-cats = [ x.strip() for x in cats.split("\n") if x.strip() ]
-#---
+    """
+# ---
+cats = [x.strip() for x in cats.split("\n") if x.strip()]
+# ---
 for cat in cats:
     print(f"cat: {cat}")
     page = ncc_MainPage(cat, "www", family="nccommons")
@@ -54,7 +56,8 @@ for cat in cats:
     text = page.get_text()
     # ---
     # remove category liike: [[Category:Radiopaedia cases by type | 011219]]
-    newtext = re.sub(r"\[\[Category:Radiopaedia cases by type\s*\|*.*?\]\]", "", text)
+    newtext = re.sub(r"\[\[Category:Radiopaedia cases by type\s*\|*.*?\]\]",
+                     "", text)
     # ---
     if newtext == text:
         print("newtext == text")

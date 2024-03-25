@@ -1,4 +1,4 @@
-'''
+"""
 # ---
 from priorviews.lists import creators
 # creators.Creators_by_lang_title
@@ -6,13 +6,14 @@ from priorviews.lists import creators
 # ---
 python3 core8/pwb.py priorviews/lists/creators
 
-'''
-import sys
+"""
+
+import codecs
 import json
 import os
-from pathlib import Path
 import re
-import codecs
+import sys
+from pathlib import Path
 
 # ---
 from priorviews.bots import helps
@@ -20,21 +21,21 @@ from priorviews.bots import helps
 # ---
 Dir = Path(__file__).parent
 # ---
-file_cts = f'{Dir}/creators_as_translators.json'
+file_cts = f"{Dir}/creators_as_translators.json"
 # ---
 if not os.path.exists(file_cts):
-    with open(file_cts, 'w', encoding="utf-8") as f:
+    with open(file_cts, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-creators_as_translators = json.load(codecs.open(file_cts, 'r', 'utf-8'))
+creators_as_translators = json.load(codecs.open(file_cts, "r", "utf-8"))
 # ---
-file = f'{Dir}/creators_by_lang.json'
+file = f"{Dir}/creators_by_lang.json"
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-CreatorsData = json.load(codecs.open(file, 'r', 'utf-8'))
+CreatorsData = json.load(codecs.open(file, "r", "utf-8"))
 # ---
 Creators_by_lang_title = {}
 # ---
@@ -61,11 +62,12 @@ for lang in CreatorsData.copy():
         # ---
         if comment.find("|User:Mr. Ibrahem/") == -1 and TD:
             Dump_it = True
-            print('false TD..')
-            CreatorsData[lang][title]['TD'] = False
+            print("false TD..")
+            CreatorsData[lang][title]["TD"] = False
         # ---
         # if actor match IP address : skip
-        if re.match(r"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$", actor):
+        if re.match(r"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$",
+                    actor):
             continue
         # ---
         if actor not in counts_creators_by_lang[lang]:
@@ -78,9 +80,9 @@ for lang in CreatorsData.copy():
 if Dump_it:
     helps.dump_data(file, CreatorsData)
 # ---
-if __name__ == '__main__':
-    if 'dd' not in sys.argv:
-        print(f'len of Creators_by_lang_title: {len(Creators_by_lang_title)}')
+if __name__ == "__main__":
+    if "dd" not in sys.argv:
+        print(f"len of Creators_by_lang_title: {len(Creators_by_lang_title)}")
         for lang, titles in Creators_by_lang_title.items():
             for title, words in titles.items():
                 print(lang, title, words)
@@ -90,7 +92,8 @@ if __name__ == '__main__':
             for x, z in wo.items():
                 print(x, z)
         # ---
-        print(f'len of counts_creators_by_lang: {len(counts_creators_by_lang)}')
+        print(
+            f"len of counts_creators_by_lang: {len(counts_creators_by_lang)}")
         # ---
 
 # ---

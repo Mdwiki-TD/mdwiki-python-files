@@ -1,31 +1,35 @@
-'''
+"""
 
 python3 core8/pwb.py mass/radio/authors_list/bot nodump
 python3 core8/pwb.py mass/radio/authors_list/bot
 
 tfj run auths --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/bot && $HOME/local/bin/python3 core8/pwb.py mass/radio/authors_list/save"
 
-'''
-import re
-import sys
+"""
+
 import json
 import os
+import sys
 from pathlib import Path
+
 from newapi import printe
-from mass.radio.authors_list.auths_infos import get_author_infos
+
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / 'jsons/infos.json', 'r', encoding='utf-8') as f:
+with open(main_dir / "jsons/infos.json", encoding="utf-8") as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(str(main_dir), "jsons/authors.json"),
+          encoding="utf-8") as f:
     authors = json.load(f)
 # ---
-with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
+with open(main_dir / "jsons/all_ids.json", encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 print(f"Length of all_ids: {len(all_ids)}")
+
+
 # ---
 def get_missing_authors():
     printe.output("<<yellow>> get_missing_authors:")
@@ -41,15 +45,15 @@ def get_missing_authors():
         if author_exists:
             continue
         # ---
-        url = ta.get('url', None)
+        url = ta.get("url", None)
         # ---
         if not x or x in updated_authors:
             continue
         # ---
-        author = ta.get('author', "")
+        author = ta.get("author", "")
         # ---
         if not author:
-            author = infos.get(url, {}).get('author', "")
+            author = infos.get(url, {}).get("author", "")
             if author:
                 add_from_info += 1
         # ---
@@ -61,17 +65,22 @@ def get_missing_authors():
     print(f"add_from_info: {add_from_info:,}")
     # ---
     # sort updated_authors by int(k)
-    updated_authors = dict(sorted(updated_authors.items(), key=lambda x: int(x[0])))
+    updated_authors = dict(
+        sorted(updated_authors.items(), key=lambda x: int(x[0])))
     # ---
     if "nodump" not in sys.argv:
         # with open(os.path.join(str(main_dir), 'authors_list/authors_new.json'), 'w', encoding='utf-8') as f:
-        with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'w', encoding='utf-8') as f:
+        with open(os.path.join(str(main_dir), "jsons/authors.json"),
+                  "w",
+                  encoding="utf-8") as f:
             json.dump(updated_authors, f, ensure_ascii=False, indent=4)
     # ---
     # len of empty authors
-    print("empty authors:", len([x for x, v in updated_authors.items() if not v]))
+    print("empty authors:",
+          len([x for x, v in updated_authors.items() if not v]))
     # ---
     return updated_authors
+
 
 def make_authors_list(authors_n):
     printe.output("<<yellow>> make_authors_list:")
@@ -88,7 +97,8 @@ def make_authors_list(authors_n):
     print("len new_authors:", len(new_authors))
     # ---
     # sort
-    new_authors = dict(sorted(new_authors.items(), key=lambda x: len(x[1]), reverse=True))
+    new_authors = dict(
+        sorted(new_authors.items(), key=lambda x: len(x[1]), reverse=True))
     # ---
     printe.output("<<yellow>> new_authors:")
     # ---
@@ -98,13 +108,20 @@ def make_authors_list(authors_n):
             break
     # ---
     if "nodump" not in sys.argv:
-        with open(os.path.join(str(main_dir), 'authors_list/authors_to_cases.json'), 'w', encoding='utf-8') as f:
+        with open(
+                os.path.join(str(main_dir),
+                             "authors_list/authors_to_cases.json"),
+                "w",
+                encoding="utf-8",
+        ) as f:
             json.dump(new_authors, f, ensure_ascii=False, indent=4)
     # ---
     # print sum of all new_authors values
-    print("sum of all new_authors values:", sum([len(x) for x in new_authors.values()]))
+    print("sum of all new_authors values:",
+          sum([len(x) for x in new_authors.values()]))
     # ---
     return new_authors
+
 
 def start():
     authors_n = get_missing_authors()
@@ -112,5 +129,5 @@ def start():
     new = make_authors_list(authors_n)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

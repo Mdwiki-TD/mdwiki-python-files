@@ -5,23 +5,24 @@ python3 core8/pwb.py mass/radio/st3/count
 tfj run coca --image python3.9 --command "$HOME/local/bin/python3 c8/pwb.py mass/radio/cases_in_ids && $HOME/local/bin/python3 c8/pwb.py mass/radio/st3/count"
 
 """
+
+import json
 import os
 import sys
-import json
-import tqdm
-import time
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
-from mass.radio.get_studies import get_images_stacks, get_images
+import tqdm
 from newapi.ncc_page import MainPage as ncc_MainPage
+
+from mass.radio.get_studies import get_images, get_images_stacks
 
 main_dir = Path(__file__).parent.parent
 
-with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/all_ids.json", encoding="utf-8") as f:
     all_ids = json.load(f)
 
-with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/cases_in_ids.json", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
 studies_dir = Path("/data/project/mdwiki/studies")
@@ -49,7 +50,7 @@ def cases_counts():
         with open(cases_count_file, "w", encoding="utf-8") as f:
             f.write("{}")
 
-    with open(cases_count_file, "r", encoding="utf-8") as f:
+    with open(cases_count_file, encoding="utf-8") as f:
         cases_count = json.load(f)
 
     return cases_count
@@ -63,9 +64,9 @@ def get_studies(studies_ids, caseId):
         images = {}
         if os.path.exists(st_file):
             try:
-                with open(st_file, "r", encoding="utf-8") as f:
+                with open(st_file, encoding="utf-8") as f:
                     images = json.load(f)
-            except Exception as e:
+            except Exception:
                 print(f"{study} : error")
         images = [image for image in images if image]
         if not images:
@@ -81,18 +82,20 @@ def get_studies(studies_ids, caseId):
 def sa():
     day = datetime.now().strftime("%Y-%b-%d %H:%M:%S")
     # text = f"{day}\n"
-    text = f"* --~~~~\n"
+    text = "* --~~~~\n"
 
     text += f"* All Cases: {len(all_ids):,}\n"
     text += f"* Cases done: {cases_done:,}\n\n"
-    text += f";Remaining:\n"
+    text += ";Remaining:\n"
     text += f"* Cases: {All.cases:,}\n"
     text += f"* Images: {All.images:,}\n"
     text += f"* Studies: {All.studies:,}\n"
 
     print(text)
 
-    page = ncc_MainPage("User:Mr. Ibrahem/Radiopaedia", "www", family="nccommons")
+    page = ncc_MainPage("User:Mr. Ibrahem/Radiopaedia",
+                        "www",
+                        family="nccommons")
 
     if page.exists():
         page.save(newtext=text, summary="update")

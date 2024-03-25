@@ -12,15 +12,13 @@ python3 core8/pwb.py mdpy/recheck
 #
 
 import sys
-from pymysql.converters import escape_string
+
 # ---
 from api_sql import wiki_sql
 from mdpy import printe
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import py_tools
-from mdpy.bots import wikidataapi
-from mdpy.bots import wiki_api
-from mdpy.bots import en_to_md
+from mdpy.bots import en_to_md, py_tools, sql_for_mdwiki, wiki_api, wikidataapi
+from pymysql.converters import escape_string
+
 # ---
 targets_done = {}
 wd_tt = {}
@@ -50,10 +48,10 @@ def dodo_sql():
     len_done_target = 0
     # ---
     for tab in sq:
-        title = tab['title']
-        user = tab['user']
-        target = tab['target']
-        lang = tab['lang'].lower()
+        title = tab["title"]
+        user = tab["user"]
+        target = tab["target"]
+        lang = tab["lang"].lower()
         # ---
         if lang_o != "" and lang != lang_o.strip():
             continue
@@ -63,9 +61,14 @@ def dodo_sql():
             targets_done[lang] = {}
         target = target.replace("_", " ")
         # targets_done[lang][py_tools.ec_de_code(target , 'encode')] = { "user" : user , "target" : target, "mdtitle" : title }
-        targets_done[lang][target] = {"user": user, "target": target, "mdtitle": title}
+        targets_done[lang][target] = {
+            "user": user,
+            "target": target,
+            "mdtitle": title
+        }
     # ---
-    printe.output("<<lightyellow>> find %d with target, and %s without " % (len_done_target, len_no_target))
+    printe.output("<<lightyellow>> find %d with target, and %s without " %
+                  (len_done_target, len_no_target))
 
 
 def do_it_sql(lange, targets):
@@ -73,9 +76,12 @@ def do_it_sql(lange, targets):
     titles = list(targets.keys())
     # ---
     for i in range(0, len(titles), 100):
-        group = titles[i : i + 100]
+        group = titles[i:i + 100]
         # ---
-        ase = [escape_string(t.strip().replace(" ", "_")) for t in group if t.strip() != ""]
+        ase = [
+            escape_string(t.strip().replace(" ", "_")) for t in group
+            if t.strip() != ""
+        ]
         # ---
         if not ase:
             continue
@@ -113,16 +119,24 @@ def do_it_sql(lange, targets):
                 # ---
                 md_title = targets.get(target, {}).get("mdtitle", "")
                 # ---
-                target_tab = {"mdtitle": md_title, "lang": lange, "qid": pp_value}
+                target_tab = {
+                    "mdtitle": md_title,
+                    "lang": lange,
+                    "qid": pp_value
+                }
         # ---
         if res_len < len(group):
             diff = len(group) - res_len
             # printe.output( query )
-            itemdiff = [t for t in group if t.strip() != "" and t not in result_n]
+            itemdiff = [
+                t for t in group if t.strip() != "" and t not in result_n
+            ]
             len_missing = len(itemdiff)
             if len_missing > 0:
-                printe.output("recheck.py %d missing from %d" % (diff, len(group)))
-                printe.output("recheck.py missing:(%d):%s" % (len_missing, ",".join(itemdiff)))
+                printe.output("recheck.py %d missing from %d" %
+                              (diff, len(group)))
+                printe.output("recheck.py missing:(%d):%s" %
+                              (len_missing, ",".join(itemdiff)))
 
 
 def do_it_api(lange, targets):
@@ -140,7 +154,7 @@ def do_it_api(lange, targets):
     nomd = 0
     # ---
     for i in range(0, len(New_targets), limits):
-        group = New_targets[i : i + limits]
+        group = New_targets[i:i + limits]
         # ---
         # get all pages qid
         qids_from_wiki = wiki_api.Get_page_qids(lange, group)
@@ -210,7 +224,13 @@ def work_with_2_qids(oldq, new_q):
     # ---
     if en.startswith("User:Mr. Ibrahem"):
         printe.output(f"<<lightblue>> remove sitelink {en}")
-        remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, token=True)
+        remove = wikidataapi.post(
+            {
+                "action": "wbsetsitelink",
+                "id": oldq,
+                "linksite": "enwiki"
+            },
+            token=True)
         if "success" in remove:
             len_sites -= 1
             printe.output("<<lightgreen>> **remove sitelink true.")
@@ -218,7 +238,7 @@ def work_with_2_qids(oldq, new_q):
             printe.output("<<lightred>> **remove sitelink false.")
             printe.output(remove)
         # ---
-        remove2 = wikidataapi.Labels_API(oldq, '', 'en', remove=True)
+        remove2 = wikidataapi.Labels_API(oldq, "", "en", remove=True)
         # ---
         if remove2:
             len_sites -= 1
@@ -232,6 +252,7 @@ def work_with_2_qids(oldq, new_q):
     # ---
     printe.output(" work_with_2_qids ends.........")
     printe.output("=============================")
+
 
 def start():
     # ---
@@ -275,22 +296,30 @@ def start():
         if qid_mdwiki == "" and qid_2 != "":
             mdtitle = tit2
             qid_mdwiki = qid_2
-            printe.output(f"<<lightyellow>> mdtitle: ({mdtitle}), tit2: ({tit2})")
-            printe.output("<<lightyellow>> qid_mdwiki for mdtitle is empty, but qid_2 for tit2 is not empty")
+            printe.output(
+                f"<<lightyellow>> mdtitle: ({mdtitle}), tit2: ({tit2})")
+            printe.output(
+                "<<lightyellow>> qid_mdwiki for mdtitle is empty, but qid_2 for tit2 is not empty"
+            )
         # ---
         if qid_target == qid_mdwiki:
             continue
         # ---
         # printe.output( '<<lightred>> qid_target != qid_mdwiki' )
         # ---
-        qids_to_merge[qid_target] = {"wd_qid": qid_mdwiki, "md_title": mdtitle, "lang": lang}
+        qids_to_merge[qid_target] = {
+            "wd_qid": qid_mdwiki,
+            "md_title": mdtitle,
+            "lang": lang,
+        }
     # ---
     printe.output(f'len(qids_to_merge) = "{len(qids_to_merge)}"')
     # ---
     for oldq, tab in qids_to_merge.items():
         new_q = tab["wd_qid"]
         md_title = tab["md_title"]
-        printe.output(f"<<lightblue>> oldq:{oldq}, new_q:{new_q},md_title:{md_title}")
+        printe.output(
+            f"<<lightblue>> oldq:{oldq}, new_q:{new_q},md_title:{md_title}")
         # ---
         work_with_2_qids(oldq, new_q)
     # ---
@@ -340,7 +369,9 @@ def start():
     # ---
     for mdm in mdwiki_empty_qids:
         lang, target, qid_target = mdwiki_empty_qids[mdm]
-        printe.output(f"<<lightred>> no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}")
+        printe.output(
+            f"<<lightred>> no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}"
+        )
         to_add[mdm] = qid_target
     # ---
     printe.output("<<lightblue>> empty_qid_target:")
@@ -349,6 +380,7 @@ def start():
     # ---
     if "addthem" in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(to_add)
+
 
 if __name__ == "__main__":
     start()

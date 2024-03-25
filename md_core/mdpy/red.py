@@ -5,20 +5,19 @@
 
 """
 
+import codecs
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import sys
-import codecs
-import requests
 
-# ---
-from newapi.mdwiki_page import MainPage, NEW_API
+import requests
 from mdpy import printe
-from mdpy.bots import py_tools
-from mdpy.bots import mdwiki_api
+from mdpy.bots import mdwiki_api, py_tools
 from mdpy.bots.check_title import valid_title  # valid_title(title)
+# ---
+from newapi.mdwiki_page import NEW_API, MainPage
 
 # ---
 Session = requests.Session()
@@ -28,14 +27,14 @@ offset = {1: 0}
 to_make = {}
 # ---
 for arg in sys.argv:
-    arg, _, value = arg.partition(':')
+    arg, _, value = arg.partition(":")
     # ---
-    if arg.lower() in ['offset', '-offset'] and value.isdigit():
+    if arg.lower() in ["offset", "-offset"] and value.isdigit():
         offset[1] = int(value)
 # ---
 # from export import * # export_en_history( title )
 # ---
-api_new = NEW_API('www', family='mdwiki')
+api_new = NEW_API("www", family="mdwiki")
 api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
@@ -58,14 +57,14 @@ def get_red(title):
     # ---
     lista = []
     # ---
-    r22 = Session.post('https://' + 'en.wikipedia.org/w/api.php', data=params)
+    r22 = Session.post("https://" + "en.wikipedia.org/w/api.php", data=params)
     json1 = r22.json()
     # ---
-    pages = json1.get('query', {}).get('pages', {})
+    pages = json1.get("query", {}).get("pages", {})
     # ---szs
     for x in pages:
-        title = pages[x].get('title', '')
-        redirectsn = pages[x].get('redirects', [])
+        title = pages[x].get("title", "")
+        redirectsn = pages[x].get("redirects", [])
         printe.output(redirectsn)
         if pages[x]["title"] == title:
             for io in redirectsn:
@@ -78,14 +77,16 @@ def get_red(title):
     return lista
 
 
-def work(title, num, lenth, From=''):
+def work(title, num, lenth, From=""):
     # ---
-    printe.output('-------------------------------------------\n*<<lightyellow>> >%d/%d title:"%s".' % (num, lenth, title))
+    printe.output(
+        '-------------------------------------------\n*<<lightyellow>> >%d/%d title:"%s".'
+        % (num, lenth, title))
     # ---
     if num < offset[1]:
         return ""
     # ---
-    page = MainPage(title, 'www', family='mdwiki')
+    page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         printe.output(f" page:{title} not exists in mdwiki.")
@@ -95,8 +96,8 @@ def work(title, num, lenth, From=''):
     # ---
     printe.output(redirects)
     # ---
-    text = f'#redirect [[{title}]]'
-    sus = f'Redirected page to [[{title}]]'
+    text = f"#redirect [[{title}]]"
+    sus = f"Redirected page to [[{title}]]"
     # ---
     ing = mdwiki_api.Find_pages_exists_or_not(redirects)
     # ---
@@ -104,7 +105,8 @@ def work(title, num, lenth, From=''):
     for tit, o in ing.items():
         num += 1
         if o:
-            printe.output("page n:%d, title:'%s' already in mdwiki.org.." % (num, tit))
+            printe.output("page n:%d, title:'%s' already in mdwiki.org.." %
+                          (num, tit))
             continue
         # ---
         if not valid_title(tit):
@@ -114,7 +116,7 @@ def work(title, num, lenth, From=''):
 
 
 def main():
-    printe.output('*<<lightred>> > main:')
+    printe.output("*<<lightred>> > main:")
     # ---
     # python3 red.py -page:Allopurinol
     # python3 red.py -page:Activated_charcoal_\(medication\)
@@ -122,40 +124,41 @@ def main():
     # python red.py -newpages:1000
     # python red.py -newpages:20000
     # ---
-    page2 = ''
-    From = '0'
+    page2 = ""
+    From = "0"
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         arg = arg.lower()
         # ---
         if arg == "-from":
-            From = py_tools.ec_de_code(value, 'decode')
+            From = py_tools.ec_de_code(value, "decode")
         # ---
         if arg in ["-page2", "page2"]:
-            page2 = py_tools.ec_de_code(value, 'decode')
+            page2 = py_tools.ec_de_code(value, "decode")
     # ---
-    if page2 != '' and From != '':
+    if page2 != "" and From != "":
         work(page2, 0, 1, From=From)
     # ---
-    user = ''
-    user_limit = '3000'
+    user = ""
+    user_limit = "3000"
     # ---
     searchlist = {
-        "drug": "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
+        "drug":
+        "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
     }
     # ---
-    limite = 'max'
-    starts = ''
+    limite = "max"
+    starts = ""
     # ---
     pages = []
     # ---
-    namespaces = '0'
-    newpages = ''
+    namespaces = "0"
+    newpages = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         arg = arg.lower()
         # ---
@@ -169,10 +172,10 @@ def main():
             pages.append(value)
         # ---
         if arg in ["-page2", "page2"]:
-            value = py_tools.ec_de_code(value, 'decode')
+            value = py_tools.ec_de_code(value, "decode")
             pages.append(value)
         # ---
-        if arg in ['newpages', '-newpages']:
+        if arg in ["newpages", "-newpages"]:
             newpages = value
         # ---
         # python red.py -ns:0 -usercontribs:Edoderoobot
@@ -181,7 +184,7 @@ def main():
             user = value
         # ---
         # python red.py -start:!
-        if arg in ['start', '-start']:
+        if arg in ["start", "-start"]:
             starts = value
         # ---
         if arg == "-ns":
@@ -194,12 +197,12 @@ def main():
             # if value == 'redirectlist.txt' :
             # value = '/data/project/mdwiki/public_html/redirectlist.txt'
             # ---
-            text2 = codecs.open(value, 'r', 'utf8')
+            text2 = codecs.open(value, "r", "utf8")
             text = text2.read()
             pages.extend(x.strip() for x in text.split("\n"))
         # ---
         # python red.py -ns:0 search:drug
-        if arg == 'search':
+        if arg == "search":
             if value in searchlist:
                 value = searchlist[value]
             # ---
@@ -211,7 +214,7 @@ def main():
     start_done = starts
     okay = True
     # ---
-    if starts == 'all':
+    if starts == "all":
         while okay:
             # ---
             if starts == start_done:
@@ -220,15 +223,19 @@ def main():
             # python red.py -start:all
             #
             # ---
-            list = api_new.Get_All_pages(start='', namespace=namespaces, limit=limite)
+            list = api_new.Get_All_pages(start="",
+                                         namespace=namespaces,
+                                         limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
                 # ---
                 starts = page
     # ---
-    if starts != '':
-        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+    if starts != "":
+        listen = api_new.Get_All_pages(start=starts,
+                                       namespace=namespaces,
+                                       limit=limite)
         for num, page in enumerate(listen, start=1):
             work(page, num, len(listen))
             # ---
@@ -238,7 +245,10 @@ def main():
     if newpages != "":
         list = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        list = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
+        list = mdwiki_api.Get_UserContribs(user,
+                                           limit=user_limit,
+                                           namespace=namespaces,
+                                           ucshow="new")
     elif pages != []:
         list = pages
     for num, page in enumerate(list, start=1):
@@ -246,7 +256,7 @@ def main():
     # ---
     # '''
     # ---
-    if starts == 'all':
+    if starts == "all":
         while okay:
             # ---
             if starts == start_done:
@@ -255,13 +265,15 @@ def main():
             # python red.py -start:all
             #
             # ---
-            list = api_new.Get_All_pages(start='', namespace=namespaces, limit=limite)
+            list = api_new.Get_All_pages(start="",
+                                         namespace=namespaces,
+                                         limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
                 # ---
                 starts = page
-    elif starts != '':
+    elif starts != "":
         # while start_done != starts :
         while okay:
             # ---
@@ -271,7 +283,9 @@ def main():
             # python red.py -start:! -limit:3
             #
             # ---
-            list = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+            list = api_new.Get_All_pages(start=starts,
+                                         namespace=namespaces,
+                                         limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))

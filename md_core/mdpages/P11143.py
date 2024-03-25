@@ -4,20 +4,20 @@
 python3 core8/pwb.py mdpages/P11143
 
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
 #
 import sys
 import time
-# ---
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import catdepth2
-from mdpy.bots import wikidataapi
+
 from mdpy import printe
+# ---
+from mdpy.bots import catdepth2, sql_for_mdwiki, wikidataapi
 
 # ---
-sys.argv.append('workhimo')
+sys.argv.append("workhimo")
 # ---
 wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
 # ---
@@ -27,11 +27,11 @@ wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
 # ---
 qids_di = sql_for_mdwiki.get_all_qids()
 # ---
-qids = {q: title for title, q in qids_di.items() if q != ''}
+qids = {q: title for title, q in qids_di.items() if q != ""}
 # ---
 mdwiki_in_qids = list(qids.values())
 # ---
-query = '''select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}'''
+query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
 # ---
 in_wd = {}
 # ---
@@ -40,9 +40,9 @@ new_qids = {}
 wdlist = wikidataapi.sparql_generator_url(query, printq=False, add_date=True)
 # ---
 for wd in wdlist:
-    prop = wd['prop']
+    prop = wd["prop"]
     # ---
-    qid = wd['item'].split('/entity/')[1]
+    qid = wd["item"].split("/entity/")[1]
     # ---
     in_wd[qid] = prop
     # ---
@@ -52,23 +52,24 @@ for wd in wdlist:
 
 def add_missing(newlist):
     # ---
-    print(f'len of newlist: {len(newlist)}')
+    print(f"len of newlist: {len(newlist)}")
     # ---
     if len(newlist) > 0:
         # ---
-        printe.output(f'<<yellow>>claims to add_missing: {len(newlist.items())}')
+        printe.output(
+            f"<<yellow>>claims to add_missing: {len(newlist.items())}")
         if len(newlist.items()) < 100:
-            print("\n".join([f'{k}\t:\t{v}' for k, v in newlist.items()]))
+            print("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
         # ---
-        if 'add' not in sys.argv:
+        if "add" not in sys.argv:
             printe.output('<<puruple>> add "add" to sys.argv to add them?')
             return
         # ---
         for n, (q, value) in enumerate(newlist.items(), start=1):
-            printe.output(f'<<yellow>> q {n} from {len(newlist)}')
-            wikidataapi.Claim_API_str(q, 'P11143', value)
+            printe.output(f"<<yellow>> q {n} from {len(newlist)}")
+            wikidataapi.Claim_API_str(q, "P11143", value)
             if n % 30 == 0:
-                printe.output(f'<<yellow>> n: {n}')
+                printe.output(f"<<yellow>> n: {n}")
                 time.sleep(5)
 
 
@@ -81,29 +82,29 @@ def fix(merge_qids):
         if md_title == wd_value:
             continue
         # ---
-        print(f'wd_value:{wd_value} != md_title:{md_title}, qid:{q}')
+        print(f"wd_value:{wd_value} != md_title:{md_title}, qid:{q}")
         # ---
         merge_qids[q] = md_title
         # ---
         # delete the old
-        ae = wikidataapi.Get_claim(q, 'P11143', get_claim_id=True)
+        ae = wikidataapi.Get_claim(q, "P11143", get_claim_id=True)
         if ae:
             for x in ae:
-                value = x['value']
-                claimid = x['id']
+                value = x["value"]
+                claimid = x["id"]
                 if value == wd_value:
                     uxx = wikidataapi.Delete_claim(claimid)
                     if uxx:
-                        print(f'True.. Deleted {claimid}')
+                        print(f"True.. Deleted {claimid}")
                     else:
-                        print(f'Failed to delete {claimid}')
+                        print(f"Failed to delete {claimid}")
         # ---
         # add the correct claim
-        ase = wikidataapi.Claim_API_str(q, 'P11143', md_title)
+        ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
         if ase:
-            print(f'True.. Added P11143:{md_title}')
+            print(f"True.. Added P11143:{md_title}")
         else:
-            print(f'Failed to add P11143:{md_title}')
+            print(f"Failed to add P11143:{md_title}")
 
 
 def duplicate(merge_qids):
@@ -121,22 +122,22 @@ def duplicate(merge_qids):
     va_tab_x = {k: v for k, v in va_tab.items() if len(v) > 1}
     # ---
     if va_tab_x:
-        printe.output(f'<<lightyellow>> len of va_tab_x: {len(va_tab_x)}')
+        printe.output(f"<<lightyellow>> len of va_tab_x: {len(va_tab_x)}")
         # ---
         for va, qs in va_tab_x.items():
-            print(f'va:{va}, qs:{qs}')
+            print(f"va:{va}, qs:{qs}")
     # ---
-    printe.output('<<lightyellow>> duplicate() end...')
+    printe.output("<<lightyellow>> duplicate() end...")
 
 
 def add_q(new_qids):
     # ---
     TD_list = catdepth2.make_cash_to_cats(return_all_pages=True)
     # ---
-    print(f'len of new_qids: {len(new_qids)}')
+    print(f"len of new_qids: {len(new_qids)}")
     # ---
     if len(new_qids) < 10:
-        print("\n".join([f'{k}:{v}' for k, v in new_qids.items()]))
+        print("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
     # ---
     newtitles = {title: qid for qid, title in new_qids.items()}
     # ---
@@ -149,12 +150,12 @@ def add_q(new_qids):
         del newtitles[title]
         delets.append(title)
     # ---
-    print(f'len of newtitles: {len(newtitles)}, len of delets: {len(delets)}')
+    print(f"len of newtitles: {len(newtitles)}, len of delets: {len(delets)}")
     # ---
     if newtitles:
         printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
         # ---
-        if 'addq' not in sys.argv:
+        if "addq" not in sys.argv:
             return
         # ---
         sql_for_mdwiki.add_titles_to_qids(newtitles)
@@ -163,7 +164,7 @@ def add_q(new_qids):
 
 def start():
     # ---
-    print(f'len of in_wd: {len(in_wd)}')
+    print(f"len of in_wd: {len(in_wd)}")
     # ---
     newlist = {q: tt for q, tt in qids.items() if q not in in_wd.keys()}
     # ---
@@ -172,7 +173,7 @@ def start():
     # merge_qids = {**newlist, **in_wd}
     merge_qids = {**newlist, **in_wd}
     # ---
-    if 'fix' in sys.argv:
+    if "fix" in sys.argv:
         fix(merge_qids)
     # ---
     duplicate(merge_qids)
@@ -180,5 +181,5 @@ def start():
     add_q(new_qids)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

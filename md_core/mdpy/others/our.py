@@ -4,23 +4,21 @@
 python3 core8/pwb.py mdpy/our
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import json
-import pywikibot
-import os
 import sys
-from pywikibot.comms import http
-
-# ---
-from mdpy.bots import txtlib2
-from mdpy import printe
-from mdpy.bots import mdwiki_api
-
 # ---
 from pathlib import Path
+
+import pywikibot
+from mdpy import printe
+# ---
+from mdpy.bots import mdwiki_api, txtlib2
+from pywikibot.comms import http
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
@@ -29,7 +27,7 @@ values = {}
 
 
 def fix_p(title, text, param):
-    uu = '{{ourworldindatamirror|%s}}' % param
+    uu = "{{ourworldindatamirror|%s}}" % param
     nn = f'<templatestyles src="Owid/styles.css"/><ourworldindatamirror>{param}</ourworldindatamirror>'
     newtext = text
     if text.find(uu) != -1:
@@ -47,25 +45,25 @@ def work(title):
     # ---
     ingr = txtlib2.extract_templates_and_params(text)
     # ---
-    pas = ''
+    pas = ""
     # ---
     newtext = text
     # ---
     for temp in ingr:
         # ---
-        namestrip, params = temp['namestrip'], temp['params']
+        namestrip, params = temp["namestrip"], temp["params"]
         # ---
-        if namestrip.lower() == 'ourworldindatamirror':
+        if namestrip.lower() == "ourworldindatamirror":
             # ---
-            pas += str(params) + '\n'
+            pas += str(params) + "\n"
             # ---
-            param = params.get(1) or params.get('1') or ''
+            param = params.get(1) or params.get("1") or ""
             # ---
-            if param == '' and len(params.keys()) == 1:
+            if param == "" and len(params.keys()) == 1:
                 pp = list(params.keys())[0]
                 vv = params[pp]
-                if pp.find('https') != -1 and vv.find('Webarchive') != -1:
-                    param = f'{pp}={vv}'
+                if pp.find("https") != -1 and vv.find("Webarchive") != -1:
+                    param = f"{pp}={vv}"
                     # ---
                     newtext = fix_p(title, newtext, param)
                     # ---
@@ -79,13 +77,17 @@ def work(title):
     if newtext != text:
         sa = True
         # ---
-        if 'ask' in sys.argv:
+        if "ask" in sys.argv:
             pywikibot.showDiff(text, newtext)
-            sas = pywikibot.input(f'<<lightyellow>>API: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {title}')
-            sa = sas in ['', 'y']
+            sas = pywikibot.input(
+                f"<<lightyellow>>API: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {title}"
+            )
+            sa = sas in ["", "y"]
         # ---
         if sa:
-            mdwiki_api.page_put_new(newtext, 'fix ourworldindatamirror template.', title)
+            mdwiki_api.page_put_new(newtext,
+                                    "fix ourworldindatamirror template.",
+                                    title)
     # ---
     printe.output(pas)
 
@@ -99,16 +101,18 @@ def check_urls(urls):
     global errors
     for u in urls:
         url = u
-        url = url.split('{{')[0].strip()
-        if url.find('http') == -1:
-            url = f'https://owidm.wmcloud.org/grapher/{url}'
+        url = url.split("{{")[0].strip()
+        if url.find("http") == -1:
+            url = f"https://owidm.wmcloud.org/grapher/{url}"
         # ---
         print(url)
         # ---
         req = http.fetch(url)
         # ---
         if 500 <= req.status_code < 600:
-            printe.output(f'<<lightred>> received {req.uri} status from {req.status_code}')
+            printe.output(
+                f"<<lightred>> received {req.uri} status from {req.status_code}"
+            )
             errors[u] = True
 
 
@@ -119,22 +123,23 @@ def make_log(dad):
     # ---
     sorts = sorted(lists.items(), key=lambda x: x[1], reverse=True)
     # ---
-    text = ''
-    text_error = ''
+    text = ""
+    text_error = ""
     # ---
     for x, va in sorts:
-        ta = f'\n== {x} ==\n'  # .replace('https://ourworldindata.org/grapher/','')
+        # .replace('https://ourworldindata.org/grapher/','')
+        ta = f"\n== {x} ==\n"
         # ---
         vav = errors.get(x, False)
         # ---
-        ta += 'used %d times.\n' % va
+        ta += "used %d times.\n" % va
         # ---
-        if x.find('https') == -1:
+        if x.find("https") == -1:
             ta += f"[https://owidm.wmcloud.org/grapher/{x.replace(' ', '%20')} {x}]"
         else:
             ta += x
         # ---
-        ta += '\n=== pages ===\n%s' % "\n".join([f"*[[{s}]]" for s in dad[x]])
+        ta += "\n=== pages ===\n%s" % "\n".join([f"*[[{s}]]" for s in dad[x]])
         # print(ta)
         # ---
         if vav:
@@ -142,36 +147,44 @@ def make_log(dad):
         else:
             text += ta
     # ---
-    te = '= errors = \n' + text_error + '\n'
-    te += '= no errors = \n' + text + '\n'
+    te = "= errors = \n" + text_error + "\n"
+    te += "= no errors = \n" + text + "\n"
     # ---
-    mdwiki_api.page_put(newtext=te, summary='update', title='User:Mr. Ibrahem/Ourworldindatamirror', diff=False)
+    mdwiki_api.page_put(
+        newtext=te,
+        summary="update",
+        title="User:Mr. Ibrahem/Ourworldindatamirror",
+        diff=False,
+    )
 
 
 def main():
     # ---
     global values
     # ---
-    if 'read' in sys.argv:
-        listas = mdwiki_api.Get_template_pages("Template:Ourworldindatamirror", namespace="0", limit="max")
+    if "read" in sys.argv:
+        listas = mdwiki_api.Get_template_pages("Template:Ourworldindatamirror",
+                                               namespace="0",
+                                               limit="max")
         # ---
         num = 0
         # ---
         for page in listas:
             num += 1
             # ---
-            printe.output(f'<<lightyellow>> work {num}/{len(listas)} page: {page}')
+            printe.output(
+                f"<<lightyellow>> work {num}/{len(listas)} page: {page}")
             # ---
             work(page)
             # ---
-            if '50' in sys.argv and num > 50:
+            if "50" in sys.argv and num > 50:
                 break
         # ---
-        with open(f'{Dir}/our.json', 'w', encoding="utf-8") as f:
+        with open(f"{Dir}/our.json", "w", encoding="utf-8") as f:
             json.dump(values, f)
             # ---
     else:
-        with open(f'{Dir}/our.json', 'r', encoding='utf-8') as f:
+        with open(f"{Dir}/our.json", encoding="utf-8") as f:
             values = json.load(f)
     # ---
     make_log(values)

@@ -12,33 +12,35 @@ tfj run gnr5 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core
 tfj run gnr6 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:6 mdwiki"
 
 """
-import sys
-import psutil
-import tqdm
+
 import json
 import os
-from pathlib import Path
+import sys
 from multiprocessing import Pool
+from pathlib import Path
 
+import psutil
+import tqdm
 # ---
 from newapi import printe
+
 from mass.radio.st3.One_Case_New import OneCase
 
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / "jsons/authors.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/authors.json", encoding="utf-8") as f:
     authors = json.load(f)
 # ---
-with open(main_dir / "jsons/infos.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/infos.json", encoding="utf-8") as f:
     infos = json.load(f)
 # ---
-with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/all_ids.json", encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
-with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/cases_in_ids.json", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
 ids_by_caseId = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
@@ -72,7 +74,7 @@ def do_it(va):
 def multi_work(tab, numb=10):
     done = 0
     for i in range(0, len(tab), numb):
-        group = tab[i : i + numb]
+        group = tab[i:i + numb]
         # ---
         done += numb
         printe.output(f"<<purple>> done: {done}:")
@@ -96,9 +98,11 @@ def ddo(taba):
     length = (len(ids_tabs) // 6) + 1
     for i in range(0, len(ids_tabs), length):
         num = i // length + 1
-        tabs[str(num)] = dict(list(ids_tabs.items())[i : i + length])
+        tabs[str(num)] = dict(list(ids_tabs.items())[i:i + length])
         # print(f'tab {num} : {len(tabs[str(num)])}')
-        print(f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:{num} {len(tabs[str(num)])}"')
+        print(
+            f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:{num} {len(tabs[str(num)])}"'
+        )
 
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
@@ -139,11 +143,18 @@ def main(ids_tab):
         # ---
         studies = [study.split("/")[-1] for study in va["studies"]]
         # ---
-        tab.append({"caseId": caseId, "case_url": case_url, "title": title, "studies": studies, "author": author})
+        tab.append({
+            "caseId": caseId,
+            "case_url": case_url,
+            "title": title,
+            "studies": studies,
+            "author": author,
+        })
     # ---
     del ids_tab
     # ---
     multi_work(tab)
+
 
 def main_by_ids(ids):
     printe.output(f"<<purple>> start.py main_by_ids: {len(ids)=}:")
@@ -156,10 +167,22 @@ def main_by_ids(ids):
     # ---
     main(ids_tab)
 
+
 if __name__ == "__main__":
     # ---
     if "test" in sys.argv:
-        ids_by_caseId = {"161846": {"url": "https://radiopaedia.org/cases/cholangiocarcinoma-25", "caseId": 161846, "title": "Cholangiocarcinoma", "studies": ["https://radiopaedia.org/cases/161846/studies/132257"], "author": "Mohammadtaghi Niknejad", "system": "Hepatobiliary", "published": "19 Feb 2023"}}
+        ids_by_caseId = {
+            "161846": {
+                "url": "https://radiopaedia.org/cases/cholangiocarcinoma-25",
+                "caseId": 161846,
+                "title": "Cholangiocarcinoma",
+                "studies":
+                ["https://radiopaedia.org/cases/161846/studies/132257"],
+                "author": "Mohammadtaghi Niknejad",
+                "system": "Hepatobiliary",
+                "published": "19 Feb 2023",
+            }
+        }
     # ---
     print("ids_by_caseId: ", len(ids_by_caseId))
     # ---

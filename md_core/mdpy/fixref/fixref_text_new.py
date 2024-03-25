@@ -13,7 +13,12 @@ def change_lay_source(temp):
     # ---
     temp_name = str(temp.normal_name()).strip()
     # ---
-    tab = {"url": ['layurl', 'lay-url'], "title": ['laytitle', 'lay-title'], "date": ['laydate', 'lay-date'], "source": ['laysource', 'lay-source']}
+    tab = {
+        "url": ["layurl", "lay-url"],
+        "title": ["laytitle", "lay-title"],
+        "date": ["laydate", "lay-date"],
+        "source": ["laysource", "lay-source"],
+    }
     # ---
     new_tab = {"url": "", "title": "", "date": "", "source": ""}
     # ---
@@ -21,7 +26,7 @@ def change_lay_source(temp):
         for param in ys:
             if temp.has_arg(param):
                 val = temp.get_arg(param).value
-                if val.strip() != '':
+                if val.strip() != "":
                     new_tab[x] = val.strip()
                 temp.del_arg(param)
     # ---
@@ -30,46 +35,46 @@ def change_lay_source(temp):
     Date = new_tab["date"]
     source = new_tab["source"]
     # ---
-    if title == '' and url != '':
+    if title == "" and url != "":
         title = make_title_bot.make_title(url)
     # ---
-    lay_temp = ''
+    lay_temp = ""
     # ---
-    if url != '' or source != '':
-        lay_temp = f'''|template = {temp_name}|url = {url}|title = {title}|date = {Date}|website = {source}'''
+    if url != "" or source != "":
+        lay_temp = f"""|template = {temp_name}|url = {url}|title = {title}|date = {Date}|website = {source}"""
         lay_temp = "* {{lay source" + lay_temp + "}}"
     # ---
     return lay_temp, temp
 
 
 def add_title(temp):
-    title = ''
+    title = ""
     # ---
-    title_arg = temp.get_arg('title')
+    title_arg = temp.get_arg("title")
     # ---
     if title_arg:
         title = str(title_arg.value).strip()
-    url = temp.get_arg('url').value if temp.has_arg('url') else ''
+    url = temp.get_arg("url").value if temp.has_arg("url") else ""
     # ---
-    if title != '' or url == '':
+    if title != "" or url == "":
         return temp
     # ---
     title = make_title_bot.make_title(url)
     # ---
-    if title == '':
+    if title == "":
         return temp
     # ---
     if title_arg:
         title_arg.value = title
     else:
-        temp.set_arg('title', title)
+        temp.set_arg("title", title)
     # ---
     return temp
 
 
 def fix_ref_template(text, returnsummary=False):
     # ---
-    summary = 'Normalize references'
+    summary = "Normalize references"
     # ---
     newtext = text
     # ---
@@ -96,12 +101,12 @@ def fix_ref_template(text, returnsummary=False):
             # ---
             temp_new = temp.string
             # ---
-            if 'newline' not in sys.argv:
-                temp_new = re.sub(r'\n', '', temp_new, flags=re.DOTALL)
+            if "newline" not in sys.argv:
+                temp_new = re.sub(r"\n", "", temp_new, flags=re.DOTALL)
             # ---
-            if laysource != '':
+            if laysource != "":
                 temp_new = temp_new + "\n" + laysource
-                summary = 'Normalize references, move lay source params'
+                summary = "Normalize references, move lay source params"
             # ---
             newtext = newtext.replace(temp_str, temp_new)
     # ---

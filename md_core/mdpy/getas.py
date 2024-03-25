@@ -11,72 +11,76 @@ python3 core8/pwb.py mdpy/getas newpages
 
 """
 
+import codecs
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import json
-import codecs
-import os
 import sys
-
-# ---
-from mdpy.bots.en_to_md import enwiki_to_mdwiki
-from mdpy.bots import wiki_api
-from mdpy.bots import catdepth2
-from mdpy import printe
-
 # ---
 # ---
 from pathlib import Path
 
+from mdpy import printe
+from mdpy.bots import catdepth2, wiki_api
+# ---
+from mdpy.bots.en_to_md import enwiki_to_mdwiki
+
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+dir2 = Dir.replace("\\", "/")
+dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
 # ---
-printe.output('Get vaild_links from cat : RTT')
+printe.output("Get vaild_links from cat : RTT")
 # ---
-tabe = catdepth2.subcatquery2('RTT', depth='2', ns='0')
-vaild_links = tabe['list']
+tabe = catdepth2.subcatquery2("RTT", depth="2", ns="0")
+vaild_links = tabe["list"]
 # ---
-printe.output(f'len of vaild_links: {len(vaild_links)}')
+printe.output(f"len of vaild_links: {len(vaild_links)}")
 # ---
-json_file = {0: f'{dir2}/public_html/Translation_Dashboard/Tables/assessments.json'}
-lala = ''
+json_file = {
+    0: f"{dir2}/public_html/Translation_Dashboard/Tables/assessments.json"
+}
+lala = ""
 # ---
 with codecs.open(json_file[0], "r", encoding="utf-8-sig") as listt:
     lala = listt.read()
 # ---
-printe.output(f'file_name:{json_file[0]}')
+printe.output(f"file_name:{json_file[0]}")
 fa = str(lala)
-old_assessments = json.loads(fa) if fa != '' else {}
+old_assessments = json.loads(fa) if fa != "" else {}
 # ---
 len_old = len(old_assessments)
 # ---
 assessments = dict(old_assessments.items())
 # ---
-if 'newpages' in sys.argv:  # vaild_links
+if "newpages" in sys.argv:  # vaild_links
     vaild_links2 = vaild_links
-    vaild_links = [xp for xp in vaild_links2 if (xp not in old_assessments or old_assessments.get(xp) in ["Unknown", ""])]
+    vaild_links = [
+        xp for xp in vaild_links2
+        if (xp not in old_assessments
+            or old_assessments.get(xp) in ["Unknown", ""])
+    ]
     # ---
-    printe.output(f'Category-members:{len(vaild_links2)},New-members:{len(vaild_links)}')
+    printe.output(
+        f"Category-members:{len(vaild_links2)},New-members:{len(vaild_links)}")
     # ---
 # ---
 Nore = {1: False}
 # ---
 for arg in sys.argv:
-    if arg in ['new', 'listnew', 'less100', 'more400']:
+    if arg in ["new", "listnew", "less100", "more400"]:
         Nore[1] = True
 
 
 def log():
-    with open(json_file[0], 'w', encoding="utf-8") as outfile:
+    with open(json_file[0], "w", encoding="utf-8") as outfile:
         json.dump(assessments, outfile, sort_keys=True)
     # ---
-    printe.output(f'<<lightgreen>> {len(assessments)} lines to {json_file[0]}')
-    printe.output('<<lightgreen>> len old assessments %d' % len_old)
+    printe.output(f"<<lightgreen>> {len(assessments)} lines to {json_file[0]}")
+    printe.output("<<lightgreen>> len old assessments %d" % len_old)
 
 
 def work_for_list(listn):
@@ -84,7 +88,8 @@ def work_for_list(listn):
     # من ميد إلى الإنجليزية
     # listo = [mdwiki_to_enwiki.get(cc, cc) for cc in listn]
     # ---
-    ase = wiki_api.Getpageassessments_from_wikipedia("|".join(listn), site='en')
+    ase = wiki_api.Getpageassessments_from_wikipedia("|".join(listn),
+                                                     site="en")
     # ---
     lenn = 0
     # ---
@@ -92,7 +97,8 @@ def work_for_list(listn):
         # ---
         # {'pageid': 3186837, 'ns': 0, 'title': 'WAGR syndrome', 'pageassessments': {'Medicine': {'class': 'Start', 'importance': 'Low'}}}
         # ---
-        importance = tabe.get('pageassessments', {}).get('Medicine', {}).get('importance', '')
+        importance = (tabe.get("pageassessments",
+                               {}).get("Medicine", {}).get("importance", ""))
         # ---
         # من الإنجليزية إلى ميد
         title = enwiki_to_mdwiki.get(title, title)
@@ -101,7 +107,7 @@ def work_for_list(listn):
         # ---
         assessments[title] = importance
     # ---
-    printe.output(f'len of new assessments:{lenn}')
+    printe.output(f"len of new assessments:{lenn}")
 
 
 def mmain():
@@ -109,7 +115,7 @@ def mmain():
     # ---
     kkk = {1: vaild_links}
     # ---
-    if 'new' not in sys.argv:
+    if "new" not in sys.argv:
         # kkk = [ x for x in vaild_links if not x in old_assessments ]
         kkk[1] = []
         for x in vaild_links:
@@ -118,7 +124,7 @@ def mmain():
             kkk[1].append(x2)
     # ---
     for i in range(0, len(kkk[1]), 50):
-        group = kkk[1][i : i + 50]
+        group = kkk[1][i:i + 50]
         work_for_list(group)
         # ---
         # log()
@@ -130,6 +136,6 @@ def mmain():
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     mmain()
 # ---

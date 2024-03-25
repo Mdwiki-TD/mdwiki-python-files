@@ -1,17 +1,17 @@
-'''
+"""
 python pwb.py niosh/get write ask
 
 python3 core8/pwb.py niosh/get write ask
 
-'''
-from newapi.mdwiki_page import MainPage as md_MainPage
+"""
+
+import json
 import sys
 from pathlib import Path
-import json
-import codecs
 
 # ---
 from mdpy import printe
+from newapi.mdwiki_page import MainPage as md_MainPage
 
 # ---
 Dir = Path(__file__).parent
@@ -33,52 +33,56 @@ all_pages = {}
 
 
 def write_main():
-    title = 'User:Mr. Ibrahem/niosh'
-    text = ''
+    title = "User:Mr. Ibrahem/niosh"
+    text = ""
     # ---
     # sort all_pages
-    all_pa = {x: v for x, v in sorted(all_pages.items(), key=lambda item: item[0].lower(), reverse=False)}
+    all_pa = {
+        x: v
+        for x, v in sorted(
+            all_pages.items(), key=lambda item: item[0].lower(), reverse=False)
+    }
     # ---
     for x, tt in all_pa.items():
-        text += f'* [[{tt}]]\n'
+        text += f"* [[{tt}]]\n"
 
-    page = md_MainPage(title, 'www', family='mdwiki')
+    page = md_MainPage(title, "www", family="mdwiki")
 
     # Get the current text of the page.
     oldtext = page.get_text()
     exists = page.exists()
     if not exists:
-        page.Create(text=text, summary='update')
+        page.Create(text=text, summary="update")
     elif oldtext != text:
-        page.save(newtext=text, summary='update', nocreate=0, minor='')
+        page.save(newtext=text, summary="update", nocreate=0, minor="")
 
 
 def write_to_mdwiki(data, x):
-    if 'write' not in sys.argv:
+    if "write" not in sys.argv:
         return
-    wikitext = '''{| class="wikitable sortable"\n|-\n'''
-    wikitext += '! # !! title !! urls\n|-\n'
+    wikitext = """{| class="wikitable sortable"\n|-\n"""
+    wikitext += "! # !! title !! urls\n|-\n"
     n = 0
     for k, v in data.items():
         if v:
             n += 1
             v = list(set(v))
             v_li = "\n* ".join(v)
-            wikitext += f'|-\n| {n} || [[:en:{k}|{k}]] || \n* {v_li}\n'
+            wikitext += f"|-\n| {n} || [[:en:{k}|{k}]] || \n* {v_li}\n"
     wikitext += "\n|-\n|}"
     # ---
-    title = f'User:Mr. Ibrahem/niosh/{x}'
+    title = f"User:Mr. Ibrahem/niosh/{x}"
     all_pages[x] = title
     # ---
-    page = md_MainPage(title, 'www', family='mdwiki')
+    page = md_MainPage(title, "www", family="mdwiki")
 
     # Get the current text of the page.
     oldtext = page.get_text()
     exists = page.exists()
     if not exists:
-        page.Create(text=wikitext, summary='update')
+        page.Create(text=wikitext, summary="update")
     elif oldtext != wikitext:
-        page.save(newtext=wikitext, summary='update', nocreate=0, minor='')
+        page.save(newtext=wikitext, summary="update", nocreate=0, minor="")
 
 
 def run(x, urls):
@@ -115,21 +119,25 @@ def run(x, urls):
             by_url[_u] = []
     # ---
     # sort by_url keys
-    by_url = {k: v for k, v in sorted(by_url.items(), key=lambda item: item[0].lower(), reverse=False)}
+    by_url = {
+        k: v
+        for k, v in sorted(
+            by_url.items(), key=lambda item: item[0].lower(), reverse=False)
+    }
     # ---
     file1 = f"{Dir}/by_title/{x}.json"
     # ---
-    with open(file1, 'w', encoding='utf-8') as outfile:
+    with open(file1, "w", encoding="utf-8") as outfile:
         json.dump(by_title, outfile, ensure_ascii=False, indent=4)
     # ---
-    printe.output(f'wrote {file1}')
+    printe.output(f"wrote {file1}")
     # ---
     file2 = f"{Dir}/by_url/{x}.json"
     # ---
-    with open(file2, 'w', encoding='utf-8') as outfile:
+    with open(file2, "w", encoding="utf-8") as outfile:
         json.dump(by_url, outfile, ensure_ascii=False, indent=4)
     # ---
-    printe.output(f'wrote {file2}')
+    printe.output(f"wrote {file2}")
     # ---
     write_to_mdwiki(by_title, x)
 
@@ -143,19 +151,19 @@ for x, urls in data.items():
 # ---
 file3 = f"{Dir}/by_url/all.json"
 # ---
-with open(file3, 'w', encoding='utf-8') as outfile:
+with open(file3, "w", encoding="utf-8") as outfile:
     json.dump(by_url_all, outfile, ensure_ascii=False, indent=4)
 # ---
-printe.output(f'wrote {file3}')
+printe.output(f"wrote {file3}")
 # ---
 file4 = f"{Dir}/by_title/all.json"
 # ---
-with open(file4, 'w', encoding='utf-8') as hh:
+with open(file4, "w", encoding="utf-8") as hh:
     json.dump(by_title_all, hh, ensure_ascii=False, indent=4)
 # ---
-printe.output(f'wrote {file4}')
+printe.output(f"wrote {file4}")
 # ---
-write_to_mdwiki(by_title_all, 'all')
+write_to_mdwiki(by_title_all, "all")
 # ---
 write_main()
 # ---

@@ -9,6 +9,8 @@ from nccommons import mosab_api
 # upload = mosab_api.upload_by_url(file_name, text, url, comment='')
 # ---
 """
+
+import configparser
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -17,19 +19,17 @@ import sys
 import time
 import urllib
 import urllib.parse
-import os
-import configparser
-import requests
+from pathlib import Path
 
+import requests
 # ---
 from newapi import printe
-from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+dir2 = Dir.replace("\\", "/")
+dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
 # ---
 config = configparser.ConfigParser()
 config.read(dir2 + "/confs/nccommons_user.ini")
@@ -44,8 +44,18 @@ yes_answer = ["y", "a", "", "Y", "A", "all"]
 Save_all = {1: False}
 upload_all = {1: False}
 # ---
-r1_params = {"format": "json", "action": "query", "meta": "tokens", "type": "login"}
-r2_params = {"format": "json", "action": "login", "lgname": username, "lgpassword": password}
+r1_params = {
+    "format": "json",
+    "action": "query",
+    "meta": "tokens",
+    "type": "login"
+}
+r2_params = {
+    "format": "json",
+    "action": "login",
+    "lgname": username,
+    "lgpassword": password,
+}
 # ---
 SS = {}
 SS["ss"] = requests.Session()
@@ -77,14 +87,21 @@ def Log_to_wiki(family="nccommons", lang="www"):
     r22 = SS["ss"].post(SS["url"], data=r2_params)
     # ---
     if r22.json()["login"]["result"] != "Success":
-        printe.output(f"nccommons.py: login failed, reason: {r22.json()['login']['reason']}")
+        printe.output(
+            f"nccommons.py: login failed, reason: {r22.json()['login']['reason']}"
+        )
         # sys.exit(1)
         SS["login_not_done"] = True
         return False
     else:
         printe.output("com.py login Success")
     # ---
-    SS["r33"] = SS["ss"].get(SS["url"], params={"format": "json", "action": "query", "meta": "tokens"})
+    SS["r33"] = SS["ss"].get(SS["url"],
+                             params={
+                                 "format": "json",
+                                 "action": "query",
+                                 "meta": "tokens"
+    })
     # ---
     SS["r3_token"] = SS["r33"].json()["query"]["tokens"]["csrftoken"]
     SS["login_not_done"] = False
@@ -92,21 +109,21 @@ def Log_to_wiki(family="nccommons", lang="www"):
 
 def post_s(params, addtoken=False):
     # ---
-    params['format'] = 'json'
-    params['utf8'] = 1
+    params["format"] = "json"
+    params["utf8"] = 1
     # ---
     if SS["login_not_done"]:
         Log_to_wiki()
     # ---
     if addtoken:
-        params['token'] = SS["r3_token"]
+        params["token"] = SS["r3_token"]
     # ---
     jj = {}
     # ---
-    url = SS["url"] + '?' + urllib.parse.urlencode(params)
+    url = SS["url"] + "?" + urllib.parse.urlencode(params)
     # ---
-    if 'printurl' in sys.argv:
-        printe.output(url.replace('&format=json', ''))
+    if "printurl" in sys.argv:
+        printe.output(url.replace("&format=json", ""))
     # ---
     try:
         r4 = SS["ss"].post(SS["url"], data=params)
@@ -120,7 +137,7 @@ def post_s(params, addtoken=False):
     except BaseException:
         text = r4.text
         # ---
-        if text.find('<!DOCTYPE html>') != -1:
+        if text.find("<!DOCTYPE html>") != -1:
             text = "<!DOCTYPE html>"
         # ---
         printe.output("error r4.json()")
@@ -130,9 +147,15 @@ def post_s(params, addtoken=False):
     return jj
 
 
-def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all=0):
+def Get_All_pages(start,
+                  namespace="0",
+                  limit="max",
+                  apfilterredir="",
+                  limit_all=0):
     # ---
-    printe.output(f'Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}')
+    printe.output(
+        f"Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}"
+    )
     # ---
     numb = 0
     # ---
@@ -145,34 +168,35 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all
         "apfilterredir": "nonredirects",
     }
     # ---
-    if apfilterredir in ['redirects', 'all', 'nonredirects']:
-        params['apfilterredir'] = apfilterredir
+    if apfilterredir in ["redirects", "all", "nonredirects"]:
+        params["apfilterredir"] = apfilterredir
     # ---
-    if start != '':
-        params['apfrom'] = start
+    if start != "":
+        params["apfrom"] = start
     # ---
-    apcontinue = 'x'
+    apcontinue = "x"
     # ---
     Main_table = []
     # ---
-    while apcontinue != '':
+    while apcontinue != "":
         # ---
         numb += 1
         # ---
-        printe.output(f'Get_All_pages {numb}, apcontinue:{apcontinue}..')
+        printe.output(f"Get_All_pages {numb}, apcontinue:{apcontinue}..")
         # ---
-        if apcontinue != 'x':
-            params['apcontinue'] = apcontinue
+        if apcontinue != "x":
+            params["apcontinue"] = apcontinue
         # ---
         json1 = post_s(params)
         # ---
         if not json1 or json1 == {}:
             break
         # ---
-        apcontinue = json1.get("continue", {}).get("apcontinue", '')
+        apcontinue = json1.get("continue", {}).get("apcontinue", "")
         # ---
         newp = json1.get("query", {}).get("allpages", [])
-        printe.output(f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
+        printe.output(
+            f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
         # ---
         for x in newp:
             if x["title"] not in Main_table:
@@ -181,30 +205,40 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all
         printe.output(f"len of Main_table {len(Main_table)}.")
         # ---
         if limit_all > 0 and len(Main_table) > limit_all:
-            apcontinue = ''
+            apcontinue = ""
             printe.output("<<lightgreen>> limit_all > len(Main_table) ")
             break
         # ---
     # ---
-    if numb > 0 and apcontinue == '':
+    if numb > 0 and apcontinue == "":
         printe.output("<<lightgreen>> apcontinue == '' ")
     # ---
-    printe.output(f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
+    printe.output(
+        f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
     # ---
     return Main_table
 
 
-def upload_by_url(file_name, text, url, comment=''):
+def upload_by_url(file_name, text, url, comment=""):
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
     # ---
-    params = {'action': 'upload', 'format': 'json', 'filename': file_name, 'url': url, 'comment': comment, 'text': text}
+    params = {
+        "action": "upload",
+        "format": "json",
+        "filename": file_name,
+        "url": url,
+        "comment": comment,
+        "text": text,
+    }
     # ---
     if not upload_all[1] and "ask" in sys.argv:
-        if 'nodiff' not in sys.argv:
+        if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o):user:{r2_params['lgname']}")
+        sa = py_input(
+            f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o):user:{r2_params['lgname']}"
+        )
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -212,7 +246,8 @@ def upload_by_url(file_name, text, url, comment=''):
         # ---
         if sa.strip() == "a":
             printe.output("---------------------------------------------")
-            printe.output("nccommons.py upload_by_url save all without asking.")
+            printe.output(
+                "nccommons.py upload_by_url save all without asking.")
             printe.output("---------------------------------------------")
             upload_all[1] = True
         # ---
@@ -226,13 +261,16 @@ def upload_by_url(file_name, text, url, comment=''):
     # ---
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
-    error_code = result.get("error", {}).get("code", '')
+    error_code = result.get("error", {}).get("code", "")
     # ---
     if success:
-        printe.output(f"<<lightgreen>> ** true ..  {SS['family']} : [[File:{file_name}]] ")
+        printe.output(
+            f"<<lightgreen>> ** true ..  {SS['family']} : [[File:{file_name}]] "
+        )
         return True
     elif error != {}:
-        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(
+            f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error)
     else:
         printe.output(result)
@@ -245,12 +283,21 @@ def create_Page(text, title, summary="create page"):
     printe.output(f" create Page {title}:")
     time_sleep = 0
     # ---
-    params = {"action": "edit", "title": title, "text": text, "summary": summary, "notminor": 1, "createonly": 1}
+    params = {
+        "action": "edit",
+        "title": title,
+        "text": text,
+        "summary": summary,
+        "notminor": 1,
+        "createonly": 1,
+    }
     # ---
     if not Save_all[1] and ("ask" in sys.argv and "save" not in sys.argv):
-        if 'nodiff' not in sys.argv:
+        if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(f"<<lightyellow>> nccommons.py: create:\"{title}\" page ? ([y]es, [N]o):user:{r2_params['lgname']}")
+        sa = py_input(
+            f"<<lightyellow>> nccommons.py: create:\"{title}\" page ? ([y]es, [N]o):user:{r2_params['lgname']}"
+        )
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -269,7 +316,7 @@ def create_Page(text, title, summary="create page"):
     # ---
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
-    error_code = result.get("error", {}).get("code", '')
+    error_code = result.get("error", {}).get("code", "")
     # ---
     if success:
         printe.output(f"** true ..  {SS['family']} : [[{title}]] ")
@@ -277,7 +324,8 @@ def create_Page(text, title, summary="create page"):
         time.sleep(time_sleep)
         return True
     elif error != {}:
-        printe.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
+        printe.output(
+            f"<<lightred>> error when create_Page, error_code:{error_code}")
         printe.output(error)
     else:
         printe.output(result)
@@ -299,7 +347,7 @@ def Find_pages_exists_or_not(liste):
     exists = 0
     # ---
     for i in range(0, len(liste), 50):
-        titles = liste[i : i + 50]
+        titles = liste[i:i + 50]
         # ---
         done += len(titles)
         # ---
@@ -339,10 +387,11 @@ def Find_pages_exists_or_not(liste):
                 else:
                     exists += 1
     # ---
-    printe.output(f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}")
+    printe.output(
+        f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}")
     # ---
     return table
 
 
-if __name__ == '__main__':
-    Get_All_pages('')
+if __name__ == "__main__":
+    Get_All_pages("")

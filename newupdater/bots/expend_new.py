@@ -1,8 +1,8 @@
 """
 from bots.expend_new import expend_infoboxs
 """
-import wikitextparser as wtp
 
+import wikitextparser as wtp
 from lists.expend_lists import main_temps_list
 
 
@@ -14,7 +14,7 @@ def expend_new(template, min_len=1):
     if not template:
         return template
     template_name = str(template.normal_name()).strip()
-    template.name = template_name + '\n'
+    template.name = template_name + "\n"
     to_del = []
 
     template.rm_dup_args_safe()
@@ -23,7 +23,7 @@ def expend_new(template, min_len=1):
         value = arg.value.rstrip()
         if len(arg.name.strip()) <= min_len:
             continue
-        arg.value = value + '\n'
+        arg.value = value + "\n"
         arg.name = arg.name.strip().ljust(16)
 
     for aa in to_del:
@@ -37,12 +37,13 @@ def expend_infoboxs(new_text):
     for temp in parsed.templates:
         temp_str = temp.string
 
-        if not temp_str or temp_str.strip() == '':
+        if not temp_str or temp_str.strip() == "":
             continue
 
         name = str(temp.normal_name()).strip().lower()
 
-        isvalid = name.startswith('infobox') or name.endswith('infobox') or name.endswith('box')
+        isvalid = (name.startswith("infobox") or name.endswith("infobox")
+                   or name.endswith("box"))
 
         if name not in main_temps_list and not isvalid:
             continue

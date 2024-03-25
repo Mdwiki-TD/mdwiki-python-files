@@ -15,30 +15,28 @@ from after_translate.bots import add_to_wd
 #
 #
 import re
-import sys
+
+from mdpy import orred
+from mdpy.bots import (en_to_md, mdwiki_api, sql_for_mdwiki, wiki_api,
+                       wikidataapi)
+from newapi import printe
 # ---
 from pymysql.converters import escape_string
-from newapi import printe
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import wiki_api
-from mdpy.bots import mdwiki_api
-from mdpy.bots import en_to_md
-from mdpy.bots import wikidataapi
-from mdpy import orred
+
 # ---
-wddone_table = '''CREATE TABLE wddone (
+wddone_table = """CREATE TABLE wddone (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     mdtitle VARCHAR(120) NOT NULL,
     target VARCHAR(120) NOT NULL,
     lang VARCHAR(30) NOT NULL,
     user VARCHAR(120) NOT NULL
-    )'''
+    )"""
 # ---
-que_wddone = '''
+que_wddone = """
 select mdtitle,target,lang,user
 from wddone
 ;
-'''
+"""
 # ---
 sq_dd = sql_for_mdwiki.mdwiki_sql(que_wddone, return_dict=True)
 # ---
@@ -46,10 +44,10 @@ wddone_by_u_t = []
 wddone_by_u_l_mdt = []
 # ---
 for tab in sq_dd:
-    mdtitle = tab['mdtitle']
-    target = tab['target']
-    lang = tab['lang']
-    user = tab['user']
+    mdtitle = tab["mdtitle"]
+    target = tab["target"]
+    lang = tab["lang"]
+    user = tab["user"]
     # ---
     wddone_by_u_t.append((user, target))
     wddone_by_u_l_mdt.append((user, lang, mdtitle))
@@ -63,36 +61,50 @@ def work_with_2_qids(oldq, new_q):
     fas = wikidataapi.Get_sitelinks_From_Qid(oldq)
     # {'sitelinks': {'enwiki': 'User:Mr. Ibrahem/Baricitinib', 'orwiki': 'ବାରିସିଟିନିବ'}, 'q': 'Q112331510'}
     # ---
-    false_sitelinks = fas.get('sitelinks', {})
+    false_sitelinks = fas.get("sitelinks", {})
     # ---
     len_sites = len(false_sitelinks)
     # ---
-    printe.output(f'<<lightblue>> len_sites {len_sites}')
+    printe.output(f"<<lightblue>> len_sites {len_sites}")
     # ---
     printe.output(false_sitelinks)
     # ---
-    en = false_sitelinks.get('enwiki', '')
+    en = false_sitelinks.get("enwiki", "")
     # ---
-    if en.startswith('User:Mr. Ibrahem'):
-        printe.output(f'<<lightblue>> remove sitelink {en}')
-        remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, token=True)
-        if 'success' in remove:
+    if en.startswith("User:Mr. Ibrahem"):
+        printe.output(f"<<lightblue>> remove sitelink {en}")
+        remove = wikidataapi.post(
+            {
+                "action": "wbsetsitelink",
+                "id": oldq,
+                "linksite": "enwiki"
+            },
+            token=True)
+        if "success" in remove:
             len_sites -= 1
-            printe.output('<<lightgreen>> **remove sitelink true.')
+            printe.output("<<lightgreen>> **remove sitelink true.")
         else:
-            printe.output('<<lightred>> **remove sitelink false.')
+            printe.output("<<lightred>> **remove sitelink false.")
             printe.output(remove)
         # ---
-        remove2 = wikidataapi.post({"action": "wbsetlabel", "id": oldq, "language": "en", "value": ""}, token=True)
-        if 'success' in remove2:
+        remove2 = wikidataapi.post(
+            {
+                "action": "wbsetlabel",
+                "id": oldq,
+                "language": "en",
+                "value": ""
+            },
+            token=True,
+        )
+        if "success" in remove2:
             len_sites -= 1
-            printe.output('<<lightgreen>> **remove2 label true.')
+            printe.output("<<lightgreen>> **remove2 label true.")
         else:
-            printe.output('<<lightred>> **remove2 label false.')
+            printe.output("<<lightred>> **remove2 label false.")
             printe.output(remove2)
     # ---
     if len_sites in [1, 0]:
-        printe.output('<<lightblue>> merge qids')
+        printe.output("<<lightblue>> merge qids")
         return wikidataapi.WD_Merge(oldq, new_q)
     # ---
     return False
@@ -102,16 +114,16 @@ def add_wd(qid, enlink, lang, target):
     params = {
         "action": "wbsetsitelink",
         "linktitle": target,
-        "linksite": f'{lang}wiki',
+        "linksite": f"{lang}wiki",
         "format": "json",
         "utf8": 1,
     }
     # ---
     if qid != "":
-        params['id'] = qid
+        params["id"] = qid
     else:
-        params['title'] = enlink
-        params['site'] = 'enwiki'
+        params["title"] = enlink
+        params["site"] = "enwiki"
     # ---
     ss = wikidataapi.post(params, token=True)
     # ---
@@ -127,8 +139,8 @@ def add_wd(qid, enlink, lang, target):
     # ---
     # error = ss.get('error', {}).get('code', {})
     # ---
-    if 'wikibase-validator-sitelink-conflict' in str(ss):
-        qii = re.match(r'.*\"\>(Q\d+)\<\/a.*', str(ss))
+    if "wikibase-validator-sitelink-conflict" in str(ss):
+        qii = re.match(r".*\"\>(Q\d+)\<\/a.*", str(ss))
         if qii:
             qid2 = qii.group(1)
             # ---
@@ -136,7 +148,7 @@ def add_wd(qid, enlink, lang, target):
                 qids_from_wiki = wiki_api.Get_page_qids("en", [enlink])
                 # ---
                 for _, tab in qids_from_wiki.items():
-                    qid = tab.get('q', '')
+                    qid = tab.get("q", "")
                     break
             return work_with_2_qids(qid2, qid)
     # ---
@@ -166,18 +178,19 @@ def Add_to_wikidata(mdtitle, lang, target, user):
                 AND user = '{user}'
             )"""
         # ---
-        printe.output('**************')
+        printe.output("**************")
         printe.output(done_qua)
-        printe.output('**************')
+        printe.output("**************")
         sql_for_mdwiki.mdwiki_sql(done_qua, update=True)
     # ---
     tat = mdwiki_api.GetPageText(mdtitle)
     # ---
-    lalas = f'[[{lang}:'
+    lalas = f"[[{lang}:"
     # ---
-    line = f'[[{lang}:{target}]]'
-    if tat != '' and tat.find(line) == -1 and tat.find(lalas) == -1:
-        mdwiki_api.Add_To_Bottom('\n' + line, f'add link to {line}', mdtitle, False)
+    line = f"[[{lang}:{target}]]"
+    if tat != "" and tat.find(line) == -1 and tat.find(lalas) == -1:
+        mdwiki_api.Add_To_Bottom("\n" + line, f"add link to {line}", mdtitle,
+                                 False)
     # ---
     if lang == "or":
         orred.create_redirect(target, mdtitle)
@@ -190,15 +203,16 @@ def add_tab_to_wd(table):
         number = 0
         # ---
         for tt in tab:
-            tabe = tab[tt]  # {"mdtitle": md_title.replace("'" , "\'") , "target": target, "user":user.replace("'" , "\'"),"lang":lange}
+            # {"mdtitle": md_title.replace("'" , "\'") , "target": target, "user":user.replace("'" , "\'"),"lang":lange}
+            tabe = tab[tt]
             # ---
-            mdtitle = tabe['mdtitle']
-            lang = tabe['lang']
-            target = tabe['target']
-            user = tabe['user']
-            ns = tabe['namespace']
+            mdtitle = tabe["mdtitle"]
+            lang = tabe["lang"]
+            target = tabe["target"]
+            user = tabe["user"]
+            ns = tabe["namespace"]
             # ---
-            if str(ns) != '0':
+            if str(ns) != "0":
                 continue
             # ---
             if (user, target) in wddone_by_u_t:
@@ -209,8 +223,10 @@ def add_tab_to_wd(table):
             # ---
             number += 1
             # ---
-            printe.output('=========================')
-            printe.output('<<lightgreen>>p %d/%d: mdtitle:%s,lang:%s,target:%s' % (number, len(tab), mdtitle, lang, target))
+            printe.output("=========================")
+            printe.output(
+                "<<lightgreen>>p %d/%d: mdtitle:%s,lang:%s,target:%s" %
+                (number, len(tab), mdtitle, lang, target))
             # ---
             Add_to_wikidata(mdtitle, lang, target, user)
 

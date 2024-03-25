@@ -2,13 +2,14 @@
 
 python3 core8/pwb.py mass/radio/syss/sys_urls
 """
-import sys
-import os
+
 import json
+import os
+import sys
 from pathlib import Path
 
 # ---
-from mass.radio.geturlsnew import get_urls_system, systems, lenth_of_systems
+from mass.radio.geturlsnew import get_urls_system, lenth_of_systems, systems
 from mass.radio.jsons_files import jsons
 
 # ---
@@ -48,7 +49,7 @@ for n, sy in enumerate(nnno, start=10):
         with open(v, "w", encoding="utf-8") as f:
             f.write("{}")
     # ---
-    with open(v, "r", encoding="utf-8") as f:
+    with open(v, encoding="utf-8") as f:
         systems_data[sy] = json.loads(f.read())
 # ---
 if "only" in sys.argv:
@@ -63,7 +64,9 @@ if not system_to_work:
     exit()
 # ---
 if jsons.systems.get(system_to_work):
-    print(f"<<green>> system:{system_to_work} already in jsons.systems. Skipping.")
+    print(
+        f"<<green>> system:{system_to_work} already in jsons.systems. Skipping."
+    )
     print("exit()")
     exit()
 # ---
@@ -77,7 +80,9 @@ if not urls_data:
     exit()
 # ---
 new_urls = {
-    x: v['title'] for x, v in urls_data.items() if x not in systems_data.get(system_to_work, {})
+    x: v["title"]
+    for x, v in urls_data.items()
+    if x not in systems_data.get(system_to_work, {})
 }
 # ---
 print(f"new_urls: {len(new_urls)}, urls_data: {len(urls_data)}")

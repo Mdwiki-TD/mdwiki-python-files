@@ -6,13 +6,15 @@ from mdpy.bots import py_tools
 # py_tools.quoteurl(fao)
 # ---
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
 #
 import sys
-import urllib
 import traceback
+import urllib
+
 import pywikibot
 
 # ---
@@ -27,14 +29,14 @@ else:
 
         .. versionadded:: 5.4
         """
-        return string[len(prefix) :] if string.startswith(prefix) else string
+        return string[len(prefix):] if string.startswith(prefix) else string
 
     def removesuffix(string: str, suffix: str) -> str:
         """Remove prefix from a string or return a copy otherwise.
 
         .. versionadded:: 5.4
         """
-        return string[: -len(suffix)] if string.endswith(suffix) else string
+        return string[:-len(suffix)] if string.endswith(suffix) else string
 
 
 def quoteurl(fao):
@@ -49,9 +51,9 @@ def quoteurl(fao):
     try:
         fao = urllib.parse.quote(fao)
     except Exception:
-        pywikibot.output('Traceback (most recent call last):')
+        pywikibot.output("Traceback (most recent call last):")
         pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
+        pywikibot.output("CRITICAL:")
     # ---
     if endash:
         fao = fao.replace("ioioioioio", "%E2%80%93")
@@ -67,10 +69,10 @@ def Decode_bytes(x):
 
 def ec_de_code(tt, Type):
     fao = tt
-    if Type == 'encode':
+    if Type == "encode":
         # fao = encode_arabic(tt)
         fao = urllib.parse.quote(tt)
-    elif Type == 'decode':
+    elif Type == "decode":
         fao = urllib.parse.unquote(tt)
     return fao
 

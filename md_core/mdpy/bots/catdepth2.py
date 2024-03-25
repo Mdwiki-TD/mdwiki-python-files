@@ -4,33 +4,33 @@
 python3 core8/pwb.py mdpy/bots/catdepth2
 
 """
+
+import codecs
+import json
+import os
+import sys
+import time
+import traceback
+from datetime import datetime
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
-import sys
-import json
-import traceback
-import codecs
-import time
-import os
-from datetime import datetime
+from pathlib import Path
 
 # ---
-from mdpy.bots import mdwiki_api
-from mdpy.bots import sql_for_mdwiki
+from mdpy.bots import mdwiki_api, sql_for_mdwiki
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---
-from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+dir2 = Dir.replace("\\", "/")
+dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
 # ---
 # sql_for_mdwiki.mdwiki_sql(query, update = False)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
@@ -45,8 +45,8 @@ def Get_cat(enlink, print_url=False):
     # ---
     # print(' Get_cat for %s' % (enlink) )
     # ---
-    if not enlink.startswith('Category:'):
-        enlink = f'Category:{enlink}'
+    if not enlink.startswith("Category:"):
+        enlink = f"Category:{enlink}"
     # ---
     params = {
         "action": "query",
@@ -62,17 +62,17 @@ def Get_cat(enlink, print_url=False):
     # ---
     # print('<<lightblue>> API_CALLS %d  for %s' % (API_CALLS[1],enlink) )
     # ----
-    continue_p = ''
-    continue_v = 'x'
+    continue_p = ""
+    continue_v = "x"
     # ---
     table = {}
     # ----
-    while continue_v != '':
+    while continue_v != "":
         # ---
-        if continue_v != 'x':
+        if continue_v != "x":
             params[continue_p] = continue_v
         # ---
-        continue_v = ''
+        continue_v = ""
         # ---
         api = mdwiki_api.post_s(params)
         # ---
@@ -81,7 +81,7 @@ def Get_cat(enlink, print_url=False):
         # ---
         continue_d = api.get("continue", {})
         for p, v in continue_d.items():
-            if p == 'continue':
+            if p == "continue":
                 continue
             continue_v = v
             continue_p = p
@@ -96,17 +96,20 @@ def Get_cat(enlink, print_url=False):
                 caca = pages[category]
             # ---
             cate_title = caca["title"]
-            tablese = {'title': caca['title']}
+            tablese = {"title": caca["title"]}
             # ---
             if "ns" in caca:
-                tablese['ns'] = caca['ns']
+                tablese["ns"] = caca["ns"]
                 # print("<<lightblue>> ns: %s" %  caca['ns'])
             # ---
-            if 'templates' in caca:
-                tablese['templates'] = [x['title'] for x in caca['templates']]
+            if "templates" in caca:
+                tablese["templates"] = [x["title"] for x in caca["templates"]]
             # ---
-            if 'langlinks' in caca:
-                tablese['langlinks'] = {fo['lang']: fo['*'] for fo in caca['langlinks']}
+            if "langlinks" in caca:
+                tablese["langlinks"] = {
+                    fo["lang"]: fo["*"]
+                    for fo in caca["langlinks"]
+                }
             # ---
             table[cate_title] = tablese
             # ---
@@ -123,29 +126,35 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
     start = time.time()
     final = time.time()
     # ---
-    if not title.strip().startswith('Category:'):
-        title = f'Category:{title.strip()}'
+    if not title.strip().startswith("Category:"):
+        title = f"Category:{title.strip()}"
     # ---
     tablemember = Get_cat(title, print_url=True)
     # ---
     # result_table = { x : da for x, da in tablemember.items() if valid_title(x) }
-    result_table = {x: da for x, da in tablemember.items() if int(da["ns"]) == 0}
+    result_table = {
+        x: da
+        for x, da in tablemember.items() if int(da["ns"]) == 0
+    }
     # ---
     # for x in tablemember: if valid_title(x) :  result_table[x] = tablemember[x]
     # ---
     cat_done = []
     # ---
-    new_list = [v['title'] for x, v in tablemember.items() if int(v["ns"]) == 14]
+    new_list = [
+        v["title"] for x, v in tablemember.items() if int(v["ns"]) == 14
+    ]
     # ---
     if not isinstance(depth, int) and depth.isdigit():
         depth = int(depth)
     # ---
-    if 'newlist' in sys.argv:
-        print(f'lenof main cat:{len(result_table)}')
+    if "newlist" in sys.argv:
+        print(f"lenof main cat:{len(result_table)}")
     # ---
     depth_done = 0
     # ---
-    while depth > depth_done:  # and ( limit > 0 and len(result_table) < limit ):
+    # and ( limit > 0 and len(result_table) < limit ):
+    while depth > depth_done:
         depth_done += 1
         new_tab2 = []
         # ---
@@ -157,10 +166,11 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
                 # ---
                 for x, tabla in table2.items():
                     # ---
-                    if int(tabla["ns"]) == 14 or tabla["title"].startswith('Category:'):
+                    if int(tabla["ns"]) == 14 or tabla["title"].startswith(
+                            "Category:"):
                         new_tab2.append(x)
                     # ---
-                    if ns in [0, '0']:
+                    if ns in [0, "0"]:
                         if int(tabla["ns"]) == 0:
                             result_table[x] = tabla
                     else:
@@ -172,58 +182,61 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
     # ---
     # if "printresult" in sys.argv: print(result_table)
     # ---
-    if 'newlist' in sys.argv:
+    if "newlist" in sys.argv:
         delta = int(final - start)
-        print('<<lightblue>>catdepth.py: find %d pages(ns:%s) in %s, depth:%d, subcat:%d in %d seconds' % (len(result_table), str(ns), title, depth, len(cat_done), delta))
+        print(
+            "<<lightblue>>catdepth.py: find %d pages(ns:%s) in %s, depth:%d, subcat:%d in %d seconds"
+            % (len(result_table), str(ns), title, depth, len(cat_done), delta))
         if cat_done:
             print(f"subcats:{', '.join(cat_done)}")
     return list(result_table.keys())
 
 
 def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
-    filename = f'{dir2}/public_html/Translation_Dashboard/cats_cash/{cat}.json'
+    filename = f"{dir2}/public_html/Translation_Dashboard/cats_cash/{cat}.json"
     # ---
-    if cat == 'RTT':
+    if cat == "RTT":
         depth = 2
     # ---
     if not os.path.isfile(filename):
         # ---
         try:
-            with open(filename, 'w', encoding='utf8') as uu:
+            with open(filename, "w", encoding="utf8") as uu:
                 json.dump({}, uu)
         except Exception as e:
-            print('Traceback (most recent call last):')
-            print(f'<<lightred>> {__file__} Exception:{str(e)}')
-            print('CRITICAL:')
+            print("Traceback (most recent call last):")
+            print(f"<<lightred>> {__file__} Exception:{str(e)}")
+            print("CRITICAL:")
             # ---
     # ---
     try:
         with codecs.open(filename, "r", encoding="utf-8") as file:
             textn = file.read()
     except Exception:
-        print('Traceback (most recent call last):')
+        print("Traceback (most recent call last):")
         print(traceback.format_exc())
-        print('CRITICAL:')
-        textn = ''
-    Table = json.loads(textn) if textn != '' else {}
+        print("CRITICAL:")
+        textn = ""
+    Table = json.loads(textn) if textn != "" else {}
     # ---
-    if str(Table.get('Day_History', '')) != str(Day_History) or 'newlist' in sys.argv or len(Table['list']) < 1500:
+    if (str(Table.get("Day_History", "")) != str(Day_History)
+            or "newlist" in sys.argv or len(Table["list"]) < 1500):
         # ---
-        if 'print' in sys.argv:
-            print('get new catmembers')
+        if "print" in sys.argv:
+            print("get new catmembers")
         # ---
         Listo = subcatquery(cat, depth=depth, ns=ns, limit=limit, test=test)
         Table = {}
         # ---
-        Table['list'] = [x for x in Listo if valid_title(x)]
+        Table["list"] = [x for x in Listo if valid_title(x)]
         # ---
-        Table['Day_History'] = Day_History
+        Table["Day_History"] = Day_History
         # ---
-        with open(filename, 'w', encoding='utf8') as aa:
+        with open(filename, "w", encoding="utf8") as aa:
             json.dump(Table, aa)
         # ---
     # ---
-    if 'print' in sys.argv:
+    if "print" in sys.argv:
         print(f"len of list:{len(Table['list'])}")
     # ---
     return Table
@@ -231,12 +244,12 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
 
 def get_RTT():
     # ---
-    Listo = subcatquery('RTT', depth='3', ns='0')
+    Listo = subcatquery("RTT", depth="3", ns="0")
     # ---
     # Listo = Listo['list']
     # ---
     for x in Listo[:]:
-        if x.startswith('Category:'):
+        if x.startswith("Category:"):
             Listo.remove(x)
     # ---
     return Listo
@@ -247,11 +260,11 @@ def make_cash_to_cats(return_all_pages=False):
     cats = sql_for_mdwiki.get_db_categories()
     # ---
     for cat, depth in cats.items():
-        ca = subcatquery2(cat, depth=depth, ns='all')
+        ca = subcatquery2(cat, depth=depth, ns="all")
         # ---
-        print(f"len of pages in {cat}, depth:{depth}, : %d" % len(ca['list']))
+        print(f"len of pages in {cat}, depth:{depth}, : %d" % len(ca["list"]))
         # ---
-        for x in ca['list']:
+        for x in ca["list"]:
             if x not in all_pages:
                 all_pages.append(x)
     # ---
@@ -259,5 +272,5 @@ def make_cash_to_cats(return_all_pages=False):
         return all_pages
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     make_cash_to_cats()

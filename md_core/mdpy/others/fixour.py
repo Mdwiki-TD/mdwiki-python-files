@@ -1,26 +1,24 @@
 #!/usr/bin/python3
-"""
+""" """
 
-"""
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import re
-import os
 
 # ---
-from newapi.mdwiki_page import MainPage, NEW_API
+from newapi.mdwiki_page import NEW_API, MainPage
 
 # ---
-numbers = {1: 20000, 'done': 0}
+numbers = {1: 20000, "done": 0}
 # ---
-api_new = NEW_API('www', family='mdwiki')
+api_new = NEW_API("www", family="mdwiki")
 api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 # ---
-'''
+"""
 page      = MainPage(title, 'www', family='mdwiki')
 exists    = page.exists()
 if not exists: return
@@ -28,12 +26,12 @@ if not exists: return
 text        = page.get_text()
 save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
 # ---
-'''
+"""
 
 
 def work(title):
     # ---
-    page = MainPage(title, 'www', family='mdwiki')
+    page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         return
@@ -41,7 +39,10 @@ def work(title):
     text = page.get_text()
     # <templatestyles src="Owid/styles.css"/><ourworldindatamirror>cumulative-covid-cases-region</ourworldindatamirror>
     # ---
-    regref = re.compile(r'<templatestyles\s*src="Owid/styles.css"\s*/\s*>\s*<ourworldindatamirror>(?P<content>.*?)</ourworldindatamirror>', re.IGNORECASE | re.DOTALL)
+    regref = re.compile(
+        r'<templatestyles\s*src="Owid/styles.css"\s*/\s*>\s*<ourworldindatamirror>(?P<content>.*?)</ourworldindatamirror>',
+        re.IGNORECASE | re.DOTALL,
+    )
     # ---
     newtext = text
     # ---
@@ -49,34 +50,39 @@ def work(title):
         # ---
         aaa = match.group()
         # ---
-        content = match.group('content')
+        content = match.group("content")
         if not content.strip():
             continue
         # ---
         content = content.strip()
         # ---
         if newtext.find(content) != -1:
-            newtext = newtext.replace(aaa, '{{ourworldindatamirror|%s}}' % content)
+            newtext = newtext.replace(aaa,
+                                      "{{ourworldindatamirror|%s}}" % content)
     # ---
     if newtext != text:
-        numbers['done'] += 1
+        numbers["done"] += 1
         # ---
-        sus = 'fix ourworldindatamirror'
+        sus = "fix ourworldindatamirror"
         # ---
         save_page = page.save(newtext=newtext, summary=sus)
 
 
 def main():
-    nn = ''
+    nn = ""
     # ---
-    list = api_new.Get_All_pages(start='COVID', namespace="0", limit="max", apfilterredir='', limit_all=0)
+    list = api_new.Get_All_pages(start="COVID",
+                                 namespace="0",
+                                 limit="max",
+                                 apfilterredir="",
+                                 limit_all=0)
     # ---
     num = 0
     # ---
     for page in list:
         num += 1
         # ---
-        if numbers['done'] >= numbers[1]:
+        if numbers["done"] >= numbers[1]:
             break
         # ---
         work(page)

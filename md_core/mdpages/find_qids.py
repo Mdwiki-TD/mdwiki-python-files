@@ -10,27 +10,26 @@ Usage:
 python3 core8/pwb.py mdpages/find_qids
 
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
 #
-import os
 import sys
 
-# ---
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import wiki_api
-from mdpy.bots import wikidataapi
+from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
 from mdpy import printe
+# ---
+from mdpy.bots import sql_for_mdwiki, wiki_api, wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-from mdpages.qids_others.unlinkedwikibase import work_page#(title, qid)
+
 # ---
 qids = sql_for_mdwiki.get_all_qids()
 # ---
 # qids_already = [q for title, q in qids.items() if q != '']
-qids_already = {q: title for title, q in qids.items() if q != ''}
+qids_already = {q: title for title, q in qids.items() if q != ""}
 # ---
-noqids = [title for title, q in qids.items() if q == '' and valid_title(title)]
+noqids = [title for title, q in qids.items() if q == "" and valid_title(title)]
 
 
 def create_qids(no_qids):
@@ -66,23 +65,27 @@ def get_qids(noqids_list):
         "utf8": 1,
     }
     # ---
-    if 'redirects' in sys.argv:
+    if "redirects" in sys.argv:
         params["redirects"] = 1
     # ---
     num = 0
     # ---
     for i in range(0, len(noqids_list), 100):
         # ---
-        group = noqids_list[i : i + 100]
+        group = noqids_list[i:i + 100]
         # ---
-        params["titles"] = '|'.join(group)
+        params["titles"] = "|".join(group)
         # ---
-        jsone = wiki_api.submitAPI(params, apiurl='https://en.wikipedia.org/w/api.php')
+        jsone = wiki_api.submitAPI(params,
+                                   apiurl="https://en.wikipedia.org/w/api.php")
         # ---
-        if jsone and 'batchcomplete' in jsone:
+        if jsone and "batchcomplete" in jsone:
             query = jsone.get("query", {})
             # ---
-            redirects_x = {x['to']: x['from'] for x in query.get("redirects", [])}
+            redirects_x = {
+                x["to"]: x["from"]
+                for x in query.get("redirects", [])
+            }
             # ---
             # "redirects": [{"from": "Acetylsalicylic acid","to": "Aspirin"}]
             # ---
@@ -104,13 +107,15 @@ def get_qids(noqids_list):
     # ---
     return new_title_qids
 
+
 def work_un(tab):
     for numb, (title, new_q) in enumerate(tab.items(), start=1):
         # ---
-        printe.output(f'<<yellow>> {numb}, {title=}, {new_q=}')
+        printe.output(f"<<yellow>> {numb}, {title=}, {new_q=}")
         # ---
         if new_q:
             work_page(title, new_q)
+
 
 def start():
     # ---
@@ -120,7 +125,7 @@ def start():
     # ---
     new_title_qid = get_qids(noqids)
     # ---
-    no = ''
+    no = ""
     # ---
     false_qids = {}
     # ---
@@ -130,7 +135,7 @@ def start():
     for x, q in new_title_qid.items():
         ll = f'"{q}":"{x}",\n'
         # ---
-        if q == '':
+        if q == "":
             no += ll
             empty_qids.append(x)
             continue
@@ -140,37 +145,41 @@ def start():
         else:
             false_qids[x] = q
     # ---
-    printe.output('===================')
+    printe.output("===================")
     if false_qids:
-        printe.output('<<lightred>> flase qids:')
+        printe.output("<<lightred>> flase qids:")
         for xz, q in false_qids.items():
-            title_in = qids_already.get(q, '')
+            title_in = qids_already.get(q, "")
             # ---
-            printe.output(f'q: {q}\t new title: ({xz})\t: title_in: ({title_in})..')
+            printe.output(
+                f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
     # ---
-    printe.output('===================')
-    printe.output(f'<<lightred>>no qids: {len(empty_qids)}')
+    printe.output("===================")
+    printe.output(f"<<lightred>>no qids: {len(empty_qids)}")
     if empty_qids:
         printe.output(no)
         # ---
-        printe.output('<<purple>> add "createq" to sys.argv to create new items for them?')
+        printe.output(
+            '<<purple>> add "createq" to sys.argv to create new items for them?'
+        )
         # ---
-        if 'createq' in sys.argv:
+        if "createq" in sys.argv:
             create_qids(empty_qids)
     # ---
-    printe.output('===================')
-    printe.output(f'find qid to {len(to_add)} from {len(noqids)} pages.')
+    printe.output("===================")
+    printe.output(f"find qid to {len(to_add)} from {len(noqids)} pages.")
     # ---
     if to_add:
-        printe.output('<<lightyellow>>\n'.join([f'{k}\t:\t{v}' for k, v in to_add.items()]))
+        printe.output("<<lightyellow>>\n".join(
+            [f"{k}\t:\t{v}" for k, v in to_add.items()]))
         # ---
         printe.output('<<purple>> add "addthem" to sys.argv to add them?')
         # ---
-        if 'addthem' in sys.argv:
+        if "addthem" in sys.argv:
             sql_for_mdwiki.add_titles_to_qids(to_add)
         # ----
         work_un(to_add)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

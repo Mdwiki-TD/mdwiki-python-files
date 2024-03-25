@@ -13,58 +13,71 @@ python3 core8/pwb.py wprefs/bot -lang:ro ask
 python3 core8/pwb.py wprefs/bot ask
 
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
 #
-import os
 import sys
+
 # ---
-if '/data/project/mdwiki/pybot/md_core/' not in sys.path:
-    sys.path.append('/data/project/mdwiki/pybot/md_core/')
+if "/data/project/mdwiki/pybot/md_core/" not in sys.path:
+    sys.path.append("/data/project/mdwiki/pybot/md_core/")
 # ---
-if 'returnfile' not in sys.argv:
+if "returnfile" not in sys.argv:
     from mdpy.bots import sql_for_mdwiki
 # ---
-from wprefs.api import log, GetPageText, missingtitles, page_put
-from wprefs.helps import print_s, ec_de_code
-from wprefs.files import reffixed_list, setting, append_reffixed_file, save_wprefcash
+from wprefs.api import GetPageText, log, missingtitles, page_put
+from wprefs.files import (append_reffixed_file, reffixed_list, save_wprefcash,
+                          setting)
+from wprefs.helps import ec_de_code, print_s
 from wprefs.wpref_text import fix_page
+
 # ---
 move_dot = {1: False}
 expend_infobox = {1: False}
 
+
 def fix_page_here(text, title, langcode):
     newtext = text
     # ---
-    section_0_text = ''
+    section_0_text = ""
     # ---
     lang_default = setting.get(langcode, {})
     # ---
     dots = move_dot[1]
-    if lang_default.get('move_dots', 0) == 1:
+    if lang_default.get("move_dots", 0) == 1:
         dots = True
     # ---
     expend = expend_infobox[1]
-    if lang_default.get('expend', 0) == 1:
+    if lang_default.get("expend", 0) == 1:
         expend = True
     # ---
     adden = False
-    if lang_default.get('add_en_lang', 0) == 1:
+    if lang_default.get("add_en_lang", 0) == 1:
         adden = True
     # ---
-    newtext = fix_page(newtext, title, move_dots=dots, infobox=expend, section_0=section_0_text, lang=langcode, add_en_lang=adden)
+    newtext = fix_page(
+        newtext,
+        title,
+        move_dots=dots,
+        infobox=expend,
+        section_0=section_0_text,
+        lang=langcode,
+        add_en_lang=adden,
+    )
     # ---
     return newtext
 
 
 def work_one_lang(list_, lang):
     # ---
-    print_s(f'<<lightblue>> work on lang: {lang}.wikipedia......................')
+    print_s(
+        f"<<lightblue>> work on lang: {lang}.wikipedia......................")
     # ---
     newlist = list_
     # ---
-    if 'lala' not in sys.argv:
+    if "lala" not in sys.argv:
         newlist = [x for x in list_ if f"{lang}:{x}" not in reffixed_list]
         dd = int(len(list_)) - int(len(newlist))
         print("already in reffixed_list :%d" % dd)
@@ -78,21 +91,22 @@ def work_one_lang(list_, lang):
     # ---
     for title in newlist:
         # ---
-        lio = f'{lang}:{title}'
+        lio = f"{lang}:{title}"
         number += 1
-        print_s('<<lightyellow>> %d from %d, page: %s' % (number, len(newlist), lio))
+        print_s("<<lightyellow>> %d from %d, page: %s" %
+                (number, len(newlist), lio))
         # ---
-        if lio in reffixed_list and 'lala' not in sys.argv:
-            print_s('<<lightred>>\talready in reffixed_list.')
+        if lio in reffixed_list and "lala" not in sys.argv:
+            print_s("<<lightred>>\talready in reffixed_list.")
             continue
         # ---
-        if 'adddone' in sys.argv:
+        if "adddone" in sys.argv:
             dns.append(title)
             continue
         # ---
         text = GetPageText(title, lang=lang)
         # ---
-        if text == '':
+        if text == "":
             print_s('\ttext == ""')
             continue
         # ---
@@ -101,32 +115,38 @@ def work_one_lang(list_, lang):
         donee = False
         # ---
         if text != newtext:
-            aa = page_put(text, newtext, 'Fix references, Expend infobox mdwiki.toolforge.org.', title, lang)
+            aa = page_put(
+                text,
+                newtext,
+                "Fix references, Expend infobox mdwiki.toolforge.org.",
+                title,
+                lang,
+            )
             # ---
             if aa:
                 donee = True
         # ---
-        if donee or 'donee' in sys.argv:
+        if donee or "donee" in sys.argv:
             append_reffixed_file(lang, title)
     # ---
     if dns:
-        append_reffixed_file(lang, '', dns)
+        append_reffixed_file(lang, "", dns)
 
 
 def work_sql_result(lange, nolange, year=2024):
     newtable = {}
-    que = f'''
+    que = f"""
         select lang, target from pages
         where target != ""
         and lang != ""
         and lang != "ar"
         and date like "{year}-%"
         ;
-    '''
+    """
     # ---
-    if nolange != '':
+    if nolange != "":
         que = que.replace('and lang != ""', f'and lang != "{nolange}"')
-    elif lange != '':
+    elif lange != "":
         que = f'select lang, target from pages where target != "" and lang = "{lange}" and date like "{year}-%";'
     # ---
     print_s(que)
@@ -134,8 +154,8 @@ def work_sql_result(lange, nolange, year=2024):
     sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
     # ---
     for tab in sq:
-        lang = tab['lang']
-        target = tab['target']
+        lang = tab["lang"]
+        target = tab["target"]
         # ---
         if lang not in newtable:
             newtable[lang] = []
@@ -146,24 +166,24 @@ def work_sql_result(lange, nolange, year=2024):
 
 def maine():
     # ---
-    page = ''
-    lange = ''
-    nolange = ''
+    page = ""
+    lange = ""
+    nolange = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         arg = arg[1:] if arg.startswith("-") else arg
         # ---
-        if arg == 'infobox':
+        if arg == "infobox":
             expend_infobox[1] = True
-        if arg == 'movedots':
+        if arg == "movedots":
             move_dot[1] = True
         # ---
-        if arg == 'nolang':
+        if arg == "nolang":
             nolange = value
-        if arg == 'lang':
+        if arg == "lang":
             lange = value
-        if arg == 'page':
+        if arg == "page":
             page = value.replace("_", " ")
     # ---
     newtable = {}
@@ -171,36 +191,42 @@ def maine():
     if page != "" and lange != "":
         newtable[lange] = [page]
     # ---
-    if page != "" and lange != "" and 'returnfile' in sys.argv:
+    if page != "" and lange != "" and "returnfile" in sys.argv:
         # ---
-        title = ec_de_code(page, 'decode')
+        title = ec_de_code(page, "decode")
         log(lange)
         text = GetPageText(title, lang=lange, Print=False)
         # ---
-        if text == '':
-            print('notext')
-            return ''
+        if text == "":
+            print("notext")
+            return ""
         # ---
         newtext = fix_page_here(text, title, lange)
         # ---
         if text == newtext:
-            print('no changes')
-            return ''
+            print("no changes")
+            return ""
         # ---
-        if newtext == '':
-            print('notext')
-            return ''
+        if newtext == "":
+            print("notext")
+            return ""
         # ---
-        if 'save' in sys.argv:
-            a = page_put(text, newtext, 'Fix references, Expend infobox mdwiki.toolforge.org.', title, lange)
+        if "save" in sys.argv:
+            a = page_put(
+                text,
+                newtext,
+                "Fix references, Expend infobox mdwiki.toolforge.org.",
+                title,
+                lange,
+            )
             if a:
-                print('ok')
-                return ''
+                print("ok")
+                return ""
         else:
             filee = save_wprefcash(title, newtext)
             print(filee)
         # ---
-        return ''
+        return ""
     # ---
     if page == "":
         # ---
@@ -209,11 +235,11 @@ def maine():
     for lang, tab in newtable.items():
         work_one_lang(tab, lang)
     # ---
-    if 'returnfile' not in sys.argv:
-        print_s(f'find {len(missingtitles)} pages in missingtitles')
+    if "returnfile" not in sys.argv:
+        print_s(f"find {len(missingtitles)} pages in missingtitles")
         for x, lang in missingtitles.items():
-            print_s(f'lang: {lang}, title: {x}')
+            print_s(f"lang: {lang}, title: {x}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     maine()

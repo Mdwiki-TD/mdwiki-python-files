@@ -1,6 +1,7 @@
 """
 from bots.old_params import rename_params
 """
+
 # ---
 import wikitextparser as wtp
 
@@ -27,7 +28,7 @@ def rename_params(temptext):
     parsed_old = wtp.parse(new_temptext)
     temps = parsed_old.templates
     # ---
-    temps_okay = ['drugbox', 'infobox drug']
+    temps_okay = ["drugbox", "infobox drug"]
     # ---
     _temps_ = []
     # ---
@@ -56,11 +57,11 @@ def rename_params(temptext):
         for old, new in to_replace.items():
             if temp.has_arg(old):
                 value = temp.get_arg(old).value
-                printn(f'value: {value}')
+                printn(f"value: {value}")
                 temp.set_arg(new, value, before=old)
                 temp.del_arg(old)
         # ---
-        printn('diff:')
+        printn("diff:")
         # ---
         new_temptext = new_temptext.replace(old_temp, temp.string)
     # ---
@@ -75,7 +76,7 @@ if __name__ == "__main__":
     import pywikibot
 
     printn = print
-    o = '''
+    o = """
 {{drugbox
 |side effects=test
 <!-- asdadsxxx -->
@@ -88,7 +89,7 @@ if __name__ == "__main__":
 |side effects=22
 |side effects=211
 }}
-'''
+"""
     n = rename_params(o)
     # ---
     pywikibot.showDiff(o, n)

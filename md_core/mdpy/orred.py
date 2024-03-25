@@ -15,26 +15,24 @@ python3 core8/pwb.py mdpy/orred
 
 # ---
 
-# ---
-# ---
-from mdpy.bots import sql_for_mdwiki
-
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # ---
 from mdpy import printe
-from mdpy import wpref
+# ---
+# ---
+from mdpy.bots import sql_for_mdwiki
 from wprefs.api import submitAPI  # (params, lang='', Type='post')
 
 # ---
-or_url = 'https://' + 'or.wikipedia.org/w/api.php'
+or_url = "https://" + "or.wikipedia.org/w/api.php"
 
 
-def Find_pages_exists_or_not(liste, apiurl=''):
+def Find_pages_exists_or_not(liste, apiurl=""):
     # ---
     params = {
         "action": "query",
         "format": "json",
-        "titles": '|'.join(liste),
+        "titles": "|".join(liste),
         # "redirects": 0,
         # "prop": "templates|langlinks",
         "utf8": 1,
@@ -43,7 +41,7 @@ def Find_pages_exists_or_not(liste, apiurl=''):
     # ---
     table = {}
     # ---
-    json1 = submitAPI(params, lang='or')
+    json1 = submitAPI(params, lang="or")
     # ---
     if json1:
         query_pages = json1.get("query", {}).get("pages", {})
@@ -72,31 +70,42 @@ def create_redirect(target, mdtitle):
     # ---
     if Worrk:
         # ---
-        text = f'#redirect [[{target}]]'
-        sus = f'Redirected page to [[{target}]]'
-        params = {"action": "edit", "format": "json", "title": mdtitle, "text": text, "summary": sus, "createonly": 1, "utf8": 1, "token": ""}
+        text = f"#redirect [[{target}]]"
+        sus = f"Redirected page to [[{target}]]"
+        params = {
+            "action": "edit",
+            "format": "json",
+            "title": mdtitle,
+            "text": text,
+            "summary": sus,
+            "createonly": 1,
+            "utf8": 1,
+            "token": "",
+        }
         # ---
-        uu = submitAPI(params, lang='or')
+        uu = submitAPI(params, lang="or")
         # ---
-        if 'Success' in uu:
-            printe.output(f'<<lightgreen>>** true .. [[{mdtitle}]] ')
+        if "Success" in uu:
+            printe.output(f"<<lightgreen>>** true .. [[{mdtitle}]] ")
         else:
             printe.output(uu)
 
 
 def dodo_sql():
     # ---
-    que = '''select title, target from pages where target != "" and lang = "or";'''
+    que = """select title, target from pages where target != "" and lang = "or";"""
     # ---
     sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
     # ---
     for n, tab in enumerate(sq, start=1):
-        mdtitle = tab['title']
-        target = tab['target']
+        mdtitle = tab["title"]
+        target = tab["target"]
         # ---
-        printe.output(f'----------\n*<<lightyellow>> p{n}/{len(sq)} >target:"{target}".')
+        printe.output(
+            f'----------\n*<<lightyellow>> p{n}/{len(sq)} >target:"{target}".')
         # ---
         create_redirect(target, mdtitle)
+
 
 if __name__ == "__main__":
     dodo_sql()

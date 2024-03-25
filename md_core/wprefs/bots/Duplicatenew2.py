@@ -11,47 +11,47 @@
 #
 #
 
-import re
 import itertools
+import re
 from contextlib import suppress
 
 # ---
-from wprefs.bots.replace_except import replaceExcept, removeprefix
+from wprefs.bots.replace_except import removeprefix, replaceExcept
 
 
 def get_html_attributes_value(text, param):
     # rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
     rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
     if not text:
-        return ''
+        return ""
     m = re.search(rar, text)
     if m:
         return m.group(param)
-    return ''
+    return ""
 
 
 def merge_references(text):
     # ---
     # Match references
-    REFS = re.compile(r'(?is)<ref(?P<params>[^>\/]*)>(?P<content>.*?)<\/ref>')
+    REFS = re.compile(r"(?is)<ref(?P<params>[^>\/]*)>(?P<content>.*?)<\/ref>")
     fmt = r'(?i){0}\s*=\s*(?P<quote>["\']?)\s*(?P<{0}>.+?)\s*(?P=quote)'
     # ---
-    name_r = fmt.format('name')
-    group_r = fmt.format('group')
+    name_r = fmt.format("name")
+    group_r = fmt.format("group")
     # ---
     ref_tab_new = {}
     # ---
     for Match in REFS.finditer(text):
-        content = Match.group('content')
+        content = Match.group("content")
         if not content.strip():
             # printe.output( "\tno content" )
             continue
         # ---
-        params = Match.group('params')
+        params = Match.group("params")
         # print(f"{params=}")
         Group = re.search(group_r, params, re.IGNORECASE | re.DOTALL)
         if Group:
-            Group = Group.group('group')
+            Group = Group.group("group")
         # ---
         namefound = re.search(name_r, params)
         # ---
@@ -60,15 +60,15 @@ def merge_references(text):
         # ---
         if namefound:
             # ---
-            name = namefound.group('name')
-            quote = namefound.group('quote')
-            quoted = namefound.group('quote') == '"'
+            name = namefound.group("name")
+            quote = namefound.group("quote")
+            quoted = namefound.group("quote") == '"'
             # ---
             # change the regex if params.find '" == -1
             # if params.find('"') == -1 and params.find("'") == -1:
             if Group is None:
-                if quote == '' or quote is None:
-                    name2 = get_html_attributes_value(params, 'name')
+                if quote == "" or quote is None:
+                    name2 = get_html_attributes_value(params, "name")
                     if name2:
                         name = name2
                         # printe.output("get the name again:%s" % name )
@@ -100,11 +100,11 @@ def DuplicateReferences(text):
     named_repl = {}
     # ---
     # Match references
-    REFS = re.compile(r'(?is)<ref(?P<params>[^>\/]*)>(?P<content>.*?)<\/ref>')
+    REFS = re.compile(r"(?is)<ref(?P<params>[^>\/]*)>(?P<content>.*?)<\/ref>")
     fmt = r'(?i){0}\s*=\s*(?P<quote>["\']?)\s*(?P<{0}>.+?)\s*(?P=quote)'
     # ---
-    name_r = fmt.format('name')
-    group_r = fmt.format('group')
+    name_r = fmt.format("name")
+    group_r = fmt.format("group")
     # ---
     # ("group_r:" + group_r )
     # ---
@@ -112,15 +112,15 @@ def DuplicateReferences(text):
     GROUPS = re.compile(group_r)
     # ---
     for Match in REFS.finditer(text):
-        content = Match.group('content')
+        content = Match.group("content")
         if not content.strip():
             # printe.output( "no content" )
             continue
         # ---
-        params = Match.group('params')
+        params = Match.group("params")
         Group = re.search(group_r, params, re.IGNORECASE | re.DOTALL)
         if Group:
-            Group = Group.group('group')
+            Group = Group.group("group")
         # ---
         if Group not in found_refs:
             found_refs[Group] = {}
@@ -137,16 +137,16 @@ def DuplicateReferences(text):
         # ---
         if namefound:
             # ---
-            quote = namefound.group('quote')
-            name = namefound.group('name')
+            quote = namefound.group("quote")
+            name = namefound.group("name")
             quoted = quote == '"'
             # ---
             # change the regex if params.find '" == -1
             # if params.find('"') == -1 and params.find("'") == -1:
             if Group is None:
-                if quote == '' or quote is None:
+                if quote == "" or quote is None:
                     # print("get the name again:" )
-                    name = get_html_attributes_value(params, 'name')
+                    name = get_html_attributes_value(params, "name")
             # ---
             if not v[0]:
                 # First name associated with this content
@@ -175,13 +175,14 @@ def DuplicateReferences(text):
             used_numbers.add(int(number))
     # ---
     # generator to give the next free number for autogenerating names
-    free_number = (str(i) for i in itertools.count(start=1) if i not in used_numbers)
+    free_number = (str(i) for i in itertools.count(start=1)
+                   if i not in used_numbers)
     # ---
     iui_to_named = {}
     # ---
     # Fix references
     for groupname, references in found_refs.items():
-        group = f'group="{groupname}" ' if groupname else ''
+        group = f'group="{groupname}" ' if groupname else ""
         # ---
         for ref, v in references.items():
             if len(v[1]) == 1 and not v[3]:
@@ -194,17 +195,17 @@ def DuplicateReferences(text):
             elif v[2]:
                 name = f'"{name}"'
             # ---
-            named = f'<ref {group}name={name}>{ref}</ref>'
+            named = f"<ref {group}name={name}>{ref}</ref>"
             text = text.replace(v[1][0], named, 1)
             # ---
             # replace multiple identical references with repeated ref
-            repeated_ref = f'<ref {group}name={name} />'
+            repeated_ref = f"<ref {group}name={name} />"
             # ---
             sas = v[1][1:]
             # print(f"v[1]: {v[1]}")
             # print(f"sas : {sas}")
             # ---
-            iui = fr'<ref\s+{group}name\s*=\s*{name}\s*\/\>'
+            iui = rf"<ref\s+{group}name\s*=\s*{name}\s*\/\>"
             iui_to_named[iui] = named
             # ---
             for ref in v[1][1:]:
@@ -222,7 +223,11 @@ def DuplicateReferences(text):
         if v[1]:
             name = f'"{name}"'
         # ---
-        text = re.sub(r'<ref name\s*=\s*(?P<quote>["\']?)\s*{}\s*(?P=quote)\s*/>'.format(ref), f'<ref name={name} />', text)
+        text = re.sub(
+            rf'<ref name\s*=\s*(?P<quote>["\']?)\s*{ref}\s*(?P=quote)\s*/>',
+            f"<ref name={name} />",
+            text,
+        )
     # ---
     # iui_to_named = {}
     for iui, named in iui_to_named.items():
@@ -230,7 +235,11 @@ def DuplicateReferences(text):
             # ---
             # print("text not found: " + named)
             # ---
-            text = replaceExcept(text, iui, named, exceptions=['template'], count=1)
+            text = replaceExcept(text,
+                                 iui,
+                                 named,
+                                 exceptions=["template"],
+                                 count=1)
             if text.find(named) == -1:
                 text = re.sub(iui, named, text, 1)
             # ---

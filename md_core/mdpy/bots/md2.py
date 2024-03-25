@@ -7,14 +7,15 @@ python pwb.py md2 -page:Hyoscine_butylbromide
 python3 core8/pwb.py md2 -page:Hyoscine_butylbromide
 
 """
+
+import sys
+
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 # ---
 import pywikibot
-import sys
-
 # ---
 from mdpy import printe
 from mdpy.bots import mdwiki_api
@@ -29,13 +30,20 @@ def treat_page(title, textn):
     # ---
     newtext = med.work(title, returntext=True, text_O=textn)
     # ---
-    if 'test' in sys.argv:
+    if "test" in sys.argv:
         pywikibot.showDiff(textn, newtext)
-        return ''
+        return ""
     # ---
-    mdwiki_api.page_put(oldtext=textn, newtext=newtext, summary='mdwiki changes.', title=title, returntrue=False, diff=True)
+    mdwiki_api.page_put(
+        oldtext=textn,
+        newtext=newtext,
+        summary="mdwiki changes.",
+        title=title,
+        returntrue=False,
+        diff=True,
+    )
     # ---
-    test_text = '''
+    test_text = """
 {{Drugbox
 | Verifiedfields = changed
 | verifiedrevid = 448004176
@@ -73,7 +81,7 @@ def treat_page(title, textn):
 
 <!--Chemical data-->
 |drug_name=|alt=|caption=|licence_EU=|licence_US=}}
-'''
+"""
 
 
 def main():
@@ -84,7 +92,7 @@ def main():
     # python3 core8/pwb.py md2 -page:Hyoscine_butylbromide
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         if arg == "-page":
             ttab.append(value)
@@ -92,19 +100,22 @@ def main():
         # python3 core8/pwb.py md2 allpages
         # python pwb.py md2 allpages
         if arg == "allpages":
-            ttab = mdwiki_api.Get_All_pages('!', namespace='0', apfilterredir='nonredirects')
+            ttab = mdwiki_api.Get_All_pages("!",
+                                            namespace="0",
+                                            apfilterredir="nonredirects")
     # ---
     for numb, title in enumerate(ttab, start=1):
-        printe.output('<<lightyellow>> tit:%d / %d\t title: %s.' % (numb, len(ttab), title))
+        printe.output("<<lightyellow>> tit:%d / %d\t title: %s." %
+                      (numb, len(ttab), title))
         text = mdwiki_api.GetPageText(title)
         treat_page(title, text)
     # ---
     # python pwb.py md2 test
-    if 'test' in sys.argv:
-        treat_page('nana', test_text)
+    if "test" in sys.argv:
+        treat_page("nana", test_text)
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 # ---

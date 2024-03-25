@@ -1,11 +1,12 @@
 import os
-import requests
 from io import BytesIO
+
+import requests
 
 try:
     from PIL import Image
 except ImportError:
-    print('Installing Pillow using pip...')
+    print("Installing Pillow using pip...")
     os.system("pip install pillow")
     from PIL import Image
 
@@ -43,6 +44,7 @@ def save_image(image_data, file_name):
             file.write(image_data)
         return file_name
 
+
 def work_bmp(url):
     extension = url.split(".")[-1].lower()
     # ---
@@ -67,7 +69,7 @@ def work_bmp(url):
     else:
         print(f"Image already exists at {img_path}. continue...")
     # ---
-    url = f'https://mdwiki.toolforge.org/images/{file_name}'
+    url = f"https://mdwiki.toolforge.org/images/{file_name}"
     # ---
     print(f"Image saved successfully. URL: {url}")
     return url, "jpg"

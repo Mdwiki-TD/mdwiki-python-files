@@ -1,21 +1,25 @@
 #!/usr/bin/python3
 """
 This script performs various operations related to MediaWiki pages and Wikibase QIDs.
-It includes functions for filtering and processing page titles, checking page existence, 
+It includes functions for filtering and processing page titles, checking page existence,
 retrieving and modifying page content, and adding tags based on QIDs.
 
 Usage:
 python3 core8/pwb.py mdpages/qids_others/unlinkedwikibase add
 """
+
 # ---
 import sys
+
+from mdpages.qids_others import sql_qids_others
+from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from mdpy import printe
-from mdpages.qids_others import sql_qids_others
 # ---
-from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage
-api_new = NEW_API('www', family='mdwiki')
+from newapi.mdwiki_page import NEW_API
+from newapi.mdwiki_page import MainPage as md_MainPage
+
+api_new = NEW_API("www", family="mdwiki")
 api_new.Login_to_wiki()
 # ---
 qids1 = sql_for_mdwiki.get_all_qids()
@@ -68,19 +72,25 @@ def add_tag():
     # ---
     printe.output("Get all pages...")
     # ---
-    all_pages = api_new.Get_All_pages(start='!', namespace="0", apfilterredir='nonredirects')
+    all_pages = api_new.Get_All_pages(start="!",
+                                      namespace="0",
+                                      apfilterredir="nonredirects")
     # ---
     all_pages = [x for x in all_pages if valid_title(x)]
     # ---
-    pages_has = api_new.Search(value='{{#unlinkedwikibase:id=', ns="0")
+    pages_has = api_new.Search(value="{{#unlinkedwikibase:id=", ns="0")
     # ---
     pages_has_to_work = [page for page in pages_has if page in qids]
     # ---
-    printe.output(f"len of pages_has: {len(pages_has)}, pages_has_to_work: {len(pages_has_to_work)}")
+    printe.output(
+        f"len of pages_has: {len(pages_has)}, pages_has_to_work: {len(pages_has_to_work)}"
+    )
     # ---
     pages_to_work = [page for page in all_pages if page in qids]
     # ---
-    printe.output(f"len of all_pages: {len(all_pages)}, pages_to_work: {len(pages_to_work)}")
+    printe.output(
+        f"len of all_pages: {len(all_pages)}, pages_to_work: {len(pages_to_work)}"
+    )
     # ---
     for n, x in enumerate(pages_has_to_work):
         printe.output(f"p:{n}/{len(pages_has)}: t:{x}::")

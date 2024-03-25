@@ -1,4 +1,4 @@
-'''
+"""
 
 tfj run chsh --image mariadb --command "$HOME/ch.sh"
 
@@ -42,4 +42,4 @@ tfj run radrt --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 tfj run studies --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/get_infos && $HOME/local/bin/python3 core8/pwb.py mass/radio/get_studies"
 
 
-'''
+"""

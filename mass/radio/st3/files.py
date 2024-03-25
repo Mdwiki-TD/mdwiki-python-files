@@ -5,14 +5,24 @@ python3 core8/pwb.py mass/radio/st3/files
 tfj run files --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/files"
 
 """
+
 import re
+
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
-from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
+
+from mass.radio.lists.cases_to_cats import cases_cats  # cases_cats()
+
 
 def images_to_cats():
-    members = CatDepth("Category:Radiopaedia_images_by_system", sitecode="www", family="nccommons", depth=1, ns="10")
+    members = CatDepth(
+        "Category:Radiopaedia_images_by_system",
+        sitecode="www",
+        family="nccommons",
+        depth=1,
+        ns="10",
+    )
     reg = r"^File:.*? \(Radiopaedia (\d+)\)\.\w+$"
     # ---
     tab = {}

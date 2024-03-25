@@ -1,5 +1,5 @@
-from wprefs.wpref_text import fix_page
 import pywikibot
+from wprefs.wpref_text import fix_page
 
 text = """Boala se agravează în timp și este de obicei diagnosticată atunci când declinul cognitiv interferează cu funcționarea zilnică normală.<ref name="McKeithConsensus2017">{{Citat revistă
 |dată=July 2017
@@ -24,7 +24,11 @@ text = """Boala se agravează în timp și este de obicei diagnosticată atunci 
 # ---
 # ---
 # ---
-newtext = fix_page(text, 'Demența cu corpi Lewy', move_dots=False, infobox=True, lang='pt')
+newtext = fix_page(text,
+                   "Demența cu corpi Lewy",
+                   move_dots=False,
+                   infobox=True,
+                   lang="pt")
 pywikibot.showDiff(text, newtext)
 
 # python3 core8/pwb.py wprefs/bots/test_pt_months

@@ -11,36 +11,32 @@ python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
 
 """
 
+import codecs
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import json
-import codecs
-import re
-import os
 import sys
-from mdpy.bots import sql_for_mdwiki
-from mdcount import ref
-from mdpy.bots import mdwiki_api
-from mdpy import printe
-from mdpy.bots import catdepth2
-from mdcount.regex_scanner import RegexScanner
 # ---
 from pathlib import Path
+
+from mdcount.regex_scanner import RegexScanner
+from mdpy import printe
+from mdpy.bots import catdepth2, mdwiki_api, sql_for_mdwiki
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+dir2 = Dir.replace("\\", "/")
+dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
 # ---
 all_ref = {}
 lead_ref = {}
 vaild_links = {1: []}
 # ---
-file_all = f'{dir2}/public_html/Translation_Dashboard/Tables/all_refcount.json'
-file_lead = f'{dir2}/public_html/Translation_Dashboard/Tables/lead_refcount.json'
+file_all = f"{dir2}/public_html/Translation_Dashboard/Tables/all_refcount.json"
+file_lead = f"{dir2}/public_html/Translation_Dashboard/Tables/lead_refcount.json"
 # ---
 a = {}
 # ---
@@ -61,36 +57,41 @@ list_fu = list(set(all_ref.keys()) & set(lead_ref.keys()))
 list_fu = list(set(list_fu))
 list_ma = {1: [x for x in list_fu if (x in all_ref and x in lead_ref)]}
 
+
 def get_refs_new(text):
     ref_list = []
     # ---
-    scanner = RegexScanner(r'(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>', text)
+    scanner = RegexScanner(r"(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>",
+                           text)
     # ---
     for m in scanner.requests:
         # ---
-        name = m.get('name', '')
-        content = m.get('content', '')
+        name = m.get("name", "")
+        content = m.get("content", "")
         # ---
-        if name.strip() != '':
+        if name.strip() != "":
             if name.strip() not in ref_list:
                 ref_list.append(name.strip())
-        elif content.strip() != '':
+        elif content.strip() != "":
             if content.strip() not in ref_list:
                 ref_list.append(content.strip())
     # ---
-    printe.output(f'len of get_refs_new : {len(ref_list)}')
+    printe.output(f"len of get_refs_new : {len(ref_list)}")
     # ---
     return ref_list
 
+
 def get_short_refs(text):
     # ---
-    scanner = RegexScanner(r'<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>', text)
+    scanner = RegexScanner(
+        r"<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>", text)
     # ---
-    ref_list = scanner.attr_scan('name')
+    ref_list = scanner.attr_scan("name")
     # ---
-    printe.output(f'len of get_short_refs : {len(ref_list)}')
+    printe.output(f"len of get_short_refs : {len(ref_list)}")
     # ---
     return ref_list
+
 
 def count_ref_from_text(text, get_short=False):
     # ---
@@ -108,6 +109,7 @@ def count_ref_from_text(text, get_short=False):
     # ---
     return len(ref_list)
 
+
 def count_refs(title):
     # ---
     text = mdwiki_api.GetPageText(title)
@@ -119,40 +121,42 @@ def count_refs(title):
     all_c = count_ref_from_text(text2)
     all_ref[title] = all_c
     # ---
-    leadtext = text2.split('==')[0]
+    leadtext = text2.split("==")[0]
     lead_c = count_ref_from_text(leadtext, get_short=True)
     # ---
     lead_ref[title] = lead_c
     # ---
-    printe.output('<<lightgreen>> all:%d \t lead:%d' % (all_c, lead_c))
+    printe.output("<<lightgreen>> all:%d \t lead:%d" % (all_c, lead_c))
 
 
 def logaa(file, table):
-    with open(file, 'w', encoding='utf-8') as outfile:
+    with open(file, "w", encoding="utf-8") as outfile:
         json.dump(table, outfile, sort_keys=True, indent=4)
     # ---
-    printe.output(f'<<lightgreen>> {len(table)} lines to {file}')
+    printe.output(f"<<lightgreen>> {len(table)} lines to {file}")
 
 
 def from_sql():
     # ---
-    que = '''select title, word from pages;'''
+    que = """select title, word from pages;"""
     # ---
     sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
     # ---
-    titles2 = [q['title'] for q in sq]
+    titles2 = [q["title"] for q in sq]
     # ---
     titles = [x for x in titles2 if x not in list_ma[1]]
     # ---
-    printe.output(f'<<lightyellow>> sql: find {len(titles2)} titles, {len(titles)} to work. ')
+    printe.output(
+        f"<<lightyellow>> sql: find {len(titles2)} titles, {len(titles)} to work. "
+    )
     return titles
 
 
 def get_links():
-    tabe = catdepth2.subcatquery2('RTT', depth='1', ns='0')
-    lale = from_sql() if 'sql' in sys.argv else tabe['list']
+    tabe = catdepth2.subcatquery2("RTT", depth="1", ns="0")
+    lale = from_sql() if "sql" in sys.argv else tabe["list"]
     # ---
-    if 'newpages' in sys.argv:
+    if "newpages" in sys.argv:
         lale = [x for x in lale if (x not in list_ma[1])]
     # ---
     return lale
@@ -162,15 +166,15 @@ def mai():
     # ---
     numb = 0
     # ---
-    limit = 100 if 'limit100' in sys.argv else 10000
+    limit = 100 if "limit100" in sys.argv else 10000
     # ---
     # python3 core8/pwb.py mdcount/countref -title:Testosterone_\(medication\)
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         if arg == "-title":
-            vaild_links[1] = [ value.replace('_', ' ') ]
+            vaild_links[1] = [value.replace("_", " ")]
     # ---
     if not vaild_links[1]:
         vaild_links[1] = get_links()
@@ -182,11 +186,12 @@ def mai():
         if numb >= limit:
             break
         # ---
-        printe.output(' p %d from %d: for %s:' % (numb, len(vaild_links[1]), x))
+        printe.output(" p %d from %d: for %s:" %
+                      (numb, len(vaild_links[1]), x))
         # ---
         count_refs(x)
         # ---
-        if numb == 10 or str(numb).endswith('00'):
+        if numb == 10 or str(numb).endswith("00"):
             logaa(file_lead, lead_ref)
             logaa(file_all, all_ref)
         # ---
@@ -195,5 +200,5 @@ def mai():
     logaa(file_all, all_ref)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     mai()

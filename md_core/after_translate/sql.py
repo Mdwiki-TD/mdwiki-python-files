@@ -17,17 +17,14 @@ import sys
 import time
 
 # ---
-from newapi import printe
-
-# ---
 from after_translate.bots import add_to_wd
 from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 from after_translate.bots.fixcat import cat_for_pages
-
-# ---
-from mdpy.bots import py_tools
-from mdpy.bots import sql_for_mdwiki
 from api_sql import wiki_sql
+# ---
+from mdpy.bots import py_tools, sql_for_mdwiki
+# ---
+from newapi import printe
 
 # ---
 Lang_usr_mdtitle = {}
@@ -188,7 +185,9 @@ def get_pages_from_db():
             targets_done[lang][target] = {"user": user, "target": target}
             targets_done[lang][target2] = {"user": user, "target": target}
     # ---
-    printe.output(f"<<lightyellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
+    printe.output(
+        f"<<lightyellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. "
+    )
     # ---
     if "print" in sys.argv:
         printe.output(Langs_to_title_and_user)
@@ -214,7 +213,8 @@ def start(result, lange):
         # ---
         namespace = str(namespace)
         pupdate = pupdate[:8]
-        pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>", pupdate)
+        pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>",
+                         pupdate)
         # ---
         md_title = co_text.replace("_", " ").strip()
         md_title = re.sub("/full$", "", co_text)
@@ -285,7 +285,9 @@ def main():
         numb_lang += 1
         # ---
         printe.output(" \\/\\/\\/\\/\\/ ")
-        printe.output(f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"')
+        printe.output(
+            f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"'
+        )
         # ---
         result = {}
         # ---
@@ -314,10 +316,11 @@ def main():
         if result != {}:
             start(result, lange)
         # ---
-        if 'justsql' not in sys.argv:
+        if "justsql" not in sys.argv:
             add_to_wd.add_tab_to_wd({lange: tab_by_lang[lange]})
         # ---
-        add_to_mdwiki_sql({lange: tab_by_lang[lange]}, to_update_lang_user_mdtitle.get(lange, {}))
+        add_to_mdwiki_sql({lange: tab_by_lang[lange]},
+                          to_update_lang_user_mdtitle.get(lange, {}))
 
 
 if __name__ == "__main__":

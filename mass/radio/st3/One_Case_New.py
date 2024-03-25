@@ -1,23 +1,29 @@
 """
 from mass.radio.st3.One_Case_New import OneCase
 """
-import sys
-import re
-import os
-from pathlib import Path
+
 import json
+import os
+import sys
 import traceback
+from pathlib import Path
+
 # ---
 from nccommons import api
 from newapi import printe
-from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
-from mass.radio.get_studies import get_images_stacks, get_images
+from newapi.ncc_page import NEW_API
+from newapi.ncc_page import MainPage as ncc_MainPage
+
 from mass.radio.bots.bmp import work_bmp
-from mass.radio.bots.update import update_text, update_text_new
-from mass.radio.jsons_files import jsons  # , dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.bots.update import update_text_new
+from mass.radio.get_studies import get_images, get_images_stacks
+# , dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons
+
 # ---
 try:
     import pywikibot
+
     pywikibotoutput = pywikibot.output
 except ImportError:
     pywikibotoutput = print
@@ -27,13 +33,14 @@ except ImportError:
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-studies_dir = Path('/data/project/mdwiki/studies')
+studies_dir = Path("/data/project/mdwiki/studies")
 # ---
 if not os.path.exists(studies_dir):
-    printe.output(f'<<red>> studies_dir {studies_dir} not found')
-    studies_dir = main_dir / 'studies'
+    printe.output(f"<<red>> studies_dir {studies_dir} not found")
+    studies_dir = main_dir / "studies"
 # ---
-with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), "r", encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"),
+          encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
 api_new = NEW_API("www", family="nccommons")
@@ -44,7 +51,9 @@ urls_done = []
 PD_medical_pages = []
 if "updatetext" in sys.argv:
     from mass.radio.lists.PD_medical import PD_medical_pages_def
+
     PD_medical_pages = PD_medical_pages_def()
+
 
 def get_image_extension(image_url):
     # Split the URL to get the filename and extension
@@ -65,6 +74,7 @@ def printt(s):
 
 
 class OneCase:
+
     def __init__(self, case_url, caseId, title, studies_ids, author):
         self.author = author
         self.caseId = caseId
@@ -136,10 +146,11 @@ class OneCase:
             # ---
             if os.path.exists(st_file):
                 try:
-                    with open(st_file, "r", encoding="utf-8") as f:
+                    with open(st_file, encoding="utf-8") as f:
                         images = json.loads(f.read())
                 except Exception as e:
-                    pywikibotoutput("<<lightred>> Traceback (most recent call last):")
+                    pywikibotoutput(
+                        "<<lightred>> Traceback (most recent call last):")
                     printt(f"{study} : error")
                     pywikibotoutput(e)
                     pywikibotoutput(traceback.format_exc())
@@ -155,13 +166,17 @@ class OneCase:
                 images = get_images_stacks(study)
                 # ---
                 if not images:
-                    images = get_images(f"https://radiopaedia.org/cases/{self.caseId}/studies/{study}")
+                    images = get_images(
+                        f"https://radiopaedia.org/cases/{self.caseId}/studies/{study}"
+                    )
                 # ---
                 with open(st_file, "w", encoding="utf-8") as f:
                     json.dump(images, f, ensure_ascii=False, indent=4)
             # ---
             self.studies[study] = images
-            printt(f"study:{study} : len(images) = {len(images)}, st_file:{st_file}")
+            printt(
+                f"study:{study} : len(images) = {len(images)}, st_file:{st_file}"
+            )
 
     def make_image_text(self, image_url, image_id, plane, modality, study_id):
         auth_line = f"{self.author}"
@@ -200,11 +215,11 @@ class OneCase:
             "{{CC-BY-NC-SA-3.0}}\n"
             f"{usa_license}\n"
             f"[[{self.category}]]\n"
-            "[[Category:Uploads by Mr. Ibrahem]]"
-        )
+            "[[Category:Uploads by Mr. Ibrahem]]")
         return image_text
 
-    def upload_image(self, image_url, image_name, image_id, plane, modality, study_id):
+    def upload_image(self, image_url, image_name, image_id, plane, modality,
+                     study_id):
         if "noup" in sys.argv:
             return image_name
         # ---
@@ -215,9 +230,14 @@ class OneCase:
         if exists:
             return image_name
         # ---
-        image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
+        image_text = self.make_image_text(image_url, image_id, plane, modality,
+                                          study_id)
 
-        file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True, do_ext=True)
+        file_name = api.upload_by_url(image_name,
+                                      image_text,
+                                      image_url,
+                                      return_file_name=True,
+                                      do_ext=True)
 
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
@@ -269,12 +289,21 @@ class OneCase:
             # ---
             file_name = f"{self.title} (Radiopaedia {self.caseId}-{study} {plane} {planes[plane]}).{extension}"
             # ---
-            file_name = file_name.replace("  ", " ").replace("  ", " ").replace("  ", " ")
+            file_name = (file_name.replace("  ", " ").replace("  ",
+                                                              " ").replace(
+                                                                  "  ", " "))
             # ---
             # fix BadFileName
             file_name = file_name.replace(":", ".").replace("/", ".")
             # ---
-            to_up[f"File:{file_name}"] = (image_url, file_name, image_id, plane, modality, study)
+            to_up[f"File:{file_name}"] = (
+                image_url,
+                file_name,
+                image_id,
+                plane,
+                modality,
+                study,
+            )
         # ---
         to_c = list(to_up.keys())
         # ---
@@ -293,14 +322,16 @@ class OneCase:
         # ---
         if "updatetext" in sys.argv:
             # ---
-            tits1 = [ x for x in already_in if x in to_up]
-            tits2 = [ x for x in tits1 if f"File:{x}" not in PD_medical_pages]
+            tits1 = [x for x in already_in if x in to_up]
+            tits2 = [x for x in tits1 if f"File:{x}" not in PD_medical_pages]
             # ---
             printt(f"{len(tits1)=}, {len(tits2)=}")
             # ---
             for fa in tits2:
-                image_url, file_name, image_id, plane, modality, study_id = to_up[fa]
-                image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
+                image_url, file_name, image_id, plane, modality, study_id = to_up[
+                    fa]
+                image_text = self.make_image_text(image_url, image_id, plane,
+                                                  modality, study_id)
                 # ---
                 file_title = f"File:{file_name}"
                 # ---
@@ -311,11 +342,13 @@ class OneCase:
         # ---
         printt(f"not_in: {len(not_in)}")
         # ---
-        for i, (image_url, file_name, image_id, plane, modality, study_o) in enumerate(not_in.values(), 1):
+        for i, (image_url, file_name, image_id, plane, modality,
+                study_o) in enumerate(not_in.values(), 1):
             # ---
             printt(f"file: {i}/{len(not_in)} :")
             # ---
-            new_name = self.upload_image(image_url, file_name, image_id, plane, modality, study_o)
+            new_name = self.upload_image(image_url, file_name, image_id, plane,
+                                         modality, study_o)
             # ---
             file_n = f"File:{new_name}" if new_name else f"File:{file_name}"
             # ---
@@ -350,7 +383,7 @@ class OneCase:
         if "noset" in sys.argv:
             return
         # ---
-        sets = [ x.strip() for x in sets if x.strip() ]
+        sets = [x.strip() for x in sets if x.strip()]
         # ---
         if len(sets) < 2:
             return
@@ -380,14 +413,20 @@ class OneCase:
         # ---
         if p_text.find(".bmp") != -1:
             p_text = p_text.replace(".bmp", ".jpg")
-            ssa = page.save(newtext=p_text, summary="update", nocreate=0, minor="")
+            ssa = page.save(newtext=p_text,
+                            summary="update",
+                            nocreate=0,
+                            minor="")
             return ssa
 
         elif "fix" in sys.argv:
             if text == p_text:
                 printt("<<lightyellow>> no changes")
                 return True
-            ssa = page.save(newtext=text, summary="update", nocreate=0, minor="")
+            ssa = page.save(newtext=text,
+                            summary="update",
+                            nocreate=0,
+                            minor="")
             return ssa
 
     def add_category(self, file_name):
@@ -409,5 +448,6 @@ class OneCase:
         # ---
         if p_text.find(self.category) == -1:
             new_text = p_text + add_text
-            ssa = page.save(newtext=new_text, summary=f"Bot: added [[:{self.category}]]")
+            ssa = page.save(newtext=new_text,
+                            summary=f"Bot: added [[:{self.category}]]")
             return ssa

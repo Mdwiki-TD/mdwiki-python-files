@@ -1,4 +1,4 @@
-'''
+"""
 # ---
 from priorviews.lists import translators
 # translators.tra_by_lang
@@ -7,23 +7,25 @@ from priorviews.lists import translators
 # ---
 python3 core8/pwb.py priorviews/lists/translators
 
-'''
-from priorviews.bots import helps
+"""
+
+import codecs
 import json
 import os
 from pathlib import Path
-import codecs
+
+from priorviews.bots import helps
 
 # ---
 Dir = Path(__file__).parent
 # ---
-file = f'{Dir}/translators_mdwiki_langs.json'
+file = f"{Dir}/translators_mdwiki_langs.json"
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-tra_by_lang = json.load(codecs.open(file, 'r', 'utf-8'))
+tra_by_lang = json.load(codecs.open(file, "r", "utf-8"))
 # ---
 _data = {"ar": {"artitle": "بيت الحكمة"}}
 # ---
@@ -44,7 +46,7 @@ for lang, titles in tra_by_lang.items():
     # ---
     for title, user in titles.items():
         # ---
-        if user == '':
+        if user == "":
             continue
         # ---
         # skip user match ip address
@@ -57,14 +59,14 @@ for lang, titles in tra_by_lang.items():
         # ---
         counts_by_lang[lang] += 1
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # for x, wo in counts_by_translator.items():   print(x, wo)
     # ---
-    print(f'len of counts_by_translator: {len(counts_by_translator)}')
+    print(f"len of counts_by_translator: {len(counts_by_translator)}")
     # ---
-    print(f'len of tra_by_lang: {len(tra_by_lang)}')
+    print(f"len of tra_by_lang: {len(tra_by_lang)}")
     for lang, titles in tra_by_lang.items():
         for title, user in titles.items():
-            if user != '':
-                print(f'{lang=}, {title=}, {user=}')
+            if user != "":
+                print(f"{lang=}, {title=}, {user=}")
 # ---

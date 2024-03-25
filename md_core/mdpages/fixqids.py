@@ -4,47 +4,50 @@
 python3 core8/pwb.py mdpy/fixqids
 
 """
+
 #
 # ---
 import sys
-from mdpy.bots import catdepth2
-from mdpy.bots import wikidataapi
+
+from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
 from mdpy import printe
-from mdpy.bots import sql_for_mdwiki
+from mdpy.bots import catdepth2, sql_for_mdwiki, wikidataapi
 from mdpy.bots.check_title import valid_title
-from mdpages.qids_others.unlinkedwikibase import work_page#(title, qid)
+
 # ---
 mdlist = sql_for_mdwiki.get_all_qids()
 # ---
-qs_list = {q: t for t, q in mdlist.items() if q != ''}
+qs_list = {q: t for t, q in mdlist.items() if q != ""}
+
 
 def work_un(tab):
     for numb, (old_q, new_q) in enumerate(tab.items(), start=1):
         # ---
         title = qs_list.get(old_q)
-        printe.output(f'<<yellow>> {numb}, {title=}, {old_q=}, {new_q=}')
+        printe.output(f"<<yellow>> {numb}, {title=}, {old_q=}, {new_q=}")
         # ---
         work_page(title, new_q)
-        
+
+
 def fix_redirects(qs_list):
     # ---
     # python3 core8/pwb.py mdpy/fixqids redirects
     # ---
-    printe.output('<<lightyellow>> start fix_redirects()')
+    printe.output("<<lightyellow>> start fix_redirects()")
     # ---
     new_list = list(qs_list.keys())
     # ---
     reds = wikidataapi.get_redirects(new_list)
     # ---
-    printe.output(f'len of redirects: {len(reds)}')
+    printe.output(f"len of redirects: {len(reds)}")
     # ---
     for numb, (old_q, new_q) in enumerate(reds.items(), start=1):
         # ---
-        printe.output(f'<<lightblue>> {numb}, old_q: {old_q}, new_q: {new_q}')
+        printe.output(f"<<lightblue>> {numb}, old_q: {old_q}, new_q: {new_q}")
         # ---
         qua = f'update qids set qid = "{new_q}" where qid = "{old_q}"'
         # ---
-        if 'fix' in sys.argv:
+        if "fix" in sys.argv:
             # python3 core8/pwb.py mdpy/cashwd redirects fix
             sql_for_mdwiki.mdwiki_sql(qua, update=True)
         else:
@@ -53,9 +56,10 @@ def fix_redirects(qs_list):
     # ----
     work_un(reds)
 
+
 def add_to_qids(mdlist):
     # ---
-    printe.output('<<lightyellow>> start add_to_qids()')
+    printe.output("<<lightyellow>> start add_to_qids()")
     # ---
     all_pages = catdepth2.make_cash_to_cats(return_all_pages=True)
     # ---
@@ -63,16 +67,16 @@ def add_to_qids(mdlist):
     # ---
     all_in = list(mdlist)
     # ---
-    new_list = {title: '' for title in all_pages if title not in all_in}
+    new_list = {title: "" for title in all_pages if title not in all_in}
     # ---
-    printe.output(f'len of new_list: {len(new_list)}')
+    printe.output(f"len of new_list: {len(new_list)}")
     # ---
     sql_for_mdwiki.add_titles_to_qids(new_list, add_empty_qid=True)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     fix_redirects(qs_list)
-    print('_______________d')
-    print('_______________d')
-    print('_______________d')
+    print("_______________d")
+    print("_______________d")
+    print("_______________d")
     add_to_qids(mdlist)

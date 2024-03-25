@@ -5,26 +5,25 @@
 python3 core8/pwb.py mdpy/wddone
 
 """
+
+# ---
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 # ---
-from mdpy.bots import sql_for_mdwiki
+from mdpy.bots import py_tools, sql_for_mdwiki
 from pymysql.converters import escape_string
-
-# ---
-from mdpy.bots import py_tools
 
 # escape_string(string)
 
 # ---
 # ---
-que = '''
+que = """
 select title,user,lang,target
 from pages
 where target != ""
-;'''
+;"""
 # ---
 sq = sql_for_mdwiki.mdwiki_sql(que)
 # ---
@@ -49,9 +48,9 @@ for tab in sq:
             )
     """
     # ---
-    print('**************')
+    print("**************")
     print(done_qu)
-    print('**************')
+    print("**************")
     # ---
     vfg = sql_for_mdwiki.mdwiki_sql(done_qu, update=True)
 # ---

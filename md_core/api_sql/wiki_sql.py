@@ -9,6 +9,7 @@ from api_sql import wiki_sql
 # result = wiki_sql.sql_new_title_ns(qua2, wiki="en", t1="title", t2="ns")
 # ---
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -16,9 +17,9 @@ from api_sql import wiki_sql
 import sys
 import time as tttime
 
+from api_sql import sql_qu
 # ---
 from mdpy import printe
-from api_sql import sql_qu
 
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db
@@ -31,7 +32,7 @@ def GET_SQL():
 
 def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     # ---
-    if wiki.endswith('wiki'):
+    if wiki.endswith("wiki"):
         wiki = wiki[:-4]
     # ---
     wiki = wiki.replace("-", "_")
@@ -49,7 +50,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     # ---
     host = f"{wiki}.analytics.db.svc.wikimedia.cloud"
     # ---
-    dbs_p = f'{dbs}_p'
+    dbs_p = f"{dbs}_p"
     # ---
     return host, dbs_p
 
@@ -69,13 +70,18 @@ def sql_new(queries, wiki="", printqua=False, values=[]):
     start = tttime.time()
     final = tttime.time()
     # ---
-    rows = sql_qu.make_sql_connect(queries, db=dbs_p, host=host, return_dict=True, values=values)
+    rows = sql_qu.make_sql_connect(queries,
+                                   db=dbs_p,
+                                   host=host,
+                                   return_dict=True,
+                                   values=values)
     # ---
     final = tttime.time()
     # ---
     delta = int(final - start)
     # ---
-    printe.output(f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
+    printe.output(
+        f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
     # ---
     return rows
 
@@ -95,13 +101,18 @@ def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     start = tttime.time()
     final = tttime.time()
     # ---
-    rows2 = sql_qu.make_sql_connect(queries, db=dbs_p, host=host, return_dict=return_dict)
+    rows2 = sql_qu.make_sql_connect(queries,
+                                    db=dbs_p,
+                                    host=host,
+                                    return_dict=return_dict)
     # ---
     final = tttime.time()
     # ---
     delta = int(final - start)
     # ---
-    printe.output(f'wiki_sql.py Make_sql_many_rows len(encats) = "{len(rows2)}", in {delta} seconds')
+    printe.output(
+        f'wiki_sql.py Make_sql_many_rows len(encats) = "{len(rows2)}", in {delta} seconds'
+    )
     # ---
     return rows2
 
@@ -110,14 +121,14 @@ def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
     # ---
     lang = wiki
     # ---
-    if lang.endswith('wiki'):
+    if lang.endswith("wiki"):
         lang = lang[:-4]
     # ---
     rows = sql_new(queries, wiki=wiki)
     # ---
-    if t1 == '':
+    if t1 == "":
         t1 = "page_title"
-    if t2 == '':
+    if t2 == "":
         t2 = "page_namespace"
     # ---
     newlist = []
@@ -143,28 +154,49 @@ def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
         "829": "نقاش الوحدة",
     }
     # ---
-    ns_text_tab_en = {"0": "", "1": "Talk", "2": "User", "3": "User talk", "4": "Project", "5": "Project talk", "6": "File", "7": "File talk", "8": "MediaWiki", "9": "MediaWiki talk", "10": "Template", "11": "Template talk", "12": "Help", "13": "Help talk", "14": "Category", "15": "Category talk", "100": "Portal", "101": "Portal talk", "828": "Module", "829": "Module talk"}
+    ns_text_tab_en = {
+        "0": "",
+        "1": "Talk",
+        "2": "User",
+        "3": "User talk",
+        "4": "Project",
+        "5": "Project talk",
+        "6": "File",
+        "7": "File talk",
+        "8": "MediaWiki",
+        "9": "MediaWiki talk",
+        "10": "Template",
+        "11": "Template talk",
+        "12": "Help",
+        "13": "Help talk",
+        "14": "Category",
+        "15": "Category talk",
+        "100": "Portal",
+        "101": "Portal talk",
+        "828": "Module",
+        "829": "Module talk",
+    }
     # ---
     for row in rows:
         title = row.get(t1)
         ns = row.get(t2)
         # ---
-        if str(ns) == '0':
+        if str(ns) == "0":
             newlist.append(title)
             continue
         # ---
         ns_text = ns_text_tab_ar.get(str(ns))
-        if lang != 'ar':
+        if lang != "ar":
             ns_text = ns_text_tab_en.get(str(ns))
         # ---
         if not ns_text:
-            printe.output(f'no ns_text for {str(ns)}')
+            printe.output(f"no ns_text for {str(ns)}")
         # ---
         if title and ns:
             new_title = f"{ns_text}:{title}"
             newlist.append(new_title)
         else:
-            printe.output(f'xa {str(row)}')
+            printe.output(f"xa {str(row)}")
             newlist.append(row)
         # ---
     # ---

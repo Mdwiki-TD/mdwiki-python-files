@@ -8,10 +8,14 @@ This script is used to handle operations related to Radiopaedia cases.
 """
 
 # Script for handling Radiopaedia operation tasks
+
+# ---
+
+# ---
+
+
 import sys
-# ---
 from mass.radio.st3.start3 import main_by_ids
-# ---
 ids = [arg for arg in sys.argv[1:] if arg.isdigit()]
 # ---
 print(f"len ids: {len(ids)}")

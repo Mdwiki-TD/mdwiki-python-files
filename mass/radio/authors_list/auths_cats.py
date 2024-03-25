@@ -1,4 +1,4 @@
-'''
+"""
 
 python3 core8/pwb.py mass/radio/authors_list/auths_cats break
 
@@ -10,47 +10,53 @@ https://nccommons.org/wiki/User:Mr._Ibrahem/Radiopaedia_authors
 from mass.radio.authors_list import auths_cats
 # auth_cats = auths_cats.get_auth_cats(id2cat, auth)
 
-'''
-import re
-import sys
+"""
+
 import json
 import os
-from pathlib import Path
+import sys
 from multiprocessing import Pool
+from pathlib import Path
+
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
-from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
+
+from mass.radio.lists.cases_to_cats import cases_cats  # cases_cats()
+
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / 'authors_list' / 'authors_to_cases.json', 'r', encoding='utf-8') as f:
+with open(main_dir / "authors_list" / "authors_to_cases.json",
+          encoding="utf-8") as f:
     authors_to_cases = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"),
+          encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")
 # ---
 
+
 def create_cat(cat, text):
-    page = ncc_MainPage(cat, 'www', family='nccommons')
+    page = ncc_MainPage(cat, "www", family="nccommons")
 
     if page.exists():
         pa_text = page.get_text()
         if pa_text == text:
             print("no different")
             return
-        page.save(newtext=text, summary='create')
+        page.save(newtext=text, summary="create")
     else:
-        page.Create(text=text, summary='create')
+        page.Create(text=text, summary="create")
 
 
 def add(da=[], title="", cat=""):
     if da:
         title, cat = da[0], da[1]
     # ---
-    page = ncc_MainPage(title, 'www', family='nccommons')
+    page = ncc_MainPage(title, "www", family="nccommons")
 
     if not page.exists():
         return
@@ -64,7 +70,7 @@ def add(da=[], title="", cat=""):
     newtext = text
     newtext += f"\n[[{cat}]]"
     # ---
-    page.save(newtext=newtext, summary=f'Bot: added [[:{cat}]]')
+    page.save(newtext=newtext, summary=f"Bot: added [[:{cat}]]")
 
 
 def mu(tab):
@@ -86,11 +92,11 @@ def add_cat(pages, cat):
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
     # ---
-    cat  = f"Category:Radiopaedia cases by {auth}"
+    cat = f"Category:Radiopaedia cases by {auth}"
     text = ""
     # ---
-    url      = authors_infos.get(auth, {}).get('url')
-    location = authors_infos.get(auth, {}).get('location')
+    url = authors_infos.get(auth, {}).get("url")
+    location = authors_infos.get(auth, {}).get("location")
     # ---
     if url:
         text += f"* Author: [{url} {auth}]\n"
@@ -101,7 +107,7 @@ def one_auth(auth, cat_list):
     # ---
     create_cat(cat, text)
     # ---
-    done = CatDepth(cat, sitecode='www', family="nccommons", depth=0, ns="14")
+    done = CatDepth(cat, sitecode="www", family="nccommons", depth=0, ns="14")
     # ---
     new_cat_list = [x for x in cat_list if x not in done]
     # ---
@@ -117,6 +123,7 @@ def get_auth_cats(cats, auth):
     printe.output(f"get_auth_cats: {auth=}, {len(cat_list)=}")
     # ---
     return cat_list
+
 
 def start():
     # ---
@@ -140,5 +147,5 @@ def start():
             break
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

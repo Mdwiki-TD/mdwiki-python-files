@@ -1,18 +1,17 @@
-"""
-"""
+""" """
 
 import re
-import wikitextparser as wtp
 
+import wikitextparser as wtp
+from wprefs.bots.es_months import fix_es_months
+from wprefs.bots.es_refs import mv_es_refs
+from wprefs.bots.es_section import add_section
 # ---
 from wprefs.helps import print_s
-from wprefs.bots.es_months import fix_es_months
-from wprefs.bots.es_section import add_section
-from wprefs.bots.es_refs import mv_es_refs
 
 # ---
 refs_temps = {
-    'cite web': 'cita web',
+    "cite web": "cita web",
     "cite arxiv": "cita arxiv",
     "cite certification": "cita certificación",
     "cite conference": "cita conferencia",
@@ -72,7 +71,8 @@ params = {
     "fecha": ["date"],
     "editorial": ["publisher"],
     "apellido-editor": ["editor-last", "editor-surname", "editor1-last"],
-    "nombre-editor": ["editor-first", "editor-given", "editor1-first", "editor1-given"],
+    "nombre-editor":
+    ["editor-first", "editor-given", "editor1-first", "editor1-given"],
     "enlace-editor": ["editor-link", "editor1-link"],
     "ubicación": ["place", "location"],
     "lugar-publicación": ["publication-place"],
@@ -148,7 +148,8 @@ def fix_temps(text):
         # ---
         name = str(template.normal_name()).strip()
         # ---
-        if name.lower() in refs_temps.keys() or name.lower() in refs_temps.values():
+        if name.lower() in refs_temps.keys() or name.lower(
+        ) in refs_temps.values():
             # ---
             old = template.string
             # ---
@@ -162,8 +163,8 @@ def fix_temps(text):
                     # ---
                     arg.name = args_to[param]
             # ---
-            if template.has_arg('url-status'):
-                template.del_arg('url-status')
+            if template.has_arg("url-status"):
+                template.del_arg("url-status")
             # ---
             template_name = refs_temps.get(name, name).strip()
             # ---
@@ -180,27 +181,27 @@ def fix_temps(text):
     return new_text
 
 
-def add_lang_en(text, lang=''):
+def add_lang_en(text, lang=""):
     # ---
-    print_s('add_lang_en:')
+    print_s("add_lang_en:")
     # ---
     # Match references
-    REFS = re.compile(r'(?is)(?P<pap><ref[^>\/]*>)(?P<ref>.*?<\/ref>)')
+    REFS = re.compile(r"(?is)(?P<pap><ref[^>\/]*>)(?P<ref>.*?<\/ref>)")
     # ---
     for Match in REFS.finditer(text):
-        pap = Match.group('pap')
-        ref = Match.group('ref')
+        pap = Match.group("pap")
+        ref = Match.group("ref")
         # ---
         if not ref.strip():
             continue
         # ---
-        if re.sub(r'\|\s*language\s*\=\s*\w+', '', ref) != ref:
+        if re.sub(r"\|\s*language\s*\=\s*\w+", "", ref) != ref:
             continue
         # ---
-        ref2 = re.sub(r'(\|\s*language\s*\=\s*)(\|\}\})', r'\g<1>en\g<2>', ref)
+        ref2 = re.sub(r"(\|\s*language\s*\=\s*)(\|\}\})", r"\g<1>en\g<2>", ref)
         # ---
         if ref2 == ref:
-            ref2 = ref.replace('}}</ref>', '|language=en}}</ref>')
+            ref2 = ref.replace("}}</ref>", "|language=en}}</ref>")
         # ---
         if ref2 != ref:
             text = text.replace(pap + ref, pap + ref2)
@@ -210,10 +211,10 @@ def add_lang_en(text, lang=''):
 
 def fix_es(text, title):
     # ---
-    if text.find('#REDIRECCIÓN') != -1:
+    if text.find("#REDIRECCIÓN") != -1:
         return text
     # ---
-    if len(text.split('\n')) < 10:
+    if len(text.split("\n")) < 10:
         return text
     # ---
     newtext = text
@@ -226,7 +227,7 @@ def fix_es(text, title):
     # ---
     newtext = mv_es_refs(newtext)
     # ---
-    newtext = newtext.replace('<references />', '{{listaref}}')
+    newtext = newtext.replace("<references />", "{{listaref}}")
     # ---
     return newtext
 

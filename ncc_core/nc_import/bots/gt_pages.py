@@ -1,4 +1,4 @@
-from newapi.wiki_page import MainPage, NEW_API
+from newapi.wiki_page import NEW_API
 
 # api_new = NEW_API('en', family='wikipedia')
 # login    = api_new.Login_to_wiki()

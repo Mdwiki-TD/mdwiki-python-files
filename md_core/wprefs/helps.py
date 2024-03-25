@@ -1,6 +1,7 @@
 """
 from wprefs.helps import print_s, ec_de_code, exepts
 """
+
 import sys
 import traceback
 import urllib.parse
@@ -18,16 +19,16 @@ except ImportError:
 def print_s(s):
     if not printe:
         return
-    if 'returnfile' not in sys.argv:
+    if "returnfile" not in sys.argv:
         printe.output(s)
 
 
 def ec_de_code(tt, type1):
     fao = tt
-    if type1 == 'encode':
+    if type1 == "encode":
         # fao = encode_arabic(tt)
         fao = urllib.parse.quote(tt)
-    elif type1 == 'decode':
+    elif type1 == "decode":
         fao = urllib.parse.unquote(tt)
     return fao
 
@@ -35,7 +36,7 @@ def ec_de_code(tt, type1):
 def exepts():
     if not pywikibot:
         return
-    if 'returnfile' not in sys.argv:
-        pywikibot.output('Traceback (most recent call last):')
+    if "returnfile" not in sys.argv:
+        pywikibot.output("Traceback (most recent call last):")
         pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
+        pywikibot.output("CRITICAL:")

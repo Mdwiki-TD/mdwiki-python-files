@@ -6,17 +6,16 @@
 python3 core8/pwb.py mdpy/get_red
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
-import os
 from datetime import datetime
 
 # ---
 from mdpy import printe
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import mdwiki_api
+from mdpy.bots import mdwiki_api, sql_for_mdwiki
 
 # ---
 mdwiki_to_qid = sql_for_mdwiki.get_all_qids()
@@ -41,20 +40,20 @@ def get_pages():
     len_grup = 100
     # ---
     for i in range(0, len(titles), len_grup):
-        group = titles[i : i + len_grup]
+        group = titles[i:i + len_grup]
         # ---
         done += len(group)
         # ---
         asa = mdwiki_api.get_redirect(group)
         # ---
-        print(f'work on {len_grup} pagees, done: {done}/{len(titles)}.')
+        print(f"work on {len_grup} pagees, done: {done}/{len(titles)}.")
         # ---
         table = {**table, **asa}
         # ---
     # ---
-    print(f'len of table {len(table)} ')
+    print(f"len of table {len(table)} ")
     # ---
-    tat = ''
+    tat = ""
     # ---
     rep = 0
     remo = 0
@@ -75,7 +74,7 @@ def get_pages():
                 # استبدال
                 rep += 1
                 # ---
-                printe.output(f'<<lightyellow>>{ll.strip()}')
+                printe.output(f"<<lightyellow>>{ll.strip()}")
                 # ---
                 sql_for_mdwiki.set_title_where_qid(new_title, old_title_qid)
                 # ---
@@ -88,27 +87,27 @@ def get_pages():
                 remo += 1
                 to_del.append(old_title)
     # ---
-    printe.output('===================')
-    if tat != '':
-        printe.output('<<lightred>> redirects: ')
+    printe.output("===================")
+    if tat != "":
+        printe.output("<<lightred>> redirects: ")
         printe.output(tat)
-        printe.output('===================')
+        printe.output("===================")
     # ---
-    printe.output('replace %d pages. ' % rep)
-    printe.output('remove %d pages. ' % remo)
+    printe.output("replace %d pages. " % rep)
+    printe.output("remove %d pages. " % remo)
     # ---
     if to_del:
-        printe.output(f'delete {len(to_del)} pages. ')
+        printe.output(f"delete {len(to_del)} pages. ")
         printe.output(to_del)
     # ---
     if to_add:
-        printe.output(f'add {len(to_add)} pages. ')
+        printe.output(f"add {len(to_add)} pages. ")
         printe.output(to_add)
         sql_for_mdwiki.add_titles_to_qids(to_add)
         # ---
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     get_pages()
 # ---

@@ -1,4 +1,4 @@
-'''
+"""
 # ---
 from priorviews.lists import words
 # words.words_by_lang
@@ -6,22 +6,23 @@ from priorviews.lists import words
 # ---
 python3 core8/pwb.py priorviews/words
 
-'''
+"""
+
+import codecs
 import json
 import os
 from pathlib import Path
-import codecs
 
 # ---
 Dir = Path(__file__).parent
 # ---
-file = f'{Dir}/words_mdwiki_langs.json'
+file = f"{Dir}/words_mdwiki_langs.json"
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-words_by_lang = json.load(codecs.open(file, 'r', 'utf-8'))
+words_by_lang = json.load(codecs.open(file, "r", "utf-8"))
 # ---
 _data = {"ar": {"artitle": 0, "artitle2": 0}}
 # ---
@@ -36,13 +37,13 @@ for lang, titles in words_by_lang.items():
     for title, words in titles.items():
         count_words_by_lang[lang] += words
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     for x, wo in count_words_by_lang.items():
         print(x, wo)
     # ---
-    print(f'len of count_words_by_lang: {len(count_words_by_lang)}')
+    print(f"len of count_words_by_lang: {len(count_words_by_lang)}")
     # ---
-    print(f'len of words_by_lang: {len(words_by_lang)}')
+    print(f"len of words_by_lang: {len(words_by_lang)}")
     for lang, titles in words_by_lang.items():
         for title, words in titles.items():
             print(lang, title, words)

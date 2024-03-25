@@ -1,25 +1,25 @@
-# -*- coding: utf-8 -*-
 """
 python3 core8/pwb.py atlas/add_cat
 
 """
-import os
+
 import json
+import os
 from pathlib import Path
-from tqdm import tqdm
+
 from newapi import printe
 from newapi.ncc_page import MainPage as ncc_MainPage
 
 # Specify the root folder
 main_dir = Path(__file__).parent
-root_folder = os.path.join(str(main_dir), 'images')
+root_folder = os.path.join(str(main_dir), "images")
 
 
 def get_info(root):
-    info_file_path = os.path.join(root, 'info.json')
+    info_file_path = os.path.join(root, "info.json")
 
     # Read information from info.json
-    with open(info_file_path, "r", encoding="utf-8") as info_file:
+    with open(info_file_path, encoding="utf-8") as info_file:
         info_data = json.load(info_file)
 
     return info_data
@@ -39,17 +39,24 @@ def process_folders(root_folder):
         if disease_name:
             n += 1
             printe.output(f"{n} diseases:{disease_name}:")
-            page = ncc_MainPage(f'Category:{disease_name}', 'www', family='nccommons')
+            page = ncc_MainPage(f"Category:{disease_name}",
+                                "www",
+                                family="nccommons")
             # ---
             categories = page.get_categories(with_hidden=False)
             # ---
             text = page.text
             # ---
-            if 'Category:Atlasdermatologico' not in categories:
+            if "Category:Atlasdermatologico" not in categories:
                 printe.output(categories)
-                text += '\n[[Category:Atlasdermatologico]]'
+                text += "\n[[Category:Atlasdermatologico]]"
                 # ---
-                page.save(newtext=text, summary='added [[:Category:Atlasdermatologico]]', nocreate=0, minor='')
+                page.save(
+                    newtext=text,
+                    summary="added [[:Category:Atlasdermatologico]]",
+                    nocreate=0,
+                    minor="",
+                )
 
 
 if __name__ == "__main__":

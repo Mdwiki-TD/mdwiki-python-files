@@ -4,13 +4,14 @@ python3 core8/pwb.py mass/radio/syss/sys_infos
 python3 core8/pwb.py mass/radio/syss/sys_infos todo
 
 """
-import sys
-import os
+
 import json
+import os
+import sys
 from pathlib import Path
 
 # ---
-from mass.radio.geturlsnew import get_urls_system, systems, lenth_of_systems
+from mass.radio.geturlsnew import get_urls_system, lenth_of_systems, systems
 from mass.radio.jsons_files import jsons
 
 # ---
@@ -29,17 +30,21 @@ for arg in sys.argv:
         system_to_work = arg
 # ---
 nnno = dict(sorted(lenth_of_systems.items(), key=lambda x: x[1], reverse=True))
+
+
 # ---
 def get_to_do(k):
     stw_file = os.path.join(str(main_dir), f"jsons/{k}.json")
     # ---
     # dump
-    with open(stw_file, "r", encoding="utf-8") as f:
+    with open(stw_file, encoding="utf-8") as f:
         urls_sys = json.loads(f.read())
     # ---
-    to_do = [ url for url in urls_sys.keys() if url not in ma_infos ]
+    to_do = [url for url in urls_sys.keys() if url not in ma_infos]
     # ---
     return to_do
+
+
 # ---
 nnno = list(nnno.keys())
 # ---
@@ -52,10 +57,12 @@ for n, sy in enumerate(nnno, start=10):
     # ---
     ln = lenth_of_systems[sy] * 20
     # ---
-    if 'todo' in sys.argv:
+    if "todo" in sys.argv:
         to_do = get_to_do(sy)
         if to_do:
-            print(f"system: {sy.ljust(25)} to_do: {str(len(to_do)).ljust(15)} len_system_urls: {ln:,}")
+            print(
+                f"system: {sy.ljust(25)} to_do: {str(len(to_do)).ljust(15)} len_system_urls: {ln:,}"
+            )
         continue
     # ---
     if not system_to_work:
@@ -69,7 +76,7 @@ for n, sy in enumerate(nnno, start=10):
         with open(v, "w", encoding="utf-8") as f:
             f.write("{}")
     # ---
-    with open(v, "r", encoding="utf-8") as f:
+    with open(v, encoding="utf-8") as f:
         systems_data[sy] = json.loads(f.read())
 # ---
 if "only" in sys.argv:
@@ -101,13 +108,12 @@ if not u_data:
     print("exit()")
     exit()
 # ---
-new_infos = {
-    x: v for x, v in u_data.items() if x not in ma_infos
-}
+new_infos = {x: v for x, v in u_data.items() if x not in ma_infos}
 # ---
 print(f"new_infos: {len(new_infos)}")
 
-stw_infos_file = os.path.join(str(main_dir), f"jsons/{system_to_work}_infos.json")
+stw_infos_file = os.path.join(str(main_dir),
+                              f"jsons/{system_to_work}_infos.json")
 
 # dump infos
 with open(stw_infos_file, "w", encoding="utf-8") as f:

@@ -1,11 +1,12 @@
-import wikitextparser as wtp
-from pathlib import Path
 import codecs
+from pathlib import Path
+
+import wikitextparser as wtp
+from lists.chem_params import rename_chem_params
 
 # ---
 Dir = Path(__file__).parent
 # ---
-from lists.chem_params import rename_chem_params
 
 
 def printn(s):
@@ -13,6 +14,7 @@ def printn(s):
 
 
 class fix_Chembox:
+
     def __init__(self, text):
         self.text = text
         self.new_text = text
@@ -30,8 +32,9 @@ class fix_Chembox:
         # create self.newchembox
         self.new_temp()
         # ---
-        if self.oldchembox != '' and self.newchembox != '':
-            self.new_text = self.new_text.replace(self.oldchembox, self.newchembox)
+        if self.oldchembox != "" and self.newchembox != "":
+            self.new_text = self.new_text.replace(self.oldchembox,
+                                                  self.newchembox)
         # ---
         return self.new_text
 
@@ -47,29 +50,32 @@ class fix_Chembox:
             name = str(template.normal_name()).strip()
             # ---
             boxes = [
-                'chembox',
-                'chembox identifiers',
-                'chembox properties',
-                'chembox hazards',
-                'chembox thermochemistry',
-                'chembox explosive',
-                'chembox pharmacology',
-                'chembox related',
-                'chembox structure',
-                'chembox supplement',
+                "chembox",
+                "chembox identifiers",
+                "chembox properties",
+                "chembox hazards",
+                "chembox thermochemistry",
+                "chembox explosive",
+                "chembox pharmacology",
+                "chembox related",
+                "chembox structure",
+                "chembox supplement",
             ]
             # ---
-            if name.lower() == 'chembox':
+            if name.lower() == "chembox":
                 self.oldchembox = template.string
             # ---
             # if name.lower().startswith("chembox"):
             elif name.lower() not in boxes:
                 continue
             # ---
-            params = {str(param.name).strip(): str(param.value) for param in template.arguments}
+            params = {
+                str(param.name).strip(): str(param.value)
+                for param in template.arguments
+            }
             # ---
             for x, v in params.items():
-                if v.strip() == '':
+                if v.strip() == "":
                     continue
                 # ---
                 if x.lower().startswith("section"):
@@ -81,9 +87,10 @@ class fix_Chembox:
         # ---
         for p, value in self.all_params.items():
             # ---
-            p = rename_chem_params.get(p, '') if rename_chem_params.get(p, '') != '' else p
+            p = (rename_chem_params.get(p, "") if rename_chem_params.get(
+                p, "") != "" else p)
             # ---
-            p_v = f'\n| {p}= {value}'
+            p_v = f"\n| {p}= {value}"
             # ---
             self.newchembox += p_v
             # ---
@@ -91,10 +98,11 @@ class fix_Chembox:
         self.newchembox += "\n}}"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import pywikibot
 
-    text = codecs.open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8").read()
+    text = codecs.open(f"{Dir}/texts/chembox.txt", "r",
+                       encoding="utf-8").read()
     bot = fix_Chembox(text)
     newtext = bot.run()
     pywikibot.showDiff(text, newtext)

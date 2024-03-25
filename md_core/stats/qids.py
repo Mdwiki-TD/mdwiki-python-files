@@ -1,25 +1,26 @@
-'''
+"""
 
 from stats.qids import qids_list
 
-'''
+"""
+
 import json
 import os
-import sys
 from pathlib import Path
+
 from api_sql import wiki_sql
 
 Dir = Path(__file__).parent
 
-qids_file = Dir / 'qids.json'
+qids_file = Dir / "qids.json"
 
 if not os.path.exists(qids_file):
-    with open(qids_file, 'w', encoding='utf-8') as f:
+    with open(qids_file, "w", encoding="utf-8") as f:
         json.dump({}, f, sort_keys=True)
 
 qids_list = {}
 
-with open(qids_file, 'r', encoding='utf-8') as f:
+with open(qids_file, encoding="utf-8") as f:
     qids_list = json.load(f)
 
 
@@ -37,8 +38,8 @@ def get_en_articles():
         and pp_page = p2.page_id
     """
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki')
-    return {x['page_title']: x['pp_value'] for x in result}
+    result = wiki_sql.sql_new(query, "enwiki")
+    return {x["page_title"]: x["pp_value"] for x in result}
 
 
 def start():
@@ -48,7 +49,7 @@ def start():
     qids_list = list(articles.values())
     # ---
     # dump
-    with open(qids_file, 'w', encoding='utf-8') as f:
+    with open(qids_file, "w", encoding="utf-8") as f:
         json.dump(qids_list, f, sort_keys=True)
 
 

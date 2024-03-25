@@ -1,19 +1,19 @@
-'''
+"""
 
 from priorviews.bots.sections_links import get_section_links
 
 python3 core8/pwb.py priorviews/sections_links
 
-'''
+"""
+
+import codecs
+import json
 import os
 from pathlib import Path
-import json
-import wikitextparser
-import codecs
 
+import wikitextparser
 # ---
 from mdpy import printe
-
 # ---
 from newapi.mdwiki_page import MainPage as md_MainPage
 
@@ -21,12 +21,12 @@ from newapi.mdwiki_page import MainPage as md_MainPage
 Dir = Path(__file__).parent
 Dir = os.path.dirname(Dir)
 # ---
-sect_file = f'{Dir}/lists/secs_links.json'
+sect_file = f"{Dir}/lists/secs_links.json"
 if not os.path.exists(sect_file):
-    with open(sect_file, 'w', encoding="utf-8") as f:
+    with open(sect_file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-old = json.load(codecs.open(sect_file, 'r', 'utf-8'))
+old = json.load(codecs.open(sect_file, "r", "utf-8"))
 # ---
 replaces = {
     "Syncope": "Syncope (medicine)",
@@ -35,6 +35,7 @@ replaces = {
 
 
 class Sectios_links:
+
     def __init__(self):
         """
         Initializes an instance of the class.
@@ -43,7 +44,7 @@ class Sectios_links:
         self.title = "WikiProjectMed:List/Prior"
 
         # Create a new instance of md_MainPage with the specified title and family
-        self.page = md_MainPage(self.title, 'www', family='mdwiki')
+        self.page = md_MainPage(self.title, "www", family="mdwiki")
 
         # Get the text content of the page
         self.text = self.page.get_text()
@@ -76,7 +77,10 @@ class Sectios_links:
             # Get the wikilinks for the section and convert them to strings
             wikilinks = s.wikilinks
 
-            wikilinks = [str(x.title) for x in wikilinks if str(x.title).lower() not in self.titles_done]
+            wikilinks = [
+                str(x.title) for x in wikilinks
+                if str(x.title).lower() not in self.titles_done
+            ]
 
             # remove duplicates
             wikilinks = list(set(wikilinks))
@@ -92,7 +96,7 @@ class Sectios_links:
                 continue
 
             # Replace any forward slashes in the section title with hyphens
-            t = t.replace('/', '-')
+            t = t.replace("/", "-")
 
             # Add the section and its links to the all_sections dict
             self.SectionsToLinks[t] = wikilinks
@@ -103,8 +107,14 @@ def dump_secs_links(d_links):
     global sect_file
     # ---
     if d_links != {}:
-        printe.output(f'<<lightyellow>> d_links(): lenth: {len(d_links.keys())}')
-        json.dump(d_links, codecs.open(sect_file, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+        printe.output(
+            f"<<lightyellow>> d_links(): lenth: {len(d_links.keys())}")
+        json.dump(
+            d_links,
+            codecs.open(sect_file, "w", encoding="utf-8"),
+            ensure_ascii=False,
+            indent=4,
+        )
 
 
 def get_section_links(new=False):
@@ -128,14 +138,14 @@ def get_section_links(new=False):
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     all_links = {}
     # ---
     ll = get_section_links()
     # ---
     for s, ls in ll.items():
-        print(f'section: {s}')
-        print(f'len of links: {len(ls)}')
+        print(f"section: {s}")
+        print(f"len of links: {len(ls)}")
         if len(ls) < 10:
             print(ls)
         # ---
@@ -145,10 +155,10 @@ if __name__ == '__main__':
             if s not in all_links[link.lower()]:
                 all_links[link.lower()].append(s)
     # ---
-    printe.output('<<red>>---------------')
+    printe.output("<<red>>---------------")
     # ---
     for x, v in all_links.items():
         if len(v) > 1:
             sections = ", ".join(v)
-            print(f'link: ({x}) in {len(v)} sections: {sections}')
+            print(f"link: ({x}) in {len(v)} sections: {sections}")
     # ---

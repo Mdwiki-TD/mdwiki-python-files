@@ -2,21 +2,21 @@
 """
 !
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
 #
 import codecs
 import sys
-import os
-import requests
 import urllib
 import urllib.parse
 from pathlib import Path
 
+import MedWorkNew
+import requests
 # ---
 import user_account_new
-import MedWorkNew
 
 # ---
 from_toolforge = True
@@ -29,8 +29,8 @@ if "from_toolforge" not in sys.argv:
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+dir2 = Dir.replace("\\", "/")
+dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
 # ---
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
@@ -59,7 +59,8 @@ def login():
             "action": "query",
             "meta": "tokens",
             "type": "login",
-        }, timeout=10
+        },
+        timeout=10,
     )
     r11.raise_for_status()
     # log in
@@ -72,7 +73,8 @@ def login():
             "lgname": username,
             "lgtoken": r11.json()["query"]["tokens"]["logintoken"],
             "lgpassword": password,
-        }, timeout=10
+        },
+        timeout=10,
     )
     # ---
     # get edit token
@@ -82,7 +84,8 @@ def login():
             "format": "json",
             "action": "query",
             "meta": "tokens",
-        }, timeout=10
+        },
+        timeout=10,
     )
     # ---
     SS["r3_token"] = SS["r33"].json()["query"]["tokens"]["csrftoken"]
@@ -90,11 +93,20 @@ def login():
 
 def GetPageText(title):
     # ---
-    print_new(f'get text for {title}')
+    print_new(f"get text for {title}")
     # ---
-    params = {"action": "parse", "format": "json", "prop": "wikitext", "page": title, "utf8": 1}
+    params = {
+        "action": "parse",
+        "format": "json",
+        "prop": "wikitext",
+        "page": title,
+        "utf8": 1,
+    }
     # ---
-    url = "https://" + "mdwiki.org/w/api.php?action=parse&prop=wikitext&utf8=1&format=json&page=" + title
+    url = (
+        "https://" +
+        "mdwiki.org/w/api.php?action=parse&prop=wikitext&utf8=1&format=json&page="
+        + title)
     # ---
     r4 = {}
     # ---
@@ -134,7 +146,7 @@ def page_put(NewText, title):
         print("False")
 
 
-def get_new_text(title, text=''):
+def get_new_text(title, text=""):
     # ---
     if text == "":
         text = GetPageText(title)
@@ -159,7 +171,7 @@ def work_on_title(title, returntext=False, text_O=""):
         print(new_text)
         return
     # ---
-    if 'xx' not in sys.argv:
+    if "xx" not in sys.argv:
         # ---
         if text.strip() == "" or new_text.strip() == "":
             print("notext")
@@ -167,7 +179,7 @@ def work_on_title(title, returntext=False, text_O=""):
         elif text == new_text:
             print("no changes")
             return
-        elif new_text == '':
+        elif new_text == "":
             print("notext")
             return
         elif "save" in sys.argv:
@@ -176,8 +188,8 @@ def work_on_title(title, returntext=False, text_O=""):
     title2 = title
     title2 = title2.replace(":", "-").replace("/", "-")
     # ---
-    if 'xx' in sys.argv:
-        title2 = 'xx'
+    if "xx" in sys.argv:
+        title2 = "xx"
     # ---
     try:
         filename = f"{dir2}/public_html/updatercash/{title2}_1.txt"

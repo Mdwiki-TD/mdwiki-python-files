@@ -8,6 +8,7 @@ python t.py test
 python3 core8/pwb.py tw/t
 
 """
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -31,7 +32,13 @@ bearer_token = twet_config.bearer_token
 # auth = tweepy.OAuth2BearerHandler(bearer_token)
 # api = tweepy.Client(auth)
 # ---
-api = tweepy.Client(bearer_token=bearer_token, consumer_key=consumer_key, consumer_secret=consumer_secret, access_token=access_token, access_token_secret=access_token_secret)
+api = tweepy.Client(
+    bearer_token=bearer_token,
+    consumer_key=consumer_key,
+    consumer_secret=consumer_secret,
+    access_token=access_token,
+    access_token_secret=access_token_secret,
+)
 # ---
 # print(dir(api))
 # ---

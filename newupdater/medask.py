@@ -9,28 +9,30 @@ python3 core8/pwb.py newupdater/medask -start:!
 python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Edoderoobot
 python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Ghuron
 """
+
+import sys
+import urllib
+import urllib.parse
+# ---
+from pathlib import Path
+
+from mdpy import printe
+from mdpy.bots import mdwiki_api
 #
 # (C) Ibrahem Qasim, 2023
 #
 #
-import sys
-import urllib
-import urllib.parse
+from newapi.mdwiki_page import NEW_API
 
-# ---
-from pathlib import Path
+from newupdater import med
 
 Dir = Path(__file__).parent
 # ---
 sys.path.append(str(Dir))
 # ---
-from newupdater import med
-from mdpy import printe
-from mdpy.bots import mdwiki_api
-from newapi.mdwiki_page import NEW_API
 
 # ---
-api_new = NEW_API('www', family='mdwiki')
+api_new = NEW_API("www", family="mdwiki")
 api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
@@ -55,7 +57,7 @@ def work_on_title(title, returntext=False, text_O=""):
     printe.showDiff(text, new_text)
     # ---
     ask = input(f"<<yellow>> save title:{title}? ")
-    if ask in ['y', '', 'a']:
+    if ask in ["y", "", "a"]:
         return med.page_put(new_text, title)
     print("not saved")
     return
@@ -71,25 +73,26 @@ def main1():
 
 
 def main():
-    printe.output('*<<lightred>> > main:')
+    printe.output("*<<lightred>> > main:")
     # ---
-    user = ''
-    user_limit = '3000'
+    user = ""
+    user_limit = "3000"
     # ---
     searchlist = {
-        "drug": "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
+        "drug":
+        "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
     }
     # ---
-    limite = 'max'
-    starts = ''
+    limite = "max"
+    starts = ""
     # ---
     pages = []
     # ---
-    namespaces = '0'
-    newpages = ''
+    namespaces = "0"
+    newpages = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         if not value:
             print(f"Value required for argument {arg}")
@@ -106,34 +109,36 @@ def main():
         if arg in ["-page", "page"]:
             pages.append(value)
         # ---
-        if arg in ['newpages', '-newpages']:
+        if arg in ["newpages", "-newpages"]:
             newpages = value
         # ---
         if arg in ["-user", "-usercontribs"]:
             user = value
         # ---
-        if arg in ['start', '-start']:
+        if arg in ["start", "-start"]:
             starts = value
         # ---
         if arg == "-ns":
             namespaces = value
         # ---
-        if arg == 'search':
+        if arg == "search":
             if value in searchlist:
                 value = searchlist[value]
             # ---
             ccc = NEW_API.Search(value=value, ns="0", srlimit="max")
             pages.extend(iter(ccc))
     # ---
-    if starts != '':
+    if starts != "":
         # ---
-        if starts == 'all':
-            starts = ''
+        if starts == "all":
+            starts = ""
         # ---
-        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+        listen = api_new.Get_All_pages(start=starts,
+                                       namespace=namespaces,
+                                       limit=limite)
         # ---
         for n, page in enumerate(listen):
-            printe.output(f'<<green>> n:{n}, title:{page}')
+            printe.output(f"<<green>> n:{n}, title:{page}")
             work_on_title(page)
             # ---
     # ---
@@ -142,12 +147,15 @@ def main():
     if newpages != "":
         lista = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        lista = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
+        lista = mdwiki_api.Get_UserContribs(user,
+                                            limit=user_limit,
+                                            namespace=namespaces,
+                                            ucshow="new")
     elif pages != []:
         lista = pages
     # ---
     for n, page in enumerate(lista):
-        printe.output(f'<<green>> n:{n}, title:{page}')
+        printe.output(f"<<green>> n:{n}, title:{page}")
         work_on_title(page)
     # ---
 

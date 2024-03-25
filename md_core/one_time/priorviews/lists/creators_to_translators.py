@@ -5,31 +5,31 @@ python3 core8/pwb.py priorviews/lists/creators_to_translators
 from priorviews.lists.creators_to_translators import creators_as_translators
 # ---
 """
+
+import codecs
+import datetime
 import json
 import os
 from pathlib import Path
-import datetime
-import codecs
 
 # ---
 from mdpy import printe
-
-# ---
-from priorviews.lists.links_by_section import links_by_lang
-from priorviews.lists import translators
 from priorviews.bots import helps
 from priorviews.lists import creators  # creators.Creators_by_lang_title
+from priorviews.lists import translators
+# ---
+from priorviews.lists.links_by_section import links_by_lang
 
 # ---
 Dir = Path(__file__).parent
 # ---
-file_cts = f'{Dir}/creators_as_translators.json'
+file_cts = f"{Dir}/creators_as_translators.json"
 # ---
 if not os.path.exists(file_cts):
-    with open(file_cts, 'w', encoding="utf-8") as f:
+    with open(file_cts, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-creators_as_translators = json.load(codecs.open(file_cts, 'r', 'utf-8'))
+creators_as_translators = json.load(codecs.open(file_cts, "r", "utf-8"))
 # ---
 n = 0
 # ---
@@ -46,7 +46,7 @@ for lang, links in links_by_lang.items():
     # ---
     lang_translations = translators.tra_by_lang.get(lang, {})
     # ---
-    links = [x for x in links if lang_translations.get(x.lower(), '') == '']
+    links = [x for x in links if lang_translations.get(x.lower(), "") == ""]
     # ---
     for title in links:
         # ---
@@ -56,18 +56,19 @@ for lang, links in links_by_lang.items():
         actor = _creator.get("actor", "")
         # ---
         _time_ = _creator.get("time", "")
-        _time_x = ''
+        _time_x = ""
         # ---
-        if actor == '':
+        if actor == "":
             continue
         # ---
-        year = '0'
+        year = "0"
         # ---
-        if _time_ != '':
+        if _time_ != "":
             # Convert _time_ to a datetime object
-            datetime_obj = datetime.datetime.strptime(str(_time_), '%Y%m%d%H%M%S')
-            _time_x = datetime_obj.strftime('%Y-%m-%d')
-            year = datetime_obj.strftime('%Y')
+            datetime_obj = datetime.datetime.strptime(str(_time_),
+                                                      "%Y%m%d%H%M%S")
+            _time_x = datetime_obj.strftime("%Y-%m-%d")
+            year = datetime_obj.strftime("%Y")
         # ---
         if TD or int(year) > 2012:
             creators_as_translators[lang][title] = actor
@@ -77,10 +78,10 @@ for lang, links in links_by_lang.items():
         else:
             notadded += 1
 # ---
-printe.output(f'<<blue>> added: {added}')
-printe.output(f'<<blue>> notadded: {notadded}')
+printe.output(f"<<blue>> added: {added}")
+printe.output(f"<<blue>> notadded: {notadded}")
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # dump creators_as_translators
     helps.dump_data(file_cts, creators_as_translators)
     # ---

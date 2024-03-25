@@ -1,8 +1,8 @@
 # ---
 import re
+
 import pywikibot
 import wikitextparser as wtp
-
 # ---
 from mdpy.bots import mdwiki_api
 
@@ -36,7 +36,7 @@ def count_text(text):
     tem_text = re.sub(r"\d+", "", tem_text)
 
     # get counts of words
-    lenth = len(re.findall(r'\w+', tem_text))
+    lenth = len(re.findall(r"\w+", tem_text))
     # ---
     # print(f'count_text: {lenth}')
     return tem_text, lenth
@@ -52,14 +52,14 @@ def count_lead(x):
     te_1, lenth1 = get_lead_text(page_text)
     te_2, lenth2 = count_text(page_text)
     # ---
-    pywikibot.showDiff(te_1, f'count_text:\n{te_2}')
+    pywikibot.showDiff(te_1, f"count_text:\n{te_2}")
     # ---
     return lenth1
 
 
-def count_all(title='', text=''):
+def count_all(title="", text=""):
     # ---
-    if text == '' and title != '':
+    if text == "" and title != "":
         text = mdwiki_api.GetPageText(title)
     # ---
     parsed = wtp.parse(text)
@@ -74,12 +74,12 @@ def count_all(title='', text=''):
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # ---
-    x = 'Spondyloperipheral dysplasia'
+    x = "Spondyloperipheral dysplasia"
     # ---
     leadword, pageword = count_all(title=x)
-    print(f'leadword: {leadword}, pageword: {pageword}')
+    print(f"leadword: {leadword}, pageword: {pageword}")
     # ---
     pageword2 = mdwiki_api.wordcount(x)
-    print(f'pageword2: {pageword2}')
+    print(f"pageword2: {pageword2}")

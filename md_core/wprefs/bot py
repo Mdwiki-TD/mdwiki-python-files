@@ -13,25 +13,29 @@ python3 core8/pwb.py wprefs/bot -lang:ro ask
 python3 core8/pwb.py wprefs/bot ask
 
 """
+import os
+import sys
+
+from wprefs.api import GetPageText, log, missingtitles, page_put
+from wprefs.files import (append_reffixed_file, reffixed_list, save_wprefcash,
+                          setting)
+from wprefs.helps import ec_de_code, print_s
 #
 # (C) Ibrahem Qasim, 2023
 #
 #
-import os
-import sys
+from wprefs.wpref_text import fix_page
+
 # ---
 sys.path.append('/data/project/mdwiki/pybot/md_core/')
 # ---
 if 'returnfile' not in sys.argv:
     from mdpy.bots import sql_for_mdwiki
 # ---
-from wprefs.api import log, GetPageText, missingtitles, page_put
-from wprefs.helps import print_s, ec_de_code
-from wprefs.files import reffixed_list, setting, append_reffixed_file, save_wprefcash
-from wprefs.wpref_text import fix_page
 # ---
 move_dot = {1: False}
 expend_infobox = {1: False}
+
 
 def fix_page_here(text, title, langcode):
     newtext = text
@@ -52,14 +56,21 @@ def fix_page_here(text, title, langcode):
     if lang_default.get('add_en_lang', 0) == 1:
         adden = True
     # ---
-    newtext = fix_page(newtext, title, move_dots=dots, infobox=expend, section_0=section_0_text, lang=langcode, add_en_lang=adden)
+    newtext = fix_page(newtext,
+                       title,
+                       move_dots=dots,
+                       infobox=expend,
+                       section_0=section_0_text,
+                       lang=langcode,
+                       add_en_lang=adden)
     # ---
     return newtext
 
 
 def work_one_lang(list_, lang):
     # ---
-    print_s(f'<<lightblue>> work on lang: {lang}.wikipedia......................')
+    print_s(
+        f'<<lightblue>> work on lang: {lang}.wikipedia......................')
     # ---
     newlist = list_
     # ---
@@ -79,7 +90,8 @@ def work_one_lang(list_, lang):
         # ---
         lio = f'{lang}:{title}'
         number += 1
-        print_s('<<lightyellow>> %d from %d, page: %s' % (number, len(newlist), lio))
+        print_s('<<lightyellow>> %d from %d, page: %s' %
+                (number, len(newlist), lio))
         # ---
         if lio in reffixed_list and 'lala' not in sys.argv:
             print_s('<<lightred>>\talready in reffixed_list.')
@@ -100,7 +112,10 @@ def work_one_lang(list_, lang):
         donee = False
         # ---
         if text != newtext:
-            aa = page_put(text, newtext, 'Fix references, Expend infobox mdwiki.toolforge.org.', title, lang)
+            aa = page_put(
+                text, newtext,
+                'Fix references, Expend infobox mdwiki.toolforge.org.', title,
+                lang)
             # ---
             if aa:
                 donee = True

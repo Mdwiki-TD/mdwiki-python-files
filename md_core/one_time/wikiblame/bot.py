@@ -4,11 +4,13 @@ python3 core8/pwb.py wikiblame/bot
 from wikiblame.bot import get_blame #first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
 # ---
 """
-import requests
+
 import re
 import sys
-from bs4 import BeautifulSoup
 from urllib.parse import urlencode
+
+import requests
+from bs4 import BeautifulSoup
 
 
 class WikiBlame:
@@ -29,16 +31,36 @@ class WikiBlame:
         self.base_url = "http://wikipedia.ramselehof.de/wikiblame.php"
         self.in_first = False
         self.oldids = []
-        self.params = {"lang": "", "article": "", "needle": "", "user_lang": "en", "project": "wikipedia", "tld": "org", "skipversions": "0", "ignorefirst": "0", "limit": "2500", "offtag": "22", "offmon": "7", "offjahr": "2023", "searchmethod": "int", "order": "asc", "force_wikitags": "on", "user": ""}  # desc
+        self.params = {
+            "lang": "",
+            "article": "",
+            "needle": "",
+            "user_lang": "en",
+            "project": "wikipedia",
+            "tld": "org",
+            "skipversions": "0",
+            "ignorefirst": "0",
+            "limit": "2500",
+            "offtag": "22",
+            "offmon": "7",
+            "offjahr": "2023",
+            "searchmethod": "int",
+            "order": "asc",
+            "force_wikitags": "on",
+            "user": "",
+        }  # desc
         if params is not None:
-            self.params.update({x: v for x, v in params.items() if v and v != ''})
+            self.params.update({
+                x: v
+                for x, v in params.items() if v and v != ""
+            })
         self.content = None
 
     def fetch_content(self) -> None:
         """Fetch the content of the web page."""
         url = self.base_url + "?" + urlencode(self.params)
         # ---
-        if 'printurl' in sys.argv:
+        if "printurl" in sys.argv:
             print(url)
         # ---
         response = requests.get(url)
@@ -50,7 +72,7 @@ class WikiBlame:
             print("No content fetched yet. Run fetch_content() first.")
             return None
 
-        soup = BeautifulSoup(self.content, 'html.parser')
+        soup = BeautifulSoup(self.content, "html.parser")
         results_div = soup.find("div", {"class": "results"})
         if not results_div:
             print("No results found.")
@@ -58,7 +80,7 @@ class WikiBlame:
         # ---
         text = results_div.text
         # ---
-        if text and text.find('present in the oldest revision searched') != -1:
+        if text and text.find("present in the oldest revision searched") != -1:
             self.in_first = True
         # ---
         results = results_div.find_all("a")

@@ -4,14 +4,13 @@
 from mass.radio.authors_list.auths_infos import get_author_infos
 
 '''
-import re
-import requests
+
 import sys
-import json
-import os
-from pathlib import Path
+
+import requests
 from bs4 import BeautifulSoup
 from newapi import printe
+
 
 def get_soup(url):
     # ---
@@ -23,17 +22,21 @@ def get_soup(url):
     # ---
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
-        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
+        print(
+            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
+        )
         return
     # ---
     # Step 2: Parse the HTML content
     try:
-        soup = BeautifulSoup(response.content, 'html.parser')
+        soup = BeautifulSoup(response.content, "html.parser")
     except Exception as e:
         print(f"Error parsing HTML content: {e}")
         return
     # ---
     return soup
+
+
 def get_user_infos(url):
     """Retrieve user information from a given URL."""
     """Parameters:
@@ -55,11 +58,11 @@ def get_user_infos(url):
     # ---
     # <div class="author-info">Case contributed by <a href="/users/frank?lang=us">Frank Gaillard</a>        </div>
     user_url = ""
-    div = soup.find('div', class_='author-info')
+    div = soup.find("div", class_="author-info")
     if div:
-        a = div.find('a')
+        a = div.find("a")
         if a:
-            user_url = a.get('href')
+            user_url = a.get("href")
             if user_url and user_url.startswith("/"):
                 user_url = "https://radiopaedia.org" + user_url
     # ---
@@ -67,7 +70,7 @@ def get_user_infos(url):
         soup2 = get_soup(user_url)
         if soup2:
             # <dd class="institution-and-location">Melbourne, Australia</dd>
-            dd = soup2.find('dd', class_='institution-and-location')
+            dd = soup2.find("dd", class_="institution-and-location")
             if dd:
                 location = dd.text.strip()
     # ---
@@ -77,6 +80,7 @@ def get_user_infos(url):
     printe.output(f" {location=}, {user_url=}")
     # ---
     return user_info
+
 
 def get_author_infos(auth, first_case_url):
     """Retrieve author information for a given author and first case URL."""
@@ -88,11 +92,7 @@ def get_author_infos(auth, first_case_url):
     # ---
     printe.output(f"<<yellow>> get_author_infos:{auth=}, {first_case_url=}")
     # ---
-    info = {
-        "url" : "",
-        "location" : "",
-        "cases" : 0
-    }
+    info = {"url": "", "location": "", "cases": 0}
     # ---
     na = get_user_infos(first_case_url)
     # ---

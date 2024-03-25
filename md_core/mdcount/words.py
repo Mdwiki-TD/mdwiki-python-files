@@ -13,29 +13,28 @@ python3 core8/pwb.py mdpy/words less100
 python3 core8/pwb.py mdpy/words sql
 
 """
+
+import codecs
+import json
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
-import os
-import json
-import codecs
 import sys
-
-# ---
-from mdpy.bots import mdwiki_api
-from mdpy import printe
-from mdcount.links import get_valid_Links
-from mdcount import lead
-
 # ---
 from pathlib import Path
+
+from mdcount import lead
+from mdcount.links import get_valid_Links
+from mdpy import printe
+# ---
+from mdpy.bots import mdwiki_api
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+dir2 = Dir.replace("\\", "/")
+dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
 # ---
 json_file = {}
 # ---
@@ -48,15 +47,19 @@ def get_word_files():
     # ---
     global json_file, words_n, all_words_n
     # ---
-    json_file[1] = f'{dir2}/public_html/Translation_Dashboard/Tables/allwords.json'
+    json_file[
+        1] = f"{dir2}/public_html/Translation_Dashboard/Tables/allwords.json"
     # ---
-    all_words_n = json.loads(codecs.open(json_file[1], "r", encoding="utf-8").read())
+    all_words_n = json.loads(
+        codecs.open(json_file[1], "r", encoding="utf-8").read())
     # ---
-    json_file[0] = f'{dir2}/public_html/Translation_Dashboard/Tables/words.json'
+    json_file[
+        0] = f"{dir2}/public_html/Translation_Dashboard/Tables/words.json"
     # ---
-    words_n = json.loads(codecs.open(json_file[0], "r", encoding="utf-8").read())
+    words_n = json.loads(
+        codecs.open(json_file[0], "r", encoding="utf-8").read())
     # ---
-    printe.output(f'len of words_n:{len(words_n.keys())}')
+    printe.output(f"len of words_n:{len(words_n.keys())}")
 
     # ---
 
@@ -66,23 +69,23 @@ get_word_files()
 
 
 def log(file, table):
-    with open(file, 'w', encoding='utf-8') as aa:
+    with open(file, "w", encoding="utf-8") as aa:
         json.dump(table, aa, sort_keys=True)
     # ---
-    printe.output(f'<<lightgreen>> {len(table)} lines to {file}')
+    printe.output(f"<<lightgreen>> {len(table)} lines to {file}")
 
 
 # ---
 Nore = {1: False}
 for arg in sys.argv:
-    if arg in ['new', 'listnew', 'less100', 'more400']:
+    if arg in ["new", "listnew", "less100", "more400"]:
         Nore[1] = True
 
 
 def mmain():
     # ---
     n = 0
-    limit = 100 if 'limit100' in sys.argv else 10000
+    limit = 100 if "limit100" in sys.argv else 10000
     # ---
     vaild_links = get_valid_Links(words_n)
     # ---
@@ -92,8 +95,8 @@ def mmain():
         # ---
         n += 1
         # ---
-        printe.output('------------------')
-        printe.output('page %d from %d, x:%s' % (n, len(kkk[1]), x))
+        printe.output("------------------")
+        printe.output("page %d from %d, x:%s" % (n, len(kkk[1]), x))
         # ---
         if n >= limit:
             break
@@ -102,15 +105,15 @@ def mmain():
         # ---
         # pageword = mdwiki_api.wordcount(x)
         # leadword = lead.count_lead(x)
-        leadword, pageword = lead.count_all(title='', text=text)
+        leadword, pageword = lead.count_all(title="", text=text)
         # ---
-        printe.output('\t\t pageword:%d' % pageword)
-        printe.output('\t\t leadword:%d' % leadword)
+        printe.output("\t\t pageword:%d" % pageword)
+        printe.output("\t\t leadword:%d" % leadword)
         # ---
         all_words_n[x] = pageword
         words_n[x] = leadword
         # ---
-        if n == 10 or str(n).endswith('00'):
+        if n == 10 or str(n).endswith("00"):
             log(json_file[0], words_n)
             log(json_file[1], all_words_n)
         # ---
@@ -120,10 +123,10 @@ def mmain():
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     mmain()
     # ---
-    sys.argv.append('sql')
+    sys.argv.append("sql")
     # ---
     mmain()
 # ---
