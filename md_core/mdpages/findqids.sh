@@ -10,6 +10,6 @@ $HOME/local/bin/python3 core8/pwb.py mdpages/fixqids fix
 
 $HOME/local/bin/python3 core8/pwb.py mdpages/get_red
 
-$HOME/local/bin/python3 core8/pwb.py p11143_bot/bot --td add addq
+$HOME/local/bin/python3 core8/pwb.py p11143_bot/bot -td add addq
 
 $HOME/local/bin/python3 core8/pwb.py unlinked_wb/bot
