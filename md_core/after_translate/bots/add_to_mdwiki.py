@@ -43,9 +43,9 @@ def add_to_mdwiki_sql_users(lista):
         add_date = time.strftime("%Y-%m-%d")
         # ---
         update_qua = f'''
-            UPDATE pages_users SET 
-                target = '{tar}', pupdate = "{pupdate}",  add_date = "{add_date}" 
-            WHERE user = '{user2}' 
+            UPDATE pages_users SET
+                target = '{tar}', pupdate = "{pupdate}",  add_date = "{add_date}"
+            WHERE user = '{user2}'
             AND title = '{mdtit}'
             AND lang = "{lang}"
             ;'''
@@ -53,7 +53,7 @@ def add_to_mdwiki_sql_users(lista):
         insert_qua = f'''
             INSERT INTO
                 pages_users (title, lang, user, pupdate, target, add_date)
-            SELECT 
+            SELECT
                 '{mdtit}', '{lang}', '{user2}', '{pupdate}', '{tar}', '{add_date}'
             WHERE NOT EXISTS ( SELECT 1 FROM pages_users WHERE title='{mdtit}' AND lang='{lang}' AND user='{user2}' )
             ;
@@ -100,9 +100,9 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             add_date = time.strftime("%Y-%m-%d")
             # ---
             update_qua = f'''
-                UPDATE pages SET 
-                    target = '{tar}',  pupdate = "{pupdate}",  add_date = "{add_date}" 
-                WHERE user = '{user2}' 
+                UPDATE pages SET
+                    target = '{tar}',  pupdate = "{pupdate}",  add_date = "{add_date}"
+                WHERE user = '{user2}'
                 AND title = '{mdtit}'
                 AND lang = "{lang}"
                 ;'''
@@ -110,7 +110,7 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             insert_qua = f'''
                 INSERT INTO
                     pages (title, word, translate_type, cat, lang, date, user, pupdate, target, add_date)
-                SELECT 
+                SELECT
                     '{mdtit}', '{word}', 'lead', '{cat}', '{lang}', '{add_date}', '{user2}', '{pupdate}', '{tar}', '{add_date}'
                 WHERE NOT EXISTS ( SELECT 1 FROM pages WHERE title='{mdtit}' AND lang='{lang}' AND user='{user2}' )
                 ;

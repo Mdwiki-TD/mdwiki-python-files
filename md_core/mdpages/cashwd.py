@@ -243,7 +243,7 @@ def cash_wd():
     # ---
         """
     Retrieves Wikidata QIDs for a list of mdwiki titles, obtains sitelinks for each QID, and saves the results in JSON files.
-    
+
     Returns:
         None
     """

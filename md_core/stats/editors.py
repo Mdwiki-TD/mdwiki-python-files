@@ -40,8 +40,8 @@ def validate_ip(ip_address):
 def get_editors_sql(links, site):
     # ---
     qua = '''
-        SELECT actor_name, count(*) as count from revision 
-            join actor on rev_actor = actor_id 
+        SELECT actor_name, count(*) as count from revision
+            join actor on rev_actor = actor_id
             join page on rev_page = page_id
             WHERE lower(cast(actor_name as CHAR)) NOT LIKE '%bot%' AND page_namespace = 0 AND rev_timestamp like '2023%'
             and page_id in (
@@ -51,7 +51,7 @@ def get_editors_sql(links, site):
                     %s
                 )
             )
-        group by actor_id 
+        group by actor_id
         order by count(*) desc
     '''
     # ---

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py updates/c2023 
+python3 core8/pwb.py updates/c2023
 python3 core8/pwb.py updates/c2023 prior
 
 tfj run c202c --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py updates/c2023"

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 This script performs various operations related to MediaWiki pages and Wikibase QIDs.
-It includes functions for filtering and processing page titles, checking page existence, 
+It includes functions for filtering and processing page titles, checking page existence,
 retrieving and modifying page content, and adding tags based on QIDs.
 
 Usage:

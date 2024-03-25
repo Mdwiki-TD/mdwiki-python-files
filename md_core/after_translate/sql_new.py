@@ -87,7 +87,7 @@ query_main = """
             "contenttranslation",
             "contenttranslation-v2"
         ) #id = 3 # id = 120
-        # AND r.rev_parent_id = 0 
+        # AND r.rev_parent_id = 0
         # AND r.rev_timestamp > 20210101000000
         AND r.rev_timestamp > 20240101000000
         AND comment_text like "%User:Mr. Ibrahem/%" #AND p.page_namespace = 0
