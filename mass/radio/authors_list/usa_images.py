@@ -89,10 +89,7 @@ def one_auth_wrk(auth: str, auth_cats: list) -> None:
     # print(all_auth_images)
 
     # images has "Template:PD-medical" in thir "templates"
-    in_pd = {
-        image: va
-        for image, va in all_auth_images.items() if "Template:PD-medical" in va['templates']
-    }
+    in_pd = {image: va for image, va in all_auth_images.items() if "Template:PD-medical" in va['templates']}
     printe.output(f"\tin_pd: {len(in_pd)}")
 
     # images not in in_pd

@@ -8,8 +8,10 @@ import sys
 import json
 import os
 from pathlib import Path
+
 # ---
 from newapi.ncc_page import MainPage as ncc_MainPage
+
 # ---
 main_dir = Path(__file__).parent.parent
 # ---

@@ -8,6 +8,7 @@ python3 core8/pwb.py mass/radio/bots/add nodump
 # ---
 import sys
 from mass.radio.jsons_files import jsons, dumps_jsons, dump_json_file, urls_to_ids
+
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
 all_ids = jsons.all_ids.copy()
@@ -20,7 +21,6 @@ added_author = 0
 added_published = 0
 # ---
 for caseId, v in all_ids.copy().items():
-
     info = jsons.infos.get(v['url'], {})
 
     if not info:

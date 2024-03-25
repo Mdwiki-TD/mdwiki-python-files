@@ -13,9 +13,11 @@ import re
 import sys
 import json
 from pathlib import Path
+
 # ---
 from newapi import printe
 from mass.radio.st3.start3 import main_by_ids
+
 # ---
 main_dir = Path(__file__).parent
 # ---
@@ -61,7 +63,7 @@ def sa():
     tab = dict(sorted(tab.items(), key=lambda item: len(item[1]), reverse=Reverse))
     # ---
     # split to 2 parts
-    tab1, tab2 = dict(list(tab.items())[:len(tab)//2]), dict(list(tab.items())[len(tab)//2:])
+    tab1, tab2 = dict(list(tab.items())[: len(tab) // 2]), dict(list(tab.items())[len(tab) // 2 :])
     # ---
     if "tab1" in sys.argv:
         work(tab1)
