@@ -75,9 +75,10 @@ def upload_by_file(file_name, text, url, comment="", code="en", family="wikipedi
     if error:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error)
-    
+
     # ----
     return False
+
 
 def upload_by_url(file_name, text, url, comment="", code="en", family="wikipedia"):
     # ---
@@ -108,7 +109,7 @@ def upload_by_url(file_name, text, url, comment="", code="en", family="wikipedia
 
     if duplicate:
         printe.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
-    
+
     if error:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error_info)

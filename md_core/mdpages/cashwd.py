@@ -98,7 +98,7 @@ def get_qids_sitelinks(qidslist):
     # ---
     for i in range(0, len(qs_list), 100):
         # ---
-        qids = qs_list[i : i + 100]
+        qids = qs_list[i: i + 100]
         # ---
         params_wd["ids"] = '|'.join(qids)
         # ---
@@ -243,7 +243,7 @@ def cash_wd():
     # ---
         """
     Retrieves Wikidata QIDs for a list of mdwiki titles, obtains sitelinks for each QID, and saves the results in JSON files.
-    
+
     Returns:
         None
     """

@@ -98,5 +98,6 @@ def dodo_sql():
         # ---
         create_redirect(target, mdtitle)
 
+
 if __name__ == "__main__":
     dodo_sql()

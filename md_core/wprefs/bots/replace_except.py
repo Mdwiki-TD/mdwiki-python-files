@@ -61,7 +61,7 @@ else:
         .. versionadded:: 5.4
         """
         if string.startswith(prefix):
-            return string[len(prefix) :]
+            return string[len(prefix):]
         return string
 
     def removesuffix(string: str, suffix: str) -> str:
@@ -253,14 +253,14 @@ def replaceExcept(text: str, old, new, exceptions: list, caseInsensitive: bool =
                         group_id = int(group_id)
 
                     try:
-                        replacement += new[last : group_match.start()]
+                        replacement += new[last: group_match.start()]
                         replacement += match.group(group_id) or ''
                     except IndexError:
                         raise IndexError(f'Invalid group reference: {group_id}\n Groups found: {match.groups()}')
                     last = group_match.end()
                 replacement += new[last:]
 
-            text = text[: match.start()] + replacement + text[match.end() :]
+            text = text[: match.start()] + replacement + text[match.end():]
 
             # continue the search on the remaining text
             if allowoverlap:

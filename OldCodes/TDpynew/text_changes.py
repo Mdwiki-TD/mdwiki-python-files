@@ -39,7 +39,7 @@ if __name__ == '__main__':
 | image             = Netilmicin structure.svg
 
 <!-- Names -->
-| pronounce         = 
+| pronounce         =
 | tradename         = Netromycin, others
 | synonyms          = 1-N-ethylsisomicin
 | IUPAC_name        = (2''R'',3''R'',4''R'',5''R'')-2-{[(1''S'',2''S'',3''R'',4''S'',6''R'')-4-Amino-3-{[(2''S'',3''R'')-3-amino-6-(aminomethyl)-3,4-dihydro-2''H''-pyran-2-yl]oxy}-6-(ethylamino)-2-hydroxycyclohexyl]oxy}-5-methyl-4-(methylamino)oxane-3,5-diol
@@ -51,16 +51,16 @@ if __name__ == '__main__':
 | interactions      = <!-- notable interactions -->
 | pregnancy_AU      = <!-- A / B1 / B2 / B3 / C / D / X -->
 | pregnancy_US      = <!-- A / B / C / D / X -->
-| pregnancy_category= 
-| breastfeeding     = 
+| pregnancy_category=
+| breastfeeding     =
 | routes_of_administration= [[Eye drop]], by injection
-| onset             = 
-| duration_of_action= 
-| defined_daily_dose= 
+| onset             =
+| duration_of_action=
+| defined_daily_dose=
 | typical_dose      =
 
 <!-- External links -->
-| Drugs.com         = 
+| Drugs.com         =
 | MedlinePlus       =
 
 <!-- Legal data -->
@@ -71,14 +71,14 @@ if __name__ == '__main__':
 
 <!-- Pharmacokinetic data -->
 | bioavailability   = ~0%
-| protein_bound     = 
-| metabolism        = 
+| protein_bound     =
+| metabolism        =
 | elimination_half-life= 2.5 hours
 | excretion         =
 
 <!-- Chemical and physical data -->
-| C= 21 | H= 41 | N= 5 | O= 7 
-| SMILES            = O[C@]3(C)[C@H](NC)[C@@H](O)[C@@H](O[C@H]2[C@H](NCC)C[C@H](N)[C@@H](OC1O\C(=C/CC1N)CN)[C@@H]2O)OC3
+| C= 21 | H= 41 | N= 5 | O= 7
+| SMILES            = O[C@]3(C)[C@H](NC)[C@@H](O)[C@@H](O[C@H]2[C@H](NCC)C[C@H](N)[C@@H](OC1O\\C(=C/CC1N)CN)[C@@H]2O)OC3
 | StdInChI          = 1S/C21H41N5O7/c1-4-26-13-7-12(24)16(32-19-11(23)6-5-10(8-22)31-19)14(27)17(13)33-20-15(28)18(25-3)21(2,29)9-30-20/h5,11-20,25-29H,4,6-9,22-24H2,1-3H3/t11?,12-,13+,14-,15+,16+,17-,18+,19?,20+,21-/m0/s1
 | StdInChI_Ref      = {{stdinchicite|correct|chemspider}}
 | StdInChIKey       = CIDUJQMULVCIBT-KALHTFJLSA-N

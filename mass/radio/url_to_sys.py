@@ -7,8 +7,10 @@ import sys
 import os
 import json
 from pathlib import Path
+
 # ---
 from mass.radio.jsons_files import jsons, dump_json_file
+
 # jsons.url_to_sys
 # dumps_jsons(url_to_sys=0)
 # ---
@@ -20,7 +22,7 @@ main_dir = Path(__file__).parent
 # ---
 files_path = main_dir / 'syss/jsons'
 # ---
-urls_files  = [ f for f in os.listdir(files_path) if not f.endswith('_infos.json') and f.endswith('.json') ]
+urls_files = [f for f in os.listdir(files_path) if not f.endswith('_infos.json') and f.endswith('.json')]
 # ---
 for f in urls_files:
     # ---

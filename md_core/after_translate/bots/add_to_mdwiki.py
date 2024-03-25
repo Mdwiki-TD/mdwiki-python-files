@@ -24,11 +24,11 @@ def add_to_mdwiki_sql_users(lista):
         return
     # ---
     for tabe in lista:
-        mdtitle   = tabe['mdtitle']
-        lang      = tabe['lang']
-        target    = tabe['target']
-        user      = tabe['user']
-        pupdate   = tabe['pupdate']
+        mdtitle = tabe['mdtitle']
+        lang = tabe['lang']
+        target = tabe['target']
+        user = tabe['user']
+        pupdate = tabe['pupdate']
         # ---
         cat = cat_for_pages.get(mdtitle, '')
         # ---
@@ -38,14 +38,14 @@ def add_to_mdwiki_sql_users(lista):
         # ---
         mdtit = escape_string(mdtitle)
         user2 = escape_string(user)
-        tar   = escape_string(target)
+        tar = escape_string(target)
         # ---
         add_date = time.strftime("%Y-%m-%d")
         # ---
         update_qua = f'''
-            UPDATE pages_users SET 
-                target = '{tar}', pupdate = "{pupdate}",  add_date = "{add_date}" 
-            WHERE user = '{user2}' 
+            UPDATE pages_users SET
+                target = '{tar}', pupdate = "{pupdate}",  add_date = "{add_date}"
+            WHERE user = '{user2}'
             AND title = '{mdtit}'
             AND lang = "{lang}"
             ;'''
@@ -53,7 +53,7 @@ def add_to_mdwiki_sql_users(lista):
         insert_qua = f'''
             INSERT INTO
                 pages_users (title, lang, user, pupdate, target, add_date)
-            SELECT 
+            SELECT
                 '{mdtit}', '{lang}', '{user2}', '{pupdate}', '{tar}', '{add_date}'
             WHERE NOT EXISTS ( SELECT 1 FROM pages_users WHERE title='{mdtit}' AND lang='{lang}' AND user='{user2}' )
             ;
@@ -75,20 +75,20 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
     # ---
     for _, tab in table.items():
         for tt in tab:
-            tabe      = tab[tt]
-            mdtitle   = tabe['mdtitle']
-            lang      = tabe['lang']
-            target    = tabe['target']
-            user      = tabe['user']
-            pupdate   = tabe['pupdate']
+            tabe = tab[tt]
+            mdtitle = tabe['mdtitle']
+            lang = tabe['lang']
+            target = tabe['target']
+            user = tabe['user']
+            pupdate = tabe['pupdate']
             namespace = tabe['namespace']
             # ---
             cat = cat_for_pages.get(mdtitle, '')
             # ---
             mdtit = escape_string(mdtitle)
             user2 = escape_string(user)
-            tar   = escape_string(target)
-            word  = 0
+            tar = escape_string(target)
+            word = 0
             # ---
             if str(namespace) != '0':
                 lista.append(tabe)
@@ -100,9 +100,9 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             add_date = time.strftime("%Y-%m-%d")
             # ---
             update_qua = f'''
-                UPDATE pages SET 
-                    target = '{tar}',  pupdate = "{pupdate}",  add_date = "{add_date}" 
-                WHERE user = '{user2}' 
+                UPDATE pages SET
+                    target = '{tar}',  pupdate = "{pupdate}",  add_date = "{add_date}"
+                WHERE user = '{user2}'
                 AND title = '{mdtit}'
                 AND lang = "{lang}"
                 ;'''
@@ -110,7 +110,7 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
             insert_qua = f'''
                 INSERT INTO
                     pages (title, word, translate_type, cat, lang, date, user, pupdate, target, add_date)
-                SELECT 
+                SELECT
                     '{mdtit}', '{word}', 'lead', '{cat}', '{lang}', '{add_date}', '{user2}', '{pupdate}', '{tar}', '{add_date}'
                 WHERE NOT EXISTS ( SELECT 1 FROM pages WHERE title='{mdtit}' AND lang='{lang}' AND user='{user2}' )
                 ;

@@ -61,6 +61,7 @@ list_fu = list(set(all_ref.keys()) & set(lead_ref.keys()))
 list_fu = list(set(list_fu))
 list_ma = {1: [x for x in list_fu if (x in all_ref and x in lead_ref)]}
 
+
 def get_refs_new(text):
     ref_list = []
     # ---
@@ -82,6 +83,7 @@ def get_refs_new(text):
     # ---
     return ref_list
 
+
 def get_short_refs(text):
     # ---
     scanner = RegexScanner(r'<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>', text)
@@ -91,6 +93,7 @@ def get_short_refs(text):
     printe.output(f'len of get_short_refs : {len(ref_list)}')
     # ---
     return ref_list
+
 
 def count_ref_from_text(text, get_short=False):
     # ---
@@ -107,6 +110,7 @@ def count_ref_from_text(text, get_short=False):
     ref_list.extend(refs)
     # ---
     return len(ref_list)
+
 
 def count_refs(title):
     # ---
@@ -170,7 +174,7 @@ def mai():
         arg, _, value = arg.partition(':')
         # ---
         if arg == "-title":
-            vaild_links[1] = [ value.replace('_', ' ') ]
+            vaild_links[1] = [value.replace('_', ' ')]
     # ---
     if not vaild_links[1]:
         vaild_links[1] = get_links()

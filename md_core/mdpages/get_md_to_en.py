@@ -53,7 +53,7 @@ def check():
     # ---
     for i in range(0, len(Listo), 100):
         # ---
-        newlist = Listo[i : i + 100]
+        newlist = Listo[i: i + 100]
         # ---
         line = "|".join(newlist)
         # ---

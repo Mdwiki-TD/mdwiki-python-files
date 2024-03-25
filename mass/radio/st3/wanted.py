@@ -8,13 +8,17 @@ python3 core8/pwb.py mass/radio/st3/wanted nomulti add_category
 """
 import sys
 import re
+
 # ---
 from newapi.ncc_page import NEW_API
 from mass.radio.st3.start3 import main_by_ids
+
 # ---
-api_new  = NEW_API('www', family='nccommons')
+api_new = NEW_API('www', family='nccommons')
 api_new.Login_to_wiki()
 # ---
+
+
 def titles_to_ids(titles):
     cases = []
     # ---
@@ -27,6 +31,8 @@ def titles_to_ids(titles):
             cases.append(case_id)
     # ---
     return cases
+
+
 # ---
 prop = "Wantedcategories"
 # ---
@@ -38,7 +44,7 @@ if "unused" in sys.argv:
 # ---
 cats = api_new.querypage_list(qppage=prop, Max=5000)
 # ---
-cats = [ x['title'] for x in cats ]
+cats = [x['title'] for x in cats]
 # ---
 print(f"len cats: {len(cats)}")
 # ---

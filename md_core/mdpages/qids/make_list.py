@@ -16,7 +16,7 @@ from mdpy.bots import catdepth2
 from mdpy.bots import wiki_api
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-from mdpages.qids_others.unlinkedwikibase import work_page#(title, qid)
+from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
 # ---
 medwiki_to_enwiki_conflic = {}
 medwiki_to_enwiki = {}
@@ -25,6 +25,7 @@ medwiki_to_enwiki = {}
 # sql_for_mdwiki.add_titles_to_qids(tab, add_empty_qid=False)
 # sql_for_mdwiki.set_title_where_qid(new_title, qid)
 
+
 def work_un(tab):
     for numb, (title, new_q) in enumerate(tab.items(), start=1):
         # ---
@@ -32,7 +33,8 @@ def work_un(tab):
         # ---
         if new_q:
             work_page(title, new_q)
-        
+
+
 def add_sql(o_qids):
     printe.output('write to sql')
     # ---
@@ -104,7 +106,7 @@ def check():
     # ---
     for i in range(0, len(Listo), 100):
         # ---
-        group = Listo[i : i + 100]
+        group = Listo[i: i + 100]
         # ---
         params["titles"] = '|'.join(group)
         # ---

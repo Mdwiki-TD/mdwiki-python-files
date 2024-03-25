@@ -10,12 +10,14 @@ tfj run usaimages1 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python
 """
 import sys
 from mass.radio.authors_list.usa import get_usa_auths
+
 # from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
 # from mass.radio.authors_list import auths_cats
 
 from newapi.ncc_page import MainPage as ncc_MainPage
 from newapi.ncc_page import CatDepth
 from newapi import printe
+
 # from mass.radio.lists.PD_medical import PD_medical_pages_def
 # PD_medical_pages = PD_medical_pages_def()
 # id2cat = cases_cats()
@@ -24,7 +26,8 @@ from newapi import printe
 
 PD_medical_pages = []
 
-def add_pd_to_images(not_in_pd : list) -> None:
+
+def add_pd_to_images(not_in_pd: list) -> None:
     printe.output(f"\t\tadd_pd_to_images: {len(not_in_pd)}")
     # ---
     pd_temp = "{{PD-medical}}"
@@ -43,10 +46,7 @@ def add_pd_to_images(not_in_pd : list) -> None:
             printe.output(f"\t\t\tno need to add {pd_temp} to {image}")
             continue
         # ---
-        add_after = [
-            "{{CC-BY-NC-SA-3.0}}",
-            "== {{int:license}} =="
-        ]
+        add_after = ["{{CC-BY-NC-SA-3.0}}", "== {{int:license}} =="]
         # ---
         for add in add_after:
             if add in text:
@@ -62,6 +62,7 @@ def add_pd_to_images(not_in_pd : list) -> None:
         if new_text != text:
             page.save(newtext=new_text, summary=f"Bot: add {pd_temp}")
 
+
 def get_cats_images(cats: list) -> list:
     printe.output(f"\tget_cats_images: {len(cats)}")
     # ---
@@ -76,7 +77,8 @@ def get_cats_images(cats: list) -> list:
     # ---
     return result
 
-def one_auth_wrk(auth : str, auth_cats : list) -> None:
+
+def one_auth_wrk(auth: str, auth_cats: list) -> None:
     """
     work on one author cats
     """
@@ -85,9 +87,9 @@ def one_auth_wrk(auth : str, auth_cats : list) -> None:
     all_auth_images = get_cats_images(auth_cats)
     printe.output(f"\tall_auth_images: {len(all_auth_images)}")
     # print(all_auth_images)
-    
+
     # images has "Template:PD-medical" in thir "templates"
-    in_pd = { image: va for image, va in all_auth_images.items() if "Template:PD-medical" in va['templates'] }
+    in_pd = {image: va for image, va in all_auth_images.items() if "Template:PD-medical" in va['templates']}
     printe.output(f"\tin_pd: {len(in_pd)}")
 
     # images not in in_pd
@@ -97,7 +99,8 @@ def one_auth_wrk(auth : str, auth_cats : list) -> None:
     # add {{PD-medical}} to all images
     add_pd_to_images(not_in_pd)
 
-def start(usa_auths : list = []) -> None:
+
+def start(usa_auths: list = []) -> None:
     # id2cat = cases_cats()
     # ---
     if not usa_auths:
@@ -110,9 +113,11 @@ def start(usa_auths : list = []) -> None:
         printe.output(f"<<green>>usa_images: {n}/{len(usa_auths)}: {auth=}, length: {len(auth_cats)}")
         one_auth_wrk(auth, auth_cats)
 
+
 def test() -> None:
     usa_auths = ["Jonathan Minkin"]
     start(usa_auths)
+
 
 if __name__ == '__main__':
     if "test" in sys.argv:

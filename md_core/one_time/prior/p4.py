@@ -231,7 +231,7 @@ def start_all():
     for i in range(0, len(links), 100):
         n += 1
         # ---
-        titles = links[i : i + 100]
+        titles = links[i: i + 100]
         # ---
         main_File = project_js_new + f'{n}.json'
         main_File_en = project_js_newen + f'en_{n}.json'

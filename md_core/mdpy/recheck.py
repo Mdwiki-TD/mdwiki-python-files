@@ -73,7 +73,7 @@ def do_it_sql(lange, targets):
     titles = list(targets.keys())
     # ---
     for i in range(0, len(titles), 100):
-        group = titles[i : i + 100]
+        group = titles[i: i + 100]
         # ---
         ase = [escape_string(t.strip().replace(" ", "_")) for t in group if t.strip() != ""]
         # ---
@@ -140,7 +140,7 @@ def do_it_api(lange, targets):
     nomd = 0
     # ---
     for i in range(0, len(New_targets), limits):
-        group = New_targets[i : i + limits]
+        group = New_targets[i: i + limits]
         # ---
         # get all pages qid
         qids_from_wiki = wiki_api.Get_page_qids(lange, group)
@@ -232,6 +232,7 @@ def work_with_2_qids(oldq, new_q):
     # ---
     printe.output(" work_with_2_qids ends.........")
     printe.output("=============================")
+
 
 def start():
     # ---
@@ -349,6 +350,7 @@ def start():
     # ---
     if "addthem" in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(to_add)
+
 
 if __name__ == "__main__":
     start()

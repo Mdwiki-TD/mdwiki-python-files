@@ -42,9 +42,9 @@ cats = '''
     Category:Radiopaedia case 90395 Cerebellar vermis (illustration)
     Category:Radiopaedia case 11276 Cardiac pacemaker
     '''
-#---
-cats = [ x.strip() for x in cats.split("\n") if x.strip() ]
-#---
+# ---
+cats = [x.strip() for x in cats.split("\n") if x.strip()]
+# ---
 for cat in cats:
     print(f"cat: {cat}")
     page = ncc_MainPage(cat, "www", family="nccommons")

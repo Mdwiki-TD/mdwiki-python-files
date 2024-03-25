@@ -27,7 +27,7 @@ else:
 
         .. versionadded:: 5.4
         """
-        return string[len(prefix) :] if string.startswith(prefix) else string
+        return string[len(prefix):] if string.startswith(prefix) else string
 
     def removesuffix(string: str, suffix: str) -> str:
         """Remove prefix from a string or return a copy otherwise.

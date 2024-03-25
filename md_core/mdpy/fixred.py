@@ -63,7 +63,7 @@ def find_redirects(links):
     normalized_numb = 0
     # ---
     for i in range(0, len(titles), 300):
-        group = titles[i : i + 300]
+        group = titles[i: i + 300]
         # ---
         # printe.output(group)
         # ---

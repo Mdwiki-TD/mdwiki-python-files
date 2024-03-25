@@ -6,21 +6,23 @@ python3 core8/pwb.py mass/radio/cases_in_ids
 """
 import re
 from newapi.ncc_page import CatDepth
+
 # ---
 from mass.radio.jsons_files import jsons, dumps_jsons, dump_json_file
+
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 
 
 def geo():
-    print(f'lenth of jsons.cases_in_ids: {len(jsons.cases_in_ids)} ')
+    print(f"lenth of jsons.cases_in_ids: {len(jsons.cases_in_ids)} ")
     already = 0
 
-    cases = CatDepth('Category:Radiopaedia images by case', sitecode='www', family="nccommons", depth=0, ns="14") # 8068 cat before me
+    cases = CatDepth("Category:Radiopaedia images by case", sitecode="www", family="nccommons", depth=0, ns="14")  # 8068 cat before me
 
-    reg = r'^Category:Radiopaedia case (\d+) (.*?)$'
+    reg = r"^Category:Radiopaedia case (\d+) (.*?)$"
     # ---
     new_cases_in = {}
-    new_dup      = {}
+    new_dup = {}
     # ---
     for cat in cases:
         match = re.match(reg, cat)
@@ -30,7 +32,7 @@ def geo():
             # ---
             if case_id in new_cases_in:
                 already += 1
-                print(f'already:{already}, case_id {case_id} already in new_cases_in ({case_title}, {new_cases_in[case_id]})')
+                print(f"already:{already}, case_id {case_id} already in new_cases_in ({case_title}, {new_cases_in[case_id]})")
             # ---
             new_cases_in[case_id] = case_title
             # ---
@@ -41,23 +43,23 @@ def geo():
 
     # sort new_cases_in by key
     new_cases_in = dict(sorted(new_cases_in.items(), key=lambda x: int(x[0])))
-    print(f'lenth of new_cases_in: {len(new_cases_in)} ')
+    print(f"lenth of new_cases_in: {len(new_cases_in)} ")
 
     # dump
     # jsons.cases_in_ids = new_cases_in
     # jsons._replace(cases_in_ids = new_cases_in)
     # dumps_jsons(cases_in_ids=1)
-    dump_json_file('jsons/cases_in_ids.json', new_cases_in, False)
+    dump_json_file("jsons/cases_in_ids.json", new_cases_in, False)
 
     # sort jsons.cases_dup by lenth if lenth > 1
     new_dup = {k: v for k, v in sorted(new_dup.items(), key=lambda item: len(item[1]), reverse=True) if len(v) > 1}
 
-    print(f'lenth of new_dup: {len(new_dup)} ')
+    print(f"lenth of new_dup: {len(new_dup)} ")
 
     # dump
     # jsons.cases_dup = new_dup
     # jsons._replace(cases_dup = new_dup)
-    dump_json_file('jsons/cases_dup.json', new_dup, False)
+    dump_json_file("jsons/cases_dup.json", new_dup, False)
 
 
 if __name__ == "__main__":

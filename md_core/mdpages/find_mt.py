@@ -42,11 +42,12 @@ printe.output(f'<<green>> to_work list: {len(to_work)}')
 
 # ---
 
-new_qids = {x : qids_others[x] for x in to_work if x in qids_others}
+new_qids = {x: qids_others[x] for x in to_work if x in qids_others}
 
 printe.output(f'<<green>> new_qids list: {len(new_qids)}')
 
 # ---
+
 
 def doo():
 
@@ -69,6 +70,7 @@ def doo():
     # ---
 
     sql_for_mdwiki.add_titles_to_qids(new_qids)
+
 
 if __name__ == '__main__':
 

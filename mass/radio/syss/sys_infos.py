@@ -30,16 +30,20 @@ for arg in sys.argv:
 # ---
 nnno = dict(sorted(lenth_of_systems.items(), key=lambda x: x[1], reverse=True))
 # ---
+
+
 def get_to_do(k):
     stw_file = os.path.join(str(main_dir), f"jsons/{k}.json")
     # ---
     # dump
-    with open(stw_file, "r", encoding="utf-8") as f:
+    with open(stw_file, encoding="utf-8") as f:
         urls_sys = json.loads(f.read())
     # ---
-    to_do = [ url for url in urls_sys.keys() if url not in ma_infos ]
+    to_do = [url for url in urls_sys.keys() if url not in ma_infos]
     # ---
     return to_do
+
+
 # ---
 nnno = list(nnno.keys())
 # ---
@@ -59,9 +63,7 @@ for n, sy in enumerate(nnno, start=10):
         continue
     # ---
     if not system_to_work:
-        print(
-            f'tfj run syi{n} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/syss/sys_infos {sy2}" #{ln:,}'
-        )
+        print(f'tfj run syi{n} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/syss/sys_infos {sy2}" #{ln:,}')
     # ---
     v = os.path.join(str(main_dir), f"jsons/{sy}_infos.json")
     # ---
@@ -69,7 +71,7 @@ for n, sy in enumerate(nnno, start=10):
         with open(v, "w", encoding="utf-8") as f:
             f.write("{}")
     # ---
-    with open(v, "r", encoding="utf-8") as f:
+    with open(v, encoding="utf-8") as f:
         systems_data[sy] = json.loads(f.read())
 # ---
 if "only" in sys.argv:
@@ -102,7 +104,8 @@ if not u_data:
     exit()
 # ---
 new_infos = {
-    x: v for x, v in u_data.items() if x not in ma_infos
+    x: v
+    for x, v in u_data.items() if x not in ma_infos
 }
 # ---
 print(f"new_infos: {len(new_infos)}")

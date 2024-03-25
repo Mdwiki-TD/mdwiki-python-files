@@ -13,6 +13,8 @@ tit_user_lang = {}
 langs_to_t_u = {}
 to_update = {}
 # ---
+
+
 def get_pages_from_db(lang_o):
     # ---
     que = "select title, user, lang, target from pages "

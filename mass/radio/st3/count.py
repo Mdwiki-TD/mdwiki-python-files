@@ -9,7 +9,6 @@ import os
 import sys
 import json
 import tqdm
-import time
 from pathlib import Path
 from datetime import datetime
 
@@ -18,10 +17,10 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 
 main_dir = Path(__file__).parent.parent
 
-with open(main_dir / "jsons/all_ids.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/all_ids.json", encoding="utf-8") as f:
     all_ids = json.load(f)
 
-with open(main_dir / "jsons/cases_in_ids.json", "r", encoding="utf-8") as f:
+with open(main_dir / "jsons/cases_in_ids.json", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
 studies_dir = Path("/data/project/mdwiki/studies")
@@ -29,7 +28,10 @@ studies_dir = Path("/data/project/mdwiki/studies")
 if not os.path.exists(studies_dir):
     studies_dir = main_dir / "studies"
 # ---
-ids_tab = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
+ids_tab = {
+    x: v
+    for x, v in all_ids.items() if x not in cases_in_ids
+}
 
 cases_done = len(all_ids) - len(ids_tab)
 
@@ -49,7 +51,7 @@ def cases_counts():
         with open(cases_count_file, "w", encoding="utf-8") as f:
             f.write("{}")
 
-    with open(cases_count_file, "r", encoding="utf-8") as f:
+    with open(cases_count_file, encoding="utf-8") as f:
         cases_count = json.load(f)
 
     return cases_count
@@ -63,7 +65,7 @@ def get_studies(studies_ids, caseId):
         images = {}
         if os.path.exists(st_file):
             try:
-                with open(st_file, "r", encoding="utf-8") as f:
+                with open(st_file, encoding="utf-8") as f:
                     images = json.load(f)
             except Exception as e:
                 print(f"{study} : error")

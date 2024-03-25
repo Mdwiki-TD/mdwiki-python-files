@@ -93,12 +93,12 @@ def update_in_sql(lang, table):
         all_v = n_2021 + n_2022 + n_2023 + n_2024 + n_2025 + n_2026
         # ---
         if sq.get('all', 0) == all_v \
-            and sq.get('2021', 0) == n_2021 \
-            and sq.get('2022', 0) == n_2022 \
-            and sq.get('2023', 0) == n_2023 \
-            and sq.get('2024', 0) == n_2024 \
-            and sq.get('2025', 0) == n_2025 \
-            and sq.get('2026', 0) == n_2026:
+                and sq.get('2021', 0) == n_2021 \
+                and sq.get('2022', 0) == n_2022 \
+                and sq.get('2023', 0) == n_2023 \
+                and sq.get('2024', 0) == n_2024 \
+                and sq.get('2025', 0) == n_2025 \
+                and sq.get('2026', 0) == n_2026:
             print_test(f'page:{target} has same views.. skip')
             continue
         # ---
@@ -107,15 +107,15 @@ def update_in_sql(lang, table):
         qua = f"""
             UPDATE
                 views
-            SET 
+            SET
                 countall = '{all_v}',
-                # count2021 = '{n_2021}', 
-                # count2022 = '{n_2022}', 
+                # count2021 = '{n_2021}',
+                # count2022 = '{n_2022}',
                 # count2023 = '{n_2023}',
                 count2024 = '{n_2024}',
                 count2025 = '{n_2025}',
                 count2026 = '{n_2026}'
-            WHERE 
+            WHERE
                 target = '{tar2}'
                 AND lang = '{lang}'
             ;
@@ -206,14 +206,14 @@ def get_views_sql(lang_o):
             already_in_sql[lang] = {}
         # ---
         already_in_sql[lang][target] = {
-            'all': countall, 
-            '2021': count2021, 
+            'all': countall,
+            '2021': count2021,
             '2022': count2022,
             '2023': count2023,
             '2024': count2024,
             '2025': count2025,
             '2026': count2026
-            }
+        }
 
 
 def main():

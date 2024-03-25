@@ -8,7 +8,7 @@ like:(
     <meta itemprop="description" content="photos of accessory tragus" />
     <meta itemprop="relevantSpecialty" content="http://schema.org/Dermatology" /></a>
     </span></li>)
-    
+
 3. get disease href and name
 4. create folder with the disease name
 4. open diseaseId and get all links with class="thumbWrapper" like:(<a href="img?imageId=3" class="thumbWrapper"></a>)
@@ -16,10 +16,10 @@ like:(
 
 * use print() to output steps in the code
 * images name should be like: {disease_name} (Dermatology Atlas {imageId}).jpg
-* disease  url should be like: https://www.atlasdermatologico.com.br/{disease_url} 
+* disease  url should be like: https://www.atlasdermatologico.com.br/{disease_url}
 * after create_folder should add file like info.json in create_folder contains:
     disease name
-    disease_url 
+    disease_url
     all images link in the disease_url like:
     "image_name": "image_url"
 * add main_dir = Path(__file__).parent, and change : folder_name to os.path.join(str(main_dir), disease_name)

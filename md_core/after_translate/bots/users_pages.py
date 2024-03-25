@@ -32,10 +32,10 @@ def not_pages(lista):
         printe.output(f"<<blue>> {lang=}, pages: {len(tabs)}:")
         # ---
         for ta in tabs:
-            mdtitle   = ta['mdtitle']
-            target    = ta['target']
-            user      = ta['user']
-            pupdate   = ta['pupdate']
+            mdtitle = ta['mdtitle']
+            target = ta['target']
+            user = ta['user']
+            pupdate = ta['pupdate']
             namespace = ta['namespace']
             # ---
             printe.output(f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")

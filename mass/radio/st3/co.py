@@ -5,6 +5,7 @@ python3 /data/project/mdwiki/pybot/mass/radio/st3/co.py
 '''
 import sys
 import os
+
 user_script_paths = [
     '/data/project/mdwiki',
     '/data/project/mdwiki/pybot',
