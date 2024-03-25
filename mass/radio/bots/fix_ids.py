@@ -1,4 +1,4 @@
-'''
+"""
 
 python3 core8/pwb.py mass/radio/bots/fix_ids nodump
 
@@ -7,10 +7,10 @@ jsons.ids
 إلى
 jsons.all_ids
 
-'''
+"""
 # ---
-import sys
-from mass.radio.jsons_files import jsons, dumps_jsons, dump_json_file, urls_to_ids
+from mass.radio.jsons_files import jsons, dump_json_file, urls_to_ids
+
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
 all_ids = jsons.all_ids.copy()
@@ -24,7 +24,7 @@ for caseId, v in jsons.ids.items():
         v_in = all_ids[caseId]
         # ---
         for k, v2 in v.items():
-            v1 = v_in.get(k, '')
+            v1 = v_in.get(k, "")
             if v2 and not v1:
                 add_va += 1
                 all_ids[caseId][k] = v2
@@ -64,8 +64,8 @@ for caseId, v in jsons.ids.copy().items():
             added_key_to_ids += 1
 # ---
 # jsons._replace(all_ids = all_ids)
-dump_json_file('jsons/all_ids.json', all_ids, False)
-dump_json_file('jsons/ids.json', jsons.ids, False)
+dump_json_file("jsons/all_ids.json", all_ids, False)
+dump_json_file("jsons/ids.json", jsons.ids, False)
 # ---
 print(f"add: {add}")
 print(f"add_va: {add_va}")
