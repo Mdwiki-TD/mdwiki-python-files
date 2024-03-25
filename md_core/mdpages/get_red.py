@@ -18,20 +18,9 @@ from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import mdwiki_api
 
-# ---
 mdwiki_to_qid = sql_for_mdwiki.get_all_qids()
-# ---
-Day_History = datetime.now().strftime("%Y-%m-%d")
 
-
-# ---
-# sql_for_mdwiki.mdwiki_sql(query, update = False)
-# mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
-# pages = sql_for_mdwiki.get_all_pages()
-# sql_for_mdwiki.add_titles_to_qids(tab, add_empty_qid=False)
-# ---
-def get_pages():
-    # ---
+def get_table():
     table = {}
     # ---
     titles = list(mdwiki_to_qid.keys())
@@ -50,9 +39,13 @@ def get_pages():
         print(f'work on {len_grup} pagees, done: {done}/{len(titles)}.')
         # ---
         table = {**table, **asa}
-        # ---
     # ---
     print(f'len of table {len(table)} ')
+    # ---
+    return table
+def get_pages():
+    # ---
+    table = get_table()
     # ---
     tat = ''
     # ---
@@ -105,10 +98,6 @@ def get_pages():
         printe.output(f'add {len(to_add)} pages. ')
         printe.output(to_add)
         sql_for_mdwiki.add_titles_to_qids(to_add)
-        # ---
 
-
-# ---
 if __name__ == '__main__':
     get_pages()
-# ---

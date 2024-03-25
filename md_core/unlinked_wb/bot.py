@@ -5,7 +5,7 @@ It includes functions for filtering and processing page titles, checking page ex
 retrieving and modifying page content, and adding tags based on QIDs.
 
 Usage:
-python3 core8/pwb.py mdpages/qids_others/unlinkedwikibase add
+python3 core8/pwb.py unlinked_wb/bots add
 """
 # ---
 import sys
@@ -17,30 +17,33 @@ from mdpages.qids_others import sql_qids_others
 from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage
 api_new = NEW_API('www', family='mdwiki')
 api_new.Login_to_wiki()
-# ---
-qids1 = sql_for_mdwiki.get_all_qids()
-qids2 = sql_qids_others.get_others_qids()
-# ---
-qids1 = {x: v for x, v in qids1.items() if v != ""}
-qids2 = {x: v for x, v in qids2.items() if v != ""}
-# ---
-vals_d = {}
-# ---
-for tab in [qids1, qids2]:
-    for x, q in tab.items():
-        if q not in vals_d:
-            vals_d[q] = [x]
-        elif x not in vals_d[q]:
-            vals_d[q].append(x)
-# ---
-qids = {v[0]: q for q, v in vals_d.items() if len(v) == 1}
-# ---
-for q, v in vals_d.items():
-    if len(v) > 1:
-        printe.output(f"<<red>> duplicate: q:{q}, v:{v}")
 
 
-def work_page(title, qid):
+def get_qids():
+    qids1 = sql_for_mdwiki.get_all_qids()
+    qids2 = sql_qids_others.get_others_qids()
+    # ---
+    qids1 = {x: v for x, v in qids1.items() if v != ""}
+    qids2 = {x: v for x, v in qids2.items() if v != ""}
+    # ---
+    vals_d = {}
+    # ---
+    for tab in [qids1, qids2]:
+        for x, q in tab.items():
+            if q not in vals_d:
+                vals_d[q] = [x]
+            elif x not in vals_d[q]:
+                vals_d[q].append(x)
+    # ---
+    qids = {v[0]: q for q, v in vals_d.items() if len(v) == 1}
+    # ---
+    for q, v in vals_d.items():
+        if len(v) > 1:
+            printe.output(f"<<red>> duplicate: q:{q}, v:{v}")
+    # ---
+    return qids
+
+def work_un_linked_wb(title, qid):
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
     exists = page.exists()
@@ -68,6 +71,8 @@ def add_tag():
     # ---
     printe.output("Get all pages...")
     # ---
+    qids = get_qids()
+    # ---
     all_pages = api_new.Get_All_pages(start='!', namespace="0", apfilterredir='nonredirects')
     # ---
     all_pages = [x for x in all_pages if valid_title(x)]
@@ -91,7 +96,7 @@ def add_tag():
             printe.output("no qid")
             continue
         # ---
-        work_page(x, qid)
+        work_un_linked_wb(x, qid)
     # ---
     for n, x in enumerate(pages_to_work):
         printe.output(f"p:{n}/{len(pages_to_work)}: t:{x}::")
@@ -102,9 +107,8 @@ def add_tag():
             printe.output("no qid")
             continue
         # ---
-        work_page(x, qid)
+        work_un_linked_wb(x, qid)
 
 
 if __name__ == "__main__":
-    if "add" in sys.argv:
-        add_tag()
+    add_tag()

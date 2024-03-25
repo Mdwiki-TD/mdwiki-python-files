@@ -11,7 +11,7 @@ from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpages.qids_others import sql_qids_others
-from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
+from unlinked_wb.bot import work_un_linked_wb  # (title, qid)
 # ---
 qids_others = sql_qids_others.get_others_qids()
 # ---
@@ -26,7 +26,7 @@ def work_un(tab):
         title = qids_to_title.get(old_q)
         printe.output(f'<<yellow>> {numb}, {title=}, {old_q=}, {new_q=}')
         # ---
-        work_page(title, new_q)
+        work_un_linked_wb(title, new_q)
 
 
 def fix_redirects():
