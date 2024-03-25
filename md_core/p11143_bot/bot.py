@@ -1,62 +1,80 @@
-#!/usr/bin/python3
 """
+Usage:
 
-python3 core8/pwb.py mdpages/P11143
+python3 core8/pwb.py p11143_bot/bot --others
+python3 core8/pwb.py p11143_bot/bot --td
+
+
+from p11143_bot import bot as p143_bot
+# p143_bot.duplicate(merge_qids)
+# p143_bot.add_P11143_to_qids(newlist)
+# p143_bot.fix(merge_qids, qids)
+# in_wd = p143_bot.make_in_wd_tab()
+# p143_bot.add_q(new_qids)
 
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 import sys
 import time
 # ---
 from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import catdepth2
+from mdpages.qids_others import sql_qids_others
 from mdpy.bots import wikidataapi
 from mdpy import printe
-
+from mdpy.bots import catdepth2
 # ---
 sys.argv.append('workhimo')
 # ---
 wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
-# ---
-# sql_for_mdwiki.mdwiki_sql(query , update = False)
-# mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
-# sql_for_mdwiki.add_titles_to_qids(tab)
-# ---
-qids_di = sql_for_mdwiki.get_all_qids()
-# ---
-qids = {q: title for title, q in qids_di.items() if q != ''}
-# ---
-mdwiki_in_qids = list(qids.values())
-# ---
-query = '''select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}'''
-# ---
-in_wd = {}
-# ---
-new_qids = {}
-# ---
-wdlist = wikidataapi.sparql_generator_url(query, printq=False, add_date=True)
-# ---
-for wd in wdlist:
-    prop = wd['prop']
-    # ---
-    qid = wd['item'].split('/entity/')[1]
-    # ---
-    in_wd[qid] = prop
-    # ---
-    if qid not in qids and prop not in mdwiki_in_qids:
-        new_qids[qid] = prop
 
+def add_q(new_qids):
+    # ---
+    TD_list = catdepth2.make_cash_to_cats(return_all_pages=True)
+    # ---
+    print(f'len of new_qids: {len(new_qids)}')
+    # ---
+    if len(new_qids) < 10:
+        print("\n".join([f'{k}:{v}' for k, v in new_qids.items()]))
+    # ---
+    newtitles_not_td = { title: qid for qid, title in new_qids.items() if title not in TD_list }
+    # ---
+    newtitles_in_td  = { title: qid for qid, title in new_qids.items() if title in TD_list }
+    # ---
+    print(f'add_q: {len(newtitles_in_td)=}, {len(newtitles_not_td)=}')
+    # ---
+    if newtitles_in_td or newtitles_not_td:
+        printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
+        # ---
+        if 'addq' not in sys.argv:
+            return
+        # ---
+        sql_for_mdwiki.add_titles_to_qids(newtitles_in_td)
+        # ---
+        sql_qids_others.add_titles_to_qids(newtitles_not_td)
+    
+def make_in_wd_tab():
+    # ---
+    in_wd = {}
+    # ---
+    query = '''select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}'''
+    # ---
+    wdlist = wikidataapi.sparql_generator_url(query, printq=False, add_date=True)
+    # ---
+    for wd in wdlist:
+        prop = wd['prop']
+        # ---
+        qid = wd['item'].split('/entity/')[1]
+        # ---
+        in_wd[qid] = prop
+    # ---
+    return in_wd
 
-def add_missing(newlist):
+def add_P11143_to_qids(newlist):
     # ---
     print(f'len of newlist: {len(newlist)}')
     # ---
     if len(newlist) > 0:
         # ---
-        printe.output(f'<<yellow>>claims to add_missing: {len(newlist.items())}')
+        printe.output(f'<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}')
         if len(newlist.items()) < 100:
             print("\n".join([f'{k}\t:\t{v}' for k, v in newlist.items()]))
         # ---
@@ -71,8 +89,7 @@ def add_missing(newlist):
                 printe.output(f'<<yellow>> n: {n}')
                 time.sleep(5)
 
-
-def fix(merge_qids):
+def fix(merge_qids, qids):
     # mdwiki != P11143
     # تصحيح قيم الخاصية التي لا تساوي اسم المقالة
     # ---
@@ -105,7 +122,6 @@ def fix(merge_qids):
         else:
             print(f'Failed to add P11143:{md_title}')
 
-
 def duplicate(merge_qids):
     # ايجاد عناصر ويكي بيانات بها قيمة الخاصية في أكثر من عنصر
     va_tab = {}
@@ -128,57 +144,38 @@ def duplicate(merge_qids):
     # ---
     printe.output('<<lightyellow>> duplicate() end...')
 
-
-def add_q(new_qids):
+def work_qids(qids_list):
     # ---
-    TD_list = catdepth2.make_cash_to_cats(return_all_pages=True)
+    in_wd = make_in_wd_tab()
     # ---
-    print(f'len of new_qids: {len(new_qids)}')
+    qids = {q: title for title, q in qids_list.items() if q != ''}
     # ---
-    if len(new_qids) < 10:
-        print("\n".join([f'{k}:{v}' for k, v in new_qids.items()]))
-    # ---
-    newtitles = {title: qid for qid, title in new_qids.items()}
-    # ---
-    titles_not_td = [x for x in newtitles if x not in TD_list]
-    # ---
-    delets = []
-    # ---
-    for title in titles_not_td:
-        # printe.output(f'del {title}:{newtitles[title]} not in TD_list')
-        del newtitles[title]
-        delets.append(title)
-    # ---
-    print(f'len of newtitles: {len(newtitles)}, len of delets: {len(delets)}')
-    # ---
-    if newtitles:
-        printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
-        # ---
-        if 'addq' not in sys.argv:
-            return
-        # ---
-        sql_for_mdwiki.add_titles_to_qids(newtitles)
-        # ---
-
-
-def start():
+    new_qids = {q: p for q, p in in_wd.items() if q not in qids.keys() and p not in qids.values()}
     # ---
     print(f'len of in_wd: {len(in_wd)}')
     # ---
     newlist = {q: tt for q, tt in qids.items() if q not in in_wd.keys()}
     # ---
-    add_missing(newlist)
+    add_P11143_to_qids(newlist)
     # ---
     # merge_qids = {**newlist, **in_wd}
     merge_qids = {**newlist, **in_wd}
     # ---
     if 'fix' in sys.argv:
-        fix(merge_qids)
+        fix(merge_qids, qids)
     # ---
     duplicate(merge_qids)
     # ---
     add_q(new_qids)
 
+def start():
+    # ---
+    if "--others" in sys.argv:
+        qids_list = sql_qids_others.get_others_qids()
+    else:
+        qids_list = sql_for_mdwiki.get_all_qids()
+    # ---
+    work_qids(qids_list)
 
 if __name__ == '__main__':
     start()

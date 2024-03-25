@@ -23,7 +23,7 @@ from mdpy.bots import wiki_api
 from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
+from unlinked_wb.bot import work_un_linked_wb  # (title, qid)
 # ---
 qids = sql_for_mdwiki.get_all_qids()
 # ---
@@ -111,7 +111,7 @@ def work_un(tab):
         printe.output(f'<<yellow>> {numb}, {title=}, {new_q=}')
         # ---
         if new_q:
-            work_page(title, new_q)
+            work_un_linked_wb(title, new_q)
 
 
 def start():

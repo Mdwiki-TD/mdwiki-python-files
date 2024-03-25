@@ -15,7 +15,7 @@ from mdpy.bots import wiki_api
 from mdpy.bots import mdwiki_api
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
+from unlinked_wb.bot import work_un_linked_wb  # (title, qid)
 # ---
 medwiki_to_enwiki_conflic = {}
 medwiki_to_enwiki = {}
@@ -31,7 +31,7 @@ def work_un(tab):
         printe.output(f'<<yellow>> work_un: {numb}, {title=}, {new_q=}')
         # ---
         if new_q:
-            work_page(title, new_q)
+            work_un_linked_wb(title, new_q)
 
 
 def add_sql(o_qids):
@@ -177,7 +177,7 @@ def check():
     printe.output(f'<<lightgreen>> len of o_qids (qid != ""):{len(o_qids_n)}')
     # ---
     for x in missing_in_enwiki:
-        if not x in o_qids:
+        if x not in o_qids:
             o_qids[x] = ''
     # ---
     o_qids = {x: v for x, v in o_qids.items() if x in all_pages}
