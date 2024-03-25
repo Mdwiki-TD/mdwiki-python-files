@@ -23,7 +23,8 @@ class RegexScanner:
         for request in self._requests:
             attrs.append(request.get(attr, ''))
         return set(list(attrs))
-    
+
+
 if __name__ == '__main__':
     text = '''[[Mediastinitis]], [[sepsis]]<ref name=Og2015/><ref name=Bau2020/>'''
     scanner = RegexScanner(r'<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>', text)

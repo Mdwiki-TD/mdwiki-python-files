@@ -98,7 +98,7 @@ def get_qids_sitelinks(qidslist):
     # ---
     for i in range(0, len(qs_list), 100):
         # ---
-        qids = qs_list[i : i + 100]
+        qids = qs_list[i: i + 100]
         # ---
         params_wd["ids"] = '|'.join(qids)
         # ---

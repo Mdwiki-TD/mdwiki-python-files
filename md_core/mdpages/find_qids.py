@@ -23,7 +23,7 @@ from mdpy.bots import wiki_api
 from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-from mdpages.qids_others.unlinkedwikibase import work_page#(title, qid)
+from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
 # ---
 qids = sql_for_mdwiki.get_all_qids()
 # ---
@@ -73,7 +73,7 @@ def get_qids(noqids_list):
     # ---
     for i in range(0, len(noqids_list), 100):
         # ---
-        group = noqids_list[i : i + 100]
+        group = noqids_list[i: i + 100]
         # ---
         params["titles"] = '|'.join(group)
         # ---
@@ -104,6 +104,7 @@ def get_qids(noqids_list):
     # ---
     return new_title_qids
 
+
 def work_un(tab):
     for numb, (title, new_q) in enumerate(tab.items(), start=1):
         # ---
@@ -111,6 +112,7 @@ def work_un(tab):
         # ---
         if new_q:
             work_page(title, new_q)
+
 
 def start():
     # ---

@@ -344,7 +344,7 @@ def get_redirects(liste):
     for i in range(0, len(liste), 50):
         # ---
         # group = dict(list(liste.items())[i:i+50])
-        group = liste[i : i + 50]
+        group = liste[i: i + 50]
         params = {
             "action": "query",
             "format": "json",

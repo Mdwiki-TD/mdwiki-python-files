@@ -46,6 +46,7 @@ if "updatetext" in sys.argv:
     from mass.radio.lists.PD_medical import PD_medical_pages_def
     PD_medical_pages = PD_medical_pages_def()
 
+
 def get_image_extension(image_url):
     # Split the URL to get the filename and extension
     _, filename = os.path.split(image_url)
@@ -293,8 +294,8 @@ class OneCase:
         # ---
         if "updatetext" in sys.argv:
             # ---
-            tits1 = [ x for x in already_in if x in to_up]
-            tits2 = [ x for x in tits1 if f"File:{x}" not in PD_medical_pages]
+            tits1 = [x for x in already_in if x in to_up]
+            tits2 = [x for x in tits1 if f"File:{x}" not in PD_medical_pages]
             # ---
             printt(f"{len(tits1)=}, {len(tits2)=}")
             # ---
@@ -350,7 +351,7 @@ class OneCase:
         if "noset" in sys.argv:
             return
         # ---
-        sets = [ x.strip() for x in sets if x.strip() ]
+        sets = [x.strip() for x in sets if x.strip()]
         # ---
         if len(sets) < 2:
             return

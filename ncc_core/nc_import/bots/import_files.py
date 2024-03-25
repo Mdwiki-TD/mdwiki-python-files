@@ -12,6 +12,7 @@ from newapi import printe
 from nc_import.bots import upload_file
 # upload = upload_file.upload_by_url(file_name, text, url, comment='', code="en", family="wikipedia")
 
+
 def get_file_text(title):
     title = f"File:{title}" if not title.startswith("File:") else title
     printe.output(f"<<yellow>>get_file_text: {title} from nccommons:")
@@ -27,7 +28,7 @@ def import_file(title, code):
     # ---
     file_text = get_file_text(title)
     # ---
-    api_new  = ncc_NEW_API('www', family='nccommons')
+    api_new = ncc_NEW_API('www', family='nccommons')
     # api_new.Login_to_wiki()
     img_url = api_new.Get_image_url(title)
     # ---

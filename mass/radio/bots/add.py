@@ -50,4 +50,3 @@ print(f"no_info: {no_info}")
 print(f"added_system: {added_system}")
 print(f"added_author: {added_author}")
 print(f"added_published: {added_published}")
-

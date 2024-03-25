@@ -59,7 +59,7 @@ def get_editors_sql(links, site):
     # ---
     for i in range(0, len(links), 100):
         # ---
-        pages = links[i : i + 100]
+        pages = links[i: i + 100]
         # ---
         # lim = ' , '.join(['?' for x in pages])
         lim = ','.join([f'"{escape_string(x)}"' for x in pages])

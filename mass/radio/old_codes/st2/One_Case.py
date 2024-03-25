@@ -22,7 +22,7 @@ except ImportError:
 from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
-api_new  = NEW_API('www', family='nccommons')
+api_new = NEW_API('www', family='nccommons')
 api_new.Login_to_wiki()
 # ---
 main_dir = Path(__file__).parent.parent
@@ -41,10 +41,12 @@ def get_image_extension(image_url):
     ext = extension[1:]
     return ext or 'jpeg'
 
+
 def printt(s):
     if 'nopr' in sys.argv:
         return
     printe.output(s)
+
 
 class OneCase:
     def __init__(self, case_url, caseId, title, studies_ids, author):
@@ -131,7 +133,7 @@ class OneCase:
                     pywikibotoutput(traceback.format_exc())
                     pywikibotoutput("CRITICAL:")
             # ---
-            images = [ image for image in images if image ]
+            images = [image for image in images if image]
             # ---
             if not images:
                 printt(f'{study} : not found')

@@ -180,7 +180,7 @@ class WorkAll:
             # ---
             for i in range(0, len(_all_), numb):
                 # ---
-                las = dict(list(_all_.items())[i : i + numb])
+                las = dict(list(_all_.items())[i: i + numb])
                 # ---
                 ta = f'{t}_{n}'
                 # ---

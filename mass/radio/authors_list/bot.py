@@ -27,6 +27,8 @@ with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
 # ---
 print(f"Length of all_ids: {len(all_ids)}")
 # ---
+
+
 def get_missing_authors():
     printe.output("<<yellow>> get_missing_authors:")
     # ---
@@ -73,6 +75,7 @@ def get_missing_authors():
     # ---
     return updated_authors
 
+
 def make_authors_list(authors_n):
     printe.output("<<yellow>> make_authors_list:")
     # ---
@@ -105,6 +108,7 @@ def make_authors_list(authors_n):
     print("sum of all new_authors values:", sum([len(x) for x in new_authors.values()]))
     # ---
     return new_authors
+
 
 def start():
     authors_n = get_missing_authors()

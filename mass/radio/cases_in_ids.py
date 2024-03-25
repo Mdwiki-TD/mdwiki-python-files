@@ -15,12 +15,12 @@ def geo():
     print(f'lenth of jsons.cases_in_ids: {len(jsons.cases_in_ids)} ')
     already = 0
 
-    cases = CatDepth('Category:Radiopaedia images by case', sitecode='www', family="nccommons", depth=0, ns="14") # 8068 cat before me
+    cases = CatDepth('Category:Radiopaedia images by case', sitecode='www', family="nccommons", depth=0, ns="14")  # 8068 cat before me
 
     reg = r'^Category:Radiopaedia case (\d+) (.*?)$'
     # ---
     new_cases_in = {}
-    new_dup      = {}
+    new_dup = {}
     # ---
     for cat in cases:
         match = re.match(reg, cat)

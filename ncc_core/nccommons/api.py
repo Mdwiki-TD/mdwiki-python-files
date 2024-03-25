@@ -20,7 +20,7 @@ import time
 from nccommons import ext
 from newapi import printe
 from newapi.ncc_page import NEW_API
-api_new  = NEW_API('www', family='nccommons')
+api_new = NEW_API('www', family='nccommons')
 # json1    = api_new.post_params(params, addtoken=False)
 api_new.Login_to_wiki()
 # pages    = api_new.Find_pages_exists_or_not(liste)
@@ -39,11 +39,14 @@ yes_answer = ["y", "a", "", "Y", "A", "all"]
 Save_all = {1: False}
 upload_all = {1: False}
 # ---
+
+
 def py_input(s):
     printe.output(s)
     sa = input()
     # ---
     return sa
+
 
 def post_s(params, addtoken=False):
     # ---
@@ -54,8 +57,10 @@ def post_s(params, addtoken=False):
     # ---
     return json1
 
+
 def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all=0):
     return api_new.Get_All_pages(start=start, namespace=namespace, limit=limit, apfilterredir=apfilterredir, limit_all=limit_all)
+
 
 def upload_by_url(file_name, text, url, comment='', return_file_name=False, do_ext=False):
     # ---
@@ -165,6 +170,7 @@ def create_Page(text, title, summary="create page"):
 
 def Find_pages_exists_or_not(liste):
     return api_new.Find_pages_exists_or_not(liste)
+
 
 if __name__ == '__main__':
     print(Get_All_pages('', limit='10', limit_all=10))

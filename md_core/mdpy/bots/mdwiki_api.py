@@ -54,6 +54,7 @@ timesleep = 0
 def py_input(s):
     return pywikibot.input(s)
 
+
 def post_s(params, addtoken=False, files=None):
     # ---
     params['format'] = 'json'
@@ -214,7 +215,7 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
     # ---
     # Invalid = ''
     # if isinstance(r4.get("error", {}), dict):
-        # Invalid = r4.get("error", {}).get("info", '')
+    # Invalid = r4.get("error", {}).get("info", '')
     # ---
     if 'Success' in str(r4):
         printe.output(f'<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) ')

@@ -279,7 +279,7 @@ def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
     for i in range(0, len(titles), 50):
         # ---
         # group = dict(list(liste.items())[i:i+50])
-        group = titles[i : i + 50]
+        group = titles[i: i + 50]
         # ---
         params["titles"] = "|".join(group)
         # ---

@@ -6,12 +6,14 @@ skips = [
     "File:Benign enlargement of subarachnoid spaces (Radiopaedia 25801-25990 Coronal 1).jpg"
 ]
 
+
 def get_ta(text, ta):
     res = re.findall(rf"\* {ta}: (.*?)\n", text)
     if res:
         res = res[0]
         return res
     return ""
+
 
 def update_text(title, text):
     # ---
@@ -45,6 +47,7 @@ def update_text(title, text):
         page.save(newtext=text, summary="update", ASK=ASK)
     # ---
     skips.append(title)
+
 
 def update_text_new(title):
     # ---

@@ -33,8 +33,9 @@ with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
 with open(main_dir / 'jsons/cases_in_ids.json', 'r', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = { x:v for x,v in all_ids.items() if not x in cases_in_ids }
+ids_by_caseId = {x: v for x, v in all_ids.items() if not x in cases_in_ids}
 # ---
+
 
 def print_memory():
 
@@ -44,6 +45,7 @@ def print_memory():
 
     usage = psutil.Process(os.getpid()).memory_info().rss
     print(_red_ % f'memory usage: psutil {usage / 1024 / 1024} MB')
+
 
 def get_pages():
     printe.output('<<purple>> start.py get_pages:')
@@ -56,6 +58,8 @@ def get_pages():
         match = re.match(reg, cat)
         if match:
             cases_in_ids.append(str(match.group(1)))
+
+
 def de_work(tab):
     for va in tab:
         case_url = va['case_url']
@@ -72,7 +76,8 @@ def de_work(tab):
         # ---
         del bot, author, title, studies
     # ---
-    
+
+
 def main(ids_tab):
     printe.output(f'<<purple>> start.py all: {len(ids_tab)}:')
     # ---
@@ -84,10 +89,10 @@ def main(ids_tab):
         length = len(ids_tab) // 13
         for i in range(0, len(ids_tab), length):
             num = i//length+1
-            tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
+            tabs[str(num)] = dict(list(ids_tab.items())[i: i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
             print(f'tfj run sta{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"')
-        
+
         for arg in sys.argv:
             arg, _, value = arg.partition(':')
             if arg == 'get':
@@ -103,7 +108,7 @@ def main(ids_tab):
     for k, tab in ids_tab.items():
         n += 1
         # ---
-        caseId   = tab['caseId']
+        caseId = tab['caseId']
         case_url = tab['url']
         # ---
         printe.output('++++++++++++++++++++++++++++++++')
@@ -128,6 +133,7 @@ def main(ids_tab):
         tabe.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': author})
     # ---
     de_work(tabe)
+
 
 if __name__ == "__main__":
     # ---

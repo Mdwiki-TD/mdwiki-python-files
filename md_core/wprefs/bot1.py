@@ -34,6 +34,7 @@ from wprefs.wpref_text import fix_page
 move_dot = {1: False}
 expend_infobox = {1: False}
 
+
 def fix_page_here(text, title, langcode):
     newtext = text
     # ---

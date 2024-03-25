@@ -2507,10 +2507,10 @@ lista = """
     2580
     """
 # ---
-new_ids = [ x.strip() for x in lista.split("\n") if x.strip() ]
+new_ids = [x.strip() for x in lista.split("\n") if x.strip()]
 # ---
 # Parsing arguments
-lookup_dict = { x: (all_ids.get(x) or all_ids.get(int(x))) for x in new_ids if x in all_ids }
+lookup_dict = {x: (all_ids.get(x) or all_ids.get(int(x))) for x in new_ids if x in all_ids}
 
 print(f"len new_ids: {len(new_ids)}")
 print(f"len lookup_dict: {len(lookup_dict)}")

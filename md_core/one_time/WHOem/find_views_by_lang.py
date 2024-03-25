@@ -60,7 +60,7 @@ def get_v(lang, links, lang_links_mdtitle_s):
     # ---
     # split links to groups by 10 titles
     for i in range(0, len(links), 10):
-        group = dict(list(links.items())[i : i + 10])
+        group = dict(list(links.items())[i: i + 10])
         # ---
         views_tab = wiki_api.get_views_with_rest_v1(lang, group.keys())
         # ---

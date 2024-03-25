@@ -118,7 +118,7 @@ def mmain():
             kkk[1].append(x2)
     # ---
     for i in range(0, len(kkk[1]), 50):
-        group = kkk[1][i : i + 50]
+        group = kkk[1][i: i + 50]
         work_for_list(group)
         # ---
         # log()

@@ -30,6 +30,7 @@ print(f"Length of authors_to_cases: {len(authors_to_cases)}")
 print(f"Length of authors_infos: {len(authors_infos)}")
 # ---
 
+
 def make_authors_infos():
     # ---
     auths_infos = authors_infos.copy()
@@ -55,9 +56,10 @@ def make_authors_infos():
         with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'w', encoding='utf-8') as f:
             json.dump(auths_infos, f, ensure_ascii=False, indent=4)
 
+
 def start():
     make_authors_infos()
-    
+
 
 if __name__ == '__main__':
     start()

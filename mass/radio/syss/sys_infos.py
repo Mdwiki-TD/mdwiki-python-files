@@ -30,6 +30,8 @@ for arg in sys.argv:
 # ---
 nnno = dict(sorted(lenth_of_systems.items(), key=lambda x: x[1], reverse=True))
 # ---
+
+
 def get_to_do(k):
     stw_file = os.path.join(str(main_dir), f"jsons/{k}.json")
     # ---
@@ -37,9 +39,11 @@ def get_to_do(k):
     with open(stw_file, "r", encoding="utf-8") as f:
         urls_sys = json.loads(f.read())
     # ---
-    to_do = [ url for url in urls_sys.keys() if url not in ma_infos ]
+    to_do = [url for url in urls_sys.keys() if url not in ma_infos]
     # ---
     return to_do
+
+
 # ---
 nnno = list(nnno.keys())
 # ---

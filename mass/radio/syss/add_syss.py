@@ -20,18 +20,22 @@ files_path = main_dir / 'jsons'
 # ---
 # read all jsons files in main_dir and append urls to sys_urls
 # ---
-infos_files = [ f for f in os.listdir(files_path) if f.endswith('_infos.json') ]
-urls_files  = [ f for f in os.listdir(files_path) if not f.endswith('_infos.json') and f.endswith('.json') ]
+infos_files = [f for f in os.listdir(files_path) if f.endswith('_infos.json')]
+urls_files = [f for f in os.listdir(files_path) if not f.endswith('_infos.json') and f.endswith('.json')]
 # ---
 sys_urls = {}
 # ---
 printe.output(f"<<green>> urls_files: {len(urls_files)}")
 # ---
+
+
 def po(file, data, lnn):
     if len(data) < lnn and (lnn - len(data)) > 10:
         da = f"{len(data):,},".ljust(10)
         la = f"{lnn:,},".ljust(10)
         print(f"len: {da} lnn: {la} file: {file}")
+
+
 # ---
 for file in urls_files:
     # ---

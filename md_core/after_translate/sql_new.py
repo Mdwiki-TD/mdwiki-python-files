@@ -110,11 +110,11 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         # ---
         done += 1
         # ---
-        target  = lis["title"]
+        target = lis["title"]
         co_text = lis["comment_text"]
-        user    = lis["actor_name"]
+        user = lis["actor_name"]
         pupdate = lis["rev_timestamp"]
-        ns      = str(lis["page_namespace"])
+        ns = str(lis["page_namespace"])
         # ---
         pupdate = pupdate[:8]
         pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>", pupdate)
@@ -192,6 +192,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
     # ---
     return tab_lang
 
+
 def sql_results(lang):
     # ---
     qua = query_main
@@ -203,6 +204,7 @@ def sql_results(lang):
     # ---
     result = wiki_sql.sql_new(qua, str(lang))
     return result
+
 
 def main():
     # ---
@@ -254,6 +256,7 @@ def main():
         add_to_mdwiki_sql({lange: lang_tab}, to_update.get(lange, {}))
     # ---
     not_pages(titles_not_0)
+
 
 if __name__ == "__main__":
     main()

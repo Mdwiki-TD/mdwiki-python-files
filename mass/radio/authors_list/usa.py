@@ -25,6 +25,8 @@ with open(main_dir / 'authors_infos.json', 'r', encoding='utf-8') as f:
 with open(main_dir / 'authors_to_cases.json', 'r', encoding='utf-8') as f:
     authors_to_cases = json.load(f)
 # ---
+
+
 def work(tab):
     for numb, (author, ids) in enumerate(tab.items(), 1):
         ids = authors_to_cases.get(author, [])
@@ -37,19 +39,21 @@ def work(tab):
         if ids:
             main_by_ids(ids)
 
+
 def get_usa_auths():
-    usa_auths = [ k for k, v in authors_infos.items() if 'united states' in v['location'].lower()]
+    usa_auths = [k for k, v in authors_infos.items() if 'united states' in v['location'].lower()]
     print(f"len usa_auths: {len(usa_auths)}")
     # ---
     return usa_auths
+
 
 def sa():
     print(f"len all authors: {len(authors_infos)}")
 
     # filter only authors with location contains "united states"
     usa_auths = get_usa_auths()
-    
-    tab = { au : authors_to_cases.get(au, []) for au in usa_auths if au in authors_to_cases}
+
+    tab = {au: authors_to_cases.get(au, []) for au in usa_auths if au in authors_to_cases}
     print(f"len tab: {len(tab)}")
 
     # sort by number of cases
@@ -65,6 +69,7 @@ def sa():
         work(tab2)
     else:
         work(tab)
+
 
 if __name__ == '__main__':
     sa()

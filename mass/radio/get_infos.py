@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from mass.radio.jsons_files import jsons, dump_json_file, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 
+
 def get_id_infos(url):
     # ---
     case_tab = {"url": url, "caseId": "", "title": "", "studies": [], "system": "", "author": "", "published": ""}
@@ -71,10 +72,10 @@ def get_id_infos(url):
     if au:
         author = au.get('content') or ''
     # ---
-    case_tab['caseId']  = case_id
+    case_tab['caseId'] = case_id
     case_tab['studies'] = studies
-    case_tab['title']   = title
-    case_tab['author']  = author
+    case_tab['title'] = title
+    case_tab['author'] = author
     # ---
     return case_tab
 

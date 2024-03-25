@@ -13,6 +13,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from newapi import printe
 
+
 def get_soup(url):
     # ---
     try:
@@ -34,6 +35,8 @@ def get_soup(url):
         return
     # ---
     return soup
+
+
 def get_user_infos(url):
     """Retrieve user information from a given URL."""
     """Parameters:
@@ -78,6 +81,7 @@ def get_user_infos(url):
     # ---
     return user_info
 
+
 def get_author_infos(auth, first_case_url):
     """Retrieve author information for a given author and first case URL."""
     """Parameters:
@@ -89,9 +93,9 @@ def get_author_infos(auth, first_case_url):
     printe.output(f"<<yellow>> get_author_infos:{auth=}, {first_case_url=}")
     # ---
     info = {
-        "url" : "",
-        "location" : "",
-        "cases" : 0
+        "url": "",
+        "location": "",
+        "cases": 0
     }
     # ---
     na = get_user_infos(first_case_url)

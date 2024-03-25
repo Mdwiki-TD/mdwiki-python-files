@@ -43,6 +43,7 @@ def save_image(image_data, file_name):
             file.write(image_data)
         return file_name
 
+
 def work_bmp(url):
     extension = url.split(".")[-1].lower()
     # ---

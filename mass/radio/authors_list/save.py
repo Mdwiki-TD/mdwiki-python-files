@@ -17,11 +17,12 @@ with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', e
     authors_infos = json.load(f)
 # ---
 
+
 def sa(au_infos):
     text = ""
-    
+
     text += f"* All Authors: {len(au_infos):,}\n"
-    
+
     text += '{| class="wikitable sortable"\n'
     text += '|-\n'
     text += '! # !! Author !! cats !! Cases !! Url !! Location\n'
@@ -37,7 +38,7 @@ def sa(au_infos):
         text += f'| {ta["cases"]:,}\n'
         text += f'| {ta["url"]}\n'
         text += f'| {ta["location"]}\n'
-    
+
     text += '|}\n\n'
 
     page = ncc_MainPage("User:Mr. Ibrahem/Radiopaedia authors", 'www', family='nccommons')
@@ -46,6 +47,7 @@ def sa(au_infos):
         page.save(newtext=text, summary='update')
     else:
         page.Create(text=text, summary='update')
+
 
 if __name__ == '__main__':
     sa(authors_infos)

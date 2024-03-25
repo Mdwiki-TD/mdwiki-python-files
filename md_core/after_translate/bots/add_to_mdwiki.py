@@ -24,11 +24,11 @@ def add_to_mdwiki_sql_users(lista):
         return
     # ---
     for tabe in lista:
-        mdtitle   = tabe['mdtitle']
-        lang      = tabe['lang']
-        target    = tabe['target']
-        user      = tabe['user']
-        pupdate   = tabe['pupdate']
+        mdtitle = tabe['mdtitle']
+        lang = tabe['lang']
+        target = tabe['target']
+        user = tabe['user']
+        pupdate = tabe['pupdate']
         # ---
         cat = cat_for_pages.get(mdtitle, '')
         # ---
@@ -38,7 +38,7 @@ def add_to_mdwiki_sql_users(lista):
         # ---
         mdtit = escape_string(mdtitle)
         user2 = escape_string(user)
-        tar   = escape_string(target)
+        tar = escape_string(target)
         # ---
         add_date = time.strftime("%Y-%m-%d")
         # ---
@@ -75,20 +75,20 @@ def add_to_mdwiki_sql(table, to_update_lang_user_mdtitle_x):
     # ---
     for _, tab in table.items():
         for tt in tab:
-            tabe      = tab[tt]
-            mdtitle   = tabe['mdtitle']
-            lang      = tabe['lang']
-            target    = tabe['target']
-            user      = tabe['user']
-            pupdate   = tabe['pupdate']
+            tabe = tab[tt]
+            mdtitle = tabe['mdtitle']
+            lang = tabe['lang']
+            target = tabe['target']
+            user = tabe['user']
+            pupdate = tabe['pupdate']
             namespace = tabe['namespace']
             # ---
             cat = cat_for_pages.get(mdtitle, '')
             # ---
             mdtit = escape_string(mdtitle)
             user2 = escape_string(user)
-            tar   = escape_string(target)
-            word  = 0
+            tar = escape_string(target)
+            word = 0
             # ---
             if str(namespace) != '0':
                 lista.append(tabe)

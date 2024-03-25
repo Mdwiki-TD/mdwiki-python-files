@@ -11,51 +11,53 @@ from mass.radio.jsons_files import jsons, dump_json_file, ids_to_urls, urls_to_i
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0, systems=0)
 # ---
 systems = [
-    "Breast", # 50
-    "Cardiac", # 69
-    "Central Nervous System", # 549
-    "Chest", # 344
-    "Forensic", # 16
-    "Gastrointestinal", # 356
-    "Gynaecology", # 110
-    "Haematology", # 23
-    "Head & Neck", # 272
-    "Hepatobiliary", # 139
-    "Interventional", # 30
-    "Musculoskeletal", # 814
-    "Obstetrics", # 45
-    "Oncology", # 208
-    "Paediatrics", # 303
-    "Spine", # 127
-    "Trauma", # 171
-    "Urogenital", # 221
-    "Vascular", # 180
-    "Not Applicable" # 7
+    "Breast",  # 50
+    "Cardiac",  # 69
+    "Central Nervous System",  # 549
+    "Chest",  # 344
+    "Forensic",  # 16
+    "Gastrointestinal",  # 356
+    "Gynaecology",  # 110
+    "Haematology",  # 23
+    "Head & Neck",  # 272
+    "Hepatobiliary",  # 139
+    "Interventional",  # 30
+    "Musculoskeletal",  # 814
+    "Obstetrics",  # 45
+    "Oncology",  # 208
+    "Paediatrics",  # 303
+    "Spine",  # 127
+    "Trauma",  # 171
+    "Urogenital",  # 221
+    "Vascular",  # 180
+    "Not Applicable"  # 7
 ]
 # ---
 lenth_of_systems = {
-    "Breast":50,
-    "Cardiac":69,
-    "Central Nervous System":549,
-    "Chest":344,
-    "Forensic":16,
-    "Gastrointestinal":356,
-    "Gynaecology":110,
-    "Haematology":23,
-    "Head & Neck":272,
-    "Hepatobiliary":139,
-    "Interventional":30,
-    "Musculoskeletal":814,
-    "Obstetrics":45,
-    "Oncology":208,
-    "Paediatrics":303,
-    "Spine":127,
-    "Trauma":171,
-    "Urogenital":221,
-    "Vascular":180,
-    "Not Applicable":7
+    "Breast": 50,
+    "Cardiac": 69,
+    "Central Nervous System": 549,
+    "Chest": 344,
+    "Forensic": 16,
+    "Gastrointestinal": 356,
+    "Gynaecology": 110,
+    "Haematology": 23,
+    "Head & Neck": 272,
+    "Hepatobiliary": 139,
+    "Interventional": 30,
+    "Musculoskeletal": 814,
+    "Obstetrics": 45,
+    "Oncology": 208,
+    "Paediatrics": 303,
+    "Spine": 127,
+    "Trauma": 171,
+    "Urogenital": 221,
+    "Vascular": 180,
+    "Not Applicable": 7
 }
 # ---
+
+
 def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
     print(f"get_urls system:{system}::")
     # ---
@@ -147,9 +149,10 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
 
     return tat
 
+
 def main():
     # ---
-    jsons.systems.update({x:False for x in systems if x not in jsons.systems})
+    jsons.systems.update({x: False for x in systems if x not in jsons.systems})
     # ---
     for numb, system in enumerate(systems, start=1):
         # ---
@@ -162,7 +165,7 @@ def main():
         if not urls_data:
             continue
         # ---
-        new = {x:v for x, v in urls_data.items() if x not in jsons.urls}
+        new = {x: v for x, v in urls_data.items() if x not in jsons.urls}
         # ---
         print(f"new: {len(new)}, urls_data: {len(urls_data)}")
         # ---
@@ -179,6 +182,7 @@ def main():
     dump_json_file('jsons/urls.json', jsons.urls, False)
     dump_json_file('jsons/infos.json', jsons.infos, False)
     # ---
+
 
 if __name__ == "__main__":
     main()

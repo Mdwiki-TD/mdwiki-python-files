@@ -9,7 +9,8 @@ import re
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
-from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
+from mass.radio.lists.cases_to_cats import cases_cats  # cases_cats()
+
 
 def images_to_cats():
     members = CatDepth("Category:Radiopaedia_images_by_system", sitecode="www", family="nccommons", depth=1, ns="10")

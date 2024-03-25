@@ -23,6 +23,7 @@ from newapi.mdwiki_page import MainPage as md_MainPage
 # api_new  = NEW_API('ar', family='wikipedia')
 # infos  = Find_pages_exists_or_not(titles)
 
+
 def get_langs_tabs():
     # ---
     que = 'select id, title, lang, target from pages where target != "";'
@@ -44,9 +45,10 @@ def get_langs_tabs():
         langs[lang].append(tab)
     # ---
     if lang_to_get in langs:
-        langs = { lang_to_get : langs[lang_to_get] }
+        langs = {lang_to_get: langs[lang_to_get]}
     # ---
     return langs
+
 
 def get_new_target_log(lang, target):
     # ---
@@ -66,13 +68,13 @@ def get_new_target_log(lang, target):
         # ---
         printe.output(f'<<blue>> get_new_target_log({n}) lang:{lang}, target:{target}')
         # ---
-        logs     = api_new.get_logs(to_check)
+        logs = api_new.get_logs(to_check)
         # ---
         new = ''
         # ---
         for log in logs:
             title = log.get("title", "")
-            new   = log.get("params", {}).get("target_title", "")
+            new = log.get("params", {}).get("target_title", "")
             # ---
             if new:
                 break
@@ -91,6 +93,7 @@ def get_new_target_log(lang, target):
     printe.output(f'get_new_target_log() lang:{lang}, target:{target}, new:{to_check}')
     # ---
     return to_check
+
 
 def add_text(tab):
     # ---
@@ -117,6 +120,7 @@ def add_text(tab):
     # ---
     page.save(newtext=newtext, summary="update", nocreate=0)
 
+
 def start():
     # ---
     text = []
@@ -127,17 +131,17 @@ def start():
         # ---
         printe.output(f'<<green>> lang:{lang}, has {len(tabs)} tabs')
         # ---
-        titles = [ x['target'] for x in tabs ]
+        titles = [x['target'] for x in tabs]
         # ---
-        api_new  = NEW_API(lang, family='wikipedia')
-        pages    = api_new.Find_pages_exists_or_not(titles, get_redirect=True)
+        api_new = NEW_API(lang, family='wikipedia')
+        pages = api_new.Find_pages_exists_or_not(titles, get_redirect=True)
         # ---
-        missing   = [ x for x, v in pages.items() if not v ]
-        redirects = [ x for x, v in pages.items() if v == 'redirect' ]
+        missing = [x for x, v in pages.items() if not v]
+        redirects = [x for x, v in pages.items() if v == 'redirect']
         # ---
         printe.output(f'lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}')
         # ---
-        new_tabs = [ tab for tab in tabs if tab['target'] in missing or tab['target'] in redirects ]
+        new_tabs = [tab for tab in tabs if tab['target'] in missing or tab['target'] in redirects]
         # ---
         printe.output(f'lang:{lang}, has {len(new_tabs)} new tabs')
         # ---
@@ -150,19 +154,20 @@ def start():
                 printe.output(f'<<red>> page "{target}" not exists in {lang}')
                 new_target = get_new_target_log(lang, target)
             elif target in redirects:
-                page      = MainPage(target, lang, family='wikipedia')
+                page = MainPage(target, lang, family='wikipedia')
                 new_target = page.get_redirect_target()
             # ---
             if new_target:
                 page2 = MainPage(new_target, lang, family='wikipedia')
                 # ---
-                if page2.exists() and not page2.isRedirect() :
+                if page2.exists() and not page2.isRedirect():
                     printe.output(f'<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}')
                     sql_for_mdwiki.set_target_where_id(new_target, iid)
                     text.append([lang, target, new_target])
     # ---
     if text:
         add_text(text)
+
 
 if __name__ == "__main__":
     if 'test' in sys.argv:

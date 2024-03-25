@@ -37,7 +37,7 @@ def get_sitelinks(qs_list, lena=300):
     # ---
     for i in range(0, len(qs_list), lena):
         # ---
-        qids = qs_list[i : i + lena]
+        qids = qs_list[i: i + lena]
         # ---
         params_wd["ids"] = '|'.join(qids)
         # ---

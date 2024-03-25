@@ -72,7 +72,7 @@ def do_it(va):
 def multi_work(tab, numb=10):
     done = 0
     for i in range(0, len(tab), numb):
-        group = tab[i : i + numb]
+        group = tab[i: i + numb]
         # ---
         done += numb
         printe.output(f"<<purple>> done: {done}:")
@@ -96,7 +96,7 @@ def ddo(taba):
     length = (len(ids_tabs) // 6) + 1
     for i in range(0, len(ids_tabs), length):
         num = i // length + 1
-        tabs[str(num)] = dict(list(ids_tabs.items())[i : i + length])
+        tabs[str(num)] = dict(list(ids_tabs.items())[i: i + length])
         # print(f'tab {num} : {len(tabs[str(num)])}')
         print(f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:{num} {len(tabs[str(num)])}"')
 
@@ -145,6 +145,7 @@ def main(ids_tab):
     # ---
     multi_work(tab)
 
+
 def main_by_ids(ids):
     printe.output(f"<<purple>> start.py main_by_ids: {len(ids)=}:")
     # ---
@@ -155,6 +156,7 @@ def main_by_ids(ids):
     print(f"main_by_ids caseId not in all_ids: {len(not_in)}")
     # ---
     main(ids_tab)
+
 
 if __name__ == "__main__":
     # ---

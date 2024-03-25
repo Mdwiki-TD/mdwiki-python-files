@@ -12,11 +12,12 @@ from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from mdpages.qids_others.unlinkedwikibase import work_page#(title, qid)
+from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
 # ---
 mdlist = sql_for_mdwiki.get_all_qids()
 # ---
 qs_list = {q: t for t, q in mdlist.items() if q != ''}
+
 
 def work_un(tab):
     for numb, (old_q, new_q) in enumerate(tab.items(), start=1):
@@ -25,7 +26,8 @@ def work_un(tab):
         printe.output(f'<<yellow>> {numb}, {title=}, {old_q=}, {new_q=}')
         # ---
         work_page(title, new_q)
-        
+
+
 def fix_redirects(qs_list):
     # ---
     # python3 core8/pwb.py mdpy/fixqids redirects
@@ -52,6 +54,7 @@ def fix_redirects(qs_list):
             printe.output('<<lightgreen>> add "fix" to sys.argv to fix them..')
     # ----
     work_un(reds)
+
 
 def add_to_qids(mdlist):
     # ---

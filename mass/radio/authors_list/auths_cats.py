@@ -20,7 +20,7 @@ from multiprocessing import Pool
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
-from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
+from mass.radio.lists.cases_to_cats import cases_cats  # cases_cats()
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
@@ -32,6 +32,7 @@ with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', e
 # ---
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")
 # ---
+
 
 def create_cat(cat, text):
     page = ncc_MainPage(cat, 'www', family='nccommons')
@@ -86,10 +87,10 @@ def add_cat(pages, cat):
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
     # ---
-    cat  = f"Category:Radiopaedia cases by {auth}"
+    cat = f"Category:Radiopaedia cases by {auth}"
     text = ""
     # ---
-    url      = authors_infos.get(auth, {}).get('url')
+    url = authors_infos.get(auth, {}).get('url')
     location = authors_infos.get(auth, {}).get('location')
     # ---
     if url:
@@ -117,6 +118,7 @@ def get_auth_cats(cats, auth):
     printe.output(f"get_auth_cats: {auth=}, {len(cat_list)=}")
     # ---
     return cat_list
+
 
 def start():
     # ---
