@@ -14,8 +14,7 @@ main_dir = Path(__file__).parent
 
 
 def doo():
-    with open(os.path.join(str(main_dir), "images.json"),
-              encoding="utf-8") as f:
+    with open(os.path.join(str(main_dir), "images.json"), encoding="utf-8") as f:
         data = json.load(f)
 
     names = {}
@@ -29,8 +28,7 @@ def doo():
                 names[name] = 0
             names[name] += 1
 
-    text = ('{| class="wikitable sortable"\n|-\n' +
-            "! # !! Category !! Image set !! Url !! Number of images\n|-\n")
+    text = '{| class="wikitable sortable"\n|-\n' + "! # !! Category !! Image set !! Url !! Number of images\n|-\n"
     for n, (x, count) in enumerate(chapters.items(), start=1):
         url = data[x]["url"]
 
@@ -46,9 +44,7 @@ def doo():
     text += "|}"
     text += "\n[[Category:UndergradImaging|*]]"
 
-    page = ncc_MainPage("User:Mr._Ibrahem/UndergradImaging",
-                        "www",
-                        family="nccommons")
+    page = ncc_MainPage("User:Mr._Ibrahem/UndergradImaging", "www", family="nccommons")
     # ---
     page.save(newtext=text, summary="update", nocreate=0, minor="")
     # sort names by count

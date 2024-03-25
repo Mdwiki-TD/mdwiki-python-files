@@ -29,9 +29,7 @@ def get_new_ext(error_info, file_name):
         correct_ext = ".bmp"
 
     if not correct_ext:
-        print(
-            "Could not determine the correct file extension for the MIME type."
-        )
+        print("Could not determine the correct file extension for the MIME type.")
         return file_name
 
     # استبدال الامتداد في اسم الملف
@@ -46,8 +44,7 @@ if __name__ == "__main__":
     error = {
         "code": "verification-error",
         # "info": "File extension \".jpg\" does not match the detected MIME type of the file (image/png).",
-        "info":
-        'File extension ".jpg" does not match the detected MIME type of the file (image/x-bmp).',
+        "info": 'File extension ".jpg" does not match the detected MIME type of the file (image/x-bmp).',
         "details": ["filetype-mime-mismatch", "jpg", "image/png"],
         "*": "See ...",
     }

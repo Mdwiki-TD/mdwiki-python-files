@@ -1,6 +1,7 @@
 """ """
 
 import json
+
 # ---
 import os
 from pathlib import Path
@@ -35,16 +36,13 @@ def get_sitelinks(qs_list, lena=300):
     # ---
     for i in range(0, len(qs_list), lena):
         # ---
-        qids = qs_list[i:i + lena]
+        qids = qs_list[i : i + lena]
         # ---
         params_wd["ids"] = "|".join(qids)
         # ---
-        printe.output(
-            f"<<lightgreen>> done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids."
-        )
+        printe.output(f"<<lightgreen>> done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
         # ---
-        json1 = wikidataapi.post(params_wd,
-                                 apiurl="https://www.wikidata.org/w/api.php")
+        json1 = wikidataapi.post(params_wd, apiurl="https://www.wikidata.org/w/api.php")
         # ---
         if json1:
             # ---

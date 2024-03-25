@@ -11,6 +11,7 @@ from nccommons import mosab_api
 """
 
 import configparser
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -22,6 +23,7 @@ import urllib.parse
 from pathlib import Path
 
 import requests
+
 # ---
 from newapi import printe
 
@@ -44,12 +46,7 @@ yes_answer = ["y", "a", "", "Y", "A", "all"]
 Save_all = {1: False}
 upload_all = {1: False}
 # ---
-r1_params = {
-    "format": "json",
-    "action": "query",
-    "meta": "tokens",
-    "type": "login"
-}
+r1_params = {"format": "json", "action": "query", "meta": "tokens", "type": "login"}
 r2_params = {
     "format": "json",
     "action": "login",
@@ -87,21 +84,14 @@ def Log_to_wiki(family="nccommons", lang="www"):
     r22 = SS["ss"].post(SS["url"], data=r2_params)
     # ---
     if r22.json()["login"]["result"] != "Success":
-        printe.output(
-            f"nccommons.py: login failed, reason: {r22.json()['login']['reason']}"
-        )
+        printe.output(f"nccommons.py: login failed, reason: {r22.json()['login']['reason']}")
         # sys.exit(1)
         SS["login_not_done"] = True
         return False
     else:
         printe.output("com.py login Success")
     # ---
-    SS["r33"] = SS["ss"].get(SS["url"],
-                             params={
-                                 "format": "json",
-                                 "action": "query",
-                                 "meta": "tokens"
-    })
+    SS["r33"] = SS["ss"].get(SS["url"], params={"format": "json", "action": "query", "meta": "tokens"})
     # ---
     SS["r3_token"] = SS["r33"].json()["query"]["tokens"]["csrftoken"]
     SS["login_not_done"] = False
@@ -147,15 +137,9 @@ def post_s(params, addtoken=False):
     return jj
 
 
-def Get_All_pages(start,
-                  namespace="0",
-                  limit="max",
-                  apfilterredir="",
-                  limit_all=0):
+def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all=0):
     # ---
-    printe.output(
-        f"Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}"
-    )
+    printe.output(f"Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}")
     # ---
     numb = 0
     # ---
@@ -195,8 +179,7 @@ def Get_All_pages(start,
         apcontinue = json1.get("continue", {}).get("apcontinue", "")
         # ---
         newp = json1.get("query", {}).get("allpages", [])
-        printe.output(
-            f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
+        printe.output(f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
         # ---
         for x in newp:
             if x["title"] not in Main_table:
@@ -213,8 +196,7 @@ def Get_All_pages(start,
     if numb > 0 and apcontinue == "":
         printe.output("<<lightgreen>> apcontinue == '' ")
     # ---
-    printe.output(
-        f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
+    printe.output(f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
     # ---
     return Main_table
 
@@ -236,9 +218,7 @@ def upload_by_url(file_name, text, url, comment=""):
     if not upload_all[1] and "ask" in sys.argv:
         if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(
-            f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o):user:{r2_params['lgname']}"
-        )
+        sa = py_input(f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o):user:{r2_params['lgname']}")
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -246,8 +226,7 @@ def upload_by_url(file_name, text, url, comment=""):
         # ---
         if sa.strip() == "a":
             printe.output("---------------------------------------------")
-            printe.output(
-                "nccommons.py upload_by_url save all without asking.")
+            printe.output("nccommons.py upload_by_url save all without asking.")
             printe.output("---------------------------------------------")
             upload_all[1] = True
         # ---
@@ -264,13 +243,10 @@ def upload_by_url(file_name, text, url, comment=""):
     error_code = result.get("error", {}).get("code", "")
     # ---
     if success:
-        printe.output(
-            f"<<lightgreen>> ** true ..  {SS['family']} : [[File:{file_name}]] "
-        )
+        printe.output(f"<<lightgreen>> ** true ..  {SS['family']} : [[File:{file_name}]] ")
         return True
     elif error != {}:
-        printe.output(
-            f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error)
     else:
         printe.output(result)
@@ -295,9 +271,7 @@ def create_Page(text, title, summary="create page"):
     if not Save_all[1] and ("ask" in sys.argv and "save" not in sys.argv):
         if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(
-            f"<<lightyellow>> nccommons.py: create:\"{title}\" page ? ([y]es, [N]o):user:{r2_params['lgname']}"
-        )
+        sa = py_input(f"<<lightyellow>> nccommons.py: create:\"{title}\" page ? ([y]es, [N]o):user:{r2_params['lgname']}")
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -324,8 +298,7 @@ def create_Page(text, title, summary="create page"):
         time.sleep(time_sleep)
         return True
     elif error != {}:
-        printe.output(
-            f"<<lightred>> error when create_Page, error_code:{error_code}")
+        printe.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
         printe.output(error)
     else:
         printe.output(result)
@@ -347,7 +320,7 @@ def Find_pages_exists_or_not(liste):
     exists = 0
     # ---
     for i in range(0, len(liste), 50):
-        titles = liste[i:i + 50]
+        titles = liste[i : i + 50]
         # ---
         done += len(titles)
         # ---
@@ -387,8 +360,7 @@ def Find_pages_exists_or_not(liste):
                 else:
                     exists += 1
     # ---
-    printe.output(
-        f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}")
+    printe.output(f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}")
     # ---
     return table
 

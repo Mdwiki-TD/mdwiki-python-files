@@ -39,11 +39,9 @@ def process_folders(root_folder):
         if disease_name:
             all_diseases[disease_name] = len(images_info.keys())
 
-    all_diseases = dict(
-        sorted(all_diseases.items(), key=lambda x: x[1], reverse=True))
+    all_diseases = dict(sorted(all_diseases.items(), key=lambda x: x[1], reverse=True))
 
-    text = ('{| class="wikitable sortable"\n|-\n' +
-            "! # !! Category !! Image set !! Number of images\n|-\n")
+    text = '{| class="wikitable sortable"\n|-\n' + "! # !! Category !! Image set !! Number of images\n|-\n"
     for n, (x, count) in enumerate(all_diseases.items(), start=1):
         text += f"! {n}\n"
         # + ' ||{{#ifexist:Category:' + x + '|1|0}}\n'
@@ -54,9 +52,7 @@ def process_folders(root_folder):
 
     text += "|}"
 
-    page = ncc_MainPage("User:Mr._Ibrahem/Atlasdermatologico",
-                        "www",
-                        family="nccommons")
+    page = ncc_MainPage("User:Mr._Ibrahem/Atlasdermatologico", "www", family="nccommons")
     # ---
     page.save(newtext=text, summary="update", nocreate=0, minor="")
 

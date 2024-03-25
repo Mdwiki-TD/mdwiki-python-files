@@ -26,22 +26,16 @@ def add_resources(new_text, drug_resources):
     # ---
     if page_identifier_params == {}:
         return new_text, ""
-    to_add = "".join(f"| {pa} = {pap}\n"
-                     for pa, pap in page_identifier_params.items())
+    to_add = "".join(f"| {pa} = {pap}\n" for pa, pap in page_identifier_params.items())
     # ---
-    to_add = (to_add.replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace(
-        "\n\n\n", "\n").replace("\n\n\n", "\n"))
-    to_add = (to_add.replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace(
-        "\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|"))
-    to_add = (to_add.replace("\n\n<", "\n<").replace("\n\n<", "\n<").replace(
-        "\n\n<", "\n<").replace("\n\n<", "\n<").replace("\n\n<", "\n<"))
+    to_add = to_add.replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n")
+    to_add = to_add.replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|")
+    to_add = to_add.replace("\n\n<", "\n<").replace("\n\n<", "\n<").replace("\n\n<", "\n<").replace("\n\n<", "\n<").replace("\n\n<", "\n<")
     # ---
     dng = r"\=\=\s*External links\s*\=\=\s*\*\s*\{\{cite web\s*\|\s*\|\s*url\s*\=\s*https\:\/\/druginfo.*?\}\}"
     # ---
     External = re.search(dng, new_text, flags=re.IGNORECASE)
-    External2 = re.search(r"(\=\=\s*External links\s*\=\=)",
-                          new_text,
-                          flags=re.IGNORECASE)
+    External2 = re.search(r"(\=\=\s*External links\s*\=\=)", new_text, flags=re.IGNORECASE)
     External3 = re.search(r"(\{\{reflist\}\})", new_text, flags=re.IGNORECASE)
     # ---
     line = ""
@@ -55,8 +49,7 @@ def add_resources(new_text, drug_resources):
             new_text = new_text.replace(drug_resources, line)
     # ---
     else:
-        new_line = "{{drug resources\n\n<!--Identifiers-->\n" + to_add.strip(
-        ) + "\n}}"
+        new_line = "{{drug resources\n\n<!--Identifiers-->\n" + to_add.strip() + "\n}}"
         tt = ""
         to = ""
         # ---
@@ -72,8 +65,7 @@ def add_resources(new_text, drug_resources):
             new_text = new_text.replace(tt, tt + "\n" + new_line)
         # ---
         elif to != "":
-            new_text = new_text.replace(
-                to, to + "\n== External links ==\n" + new_line)
+            new_text = new_text.replace(to, to + "\n== External links ==\n" + new_line)
         # ---
         else:
             new_text = new_text + "\n\n== External links ==\n" + new_line
@@ -134,17 +126,11 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     infobox_new = infobox_temp.string
     # ---
     # remove identifiers from {{drugbox|
-    infobox_new = re.sub(r"<!--\s*Identifiers\s*-->",
-                         "",
-                         infobox_new,
-                         flags=re.IGNORECASE)
+    infobox_new = re.sub(r"<!--\s*Identifiers\s*-->", "", infobox_new, flags=re.IGNORECASE)
     # ---<!--Identifiers-->
     if new_text.find(infobox_old) != -1:
         # ---
-        infobox_new = re.sub(r"\n\s*\n\s*[\n\s]+",
-                             "\n\n",
-                             infobox_new,
-                             flags=re.DOTALL | re.MULTILINE)
+        infobox_new = re.sub(r"\n\s*\n\s*[\n\s]+", "\n\n", infobox_new, flags=re.DOTALL | re.MULTILINE)
         # ---
         new_text = new_text.replace(infobox_old, infobox_new)
     # ---
@@ -167,9 +153,7 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
             # ---
             if resources_temp.has_arg(param):
                 # ---
-                printn(
-                    f"resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}"
-                )
+                printn(f"resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}")
                 # ---
                 old_value = resources_temp.get_arg(param).value
                 # ---
@@ -177,19 +161,14 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
                     resources_temp.set_arg(f" {param} ", value)
                 # ---
             else:
-                resources_temp.set_arg(f" {param} ",
-                                       f"{value}\n",
-                                       preserve_spacing=False)
+                resources_temp.set_arg(f" {param} ", f"{value}\n", preserve_spacing=False)
         # ---
         resources_new = resources_temp.string
         # resources_new = resources_temp.pformat()
         # ---
         printn(f"resources_new = {resources_new}")
         # ---
-        resources_new = re.sub(r"\n\n\n+<",
-                               "\n\n<",
-                               resources_new,
-                               flags=re.DOTALL | re.MULTILINE)
+        resources_new = re.sub(r"\n\n\n+<", "\n\n<", resources_new, flags=re.DOTALL | re.MULTILINE)
         # ---
         new_text = new_text.replace(resources_old, resources_new)
         # ---

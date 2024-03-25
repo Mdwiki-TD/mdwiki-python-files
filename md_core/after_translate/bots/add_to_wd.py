@@ -17,9 +17,9 @@ from after_translate.bots import add_to_wd
 import re
 
 from mdpy import orred
-from mdpy.bots import (en_to_md, mdwiki_api, sql_for_mdwiki, wiki_api,
-                       wikidataapi)
+from mdpy.bots import en_to_md, mdwiki_api, sql_for_mdwiki, wiki_api, wikidataapi
 from newapi import printe
+
 # ---
 from pymysql.converters import escape_string
 
@@ -73,13 +73,7 @@ def work_with_2_qids(oldq, new_q):
     # ---
     if en.startswith("User:Mr. Ibrahem"):
         printe.output(f"<<lightblue>> remove sitelink {en}")
-        remove = wikidataapi.post(
-            {
-                "action": "wbsetsitelink",
-                "id": oldq,
-                "linksite": "enwiki"
-            },
-            token=True)
+        remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, token=True)
         if "success" in remove:
             len_sites -= 1
             printe.output("<<lightgreen>> **remove sitelink true.")
@@ -88,12 +82,7 @@ def work_with_2_qids(oldq, new_q):
             printe.output(remove)
         # ---
         remove2 = wikidataapi.post(
-            {
-                "action": "wbsetlabel",
-                "id": oldq,
-                "language": "en",
-                "value": ""
-            },
+            {"action": "wbsetlabel", "id": oldq, "language": "en", "value": ""},
             token=True,
         )
         if "success" in remove2:
@@ -189,8 +178,7 @@ def Add_to_wikidata(mdtitle, lang, target, user):
     # ---
     line = f"[[{lang}:{target}]]"
     if tat != "" and tat.find(line) == -1 and tat.find(lalas) == -1:
-        mdwiki_api.Add_To_Bottom("\n" + line, f"add link to {line}", mdtitle,
-                                 False)
+        mdwiki_api.Add_To_Bottom("\n" + line, f"add link to {line}", mdtitle, False)
     # ---
     if lang == "or":
         orred.create_redirect(target, mdtitle)
@@ -224,9 +212,7 @@ def add_tab_to_wd(table):
             number += 1
             # ---
             printe.output("=========================")
-            printe.output(
-                "<<lightgreen>>p %d/%d: mdtitle:%s,lang:%s,target:%s" %
-                (number, len(tab), mdtitle, lang, target))
+            printe.output("<<lightgreen>>p %d/%d: mdtitle:%s,lang:%s,target:%s" % (number, len(tab), mdtitle, lang, target))
             # ---
             Add_to_wikidata(mdtitle, lang, target, user)
 

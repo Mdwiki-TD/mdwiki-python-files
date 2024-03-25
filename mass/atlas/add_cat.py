@@ -39,9 +39,7 @@ def process_folders(root_folder):
         if disease_name:
             n += 1
             printe.output(f"{n} diseases:{disease_name}:")
-            page = ncc_MainPage(f"Category:{disease_name}",
-                                "www",
-                                family="nccommons")
+            page = ncc_MainPage(f"Category:{disease_name}", "www", family="nccommons")
             # ---
             categories = page.get_categories(with_hidden=False)
             # ---

@@ -17,6 +17,7 @@ import time
 
 import tqdm
 from mdpy.bots import sql_for_mdwiki
+
 # ---
 from newapi import printe
 from newapi.mdwiki_page import MainPage as md_MainPage
@@ -68,8 +69,7 @@ def get_new_target_log(lang, target):
         # ---
         n += 1
         # ---
-        printe.output(
-            f"<<blue>> get_new_target_log({n}) lang:{lang}, target:{target}")
+        printe.output(f"<<blue>> get_new_target_log({n}) lang:{lang}, target:{target}")
         # ---
         logs = api_new.get_logs(to_check)
         # ---
@@ -93,8 +93,7 @@ def get_new_target_log(lang, target):
             printe.output(f"to_check:{to_check} in done")
             break
     # ---
-    printe.output(
-        f"get_new_target_log() lang:{lang}, target:{target}, new:{to_check}")
+    printe.output(f"get_new_target_log() lang:{lang}, target:{target}, new:{to_check}")
     # ---
     return to_check
 
@@ -143,13 +142,9 @@ def start():
         missing = [x for x, v in pages.items() if not v]
         redirects = [x for x, v in pages.items() if v == "redirect"]
         # ---
-        printe.output(
-            f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
+        printe.output(f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
         # ---
-        new_tabs = [
-            tab for tab in tabs
-            if tab["target"] in missing or tab["target"] in redirects
-        ]
+        new_tabs = [tab for tab in tabs if tab["target"] in missing or tab["target"] in redirects]
         # ---
         printe.output(f"lang:{lang}, has {len(new_tabs)} new tabs")
         # ---
@@ -169,9 +164,7 @@ def start():
                 page2 = MainPage(new_target, lang, family="wikipedia")
                 # ---
                 if page2.exists() and not page2.isRedirect():
-                    printe.output(
-                        f"<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}"
-                    )
+                    printe.output(f"<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}")
                     sql_for_mdwiki.set_target_where_id(new_target, iid)
                     text.append([lang, target, new_target])
     # ---

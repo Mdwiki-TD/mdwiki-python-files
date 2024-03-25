@@ -59,11 +59,7 @@ def work_all(editors):
         # ---
         user = user.replace("_", " ")
         # ---
-        text += (f"|-\n"
-                 f"!{i}\n"
-                 f"|[[:w:{wiki}:user:{user}|{user}]]\n"
-                 f"|{count:,}\n"
-                 f"|{wiki}\n")
+        text += f"|-\n" f"!{i}\n" f"|[[:w:{wiki}:user:{user}|{user}]]\n" f"|{count:,}\n" f"|{wiki}\n"
         # ---
         if i == 1000:
             break
@@ -108,8 +104,7 @@ def start():
             all_editors[user]["all"] += count
         # ---
     # ---
-    all_editors = dict(
-        sorted(all_editors.items(), key=lambda x: x[1]["all"], reverse=True))
+    all_editors = dict(sorted(all_editors.items(), key=lambda x: x[1]["all"], reverse=True))
     # ---
     work_all(all_editors)
 

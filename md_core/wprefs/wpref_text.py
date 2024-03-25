@@ -15,6 +15,7 @@ import sys
 from wprefs.bots.Duplicatenew2 import DuplicateReferences
 from wprefs.bots.fix_pt_months import pt_months
 from wprefs.es import fix_es
+
 # ---
 from wprefs.helps import print_s
 from wprefs.infobox import Expend_Infobox
@@ -74,8 +75,7 @@ def remove_False_code(text):
         # find and get html code like <cite></cite>
         ref2 = ref
         if ref.find("<span ") != -1:
-            ref2 = re.sub(r"(\s*<span[^>]*>.*?<\/span>+?)</ref>", "</ref>",
-                          ref2)
+            ref2 = re.sub(r"(\s*<span[^>]*>.*?<\/span>+?)</ref>", "</ref>", ref2)
         ref2 = re.sub(r"<cite[^>]*>.*?<\/cite>", "", ref2)
         # ---
         if ref2 != ref and ref2.strip() != "</ref>":
@@ -108,8 +108,7 @@ def fix_page(
     add_en_lang=False,
 ):
     # ---
-    print_s(
-        f"fix page: {title}, move_dots:{move_dots}, expend_infobox:{infobox}")
+    print_s(f"fix page: {title}, move_dots:{move_dots}, expend_infobox:{infobox}")
     # ---
     if infobox:
         newtext = Expend_Infobox(newtext, title, section_0)

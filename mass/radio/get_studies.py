@@ -33,9 +33,7 @@ def get_images(url):
     response = requests.get(url, timeout=10)
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
-        print(
-            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
-        )
+        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
         studies = []
 
         return "", studies
@@ -78,16 +76,12 @@ def get_images_stacks(study_id):
 
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
-        print(
-            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
-        )
+        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
         return image_info
 
     text = response.text
     if not text.startswith("[") and not text.endswith("]"):
-        print(
-            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
-        )
+        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
         return image_info
 
     json_data = json.loads(text)

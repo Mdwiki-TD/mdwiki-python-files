@@ -61,7 +61,7 @@ else:
         .. versionadded:: 5.4
         """
         if string.startswith(prefix):
-            return string[len(prefix):]
+            return string[len(prefix) :]
         return string
 
     def removesuffix(string: str, suffix: str) -> str:
@@ -70,7 +70,7 @@ else:
         .. versionadded:: 5.4
         """
         if string.endswith(suffix):
-            return string[:-len(suffix)]
+            return string[: -len(suffix)]
         return string
 
 
@@ -78,9 +78,7 @@ def compileLinkR(withoutBracketed: bool = False, onlyBracketed: bool = False):
     """Return a regex that matches external links."""
     notAtEnd = r'\]\s\.:;,<>"\|\)'
     notInside = r'\]\s<>"'
-    regex = (r"(?P<url>http[s]?://[^{notInside}]*?[^{notAtEnd}]"
-             r"(?=[{notAtEnd}]*\'\')|http[s]?://[^{notInside}]*"
-             r"[^{notAtEnd}])".format(notInside=notInside, notAtEnd=notAtEnd))
+    regex = r"(?P<url>http[s]?://[^{notInside}]*?[^{notAtEnd}]" r"(?=[{notAtEnd}]*\'\')|http[s]?://[^{notInside}]*" r"[^{notAtEnd}])".format(notInside=notInside, notAtEnd=notAtEnd)
 
     if withoutBracketed:
         regex = r"(?<!\[)" + regex
@@ -96,78 +94,62 @@ def ignore_case(string: str) -> str:
     .. versionchanged:: 7.2
        `_ignore_case` becomes a public method
     """
-    return "".join(f"[{c}{s}]" if c != s else c
-                   for s, c in zip(string, string.swapcase()))
+    return "".join(f"[{c}{s}]" if c != s else c for s, c in zip(string, string.swapcase()))
 
 
 def _tag_pattern(tag_name: str) -> str:
     """Return a tag pattern for the given tag name."""
-    return r"<{0}(?:>|\s+[^>]*(?<!/)>)" r"[\s\S]*?" r"</{0}\s*>".format(
-        ignore_case(tag_name))  # start tag  # contents  # end tag
+    return r"<{0}(?:>|\s+[^>]*(?<!/)>)" r"[\s\S]*?" r"</{0}\s*>".format(ignore_case(tag_name))  # start tag  # contents  # end tag
 
 
 def _create_default_regexes() -> None:
     """Fill (and possibly overwrite) _regex_cache with default regexes."""
-    _regex_cache.update({
-        # categories
-        "category": (
-            r"\[\[ *(?:%s)\s*:.*?\]\]",
-            lambda site: "|".join(site.namespaces[14]),
-        ),
-        "comment":
-        re.compile(r"<!--[\s\S]*?-->"),
-        # files
-        "file": (FILE_LINK_REGEX, lambda site: "|".join(site.namespaces[6])),
-        # section headers
-        "header":
-        re.compile(r"(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*"
-                   r"=(?:[^\n]|<!--[\s\S]*?-->)+="
-                   r" *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)"),
-        # external links
-        "hyperlink":
-        compileLinkR(),
-        # also finds links to foreign sites with preleading ":"
-        "interwiki": (
-            r"\[\[:?(%s)\s?:[^\]]*\]\]\s*",
-            lambda site: "|".join(
-                ignore_case(i) for i in site.validLanguageLinks() + list(
-                    site.family.obsolete.keys())),
-        ),
-        # Module invocations (currently only Lua)
-        "invoke": (
-            r"\{\{\s*\#(?:%s):[\s\S]*?\}\}",
-            lambda site: "|".join(
-                ignore_case(mw) for mw in site.getmagicwords("invoke")),
-        ),
-        # this matches internal wikilinks, but also interwiki, categories, and
-        # images.
-        "link":
-        re.compile(r"\[\[[^\]|]*(\|[^\]]*)?\]\]"),
-        # pagelist tag (used in Proofread extension).
-        "pagelist":
-        re.compile(r"<{}[\s\S]*?/>".format(ignore_case("pagelist"))),
-        # Wikibase property inclusions
-        "property": (
-            r"\{\{\s*\#(?:%s):\s*[Pp]\d+.*?\}\}",
-            lambda site: "|".join(
-                ignore_case(mw) for mw in site.getmagicwords("property")),
-        ),
-        # lines that start with a colon or more will be indented
-        "startcolon":
-        re.compile(r"(?:(?<=\n)|\A):(.*?)(?=\n|\Z)"),
-        # lines that start with a space are shown in a monospace font and
-        # have whitespace preserved.
-        "startspace":
-        re.compile(r"(?:(?<=\n)|\A) (.*?)(?=\n|\Z)"),
-        # tables often have whitespace that is used to improve wiki
-        # source code readability.
-        # TODO: handle nested tables.
-        "table":
-        re.compile(r"(?:(?<=\n)|\A){\|[\S\s]*?\n\|}|%s" %
-                   _tag_pattern("table")),
-        "template":
-        NESTED_TEMPLATE_REGEX,
-    })
+    _regex_cache.update(
+        {
+            # categories
+            "category": (
+                r"\[\[ *(?:%s)\s*:.*?\]\]",
+                lambda site: "|".join(site.namespaces[14]),
+            ),
+            "comment": re.compile(r"<!--[\s\S]*?-->"),
+            # files
+            "file": (FILE_LINK_REGEX, lambda site: "|".join(site.namespaces[6])),
+            # section headers
+            "header": re.compile(r"(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*" r"=(?:[^\n]|<!--[\s\S]*?-->)+=" r" *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)"),
+            # external links
+            "hyperlink": compileLinkR(),
+            # also finds links to foreign sites with preleading ":"
+            "interwiki": (
+                r"\[\[:?(%s)\s?:[^\]]*\]\]\s*",
+                lambda site: "|".join(ignore_case(i) for i in site.validLanguageLinks() + list(site.family.obsolete.keys())),
+            ),
+            # Module invocations (currently only Lua)
+            "invoke": (
+                r"\{\{\s*\#(?:%s):[\s\S]*?\}\}",
+                lambda site: "|".join(ignore_case(mw) for mw in site.getmagicwords("invoke")),
+            ),
+            # this matches internal wikilinks, but also interwiki, categories, and
+            # images.
+            "link": re.compile(r"\[\[[^\]|]*(\|[^\]]*)?\]\]"),
+            # pagelist tag (used in Proofread extension).
+            "pagelist": re.compile(r"<{}[\s\S]*?/>".format(ignore_case("pagelist"))),
+            # Wikibase property inclusions
+            "property": (
+                r"\{\{\s*\#(?:%s):\s*[Pp]\d+.*?\}\}",
+                lambda site: "|".join(ignore_case(mw) for mw in site.getmagicwords("property")),
+            ),
+            # lines that start with a colon or more will be indented
+            "startcolon": re.compile(r"(?:(?<=\n)|\A):(.*?)(?=\n|\Z)"),
+            # lines that start with a space are shown in a monospace font and
+            # have whitespace preserved.
+            "startspace": re.compile(r"(?:(?<=\n)|\A) (.*?)(?=\n|\Z)"),
+            # tables often have whitespace that is used to improve wiki
+            # source code readability.
+            # TODO: handle nested tables.
+            "table": re.compile(r"(?:(?<=\n)|\A){\|[\S\s]*?\n\|}|%s" % _tag_pattern("table")),
+            "template": NESTED_TEMPLATE_REGEX,
+        }
+    )
 
 
 def _tag_regex(tag_name: str):
@@ -193,20 +175,17 @@ def _get_regexes(keys, site):
         if exc in _regex_cache:
             if isinstance(_regex_cache[exc], tuple):
                 if not site and exc in (
-                        "interwiki",
-                        "property",
-                        "invoke",
-                        "category",
-                        "file",
+                    "interwiki",
+                    "property",
+                    "invoke",
+                    "category",
+                    "file",
                 ):
-                    raise ValueError(
-                        f"Site cannot be None for the '{exc}' regex")
+                    raise ValueError(f"Site cannot be None for the '{exc}' regex")
 
                 if (exc, site) not in _regex_cache:
                     re_text, re_var = _regex_cache[exc]
-                    _regex_cache[(exc,
-                                  site)] = re.compile(re_text % re_var(site),
-                                                      re.VERBOSE)
+                    _regex_cache[(exc, site)] = re.compile(re_text % re_var(site), re.VERBOSE)
 
                 result.append(_regex_cache[(exc, site)])
             else:
@@ -267,12 +246,10 @@ def replaceExcept(
         nextExceptionMatch = None
         for dontTouchR in dontTouchRegexes:
             excMatch = dontTouchR.search(text, index)
-            if excMatch and (nextExceptionMatch is None
-                             or excMatch.start() < nextExceptionMatch.start()):
+            if excMatch and (nextExceptionMatch is None or excMatch.start() < nextExceptionMatch.start()):
                 nextExceptionMatch = excMatch
 
-        if (nextExceptionMatch is not None
-                and nextExceptionMatch.start() <= match.start()):
+        if nextExceptionMatch is not None and nextExceptionMatch.start() <= match.start():
             # an HTML comment or text in nowiki tags stands before the next
             # valid match. Skip.
             index = nextExceptionMatch.end()
@@ -304,16 +281,14 @@ def replaceExcept(
                         group_id = int(group_id)
 
                     try:
-                        replacement += new[last:group_match.start()]
+                        replacement += new[last : group_match.start()]
                         replacement += match.group(group_id) or ""
                     except IndexError:
-                        raise IndexError(
-                            f"Invalid group reference: {group_id}\n Groups found: {match.groups()}"
-                        )
+                        raise IndexError(f"Invalid group reference: {group_id}\n Groups found: {match.groups()}")
                     last = group_match.end()
                 replacement += new[last:]
 
-            text = text[:match.start()] + replacement + text[match.end():]
+            text = text[: match.start()] + replacement + text[match.end() :]
 
             # continue the search on the remaining text
             if allowoverlap:

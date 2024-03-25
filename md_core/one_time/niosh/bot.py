@@ -42,12 +42,7 @@ def new_search():
     api_new = NEW_API("en", family="wikipedia")
     # ---
     vv = 'insource:"cdc.gov/niosh/"'
-    search = api_new.Search(value=vv,
-                            ns="0",
-                            offset="",
-                            srlimit="",
-                            RETURN_dict=False,
-                            addparams={})
+    search = api_new.Search(value=vv, ns="0", offset="", srlimit="", RETURN_dict=False, addparams={})
     # ---
     na = 0
     nn = len(search)
@@ -71,8 +66,7 @@ def new_vals():
     def fix_links(x):
         # remove url suffix like https://web.archive.org/web/20150530203735/
 
-        x = re.sub(r"^https?://web\.archive\.org/web/\d+/(.*)", r"\1",
-                   x.strip())
+        x = re.sub(r"^https?://web\.archive\.org/web/\d+/(.*)", r"\1", x.strip())
 
         x = x.split("#")[0].strip()
         x = re.sub(r"^https*://(www.|)cdc.gov/", "https://www.cdc.gov/", x)
@@ -94,11 +88,7 @@ def new_vals():
         if tat:
             new[title] = tat
     # ---
-    new = {
-        k: v
-        for k, v in sorted(
-            new.items(), key=lambda item: item[0].lower(), reverse=False)
-    }
+    new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
     # ---
     with open(file_json2, "w", encoding="utf-8") as ee:
         json.dump(new, ee, ensure_ascii=False, indent=4)

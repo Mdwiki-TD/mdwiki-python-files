@@ -13,9 +13,11 @@ import re
 
 import chembox  # fix_Chembox
 import drugbox  # drugbox.TextProcessor
+
 # ---
 import mv_section  # mv_section.move_External_links_section
 import resources_new
+
 # ---
 from bots import expend  # expend_infoboxs_and_fix(text)
 from bots import expend_new  # expend_infoboxs(text)
@@ -36,10 +38,7 @@ def work_on_text_md(title, text):
     # ---
     new_text = old_params.rename_params(new_text)
     # ---
-    new_text = resources_new.move_resources(new_text,
-                                            title,
-                                            lkj=lkj,
-                                            lkj2=lkj2)
+    new_text = resources_new.move_resources(new_text, title, lkj=lkj, lkj2=lkj2)
     # ---
     bot = drugbox.TextProcessor(new_text)
     # ---
@@ -49,15 +48,9 @@ def work_on_text_md(title, text):
     if drugbox_text == "":
         return text
     # ---
-    drug_box_new = re.sub(rf"\s*{lkj2}\s*",
-                          r"\n\n\g<1>\n",
-                          drug_box_new,
-                          flags=re.DOTALL)
+    drug_box_new = re.sub(rf"\s*{lkj2}\s*", r"\n\n\g<1>\n", drug_box_new, flags=re.DOTALL)
     # ---
-    drug_box_new = re.sub(r"\n\s*\n\s*[\n\s]+",
-                          "\n\n",
-                          drug_box_new,
-                          flags=re.DOTALL | re.MULTILINE)
+    drug_box_new = re.sub(r"\n\s*\n\s*[\n\s]+", "\n\n", drug_box_new, flags=re.DOTALL | re.MULTILINE)
     # ---
     drug_box_new = re.sub(
         r"{{(Infobox drug|Drugbox|drug resources)\s*\n*",
@@ -80,10 +73,7 @@ def work_on_text_md(title, text):
     # ---
     new_text = bot2.make_new_txt()
     # ---
-    new_text = re.sub(r"\n\s*\[\[Category",
-                      "\n[[Category",
-                      new_text,
-                      flags=re.DOTALL | re.MULTILINE)
+    new_text = re.sub(r"\n\s*\[\[Category", "\n[[Category", new_text, flags=re.DOTALL | re.MULTILINE)
     # ---
     return new_text
 

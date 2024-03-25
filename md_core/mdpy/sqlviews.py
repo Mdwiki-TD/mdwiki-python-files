@@ -16,6 +16,7 @@ import re
 import sys
 
 from mdpy import printe
+
 # ---
 from mdpy.bots import sql_for_mdwiki, wiki_api
 from pymysql.converters import escape_string
@@ -60,8 +61,7 @@ def update_2023(lang, table):
         if "nosql" not in sys.argv:
             qu = sql_for_mdwiki.mdwiki_sql(qua, update=True)
             # ---
-            printe.output(
-                f"<<lightyellow>>sqlviewsm.py mdwiki_sql result:{str(qu)}")
+            printe.output(f"<<lightyellow>>sqlviewsm.py mdwiki_sql result:{str(qu)}")
 
 
 def update_in_sql(lang, table):
@@ -95,10 +95,7 @@ def update_in_sql(lang, table):
         # ---
         all_v = n_2021 + n_2022 + n_2023 + n_2024 + n_2025 + n_2026
         # ---
-        if (sq.get("all", 0) == all_v and sq.get("2021", 0) == n_2021
-                and sq.get("2022", 0) == n_2022 and sq.get("2023", 0) == n_2023
-                and sq.get("2024", 0) == n_2024 and sq.get("2025", 0) == n_2025
-                and sq.get("2026", 0) == n_2026):
+        if sq.get("all", 0) == all_v and sq.get("2021", 0) == n_2021 and sq.get("2022", 0) == n_2022 and sq.get("2023", 0) == n_2023 and sq.get("2024", 0) == n_2024 and sq.get("2025", 0) == n_2025 and sq.get("2026", 0) == n_2026:
             print_test(f"page:{target} has same views.. skip")
             continue
         # ---
@@ -126,8 +123,7 @@ def update_in_sql(lang, table):
         if "nosql" not in sys.argv:
             qu = sql_for_mdwiki.mdwiki_sql(qua, update=True)
             # ---
-            printe.output(
-                f"<<lightyellow>>sqlviewsm.py mdwiki_sql result:{str(qu)}")
+            printe.output(f"<<lightyellow>>sqlviewsm.py mdwiki_sql result:{str(qu)}")
 
 
 def insert_to_sql(lang, table):
@@ -254,8 +250,7 @@ def main():
         for pupdate, title_list in tab.items():
             start = "20210401"
             # ---
-            rem = re.match(r"^(?P<y>\d\d\d\d)-(?P<m>\d\d)-(?P<d>\d\d)$",
-                           pupdate)
+            rem = re.match(r"^(?P<y>\d\d\d\d)-(?P<m>\d\d)-(?P<d>\d\d)$", pupdate)
             # ---
             if rem:
                 start = rem.group("y") + rem.group("m") + rem.group("d")
@@ -263,9 +258,7 @@ def main():
             lenlist = len(title_list)
             # ---
             printe.output("---")
-            printe.output(
-                f"<<lightyellow>> get pageviews for {lenlist} pages, date_start:{start}"
-            )
+            printe.output(f"<<lightyellow>> get pageviews for {lenlist} pages, date_start:{start}")
             # ---
             if lenlist < 5:
                 printe.output(", ".join(title_list))

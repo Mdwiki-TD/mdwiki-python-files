@@ -23,12 +23,9 @@ Dir = Path(__file__).parent
 # ---
 NewList = {}
 # ---
-fska = codecs.open(f"{Dir}/date_before_20200701.txt", "r",
-                   encoding="utf-8").read()
+fska = codecs.open(f"{Dir}/date_before_20200701.txt", "r", encoding="utf-8").read()
 fakalist = fska.split("\n")
-fakalist = [
-    x.strip().split("]]")[0].replace("[[", "").strip() for x in fakalist
-]
+fakalist = [x.strip().split("]]")[0].replace("[[", "").strip() for x in fakalist]
 # ---
 listo = mdwiki_api.Get_All_pages("!", namespace="0")
 listo = [x for x in listo if x not in fakalist]
@@ -64,9 +61,7 @@ def get_timestamp(titles):
         # ---
         kk = hh.get("query", {}).get("pages", {})
         for key, vav in kk.items():
-            timestamp = vav.get("revisions", [{
-                "timestamp": ""
-            }])[0].get("timestamp", "")
+            timestamp = vav.get("revisions", [{"timestamp": ""}])[0].get("timestamp", "")
             NewList[page] = timestamp
         # ---
         if str(num).endswith("00"):
@@ -78,8 +73,7 @@ def get_timestamp(titles):
 # ---
 get_timestamp(listo)
 # ---
-laly = [[int(io.split("T")[0].replace("-", "")), x]
-        for x, io in NewList.items() if io.split("T")[0].replace("-", "")]
+laly = [[int(io.split("T")[0].replace("-", "")), x] for x, io in NewList.items() if io.split("T")[0].replace("-", "")]
 laly.sort(reverse=True)
 # ---
 print(f"has {len(laly)} pages. ")
@@ -95,14 +89,12 @@ print(f"we have {len(new)} pages with date > 20200701. ")
 # ---
 masha = "\n".join([f"{s}" for d, s in new])
 # ---
-with codecs.open(f"{Dir}/date_after_20200701.txt", "w",
-                 encoding="utf-8") as logfil3e:
+with codecs.open(f"{Dir}/date_after_20200701.txt", "w", encoding="utf-8") as logfil3e:
     logfil3e.write(masha)
 # ---
 masha3 = "\n".join([f"{ss}" for ds, ss in old])
 # ---
-with codecs.open(f"{Dir}/date_before_20200701.txt", "w",
-                 encoding="utf-8") as ooo:
+with codecs.open(f"{Dir}/date_before_20200701.txt", "w", encoding="utf-8") as ooo:
     ooo.write(masha3)
 # ---
 text = f"""
@@ -122,10 +114,7 @@ text += """
 numb = 0
 for Date, pag in new:
     numb += 1
-    url = (
-        "https://" +
-        "mdwiki.toolforge.org/import-history.php?code=James%2399&title={{urlencode:"
-        + pag + "}}")
+    url = "https://" + "mdwiki.toolforge.org/import-history.php?code=James%2399&title={{urlencode:" + pag + "}}"
     text += "|-\n| %d || [[%s]] || %s || [%s ] \n" % (numb, pag, Date, url)
 
 text += """|-
@@ -134,7 +123,5 @@ text += """|-
 if "test" in sys.argv:
     print(text)
 else:
-    mdwiki_api.page_put(newtext=text,
-                        summary="update",
-                        title="User:Mr. Ibrahem/pages")
+    mdwiki_api.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
 # ---

@@ -13,11 +13,13 @@ python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Ghuron
 import sys
 import urllib
 import urllib.parse
+
 # ---
 from pathlib import Path
 
 from mdpy import printe
 from mdpy.bots import mdwiki_api
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -79,8 +81,7 @@ def main():
     user_limit = "3000"
     # ---
     searchlist = {
-        "drug":
-        "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
+        "drug": "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
     }
     # ---
     limite = "max"
@@ -133,9 +134,7 @@ def main():
         if starts == "all":
             starts = ""
         # ---
-        listen = api_new.Get_All_pages(start=starts,
-                                       namespace=namespaces,
-                                       limit=limite)
+        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
         # ---
         for n, page in enumerate(listen):
             printe.output(f"<<green>> n:{n}, title:{page}")
@@ -147,10 +146,7 @@ def main():
     if newpages != "":
         lista = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        lista = mdwiki_api.Get_UserContribs(user,
-                                            limit=user_limit,
-                                            namespace=namespaces,
-                                            ucshow="new")
+        lista = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
     elif pages != []:
         lista = pages
     # ---

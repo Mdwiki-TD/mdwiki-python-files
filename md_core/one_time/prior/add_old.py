@@ -31,6 +31,7 @@ import sys
 from pathlib import Path
 
 from mdpy import printe
+
 # ---
 from prior import get_them
 
@@ -53,9 +54,7 @@ class PriorAddOld:
             if filename.endswith(".json"):
                 p += 1
                 self.all_file.append(filename)
-                print(
-                    f'toolforge jobs run p{p} --command "python3 core8/pwb.py prior/add_old -file:{filename}" --image python3.9'
-                )
+                print(f'toolforge jobs run p{p} --command "python3 core8/pwb.py prior/add_old -file:{filename}" --image python3.9')
         # ---
         file_to = ""
         # ---
@@ -98,8 +97,7 @@ class PriorAddOld:
                     lead_ex = tab["old"].get("lead", {}).get("extlinks", [])
                     lead_re = tab["old"].get("lead", {}).get("refsname", [])
                     # ---
-                    if (len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0
-                            and len(lead_re) > 0):
+                    if len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0 and len(lead_re) > 0:
                         # ---
                         continue
                 # ---
@@ -116,11 +114,8 @@ class PriorAddOld:
                 lenex_lead1 = str(len(old.lead["extlinks"])).ljust(4)
                 lenre_lead1 = str(len(old.lead["refsname"])).ljust(4)
                 # ---
-                printe.output(
-                    f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
-                printe.output(
-                    f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname"
-                )
+                printe.output(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
+                printe.output(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
                 # ---
                 data_new[title] = tab
         # ---

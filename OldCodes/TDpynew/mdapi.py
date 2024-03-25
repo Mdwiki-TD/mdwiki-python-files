@@ -78,9 +78,7 @@ def login():
             pywikibot.output(traceback.format_exc())
             pywikibot.output("CRITICAL:")
     else:
-        printt(
-            f"<<lightgreen>> mdwiki/TDpynew/mdapi.py: log to {SS['url']} user:{username} Success... "
-        )
+        printt(f"<<lightgreen>> mdwiki/TDpynew/mdapi.py: log to {SS['url']} user:{username} Success... ")
     # ---
     # get edit token
     SS["r33"] = SS["ss"].get(

@@ -127,13 +127,10 @@ class InOldText:
         # ---
         json1 = self.post_to_json(params)
         # ---
-        revisions = (json1.get("query",
-                               {}).get("pages",
-                                       [{}])[0].get("revisions", [{}])[0])
+        revisions = json1.get("query", {}).get("pages", [{}])[0].get("revisions", [{}])[0]
         self.timestamp = revisions.get("timestamp", "")
         # print(f'timestamp: {self.timestamp}')
-        self.oldtext = revisions.get("slots", {}).get("main",
-                                                      {}).get("content", "")
+        self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
     def get_newtext(self):
         params = {

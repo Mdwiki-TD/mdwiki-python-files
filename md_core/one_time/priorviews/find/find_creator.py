@@ -12,9 +12,11 @@ import sys
 from pathlib import Path
 
 from api_sql import wiki_sql
+
 # ---
 from mdpy import printe
 from priorviews.bots import helps
+
 # ---
 from priorviews.lists.links_by_section import links_by_lang
 from pymysql.converters import escape_string
@@ -66,7 +68,7 @@ def get_creator(links, lang):
     # ---
     # split links to 100 per group
     for i in range(0, len(links), 100):
-        titles = [x.replace(" ", "_") for x in links[i:i + 100]]
+        titles = [x.replace(" ", "_") for x in links[i : i + 100]]
         # ---
         titles = ", ".join([f'"{escape_string(x)}"' for x in titles])
         # ---
@@ -93,8 +95,7 @@ def get_creator(links, lang):
             if comment_text.find("|User:Mr. Ibrahem/") != -1:
                 TD = True
             # ---
-            print(f"time:{time_stamp}", f"title:{page_title}",
-                  f"actor:{actor_name}")
+            print(f"time:{time_stamp}", f"title:{page_title}", f"actor:{actor_name}")
             # ---
             tab = {
                 "time": time_stamp,

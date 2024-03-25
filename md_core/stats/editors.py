@@ -12,6 +12,7 @@ from pathlib import Path
 
 from api_sql import wiki_sql
 from pymysql.converters import escape_string
+
 # ---
 from stats.ar import get_ar_results
 
@@ -60,7 +61,7 @@ def get_editors_sql(links, site):
     # ---
     for i in range(0, len(links), 100):
         # ---
-        pages = links[i:i + 100]
+        pages = links[i : i + 100]
         # ---
         # lim = ' , '.join(['?' for x in pages])
         lim = ",".join([f'"{escape_string(x)}"' for x in pages])

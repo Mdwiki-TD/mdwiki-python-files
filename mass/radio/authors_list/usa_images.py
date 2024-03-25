@@ -56,8 +56,7 @@ def add_pd_to_images(not_in_pd: list) -> None:
                 break
         # ---
         if new_text == text:
-            new_text = new_text.replace("[[Category:",
-                                        f"{pd_temp}\n[[Category:", 1)
+            new_text = new_text.replace("[[Category:", f"{pd_temp}\n[[Category:", 1)
         # ---
         if new_text == text:
             new_text = new_text + f"\n{pd_temp}"
@@ -99,11 +98,7 @@ def one_auth_wrk(auth: str, auth_cats: list) -> None:
     # print(all_auth_images)
 
     # images has "Template:PD-medical" in thir "templates"
-    in_pd = {
-        image: va
-        for image, va in all_auth_images.items()
-        if "Template:PD-medical" in va["templates"]
-    }
+    in_pd = {image: va for image, va in all_auth_images.items() if "Template:PD-medical" in va["templates"]}
     printe.output(f"\tin_pd: {len(in_pd)}")
 
     # images not in in_pd
@@ -124,9 +119,7 @@ def start(usa_auths: list = []) -> None:
         # auth_cats = auths_cats.get_auth_cats(id2cat, auth)
         auth_cats = [f"Category:Radiopaedia cases by {auth}"]
         # ---
-        printe.output(
-            f"<<green>>usa_images: {n}/{len(usa_auths)}: {auth=}, length: {len(auth_cats)}"
-        )
+        printe.output(f"<<green>>usa_images: {n}/{len(usa_auths)}: {auth=}, length: {len(auth_cats)}")
         one_auth_wrk(auth, auth_cats)
 
 

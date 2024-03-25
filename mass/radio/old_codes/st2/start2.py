@@ -13,6 +13,7 @@ from pathlib import Path
 
 import psutil
 import tqdm
+
 # ---
 from newapi import printe
 
@@ -27,8 +28,7 @@ with open(main_dir / "jsons/authors.json", encoding="utf-8") as f:
 with open(main_dir / "jsons/infos.json", encoding="utf-8") as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), "jsons/all_ids.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "jsons/all_ids.json"), encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
@@ -89,11 +89,9 @@ def main(ids_tab):
         length = len(ids_tab) // 13
         for i in range(0, len(ids_tab), length):
             num = i // length + 1
-            tabs[str(num)] = dict(list(ids_tab.items())[i:i + length])
+            tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
-            print(
-                f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st2/start2 nodiff get:{num} {len(tabs[str(num)])}"'
-            )
+            print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st2/start2 nodiff get:{num} {len(tabs[str(num)])}"')
 
         for arg in sys.argv:
             arg, _, value = arg.partition(":")
@@ -123,13 +121,15 @@ def main(ids_tab):
         # ---
         studies = [study.split("/")[-1] for study in va["studies"]]
         # ---
-        tab.append({
-            "caseId": caseId,
-            "case_url": case_url,
-            "title": title,
-            "studies": studies,
-            "author": author,
-        })
+        tab.append(
+            {
+                "caseId": caseId,
+                "case_url": case_url,
+                "title": title,
+                "studies": studies,
+                "author": author,
+            }
+        )
     # ---
     del ids_tab
     # ---
@@ -143,10 +143,8 @@ if __name__ == "__main__":
             "98997": {
                 "caseId": 98997,
                 "title": "C6-C7 fracture dislocation",
-                "studies":
-                ["https://radiopaedia.org/cases/98997/studies/120238"],
-                "url":
-                "https://radiopaedia.org/cases/c6-c7-fracture-dislocation",
+                "studies": ["https://radiopaedia.org/cases/98997/studies/120238"],
+                "url": "https://radiopaedia.org/cases/c6-c7-fracture-dislocation",
                 "system": "Musculoskeletal",
                 "author": "Bahman Rasuli",
                 "published": "18 Apr 2022",

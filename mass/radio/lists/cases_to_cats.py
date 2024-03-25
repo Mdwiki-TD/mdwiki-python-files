@@ -49,9 +49,7 @@ def new_list():
             # ---
             id2cat[case_id] = cat
     # ---
-    print(
-        f"cases_cats, lenth of members: {len(members)}, lenth of id2cat: {len(id2cat)} "
-    )
+    print(f"cases_cats, lenth of members: {len(members)}, lenth of id2cat: {len(id2cat)} ")
     # ---
     with open(cases_cats_file, "w", encoding="utf-8") as f:
         json.dump(id2cat, f)
@@ -70,9 +68,7 @@ def cases_cats():
     today = datetime.today().strftime("%Y-%m-%d")
     # ---
     if date != today or not cases_cats_list:
-        printe.output(
-            f"<<purple>> Cases to categories last modified: {date}, today: {today}, current length: {len(cases_cats_list)}"
-        )
+        printe.output(f"<<purple>> Cases to categories last modified: {date}, today: {today}, current length: {len(cases_cats_list)}")
         cases_cats_list = new_list()
     # ---
     return cases_cats_list

@@ -15,8 +15,7 @@ from mass.radio.st3.start3 import main
 
 # ---
 main_dir = Path(__file__).parent.parent
-with open(os.path.join(str(main_dir), "jsons/all_ids.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "jsons/all_ids.json"), encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 lista = """
@@ -2514,10 +2513,7 @@ lista = """
 new_ids = [x.strip() for x in lista.split("\n") if x.strip()]
 # ---
 # Parsing arguments
-lookup_dict = {
-    x: (all_ids.get(x) or all_ids.get(int(x)))
-    for x in new_ids if x in all_ids
-}
+lookup_dict = {x: (all_ids.get(x) or all_ids.get(int(x))) for x in new_ids if x in all_ids}
 
 print(f"len new_ids: {len(new_ids)}")
 print(f"len lookup_dict: {len(lookup_dict)}")

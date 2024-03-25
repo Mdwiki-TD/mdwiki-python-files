@@ -65,8 +65,7 @@ def Expend_Infobox(text, title, section_0):
     title2 = re.escape(title)
     # ---
     newtext = re.sub(r"\}\s*(\'\'\'%s\'\'\')" % title2, r"}\n\n\g<1>", newtext)
-    section_0 = re.sub(r"\}\s*(\'\'\'%s\'\'\')" % title2, r"}\n\n\g<1>",
-                       section_0)
+    section_0 = re.sub(r"\}\s*(\'\'\'%s\'\'\')" % title2, r"}\n\n\g<1>", section_0)
     # ---
     tempse_by_u = {}
     tempse = {}

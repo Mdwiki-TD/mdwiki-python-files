@@ -3,9 +3,7 @@ import sys
 
 from newapi.ncc_page import MainPage as ncc_MainPage
 
-skips = [
-    "File:Benign enlargement of subarachnoid spaces (Radiopaedia 25801-25990 Coronal 1).jpg"
-]
+skips = ["File:Benign enlargement of subarachnoid spaces (Radiopaedia 25801-25990 Coronal 1).jpg"]
 
 
 def get_ta(text, ta):
@@ -28,8 +26,7 @@ def update_text(title, text):
     # get * Findings: CT
     Findings = get_ta(p_text, "Findings")
     if Findings != "":
-        text = text.replace("* Author location:",
-                            f"* Findings: {Findings}\n* Author location:")
+        text = text.replace("* Author location:", f"* Findings: {Findings}\n* Author location:")
     # ---
     # get * Study findings:
     Study_findings = get_ta(p_text, "Study findings")
@@ -46,8 +43,7 @@ def update_text(title, text):
     ASK = "Category:Uploads by Fæ" in p_text and "askusa" in sys.argv
     # ---
     if p_text.find("Category:Uploads by Fæ") != -1:
-        text = text.replace("[[Category:Uploads by Mr. Ibrahem",
-                            "[[Category:Uploads by Fæ")
+        text = text.replace("[[Category:Uploads by Mr. Ibrahem", "[[Category:Uploads by Fæ")
     # ---
     if p_text != text:
         page.save(newtext=text, summary="update", ASK=ASK)
@@ -79,8 +75,7 @@ def update_text_new(title):
             break
     # ---
     if new_text == p_text:
-        new_text = new_text.replace("[[Category:", f"{pd_temp}\n[[Category:",
-                                    1)
+        new_text = new_text.replace("[[Category:", f"{pd_temp}\n[[Category:", 1)
     # ---
     if new_text == p_text:
         new_text = new_text + f"\n{pd_temp}"

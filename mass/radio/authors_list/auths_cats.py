@@ -27,12 +27,10 @@ from mass.radio.lists.cases_to_cats import cases_cats  # cases_cats()
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / "authors_list" / "authors_to_cases.json",
-          encoding="utf-8") as f:
+with open(main_dir / "authors_list" / "authors_to_cases.json", encoding="utf-8") as f:
     authors_to_cases = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")

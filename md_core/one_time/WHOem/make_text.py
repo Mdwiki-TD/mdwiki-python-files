@@ -76,31 +76,16 @@ def make_text(ViewsData):
     """
     Generate formatted text from given section and links.
     """
-    text = (
-        '<div style="height:1500px;width:100%;overflow-x:auto; overflow-y:auto">\n'
-        '{| class="wikitable sortable" style="width:100%;background-color:#dedede"\n'
-        '|- style="position: sticky;top: 0; z-index: 2;"\n'
-        "! #\n"
-        '! style="position: sticky;top: 0;left: 0;" | Title\n'
-        "! Views\n"
-        "! Articles\n"
-        "!\n")
+    text = '<div style="height:1500px;width:100%;overflow-x:auto; overflow-y:auto">\n' '{| class="wikitable sortable" style="width:100%;background-color:#dedede"\n' '|- style="position: sticky;top: 0; z-index: 2;"\n' "! #\n" '! style="position: sticky;top: 0;left: 0;" | Title\n' "! Views\n" "! Articles\n" "!\n"
     # ---
-    langs_keys = [
-        lang for mdtitle, tab in ViewsData.items() for lang in tab.keys()
-    ]
+    langs_keys = [lang for mdtitle, tab in ViewsData.items() for lang in tab.keys()]
     langs_keys = sorted(set(langs_keys))
     # ---
-    with codecs.open(f"{Dir}/lists/lang_links_mdtitles.json",
-                     "r",
-                     encoding="utf-8") as f:
+    with codecs.open(f"{Dir}/lists/lang_links_mdtitles.json", "r", encoding="utf-8") as f:
         lang_links_mdtitles = json.load(f)
     # ---
     # sort lang_links_mdtitles by lenth
-    lang_to_wrks = dict(
-        sorted(lang_links_mdtitles.items(),
-               key=lambda x: len(x[1]),
-               reverse=True))
+    lang_to_wrks = dict(sorted(lang_links_mdtitles.items(), key=lambda x: len(x[1]), reverse=True))
     # change it to list
     lang_to_wrks = list(lang_to_wrks.keys())
     # ---
@@ -139,8 +124,7 @@ def make_text(ViewsData):
     text += "\n|-\n"
     text += f'! !! style="position: sticky;left: 0;colspan:2;" | Total views !! {section_views:,} \n'
     text += "! \n! "
-    text += " !! ".join(
-        [str(fo_n(section_langs_views.get(l, 0))) for l in langs_keys])
+    text += " !! ".join([str(fo_n(section_langs_views.get(l, 0))) for l in langs_keys])
 
     # Add the closing table tag and div tag to the text variable.
     text += "\n|}\n</div>"
@@ -179,10 +163,7 @@ def start():
     else:
         # ---
         text = page.get_text()
-        save_page = page.save(newtext=ntext,
-                              summary="update",
-                              nocreate=1,
-                              minor="")
+        save_page = page.save(newtext=ntext, summary="update", nocreate=1, minor="")
 
 
 if __name__ == "__main__":

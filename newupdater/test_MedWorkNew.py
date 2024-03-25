@@ -16,16 +16,14 @@ def test():
     # ---
     Dir = Path(__file__).parent
     # ---
-    with codecs.open(os.path.join(Dir, "bots/resources.txt"), "r",
-                     "utf-8") as f:
+    with codecs.open(os.path.join(Dir, "bots/resources.txt"), "r", "utf-8") as f:
         text = f.read()
     # ---
     newtext = work_on_text("test", text)
     # ---
     pywikibot.showDiff(text, newtext)
     # ---
-    with codecs.open(os.path.join(Dir, "bots/resources_new.txt"), "w",
-                     "utf-8") as f:
+    with codecs.open(os.path.join(Dir, "bots/resources_new.txt"), "w", "utf-8") as f:
         f.write(newtext)
     # ---
 

@@ -18,6 +18,7 @@ python3 core8/pwb.py mdpy/orred
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # ---
 from mdpy import printe
+
 # ---
 # ---
 from mdpy.bots import sql_for_mdwiki
@@ -101,8 +102,7 @@ def dodo_sql():
         mdtitle = tab["title"]
         target = tab["target"]
         # ---
-        printe.output(
-            f'----------\n*<<lightyellow>> p{n}/{len(sq)} >target:"{target}".')
+        printe.output(f'----------\n*<<lightyellow>> p{n}/{len(sq)} >target:"{target}".')
         # ---
         create_redirect(target, mdtitle)
 

@@ -91,10 +91,7 @@ def main(listen=[]):
     # ---
     if not listen:
         if user != "":
-            listen = api_new.UserContribs(user,
-                                          limit=5000,
-                                          namespace="0",
-                                          ucshow="new")
+            listen = api_new.UserContribs(user, limit=5000, namespace="0", ucshow="new")
         else:
             listen = api_new.Get_All_pages(start="!", namespace="0")
     # ---
@@ -104,10 +101,7 @@ def main(listen=[]):
     # ---
     if with_err:
         page = md_MainPage("User:Mr. Ibrahem/err", "www", family="mdwiki")
-        text = "\n".join([
-            f"# [[{title}]]: [[Special:diff/{rev}|Diff]]"
-            for title, rev in with_err.items()
-        ])
+        text = "\n".join([f"# [[{title}]]: [[Special:diff/{rev}|Diff]]" for title, rev in with_err.items()])
         page.save(newtext=text, summary="err", nocreate=0, minor="")
 
 

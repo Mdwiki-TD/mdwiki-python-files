@@ -6,6 +6,7 @@ from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 import codecs
 import json
 import sys
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -244,9 +245,7 @@ def page_put(oldtext, NewText, summary, title, lang):
             pywikibot.showDiff(oldtext, NewText)
         # ---
         print_s(f" -Edit summary: {summary}:")
-        sa = input(
-            f"<<lightyellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})"
-        )
+        sa = input(f"<<lightyellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})")
         # ---
         if sa == "a" or sa == "all":
             ask_a[1] = True
@@ -275,16 +274,14 @@ def page_put(oldtext, NewText, summary, title, lang):
     r4 = session[1].post(session["url"], data=pparams)
     # ---
     if "Success" in r4.text:
-        print_s("<<lightgreen>> ** true .. " +
-                f"[[{session['lang']}:{session['family']}:{title}]]")
+        print_s("<<lightgreen>> ** true .. " + f"[[{session['lang']}:{session['family']}:{title}]]")
         return True
     # ---
     else:
         print_s(r4.text)
     # ---
     if "savetofile" in sys.argv:
-        with codecs.open(str(Dir) + "/wpref_1.txt", "w",
-                         encoding="utf-8") as ggg:
+        with codecs.open(str(Dir) + "/wpref_1.txt", "w", encoding="utf-8") as ggg:
             ggg.write(NewText)
     # ---
     return False

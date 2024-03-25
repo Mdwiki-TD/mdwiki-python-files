@@ -8,6 +8,7 @@ delete from qids q1 WHERE q1.qid = '' and EXISTS  (SELECT 1 FROM qids q2 WHERE q
 """
 
 import sys
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -17,6 +18,7 @@ from pathlib import Path
 
 # ---
 from mdpy.bots import en_to_md, sql_for_mdwiki
+
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
 # sql_for_mdwiki.add_titles_to_qids(tab)

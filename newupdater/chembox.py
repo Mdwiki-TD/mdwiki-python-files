@@ -33,8 +33,7 @@ class fix_Chembox:
         self.new_temp()
         # ---
         if self.oldchembox != "" and self.newchembox != "":
-            self.new_text = self.new_text.replace(self.oldchembox,
-                                                  self.newchembox)
+            self.new_text = self.new_text.replace(self.oldchembox, self.newchembox)
         # ---
         return self.new_text
 
@@ -69,10 +68,7 @@ class fix_Chembox:
             elif name.lower() not in boxes:
                 continue
             # ---
-            params = {
-                str(param.name).strip(): str(param.value)
-                for param in template.arguments
-            }
+            params = {str(param.name).strip(): str(param.value) for param in template.arguments}
             # ---
             for x, v in params.items():
                 if v.strip() == "":
@@ -87,8 +83,7 @@ class fix_Chembox:
         # ---
         for p, value in self.all_params.items():
             # ---
-            p = (rename_chem_params.get(p, "") if rename_chem_params.get(
-                p, "") != "" else p)
+            p = rename_chem_params.get(p, "") if rename_chem_params.get(p, "") != "" else p
             # ---
             p_v = f"\n| {p}= {value}"
             # ---
@@ -101,8 +96,7 @@ class fix_Chembox:
 if __name__ == "__main__":
     import pywikibot
 
-    text = codecs.open(f"{Dir}/texts/chembox.txt", "r",
-                       encoding="utf-8").read()
+    text = codecs.open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8").read()
     bot = fix_Chembox(text)
     newtext = bot.run()
     pywikibot.showDiff(text, newtext)

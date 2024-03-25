@@ -11,6 +11,7 @@ import codecs
 import json
 import os
 import sys
+
 # ---
 from pathlib import Path
 
@@ -18,6 +19,7 @@ from pathlib import Path
 from mdpy import printe
 from newapi.mdwiki_page import MainPage as md_MainPage
 from newapi.wiki_page import MainPage, change_codes
+
 # ---
 from prior import get_them
 
@@ -44,9 +46,7 @@ def main_links():
         "Syncope": "Syncope (medicine)",
     }
     # ---
-    links = [
-        replaces.get(x["title"], x["title"]) for x in links if x["ns"] == 0
-    ]
+    links = [replaces.get(x["title"], x["title"]) for x in links if x["ns"] == 0]
     # ---
     printe.output(f"{len(links)} links found")
     # ---
@@ -88,8 +88,7 @@ def advance_work_en(title, title2, page):
     lenre_lead = str(len(tat.lead["refsname"])).ljust(4)
     # ---
     printe.output(f"p0/\ten\t\t{lenex} extlinks, {lenre} refsname")
-    printe.output(
-        f"p0/\ten\t\t{lenex_lead} lead_extlinks, {lenre_lead} lead_refsname")
+    printe.output(f"p0/\ten\t\t{lenex_lead} lead_extlinks, {lenre_lead} lead_refsname")
     # ---
     old = get_them.get_old(title)
     allen[title]["old"] = {}
@@ -104,9 +103,7 @@ def advance_work_en(title, title2, page):
     lenre_lead1 = str(len(old.lead["refsname"])).ljust(4)
     # ---
     printe.output(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
-    printe.output(
-        f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname"
-    )
+    printe.output(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
 
 
 def work_in_en_page(title):
@@ -119,10 +116,7 @@ def work_in_en_page(title):
             "extlinks": [],
             "refsname": [],
             "en": title,
-            "lead": {
-                "extlinks": [],
-                "refsname": []
-            },
+            "lead": {"extlinks": [], "refsname": []},
         }
     # ---
     page = MainPage(title, "en")
@@ -172,9 +166,7 @@ def work_in_en_page(title):
         lenex = str(len(tata["extlinks"])).ljust(4)
         lenre = str(len(tata["refsname"])).ljust(4)
         # ---
-        printe.output(
-            f"\tp{n}/{len(langlinks)}:\t{lang.ljust(20)}\t{lenex} extlinks, {lenre} refsname.."
-        )
+        printe.output(f"\tp{n}/{len(langlinks)}:\t{lang.ljust(20)}\t{lenex} extlinks, {lenre} refsname..")
         # ---
         All[title]["langs"][lang] = tata
 
@@ -196,9 +188,7 @@ def work_in_links(links, main_File, main_File_en, Log=True):
     if os.path.exists(main_File_en):
         en_in = json.load(open(main_File_en, encoding="utf-8"))
         allen = en_in
-        printe.output(
-            f"<<green>> There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links..."
-        )
+        printe.output(f"<<green>> There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links...")
     # ---
     if os.path.exists(main_File):
         All = json.load(open(main_File, encoding="utf-8"))
@@ -219,12 +209,9 @@ def work_in_links(links, main_File, main_File_en, Log=True):
                 lead_ex = en_in[x].get("lead", {}).get("extlinks", [])
                 lead_re = en_in[x].get("lead", {}).get("refsname", [])
                 # ---
-                if (len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0
-                        and len(lead_re) > 0):
+                if len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0 and len(lead_re) > 0:
                     # ---
-                    printe.output(
-                        f"<<lightyellow>> en {x} already in {basefilename}, skip.........."
-                    )
+                    printe.output(f"<<lightyellow>> en {x} already in {basefilename}, skip..........")
                     continue
         # ---
         work_in_en_page(x)
@@ -250,20 +237,14 @@ def start_all():
     for i in range(0, len(links), 100):
         n += 1
         # ---
-        titles = links[i:i + 100]
+        titles = links[i : i + 100]
         # ---
         main_File = project_js_new + f"{n}.json"
         main_File_en = project_js_newen + f"en_{n}.json"
         # ---
-        tanko[str(n)] = {
-            "file": main_File,
-            "file_en": main_File_en,
-            "links": titles
-        }
+        tanko[str(n)] = {"file": main_File, "file_en": main_File_en, "links": titles}
         # ---
-        printe.output(
-            f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"'
-        )
+        printe.output(f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"')
 
         # ---
     # ---
@@ -283,8 +264,7 @@ def start_all():
         printe.output(f"list number:{valu} not found.")
         # ---
         if "All" not in sys.argv:
-            printe.output(
-                'Add "All" to sys.argv to work in All.. \n sys.exit()')
+            printe.output('Add "All" to sys.argv to work in All.. \n sys.exit()')
             sys.exit()
     # ---
     for x, tab in tanko.items():

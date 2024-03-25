@@ -113,9 +113,7 @@ def start():
     files = os.listdir(sites_dir)
     # ---
     # sort files by biggest size
-    files = sorted(files,
-                   key=lambda x: os.stat(sites_dir / x).st_size,
-                   reverse=True)
+    files = sorted(files, key=lambda x: os.stat(sites_dir / x).st_size, reverse=True)
     # ---
     for numb, file in enumerate(files, start=1):
         # ---

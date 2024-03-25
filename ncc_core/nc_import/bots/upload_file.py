@@ -14,6 +14,7 @@ import urllib.request
 
 # ---
 from newapi import printe
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -40,12 +41,7 @@ def download_file(url):
         return None
 
 
-def upload_by_file(file_name,
-                   text,
-                   url,
-                   comment="",
-                   code="en",
-                   family="wikipedia"):
+def upload_by_file(file_name, text, url, comment="", code="en", family="wikipedia"):
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
@@ -65,9 +61,7 @@ def upload_by_file(file_name,
     api_new = NEW_API(code, family=family)
     # api_new.Login_to_wiki()
     # ---
-    result = api_new.post_params(params,
-                                 addtoken=True,
-                                 files={"file": open(file_path, "rb")})
+    result = api_new.post_params(params, addtoken=True, files={"file": open(file_path, "rb")})
     # ---
     upload_result = result.get("upload", {})
     # ---
@@ -78,33 +72,24 @@ def upload_by_file(file_name,
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
-    duplicate = (upload_result.get("warnings",
-                                   {}).get("duplicate",
-                                           [""])[0].replace("_", " "))
+    duplicate = upload_result.get("warnings", {}).get("duplicate", [""])[0].replace("_", " ")
     # ---
     if success:
-        printe.output(
-            f"<<lightgreen>> ** upload true .. [[File:{file_name}]] ")
+        printe.output(f"<<lightgreen>> ** upload true .. [[File:{file_name}]] ")
         return True
 
     if duplicate:
         printe.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
 
     if error:
-        printe.output(
-            f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error)
 
     # ----
     return False
 
 
-def upload_by_url(file_name,
-                  text,
-                  url,
-                  comment="",
-                  code="en",
-                  family="wikipedia"):
+def upload_by_url(file_name, text, url, comment="", code="en", family="wikipedia"):
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
@@ -133,9 +118,7 @@ def upload_by_url(file_name,
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
-    duplicate = (upload_result.get("warnings",
-                                   {}).get("duplicate",
-                                           [""])[0].replace("_", " "))
+    duplicate = upload_result.get("warnings", {}).get("duplicate", [""])[0].replace("_", " ")
     # ---
     if success:
         printe.output(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
@@ -145,16 +128,10 @@ def upload_by_url(file_name,
         printe.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
 
     if error:
-        printe.output(
-            f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error_info)
     errors = ["copyuploadbaddomain", "copyuploaddisabled"]
     if error_code in errors or " url " in error_info.lower():
-        return upload_by_file(file_name,
-                              text,
-                              url,
-                              comment=comment,
-                              code=code,
-                              family=family)
+        return upload_by_file(file_name, text, url, comment=comment, code=code, family=family)
     # ----
     return False

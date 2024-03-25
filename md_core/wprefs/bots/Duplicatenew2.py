@@ -175,8 +175,7 @@ def DuplicateReferences(text):
             used_numbers.add(int(number))
     # ---
     # generator to give the next free number for autogenerating names
-    free_number = (str(i) for i in itertools.count(start=1)
-                   if i not in used_numbers)
+    free_number = (str(i) for i in itertools.count(start=1) if i not in used_numbers)
     # ---
     iui_to_named = {}
     # ---
@@ -235,11 +234,7 @@ def DuplicateReferences(text):
             # ---
             # print("text not found: " + named)
             # ---
-            text = replaceExcept(text,
-                                 iui,
-                                 named,
-                                 exceptions=["template"],
-                                 count=1)
+            text = replaceExcept(text, iui, named, exceptions=["template"], count=1)
             if text.find(named) == -1:
                 text = re.sub(iui, named, text, 1)
             # ---

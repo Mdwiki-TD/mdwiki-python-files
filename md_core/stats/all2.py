@@ -76,11 +76,7 @@ def work_all(editors):
         # #{{#target:User:{User}|{wiki}.wikipedia.org}}
         targets += f"#{{{{#target:User:{user}|{wiki}.wikipedia.org}}}}\n"
         # ---
-        txt_table += (f"|-\n"
-                      f"!{i}\n"
-                      f"|[[:w:{site}:user:{user}|{user}]]\n"
-                      f"|{count:,}\n"
-                      f"|{wiki}\n")
+        txt_table += f"|-\n" f"!{i}\n" f"|[[:w:{site}:user:{user}|{user}]]\n" f"|{count:,}\n" f"|{wiki}\n"
         # ---
         if i == 1000:
             break
@@ -131,8 +127,7 @@ def start():
                     all_editors[user]["count"] = count
                     all_editors[user]["site"] = site
     # ---
-    all_editors = dict(
-        sorted(all_editors.items(), key=lambda x: x[1]["count"], reverse=True))
+    all_editors = dict(sorted(all_editors.items(), key=lambda x: x[1]["count"], reverse=True))
     # ---
     work_all(all_editors)
 

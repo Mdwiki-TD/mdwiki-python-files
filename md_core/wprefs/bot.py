@@ -17,9 +17,9 @@ python3 core8/pwb.py wprefs/bot ask
 import sys
 
 from wprefs.api import GetPageText, log, missingtitles, page_put
-from wprefs.files import (append_reffixed_file, reffixed_list, save_wprefcash,
-                          setting)
+from wprefs.files import append_reffixed_file, reffixed_list, save_wprefcash, setting
 from wprefs.helps import ec_de_code, print_s
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -72,8 +72,7 @@ def fix_page_here(text, title, langcode):
 
 def work_one_lang(list_, lang):
     # ---
-    print_s(
-        f"<<lightblue>> work on lang: {lang}.wikipedia......................")
+    print_s(f"<<lightblue>> work on lang: {lang}.wikipedia......................")
     # ---
     newlist = list_
     # ---
@@ -93,8 +92,7 @@ def work_one_lang(list_, lang):
         # ---
         lio = f"{lang}:{title}"
         number += 1
-        print_s("<<lightyellow>> %d from %d, page: %s" %
-                (number, len(newlist), lio))
+        print_s("<<lightyellow>> %d from %d, page: %s" % (number, len(newlist), lio))
         # ---
         if lio in reffixed_list and "lala" not in sys.argv:
             print_s("<<lightred>>\talready in reffixed_list.")

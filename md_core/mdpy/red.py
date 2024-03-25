@@ -6,6 +6,7 @@
 """
 
 import codecs
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -16,6 +17,7 @@ import requests
 from mdpy import printe
 from mdpy.bots import mdwiki_api, py_tools
 from mdpy.bots.check_title import valid_title  # valid_title(title)
+
 # ---
 from newapi.mdwiki_page import NEW_API, MainPage
 
@@ -79,9 +81,7 @@ def get_red(title):
 
 def work(title, num, lenth, From=""):
     # ---
-    printe.output(
-        '-------------------------------------------\n*<<lightyellow>> >%d/%d title:"%s".'
-        % (num, lenth, title))
+    printe.output('-------------------------------------------\n*<<lightyellow>> >%d/%d title:"%s".' % (num, lenth, title))
     # ---
     if num < offset[1]:
         return ""
@@ -105,8 +105,7 @@ def work(title, num, lenth, From=""):
     for tit, o in ing.items():
         num += 1
         if o:
-            printe.output("page n:%d, title:'%s' already in mdwiki.org.." %
-                          (num, tit))
+            printe.output("page n:%d, title:'%s' already in mdwiki.org.." % (num, tit))
             continue
         # ---
         if not valid_title(tit):
@@ -145,8 +144,7 @@ def main():
     user_limit = "3000"
     # ---
     searchlist = {
-        "drug":
-        "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
+        "drug": "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
     }
     # ---
     limite = "max"
@@ -223,9 +221,7 @@ def main():
             # python red.py -start:all
             #
             # ---
-            list = api_new.Get_All_pages(start="",
-                                         namespace=namespaces,
-                                         limit=limite)
+            list = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
@@ -233,9 +229,7 @@ def main():
                 starts = page
     # ---
     if starts != "":
-        listen = api_new.Get_All_pages(start=starts,
-                                       namespace=namespaces,
-                                       limit=limite)
+        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
         for num, page in enumerate(listen, start=1):
             work(page, num, len(listen))
             # ---
@@ -245,10 +239,7 @@ def main():
     if newpages != "":
         list = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        list = mdwiki_api.Get_UserContribs(user,
-                                           limit=user_limit,
-                                           namespace=namespaces,
-                                           ucshow="new")
+        list = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
     elif pages != []:
         list = pages
     for num, page in enumerate(list, start=1):
@@ -265,9 +256,7 @@ def main():
             # python red.py -start:all
             #
             # ---
-            list = api_new.Get_All_pages(start="",
-                                         namespace=namespaces,
-                                         limit=limite)
+            list = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
@@ -283,9 +272,7 @@ def main():
             # python red.py -start:! -limit:3
             #
             # ---
-            list = api_new.Get_All_pages(start=starts,
-                                         namespace=namespaces,
-                                         limit=limite)
+            list = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))

@@ -13,6 +13,7 @@ import sys
 
 from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
 from mdpy import printe
+
 # ---
 from mdpy.bots import catdepth2, sql_for_mdwiki, wiki_api
 from mdpy.bots.check_title import valid_title  # valid_title(title)
@@ -44,23 +45,15 @@ def add_sql(o_qids):
     same = [x for x in o_qids if x in t_qids_in and t_qids_in[x] == o_qids[x]]
     # ---
     # diff = [x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x] and o_qids[x] != '']
-    diff = [
-        x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x]
-        and o_qids[x] != "" and t_qids_in[x] != ""
-    ]
+    diff = [x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x] and o_qids[x] != "" and t_qids_in[x] != ""]
     # ---
     printe.output(f"len of same: {len(same)}")
     printe.output(f"len of diff: {len(diff)}")
     # ---
     # del all same from o_qids
-    o_qids_new = {
-        x: y
-        for x, y in o_qids.items() if x not in same and x not in diff
-    }
+    o_qids_new = {x: y for x, y in o_qids.items() if x not in same and x not in diff}
     # ---
-    len_empty = [
-        x for x in o_qids_new if o_qids_new[x] == "" and t_qids_in.get(x) == ""
-    ]
+    len_empty = [x for x in o_qids_new if o_qids_new[x] == "" and t_qids_in.get(x) == ""]
     printe.output(f"<<lightgreen>> new len of len_empty:{len(len_empty)}")
     # ---
     # del empty qids but not empty in get_all_qids
@@ -69,12 +62,9 @@ def add_sql(o_qids):
             del o_qids_new[ti]
     # ---
     for x in diff:
-        printe.output(
-            f"x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")
+        printe.output(f"x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")
     # ---
-    printe.output(
-        f'<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}, add "add" to sys.argv to add to sql'
-    )
+    printe.output(f'<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}, add "add" to sys.argv to add to sql')
     # ---
     if "add" in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(o_qids_new, add_empty_qid=True)
@@ -117,21 +107,16 @@ def check():
     # ---
     for i in range(0, len(Listo), 100):
         # ---
-        group = Listo[i:i + 100]
+        group = Listo[i : i + 100]
         # ---
         params["titles"] = "|".join(group)
         # ---
-        jsone = wiki_api.submitAPI(params,
-                                   apiurl="https://en.wikipedia.org/w/api.php",
-                                   returnjson=False)
+        jsone = wiki_api.submitAPI(params, apiurl="https://en.wikipedia.org/w/api.php", returnjson=False)
         # ---
         if jsone and "batchcomplete" in jsone:
             query = jsone.get("query", {})
             # ---
-            redirects_x = {
-                x["to"]: x["from"]
-                for x in query.get("redirects", [])
-            }
+            redirects_x = {x["to"]: x["from"] for x in query.get("redirects", [])}
             # ---
             # "redirects": [{"from": "Acetylsalicylic acid","to": "Aspirin"}]
             Redirects = query.get("redirects", [])
@@ -174,19 +159,14 @@ def check():
         numb += 1
         faf = f'["{md}"]'
         fen = f'["{en}"]'
-        printe.output(
-            f"<<lightred>> {numb} page{faf.ljust(40)} to enwiki{fen}")
+        printe.output(f"<<lightred>> {numb} page{faf.ljust(40)} to enwiki{fen}")
     # ---
     sames = list(set(sames))
     missing_in_enwiki = list(set(missing_in_enwiki))
     # ---
-    printe.output(
-        f"<<lightgreen>> len of medwiki_to_enwiki:{len(medwiki_to_enwiki)}")
-    printe.output(
-        f"<<lightgreen>> len of missing_in_enwiki:{len(missing_in_enwiki)}")
-    printe.output(
-        f"<<lightgreen>> len of medwiki_to_enwiki_conflic:{len(medwiki_to_enwiki_conflic)}"
-    )
+    printe.output(f"<<lightgreen>> len of medwiki_to_enwiki:{len(medwiki_to_enwiki)}")
+    printe.output(f"<<lightgreen>> len of missing_in_enwiki:{len(missing_in_enwiki)}")
+    printe.output(f"<<lightgreen>> len of medwiki_to_enwiki_conflic:{len(medwiki_to_enwiki_conflic)}")
     printe.output(f"<<lightgreen>> len of sames:{len(sames)}")
     # ---
     printe.output(f"<<lightgreen>> len of o_qids:{len(o_qids)}")

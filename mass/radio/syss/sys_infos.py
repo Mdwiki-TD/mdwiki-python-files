@@ -60,15 +60,11 @@ for n, sy in enumerate(nnno, start=10):
     if "todo" in sys.argv:
         to_do = get_to_do(sy)
         if to_do:
-            print(
-                f"system: {sy.ljust(25)} to_do: {str(len(to_do)).ljust(15)} len_system_urls: {ln:,}"
-            )
+            print(f"system: {sy.ljust(25)} to_do: {str(len(to_do)).ljust(15)} len_system_urls: {ln:,}")
         continue
     # ---
     if not system_to_work:
-        print(
-            f'tfj run syi{n} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/syss/sys_infos {sy2}" #{ln:,}'
-        )
+        print(f'tfj run syi{n} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/syss/sys_infos {sy2}" #{ln:,}')
     # ---
     v = os.path.join(str(main_dir), f"jsons/{sy}_infos.json")
     # ---
@@ -112,8 +108,7 @@ new_infos = {x: v for x, v in u_data.items() if x not in ma_infos}
 # ---
 print(f"new_infos: {len(new_infos)}")
 
-stw_infos_file = os.path.join(str(main_dir),
-                              f"jsons/{system_to_work}_infos.json")
+stw_infos_file = os.path.join(str(main_dir), f"jsons/{system_to_work}_infos.json")
 
 # dump infos
 with open(stw_infos_file, "w", encoding="utf-8") as f:

@@ -11,12 +11,15 @@ from urllib.parse import urlencode
 import requests
 import wikitextparser
 from mdpy import printe
+
 # tab = json_langs_by_langs.get(lang, {}).get(title, {})# {'extlinks': extlinks, 'refsname': refsname}
 # ---
 from prior.json_en.lists import json_en_all
+
 # ---
 # ---
 from prior.json_langs.lists import json_langs_by_langs
+
 # tab = json_en_all.get(en, {})# {'extlinks': extlinks, 'refsname': refsname}
 # ---
 from priorviews.bots import helps
@@ -62,18 +65,11 @@ def match_ref_names(r, refnames, lang):
         _tags_[name] += 1
     # ---
     # sort by count
-    _tags_ = {
-        k: v
-        for k, v in sorted(
-            _tags_.items(), key=lambda item: item[1], reverse=True)
-    }
+    _tags_ = {k: v for k, v in sorted(_tags_.items(), key=lambda item: item[1], reverse=True)}
     for k, v in _tags_.items():
         if k in refnames:
-            printe.output(
-                f"<<green>> find: {k=} count: {v=}| main: {refnames[k]=}")
-            printe.output(
-                f'https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r["revid"]}'
-            )
+            printe.output(f"<<green>> find: {k=} count: {v=}| main: {refnames[k]=}")
+            printe.output(f'https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r["revid"]}')
             printe.output(f"new user: {user}")
             return user
     # ---
@@ -205,10 +201,7 @@ def search_history(title, lang, en="", refname=[], extlinks=[]):
     lenth_before = len(revisions)
     # ---
     # skip bots
-    revisions = [
-        rev for rev in revisions
-        if not rev.get("user", "").lower().endswith("bot")
-    ]
+    revisions = [rev for rev in revisions if not rev.get("user", "").lower().endswith("bot")]
     # ---
     bots_lenth = lenth_before - len(revisions)
     # ---

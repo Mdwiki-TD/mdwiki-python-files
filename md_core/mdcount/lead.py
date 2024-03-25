@@ -3,6 +3,7 @@ import re
 
 import pywikibot
 import wikitextparser as wtp
+
 # ---
 from mdpy.bots import mdwiki_api
 

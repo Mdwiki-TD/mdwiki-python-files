@@ -6,6 +6,7 @@ import sys
 
 # ---
 import requests
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -25,8 +26,7 @@ for arg in sys.argv:
     arg, _, value = arg.partition(":")
     # ---
     if arg == "-lasi" or arg == "lasi" and value.isdigit():
-        printe.output('<<lightyellow>> change La_si[1] from "%d" to %s' %
-                      (La_si[1], value))
+        printe.output('<<lightyellow>> change La_si[1] from "%d" to %s' % (La_si[1], value))
         # ---
         La_si[1] = int(value)
         # ---
@@ -70,18 +70,12 @@ def export_en_history(title):
     # ---
     texts = {}
     # ---
-    revisione = xmldata.replace(first,
-                                "").split("</page>")[0].split("</revision>")
-    revisions = [
-        x + "</revision>" for x in revisione
-        if x.strip().startswith("<revision>")
-    ]
+    revisione = xmldata.replace(first, "").split("</page>")[0].split("</revision>")
+    revisions = [x + "</revision>" for x in revisione if x.strip().startswith("<revision>")]
     if "teest" in sys.argv:
         printe.output(revisions)
     # ---
-    printe.output(
-        f"<<lightyellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions"
-    )
+    printe.output(f"<<lightyellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
     # ---
     # ---
     title2 = title.replace(":", "-").replace("/", "-")
@@ -155,8 +149,7 @@ def export(title):
     # ---
     # if title == 'Pubic lice' : paramse['pages'] =
     # ---
-    urll = ("https://" + "en.wikipedia.org/w/index.php?title=Special:Export/" +
-            title.replace(" ", "_"))
+    urll = "https://" + "en.wikipedia.org/w/index.php?title=Special:Export/" + title.replace(" ", "_")
     # urll = "https://" + 'en.wikipedia.org/wiki/Special:Export/' + title.replace(' ','_')
     # ---
     gg = Session.post(url=urll, data=paramse)
@@ -166,9 +159,7 @@ def export(title):
     # ---
     revisions = xmldata.split("</revision>")
     # ---
-    printe.output(
-        f"<<lightyellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions"
-    )
+    printe.output(f"<<lightyellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
     # ---
     title2 = title.replace(":", "-").replace("/", "-")
     # ---

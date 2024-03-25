@@ -50,10 +50,7 @@ class WikiBlame:
             "user": "",
         }  # desc
         if params is not None:
-            self.params.update({
-                x: v
-                for x, v in params.items() if v and v != ""
-            })
+            self.params.update({x: v for x, v in params.items() if v and v != ""})
         self.content = None
 
     def fetch_content(self) -> None:

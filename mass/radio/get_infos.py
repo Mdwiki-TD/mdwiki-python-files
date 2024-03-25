@@ -33,9 +33,7 @@ def get_id_infos(url):
     # ---
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
-        print(
-            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
-        )
+        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
         return case_tab
     # ---
     # Step 2: Parse the HTML content
@@ -64,8 +62,7 @@ def get_id_infos(url):
             if json_content.find("caseId") != -1:
                 # Parse JSON to get caseId
                 try:
-                    case_id = int(
-                        json_content.split('"caseId":')[1].split(",")[0])
+                    case_id = int(json_content.split('"caseId":')[1].split(",")[0])
                     break
                 except (ValueError, IndexError):
                     print("Error: Unable to extract caseId from JSON.")

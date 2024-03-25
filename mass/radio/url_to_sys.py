@@ -22,10 +22,7 @@ main_dir = Path(__file__).parent
 # ---
 files_path = main_dir / "syss/jsons"
 # ---
-urls_files = [
-    f for f in os.listdir(files_path)
-    if not f.endswith("_infos.json") and f.endswith(".json")
-]
+urls_files = [f for f in os.listdir(files_path) if not f.endswith("_infos.json") and f.endswith(".json")]
 # ---
 for f in urls_files:
     # ---

@@ -66,12 +66,7 @@ def work(title):
     if "test" in sys.argv:
         print(title)
     # ---
-    params2 = {
-        "action": "parse",
-        "format": "json",
-        "page": title,
-        "prop": "wikitext"
-    }
+    params2 = {"action": "parse", "format": "json", "page": title, "prop": "wikitext"}
     # ---
     json2 = mdapi.submitAPI(params2)
     # ---

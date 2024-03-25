@@ -64,9 +64,7 @@ all_params["combo"] = {
     "all": [],
 }
 # ---
-all_params["combo"]["all"] = (all_params["combo"]["mab"] +
-                              all_params["combo"]["vaccine"] +
-                              all_params["combo"]["combo"])
+all_params["combo"]["all"] = all_params["combo"]["mab"] + all_params["combo"]["vaccine"] + all_params["combo"]["combo"]
 all_params["combo"]["all"] = list(set(all_params["combo"]["all"]))
 # ---
 all_params["names"] = [

@@ -22,11 +22,14 @@ from after_translate.bots import add_to_wd
 from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 from after_translate.bots.fixcat import cat_for_pages
 from after_translate.bots.get_pages import get_pages_from_db
+
 # ---
 from after_translate.bots.users_pages import not_pages
 from api_sql import wiki_sql
+
 # ---
 from mdpy.bots import py_tools
+
 # ---
 from newapi import printe
 
@@ -115,8 +118,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         ns = str(lis["page_namespace"])
         # ---
         pupdate = pupdate[:8]
-        pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>",
-                         pupdate)
+        pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>", pupdate)
         # ---
         md_title = co_text.replace("_", " ").strip()
         md_title = re.sub("/full$", "", co_text)
@@ -185,9 +187,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
                 printe.output(f"target already in, {target}")
 
             else:
-                printe.output(
-                    f"puplished target: {tul_target} != target to add: {target}"
-                )
+                printe.output(f"puplished target: {tul_target} != target to add: {target}")
     # ---
     printe.output(f"lang: {lange} done: {done}, to_add: {to_add}")
     # ---
@@ -217,8 +217,7 @@ def main():
             lang_o = value
         # ---
     # ---
-    to_update, langs_to_t_u, targets_done, tit_user_lang, targets_done_by_mdtitle = (
-        get_pages_from_db(lang_o))
+    to_update, langs_to_t_u, targets_done, tit_user_lang, targets_done_by_mdtitle = get_pages_from_db(lang_o)
     # ---
     time.sleep(3)
     # ---
@@ -232,9 +231,7 @@ def main():
         numb_lang += 1
         # ---
         printe.output(" \\/\\/\\/\\/\\/ ")
-        printe.output(
-            f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"'
-        )
+        printe.output(f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"')
         # ---
         if lange in skip_langs:
             printe.output(f"skip lang:{lange}")

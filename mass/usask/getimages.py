@@ -12,6 +12,7 @@ from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
+
 # ---
 from newapi import printe
 
@@ -66,8 +67,7 @@ def extract_images_from_url(url):
         # Check if 'img' tag exists
         if img_tag:
             # Get the value of the 'srcset' attribute of the 'img' tag
-            img_srcset = (img_tag.get("srcset", "").split(",")[0].split()[0]
-                          if img_tag.get("srcset", "") else "")
+            img_srcset = img_tag.get("srcset", "").split(",")[0].split()[0] if img_tag.get("srcset", "") else ""
             img_src = img_tag.get("src", "")
             # printe.output(f'\t\t <<yellow>> img_srcset: <<default>> {img_srcset}')
             # printe.output(f'\t\t <<yellow>> img_src: <<default>> {img_src}')
@@ -97,10 +97,8 @@ def main():
     # If 'test' is in the command line arguments, replace data with a test value
     if "test" in sys.argv:
         data = {
-            "Online DICOM Image Viewer (ODIN): An Introduction and User Manual":
-            {
-                "url":
-                "https://openpress.usask.ca/undergradimaging/chapter/online-dicom-image-viewer-odin-an-introduction-and-user-manual/",
+            "Online DICOM Image Viewer (ODIN): An Introduction and User Manual": {
+                "url": "https://openpress.usask.ca/undergradimaging/chapter/online-dicom-image-viewer-odin-an-introduction-and-user-manual/",
                 "images": {},
             }
         }
@@ -114,8 +112,7 @@ def main():
         n += 1
 
         # Print the section being processed
-        printe.output(
-            f"<<yellow>> Processing section {n}/{len(data)}: {section}")
+        printe.output(f"<<yellow>> Processing section {n}/{len(data)}: {section}")
 
         # Get the URL from the section data
         url = section_data["url"]
@@ -130,24 +127,15 @@ def main():
                 break
 
     # sort the data by if it has images
-    data = dict(
-        sorted(data.items(),
-               key=lambda item: len(item[1]["images"]),
-               reverse=True))
+    data = dict(sorted(data.items(), key=lambda item: len(item[1]["images"]), reverse=True))
 
     # print how many has images and how many has no images
-    printe.output(
-        f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}"
-    )
+    printe.output(f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}")
 
-    printe.output(
-        f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}"
-    )
+    printe.output(f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}")
 
     # print len of all images
-    printe.output(
-        f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}"
-    )
+    printe.output(f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}")
 
     if "test" not in sys.argv:
         # Save the updated data back to the JSON file

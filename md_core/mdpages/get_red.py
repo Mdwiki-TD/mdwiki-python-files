@@ -40,7 +40,7 @@ def get_pages():
     len_grup = 100
     # ---
     for i in range(0, len(titles), len_grup):
-        group = titles[i:i + len_grup]
+        group = titles[i : i + len_grup]
         # ---
         done += len(group)
         # ---

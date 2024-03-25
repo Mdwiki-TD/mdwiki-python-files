@@ -87,8 +87,7 @@ def create_category(disease_name):
     return cat_title
 
 
-def upload_image(category_name, image_path, image_url, image_name,
-                 disease_url):
+def upload_image(category_name, image_path, image_url, image_name, disease_url):
     global len_all_images
     # split disease_url to get last text after =
     image_name = image_name.replace("_", " ").replace("  ", " ")
@@ -102,23 +101,9 @@ def upload_image(category_name, image_path, image_url, image_name,
 
     image_text = "== {{int:summary}} ==\n"
 
-    image_text += (
-        "{{Information\n"
-        f"|Description = \n* Atlasdermatologico disease ID: [{disease_url} {diseaseid}]\n"
-        f"* Image ID: [{image_url} {image_id}]\n"
-        f"|Date = \n|Source = {disease_url}\n"
-        "|Author = https://www.atlasdermatologico.com.br/\n"
-        "|Permission = http://creativecommons.org/licenses/by-nc-sa/3.0/\n"
-        "}}\n"
-        "== {{int:license}} ==\n"
-        "{{CC-BY-NC-SA-3.0}}\n"
-        f"[[{category_name}]]\n"
-        "[[Category:Atlasdermatologico]]")
+    image_text += "{{Information\n" f"|Description = \n* Atlasdermatologico disease ID: [{disease_url} {diseaseid}]\n" f"* Image ID: [{image_url} {image_id}]\n" f"|Date = \n|Source = {disease_url}\n" "|Author = https://www.atlasdermatologico.com.br/\n" "|Permission = http://creativecommons.org/licenses/by-nc-sa/3.0/\n" "}}\n" "== {{int:license}} ==\n" "{{CC-BY-NC-SA-3.0}}\n" f"[[{category_name}]]\n" "[[Category:Atlasdermatologico]]"
 
-    upload = mosab_api.upload_by_url(image_name,
-                                     image_text,
-                                     image_url,
-                                     comment="")
+    upload = mosab_api.upload_by_url(image_name, image_text, image_url, comment="")
 
     print(f"upload result: {upload}")
 
@@ -155,15 +140,11 @@ def process_folder(root):
     if category and "noup" not in sys.argv:
         # Upload images
         n = 0
-        for image_name, image_url in tqdm(images_info.items(),
-                                          desc="Uploading images",
-                                          total=len(images_info.keys())):
+        for image_name, image_url in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
             n += 1
             image_path = os.path.join(root, image_name)
-            print(
-                f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
-            upload_image(category, image_path, image_url, image_name,
-                         disease_url)
+            print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
+            upload_image(category, image_path, image_url, image_name, disease_url)
 
     create_set(disease_name, images_info)
 

@@ -11,6 +11,7 @@ import re
 import sys
 
 from mdpy import printe
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -28,14 +29,10 @@ def printtest(s):
 
 
 # ---
-redirects_pages = mdwiki_api.Get_All_pages("!",
-                                           namespace="0",
-                                           apfilterredir="redirects")
+redirects_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="redirects")
 print(f"len of redirects_pages {len(redirects_pages)} ")
 # ---
-nonredirects = mdwiki_api.Get_All_pages("!",
-                                        namespace="0",
-                                        apfilterredir="nonredirects")
+nonredirects = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 # nonredirects = []
 printe.output(f"len of nonredirects {len(nonredirects)} ")
 # printe.output( str(nonredirects) )
@@ -68,7 +65,7 @@ def find_redirects(links):
     normalized_numb = 0
     # ---
     for i in range(0, len(titles), 300):
-        group = titles[i:i + 300]
+        group = titles[i : i + 300]
         # ---
         # printe.output(group)
         # ---
@@ -124,13 +121,9 @@ def replace_links2(text, oldlink, newlink):
     # ---
     oldlink2 = normalized.get(oldlink, oldlink)
     # ---
-    while (text.find(f"[[{oldlink}]]") != -1
-           or text.find(f"[[{oldlink}|") != -1
-           or text.find(f"[[{oldlink2}]]") != -1
-           or text.find(f"[[{oldlink2}|") != -1):
+    while text.find(f"[[{oldlink}]]") != -1 or text.find(f"[[{oldlink}|") != -1 or text.find(f"[[{oldlink2}]]") != -1 or text.find(f"[[{oldlink2}|") != -1:
         # ---
-        printe.output(
-            f"text.replace( '[[{oldlink}]]' , '[[{newlink}|{oldlink}]]' )")
+        printe.output(f"text.replace( '[[{oldlink}]]' , '[[{newlink}|{oldlink}]]' )")
         # ---
         text = text.replace(f"[[{oldlink}]]", f"[[{newlink}|{oldlink}]]")
         text = text.replace(f"[[{oldlink}|", f"[[{newlink}|")
@@ -197,9 +190,7 @@ def treat_page(title):
             newtext = replace_links2(newtext, tit, fixed_tit)
         elif tit not in nonredirects:
             if tit2 != tit:
-                printe.output(
-                    f'<<lightred>> tit:["{tit}"] and tit:["{tit2}"] not in from_to'
-                )
+                printe.output(f'<<lightred>> tit:["{tit}"] and tit:["{tit2}"] not in from_to')
             # else:
             # printe.output('<<lightred>> tit:["%s"] not in from_to' % tit )
             # ---

@@ -57,8 +57,7 @@ def work(title):
         content = content.strip()
         # ---
         if newtext.find(content) != -1:
-            newtext = newtext.replace(aaa,
-                                      "{{ourworldindatamirror|%s}}" % content)
+            newtext = newtext.replace(aaa, "{{ourworldindatamirror|%s}}" % content)
     # ---
     if newtext != text:
         numbers["done"] += 1
@@ -71,11 +70,7 @@ def work(title):
 def main():
     nn = ""
     # ---
-    list = api_new.Get_All_pages(start="COVID",
-                                 namespace="0",
-                                 limit="max",
-                                 apfilterredir="",
-                                 limit_all=0)
+    list = api_new.Get_All_pages(start="COVID", namespace="0", limit="max", apfilterredir="", limit_all=0)
     # ---
     num = 0
     # ---

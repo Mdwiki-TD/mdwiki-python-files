@@ -66,8 +66,7 @@ for lang in CreatorsData.copy():
             CreatorsData[lang][title]["TD"] = False
         # ---
         # if actor match IP address : skip
-        if re.match(r"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$",
-                    actor):
+        if re.match(r"^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$", actor):
             continue
         # ---
         if actor not in counts_creators_by_lang[lang]:
@@ -92,8 +91,7 @@ if __name__ == "__main__":
             for x, z in wo.items():
                 print(x, z)
         # ---
-        print(
-            f"len of counts_creators_by_lang: {len(counts_creators_by_lang)}")
+        print(f"len of counts_creators_by_lang: {len(counts_creators_by_lang)}")
         # ---
 
 # ---

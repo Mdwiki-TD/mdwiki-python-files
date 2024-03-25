@@ -39,9 +39,7 @@ def geo():
             # ---
             if case_id in new_cases_in:
                 already += 1
-                print(
-                    f"already:{already}, case_id {case_id} already in new_cases_in ({case_title}, {new_cases_in[case_id]})"
-                )
+                print(f"already:{already}, case_id {case_id} already in new_cases_in ({case_title}, {new_cases_in[case_id]})")
             # ---
             new_cases_in[case_id] = case_title
             # ---
@@ -61,12 +59,7 @@ def geo():
     dump_json_file("jsons/cases_in_ids.json", new_cases_in, False)
 
     # sort jsons.cases_dup by lenth if lenth > 1
-    new_dup = {
-        k: v
-        for k, v in sorted(
-            new_dup.items(), key=lambda item: len(item[1]), reverse=True)
-        if len(v) > 1
-    }
+    new_dup = {k: v for k, v in sorted(new_dup.items(), key=lambda item: len(item[1]), reverse=True) if len(v) > 1}
 
     print(f"lenth of new_dup: {len(new_dup)} ")
 

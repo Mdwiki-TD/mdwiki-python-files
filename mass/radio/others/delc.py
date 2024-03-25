@@ -56,8 +56,7 @@ for cat in cats:
     text = page.get_text()
     # ---
     # remove category liike: [[Category:Radiopaedia cases by type | 011219]]
-    newtext = re.sub(r"\[\[Category:Radiopaedia cases by type\s*\|*.*?\]\]",
-                     "", text)
+    newtext = re.sub(r"\[\[Category:Radiopaedia cases by type\s*\|*.*?\]\]", "", text)
     # ---
     if newtext == text:
         print("newtext == text")

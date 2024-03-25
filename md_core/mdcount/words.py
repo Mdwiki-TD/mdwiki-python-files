@@ -16,17 +16,20 @@ python3 core8/pwb.py mdpy/words sql
 
 import codecs
 import json
+
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import sys
+
 # ---
 from pathlib import Path
 
 from mdcount import lead
 from mdcount.links import get_valid_Links
 from mdpy import printe
+
 # ---
 from mdpy.bots import mdwiki_api
 
@@ -47,17 +50,13 @@ def get_word_files():
     # ---
     global json_file, words_n, all_words_n
     # ---
-    json_file[
-        1] = f"{dir2}/public_html/Translation_Dashboard/Tables/allwords.json"
+    json_file[1] = f"{dir2}/public_html/Translation_Dashboard/Tables/allwords.json"
     # ---
-    all_words_n = json.loads(
-        codecs.open(json_file[1], "r", encoding="utf-8").read())
+    all_words_n = json.loads(codecs.open(json_file[1], "r", encoding="utf-8").read())
     # ---
-    json_file[
-        0] = f"{dir2}/public_html/Translation_Dashboard/Tables/words.json"
+    json_file[0] = f"{dir2}/public_html/Translation_Dashboard/Tables/words.json"
     # ---
-    words_n = json.loads(
-        codecs.open(json_file[0], "r", encoding="utf-8").read())
+    words_n = json.loads(codecs.open(json_file[0], "r", encoding="utf-8").read())
     # ---
     printe.output(f"len of words_n:{len(words_n.keys())}")
 

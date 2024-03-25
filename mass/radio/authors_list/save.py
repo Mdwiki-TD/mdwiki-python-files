@@ -14,8 +14,7 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
 
@@ -30,8 +29,7 @@ def sa(au_infos):
     text += "! # !! Author !! cats !! Cases !! Url !! Location\n"
 
     # sort au_infos by cases
-    au_infos = dict(
-        sorted(au_infos.items(), key=lambda x: x[1]["cases"], reverse=True))
+    au_infos = dict(sorted(au_infos.items(), key=lambda x: x[1]["cases"], reverse=True))
 
     for numb, (x, ta) in enumerate(au_infos.items(), 1):
         text += "|-\n"
@@ -44,9 +42,7 @@ def sa(au_infos):
 
     text += "|}\n\n"
 
-    page = ncc_MainPage("User:Mr. Ibrahem/Radiopaedia authors",
-                        "www",
-                        family="nccommons")
+    page = ncc_MainPage("User:Mr. Ibrahem/Radiopaedia authors", "www", family="nccommons")
 
     if page.exists():
         page.save(newtext=text, summary="update")

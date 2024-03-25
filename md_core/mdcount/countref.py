@@ -12,12 +12,14 @@ python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
 """
 
 import codecs
+
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import json
 import sys
+
 # ---
 from pathlib import Path
 
@@ -61,8 +63,7 @@ list_ma = {1: [x for x in list_fu if (x in all_ref and x in lead_ref)]}
 def get_refs_new(text):
     ref_list = []
     # ---
-    scanner = RegexScanner(r"(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>",
-                           text)
+    scanner = RegexScanner(r"(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>", text)
     # ---
     for m in scanner.requests:
         # ---
@@ -83,8 +84,7 @@ def get_refs_new(text):
 
 def get_short_refs(text):
     # ---
-    scanner = RegexScanner(
-        r"<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>", text)
+    scanner = RegexScanner(r"<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>", text)
     # ---
     ref_list = scanner.attr_scan("name")
     # ---
@@ -146,9 +146,7 @@ def from_sql():
     # ---
     titles = [x for x in titles2 if x not in list_ma[1]]
     # ---
-    printe.output(
-        f"<<lightyellow>> sql: find {len(titles2)} titles, {len(titles)} to work. "
-    )
+    printe.output(f"<<lightyellow>> sql: find {len(titles2)} titles, {len(titles)} to work. ")
     return titles
 
 
@@ -186,8 +184,7 @@ def mai():
         if numb >= limit:
             break
         # ---
-        printe.output(" p %d from %d: for %s:" %
-                      (numb, len(vaild_links[1]), x))
+        printe.output(" p %d from %d: for %s:" % (numb, len(vaild_links[1]), x))
         # ---
         count_refs(x)
         # ---

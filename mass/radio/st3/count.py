@@ -93,9 +93,7 @@ def sa():
 
     print(text)
 
-    page = ncc_MainPage("User:Mr. Ibrahem/Radiopaedia",
-                        "www",
-                        family="nccommons")
+    page = ncc_MainPage("User:Mr. Ibrahem/Radiopaedia", "www", family="nccommons")
 
     if page.exists():
         page.save(newtext=text, summary="update")

@@ -17,6 +17,7 @@ from mdpy.bots import sql_for_mdwiki
 
 import sys
 import traceback
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -27,6 +28,7 @@ import pkg_resources
 import pymysql
 import pymysql.cursors
 import pywikibot
+
 # ---
 from mdpy import printe
 from pymysql.converters import escape_string
@@ -37,7 +39,7 @@ can_use_sql_db = {1: True}
 # ---
 py_v = pymysql.__version__
 if py_v.endswith(".None"):
-    py_v = py_v[:-len(".None")]
+    py_v = py_v[: -len(".None")]
 # ---
 pymysql_version = pkg_resources.parse_version(py_v)
 # ---
@@ -77,8 +79,7 @@ def sql_connect_pymysql(query, return_dict=False, values=None):
     # ---
     args = dict(main_args.items())
     # ---
-    args["cursorclass"] = (pymysql.cursors.DictCursor
-                           if return_dict else pymysql.cursors.Cursor)
+    args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
     params = values if values else None
     # ---
@@ -145,18 +146,11 @@ def get_all_qids():
 
 
 def get_all_pages():
-    return [
-        ta["title"] for ta in mdwiki_sql("select DISTINCT title from pages;",
-                                         return_dict=True)
-    ]
+    return [ta["title"] for ta in mdwiki_sql("select DISTINCT title from pages;", return_dict=True)]
 
 
 def get_db_categories():
-    return {
-        c["category"]: c["depth"]
-        for c in mdwiki_sql("select category, depth from categories;",
-                            return_dict=True)
-    }
+    return {c["category"]: c["depth"] for c in mdwiki_sql("select category, depth from categories;", return_dict=True)}
 
 
 def add_qid(title, qid):
@@ -172,8 +166,7 @@ def set_qid_where_title(title, qid):
     title2 = escape_string(title)
     qua = f"""UPDATE qids set qid = '{qid}' where title = '{title2}';"""
     # ---
-    printe.output(
-        f"<<yellow>> set_qid_where_title()  title:{title}, qid:{qid}")
+    printe.output(f"<<yellow>> set_qid_where_title()  title:{title}, qid:{qid}")
     # ---
     return mdwiki_sql(qua, return_dict=True)
 
@@ -182,8 +175,7 @@ def set_title_where_qid(new_title, qid):
     title2 = escape_string(new_title)
     qua = f"""UPDATE qids set title = '{title2}' where qid = '{qid}';"""
     # ---
-    printe.output(
-        f"<<yellow>> set_title_where_qid()  new_title:{new_title}, qid:{qid}")
+    printe.output(f"<<yellow>> set_title_where_qid()  new_title:{new_title}, qid:{qid}")
     # ---
     return mdwiki_sql(qua, return_dict=True)
 
@@ -192,8 +184,7 @@ def set_target_where_id(new_target, iid):
     title2 = escape_string(new_target)
     query = f"""UPDATE pages set target = '{title2}' where id = {iid};"""
     # ---
-    printe.output(
-        f"<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}")
+    printe.output(f"<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}")
     # ---
     if new_target == "" or iid == "":
         return
@@ -232,9 +223,7 @@ def add_titles_to_qids(tab, add_empty_qid=False):
                 set_qid_where_title(title, qid)
             else:
                 # set_qid_where_title(title, qid)
-                printe.output(
-                    f"<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}"
-                )
+                printe.output(f"<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}")
 
 
 def tests():

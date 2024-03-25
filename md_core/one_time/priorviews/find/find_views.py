@@ -49,10 +49,7 @@ def api_views(title, lang):
     # d_start = d_start.strftime('%Y%m%d')
     d_start = "20110101"
     # ---
-    enviews = wiki_api.get_views_with_rest_v1(lang, [title],
-                                              date_start=d_start,
-                                              date_end=d_end,
-                                              printurl=TEST)
+    enviews = wiki_api.get_views_with_rest_v1(lang, [title], date_start=d_start, date_end=d_end, printurl=TEST)
     # ---
     if not enviews or enviews == {}:
         return 0

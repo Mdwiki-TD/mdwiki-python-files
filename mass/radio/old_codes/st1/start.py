@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 
 import psutil
+
 # ---
 from newapi import printe
 from newapi.ncc_page import CatDepth
@@ -26,8 +27,7 @@ main_dir = Path(__file__).parent
 with open(main_dir / "jsons/authors.json", encoding="utf-8") as f:
     authors = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), "jsons/infos.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "jsons/infos.json"), encoding="utf-8") as f:
     infos = json.load(f)
 # ---
 with open(main_dir / "jsons/all_ids.json", encoding="utf-8") as f:
@@ -99,11 +99,9 @@ def main(ids_tab):
         length = len(ids_tab) // 13
         for i in range(0, len(ids_tab), length):
             num = i // length + 1
-            tabs[str(num)] = dict(list(ids_tab.items())[i:i + length])
+            tabs[str(num)] = dict(list(ids_tab.items())[i : i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
-            print(
-                f'tfj run sta{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"'
-            )
+            print(f'tfj run sta{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"')
 
         for arg in sys.argv:
             arg, _, value = arg.partition(":")
@@ -127,8 +125,7 @@ def main(ids_tab):
         printe.output(f"<<purple>> case:{n} / {len(ids_tab)}, caseId:{caseId}")
         # ---
         if caseId in cases_in_ids or str(caseId) in cases_in_ids:
-            printe.output(
-                f"<<purple>> caseId {caseId} already in cases_in_ids")
+            printe.output(f"<<purple>> caseId {caseId} already in cases_in_ids")
             continue
         # ---
         author = tab.get("author", "")
@@ -143,13 +140,15 @@ def main(ids_tab):
         # ---
         studies = [study.split("/")[-1] for study in tab["studies"]]
         # ---
-        tabe.append({
-            "caseId": caseId,
-            "case_url": case_url,
-            "title": title,
-            "studies": studies,
-            "author": author,
-        })
+        tabe.append(
+            {
+                "caseId": caseId,
+                "case_url": case_url,
+                "title": title,
+                "studies": studies,
+                "author": author,
+            }
+        )
     # ---
     de_work(tabe)
 
@@ -161,12 +160,10 @@ if __name__ == "__main__":
     if "test" in sys.argv:
         ids_by_caseId = {
             "20476": {
-                "url":
-                "https://radiopaedia.org/cases/peritonsillar-abscess-quinsy",
+                "url": "https://radiopaedia.org/cases/peritonsillar-abscess-quinsy",
                 "caseId": 20476,
                 "title": "Peritonsillar abscess (quinsy)",
-                "studies":
-                ["https://radiopaedia.org/cases/20476/studies/20387"],
+                "studies": ["https://radiopaedia.org/cases/20476/studies/20387"],
                 "author": "Chris O'Donnell",
             }
         }

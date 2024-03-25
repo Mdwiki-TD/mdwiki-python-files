@@ -4,16 +4,19 @@ python3 core8/pwb.py nccommons/mv
 """
 
 import json
+
 #
 # (C) Ibrahem Qasim, 2023
 #
 # ---
 import sys
+
 # ---
 from pathlib import Path
 
 from mdpy.bots import mdwiki_api
 from nccommons import api
+
 # ---
 from newapi import printe
 from newapi.mdwiki_page import NEW_API
@@ -90,9 +93,7 @@ for cat in to_update:
     if md_text == nc_text:
         printe.output(f"{cat} is up to date")
     else:
-        save_page = nspage.save(newtext=md_text,
-                                summary="Copy from mdwiki",
-                                nocreate=1)
+        save_page = nspage.save(newtext=md_text, summary="Copy from mdwiki", nocreate=1)
     # ---
     delete_it(cat)
     # ---

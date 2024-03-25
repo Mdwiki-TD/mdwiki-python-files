@@ -18,6 +18,7 @@ import sys
 import time as tttime
 
 from api_sql import sql_qu
+
 # ---
 from mdpy import printe
 
@@ -70,18 +71,13 @@ def sql_new(queries, wiki="", printqua=False, values=[]):
     start = tttime.time()
     final = tttime.time()
     # ---
-    rows = sql_qu.make_sql_connect(queries,
-                                   db=dbs_p,
-                                   host=host,
-                                   return_dict=True,
-                                   values=values)
+    rows = sql_qu.make_sql_connect(queries, db=dbs_p, host=host, return_dict=True, values=values)
     # ---
     final = tttime.time()
     # ---
     delta = int(final - start)
     # ---
-    printe.output(
-        f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
+    printe.output(f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
     # ---
     return rows
 
@@ -101,18 +97,13 @@ def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     start = tttime.time()
     final = tttime.time()
     # ---
-    rows2 = sql_qu.make_sql_connect(queries,
-                                    db=dbs_p,
-                                    host=host,
-                                    return_dict=return_dict)
+    rows2 = sql_qu.make_sql_connect(queries, db=dbs_p, host=host, return_dict=return_dict)
     # ---
     final = tttime.time()
     # ---
     delta = int(final - start)
     # ---
-    printe.output(
-        f'wiki_sql.py Make_sql_many_rows len(encats) = "{len(rows2)}", in {delta} seconds'
-    )
+    printe.output(f'wiki_sql.py Make_sql_many_rows len(encats) = "{len(rows2)}", in {delta} seconds')
     # ---
     return rows2
 

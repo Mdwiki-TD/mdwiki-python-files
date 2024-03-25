@@ -44,10 +44,7 @@ def work(tab):
 
 
 def get_usa_auths():
-    usa_auths = [
-        k for k, v in authors_infos.items()
-        if "united states" in v["location"].lower()
-    ]
+    usa_auths = [k for k, v in authors_infos.items() if "united states" in v["location"].lower()]
     print(f"len usa_auths: {len(usa_auths)}")
     # ---
     return usa_auths
@@ -59,21 +56,17 @@ def sa():
     # filter only authors with location contains "united states"
     usa_auths = get_usa_auths()
 
-    tab = {
-        au: authors_to_cases.get(au, [])
-        for au in usa_auths if au in authors_to_cases
-    }
+    tab = {au: authors_to_cases.get(au, []) for au in usa_auths if au in authors_to_cases}
     print(f"len tab: {len(tab)}")
 
     # sort by number of cases
     Reverse = "reverse" not in sys.argv
-    tab = dict(
-        sorted(tab.items(), key=lambda item: len(item[1]), reverse=Reverse))
+    tab = dict(sorted(tab.items(), key=lambda item: len(item[1]), reverse=Reverse))
     # ---
     # split to 2 parts
     tab1, tab2 = (
-        dict(list(tab.items())[:len(tab) // 2]),
-        dict(list(tab.items())[len(tab) // 2:]),
+        dict(list(tab.items())[: len(tab) // 2]),
+        dict(list(tab.items())[len(tab) // 2 :]),
     )
     # ---
     if "tab1" in sys.argv:

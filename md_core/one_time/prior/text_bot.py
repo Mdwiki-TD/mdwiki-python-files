@@ -7,6 +7,7 @@ from pathlib import Path
 
 # ---
 from mdpy import printe
+
 # ---
 from priorviews.lists import translators
 
@@ -136,8 +137,7 @@ def get_t_sections():
     return text
 
 
-def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks,
-               lead_refsname):
+def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_refsname):
     # ---
     _sa_11 = False
     _sa_22 = False
@@ -184,9 +184,7 @@ def log_all_pages_states():
     file = f"{Dir}/all_pages_states.json"
     # ---
     if all_pages_states != {}:
-        printe.output(
-            f"<<lightyellow>> log_all_pages_states(): lenth: {len(all_pages_states.keys())}"
-        )
+        printe.output(f"<<lightyellow>> log_all_pages_states(): lenth: {len(all_pages_states.keys())}")
         json.dump(all_pages_states, codecs.open(file, "w", encoding="utf-8"))
 
     # ---
@@ -227,9 +225,7 @@ def make_text(allo, ttt=""):
             langs_keys_2[la] += 1
     # ---
     # sort langs_keys_2 by number of references
-    langs_keys_2 = sorted(langs_keys_2.items(),
-                          key=lambda x: x[1],
-                          reverse=True)
+    langs_keys_2 = sorted(langs_keys_2.items(), key=lambda x: x[1], reverse=True)
     # ---
     # print(langs_keys_2)
     # ---
@@ -328,16 +324,13 @@ def make_text(allo, ttt=""):
                     en_extlinks.extend([x.lower() for x in old["extlinks"]])
                     en_extlinks = list(set(en_extlinks))
                     # ---
-                    en_refsname.extend(
-                        [x.lower() for x in old["refsname"].keys()])
+                    en_refsname.extend([x.lower() for x in old["refsname"].keys()])
                     en_refsname = list(set(en_refsname))
                     # ---
-                    lead_refsname.extend(
-                        [x.lower() for x in old_lead["refsname"].keys()])
+                    lead_refsname.extend([x.lower() for x in old_lead["refsname"].keys()])
                     lead_refsname = list(set(lead_refsname))
                     # ---
-                    lead_extlinks.extend(
-                        [x.lower() for x in old_lead["extlinks"]])
+                    lead_extlinks.extend([x.lower() for x in old_lead["extlinks"]])
                     lead_extlinks = list(set(lead_extlinks))
                     # ---
                     color_tab = make_color(
@@ -354,15 +347,9 @@ def make_text(allo, ttt=""):
                     if color == "red":
                         # ---
                         en_extlinks_o = [x.lower() for x in old["extlinks"]]
-                        en_refsname_o = [
-                            x.lower() for x in old["refsname"].keys()
-                        ]
-                        lead_refsname_o = [
-                            x.lower() for x in old_lead["refsname"].keys()
-                        ]
-                        lead_extlinks_o = [
-                            x.lower() for x in old_lead["extlinks"]
-                        ]
+                        en_refsname_o = [x.lower() for x in old["refsname"].keys()]
+                        lead_refsname_o = [x.lower() for x in old_lead["refsname"].keys()]
+                        lead_extlinks_o = [x.lower() for x in old_lead["extlinks"]]
                         # ---
                         color_tab2 = make_color(
                             en_extlinks_o,
@@ -377,13 +364,10 @@ def make_text(allo, ttt=""):
                         # ---
                 # ---
                 if color == "red":
-                    translator = translators.tra_by_lang.get(l, {}).get(
-                        tit.lower(), "")
+                    translator = translators.tra_by_lang.get(l, {}).get(tit.lower(), "")
                     if translator != "":
                         color = "green"
-                        printe.output(
-                            f"<<purple>> change color for [[{l}:{tit}]] to green: {translator=}"
-                        )
+                        printe.output(f"<<purple>> change color for [[{l}:{tit}]] to green: {translator=}")
                 # ---
                 same1 = color_tab["same1"]
                 same2 = color_tab["same2"]
@@ -443,7 +427,8 @@ def make_text(allo, ttt=""):
         # ---
         red_line += f'{ta["red"]} || '
     # ---
-    te_langs = (f"""
+    te_langs = (
+        f"""
 {te_langs}
 
 |- style="position: sticky;top: 0; z-index: 2;"
@@ -453,7 +438,9 @@ def make_text(allo, ttt=""):
 |- style="position: sticky;top: 0; z-index: 2;"
 ! style="position: sticky;top: 0;left: 0;" | red
 | {red_line}
-""" + "\n|}\n</div>")
+"""
+        + "\n|}\n</div>"
+    )
     # ---
     lrnn = len(allo.keys())
     # ---

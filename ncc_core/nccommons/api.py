@@ -61,11 +61,7 @@ def post_s(params, addtoken=False):
     return json1
 
 
-def Get_All_pages(start,
-                  namespace="0",
-                  limit="max",
-                  apfilterredir="",
-                  limit_all=0):
+def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all=0):
     return api_new.Get_All_pages(
         start=start,
         namespace=namespace,
@@ -75,12 +71,7 @@ def Get_All_pages(start,
     )
 
 
-def upload_by_url(file_name,
-                  text,
-                  url,
-                  comment="",
-                  return_file_name=False,
-                  do_ext=False):
+def upload_by_url(file_name, text, url, comment="", return_file_name=False, do_ext=False):
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
@@ -97,9 +88,7 @@ def upload_by_url(file_name,
     if not upload_all[1] and "ask" in sys.argv:
         if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(
-            f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o)"
-        )
+        sa = py_input(f"<<lightyellow>> nccommons.py: upload file:'{file_name}' ? ([y]es, [N]o)")
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -107,8 +96,7 @@ def upload_by_url(file_name,
         # ---
         if sa.strip() == "a":
             printe.output("---------------------------------------------")
-            printe.output(
-                "nccommons.py upload_by_url save all without asking.")
+            printe.output("nccommons.py upload_by_url save all without asking.")
             printe.output("---------------------------------------------")
             upload_all[1] = True
         # ---
@@ -126,9 +114,7 @@ def upload_by_url(file_name,
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
-    duplicate = (upload_result.get("warnings",
-                                   {}).get("duplicate",
-                                           [""])[0].replace("_", " "))
+    duplicate = upload_result.get("warnings", {}).get("duplicate", [""])[0].replace("_", " ")
     # ---
     if success:
         printe.output(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
@@ -138,8 +124,7 @@ def upload_by_url(file_name,
         printe.output(f"<<lightred>> ** duplicate file:  {duplicate}.")
         return f"{duplicate}" if return_file_name else True
     elif error != {}:
-        printe.output(
-            f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         # ---
         printe.output(error)
         # ----
@@ -174,9 +159,7 @@ def create_Page(text, title, summary="create page"):
     if not Save_all[1] and ("ask" in sys.argv and "save" not in sys.argv):
         if "nodiff" not in sys.argv:
             printe.output(text)
-        sa = py_input(
-            f'<<lightyellow>> nccommons.py: create:"{title}" page ? ([y]es, [N]o)'
-        )
+        sa = py_input(f'<<lightyellow>> nccommons.py: create:"{title}" page ? ([y]es, [N]o)')
         # ---
         if sa.strip() not in yes_answer:
             printe.output("<<lightred>> wrong answer")
@@ -203,8 +186,7 @@ def create_Page(text, title, summary="create page"):
         time.sleep(time_sleep)
         return True
     elif error != {}:
-        printe.output(
-            f"<<lightred>> error when create_Page, error_code:{error_code}")
+        printe.output(f"<<lightred>> error when create_Page, error_code:{error_code}")
         printe.output(error)
     else:
         printe.output(result)

@@ -13,12 +13,14 @@ from pathlib import Path
 # ---
 from mdpy import printe
 from prior.json_langs.lists import json_langs_by_langs
+
 # tab = json_langs_by_langs.get(lang, {}).get(title, {})# {'extlinks': extlinks, 'refsname': refsname}
 # ---
 from priorviews.bots import gt_blame, helps
 from priorviews.lists import creators
 from priorviews.lists.links_by_section import links_by_lang
 from priorviews.lists.translators import tra_by_lang
+
 # ---
 # first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
 from wikiblame.bot import get_blame
@@ -27,10 +29,7 @@ from wikiblame.bot import get_blame
 links_without_translator = {}
 # ---
 for lla, titles in links_by_lang.items():
-    links_without_translator[lla] = [
-        x for x in titles if tra_by_lang.get(lla, {}).get(x, "") == ""
-        and tra_by_lang.get(lla, {}).get(x.lower(), "") == ""
-    ]
+    links_without_translator[lla] = [x for x in titles if tra_by_lang.get(lla, {}).get(x, "") == "" and tra_by_lang.get(lla, {}).get(x.lower(), "") == ""]
 # ---
 COUNTS_ALL = 0
 # ---
@@ -61,19 +60,14 @@ def gtblame_value(title, lang):
     en = infos.get("en", "")
     # ---
     if "history" in sys.argv:
-        ne = gt_blame.search_history(title,
-                                     lang,
-                                     en=en,
-                                     refname=refname,
-                                     extlinks=extlinks)
+        ne = gt_blame.search_history(title, lang, en=en, refname=refname, extlinks=extlinks)
         if ne:
             return ne
     else:
         # ---
         for ref in refname:
             # ---
-            printe.output(
-                f"search for: ref: ({ref}), page: [[{lang}:{title}]]")
+            printe.output(f"search for: ref: ({ref}), page: [[{lang}:{title}]]")
             # ---
             tab["needle"] = ref
             # ---
@@ -126,17 +120,14 @@ def get_b(links, lang):
         if COUNTS_ALL % 200 == 0:
             logem()
         # ---
-        value_in = new_data[lang].get(title_lower) or new_data[lang].get(
-            title) or ""
+        value_in = new_data[lang].get(title_lower) or new_data[lang].get(title) or ""
         # ---
-        if "new" in sys.argv and (title_lower in new_data[lang]
-                                  or title in new_data[lang]):
+        if "new" in sys.argv and (title_lower in new_data[lang] or title in new_data[lang]):
             continue
         # ---
         new_data[lang][title_lower] = value_in
         # ---
-        printe.output(
-            f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        printe.output(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
         # ---
         # {"time": 20140721110644, "actor": "CFCF", "comment": "Translated from [[:en:African trypanosomiasis|English]] by Somil.Mishra at [[:en:Translators Without Borders|Translators Without Borders]]", "TD": false}
         crate = lang_creators.get(title, {})

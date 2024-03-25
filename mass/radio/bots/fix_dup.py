@@ -22,8 +22,7 @@ for n, (idn, cats) in enumerate(jsons.cases_dup.items(), start=1):
     if cat1 == cat2:
         continue
     # ---
-    printe.output(
-        f"d:s{n}/{len(jsons.cases_dup)}<<lightyellow>> {idn} {cat1} {cat2}")
+    printe.output(f"d:s{n}/{len(jsons.cases_dup)}<<lightyellow>> {idn} {cat1} {cat2}")
     # ---
     cat1_page = ncc_MainPage(cat1, "www", family="nccommons")
     cat2_page = ncc_MainPage(cat2, "www", family="nccommons")
@@ -81,11 +80,7 @@ for n, (idn, cats) in enumerate(jsons.cases_dup.items(), start=1):
     if new_main_text != main_text:
         main_cat.save(newtext=new_main_text, summary=f"from [[{other_title}]]")
     # ---
-    cat_files = CatDepth(other_title,
-                         sitecode="www",
-                         family="nccommons",
-                         depth=0,
-                         ns="all")
+    cat_files = CatDepth(other_title, sitecode="www", family="nccommons", depth=0, ns="all")
     # ---
     for file in cat_files:
         file_page = ncc_MainPage(file, "www", family="nccommons")
@@ -93,22 +88,15 @@ for n, (idn, cats) in enumerate(jsons.cases_dup.items(), start=1):
         # ---
         # replace old title by new
         file_newtext = file_text
-        file_newtext = file_newtext.replace(f"[[{other_title}]]",
-                                            f"[[{main_cat.title}]]")
-        file_newtext = file_newtext.replace(f"[[{other_title}|",
-                                            f"[[{main_cat.title}|")
+        file_newtext = file_newtext.replace(f"[[{other_title}]]", f"[[{main_cat.title}]]")
+        file_newtext = file_newtext.replace(f"[[{other_title}|", f"[[{main_cat.title}|")
         # ---
         if file_newtext != file_text:
             file_page.save(newtext=file_newtext, summary="update")
     # ---
-    cat_files2 = CatDepth(other_title,
-                          sitecode="www",
-                          family="nccommons",
-                          depth=0,
-                          ns="all")
+    cat_files2 = CatDepth(other_title, sitecode="www", family="nccommons", depth=0, ns="all")
     # ---
     if other_cat.exists():
         if len(cat_files2) == 0:
             printe.output(f"<<green>> cat {other_title} is empty.. done..")
-            other_cat.save(newtext="[[Category:cats to delete]]",
-                           summary="empty cat")
+            other_cat.save(newtext="[[Category:cats to delete]]", summary="empty cat")

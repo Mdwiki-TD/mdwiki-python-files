@@ -7,6 +7,7 @@ from mdpy.bots import rest_v1_views
 """
 
 import datetime
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -19,6 +20,7 @@ from datetime import timedelta
 
 import pywikibot
 from mdpy import printe
+
 # ---
 from pywikibot.comms import http
 
@@ -48,10 +50,7 @@ def get_views_last_30_days(langcode, titles):
         # ---
         pa = urllib.parse.quote(page)
         # ---
-        url = ("https:" +
-               "//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/" +
-               langcode + ".wikipedia/all-access/all-agents/" +
-               pa.replace("/", "%2F") + "/daily/" + startDate + "/" + endDate)
+        url = "https:" + "//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/" + langcode + ".wikipedia/all-access/all-agents/" + pa.replace("/", "%2F") + "/daily/" + startDate + "/" + endDate
         # ---
         if "printurl" in sys.argv:
             printe.output("printboturl:\t\t" + url)

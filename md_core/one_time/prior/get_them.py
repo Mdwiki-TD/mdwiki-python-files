@@ -265,8 +265,7 @@ class work_in_one_lang_link:
             # ---
             elcontinue = json1.get("continue", {}).get("elcontinue", "")
             # ---
-            linkso = json1.get("query", {}).get("pages",
-                                                [{}])[0].get("extlinks", [])
+            linkso = json1.get("query", {}).get("pages", [{}])[0].get("extlinks", [])
             # ---
             links.extend(linkso)
         # ---
@@ -486,13 +485,10 @@ class get_old:
         # ---
         json1 = self.post_to_json(params)
         # ---
-        revisions = (json1.get("query",
-                               {}).get("pages",
-                                       [{}])[0].get("revisions", [{}])[0])
+        revisions = json1.get("query", {}).get("pages", [{}])[0].get("revisions", [{}])[0]
         self.timestamp = revisions.get("timestamp", "")
         print(f"timestamp: {self.timestamp}")
-        self.oldtext = revisions.get("slots", {}).get("main",
-                                                      {}).get("content", "")
+        self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
     def get_lead(self):
         # ---

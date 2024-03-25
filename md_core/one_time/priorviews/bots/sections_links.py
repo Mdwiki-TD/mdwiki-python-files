@@ -12,8 +12,10 @@ import os
 from pathlib import Path
 
 import wikitextparser
+
 # ---
 from mdpy import printe
+
 # ---
 from newapi.mdwiki_page import MainPage as md_MainPage
 
@@ -77,10 +79,7 @@ class Sectios_links:
             # Get the wikilinks for the section and convert them to strings
             wikilinks = s.wikilinks
 
-            wikilinks = [
-                str(x.title) for x in wikilinks
-                if str(x.title).lower() not in self.titles_done
-            ]
+            wikilinks = [str(x.title) for x in wikilinks if str(x.title).lower() not in self.titles_done]
 
             # remove duplicates
             wikilinks = list(set(wikilinks))
@@ -107,8 +106,7 @@ def dump_secs_links(d_links):
     global sect_file
     # ---
     if d_links != {}:
-        printe.output(
-            f"<<lightyellow>> d_links(): lenth: {len(d_links.keys())}")
+        printe.output(f"<<lightyellow>> d_links(): lenth: {len(d_links.keys())}")
         json.dump(
             d_links,
             codecs.open(sect_file, "w", encoding="utf-8"),

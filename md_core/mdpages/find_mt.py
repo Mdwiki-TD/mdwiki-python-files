@@ -24,9 +24,7 @@ qids = sql_for_mdwiki.get_all_qids()
 
 # ---
 
-to_work = [
-    title for title, q in qids.items() if q == "" and valid_title(title)
-]
+to_work = [title for title, q in qids.items() if q == "" and valid_title(title)]
 
 printe.output(f"<<green>> to_work list: {len(to_work)}")
 

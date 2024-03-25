@@ -3,6 +3,7 @@ import re
 import sys
 
 from mdpy import printe
+
 # ---
 from mdpy.bots import catdepth2, mdwiki_api, sql_for_mdwiki
 
@@ -10,10 +11,8 @@ from mdpy.bots import catdepth2, mdwiki_api, sql_for_mdwiki
 link_regex = re.compile(r"\[\[(.*?)\]\]")
 refreg = re.compile(r"(<ref[^>]*>[^<>]+</ref>|<ref[^>]*\/\s*>)")
 reg_links_with_allise = re.compile(r"(\[\[[^\]|[<>{}]*)\|(.*?)\]\]")
-reg_full_links = re.compile(
-    r"(\[\[(?:[^][|]+)\|*(?:[^][]*(?:\[\[[^][]+\]\][^][]*)*)\]\])")
-reg_templates = re.compile(r"{{(?:msg:)?(?P<name>[^{\|]+?)"
-                           r"(?:\|(?P<params>[^{]+?(?:{[^{]+?}[^{]*?)?)?)?}}")
+reg_full_links = re.compile(r"(\[\[(?:[^][|]+)\|*(?:[^][]*(?:\[\[[^][]+\]\][^][]*)*)\]\])")
+reg_templates = re.compile(r"{{(?:msg:)?(?P<name>[^{\|]+?)" r"(?:\|(?P<params>[^{]+?(?:{[^{]+?}[^{]*?)?)?)?}}")
 
 
 def get_valid_Links(words_tab):
@@ -44,8 +43,7 @@ def get_valid_Links(words_tab):
                 itemu = itemu[0].upper() + itemu[1:]
                 vav.append(itemu)
         # ---
-        printe.output(
-            "Get vaild_links fromlist : WikiProjectMed:List (oldway)")
+        printe.output("Get vaild_links fromlist : WikiProjectMed:List (oldway)")
     # ---
     elif "listnew" in sys.argv:
         printe.output("Get vaild_links listnew")

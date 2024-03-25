@@ -9,6 +9,7 @@ import traceback
 from pathlib import Path
 
 from nccommons import api
+
 # ---
 from newapi import printe
 from newapi.ncc_page import NEW_API
@@ -135,8 +136,7 @@ class OneCase:
                     with open(st_file, encoding="utf-8") as f:
                         images = json.loads(f.read())
                 except Exception as e:
-                    pywikibotoutput(
-                        "<<lightred>> Traceback (most recent call last):")
+                    pywikibotoutput("<<lightred>> Traceback (most recent call last):")
                     printt(f"{study} : error")
                     pywikibotoutput(e)
                     pywikibotoutput(traceback.format_exc())
@@ -151,17 +151,13 @@ class OneCase:
                 images = get_images_stacks(self.caseId)
                 # ---
                 if not images:
-                    images = get_images(
-                        f"https://radiopaedia.org/cases/{self.caseId}/studies/{study}"
-                    )
+                    images = get_images(f"https://radiopaedia.org/cases/{self.caseId}/studies/{study}")
                 # ---
                 with open(st_file, "w", encoding="utf-8") as f:
                     json.dump(images, f, ensure_ascii=False, indent=4)
             # ---
             self.studies[study] = images
-            printt(
-                f"study:{study} : len(images) = {len(images)}, st_file:{st_file}"
-            )
+            printt(f"study:{study} : len(images) = {len(images)}, st_file:{st_file}")
 
     def upload_image(self, image_url, image_name, image_id, plane, modality):
         if "noup" in sys.argv:
@@ -190,12 +186,10 @@ class OneCase:
             "== {{int:license}} ==\n"
             "{{CC-BY-NC-SA-3.0}}\n"
             f"[[{self.category}]]\n"
-            "[[Category:Uploads by Mr. Ibrahem]]")
+            "[[Category:Uploads by Mr. Ibrahem]]"
+        )
 
-        file_name = api.upload_by_url(image_name,
-                                      image_text,
-                                      image_url,
-                                      return_file_name=True)
+        file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True)
 
         printt(f"upload result: {file_name}")
         return file_name
@@ -238,17 +232,14 @@ class OneCase:
             # ---
             file_name = f"{self.title} (Radiopaedia {self.caseId}-{study} {plane} {planes[plane]}).{extension}"
             # ---
-            file_name = (file_name.replace("  ", " ").replace("  ",
-                                                              " ").replace(
-                                                                  "  ", " "))
+            file_name = file_name.replace("  ", " ").replace("  ", " ").replace("  ", " ")
             # ---
             # fix BadFileName
             file_name = file_name.replace(":", ".").replace("/", ".")
             # ---
             printt(f"file: {i}/{len(images)} :")
             # ---
-            new_name = self.upload_image(image_url, file_name, image_id, plane,
-                                         modality)
+            new_name = self.upload_image(image_url, file_name, image_id, plane, modality)
             # ---
             file_n = f"File:{new_name}" if new_name else f"File:{file_name}"
             # ---
@@ -307,18 +298,12 @@ class OneCase:
         # ---
         if p_text.find(".bmp") != -1:
             p_text = p_text.replace(".bmp", ".jpg")
-            ssa = page.save(newtext=p_text,
-                            summary="update",
-                            nocreate=0,
-                            minor="")
+            ssa = page.save(newtext=p_text, summary="update", nocreate=0, minor="")
             return ssa
 
         elif "fix" in sys.argv:
             if text == p_text:
                 printt("<<lightyellow>> no changes")
                 return True
-            ssa = page.save(newtext=text,
-                            summary="update",
-                            nocreate=0,
-                            minor="")
+            ssa = page.save(newtext=text, summary="update", nocreate=0, minor="")
             return ssa

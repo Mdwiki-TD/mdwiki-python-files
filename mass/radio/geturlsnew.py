@@ -98,9 +98,7 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
             if n == 1 and only_one:
                 # find len of search results
                 # <div role="navigation" aria-label="Pagination" class="pagination clear">
-                pagination = soup.find("div",
-                                       role="navigation",
-                                       class_="pagination clear")
+                pagination = soup.find("div", role="navigation", class_="pagination clear")
                 # ---
                 last_href = 0
                 # ---
@@ -113,8 +111,7 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
                 print(f"last_href: {last_href}")
                 return last_href
             # ---
-            links = soup.find_all("a",
-                                  class_="search-result search-result-case")
+            links = soup.find_all("a", class_="search-result search-result-case")
             # ---
             for link in links:
                 # ---
@@ -122,8 +119,7 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
                 href = href.replace("?lang=us", "")
                 href = f"https://radiopaedia.org{href}"
                 # ---
-                title = link.find(
-                    "h4", class_="search-result-title-text").text.strip()
+                title = link.find("h4", class_="search-result-title-text").text.strip()
                 # ---
                 author = ""
                 # <div class="search-result-author"><span>Henry Knipe</span></div>
@@ -132,9 +128,7 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
                     author = au.text.strip() or ""
                 # ---
                 # <span class="published">Published 15 Oct 2015</span>
-                published = (link.find("span",
-                                       class_="published").text.replace(
-                                           "Published ", "").strip())
+                published = link.find("span", class_="published").text.replace("Published ", "").strip()
                 # ---
                 tab = {
                     "title": title,
@@ -151,8 +145,7 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
                 else:
                     tat[href] = title
         # ---
-        print(
-            f"n:{n}, lenth of links: {len(links)}, tat: {len(tat)}/{len_all}")
+        print(f"n:{n}, lenth of links: {len(links)}, tat: {len(tat)}/{len_all}")
     # ---
     print(f"lenth of tat: {len(tat)}")
 
@@ -166,9 +159,7 @@ def main():
     for numb, system in enumerate(systems, start=1):
         # ---
         if jsons.systems[system]:
-            printe.output(
-                f"<<green>> system:{system} already in jsons.systems. Skipping."
-            )
+            printe.output(f"<<green>> system:{system} already in jsons.systems. Skipping.")
             continue
         # ---
         urls_data = get_urls_system(system)

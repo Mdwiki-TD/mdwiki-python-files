@@ -16,6 +16,7 @@ import sys
 #
 # ---
 import pywikibot
+
 # ---
 from mdpy import printe
 from mdpy.bots import mdwiki_api
@@ -100,13 +101,10 @@ def main():
         # python3 core8/pwb.py md2 allpages
         # python pwb.py md2 allpages
         if arg == "allpages":
-            ttab = mdwiki_api.Get_All_pages("!",
-                                            namespace="0",
-                                            apfilterredir="nonredirects")
+            ttab = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
     # ---
     for numb, title in enumerate(ttab, start=1):
-        printe.output("<<lightyellow>> tit:%d / %d\t title: %s." %
-                      (numb, len(ttab), title))
+        printe.output("<<lightyellow>> tit:%d / %d\t title: %s." % (numb, len(ttab), title))
         text = mdwiki_api.GetPageText(title)
         treat_page(title, text)
     # ---

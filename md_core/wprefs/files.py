@@ -33,8 +33,7 @@ setting = {}
 # ---
 if os.path.isfile(fixwikirefs):
     try:
-        setting = json.load(codecs.open(fixwikirefs, "r",
-                                        encoding="utf-8-sig"))
+        setting = json.load(codecs.open(fixwikirefs, "r", encoding="utf-8-sig"))
         # print(setting)
     except Exception:
         setting = {}
@@ -50,9 +49,7 @@ def make_ref_done_list():
     except Exception:
         exepts()
     # ---
-    reffixed_list = [
-        x.strip() for x in reffixed.split("\n") if x.strip() != ""
-    ]
+    reffixed_list = [x.strip() for x in reffixed.split("\n") if x.strip() != ""]
     # ---
     return reffixed_list
 

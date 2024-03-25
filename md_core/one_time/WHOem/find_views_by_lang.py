@@ -55,17 +55,13 @@ def get_v(lang, links, lang_links_mdtitle_s):
     len_p = len(links)
     # -- -
     if "new" in sys.argv:
-        links = {
-            x: t
-            for x, t in links.items()
-            if ViewsData[t].get(lang, {}).get("views", 0) == 0
-        }
+        links = {x: t for x, t in links.items() if ViewsData[t].get(lang, {}).get("views", 0) == 0}
         de = len_p - len(links)
         printe.output(f"de: {de}")
     # ---
     # split links to groups by 10 titles
     for i in range(0, len(links), 10):
-        group = dict(list(links.items())[i:i + 10])
+        group = dict(list(links.items())[i : i + 10])
         # ---
         views_tab = wiki_api.get_views_with_rest_v1(lang, group.keys())
         # ---
@@ -106,28 +102,16 @@ def get_v(lang, links, lang_links_mdtitle_s):
 
 def get_lang_links_mdtitles(lang_links):
     # ---
-    lang_links_mdtitles = {
-        lang: {}
-        for mdtitle, tab in lang_links.items()
-        for lang in tab["langs"].keys()
-    }
+    lang_links_mdtitles = {lang: {} for mdtitle, tab in lang_links.items() for lang in tab["langs"].keys()}
     # ---
     for lang in lang_links_mdtitles.keys():
-        lang_links_mdtitles[lang] = {
-            tab["langs"][lang]: md
-            for md, tab in lang_links.items() if lang in tab["langs"]
-        }
+        lang_links_mdtitles[lang] = {tab["langs"][lang]: md for md, tab in lang_links.items() if lang in tab["langs"]}
     # ---
-    with codecs.open(f"{Dir}/lists/lang_links_mdtitles.json",
-                     "w",
-                     encoding="utf-8") as f:
+    with codecs.open(f"{Dir}/lists/lang_links_mdtitles.json", "w", encoding="utf-8") as f:
         json.dump(lang_links_mdtitles, f, ensure_ascii=False, indent=4)
     # ---
     # sort lang_links_mdtitles by lenth
-    lang_links_mdtitles = dict(
-        sorted(lang_links_mdtitles.items(),
-               key=lambda x: len(x[1]),
-               reverse=True))
+    lang_links_mdtitles = dict(sorted(lang_links_mdtitles.items(), key=lambda x: len(x[1]), reverse=True))
     # ---
     # print first 10 of lang_links_mdtitles
     to_p = dict(list(lang_links_mdtitles.items())[0:10])
@@ -140,8 +124,7 @@ def get_lang_links_mdtitles(lang_links):
 
 def start():
     # ---
-    with codecs.open(f"{Dir}/lists/lang_links.json", "r",
-                     encoding="utf-8") as f:
+    with codecs.open(f"{Dir}/lists/lang_links.json", "r", encoding="utf-8") as f:
         # {'en': 'enwiki', 'redirect_to': '', 'langs': {'ar': 'arwiki'}}
         lang_links = json.load(f)
     # ---
@@ -160,8 +143,7 @@ def start():
         # ---
         ViewsData.update({x: {} for x in tab.values() if x not in ViewsData})
         # ---
-        printe.output(
-            f"<<blue>> p:{n}/{all_lenth} lang: {lang}, titles: {len(tab)}")
+        printe.output(f"<<blue>> p:{n}/{all_lenth} lang: {lang}, titles: {len(tab)}")
         # ---
         get_v(lang, tab, lang_links_mdtitles)
         # ---

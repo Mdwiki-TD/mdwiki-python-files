@@ -11,6 +11,7 @@ from pathlib import Path
 
 from mdpy import printe
 from mdpy.bots import mdwiki_api
+
 # ---
 from newapi.wiki_page import MainPage, change_codes
 
@@ -47,8 +48,7 @@ def get_lang_links(md_links):
     # ---
     links_not_found = []
     # ---
-    with codecs.open(f"{Dir}/lists/lang_links.json", "r",
-                     encoding="utf-8") as f:
+    with codecs.open(f"{Dir}/lists/lang_links.json", "r", encoding="utf-8") as f:
         lang_links = json.load(f)
     # ---
     printe.output(f"list len of it: {len(md_links)}")
@@ -59,8 +59,7 @@ def get_lang_links(md_links):
         # ---
         n += 1
         # ---
-        if "new" in sys.argv and len(lang_links.get(x, {}).get("langs",
-                                                               {})) > 0:
+        if "new" in sys.argv and len(lang_links.get(x, {}).get("langs", {})) > 0:
             continue
         # ---
         pap = f"p {n}/{len(md_links)}: {x}"
@@ -99,16 +98,12 @@ def get_lang_links(md_links):
             lang_links[title]["langs"][lang] = tit
 
     # ---
-    with codecs.open(f"{Dir}/lists/lang_links.json", "w",
-                     encoding="utf-8") as f:
+    with codecs.open(f"{Dir}/lists/lang_links.json", "w", encoding="utf-8") as f:
         json.dump(lang_links, f, ensure_ascii=False, indent=4)
     # ---
-    printe.output(
-        f"<<lightred>> len of links_not_found: {len(links_not_found)}:")
+    printe.output(f"<<lightred>> len of links_not_found: {len(links_not_found)}:")
     # ---
-    with codecs.open(f"{Dir}/lists/links_not_found.json",
-                     "w",
-                     encoding="utf-8") as f:
+    with codecs.open(f"{Dir}/lists/links_not_found.json", "w", encoding="utf-8") as f:
         json.dump(links_not_found, f, ensure_ascii=False, indent=4)
     # ---
     for title in links_not_found:

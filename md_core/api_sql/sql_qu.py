@@ -12,13 +12,17 @@ import os
 import traceback
 
 import pkg_resources
+
 # ---
 import pymysql
 import pymysql.cursors
+
 # ---
 import pywikibot
+
 # ---
 from newapi import printe
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -28,7 +32,7 @@ from pywikibot import config
 # ---
 py_v = pymysql.__version__
 if py_v.endswith(".None"):
-    py_v = py_v[:-len(".None")]
+    py_v = py_v[: -len(".None")]
 # ---
 pymysql_version = pkg_resources.parse_version(py_v)
 # ---
@@ -49,13 +53,7 @@ if not os.path.isdir(dir1) and not os.path.isdir(dir2):
     can_use_sql_db[1] = False
 
 
-def sql_connect_pymysql(query,
-                        db="",
-                        host="",
-                        update=False,
-                        Return=[],
-                        return_dict=False,
-                        values=None):
+def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_dict=False, values=None):
     # ---
     printe.output("start sql_connect_pymysql:")
     Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
@@ -138,13 +136,7 @@ def resolve_bytes(rows):
     return decoded_rows
 
 
-def make_sql_connect(query,
-                     db="",
-                     host="",
-                     update=False,
-                     Return=[],
-                     return_dict=False,
-                     values=None):
+def make_sql_connect(query, db="", host="", update=False, Return=[], return_dict=False, values=None):
     # ---
     if query == "":
         printe.output("query == ''")

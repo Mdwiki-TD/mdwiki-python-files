@@ -33,6 +33,7 @@ import pywikibot.data.api as apit
 import requests
 from mdpy import printe
 from mdpy.bots import user_account_new
+
 # ---
 from pywikibot.comms import http
 
@@ -99,9 +100,7 @@ def log(api_urle):
         warn(f"Exception:{str(r2.json())}", UserWarning)
         pywikibot.output("CRITICAL:")
     else:
-        pywikibot.output(
-            f"<<lightgreen>> mdwiki/mdpy/wiki_api.py: log to {api_urle} user:{lgname} Success... "
-        )
+        pywikibot.output(f"<<lightgreen>> mdwiki/mdpy/wiki_api.py: log to {api_urle} user:{lgname} Success... ")
     # ---
     # get edit token
     r3 = session[1].get(
@@ -249,10 +248,7 @@ def get_langlinks(title, lang):
     if not ta:
         return {}
     # ---
-    langlinks = {
-        ta["lang"]: ta.get("*") or ta.get("title")
-        for ta in ta.get("langlinks", [])
-    }
+    langlinks = {ta["lang"]: ta.get("*") or ta.get("title") for ta in ta.get("langlinks", [])}
     # ---
     return langlinks
 
@@ -288,7 +284,7 @@ def Get_page_qids(sitecode, titles, apiurl="", normalize=0):
     for i in range(0, len(titles), 50):
         # ---
         # group = dict(list(liste.items())[i:i+50])
-        group = titles[i:i + 50]
+        group = titles[i : i + 50]
         # ---
         params["titles"] = "|".join(group)
         # ---
@@ -317,25 +313,19 @@ def Get_page_qids(sitecode, titles, apiurl="", normalize=0):
                     Main_table[title] = {}
                     if "missing" in kk:
                         Main_table[title]["missing"] = True
-                    if ("pageprops" in kk and kk["pageprops"].get(
-                            "wikibase_item", "") != ""):
-                        Main_table[title]["q"] = kk["pageprops"].get(
-                            "wikibase_item", "")
+                    if "pageprops" in kk and kk["pageprops"].get("wikibase_item", "") != "":
+                        Main_table[title]["q"] = kk["pageprops"].get("wikibase_item", "")
     # ---
     return Main_table
 
 
-def Getpageassessments_from_wikipedia(titles,
-                                      site="en",
-                                      find_redirects=False,
-                                      pasubprojects=0):
+def Getpageassessments_from_wikipedia(titles, site="en", find_redirects=False, pasubprojects=0):
     # Tables = { "stub" : False }
     # ---
     if site.strip() == "":
         site = "en"
     # ---
-    printe.output(
-        f"Getpageassessments for \"{site}:{len(titles.split('|'))} pages.\"")
+    printe.output(f"Getpageassessments for \"{site}:{len(titles.split('|'))} pages.\"")
     Tables = {
         # "stub" : False ,
     }
@@ -447,13 +437,11 @@ def _get_page_views_(titles, site="en", days=30):
         if len(titles_1) < 1:
             continue
         # ---
-        printe.output("<<lightgreen>> views:%d, done:%d from %d titles." %
-                      (len(Main_table.keys()), done, len(titles)))
+        printe.output("<<lightgreen>> views:%d, done:%d from %d titles." % (len(Main_table.keys()), done, len(titles)))
         # ---
         params["titles"] = "|".join(titles_1)
         # ---
-        json1 = submitAPI(params,
-                          apiurl=f"https://{site}.wikipedia.org/w/api.php")
+        json1 = submitAPI(params, apiurl=f"https://{site}.wikipedia.org/w/api.php")
         # ---
         if not json1 or json1 == {}:
             continue
@@ -487,8 +475,7 @@ def _get_page_views_(titles, site="en", days=30):
                 continue
             # ---
             pageviews = kk.get("pageviews", {})
-            all_views = sum(views for date, views in pageviews.items()
-                            if isinstance(views, int))
+            all_views = sum(views for date, views in pageviews.items() if isinstance(views, int))
             # ---
             Main_table[title] = all_views
         # ---
@@ -545,11 +532,7 @@ def get_views_with_rest_v1(
         # ---
         pa = urllib.parse.quote(page)
         # ---
-        url = ("https:" +
-               "//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/" +
-               langcode + ".wikipedia/all-access/all-agents/" +
-               pa.replace("/", "%2F") + "/daily/" + date_start + "00/" +
-               date_end + "00")
+        url = "https:" + "//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/" + langcode + ".wikipedia/all-access/all-agents/" + pa.replace("/", "%2F") + "/daily/" + date_start + "00/" + date_end + "00"
         # ---
         if "printurl" in sys.argv or printurl:
             printe.output("printboturl:\t\t" + url)
@@ -642,9 +625,7 @@ def get_views_with_rest_v1(
 # ---
 if __name__ == "__main__":
     # get_views_with_rest_v1('ar', ['yemen', 'صنعاء'], date_start='20040101', date_end='20300101')
-    get_views_with_rest_v1("ar", ["yemen", "صنعاء"],
-                           date_start="20040101",
-                           date_end="20300101")
+    get_views_with_rest_v1("ar", ["yemen", "صنعاء"], date_start="20040101", date_end="20300101")
     ux = get_page_views(["yemen", "صنعاء"], site="ar", days=30)
     printe.output(ux)
 # ---

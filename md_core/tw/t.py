@@ -19,6 +19,7 @@ from pathlib import Path
 
 import requests
 import tweepy
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -63,8 +64,7 @@ def auth_ready(tweet, link=None):
 
     # ---
     data = getattr(t, "data")
-    if data is not None and isinstance(data,
-                                       dict) and data.get("id") is not None:
+    if data is not None and isinstance(data, dict) and data.get("id") is not None:
         print(data.get("id", ""))
         return True
 
@@ -125,12 +125,14 @@ def get_links():
     if level:
         level = str(level)
         # ---
-        uxu = do_api({
-            "action": "parse",
-            "page": title,
-            "prop": "sections|wikitext",
-            "section": level,
-        })
+        uxu = do_api(
+            {
+                "action": "parse",
+                "page": title,
+                "prop": "sections|wikitext",
+                "section": level,
+            }
+        )
         # ---
         section_text = uxu.get("parse", {}).get("wikitext", {}).get("*", "")
         # ---

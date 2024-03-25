@@ -16,8 +16,10 @@ from datetime import datetime
 from pathlib import Path
 
 import pywikibot
+
 # ---
 from mdpy import printe
+
 # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
 from mdpy.bots import en_to_md, mdwiki_api, sql_for_mdwiki, wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
@@ -98,16 +100,13 @@ def get_qids_sitelinks(qidslist):
     # ---
     for i in range(0, len(qs_list), 100):
         # ---
-        qids = qs_list[i:i + 100]
+        qids = qs_list[i : i + 100]
         # ---
         params_wd["ids"] = "|".join(qids)
         # ---
-        printe.output(
-            f"<<lightgreen>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids."
-        )
+        printe.output(f"<<lightgreen>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.")
         # ---
-        json1 = wikidataapi.post(params_wd,
-                                 apiurl="https://www.wikidata.org/w/api.php")
+        json1 = wikidataapi.post(params_wd, apiurl="https://www.wikidata.org/w/api.php")
         # ---
         if json1:
             # ---
@@ -166,8 +165,7 @@ def get_qids_sitelinks(qidslist):
                 # ---
                 # add mdwiki title to cash_exists/wiki.json table
                 # ---
-                if mdwiki_title != "" and mdwiki_title not in main_table_sites[
-                        site]:
+                if mdwiki_title != "" and mdwiki_title not in main_table_sites[site]:
                     main_table_sites[site].append(mdwiki_title)
                 # ---
                 sitelinks[site] = title
@@ -194,12 +192,9 @@ def cash_wd():
         # ---
         mdwiki_pages = mdwiki_api.subcatquery(cat, depth=dep, ns="0")
         # ---
-        titles.extend([
-            dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles
-        ])
+        titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
     # ---
-    printe.output(
-        f"<<lightgreen>> len of mdwiki_api.subcatquery:RTT:{len(titles)}.")
+    printe.output(f"<<lightgreen>> len of mdwiki_api.subcatquery:RTT:{len(titles)}.")
     # ---
     qids_list = {}
     # ---
@@ -214,8 +209,7 @@ def cash_wd():
     # ---
     lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
-    with open(f"{Dashboard_path}/Tables/sitelinks.json", "w",
-              encoding="utf-8") as aa:
+    with open(f"{Dashboard_path}/Tables/sitelinks.json", "w", encoding="utf-8") as aa:
         json.dump(lists, aa)
     # ---
     # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w', encoding="utf-8"), ensure_ascii=False, indent=4 )
@@ -236,15 +230,13 @@ def cash_wd():
         json_file = f"{Dashboard_path}/cash_exists/{site}.json"
         # ---
         if not os.path.exists(json_file):
-            printe.output(
-                f'.... <<lightred>> file:"{site}.json not exists ....')
+            printe.output(f'.... <<lightred>> file:"{site}.json not exists ....')
         # ---
         # dump miss_list to json_file
         try:
             with open(json_file, "w", encoding="utf-8") as aa:
                 json.dump(miss_list, aa, ensure_ascii=False, indent=4)
-            printe.output(
-                f"<<lightgreenn>>dump to cash_exists/{site}.json done..")
+            printe.output(f"<<lightgreenn>>dump to cash_exists/{site}.json done..")
         except Exception:
             pywikibot.output("Traceback (most recent call last):")
             pywikibot.output(traceback.format_exc())
@@ -262,16 +254,14 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    with open(f"{Dashboard_path}/Tables/noqids.json", "w",
-              encoding="utf-8") as dd:
+    with open(f"{Dashboard_path}/Tables/noqids.json", "w", encoding="utf-8") as dd:
         json.dump(noqids, dd)
     # ---
     # redirects_qids
     # mis_qids
     # ---
     for old_q, new_q in redirects_qids.items():
-        printe.output(
-            f"<<lightblue>> redirects_qids:{old_q.ljust(15)} -> {new_q}.")
+        printe.output(f"<<lightblue>> redirects_qids:{old_q.ljust(15)} -> {new_q}.")
     # ---
     for qd in mis_qids:
         printe.output(f"<<lightblue>> missing_qids:{qd}.")
@@ -279,8 +269,7 @@ def cash_wd():
     printe.output(f" len of redirects_qids:  {len(redirects_qids.keys())}")
     printe.output(f" len of missing_qids:    {len(mis_qids)}")
     # ---
-    with open(f"{Dashboard_path}/Tables/missing.json", "w",
-              encoding="utf-8") as xx:
+    with open(f"{Dashboard_path}/Tables/missing.json", "w", encoding="utf-8") as xx:
         json.dump(missing, xx)
     printe.output(" log to missing.json true.... ")
     printe.output(f"{missing['all']=}")

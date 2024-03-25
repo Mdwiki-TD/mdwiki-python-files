@@ -17,6 +17,7 @@ from mdpy import printe
 from priorviews.bots import helps
 from priorviews.lists import creators  # creators.Creators_by_lang_title
 from priorviews.lists import translators
+
 # ---
 from priorviews.lists.links_by_section import links_by_lang
 
@@ -65,8 +66,7 @@ for lang, links in links_by_lang.items():
         # ---
         if _time_ != "":
             # Convert _time_ to a datetime object
-            datetime_obj = datetime.datetime.strptime(str(_time_),
-                                                      "%Y%m%d%H%M%S")
+            datetime_obj = datetime.datetime.strptime(str(_time_), "%Y%m%d%H%M%S")
             _time_x = datetime_obj.strftime("%Y-%m-%d")
             year = datetime_obj.strftime("%Y")
         # ---

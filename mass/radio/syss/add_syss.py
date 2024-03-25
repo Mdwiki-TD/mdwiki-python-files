@@ -7,6 +7,7 @@ python3 core8/pwb.py mass/radio/syss/add_syss nodump
 
 import json
 import os
+
 # ---
 from pathlib import Path
 
@@ -24,10 +25,7 @@ files_path = main_dir / "jsons"
 # read all jsons files in main_dir and append urls to sys_urls
 # ---
 infos_files = [f for f in os.listdir(files_path) if f.endswith("_infos.json")]
-urls_files = [
-    f for f in os.listdir(files_path)
-    if not f.endswith("_infos.json") and f.endswith(".json")
-]
+urls_files = [f for f in os.listdir(files_path) if not f.endswith("_infos.json") and f.endswith(".json")]
 # ---
 sys_urls = {}
 # ---

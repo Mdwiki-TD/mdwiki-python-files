@@ -29,8 +29,7 @@ def outputnew(s):
 
 
 # ---
-ref_complite = re.compile(
-    r"(<ref\s*name\s*\=*\s*[\"\']*([^>]*)[\"\']*\s*>[^<>]+</ref>)")
+ref_complite = re.compile(r"(<ref\s*name\s*\=*\s*[\"\']*([^>]*)[\"\']*\s*>[^<>]+</ref>)")
 ref_short = re.compile(r"(<ref\s*name\s*\=\s*[\"\']*([^>]*)[\"\']*\s*\/\s*>)")
 
 

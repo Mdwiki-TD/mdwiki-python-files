@@ -15,6 +15,7 @@ from pathlib import Path
 
 import MedWorkNew
 import requests
+
 # ---
 import user_account_new
 
@@ -103,10 +104,7 @@ def GetPageText(title):
         "utf8": 1,
     }
     # ---
-    url = (
-        "https://" +
-        "mdwiki.org/w/api.php?action=parse&prop=wikitext&utf8=1&format=json&page="
-        + title)
+    url = "https://" + "mdwiki.org/w/api.php?action=parse&prop=wikitext&utf8=1&format=json&page=" + title
     # ---
     r4 = {}
     # ---

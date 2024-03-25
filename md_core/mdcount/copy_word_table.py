@@ -15,6 +15,7 @@ import sys
 from pathlib import Path
 
 from mdpy import printe
+
 # ---
 from mdpy.bots import sql_for_mdwiki
 from pymysql.converters import escape_string
@@ -41,8 +42,7 @@ for q in sql_for_mdwiki.mdwiki_sql(que, return_dict=True):
     in_sql_lead[w_title] = w_lead_words
     in_sql_all[w_title] = w_all_words
 # ---
-project_tables = Path(
-    dir2) / "public_html" / "Translation_Dashboard" / "Tables"
+project_tables = Path(dir2) / "public_html" / "Translation_Dashboard" / "Tables"
 # ---
 with open(f"{project_tables}/words.json", encoding="utf-8") as f:
     lead_words = json.load(f)
@@ -127,9 +127,7 @@ if INSERT != []:
     if "insert" in sys.argv:
         insert_line = ",\n".join(INSERT)
         # ---
-        qu = (
-            "INSERT INTO words (w_title, w_lead_words, w_all_words) values\n" +
-            insert_line)
+        qu = "INSERT INTO words (w_title, w_lead_words, w_all_words) values\n" + insert_line
         printe.output(qu)
         vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True)
     else:

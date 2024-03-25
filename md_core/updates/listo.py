@@ -21,6 +21,7 @@ python3 core8/pwb.py mdpy/listo save
 # import pywikibot
 # ---
 import re
+
 # import datetime
 # import dateutil.parser
 # from datetime import datetime, date
@@ -52,10 +53,7 @@ for arg in sys.argv:
 redirects_pages = []
 # ---
 if "nored" not in sys.argv:
-    redirects_pages = mdwiki_api.Get_All_pages("!",
-                                               namespace="0",
-                                               apfilterredir="redirects",
-                                               limit_all=limit_m[1])
+    redirects_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="redirects", limit_all=limit_m[1])
 # ---
 dones = []
 links = []
@@ -125,8 +123,5 @@ text += "\n".join([f"# [[{dx}]]" for dx in re_listo])
 # ---
 print(text)
 # ---
-mdwiki_api.page_put(newtext=text,
-                    summary="update",
-                    title="User:Mr. Ibrahem/List",
-                    nocreate=0)
+mdwiki_api.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/List", nocreate=0)
 # ---

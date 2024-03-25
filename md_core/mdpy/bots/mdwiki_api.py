@@ -2,6 +2,7 @@
 """ """
 
 import json
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -12,9 +13,11 @@ import sys
 import time
 
 import pywikibot
+
 # ---
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
+
 # ---
 from newapi.mdwiki_page import NEW_API
 
@@ -243,9 +246,7 @@ def page_put_new(
     # Invalid = r4.get("error", {}).get("info", '')
     # ---
     if "Success" in str(r4):
-        printe.output(
-            f"<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) "
-        )
+        printe.output(f"<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) ")
         printe.output("Save True.. time.sleep(%d) " % tts)
         time.sleep(tts)
         if return_table:
@@ -287,9 +288,7 @@ def page_put(
             except BaseException:
                 printe.output(" -mdwiki cant showDiff")
         printe.output(f" -Edit summary: {summary}:")
-        sa = py_input(
-            f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {lang}:{title}.org"
-        )
+        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {lang}:{title}.org")
         # ---
         if sa == "a":
             printe.output("<<lightgreen>> ---------------------------------")
@@ -355,24 +354,14 @@ def Add_To_Head(prependtext, summary, title, Ask, minor=""):
         if Ask or "ask" in sys.argv and "save" not in sys.argv:
             # if Ask:
             # pywikibot.showDiff( "" , prependtext )
-            sa = py_input(
-                f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Add_To_Head of page "{title}" ? ([y]es, [N]o):'
-            )
+            sa = py_input(f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Add_To_Head of page "{title}" ? ([y]es, [N]o):')
             if sa in yes_answer:
-                Add_To_Bottom2(prependtext,
-                               summary,
-                               title,
-                               poss="Head",
-                               minor=minor)
+                Add_To_Bottom2(prependtext, summary, title, poss="Head", minor=minor)
             else:
                 printe.output("wrong answer")
             return sa
         else:
-            Add_To_Bottom2(prependtext,
-                           summary,
-                           title,
-                           poss="Head",
-                           minor=minor)
+            Add_To_Bottom2(prependtext, summary, title, poss="Head", minor=minor)
         # ---
     else:
         printe.output('** Add_To_Head ..  title == ""')
@@ -385,24 +374,14 @@ def Add_To_Bottom(appendtext, summary, title, Ask, family="", minor=""):
         printe.output(appendtext)
         if Ask or "ask" in sys.argv and "save" not in sys.argv:
             # if Ask:
-            sa = py_input(
-                f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Add_To_Bottom of page "{title}" ? ([y]es, [N]o):'
-            )
+            sa = py_input(f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Add_To_Bottom of page "{title}" ? ([y]es, [N]o):')
             if sa in yes_answer:
-                Add_To_Bottom2(appendtext,
-                               summary,
-                               title,
-                               family=family,
-                               minor=minor)
+                Add_To_Bottom2(appendtext, summary, title, family=family, minor=minor)
             else:
                 printe.output("wrong answer")
             return sa
         else:
-            Add_To_Bottom2(appendtext,
-                           summary,
-                           title,
-                           family=family,
-                           minor=minor)
+            Add_To_Bottom2(appendtext, summary, title, family=family, minor=minor)
         # ---
     else:
         printe.output('** Add_To_Bottom ..  title == ""')
@@ -443,40 +422,28 @@ def create_Page(
     # ---
     sa = {
         "error": {
-            "code":
-            "articleexists",
-            "info":
-            "The article you tried to create has been created already.",
-            "*":
-            "See https://ar.wikipedia.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.",
+            "code": "articleexists",
+            "info": "The article you tried to create has been created already.",
+            "*": "See https://ar.wikipedia.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.",
         },
         "servedby": "mw1284",
     }
     Faco = False
     # ---
-    if not Save_2040[1] and (ask
-                             or "ask" in sys.argv and "save" not in sys.argv):
+    if not Save_2040[1] and (ask or "ask" in sys.argv and "save" not in sys.argv):
         # if ask or "ask" in sys.argv and "save" not in sys.argv:
         # if ask:
         # pywikibot.showDiff("" , text)
         if printtext:
             printe.output(f"<<lightgreen>> {text}")
         printe.output(f" summary: {summary}")
-        sa = py_input(
-            f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: create {family}:"{title}" page ? ([y]es, [N]o)'
-        )
+        sa = py_input(f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: create {family}:"{title}" page ? ([y]es, [N]o)')
         if sa.strip() in yes_answer:
             # ---
             if sa.strip() == "a":
-                printe.output(
-                    "<<lightgreen>> ---------------------------------------------"
-                )
-                printe.output(
-                    "<<lightgreen>> mdwiki.py create_Page save all without asking."
-                )
-                printe.output(
-                    "<<lightgreen>> ---------------------------------------------"
-                )
+                printe.output("<<lightgreen>> ---------------------------------------------")
+                printe.output("<<lightgreen>> mdwiki.py create_Page save all without asking.")
+                printe.output("<<lightgreen>> ---------------------------------------------")
                 Save_2040[1] = True
             # ---
             r4 = post_s(params, addtoken=True)
@@ -505,8 +472,7 @@ def create_Page(
             outbot(r4)
             return False
     # ---a
-    printe.output(
-        f"<<lightred>> end of create_Page def return False title:({title})")
+    printe.output(f"<<lightred>> end of create_Page def return False title:({title})")
     printe.output(r4)
     # ---a
     return False
@@ -531,9 +497,7 @@ def move(From, to, reason, lang="ar", nosleep=False, retry=True):
     JustMove = True
     # ---
     if not Save_2020[1] and "ask" in sys.argv:
-        sa = py_input(
-            f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you move page:[[{lang}:{From}]] to [[{to}]]? ([y]es, [N]o, [a]ll)"
-        )
+        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you move page:[[{lang}:{From}]] to [[{to}]]? ([y]es, [N]o, [a]ll)")
         # ---
         if sa == "a":
             printe.output("<<lightgreen>> ---------------------------------")
@@ -555,8 +519,7 @@ def move(From, to, reason, lang="ar", nosleep=False, retry=True):
             if nosleep:
                 time.sleep(7)
             return True
-        elif ("Please wait some time and try again" in r4.text
-              or "ratelimited" in r4.text):
+        elif "Please wait some time and try again" in r4.text or "ratelimited" in r4.text:
             printe.output(r4.text)
             if nosleep:
                 time.sleep(7)
@@ -705,9 +668,7 @@ def Get_cat(enlink, ns, lllang="", tempyes=[], lang_no="", print_url=True):
     # ---
     subcats = [x for x in table if str(table[x]["ns"]) == "14"]
     # ---
-    printe.output(
-        f"<<lightgreen>> Getcat: find {len(subcats)} subcat:{','.join(subcats)}"
-    )
+    printe.output(f"<<lightgreen>> Getcat: find {len(subcats)} subcat:{','.join(subcats)}")
     # ---
     printe.output(f"<<lightyellow>> cat:{enlink} has:{len(table)} pages.")
     # ---
@@ -753,8 +714,7 @@ def subcatquery(
         # ---
         # البحث عن وصلة لغة غير مرغوب بوجودها
         if without_lang:
-            no_langs = tablemember[x].get("langlinks",
-                                          {}).get(without_lang, "")
+            no_langs = tablemember[x].get("langlinks", {}).get(without_lang, "")
             if no_langs:
                 vaild = False
         # ---
@@ -799,15 +759,13 @@ def subcatquery(
                     # ---
                     # البحث عن وصلة لغة غير مرغوب بوجودها
                     if without_lang:
-                        no_langs = table2[x].get("langlinks",
-                                                 {}).get(without_lang, "")
+                        no_langs = table2[x].get("langlinks", {}).get(without_lang, "")
                         if no_langs:
                             vaild = False
                     # ---
                     # البحث عن وصلة لغة مرغوب بوجودها
                     if with_lang:
-                        langs = table2[x].get("langlinks",
-                                              {}).get(with_lang, "")
+                        langs = table2[x].get("langlinks", {}).get(with_lang, "")
                         vaild = langs != ""
                     # ---
                     if vaild:
@@ -819,9 +777,7 @@ def subcatquery(
     # ---
     # if "printresult" in sys.argv: printe.output(result_table)
     # ---
-    printe.output(
-        "<<lightblue>>catdepth.py: find %d pages(%s) in %s:%s, depth:%d in %d seconds"
-        % (len(result_table), str(ns), "", title, depth, delta))
+    printe.output("<<lightblue>>catdepth.py: find %d pages(%s) in %s:%s, depth:%d in %d seconds" % (len(result_table), str(ns), "", title, depth, delta))
     # ---
     result_tab = list(result_table.keys())
     # ---
@@ -889,9 +845,7 @@ def Get_Newpages(limit="max", namespace="0", rcstart="", user=""):
 
 def Get_page_links(title, namespace="0", limit="max"):
     # ---
-    printe.output(
-        f'Get_page_links for title:"{title}", limit:"{limit}",namespace:"{namespace}"'
-    )
+    printe.output(f'Get_page_links for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
     params = {
         "action": "query",
@@ -930,9 +884,7 @@ def Get_page_links(title, namespace="0", limit="max"):
     else:
         printe.output("mdwiki_api.py no json1")
     # ---
-    printe.output(
-        f"mdwiki_api.py Get_page_links : find {len(Main_table['links'])} pages."
-    )
+    printe.output(f"mdwiki_api.py Get_page_links : find {len(Main_table['links'])} pages.")
     # ---
     return Main_table
 
@@ -944,9 +896,7 @@ def Get_page_links_2(title):
 
 def Get_template_pages(title, namespace="*", limit="max"):
     # ---
-    printe.output(
-        f'Get_template_pages for template:"{title}", limit:"{limit}",namespace:"{namespace}"'
-    )
+    printe.output(f'Get_template_pages for template:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
     params = {
         "action": "query",
@@ -978,21 +928,14 @@ def Get_template_pages(title, namespace="*", limit="max"):
         # ---
         printe.output(f"len of Main_table:{len(Main_table)}.")
     # ---
-    printe.output(
-        f"mdwiki_api.py Get_template_pages : find {len(Main_table)} pages.")
+    printe.output(f"mdwiki_api.py Get_template_pages : find {len(Main_table)} pages.")
     # ---
     return Main_table
 
 
-def Get_All_pages(start,
-                  namespace="0",
-                  limit="max",
-                  apfilterredir="",
-                  limit_all=0):
+def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all=0):
     # ---
-    printe.output(
-        f"Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}"
-    )
+    printe.output(f"Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}")
     # ---
     numb = 0
     # ---
@@ -1032,8 +975,7 @@ def Get_All_pages(start,
         apcontinue = json1.get("continue", {}).get("apcontinue", "")
         # ---
         newp = json1.get("query", {}).get("allpages", [])
-        printe.output(
-            f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
+        printe.output(f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
         # ---
         for x in newp:
             if x["title"] not in Main_table:
@@ -1050,8 +992,7 @@ def Get_All_pages(start,
     if numb > 0 and apcontinue == "":
         printe.output("<<lightgreen>> apcontinue == '' ")
     # ---
-    printe.output(
-        f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
+    printe.output(f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
     # ---
     return Main_table
 
@@ -1059,12 +1000,7 @@ def Get_All_pages(start,
 def get_section(title, level):
     printe.output(f'get_section title:"{title}", level:"{level}"')
     # ---
-    params = {
-        "action": "parse",
-        "page": title,
-        "prop": "wikitext",
-        "section": level
-    }
+    params = {"action": "parse", "page": title, "prop": "wikitext", "section": level}
     # ---
     json1 = post_s(params)
     # ---
@@ -1100,8 +1036,7 @@ def Get_UserContribs(user, limit="max", namespace="*", ucshow=""):
         # ---
         Main_table = [x["title"] for x in newp]
     # ---
-    printe.output(
-        f"mdwiki_api.py Get_Newpages : find {len(Main_table)} pages.")
+    printe.output(f"mdwiki_api.py Get_Newpages : find {len(Main_table)} pages.")
     # ---
     return Main_table
 
@@ -1172,7 +1107,7 @@ def get_redirect(liste):
     redirects = {}
     # ---
     for i in range(0, len(liste), 50):
-        titles = liste[i:i + 50]
+        titles = liste[i : i + 50]
         # ---
         params = {
             "action": "query",
@@ -1200,7 +1135,7 @@ def Find_pages_exists_or_not(liste):
     table = {}
     # ---
     for i in range(0, len(liste), 50):
-        titles = liste[i:i + 50]
+        titles = liste[i : i + 50]
         # ---
         params = {
             "action": "query",

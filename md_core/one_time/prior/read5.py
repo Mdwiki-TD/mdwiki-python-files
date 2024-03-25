@@ -13,11 +13,13 @@ import codecs
 import json
 import os
 import sys
+
 # ---
 from pathlib import Path
 
 import wikitextparser
 from mdpy import printe
+
 # ---
 from newapi.mdwiki_page import MainPage as md_MainPage
 from prior import text_bot
@@ -181,7 +183,7 @@ class WorkAll:
             # ---
             for i in range(0, len(_all_), numb):
                 # ---
-                las = dict(list(_all_.items())[i:i + numb])
+                las = dict(list(_all_.items())[i : i + numb])
                 # ---
                 ta = f"{t}_{n}"
                 # ---
@@ -196,8 +198,7 @@ class WorkAll:
         for t, _all_ in self.all_sections.items():
             lrnn = len(_all_.keys())
             # ---
-            printe.output(
-                f"<<lightyellow>> section:({t}), \t\twikilinks: {lrnn}")
+            printe.output(f"<<lightyellow>> section:({t}), \t\twikilinks: {lrnn}")
             # ---
             ttt = f"User:Mr. Ibrahem/prior/{t}"
             # ---
@@ -235,9 +236,7 @@ def work_all():
     if "logall" in sys.argv:
         text_bot.log_all_pages_states()
     else:
-        printe.output(
-            '<<lightyellow>> add "logall" to args to log All pages links green/red..'
-        )
+        printe.output('<<lightyellow>> add "logall" to args to log All pages links green/red..')
 
     # ---
 

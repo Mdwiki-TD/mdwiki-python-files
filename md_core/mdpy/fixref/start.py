@@ -10,11 +10,13 @@ python3 core8/pwb.py mdpy/fixref
 #
 import codecs
 import sys
+
 # ---
 from pathlib import Path
 
 from mdpy import printe
 from mdpy.bots import catdepth2, mdwiki_api
+
 # ---
 from mdpy.fixref.fixref_text_new import fix_ref_template
 
@@ -62,8 +64,7 @@ def main():
             thenumbers[1] = int(value)
         # ---
         if arg == "-file":
-            text = codecs.open(f"{dir2}/public_html/find/{value.strip()}", "r",
-                               "utf8").read()
+            text = codecs.open(f"{dir2}/public_html/find/{value.strip()}", "r", "utf8").read()
             List = [x.strip() for x in text.split("\n") if x.strip() != ""]
         # ---
         if arg == "allpages":

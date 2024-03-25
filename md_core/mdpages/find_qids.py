@@ -19,6 +19,7 @@ import sys
 
 from mdpages.qids_others.unlinkedwikibase import work_page  # (title, qid)
 from mdpy import printe
+
 # ---
 from mdpy.bots import sql_for_mdwiki, wiki_api, wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
@@ -72,20 +73,16 @@ def get_qids(noqids_list):
     # ---
     for i in range(0, len(noqids_list), 100):
         # ---
-        group = noqids_list[i:i + 100]
+        group = noqids_list[i : i + 100]
         # ---
         params["titles"] = "|".join(group)
         # ---
-        jsone = wiki_api.submitAPI(params,
-                                   apiurl="https://en.wikipedia.org/w/api.php")
+        jsone = wiki_api.submitAPI(params, apiurl="https://en.wikipedia.org/w/api.php")
         # ---
         if jsone and "batchcomplete" in jsone:
             query = jsone.get("query", {})
             # ---
-            redirects_x = {
-                x["to"]: x["from"]
-                for x in query.get("redirects", [])
-            }
+            redirects_x = {x["to"]: x["from"] for x in query.get("redirects", [])}
             # ---
             # "redirects": [{"from": "Acetylsalicylic acid","to": "Aspirin"}]
             # ---
@@ -151,17 +148,14 @@ def start():
         for xz, q in false_qids.items():
             title_in = qids_already.get(q, "")
             # ---
-            printe.output(
-                f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
+            printe.output(f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
     # ---
     printe.output("===================")
     printe.output(f"<<lightred>>no qids: {len(empty_qids)}")
     if empty_qids:
         printe.output(no)
         # ---
-        printe.output(
-            '<<purple>> add "createq" to sys.argv to create new items for them?'
-        )
+        printe.output('<<purple>> add "createq" to sys.argv to create new items for them?')
         # ---
         if "createq" in sys.argv:
             create_qids(empty_qids)
@@ -170,8 +164,7 @@ def start():
     printe.output(f"find qid to {len(to_add)} from {len(noqids)} pages.")
     # ---
     if to_add:
-        printe.output("<<lightyellow>>\n".join(
-            [f"{k}\t:\t{v}" for k, v in to_add.items()]))
+        printe.output("<<lightyellow>>\n".join([f"{k}\t:\t{v}" for k, v in to_add.items()]))
         # ---
         printe.output('<<purple>> add "addthem" to sys.argv to add them?')
         # ---

@@ -12,18 +12,21 @@ python3 core8/pwb.py mdpy/getas newpages
 """
 
 import codecs
+
 #
 # (C) Ibrahem Qasim, 2022
 #
 #
 import json
 import sys
+
 # ---
 # ---
 from pathlib import Path
 
 from mdpy import printe
 from mdpy.bots import catdepth2, wiki_api
+
 # ---
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 
@@ -40,9 +43,7 @@ vaild_links = tabe["list"]
 # ---
 printe.output(f"len of vaild_links: {len(vaild_links)}")
 # ---
-json_file = {
-    0: f"{dir2}/public_html/Translation_Dashboard/Tables/assessments.json"
-}
+json_file = {0: f"{dir2}/public_html/Translation_Dashboard/Tables/assessments.json"}
 lala = ""
 # ---
 with codecs.open(json_file[0], "r", encoding="utf-8-sig") as listt:
@@ -58,14 +59,9 @@ assessments = dict(old_assessments.items())
 # ---
 if "newpages" in sys.argv:  # vaild_links
     vaild_links2 = vaild_links
-    vaild_links = [
-        xp for xp in vaild_links2
-        if (xp not in old_assessments
-            or old_assessments.get(xp) in ["Unknown", ""])
-    ]
+    vaild_links = [xp for xp in vaild_links2 if (xp not in old_assessments or old_assessments.get(xp) in ["Unknown", ""])]
     # ---
-    printe.output(
-        f"Category-members:{len(vaild_links2)},New-members:{len(vaild_links)}")
+    printe.output(f"Category-members:{len(vaild_links2)},New-members:{len(vaild_links)}")
     # ---
 # ---
 Nore = {1: False}
@@ -88,8 +84,7 @@ def work_for_list(listn):
     # من ميد إلى الإنجليزية
     # listo = [mdwiki_to_enwiki.get(cc, cc) for cc in listn]
     # ---
-    ase = wiki_api.Getpageassessments_from_wikipedia("|".join(listn),
-                                                     site="en")
+    ase = wiki_api.Getpageassessments_from_wikipedia("|".join(listn), site="en")
     # ---
     lenn = 0
     # ---
@@ -97,8 +92,7 @@ def work_for_list(listn):
         # ---
         # {'pageid': 3186837, 'ns': 0, 'title': 'WAGR syndrome', 'pageassessments': {'Medicine': {'class': 'Start', 'importance': 'Low'}}}
         # ---
-        importance = (tabe.get("pageassessments",
-                               {}).get("Medicine", {}).get("importance", ""))
+        importance = tabe.get("pageassessments", {}).get("Medicine", {}).get("importance", "")
         # ---
         # من الإنجليزية إلى ميد
         title = enwiki_to_mdwiki.get(title, title)
@@ -124,7 +118,7 @@ def mmain():
             kkk[1].append(x2)
     # ---
     for i in range(0, len(kkk[1]), 50):
-        group = kkk[1][i:i + 50]
+        group = kkk[1][i : i + 50]
         work_for_list(group)
         # ---
         # log()

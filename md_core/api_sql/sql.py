@@ -8,6 +8,7 @@ from api_sql import sql
 
 import datetime
 import re
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -94,12 +95,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     return host, dbs_p
 
 
-def make_sql_connect(query,
-                     db="",
-                     host="",
-                     update=False,
-                     Return=False,
-                     return_dict=False):
+def make_sql_connect(query, db="", host="", update=False, Return=False, return_dict=False):
     return sql_qu.make_sql_connect(
         query,
         db=db,
@@ -136,11 +132,7 @@ def MySQLdbar(arcatTitle):
     # ---
     host, dbs_p = make_labsdb_dbs_p("ar")
     # ---
-    ar_results = make_sql_connect(ar_queries,
-                                  db=dbs_p,
-                                  host=host,
-                                  Return=[],
-                                  return_dict=True)
+    ar_results = make_sql_connect(ar_queries, db=dbs_p, host=host, Return=[], return_dict=True)
     # ---
     if not ar_results or len(ar_results) == 0:
         return arcats
@@ -181,9 +173,7 @@ def Make_sql(queries, wiki="", printqua=False):
         print(queries)
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    printe.output(
-        f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}'
-    )
+    printe.output(f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, Return=[])
     final = tttime.time()
@@ -195,9 +185,7 @@ def Make_sql(queries, wiki="", printqua=False):
     # ---
     delta = int(final - start)
     # ---
-    print(
-        f'API/sql_py Make_sql len(encats) = "{len( encats )}", in {delta} seconds'
-    )
+    print(f'API/sql_py Make_sql len(encats) = "{len( encats )}", in {delta} seconds')
     # ---
     encats.sort()
     # ---
@@ -223,9 +211,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
     final = tttime.time()
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    printe.output(
-        f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}'
-    )
+    printe.output(f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, Return={})
     # ---
@@ -241,9 +227,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
         rows.append(raw)
     # ---
     delta = int(final - start)
-    print(
-        f'API/sql_py Make_sql_many_rows len(encats) = "{len( rows )}", in {delta} seconds'
-    )
+    print(f'API/sql_py Make_sql_many_rows len(encats) = "{len( rows )}", in {delta} seconds')
     # ---
     return rows
 
@@ -267,9 +251,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
     final = tttime.time()
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    printe.output(
-        f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}'
-    )
+    printe.output(f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, Return={})
     # ---
@@ -282,9 +264,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
         encats[key] = value
     # ---
     delta = int(final - start)
-    print(
-        f'API/sql_py Make_sql_2_rows len(results) = "{len( encats )}", in {delta} seconds'
-    )
+    print(f'API/sql_py Make_sql_2_rows len(results) = "{len( encats )}", in {delta} seconds')
     # ---
     return encats
 
@@ -308,9 +288,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
     final = tttime.time()
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    printe.output(
-        f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}'
-    )
+    printe.output(f'<<lightred>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, Return=[])
     # ---
@@ -321,9 +299,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
         encats.append(en)
     # ---
     delta = int(final - start)
-    print(
-        f'API/sql_py Make_sql_2_rows len(results) = "{len( encats )}", in {delta} seconds'
-    )
+    print(f'API/sql_py Make_sql_2_rows len(results) = "{len( encats )}", in {delta} seconds')
     # ---
     return encats
 
@@ -355,9 +331,7 @@ def MySQLdb_finder_2_rows(encatTitle):
     queries %= item
     encats = Make_sql_2_rows(queries)
     # ---end of sql--------------------------------------------
-    printe.output(
-        f"encats: <<lightred>> {len(encats.keys())} <<default>> template:{item}"
-    )
+    printe.output(f"encats: <<lightred>> {len(encats.keys())} <<default>> template:{item}")
     # ---
     return encats
 
@@ -365,10 +339,8 @@ def MySQLdb_finder_2_rows(encatTitle):
 def MySQLdb_finder_N_New(encatTitle, arcatTitle):
     printe.output(f"<<lightred>> sql . MySQLdb_finder {encatTitle}: ")
     # ---
-    item = (encatTitle.replace("category:", "").replace("Category:",
-                                                        "").replace(" ", "_"))
-    item = (str(encatTitle).replace("[[en:", "").replace("]]", "").replace(
-        " ", "_").replace("Category:", ""))
+    item = encatTitle.replace("category:", "").replace("Category:", "").replace(" ", "_")
+    item = str(encatTitle).replace("[[en:", "").replace("]]", "").replace(" ", "_").replace("Category:", "")
     # ---
     if not GET_SQL():
         return False
@@ -389,9 +361,7 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
     final_cat = [str(cat) for cat in encats if cat not in arcats]
     # ---
     delta = int(final - start)
-    print(
-        f'API/sql_py MySQLdb_finder_N_New len(final_cat) = "{len( final_cat )}", in {delta} seconds'
-    )
+    print(f'API/sql_py MySQLdb_finder_N_New len(final_cat) = "{len( final_cat )}", in {delta} seconds')
     # ---
     return final_cat if final_cat != [] else False
 

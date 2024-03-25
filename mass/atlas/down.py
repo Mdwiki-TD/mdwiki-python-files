@@ -31,6 +31,7 @@ python3 md_core/atlas/bot.py
 
 import json
 import os
+
 #
 import re
 from pathlib import Path
@@ -77,8 +78,7 @@ def process_disease_page(disease_url, disease_name):
     images_info = {}
 
     for index, link in enumerate(image_links):
-        image_url = urljoin("https://www.atlasdermatologico.com.br/",
-                            link["href"])
+        image_url = urljoin("https://www.atlasdermatologico.com.br/", link["href"])
         image_url = remove_session_id_from_url(image_url)
 
         image_name = f"{disease_name} (Dermatology Atlas {index + 1}).jpg"
@@ -101,8 +101,7 @@ def scrape_data(url):
         disease_name = disease_name.title()
 
         disease_href = item.find("a")["href"]
-        disease_url = urljoin("https://www.atlasdermatologico.com.br/",
-                              disease_href)
+        disease_url = urljoin("https://www.atlasdermatologico.com.br/", disease_href)
         disease_url = remove_session_id_from_url(disease_url)
 
         # Step 4: Process disease page and collect image information

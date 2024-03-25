@@ -13,6 +13,7 @@ from pathlib import Path
 
 # ---
 from mdpy import printe
+
 # ---
 from priorviews.bots import count_words, helps
 from priorviews.lists.links_by_section import links_by_lang
@@ -75,8 +76,7 @@ def get_w(links, lang):
         if "new" in sys.argv and words_in > 40:
             continue
         # ---
-        printe.output(
-            f"<<yellow>> title: {m}/{lena} get_w {title}, words_in:{words_in}")
+        printe.output(f"<<yellow>> title: {m}/{lena} get_w {title}, words_in:{words_in}")
         # ---
         _words = count_words.get_words(title, lang)
         # ---

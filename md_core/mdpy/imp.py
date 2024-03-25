@@ -9,6 +9,7 @@ python3 core8/pwb.py mdpy/imp -page:Infertility
 
 import codecs
 import json
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -41,9 +42,7 @@ api_new.Login_to_wiki()
 
 def work(title, num, lenth, From=""):
     # ---
-    printe.output(
-        '-------------------------------------------\n*<<lightyellow>> >%d/%d title:"%s".'
-        % (num, lenth, title))
+    printe.output('-------------------------------------------\n*<<lightyellow>> >%d/%d title:"%s".' % (num, lenth, title))
     # ---
     if num < offset[1]:
         return ""
@@ -120,8 +119,7 @@ def main():
     user_limit = "3000"
     # ---
     searchlist = {
-        "drug":
-        "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
+        "drug": "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
     }
     # ---
     limite = "max"
@@ -198,9 +196,7 @@ def main():
             # python imp.py -start:all
             #
             # ---
-            lista = api_new.Get_All_pages(start="",
-                                          namespace=namespaces,
-                                          limit=limite)
+            lista = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))
@@ -208,9 +204,7 @@ def main():
                 starts = page
     # ---
     if starts != "":
-        listen = api_new.Get_All_pages(start=starts,
-                                       namespace=namespaces,
-                                       limit=limite)
+        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
         for num, page in enumerate(listen, start=1):
             work(page, num, len(listen))
             # ---
@@ -220,10 +214,7 @@ def main():
     if newpages != "":
         lista = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        lista = mdwiki_api.Get_UserContribs(user,
-                                            limit=user_limit,
-                                            namespace=namespaces,
-                                            ucshow="new")
+        lista = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
     elif pages != []:
         lista = pages
     for num, page in enumerate(lista, start=1):
@@ -240,9 +231,7 @@ def main():
             # python imp.py -start:all
             #
             # ---
-            lista = api_new.Get_All_pages(start="",
-                                          namespace=namespaces,
-                                          limit=limite)
+            lista = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))
@@ -258,9 +247,7 @@ def main():
             # python3 imp.py -start:! -limit:3
             #
             # ---
-            lista = api_new.Get_All_pages(start=starts,
-                                          namespace=namespaces,
-                                          limit=limite)
+            lista = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))

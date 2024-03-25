@@ -16,9 +16,9 @@ from newapi.mdwiki_page import MainPage as md_MainPage
 from priorviews.bots import helps, w_all
 from priorviews.lists import creators, translators, views, words
 from priorviews.lists.creators_to_translators import creators_as_translators
+
 # ---
-from priorviews.lists.links_by_section import (links_by_lang,
-                                               sects_links_langlinks)
+from priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
 
 # ---
 Dir = Path(__file__).parent
@@ -132,19 +132,16 @@ def make_lang_textso(lang):
                 # ---
                 lang_words += arwords
                 # ---
-                ar_tra = translators.tra_by_lang.get(lang,
-                                                     {}).get(ar.lower(), "")
+                ar_tra = translators.tra_by_lang.get(lang, {}).get(ar.lower(), "")
                 # ---
-                _creat = creators.Creators_by_lang_title.get(lang,
-                                                             {}).get(ar, {})
+                _creat = creators.Creators_by_lang_title.get(lang, {}).get(ar, {})
                 _creat_user = _creat.get("actor", "")
                 # ---
                 _time_x = _creat.get("time", "")
                 # ---
                 if _time_x != "":
                     # Convert _time_x to a datetime object
-                    datetime_obj = datetime.datetime.strptime(
-                        str(_time_x), "%Y%m%d%H%M%S")
+                    datetime_obj = datetime.datetime.strptime(str(_time_x), "%Y%m%d%H%M%S")
                     _time_x = datetime_obj.strftime("%Y-%m-%d")
                 # ---
                 _cr_ = ""
@@ -201,8 +198,7 @@ def make_lang_textso(lang):
             # ---
             secs_texts += "|}\n"
     # ---
-    newtext = "[https://:" + \
-        f"{lang}.wikipedia.org {lang}.wikipedia.org] statistics:\n"
+    newtext = "[https://:" + f"{lang}.wikipedia.org {lang}.wikipedia.org] statistics:\n"
     newtext += f"* All links: {all_links:,}\n"
     newtext += f"** With ({lang}) translations: {all_links_with_ar:,}\n"
     newtext += f"*** With translators: {tr_all:,}\n"
@@ -215,11 +211,7 @@ def make_lang_textso(lang):
     print(newtext)
     # ----
     # authors = sorted(authors.items(), key=lambda x: x[1])
-    authors_2 = {
-        x: v
-        for x, v in sorted(
-            authors_2.items(), key=lambda item: item[1], reverse=True)
-    }
+    authors_2 = {x: v for x, v in sorted(authors_2.items(), key=lambda item: item[1], reverse=True)}
     authors_text = "\n==Translators==\n"
     # ----
     authors_text += authors_table(authors_2, lang)
@@ -238,19 +230,14 @@ def work(lang):
     if "write" not in sys.argv:
         return
     # ---
-    page = md_MainPage(f"User:Mr. Ibrahem/priorviews/bylang/{lang}",
-                       "www",
-                       family="mdwiki")
+    page = md_MainPage(f"User:Mr. Ibrahem/priorviews/bylang/{lang}", "www", family="mdwiki")
     exists = page.exists()
     text = page.get_text()
     if not exists:
         create = page.Create(text=newtext, summary="update")
     elif text != newtext:
         # ---
-        save_page = page.save(newtext=newtext,
-                              summary="update",
-                              nocreate=1,
-                              minor="")
+        save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
     else:
         print("no change")
 

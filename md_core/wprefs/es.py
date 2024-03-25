@@ -6,6 +6,7 @@ import wikitextparser as wtp
 from wprefs.bots.es_months import fix_es_months
 from wprefs.bots.es_refs import mv_es_refs
 from wprefs.bots.es_section import add_section
+
 # ---
 from wprefs.helps import print_s
 
@@ -71,8 +72,7 @@ params = {
     "fecha": ["date"],
     "editorial": ["publisher"],
     "apellido-editor": ["editor-last", "editor-surname", "editor1-last"],
-    "nombre-editor":
-    ["editor-first", "editor-given", "editor1-first", "editor1-given"],
+    "nombre-editor": ["editor-first", "editor-given", "editor1-first", "editor1-given"],
     "enlace-editor": ["editor-link", "editor1-link"],
     "ubicación": ["place", "location"],
     "lugar-publicación": ["publication-place"],
@@ -148,8 +148,7 @@ def fix_temps(text):
         # ---
         name = str(template.normal_name()).strip()
         # ---
-        if name.lower() in refs_temps.keys() or name.lower(
-        ) in refs_temps.values():
+        if name.lower() in refs_temps.keys() or name.lower() in refs_temps.values():
             # ---
             old = template.string
             # ---

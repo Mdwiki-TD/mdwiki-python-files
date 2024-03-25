@@ -11,22 +11,14 @@ from nccommons import api
 from newapi.ncc_page import CatDepth
 
 # ---
-cats = CatDepth("Category:Cats to delete",
-                sitecode="www",
-                family="nccommons",
-                depth=0,
-                ns="all")
+cats = CatDepth("Category:Cats to delete", sitecode="www", family="nccommons", depth=0, ns="all")
 # ---
 print(f"len of cats: {len(cats)}")
 # ---
 for cat in cats:
     print(f"cat: {cat}")
     # ---
-    members = CatDepth(cat,
-                       sitecode="www",
-                       family="nccommons",
-                       depth=0,
-                       ns="all")
+    members = CatDepth(cat, sitecode="www", family="nccommons", depth=0, ns="all")
     # ---
     if not members:
         params = {

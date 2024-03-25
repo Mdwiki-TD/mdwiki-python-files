@@ -5,33 +5,23 @@ python3 core8/pwb.py mass/radio/to_work
 from mass.radio.to_work import ids_to_work
 """
 
-from mass.radio.jsons_files import (dump_json_file, ids_to_urls, jsons,
-                                    urls_to_ids)
+from mass.radio.jsons_files import dump_json_file, ids_to_urls, jsons, urls_to_ids
 
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 
 cases_in_ids = set(jsons.cases_in_ids.keys())
 urls_set = set(jsons.urls.keys())
 
-casesin_to_urls = [
-    ids_to_urls.get(str(ca_id)) for ca_id in cases_in_ids
-    if ids_to_urls.get(str(ca_id))
-]
+casesin_to_urls = [ids_to_urls.get(str(ca_id)) for ca_id in cases_in_ids if ids_to_urls.get(str(ca_id))]
 
 t_to_work = urls_set - set(casesin_to_urls)
 
-ids_to_work = {
-    urls_to_ids.get(url): jsons.all_ids.get(urls_to_ids.get(url))
-    for url in t_to_work
-    if urls_to_ids.get(url) and jsons.all_ids.get(urls_to_ids.get(url))
-}
+ids_to_work = {urls_to_ids.get(url): jsons.all_ids.get(urls_to_ids.get(url)) for url in t_to_work if urls_to_ids.get(url) and jsons.all_ids.get(urls_to_ids.get(url))}
 
 rm2 = {x: v for x, v in ids_to_work.items() if x in cases_in_ids}
 
 print(f"Length of jsons.urls: {len(urls_set)}")
-print(
-    f"Length of jsons.cases_in: {len(cases_in_ids)}, Length of casesin_to_urls: {len(casesin_to_urls)}"
-)
+print(f"Length of jsons.cases_in: {len(cases_in_ids)}, Length of casesin_to_urls: {len(casesin_to_urls)}")
 print(f"Length of t_to_work: {len(t_to_work)}")
 print(f"Length of ids_to_work: {len(ids_to_work)}")
 print(f"Length of rm2: {len(rm2)}")

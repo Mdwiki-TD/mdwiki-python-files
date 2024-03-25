@@ -23,10 +23,7 @@ def remove_cite_web(text, resources_get_NLM, line, title):
         vas = vavo.group(1)
         # الوسيط موجود في القالب
         if line != "" and resources_get_NLM and resources_get_NLM == "":
-            line2 = re.sub(r"(\s*NLM\s*\=\s*)",
-                           r"\g<1>{{PAGENAME}}",
-                           line,
-                           flags=re.IGNORECASE)
+            line2 = re.sub(r"(\s*NLM\s*\=\s*)", r"\g<1>{{PAGENAME}}", line, flags=re.IGNORECASE)
             new_text = new_text.replace(line, line2)
             if line != line2 and new_text.find(line2) != -1:
                 new_text = new_text.replace(vas, "")  # حذف قالب الاستشهاد
@@ -55,10 +52,7 @@ def remove_cite_web(text, resources_get_NLM, line, title):
 def portal_remove(text):
     # par = "{{portal bar|Medicine}}"
     new_text = text
-    new_text = re.sub(r"\{\{\s*portal bar\s*\|\s*Medicine\s*\}\}",
-                      "",
-                      new_text,
-                      flags=re.IGNORECASE)
+    new_text = re.sub(r"\{\{\s*portal bar\s*\|\s*Medicine\s*\}\}", "", new_text, flags=re.IGNORECASE)
     # ---
     return new_text
 

@@ -168,9 +168,7 @@ def make_text(section, links):
     # total views by language
     text += "\n|-\n"
     text += f'! !! style="position: sticky;left: 0;colspan:2;" | Total views !! {section_views:,} \n'
-    text += "! " + " !! ".join([
-        str(fo_n(section_langs_views[section].get(l, 0))) for l in langs_keys
-    ])
+    text += "! " + " !! ".join([str(fo_n(section_langs_views[section].get(l, 0))) for l in langs_keys])
     # text += '! ' + " !! ".join([ str(views.count_views_by_lang.get(l, 0)) for l in langs_keys ])
 
     # Add the closing table tag and div tag to the text variable.

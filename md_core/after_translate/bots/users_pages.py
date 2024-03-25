@@ -37,6 +37,5 @@ def not_pages(lista):
             pupdate = ta["pupdate"]
             namespace = ta["namespace"]
             # ---
-            printe.output(
-                f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")
+            printe.output(f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")
             # ---

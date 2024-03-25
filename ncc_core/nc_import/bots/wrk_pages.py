@@ -2,6 +2,7 @@ import wikitextparser as wtp
 from nc_import.bots.import_files import import_file
 from newapi import printe
 from newapi.wiki_page import MainPage
+
 """
 page      = MainPage(title, 'ar', family='wikipedia')
 exists    = page.exists()

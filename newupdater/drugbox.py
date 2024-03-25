@@ -1,8 +1,7 @@
 import re
 
 import wikitextparser as wtp
-from lists.bot_params import (all_formola_params, all_params,
-                              params_placeholders, params_to_add)
+from lists.bot_params import all_formola_params, all_params, params_placeholders, params_to_add
 
 
 def printn(s):
@@ -54,8 +53,8 @@ class TextProcessor:
             name = str(template.normal_name()).strip()
             # ---
             if name.lower() in {
-                    "infobox medical condition (new)",
-                    "infobox medical condition",
+                "infobox medical condition (new)",
+                "infobox medical condition",
             }:
                 printn(f"*find temp:[{name}].")
                 continue
@@ -66,10 +65,7 @@ class TextProcessor:
                 # ---
                 txt = template.string
                 # ---
-                params = {
-                    str(param.name).strip(): str(param.value)
-                    for param in template.arguments
-                }
+                params = {str(param.name).strip(): str(param.value) for param in template.arguments}
                 # ---
                 break
         # ---
@@ -206,10 +202,7 @@ class TextProcessor:
             sec_text, sec_params = self.get_chemical()
         # ---
         if sectionname == "last":
-            sec_params = [
-                x for x in self.drugbox_params.keys()
-                if x.lower().strip() not in self.params_done_lowers
-            ]
+            sec_params = [x for x in self.drugbox_params.keys() if x.lower().strip() not in self.params_done_lowers]
         # ---
         for p in sec_params:
             p = p.strip()

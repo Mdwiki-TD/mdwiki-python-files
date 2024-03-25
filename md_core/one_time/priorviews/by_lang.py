@@ -7,6 +7,7 @@ python3 core8/pwb.py priorviews/by_lang ask
 from pathlib import Path
 
 from newapi.mdwiki_page import MainPage as md_MainPage
+
 # ---
 from priorviews.lists import translators, views, words
 from priorviews.lists.creators_to_translators import creators_as_translators
@@ -31,10 +32,7 @@ by_lang_tra = views.count_tra_by_lang
 by_lang = views.count_views_by_lang.copy()
 # ---
 # sort by_lang
-keys_1 = {
-    x: v
-    for x, v in sorted(by_lang.items(), key=lambda item: item[1], reverse=True)
-}
+keys_1 = {x: v for x, v in sorted(by_lang.items(), key=lambda item: item[1], reverse=True)}
 # ---
 total_tra = 0
 with_trator = 0
@@ -53,8 +51,7 @@ for l, vv in keys_1.items():
     # ---
     # with translators
     # ---
-    trator = translators.counts_by_lang.get(l, 0) + len(
-        creators_as_translators.get(l, {}))
+    trator = translators.counts_by_lang.get(l, 0) + len(creators_as_translators.get(l, {}))
     with_trator += trator
     # ---
     tra = by_lang_tra.get(l, 0)
@@ -63,9 +60,7 @@ for l, vv in keys_1.items():
     wrds = words.count_words_by_lang.get(l, 0)
     total_wrds += wrds
     # ---
-    te_langs += (
-        f"\n|-\n| {mm} || [[/{l}|{l}]] || {tra:,}  || {trator:,} || {vv:,} || {wrds:,}"
-    )
+    te_langs += f"\n|-\n| {mm} || [[/{l}|{l}]] || {tra:,}  || {trator:,} || {vv:,} || {wrds:,}"
 # ---
 te_langs += f"\n|-\n! || Total || {total_tra:,} || {with_trator:,} || {total_views:,} || {total_wrds:,} \n|-"
 te_langs += "\n|}"
@@ -86,17 +81,12 @@ newtext += te_langs
 newtext += te_langs
 # ---
 if __name__ == "__main__":
-    page = md_MainPage("User:Mr. Ibrahem/priorviews/bylang",
-                       "www",
-                       family="mdwiki")
+    page = md_MainPage("User:Mr. Ibrahem/priorviews/bylang", "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         create = page.Create(text=newtext, summary="update")
     else:
         # ---
         text = page.get_text()
-        save_page = page.save(newtext=newtext,
-                              summary="update",
-                              nocreate=1,
-                              minor="")
+        save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
     # ---

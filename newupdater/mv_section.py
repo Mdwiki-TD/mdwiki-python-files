@@ -57,7 +57,7 @@ class move_External_links_section:
         # ---
         while True:
             if match := metadataR.search(tmpText):
-                tmpText = tmpText[:match.start()]
+                tmpText = tmpText[: match.start()]
             else:
                 break
         # ---
@@ -97,14 +97,12 @@ class move_External_links_section:
             printn(f"title: {self.last_sec.title}")
             printn(f"contents: {l_c}")
             # ---
-            mata = re.search(r"^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}",
-                             l_c,
-                             flags=re.IGNORECASE)
+            mata = re.search(r"^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}", l_c, flags=re.IGNORECASE)
             # ---
             if mata:
                 # ---
                 # ---
-                index = len(l_c[:mata.end()])
+                index = len(l_c[: mata.end()])
                 # ---
                 l_c2 = l_c[index:]
                 # ---
@@ -119,8 +117,7 @@ class move_External_links_section:
                 self.ext_sec = f"{g_to}\n{self.ext_sec}"
                 self.new_ext_sec = self.ext_sec
                 # ---
-                self.text_to_work = self.text_to_work.replace(
-                    str(self.last_sec).strip(), l_c2.strip())
+                self.text_to_work = self.text_to_work.replace(str(self.last_sec).strip(), l_c2.strip())
 
     def make_new_txt(self):
         # ---

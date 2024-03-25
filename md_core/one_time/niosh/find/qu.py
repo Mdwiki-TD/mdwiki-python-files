@@ -56,8 +56,7 @@ for title in titles:
         if x.find("web.archive.org") > -1:
             # remove url suffix like https://web.archive.org/web/20150530203735/
 
-            x = re.sub(r"^https?://web\.archive\.org/web/\d+/(.*)", r"\1",
-                       x.strip())
+            x = re.sub(r"^https?://web\.archive\.org/web/\d+/(.*)", r"\1", x.strip())
 
         if x.find("cdc.gov/niosh/") > -1:
             x = fix_links(x)
@@ -77,11 +76,7 @@ len_all_links = len(all_links)
 print(f"all pages:{len(new.keys())}, {len_all_links=}")
 # ---
 # sort dict keys
-new = {
-    k: v
-    for k, v in sorted(
-        new.items(), key=lambda item: item[0].lower(), reverse=False)
-}
+new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
 # ---
 with codecs.open(f"{Dir2}/jsons/both.json", "w", encoding="utf-8") as ii:
     json.dump(new, ii, ensure_ascii=False, indent=4)

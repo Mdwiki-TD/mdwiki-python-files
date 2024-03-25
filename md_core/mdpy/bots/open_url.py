@@ -10,6 +10,7 @@ from mdpy.bots import open_url
 import json
 import sys
 import time
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -17,6 +18,7 @@ import traceback
 
 import pywikibot
 import requests
+
 # ---
 from mdpy import printe
 
@@ -42,8 +44,7 @@ class classgetURL:
             req = requests.get(self.url, timeout=10)
             # ---
             if 500 <= req.status_code < 600:
-                printe.output(
-                    f"received {req.status_code} status from {req.url}")
+                printe.output(f"received {req.status_code} status from {req.url}")
                 self.html = ""
             else:
                 # ---
@@ -74,10 +75,8 @@ def open_json_url(url, maxsleeps=0, **kwargs):
     bot = classgetURL(url)
     js_text = bot.open_it()
     # ---
-    if js_text.find("<!DOCTYPE html>") != -1 or js_text.find(
-            "<!doctype html>") != -1:
-        printe.output(
-            f"<<red>> open_json_url: url: {url} returns <!DOCTYPE html>!!")
+    if js_text.find("<!DOCTYPE html>") != -1 or js_text.find("<!doctype html>") != -1:
+        printe.output(f"<<red>> open_json_url: url: {url} returns <!DOCTYPE html>!!")
         return {}
     # ---
     try:

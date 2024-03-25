@@ -15,6 +15,7 @@ from mdpages.qids_others import sql_qids_others
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
+
 # ---
 from newapi.mdwiki_page import NEW_API
 from newapi.mdwiki_page import MainPage as md_MainPage
@@ -72,9 +73,7 @@ def add_tag():
     # ---
     printe.output("Get all pages...")
     # ---
-    all_pages = api_new.Get_All_pages(start="!",
-                                      namespace="0",
-                                      apfilterredir="nonredirects")
+    all_pages = api_new.Get_All_pages(start="!", namespace="0", apfilterredir="nonredirects")
     # ---
     all_pages = [x for x in all_pages if valid_title(x)]
     # ---
@@ -82,15 +81,11 @@ def add_tag():
     # ---
     pages_has_to_work = [page for page in pages_has if page in qids]
     # ---
-    printe.output(
-        f"len of pages_has: {len(pages_has)}, pages_has_to_work: {len(pages_has_to_work)}"
-    )
+    printe.output(f"len of pages_has: {len(pages_has)}, pages_has_to_work: {len(pages_has_to_work)}")
     # ---
     pages_to_work = [page for page in all_pages if page in qids]
     # ---
-    printe.output(
-        f"len of all_pages: {len(all_pages)}, pages_to_work: {len(pages_to_work)}"
-    )
+    printe.output(f"len of all_pages: {len(all_pages)}, pages_to_work: {len(pages_to_work)}")
     # ---
     for n, x in enumerate(pages_has_to_work):
         printe.output(f"p:{n}/{len(pages_has)}: t:{x}::")

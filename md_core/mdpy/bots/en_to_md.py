@@ -27,6 +27,7 @@ from mdpy.bots import en_to_md
 #
 import codecs
 import json
+
 # ---
 from pathlib import Path
 
@@ -54,8 +55,7 @@ def make_mdwiki_list():
     # ---
     # read the file without errors
     try:
-        From_json = json.loads(
-            codecs.open(ffile, "r", encoding="utf-8-sig").read())
+        From_json = json.loads(codecs.open(ffile, "r", encoding="utf-8-sig").read())
     except Exception as e:
         print(e)
         return

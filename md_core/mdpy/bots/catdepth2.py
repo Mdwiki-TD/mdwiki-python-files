@@ -12,6 +12,7 @@ import sys
 import time
 import traceback
 from datetime import datetime
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -106,10 +107,7 @@ def Get_cat(enlink, print_url=False):
                 tablese["templates"] = [x["title"] for x in caca["templates"]]
             # ---
             if "langlinks" in caca:
-                tablese["langlinks"] = {
-                    fo["lang"]: fo["*"]
-                    for fo in caca["langlinks"]
-                }
+                tablese["langlinks"] = {fo["lang"]: fo["*"] for fo in caca["langlinks"]}
             # ---
             table[cate_title] = tablese
             # ---
@@ -132,18 +130,13 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
     tablemember = Get_cat(title, print_url=True)
     # ---
     # result_table = { x : da for x, da in tablemember.items() if valid_title(x) }
-    result_table = {
-        x: da
-        for x, da in tablemember.items() if int(da["ns"]) == 0
-    }
+    result_table = {x: da for x, da in tablemember.items() if int(da["ns"]) == 0}
     # ---
     # for x in tablemember: if valid_title(x) :  result_table[x] = tablemember[x]
     # ---
     cat_done = []
     # ---
-    new_list = [
-        v["title"] for x, v in tablemember.items() if int(v["ns"]) == 14
-    ]
+    new_list = [v["title"] for x, v in tablemember.items() if int(v["ns"]) == 14]
     # ---
     if not isinstance(depth, int) and depth.isdigit():
         depth = int(depth)
@@ -166,8 +159,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
                 # ---
                 for x, tabla in table2.items():
                     # ---
-                    if int(tabla["ns"]) == 14 or tabla["title"].startswith(
-                            "Category:"):
+                    if int(tabla["ns"]) == 14 or tabla["title"].startswith("Category:"):
                         new_tab2.append(x)
                     # ---
                     if ns in [0, "0"]:
@@ -184,9 +176,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
     # ---
     if "newlist" in sys.argv:
         delta = int(final - start)
-        print(
-            "<<lightblue>>catdepth.py: find %d pages(ns:%s) in %s, depth:%d, subcat:%d in %d seconds"
-            % (len(result_table), str(ns), title, depth, len(cat_done), delta))
+        print("<<lightblue>>catdepth.py: find %d pages(ns:%s) in %s, depth:%d, subcat:%d in %d seconds" % (len(result_table), str(ns), title, depth, len(cat_done), delta))
         if cat_done:
             print(f"subcats:{', '.join(cat_done)}")
     return list(result_table.keys())
@@ -219,8 +209,7 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
         textn = ""
     Table = json.loads(textn) if textn != "" else {}
     # ---
-    if (str(Table.get("Day_History", "")) != str(Day_History)
-            or "newlist" in sys.argv or len(Table["list"]) < 1500):
+    if str(Table.get("Day_History", "")) != str(Day_History) or "newlist" in sys.argv or len(Table["list"]) < 1500:
         # ---
         if "print" in sys.argv:
             print("get new catmembers")

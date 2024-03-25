@@ -21,6 +21,7 @@ from pathlib import Path
 
 import psutil
 import tqdm
+
 # ---
 from newapi import printe
 
@@ -74,7 +75,7 @@ def do_it(va):
 def multi_work(tab, numb=10):
     done = 0
     for i in range(0, len(tab), numb):
-        group = tab[i:i + numb]
+        group = tab[i : i + numb]
         # ---
         done += numb
         printe.output(f"<<purple>> done: {done}:")
@@ -98,11 +99,9 @@ def ddo(taba):
     length = (len(ids_tabs) // 6) + 1
     for i in range(0, len(ids_tabs), length):
         num = i // length + 1
-        tabs[str(num)] = dict(list(ids_tabs.items())[i:i + length])
+        tabs[str(num)] = dict(list(ids_tabs.items())[i : i + length])
         # print(f'tab {num} : {len(tabs[str(num)])}')
-        print(
-            f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:{num} {len(tabs[str(num)])}"'
-        )
+        print(f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:{num} {len(tabs[str(num)])}"')
 
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
@@ -143,13 +142,15 @@ def main(ids_tab):
         # ---
         studies = [study.split("/")[-1] for study in va["studies"]]
         # ---
-        tab.append({
-            "caseId": caseId,
-            "case_url": case_url,
-            "title": title,
-            "studies": studies,
-            "author": author,
-        })
+        tab.append(
+            {
+                "caseId": caseId,
+                "case_url": case_url,
+                "title": title,
+                "studies": studies,
+                "author": author,
+            }
+        )
     # ---
     del ids_tab
     # ---
@@ -176,8 +177,7 @@ if __name__ == "__main__":
                 "url": "https://radiopaedia.org/cases/cholangiocarcinoma-25",
                 "caseId": 161846,
                 "title": "Cholangiocarcinoma",
-                "studies":
-                ["https://radiopaedia.org/cases/161846/studies/132257"],
+                "studies": ["https://radiopaedia.org/cases/161846/studies/132257"],
                 "author": "Mohammadtaghi Niknejad",
                 "system": "Hepatobiliary",
                 "published": "19 Feb 2023",

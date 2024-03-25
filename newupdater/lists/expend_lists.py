@@ -51,8 +51,7 @@ IMC_params = {
         "deaths",
     ]
 }
-IMC_params["infobox medical condition (new)"] = IMC_params[
-    "infobox medical condition"]
+IMC_params["infobox medical condition (new)"] = IMC_params["infobox medical condition"]
 # ---
 dup_params = {
     "infobox medical condition": {
@@ -62,6 +61,5 @@ dup_params = {
     }
 }
 # ---
-dup_params["infobox medical condition (new)"] = dup_params[
-    "infobox medical condition"]
+dup_params["infobox medical condition (new)"] = dup_params["infobox medical condition"]
 # ---

@@ -35,9 +35,7 @@ print(f"Step 1: Opened the URL. Status Code: {response.status_code}")
 
 # Check if the request was successful (status code 200)
 if response.status_code != 200:
-    print(
-        f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
-    )
+    print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
     sys.exit()
 
 # Step 2: Parse the HTML content
@@ -51,9 +49,7 @@ for p_tag in soup.find_all("p", class_="toc__title"):
         title = a_tag.text.strip()
         href = a_tag["href"]
         urls_dict[title] = {"url": href, "images": {}}
-        print(
-            f"Step 3-4: Extracted href and title - Title: {title}, Href: {href}"
-        )
+        print(f"Step 3-4: Extracted href and title - Title: {title}, Href: {href}")
 
 print(f"lenth of urls_dict: {len(urls_dict)}")
 

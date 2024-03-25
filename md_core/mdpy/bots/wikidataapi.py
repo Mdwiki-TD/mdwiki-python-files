@@ -8,6 +8,7 @@
 import json
 import re
 import sys
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -19,6 +20,7 @@ from datetime import datetime
 
 import pywikibot
 import requests
+
 # ---
 from mdpy import printe
 from mdpy.bots import py_tools, user_account_new
@@ -156,8 +158,7 @@ def post(params, apiurl="", token=True):
     # ---
     status = get_status(r4)
     if status != 200:
-        pywikibot.output(
-            f"<<lightred>> wikidataapi.py: post error status: {str(status)}")
+        pywikibot.output(f"<<lightred>> wikidataapi.py: post error status: {str(status)}")
         return {}
     # ---
     return jsone
@@ -295,9 +296,7 @@ def WD_Merge(q1, q2):
                 "summary": "",
             }
             # ---
-            r5 = post(pams2,
-                      apiurl="https://www.wikidata.org/w/api.php",
-                      token=True)
+            r5 = post(pams2, apiurl="https://www.wikidata.org/w/api.php", token=True)
             # ---
             if "success" in r5:
                 printe.output("<<lightgreen>> **createredirect true.")
@@ -333,8 +332,7 @@ def Labels_API(Qid, label, lang, remove=False):
     # ---
     if req:
         text = str(req)
-        if ("using the same description text"
-                in text) and ("associated with language code" in text):
+        if ("using the same description text" in text) and ("associated with language code" in text):
             # item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
             match = re.search(r"(Q\d+)", str(req["error"]["info"]))
             item2 = match.group(1) if match else "Unknown"
@@ -356,7 +354,7 @@ def get_redirects(liste):
     for i in range(0, len(liste), 50):
         # ---
         # group = dict(list(liste.items())[i:i+50])
-        group = liste[i:i + 50]
+        group = liste[i : i + 50]
         params = {
             "action": "query",
             "format": "json",
@@ -365,9 +363,7 @@ def get_redirects(liste):
             "utf8": 1,
         }
         # ---
-        json1 = post(params,
-                     apiurl="https://www.wikidata.org/w/api.php",
-                     token=True)
+        json1 = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
         # ---
         if json1:
             redd = json1.get("query", {}).get("redirects", [])
@@ -378,12 +374,7 @@ def get_redirects(liste):
 
 def new_item(data, summary, returnid=False):
     # ---
-    params = {
-        "action": "wbeditentity",
-        "new": "item",
-        "summary": summary,
-        "data": data
-    }
+    params = {"action": "wbeditentity", "new": "item", "summary": summary, "data": data}
     # ---
     req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---
@@ -399,8 +390,7 @@ def new_item(data, summary, returnid=False):
             # ---
             if "entity" in req and "id" in req["entity"]:
                 Qid = req["entity"]["id"]
-                printe.output(
-                    f'<<lightgreen>> himoAPI.py New_API: returnid:"{Qid}" ')
+                printe.output(f'<<lightgreen>> himoAPI.py New_API: returnid:"{Qid}" ')
             # ---
             return Qid
         # ---
@@ -413,9 +403,7 @@ def new_item(data, summary, returnid=False):
 
 def Claim_API_str(qid, property, string):
     # ---
-    printe.output(
-        f"<<lightyellow>> Claim_API_str: add claim to qid: {qid}, [{property}:{string}]"
-    )
+    printe.output(f"<<lightyellow>> Claim_API_str: add claim to qid: {qid}, [{property}:{string}]")
     # ---
     if string == "" or qid == "" or property == "":
         return ""
@@ -464,9 +452,7 @@ def Delete_claim(claimid):
 
 def Claim_API_qid(qid, property, numeric):
     # ---
-    printe.output(
-        f"<<lightyellow>> Claim_API_qid: add claim to qid: {qid}, [{property}:{numeric}]"
-    )
+    printe.output(f"<<lightyellow>> Claim_API_qid: add claim to qid: {qid}, [{property}:{numeric}]")
     # ---
     #  remove Q from numeric
     if "Q" in numeric:
@@ -557,15 +543,10 @@ def sparql_generator_url(quary, printq=False, add_date=True):
             results = json1["results"]
             if "bindings" in results:
                 for result in results["bindings"]:
-                    s = {
-                        vv: result[vv]["value"] if vv in result else ""
-                        for vv in var
-                    }
+                    s = {vv: result[vv]["value"] if vv in result else "" for vv in var}
                     qlist.append(s)
     # ---
-    printe.output(
-        f"#sparql_generator_url:<<lightgreen>> {len(qlist)} items found. {menet}"
-    )
+    printe.output(f"#sparql_generator_url:<<lightgreen>> {len(qlist)} items found. {menet}")
     return qlist
 
 
@@ -601,8 +582,7 @@ def wbsearchentities(search, language):
                 "pageid": 106531075,
                 "display": {
                     "label": {
-                        "value":
-                        "User:Mr. Ibrahem/Sodium nitrite (medical use)",
+                        "value": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
                         "language": "en",
                     }
                 },
@@ -641,9 +621,7 @@ def Get_claim(q, property, get_claim_id=False):
         "property": property,
     }
     # ---
-    json1 = post(params,
-                 apiurl="https://www.wikidata.org/w/api.php",
-                 token=True)
+    json1 = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---
     listo = []
     # ---

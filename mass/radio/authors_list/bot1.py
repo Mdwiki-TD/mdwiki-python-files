@@ -19,16 +19,13 @@ from mass.radio.authors_list.auths_infos import get_author_infos
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(os.path.join(str(main_dir), "authors_list/authors_to_cases.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "authors_list/authors_to_cases.json"), encoding="utf-8") as f:
     authors_to_cases = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), "jsons/all_ids.json"),
-          encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "jsons/all_ids.json"), encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 print(f"Length of all_ids: {len(all_ids)}")
@@ -60,9 +57,9 @@ def make_authors_infos():
     # ---
     if "nodump" not in sys.argv:
         with open(
-                os.path.join(str(main_dir), "authors_list/authors_infos.json"),
-                "w",
-                encoding="utf-8",
+            os.path.join(str(main_dir), "authors_list/authors_infos.json"),
+            "w",
+            encoding="utf-8",
         ) as f:
             json.dump(auths_infos, f, ensure_ascii=False, indent=4)
 

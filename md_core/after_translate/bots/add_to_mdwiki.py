@@ -13,6 +13,7 @@ import time
 
 from after_translate.bots.fixcat import cat_for_pages
 from mdpy.bots import sql_for_mdwiki
+
 # ---
 from newapi import printe
 from pymysql.converters import escape_string
@@ -22,9 +23,7 @@ def add_to_mdwiki_sql_users(lista):
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
     if "pages_users" not in sys.argv:
-        printe.output(
-            'skip pages_users, <<green>> add "pages_users" to sys.argv to add it to pages_users'
-        )
+        printe.output('skip pages_users, <<green>> add "pages_users" to sys.argv to add it to pages_users')
         return
     # ---
     for tabe in lista:

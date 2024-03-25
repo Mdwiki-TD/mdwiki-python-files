@@ -50,10 +50,7 @@ for section, links in sects_links_langlinks.items():
         else:
             # ---
             text = page.get_text()
-            save_page = page.save(newtext=ntext,
-                                  summary="update",
-                                  nocreate=1,
-                                  minor="")
+            save_page = page.save(newtext=ntext, summary="update", nocreate=1, minor="")
 
 # ---
 all_section_views = sections_text.all_section_views - by_lang.en_views
@@ -79,8 +76,7 @@ newtext += f"""
 * Views by section and language and title:
 """
 # ---
-newtext += "\n".join(
-    [f"** [[User:Mr. Ibrahem/priorviews/{t}|{t}]]" for t in titles_1])
+newtext += "\n".join([f"** [[User:Mr. Ibrahem/priorviews/{t}|{t}]]" for t in titles_1])
 # ---
 page = md_MainPage("User:Mr. Ibrahem/priorviews", "www", family="mdwiki")
 exists = page.exists()
@@ -89,10 +85,7 @@ if not exists:
 else:
     # ---
     text = page.get_text()
-    save_page = page.save(newtext=newtext,
-                          summary="update",
-                          nocreate=1,
-                          minor="")
+    save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
 
 # ---
 

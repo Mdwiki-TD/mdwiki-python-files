@@ -28,23 +28,15 @@ main_dir = Path(__file__).parent
 with open(os.path.join(str(main_dir), "images.json")) as f:
     data = json.load(f)
 
-data = dict(
-    sorted(data.items(), key=lambda item: len(item[1]["images"]),
-           reverse=True))
+data = dict(sorted(data.items(), key=lambda item: len(item[1]["images"]), reverse=True))
 
 # print how many has images and how many has no images
-printe.output(
-    f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}"
-)
+printe.output(f"<<green>> Number of sections with images: {len([k for k, v in data.items() if len(v['images']) > 0])}")
 
-printe.output(
-    f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}"
-)
+printe.output(f"<<green>> Number of sections with no images: {len([k for k, v in data.items() if len(v['images']) == 0])}")
 
 # print len of all images
-printe.output(
-    f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}"
-)
+printe.output(f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}")
 
 done = []
 
@@ -159,7 +151,8 @@ def upload_image(category, image_url, image_name, chapter_url, chapter_name):
         "== {{int:license}} ==\n"
         "{{CC-BY-NC-SA-4.0}}\n"
         f"[[{category}]]\n"
-        "[[Category:UndergradImaging]]")
+        "[[Category:UndergradImaging]]"
+    )
 
     upload = api.upload_by_url(image_name, image_text, image_url, comment="")
 
@@ -182,16 +175,13 @@ def process_folder():
                 # Upload images
                 n = 0
                 for image_url, image_name in tqdm(
-                        images_info.items(),
-                        desc="Uploading images",
-                        total=len(images_info.keys()),
+                    images_info.items(),
+                    desc="Uploading images",
+                    total=len(images_info.keys()),
                 ):
                     n += 1
-                    print(
-                        f"Uploading image {n}/{len(images_info.keys())}: {image_name}"
-                    )
-                    upload_image(category, image_url, image_name, chapter_url,
-                                 chapter_name)
+                    print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
+                    upload_image(category, image_url, image_name, chapter_url, chapter_name)
 
             create_set(chapter_name2, images_info)
             if "break" in sys.argv:

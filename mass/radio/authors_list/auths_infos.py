@@ -22,9 +22,7 @@ def get_soup(url):
     # ---
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
-        print(
-            f"Failed to retrieve content from the URL. Status Code: {response.status_code}"
-        )
+        print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
         return
     # ---
     # Step 2: Parse the HTML content

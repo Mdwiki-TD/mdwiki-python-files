@@ -13,6 +13,7 @@ import sys
 import time
 
 from mdpy import printe
+
 # ---
 from mdpy.bots import catdepth2, sql_for_mdwiki, wikidataapi
 
@@ -56,8 +57,7 @@ def add_missing(newlist):
     # ---
     if len(newlist) > 0:
         # ---
-        printe.output(
-            f"<<yellow>>claims to add_missing: {len(newlist.items())}")
+        printe.output(f"<<yellow>>claims to add_missing: {len(newlist.items())}")
         if len(newlist.items()) < 100:
             print("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
         # ---

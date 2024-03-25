@@ -10,6 +10,7 @@ python3 core8/pwb.py updates/Medicine_articles
 import datetime
 
 from api_sql import wiki_sql
+
 # ---
 from newapi.mdwiki_page import MainPage as md_MainPage
 
@@ -102,11 +103,7 @@ def start():
     text += """{| class="sortable wikitable"\n!Lang\n!#\n|-"""
     # ---
     # sort languages by count
-    languages = {
-        k: v
-        for k, v in sorted(
-            languages.items(), key=lambda item: item[1], reverse=True)
-    }
+    languages = {k: v for k, v in sorted(languages.items(), key=lambda item: item[1], reverse=True)}
     # ---
     for lang, count in languages.items():
         text += f"\n!{lang}\n|{count:,}\n|-"

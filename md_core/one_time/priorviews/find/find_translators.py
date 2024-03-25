@@ -13,6 +13,7 @@ from pathlib import Path
 
 # ---
 from mdpy import printe
+
 # ---
 # ---
 from priorviews.bots import get_translator, helps
@@ -74,14 +75,12 @@ def get_t(links, lang):
         # ---
         m += 1
         # ---
-        value_in = (tra_by_lang[lang].get(title_lower)
-                    or tra_by_lang[lang].get(title) or "")
+        value_in = tra_by_lang[lang].get(title_lower) or tra_by_lang[lang].get(title) or ""
         # ---
         if "new" in sys.argv and value_in != "":
             continue
         # ---
-        printe.output(
-            f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        printe.output(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
         # ---
         _value = get_translator.get_au(title, lang)
         # ---

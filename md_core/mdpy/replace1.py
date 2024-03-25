@@ -7,6 +7,7 @@
 #
 import codecs
 import sys
+
 # ---
 from pathlib import Path
 
@@ -104,8 +105,7 @@ def main():
     # ---
     find = codecs.open(f"{public_html}/find/{nn}_find.txt", "r", "utf8").read()
     # ---
-    replace = codecs.open(f"{public_html}/find/{nn}_replace.txt", "r",
-                          "utf8").read()
+    replace = codecs.open(f"{public_html}/find/{nn}_replace.txt", "r", "utf8").read()
     # ---
     if replace.strip() == "empty":
         replace = ""
@@ -125,11 +125,7 @@ def main():
     if "newlist" in sys.argv:
         Add_pa = {"srsort": "just_match", "srwhat": "text"}
         # ---
-        titles = api_new.Search(value=find,
-                                ns="0",
-                                srlimit="max",
-                                RETURN_dict=False,
-                                addparams=Add_pa)
+        titles = api_new.Search(value=find, ns="0", srlimit="max", RETURN_dict=False, addparams=Add_pa)
     else:
         titles = api_new.Get_All_pages()
         # ---

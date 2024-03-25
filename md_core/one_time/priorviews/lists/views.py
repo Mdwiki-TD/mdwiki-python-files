@@ -33,14 +33,8 @@ ViewsData = json.load(codecs.open(file, "r", "utf-8"))
 # ---
 _data = {
     "mdtitle": {
-        "ar": {
-            "title": "artitle",
-            "views": 0
-        },
-        "en": {
-            "title": "entitle",
-            "views": 0
-        },
+        "ar": {"title": "artitle", "views": 0},
+        "en": {"title": "entitle", "views": 0},
     }
 }
 # ---
@@ -60,12 +54,7 @@ def makeviews():
     dictionaries with the corresponding view counts for each markdown file and
     language.
     """
-    global \
-        ViewsData, \
-        views_by_mdtitle_langs, \
-        count_views_by_mdtitle, \
-        count_views_by_lang, \
-        views_by_lang
+    global ViewsData, views_by_mdtitle_langs, count_views_by_mdtitle, count_views_by_lang, views_by_lang
 
     # Iterate through each markdown file and language in `ViewsData`
     for mdtitle, langs in ViewsData.items():
