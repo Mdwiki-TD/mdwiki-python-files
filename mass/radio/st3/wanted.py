@@ -8,9 +8,11 @@ python3 core8/pwb.py mass/radio/st3/wanted nomulti add_category
 """
 import sys
 import re
+
 # ---
 from newapi.ncc_page import NEW_API
 from mass.radio.st3.start3 import main_by_ids
+
 # ---
 api_new = NEW_API('www', family='nccommons')
 api_new.Login_to_wiki()

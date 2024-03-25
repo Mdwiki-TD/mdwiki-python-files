@@ -2,22 +2,24 @@
 from mass.radio.st3.One_Case_New import OneCase
 """
 import sys
-import re
 import os
 from pathlib import Path
 import json
 import traceback
+
 # ---
 from nccommons import api
 from newapi import printe
 from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
 from mass.radio.get_studies import get_images_stacks, get_images
 from mass.radio.bots.bmp import work_bmp
-from mass.radio.bots.update import update_text, update_text_new
+from mass.radio.bots.update import update_text_new
 from mass.radio.jsons_files import jsons  # , dumps_jsons, ids_to_urls, urls_to_ids
+
 # ---
 try:
     import pywikibot
+
     pywikibotoutput = pywikibot.output
 except ImportError:
     pywikibotoutput = print
@@ -33,7 +35,7 @@ if not os.path.exists(studies_dir):
     printe.output(f'<<red>> studies_dir {studies_dir} not found')
     studies_dir = main_dir / 'studies'
 # ---
-with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), "r", encoding="utf-8") as f:
+with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
 api_new = NEW_API("www", family="nccommons")
@@ -44,6 +46,7 @@ urls_done = []
 PD_medical_pages = []
 if "updatetext" in sys.argv:
     from mass.radio.lists.PD_medical import PD_medical_pages_def
+
     PD_medical_pages = PD_medical_pages_def()
 
 
@@ -66,6 +69,7 @@ def printt(s):
 
 
 class OneCase:
+
     def __init__(self, case_url, caseId, title, studies_ids, author):
         self.author = author
         self.caseId = caseId
@@ -137,7 +141,7 @@ class OneCase:
             # ---
             if os.path.exists(st_file):
                 try:
-                    with open(st_file, "r", encoding="utf-8") as f:
+                    with open(st_file, encoding="utf-8") as f:
                         images = json.loads(f.read())
                 except Exception as e:
                     pywikibotoutput("<<lightred>> Traceback (most recent call last):")
@@ -201,8 +205,7 @@ class OneCase:
             "{{CC-BY-NC-SA-3.0}}\n"
             f"{usa_license}\n"
             f"[[{self.category}]]\n"
-            "[[Category:Uploads by Mr. Ibrahem]]"
-        )
+            "[[Category:Uploads by Mr. Ibrahem]]")
         return image_text
 
     def upload_image(self, image_url, image_name, image_id, plane, modality, study_id):
@@ -308,7 +311,10 @@ class OneCase:
                 # update_text(file_title, image_text)
                 update_text_new(file_title)
         # ---
-        not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
+        not_in = {
+            k: v
+            for k, v in to_up.items() if not pages.get(k)
+        }
         # ---
         printt(f"not_in: {len(not_in)}")
         # ---

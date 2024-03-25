@@ -4,12 +4,8 @@
 from mass.radio.authors_list.auths_infos import get_author_infos
 
 '''
-import re
 import requests
 import sys
-import json
-import os
-from pathlib import Path
 from bs4 import BeautifulSoup
 from newapi import printe
 
@@ -44,7 +40,11 @@ def get_user_infos(url):
     """Return:
         - user_info: A dictionary containing the user's URL and location."""
     # ---
-    user_info = {"url": "", "location": "", "cases": 0}
+    user_info = {
+        "url": "",
+        "location": "",
+        "cases": 0
+    }
     # ---
     if "empty" in sys.argv:
         return user_info

@@ -3,17 +3,26 @@
 python3 core8/pwb.py mass/radio/get_infos
 
 '''
-import time
 import requests
 from bs4 import BeautifulSoup
+
 # ---
-from mass.radio.jsons_files import jsons, dump_json_file, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, dump_json_file
+
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 
 
 def get_id_infos(url):
     # ---
-    case_tab = {"url": url, "caseId": "", "title": "", "studies": [], "system": "", "author": "", "published": ""}
+    case_tab = {
+        "url": url,
+        "caseId": "",
+        "title": "",
+        "studies": [],
+        "system": "",
+        "author": "",
+        "published": ""
+    }
     # ---
     try:
         response = requests.get(url, timeout=10)
@@ -68,7 +77,9 @@ def get_id_infos(url):
     # ---
     author = ''
     # <meta name="author" content="Frank Gaillard"/>
-    au = soup.find('meta', attrs={'name': 'author'})
+    au = soup.find('meta', attrs={
+        'name': 'author'
+    })
     if au:
         author = au.get('content') or ''
     # ---

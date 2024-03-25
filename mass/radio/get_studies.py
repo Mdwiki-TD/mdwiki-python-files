@@ -3,7 +3,6 @@
 python3 core8/pwb.py mass/radio/get_studies test
 
 """
-import sys
 import os
 from pathlib import Path
 from bs4 import BeautifulSoup
@@ -13,7 +12,7 @@ import json
 from newapi import printe
 
 # ---
-from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
+from mass.radio.jsons_files import jsons, urls_to_ids
 
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 # ---
@@ -115,7 +114,10 @@ def main():
         # ---
         no_id += 1 if not caseid else 0
         # ---
-        tab = {"url": url, "studies": []}
+        tab = {
+            "url": url,
+            "studies": []
+        }
         if caseid and jsons.all_ids.get(caseid):
             tab.update(jsons.all_ids[caseid])
         # ---

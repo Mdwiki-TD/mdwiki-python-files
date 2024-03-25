@@ -11,34 +11,38 @@ import json
 import os
 from pathlib import Path
 from multiprocessing import Pool
+
 # ---
 from newapi import printe
 from mass.radio.st2.One_Case import OneCase
+
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / 'jsons/authors.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/authors.json', encoding='utf-8') as f:
     authors = json.load(f)
 # ---
-with open(main_dir / 'jsons/infos.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/infos.json', encoding='utf-8') as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), encoding='utf-8') as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
-with open(main_dir / 'jsons/cases_in_ids.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/cases_in_ids.json', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
+ids_by_caseId = {
+    x: v
+    for x, v in all_ids.items() if x not in cases_in_ids
+}
 # ---
 del cases_in_ids
 del all_ids
 
 
 def print_memory():
-
     _red_ = "\033[91m%s\033[00m"
 
     usage = psutil.Process(os.getpid()).memory_info().rss
@@ -84,8 +88,8 @@ def main(ids_tab):
         print(f'all cases: {len(ids_tab)}')
         length = len(ids_tab) // 13
         for i in range(0, len(ids_tab), length):
-            num = i//length+1
-            tabs[str(num)] = dict(list(ids_tab.items())[i: i + length])
+            num = i // length + 1
+            tabs[str(num)] = dict(list(ids_tab.items())[i:i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
             print(f'tfj run mu{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st2/start2 nodiff get:{num} {len(tabs[str(num)])}"')
 
@@ -117,7 +121,13 @@ def main(ids_tab):
         # ---
         studies = [study.split('/')[-1] for study in va['studies']]
         # ---
-        tab.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': author})
+        tab.append({
+            'caseId': caseId,
+            'case_url': case_url,
+            'title': title,
+            'studies': studies,
+            'author': author
+        })
     # ---
     del ids_tab
     # ---
@@ -131,9 +141,7 @@ if __name__ == "__main__":
             "98997": {
                 "caseId": 98997,
                 "title": "C6-C7 fracture dislocation",
-                "studies": [
-                    "https://radiopaedia.org/cases/98997/studies/120238"
-                ],
+                "studies": ["https://radiopaedia.org/cases/98997/studies/120238"],
                 "url": "https://radiopaedia.org/cases/c6-c7-fracture-dislocation",
                 "system": "Musculoskeletal",
                 "author": "Bahman Rasuli",

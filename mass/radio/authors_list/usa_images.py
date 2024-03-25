@@ -10,12 +10,14 @@ tfj run usaimages1 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python
 """
 import sys
 from mass.radio.authors_list.usa import get_usa_auths
+
 # from mass.radio.lists.cases_to_cats import cases_cats# cases_cats()
 # from mass.radio.authors_list import auths_cats
 
 from newapi.ncc_page import MainPage as ncc_MainPage
 from newapi.ncc_page import CatDepth
 from newapi import printe
+
 # from mass.radio.lists.PD_medical import PD_medical_pages_def
 # PD_medical_pages = PD_medical_pages_def()
 # id2cat = cases_cats()
@@ -44,10 +46,7 @@ def add_pd_to_images(not_in_pd: list) -> None:
             printe.output(f"\t\t\tno need to add {pd_temp} to {image}")
             continue
         # ---
-        add_after = [
-            "{{CC-BY-NC-SA-3.0}}",
-            "== {{int:license}} =="
-        ]
+        add_after = ["{{CC-BY-NC-SA-3.0}}", "== {{int:license}} =="]
         # ---
         for add in add_after:
             if add in text:
@@ -90,7 +89,10 @@ def one_auth_wrk(auth: str, auth_cats: list) -> None:
     # print(all_auth_images)
 
     # images has "Template:PD-medical" in thir "templates"
-    in_pd = {image: va for image, va in all_auth_images.items() if "Template:PD-medical" in va['templates']}
+    in_pd = {
+        image: va
+        for image, va in all_auth_images.items() if "Template:PD-medical" in va['templates']
+    }
     printe.output(f"\tin_pd: {len(in_pd)}")
 
     # images not in in_pd

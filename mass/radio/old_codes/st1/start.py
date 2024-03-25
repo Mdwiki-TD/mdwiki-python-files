@@ -10,35 +10,39 @@ import psutil
 import json
 import os
 from pathlib import Path
+
 # ---
 from newapi import printe
 from newapi.ncc_page import CatDepth
 from mass.radio.st2.One_Case import OneCase
+
 # from mass.radio.jsons_files import jsons#, dumps_jsons, ids_to_urls, urls_to_ids
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
 
 main_dir = Path(__file__).parent
 # ---
-with open(main_dir / 'jsons/authors.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/authors.json', encoding='utf-8') as f:
     authors = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/infos.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(str(main_dir), 'jsons/infos.json'), encoding='utf-8') as f:
     infos = json.load(f)
 # ---
-with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/all_ids.json', encoding='utf-8') as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
-with open(main_dir / 'jsons/cases_in_ids.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/cases_in_ids.json', encoding='utf-8') as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = {x: v for x, v in all_ids.items() if not x in cases_in_ids}
+ids_by_caseId = {
+    x: v
+    for x, v in all_ids.items() if not x in cases_in_ids
+}
 # ---
 
 
 def print_memory():
-
     _red_ = "\033[91m%s\033[00m"
     _blue_ = "\033[94m%s\033[00m"
     _yellow_ = "\033[93m%s\033[00m"
@@ -88,8 +92,8 @@ def main(ids_tab):
         print(f'all cases: {len(ids_tab)}')
         length = len(ids_tab) // 13
         for i in range(0, len(ids_tab), length):
-            num = i//length+1
-            tabs[str(num)] = dict(list(ids_tab.items())[i: i + length])
+            num = i // length + 1
+            tabs[str(num)] = dict(list(ids_tab.items())[i:i + length])
             # print(f'tab {num} : {len(tabs[str(num)])}')
             print(f'tfj run sta{num} --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/start nodiff get:{num} {len(tabs[str(num)])}"')
 
@@ -130,7 +134,13 @@ def main(ids_tab):
         # ---
         studies = [study.split('/')[-1] for study in tab['studies']]
         # ---
-        tabe.append({'caseId': caseId, 'case_url': case_url, 'title': title, 'studies': studies, 'author': author})
+        tabe.append({
+            'caseId': caseId,
+            'case_url': case_url,
+            'title': title,
+            'studies': studies,
+            'author': author
+        })
     # ---
     de_work(tabe)
 
@@ -145,9 +155,7 @@ if __name__ == "__main__":
                 "url": "https://radiopaedia.org/cases/peritonsillar-abscess-quinsy",
                 "caseId": 20476,
                 "title": "Peritonsillar abscess (quinsy)",
-                "studies": [
-                    "https://radiopaedia.org/cases/20476/studies/20387"
-                ],
+                "studies": ["https://radiopaedia.org/cases/20476/studies/20387"],
                 "author": "Chris O'Donnell"
             }
         }

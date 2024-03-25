@@ -2,9 +2,7 @@ import sys
 import re
 from newapi.ncc_page import MainPage as ncc_MainPage
 
-skips = [
-    "File:Benign enlargement of subarachnoid spaces (Radiopaedia 25801-25990 Coronal 1).jpg"
-]
+skips = ["File:Benign enlargement of subarachnoid spaces (Radiopaedia 25801-25990 Coronal 1).jpg"]
 
 
 def get_ta(text, ta):
@@ -65,10 +63,7 @@ def update_text_new(title):
     # ---
     new_text = p_text
     # ---
-    add_after = [
-        "{{CC-BY-NC-SA-3.0}}",
-        "== {{int:license}} =="
-    ]
+    add_after = ["{{CC-BY-NC-SA-3.0}}", "== {{int:license}} =="]
     # ---
     for add in add_after:
         if add in p_text:
