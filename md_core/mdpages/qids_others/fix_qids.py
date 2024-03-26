@@ -1,32 +1,21 @@
 #!/usr/bin/env python
 #   himo
 """
-python3 core8/pwb.py mdpages/qids_others/fix_qids
+python3 core8/pwb.py qids_others/qids_others/fix_qids
 
 """
-#
-# ---
 import sys
 from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots import sql_for_mdwiki
-from mdpages.qids_others import sql_qids_others
-from unlinked_wb.bot import work_un_linked_wb  # (title, qid)
+from mdpy.bots import sql_qids_others
+from unlinked_wb.bot import work_un
 # ---
-qids_others = sql_qids_others.get_others_qids()
+qids_othrs = sql_qids_others.get_others_qids()
 # ---
-qids_to_title = {q: t for t, q in qids_others.items()}
+qids_to_title = {q: t for t, q in qids_othrs.items()}
 # ---
-to_work = [q for q in qids_others.values() if q != '']
-
-
-def work_un(tab):
-    for numb, (old_q, new_q) in enumerate(tab.items(), start=1):
-        # ---
-        title = qids_to_title.get(old_q)
-        printe.output(f'<<yellow>> {numb}, {title=}, {old_q=}, {new_q=}')
-        # ---
-        work_un_linked_wb(title, new_q)
+to_work = [q for q in qids_othrs.values() if q != '']
 
 
 def fix_redirects():
@@ -52,7 +41,9 @@ def fix_redirects():
             printe.output(qua)
             printe.output('<<lightgreen>> add "fix" to sys.argv to fix them..')
     # ----
-    work_un(reds)
+    tab = {qids_to_title.get(old_q) : new_q for old_q, new_q in reds.items() if qids_to_title.get(old_q) }
+    # ----
+    work_un(tab)
 
 
 if __name__ == '__main__':

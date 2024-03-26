@@ -12,7 +12,7 @@ import sys
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from mdpy import printe
-from mdpages.qids_others import sql_qids_others
+from mdpy.bots import sql_qids_others
 # ---
 from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage
 api_new = NEW_API('www', family='mdwiki')
@@ -66,6 +66,14 @@ def work_un_linked_wb(title, qid):
     newtext = tag + text.strip()
     page.save(newtext=newtext, summary="add tag:" + tag, nocreate=1, minor="")
 
+
+def work_un(tab):
+    for numb, (title, new_q) in enumerate(tab.items(), start=1):
+        # ---
+        printe.output(f"<<yellow>> work_un: {numb}, {title=}, {new_q=}")
+        # ---
+        if new_q:
+            work_un_linked_wb(title, new_q)
 
 def add_tag():
     # ---

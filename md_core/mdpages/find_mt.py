@@ -26,11 +26,11 @@ from mdpy import printe
 
 from mdpy.bots.check_title import valid_title
 
-from mdpages.qids_others import sql_qids_others
+from mdpy.bots import sql_qids_others
 
 # ---
 
-qids_others = sql_qids_others.get_others_qids()
+qids_othrs = sql_qids_others.get_others_qids()
 
 qids = sql_for_mdwiki.get_all_qids()
 
@@ -42,7 +42,7 @@ printe.output(f'<<green>> to_work list: {len(to_work)}')
 
 # ---
 
-new_qids = {x: qids_others[x] for x in to_work if x in qids_others}
+new_qids = {x: qids_othrs[x] for x in to_work if x in qids_othrs}
 
 printe.output(f'<<green>> new_qids list: {len(new_qids)}')
 
