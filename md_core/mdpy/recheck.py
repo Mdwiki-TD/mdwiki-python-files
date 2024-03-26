@@ -348,7 +348,7 @@ def start():
     for lal in empty_qid_target:
         printe.output(f"<<lightred>> qid_target is empty> target:{lal}")
     # ---
-    if "addthem" in sys.argv:
+    if "add" in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(to_add)
 
 

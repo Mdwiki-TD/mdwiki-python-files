@@ -10,11 +10,6 @@ Usage:
 python3 core8/pwb.py mdpages/find_qids
 
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
-import os
 import sys
 
 # ---
@@ -23,7 +18,7 @@ from mdpy.bots import wiki_api
 from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-from unlinked_wb.bot import work_un_linked_wb  # (title, qid)
+from unlinked_wb.bot import work_un
 # ---
 qids = sql_for_mdwiki.get_all_qids()
 # ---
@@ -105,15 +100,6 @@ def get_qids(noqids_list):
     return new_title_qids
 
 
-def work_un(tab):
-    for numb, (title, new_q) in enumerate(tab.items(), start=1):
-        # ---
-        printe.output(f'<<yellow>> {numb}, {title=}, {new_q=}')
-        # ---
-        if new_q:
-            work_un_linked_wb(title, new_q)
-
-
 def start():
     # ---
     if len(noqids) == 0:
@@ -166,9 +152,9 @@ def start():
     if to_add:
         printe.output('<<lightyellow>>\n'.join([f'{k}\t:\t{v}' for k, v in to_add.items()]))
         # ---
-        printe.output('<<purple>> add "addthem" to sys.argv to add them?')
+        printe.output('<<purple>> add "add" to sys.argv to add them?')
         # ---
-        if 'addthem' in sys.argv:
+        if 'add' in sys.argv:
             sql_for_mdwiki.add_titles_to_qids(to_add)
         # ----
         work_un(to_add)

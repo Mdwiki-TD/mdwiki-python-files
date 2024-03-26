@@ -1,8 +1,8 @@
 """
 Usage:
 
-python3 core8/pwb.py p11143_bot/bot --others
-python3 core8/pwb.py p11143_bot/bot --td
+python3 core8/pwb.py p11143_bot/bot -others
+python3 core8/pwb.py p11143_bot/bot -td
 
 
 from p11143_bot import bot as p143_bot
@@ -17,7 +17,7 @@ import sys
 import time
 # ---
 from mdpy.bots import sql_for_mdwiki
-from mdpages.qids_others import sql_qids_others
+from mdpy.bots import sql_qids_others
 from mdpy.bots import wikidataapi
 from mdpy import printe
 from mdpy.bots import catdepth2
@@ -170,7 +170,7 @@ def work_qids(qids_list):
 
 def start():
     # ---
-    if "--others" in sys.argv:
+    if "-others" in sys.argv:
         qids_list = sql_qids_others.get_others_qids()
     else:
         qids_list = sql_for_mdwiki.get_all_qids()
