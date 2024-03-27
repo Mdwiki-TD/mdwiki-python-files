@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #   himo
 """
-python3 core8/pwb.py qids_others/qids_others/fix_qids
+python3 core8/pwb.py mdpages/fixqids_others
 
 """
 import sys

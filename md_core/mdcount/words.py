@@ -3,14 +3,13 @@
 
 إنشاء قائمة بعدد الكلمات
 
-python3 core8/pwb.py mdpy/words newlist
-python3 core8/pwb.py mdpy/words newpages
-python3 core8/pwb.py mdpy/words listnew
+python3 core8/pwb.py mdcount/words
+python3 core8/pwb.py mdcount/words listnew
 
-python3 core8/pwb.py mdpy/words more400
+python3 core8/pwb.py mdcount/words more400
 
-python3 core8/pwb.py mdpy/words less100
-python3 core8/pwb.py mdpy/words sql
+python3 core8/pwb.py mdcount/words less100
+python3 core8/pwb.py mdcount/words sql
 
 """
 #
@@ -90,6 +89,8 @@ def mmain():
     # ---
     for x in kkk[1]:
         # ---
+        x = x.replace("\\'", "'")
+        # ---
         n += 1
         # ---
         printe.output('------------------')
@@ -123,7 +124,8 @@ def mmain():
 if __name__ == '__main__':
     mmain()
     # ---
-    sys.argv.append('sql')
-    # ---
-    mmain()
+    if "sql" not in sys.argv:
+        sys.argv.append('sql')
+        # ---
+        mmain()
 # ---
