@@ -54,6 +54,7 @@ def get_qids(noqids_list):
     params = {
         "action": "query",
         "format": "json",
+        # "titles": "",
         # "redirects": 1,
         "prop": "pageprops",
         "ppprop": "wikibase_item",
