@@ -2,9 +2,9 @@
 """
 التحقق من المقالات التحويلات أو المحذوفة
 
-python3 core8/pwb.py mdpy/check_titles -lang:ur
+python3 core8/pwb.py db_work/check_titles -lang:ur
 
-python3 core8/pwb.py mdpy/check_titles test
+python3 core8/pwb.py db_work/check_titles test
 
 """
 #

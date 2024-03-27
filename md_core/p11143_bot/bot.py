@@ -170,12 +170,19 @@ def work_qids(qids_list):
 
 def start():
     # ---
-    if "-others" in sys.argv:
-        qids_list = sql_qids_others.get_others_qids()
-    else:
-        qids_list = sql_for_mdwiki.get_all_qids()
+    others = sql_qids_others.get_others_qids()
+    allq   = sql_for_mdwiki.get_all_qids()
     # ---
-    work_qids(qids_list)
+    to_do = [allq]
+    # ---
+    if "-others" in sys.argv:
+        qids_list = [others]
+    # ---
+    if "all" in sys.argv:
+        to_do = [allq, others]
+    # ---
+    for qids_list in to_do:
+        work_qids(qids_list)
 
 if __name__ == '__main__':
     start()

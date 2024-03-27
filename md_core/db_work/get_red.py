@@ -3,7 +3,7 @@
 """
 اصلاح التحويلات في قواعد البيانات
 
-python3 core8/pwb.py mdpy/get_red
+python3 core8/pwb.py db_work/get_red
 
 """
 #

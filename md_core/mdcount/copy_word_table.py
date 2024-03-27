@@ -68,6 +68,8 @@ same = 0
 # ---
 for tit in na_list:
     # ---
+    tit = tit.strip()
+    # ---
     lead = lead_words.get(tit, 0)
     All = all_words.get(tit, 0)
     # ---
@@ -97,6 +99,10 @@ all_textx = []
 texts = []
 # ---
 n = 0
+# ---
+print("----------------")
+printe.output("<<yellow>> UPDATE: ")
+# ---
 if UPDATE != []:
     if 'update' in sys.argv:
         for qu in UPDATE:
@@ -122,15 +128,25 @@ if UPDATE != []:
                     break
     else:
         printe.output('add "update" to sys.argv to update new words.')
+        printe.output(f'{len(UPDATE)=}')
+        printe.output(UPDATE[0])
+# ---
+print("----------------")
+printe.output("<<yellow>> INSERT: ")
+# ---
 if INSERT != []:
+    insert_line = ',\n'.join(INSERT)
     if 'insert' in sys.argv:
-        insert_line = ',\n'.join(INSERT)
         # ---
         qu = 'INSERT INTO words (w_title, w_lead_words, w_all_words) values\n' + insert_line
         printe.output(qu)
         vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True)
     else:
         printe.output('add "insert" to sys.argv to insert new words.')
+        printe.output(f'{len(INSERT)=}')
+        printe.output(insert_line[0])
+# ---
+print("----------------")
 # ---
 printe.output(f'len lead_words from file: {len(lead_words)}')
 printe.output(f'len all_words from file: {len(all_words)}')
