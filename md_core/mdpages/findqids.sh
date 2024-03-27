@@ -4,7 +4,7 @@ $HOME/local/bin/python3 core8/pwb.py td_other_qids/make_list -td add
 
 $HOME/local/bin/python3 core8/pwb.py mdpages/find_qids redirects add
 
-$HOME/local/bin/python3 core8/pwb.py mdpages/get_red
+$HOME/local/bin/python3 core8/pwb.py db_work/get_red
 
 # other
 

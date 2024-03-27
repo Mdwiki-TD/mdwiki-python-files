@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-python3 core8/pwb.py mdpy/days_7
+python3 core8/pwb.py db_work/days_7
 
 """
 #
