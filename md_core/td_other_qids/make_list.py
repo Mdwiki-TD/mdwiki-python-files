@@ -33,7 +33,7 @@ def wrk_in(ty, t_qids_in):
     # ---
     work_list, all_pages = qids_help.get_pages_to_work(ty)
     # ---
-    o_qids = qids_help.check(work_list, all_pages)
+    o_qids = qids_help.check(work_list, all_pages, ty)
     o_qids = {x: v for x, v in o_qids.items() if x in work_list}
     # ---
     # write to sql
@@ -53,13 +53,14 @@ def do(ty):
     # ---
     o_qids_new = wrk_in(ty, t_qids_in)
     # ---
-    if "add" in sys.argv:
-        if ty == "other":
-            sql_qids_others.add_titles_to_qids(o_qids_new, add_empty_qid=True)
-        else:
-            sql_for_mdwiki.add_titles_to_qids(o_qids_new, add_empty_qid=True)
-    # ---
-    work_un(o_qids_new)
+    if o_qids_new:
+        if "add" in sys.argv:
+            if ty == "other":
+                sql_qids_others.add_titles_to_qids(o_qids_new, add_empty_qid=True)
+            else:
+                sql_for_mdwiki.add_titles_to_qids(o_qids_new, add_empty_qid=True)
+        # ---
+        work_un(o_qids_new)
 
 
 def start():

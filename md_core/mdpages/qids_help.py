@@ -28,11 +28,26 @@ dir2 = Dir.replace("\\", "/")
 dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
 # ---
 dir2 += "/public_html/Translation_Dashboard/Tables/"
-# ---
-json_ext = "_other.json" if "-others" in sys.argv else ".json"
 
 
-def check(work_list, all_pages):
+def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
+    # ---
+    if "nodump" in sys.argv:
+        printe("Skipping dump of JSON files")
+        return
+    # ---
+    json_ext = "_other.json" if "other" == ty else ".json"
+    # ---
+    with open(f"{dir2}medwiki_to_enwiki{json_ext}", "w", encoding="utf-8") as aa:
+        json.dump(medwiki_to_enwiki, aa)
+    # ---
+    with open(f"{dir2}missing_in_enwiki{json_ext}", "w", encoding="utf-8") as bb:
+        json.dump(missing_in_enwiki, bb)
+    # ---
+    with open(f"{dir2}sames{json_ext}", "w", encoding="utf-8") as cc:
+        json.dump(sames, cc)
+    # ---
+def check(work_list, all_pages, ty):
     """
     function retrieves QIDs for a list of items. It uses the MediaWiki API to query for page properties and extracts the Wikidata item property. The function handles redirects and normalizes the titles. It also groups the items into batches of 50 to avoid exceeding the API's limit for the number of titles in a single request. This is a good practice for working with APIs.
     """
@@ -133,16 +148,7 @@ def check(work_list, all_pages):
     printe.output(f"<<lightgreen>> len of o_qids:{len(o_qids)}")
     printe.output(f'<<lightgreen>> len of o_qids (qid != ""):{len(o_qids_n)}')
     # ---
-    if "nodump" not in sys.argv:
-        # الكتابة إلى الملفات
-        with open(f"{dir2}medwiki_to_enwiki{json_ext}", "w", encoding="utf-8") as aa:
-            json.dump(medwiki_to_enwiki, aa)
-        # ---
-        with open(f"{dir2}missing_in_enwiki{json_ext}", "w", encoding="utf-8") as bb:
-            json.dump(missing_in_enwiki, bb)
-        # ---
-        with open(f"{dir2}sames{json_ext}", "w", encoding="utf-8") as cc:
-            json.dump(sames, cc)
+    dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames)
     # ---
     return o_qids
 
