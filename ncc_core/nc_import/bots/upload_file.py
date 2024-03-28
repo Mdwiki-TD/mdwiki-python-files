@@ -8,27 +8,25 @@ from nc_import.bots import upload_file
 # ---
 
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-# ---
-import requests
 import urllib.request
-import tempfile
-import os
 import sys
+
 # ---
 from newapi import printe
+
 # ---
 sys.argv.append("botuser")
 # ---
 from newapi.wiki_page import NEW_API
-# api_new  = NEW_API('www', family='nccommons')
+# api_new  = NEW_API('ar', family='wikipedia')
 # api_new.Login_to_wiki()
 # json1    = api_new.post_params(params, addtoken=False)
 
 
 def download_file(url):
+    """
+    Downloads a file from a given URL to a temporary location.
+    """
     try:
         # Download the file to a temporary location
         temp_file_path, _ = urllib.request.urlretrieve(url)
@@ -39,7 +37,25 @@ def download_file(url):
         return None
 
 
+def do_post(code, family, params, files=None):
+    """
+    Makes a POST request to the Wikipedia API with specified parameters.
+    """
+    api_new = NEW_API(code, family=family)
+    api_new.Login_to_wiki()
+    # ---
+    if files:
+        result = api_new.post_params(params, addtoken=True, files=files)
+    else:
+        result = api_new.post_params(params, addtoken=True)
+    # ---
+    return result
+
+
 def upload_by_file(file_name, text, url, comment="", code="en", family="wikipedia"):
+    """
+    Uploads a file to Wikipedia using a local file.
+    """
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
@@ -49,17 +65,14 @@ def upload_by_file(file_name, text, url, comment="", code="en", family="wikipedi
     # ---
     params = {"action": "upload", "format": "json", "filename": file_name, "comment": comment, "text": text, "utf8": 1}
     # ---
-    api_new = NEW_API(code, family=family)
-    # api_new.Login_to_wiki()
-    # ---
-    result = api_new.post_params(params, addtoken=True, files={"file": open(file_path, "rb")})
+    result = do_post(code, family, params, files={"file": open(file_path, "rb")})
     # ---
     upload_result = result.get("upload", {})
     # ---
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
     error_code = result.get("error", {}).get("code", "")
-    error_info = result.get("error", {}).get("info", '')
+    error_info = result.get("error", {}).get("info", "")
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
@@ -81,23 +94,23 @@ def upload_by_file(file_name, text, url, comment="", code="en", family="wikipedi
 
 
 def upload_by_url(file_name, text, url, comment="", code="en", family="wikipedia"):
+    """
+    Uploads a file to Wikipedia using a URL.
+    """
     # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
     # ---
     params = {"action": "upload", "format": "json", "filename": file_name, "url": url, "comment": comment, "text": text, "utf8": 1}
     # ---
-    api_new = NEW_API(code, family=family)
-    api_new.Login_to_wiki()
-    # ---
-    result = api_new.post_params(params, addtoken=True)
+    result = do_post(code, family, params)
     # ---
     upload_result = result.get("upload", {})
     # ---
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
     error_code = result.get("error", {}).get("code", "")
-    error_info = result.get("error", {}).get("info", '')
+    error_info = result.get("error", {}).get("info", "")
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
@@ -113,10 +126,7 @@ def upload_by_url(file_name, text, url, comment="", code="en", family="wikipedia
     if error:
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
         printe.output(error_info)
-    errors = [
-        "copyuploadbaddomain",
-        "copyuploaddisabled"
-    ]
+    errors = ["copyuploadbaddomain", "copyuploaddisabled"]
     if error_code in errors or " url " in error_info.lower():
         return upload_by_file(file_name, text, url, comment=comment, code=code, family=family)
     # ----
