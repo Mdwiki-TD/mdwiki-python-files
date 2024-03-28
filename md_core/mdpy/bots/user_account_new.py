@@ -9,6 +9,7 @@ lgpass_enwiki   = user_account_new.lgpass_enwiki
 # ---
 '''
 
+import sys
 import os
 import configparser
 
