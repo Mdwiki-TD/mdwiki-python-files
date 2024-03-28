@@ -4,6 +4,7 @@ https://nccommons.org/wiki/User:Mr._Ibrahem/import_bot
 
 """
 import re
+import wikitextparser as wtp
 from newapi.ncc_page import MainPage as ncc_MainPage
 from newapi import printe
 
@@ -26,9 +27,30 @@ def get_langs_codes():
     """
     text = get_text()
     langs = []
-    fi = re.findall(r"\* (.*)\n", text)
-    for i in fi:
-        langs.append(i.strip())
+    # * {{User:Mr. Ibrahem/import bot/line|ar}}
+    # ---
+    tmp = "User:Mr. Ibrahem/import bot/line"
+    # ---
+    prased = wtp.parse(text)
+    temps = prased.templates
+    for temp in temps:
+        # ---
+        name = str(temp.normal_name()).strip().lower().replace("_", " ")
+        # ---
+        printe.output(f"{temp.name=}, {name=}")
+        # ---
+        if name == tmp.lower():
+            # ---
+            # get first argument
+            # ---
+            va = temp.get_arg("1")
+            if va and va.value:
+                langs.append(va.value.strip())
     # ---
     printe.output(f"langs: {langs}")
+    # ---
     return langs
+
+if __name__ == "__main__":
+    # python3 core8/pwb.py nc_import/bots/get_langs
+    get_langs_codes()
