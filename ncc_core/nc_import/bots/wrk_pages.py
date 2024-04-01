@@ -28,6 +28,12 @@ class PageWork:
         # ---
         self.get_temps()
         self.work_on_temps()
+        # ---
+        if self.new_text == self.text:
+            printe.output("no changes")
+            return
+        # ---
+        self.add_category()
         self.save()
 
     def get_temps(self):
@@ -79,9 +85,14 @@ class PageWork:
             if temp_new_text != string:
                 self.new_text = self.new_text.replace(string, temp_new_text)
 
+    def add_category(self):
+        cat = "Category:Contains images from NC Commons"
+        # ---
+        if self.new_text.find(cat) == -1:
+            self.new_text += "\n[[Category:Contains images from NC Commons]]"
+
     def save(self):
-        if self.new_text != self.text:
-            self.page.save(newtext=self.new_text, summary="bot: fix NC")
+        self.page.save(newtext=self.new_text, summary="bot: fix NC")
 
 
 def work_on_pages(code, pages):

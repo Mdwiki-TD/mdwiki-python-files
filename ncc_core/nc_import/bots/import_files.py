@@ -3,6 +3,7 @@
 bot for importing files from nccommons to wikipedia
 
 """
+import re
 import sys
 from newapi.ncc_page import MainPage as ncc_MainPage, NEW_API as ncc_NEW_API
 from newapi import printe
@@ -22,6 +23,16 @@ def get_file_text(title):
 
     return text
 
+def categories_work(text):
+    """
+    remove all categories from the text
+    """
+    # ---
+    text = re.sub(r"\[\[Category:(.*?)\]\]", "", text, flags=re.DOTALL)
+    # ---
+    text += "\n[[Category:Files imported from NC Commons]]"
+    # ---
+    return text
 
 def import_file(title, code):
     """
@@ -30,6 +41,8 @@ def import_file(title, code):
     printe.output(f"<<yellow>>import_file: File:{title} to {code}wiki:")
     # ---
     file_text = get_file_text(title)
+    # ---
+    file_text = categories_work(file_text)
     # ---
     api_new = ncc_NEW_API("www", family="nccommons")
     # api_new.Login_to_wiki()
