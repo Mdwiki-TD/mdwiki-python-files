@@ -8,6 +8,7 @@ import sys
 from newapi.ncc_page import MainPage as ncc_MainPage, NEW_API as ncc_NEW_API
 from newapi import printe
 from nc_import.bots import upload_file
+from nc_import.bots.db import add_to_db
 # upload = upload_file.upload_by_url(file_name, text, url, comment='', code="en", family="wikipedia")
 
 
@@ -49,5 +50,9 @@ def import_file(title, code):
     img_url = api_new.Get_image_url(title)
     # ---
     upload = upload_file.upload_by_url(title, file_text, img_url, comment="Bot: import from nccommons.org", code=code, family="wikipedia")
+    # ---
+    if upload:
+        printe.output(f"<<lightgreen>>File:{title} imported to {code}wiki.")
+        add_to_db(title, code)
     # ---
     return upload
