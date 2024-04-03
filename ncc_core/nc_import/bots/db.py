@@ -7,7 +7,7 @@ Usage:
 # ---
 
 import os
-from nc_import.bots.db_bot import NCFilesDB
+from newapi.db_bot import LiteDB
 
 root_path = "/data/project/"
 
@@ -18,7 +18,7 @@ db_path = f"{root_path}mdwiki/public_html/ncc/Tables/nc_files.db"
 
 print(db_path)
 
-nc_files_db = NCFilesDB(db_path)
+nc_files_db = LiteDB(db_path)
 
 def create():
     nc_files_db.create_table(
