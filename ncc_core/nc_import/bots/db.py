@@ -15,8 +15,8 @@ from newapi.db_bot import LiteDB
 
 root_path = "I:/" if os.path.exists("I:/") else "i:/""/data/project/"
 
-db_path = f"{root_path}mdwiki/public_html/ncc/Tables/nc_files.db"
-jsonl_path = f"{root_path}mdwiki/public_html/ncc/Tables/nc_files.jsonl"
+db_path = f"{root_path}mdwiki/public_html/ncc2/Tables/nc_files.db"
+jsonl_path = f"{root_path}mdwiki/public_html/ncc2/Tables/nc_files.jsonl"
 
 print(db_path)
 
