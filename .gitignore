@@ -36,3 +36,4 @@ w.xml
 *.json1
 mass/radiox/**
 ncc_core/nc_import/long_bots.py
+/md_core/newapix
