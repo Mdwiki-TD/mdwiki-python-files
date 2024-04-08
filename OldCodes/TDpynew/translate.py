@@ -87,7 +87,7 @@ def work(title):
     # ---
     text = first
     # ---
-    if text == '':
+    if not text:
         print_py('no text')
         return "notext"
     # ---
@@ -101,7 +101,7 @@ def work(title):
     # ---
     newtext = newtext.replace('[[Category:', '[[:Category:')
     # ---
-    if newtext == '':
+    if not newtext:
         print_py('no text')
         return "notext"
     # ---

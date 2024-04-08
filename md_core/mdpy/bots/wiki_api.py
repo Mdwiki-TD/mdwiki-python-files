@@ -309,7 +309,7 @@ def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
 def Getpageassessments_from_wikipedia(titles, site="en", find_redirects=False, pasubprojects=0):
     # Tables = { "stub" : False }
     # ---
-    if site.strip() == "":
+    if not site.strip():
         site = "en"
     # ---
     printe.output(f"Getpageassessments for \"{site}:{len(titles.split('|'))} pages.\"")
@@ -336,7 +336,7 @@ def Getpageassessments_from_wikipedia(titles, site="en", find_redirects=False, p
     # ---
     json1 = submitAPI(params, apiurl=f'https://{site}.wikipedia.org/w/api.php')
     # ---
-    if not json1 or json1 == {}:
+    if not json1:
         return Tables
     # ---
     query = json1.get("query", {})
@@ -387,7 +387,7 @@ def GetPageText(title, lang, redirects=False):
         printe.output('no parse in json1:')
         printe.output(json1)
     # ---
-    if text == "":
+    if not text:
         printe.output(f'page {title} text == "".')
     # ---
     return text
@@ -395,7 +395,7 @@ def GetPageText(title, lang, redirects=False):
 
 def _get_page_views_(titles, site='en', days=30):
     # ---
-    if site.strip() == "":
+    if not site.strip():
         site = "en"
     # ---
     if site.endswith("wiki"):
@@ -430,7 +430,7 @@ def _get_page_views_(titles, site='en', days=30):
         # ---
         json1 = submitAPI(params, apiurl=f'https://{site}.wikipedia.org/w/api.php')
         # ---
-        if not json1 or json1 == {}:
+        if not json1:
             continue
         # ---
         js = json1.get('query', {})
@@ -538,7 +538,7 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
             pywikibot.output(traceback.format_exc())
             pywikibot.output('CRITICAL:')
         # ---
-        if not data or data == {}:
+        if not data:
             pywikibot.output(url)
         # ---
         sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]

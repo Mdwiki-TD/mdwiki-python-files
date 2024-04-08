@@ -209,7 +209,7 @@ class OneCase:
             # extension = get_image_extension(image_url)
             extension = image_url.split(".")[-1].lower()
             # ---
-            if extension == '':
+            if not extension:
                 # extension = get_image_extension(image['fullscreen_filename'])
                 extension = image['fullscreen_filename'].split(".")[-1].lower()
             # ---

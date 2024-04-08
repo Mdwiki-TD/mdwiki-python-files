@@ -92,7 +92,7 @@ def work_one_lang(list_, lang):
         # ---
         text = GetPageText(title, lang=lang)
         # ---
-        if text == '':
+        if not text:
             print_s('\ttext == ""')
             continue
         # ---
@@ -177,7 +177,7 @@ def maine():
         log(lange)
         text = GetPageText(title, lang=lange, Print=False)
         # ---
-        if text == '':
+        if not text:
             print('notext')
             return ''
         # ---
@@ -187,7 +187,7 @@ def maine():
             print('no changes')
             return ''
         # ---
-        if newtext == '':
+        if not newtext:
             print('notext')
             return ''
         # ---
@@ -196,7 +196,7 @@ def maine():
         # ---
         return ''
     # ---
-    if page == "":
+    if not page:
         # ---
         newtable = work_sql_result(lange, nolange)
     # ---

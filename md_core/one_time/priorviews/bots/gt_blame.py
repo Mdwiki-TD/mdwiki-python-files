@@ -49,7 +49,7 @@ def match_ref_names(r, refnames, lang):
         # ---
         attrs = x.attrs
         name = attrs.get('name', '').replace('/', '').lower().strip()
-        if name == '':
+        if not name:
             continue
         # ---
         contents = x.contents
@@ -119,7 +119,7 @@ class FindInHistory:
             # ---
             json1 = self.post_to_json(params)
             # ---
-            if not json1 or json1 == {}:
+            if not json1:
                 break
             # ---
             continue_params = json1.get("continue", {})

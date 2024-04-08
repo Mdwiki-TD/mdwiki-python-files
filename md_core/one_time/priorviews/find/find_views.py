@@ -50,7 +50,7 @@ def api_views(title, lang):
     # ---
     enviews = wiki_api.get_views_with_rest_v1(lang, [title], date_start=d_start, date_end=d_end, printurl=TEST)
     # ---
-    if not enviews or enviews == {}:
+    if not enviews:
         return 0
     # ---
     vs = enviews.get(title, {}).get('all', 0)

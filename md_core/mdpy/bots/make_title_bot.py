@@ -71,7 +71,7 @@ def make_title(url):
     # ---
     Title_cash[url] = ''
     # ---
-    if url.strip() == "":
+    if not url.strip():
         pywikibot.output("<<lightred>> make_title url = '' return False")
         return {}
     # ---
@@ -88,7 +88,7 @@ def make_title(url):
     # ---
     json1 = open_url.open_json_url(urlr)
     # ---
-    if not json1 or json1 == {}:
+    if not json1:
         return ''
     # ---
     results = json1

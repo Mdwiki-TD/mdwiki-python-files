@@ -44,7 +44,7 @@ for lang, titles in tra_by_lang.items():
     # ---
     for title, user in titles.items():
         # ---
-        if user == '':
+        if not user:
             continue
         # ---
         # skip user match ip address

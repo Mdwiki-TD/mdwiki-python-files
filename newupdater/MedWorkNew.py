@@ -45,7 +45,7 @@ def work_on_text_md(title, text):
     drugbox_text = bot.get_old_temp()
     drug_box_new = bot.get_new_temp()
     # ---
-    if drugbox_text == '':
+    if not drugbox_text:
         return text
     # ---
     drug_box_new = re.sub(rf'\s*{lkj2}\s*', r"\n\n\g<1>\n", drug_box_new, flags=re.DOTALL)

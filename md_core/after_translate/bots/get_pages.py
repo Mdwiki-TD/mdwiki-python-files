@@ -53,7 +53,7 @@ def get_pages_from_db(lang_o):
         if user not in to_update[lang]:
             to_update[lang][user] = []
         # ---
-        if target == "":
+        if not target:
             len_no_target += 1
             # ---
             langs_to_t_u[lang][mdtitle] = user

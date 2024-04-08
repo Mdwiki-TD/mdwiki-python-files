@@ -40,7 +40,7 @@ def get_langs_tabs():
     # ---
     for tab in sql_for_mdwiki.mdwiki_sql(que, return_dict=True):
         lang = tab['lang']
-        if not lang in langs:
+        if lang not in langs:
             langs[lang] = []
         langs[lang].append(tab)
     # ---

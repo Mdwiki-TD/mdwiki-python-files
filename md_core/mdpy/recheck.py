@@ -171,12 +171,12 @@ def do_it_api(lange, targets):
         for target in group:
             # ---
             qid = qids.get(target, "")
-            if qid == "":
+            if not qid:
                 noqid += 1
                 # printe.output('<<lightred>> %d qid is empty for "%s"' % ( noqid , target ) )
             # ---
             md_title = targets.get(target, {}).get("mdtitle", "")
-            if md_title == "":
+            if not md_title:
                 nomd += 1
                 # printe.output( '<<lightred>> %d md_title is empty for "%s"' % ( nomd, target ) )
             # ---
@@ -268,7 +268,7 @@ def start():
             mdwiki_empty_qids[mdtitle] = (lang, target, qid_target)
             continue
         # ---
-        if qid_target == "":
+        if not qid_target:
             empty_qid_target.append(f"{line22},qid_mdwiki:{qid_mdwiki}")
             # printe.output( '<<lightred>> qid_target is empty> target:%s' % dsd )
             continue
@@ -322,13 +322,13 @@ def start():
         # ---
         # get qid for en page
         qid2 = en_to_md.mdtitle_to_qid.get(en, "")
-        if qid2 == "":
+        if not qid2:
             en2 = en_to_md.enwiki_to_mdwiki.get(en, en)
             qid2 = en_to_md.mdtitle_to_qid.get(en2, "")
         # ---
         print(f"qid2: {qid2}")
         # ---
-        if qid2 == "":
+        if not qid2:
             print("no qid for en page.")
             continue
         # ---

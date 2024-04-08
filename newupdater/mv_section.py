@@ -31,7 +31,7 @@ class move_External_links_section:
         # ---
         self.get_sects()
         # ---
-        if self.ext_sec == '':
+        if not self.ext_sec:
             return
         # ---
         if str(self.ext_sec) == str(self.last_sec):
@@ -80,7 +80,7 @@ class move_External_links_section:
             last = s
             # ---
         # ---
-        if self.ext_sec == '':
+        if not self.ext_sec:
             return
         # ---
         self.text_to_work = self.text_to_work.replace(str(self.ext_sec), '')

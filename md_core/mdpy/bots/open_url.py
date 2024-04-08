@@ -29,7 +29,7 @@ class classgetURL:
         self.html = ''
 
     def open_it(self):
-        if self.url == '':
+        if not self.url:
             printe.output('open_url.py: self.url == ""')
             return ''
         if 'printurl' in sys.argv:
