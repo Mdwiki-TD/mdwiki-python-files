@@ -174,7 +174,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         # للتأكد من الصفحات غير المنشورة
         if not_puplished and target_in == "":
             # ---
-            if tul_target == "":
+            if not tul_target:
                 printe.output(laox)
                 to_add += 1
                 tab_lang[md_title] = Taba2
@@ -241,7 +241,7 @@ def main():
         tgd = targets_done.get(lange, {})
         tgd_by_md = targets_done_by_mdtitle.get(lange, {})
         # ---
-        if result == {}:
+        if not result:
             printe.output("no result")
             continue
         # ---

@@ -128,7 +128,7 @@ def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
         print('no mysql')
         return {}
     # ---
-    if query == '':
+    if not query:
         print("query == ''")
         return {}
     # ---
@@ -196,7 +196,7 @@ def add_titles_to_qids(tab, add_empty_qid=False):
     # ---
     for title, qid in tab.items():
         # ---
-        if title == '':
+        if not title:
             print("title == ''")
             continue
         # ---
@@ -216,7 +216,7 @@ def add_titles_to_qids(tab, add_empty_qid=False):
         q_in = all_in[title]
         # ---
         if qid != '':
-            if q_in == '':
+            if not q_in:
                 set_qid_where_title(title, qid)
             else:
                 # set_qid_where_title(title, qid)

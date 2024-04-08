@@ -196,7 +196,7 @@ def GetPageText(title, lang='', Print=True):
             print_s(json1)
         return ''
     # ---
-    if json1 == {}:
+    if not json1:
         if Print:
             print_s('json1 == {}')
         return ''
@@ -208,7 +208,7 @@ def GetPageText(title, lang='', Print=True):
         missingtitles[title] = lang
     # ---
     parse = json1.get('parse', {})
-    if parse == {}:
+    if not parse:
         if Print:
             print_s('parse == {}')
             print_s(json1)
@@ -216,7 +216,7 @@ def GetPageText(title, lang='', Print=True):
     # ---
     text = parse.get('wikitext', {}).get('*', '')
     # ---
-    if text == "":
+    if not text:
         if Print:
             print_s(f'page {title} text == "".')
     # ---

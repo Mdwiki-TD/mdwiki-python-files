@@ -166,7 +166,7 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all
         # ---
         json1 = post_s(params)
         # ---
-        if not json1 or json1 == {}:
+        if not json1:
             break
         # ---
         apcontinue = json1.get("continue", {}).get("apcontinue", '')
@@ -314,7 +314,7 @@ def Find_pages_exists_or_not(liste):
         # ---
         json1 = post_s(params)
         # ---
-        if not json1 or json1 == {}:
+        if not json1:
             printe.output("<<lightred>> error when Find_pages_exists_or_not")
             return table
         # ---

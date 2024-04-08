@@ -162,7 +162,7 @@ def Make_sql(queries, wiki="", printqua=False):
     if not GET_SQL():
         return encats
     # ---
-    if wiki == "":
+    if not wiki:
         wiki = "enwiki"
     # ---
     host, dbs_p = make_labsdb_dbs_p(wiki)
@@ -193,7 +193,7 @@ def Make_sql(queries, wiki="", printqua=False):
 def Make_sql_many_rows(queries, wiki="", printqua=False):
     rows = []
     # ---
-    if wiki == "":
+    if not wiki:
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
@@ -233,7 +233,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
 def Make_sql_2_rows(queries, wiki="", printqua=False):
     # ---
     encats = {}
-    if wiki == "":
+    if not wiki:
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
@@ -270,7 +270,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
 def Make_sql_1_rows(queries, wiki="", printqua=False):
     encats = []
     # ---
-    if wiki == "":
+    if not wiki:
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---

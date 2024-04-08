@@ -55,7 +55,7 @@ def get_text(file_path):
         printe("red", "Exception: %s" % file_path.replace("/", "\\"))
         print(e)
     # ---
-    # if text == '' :return sad
+    # if not text:return sad
     # ---
     return text, enc
 

@@ -74,7 +74,7 @@ class TextProcessor:
         # ---
         self.olddrugbox, self.drugbox_params = self.get_txt_params(self.text)
         # ---
-        if self.olddrugbox == "":
+        if not self.olddrugbox:
             return
         # ---
         drugbox2 = re.sub(lkj2, '', self.olddrugbox)
@@ -88,7 +88,7 @@ class TextProcessor:
         self.new_temp()
 
     def add_section(self, section):
-        if section == "":
+        if not section:
             return
         # ---
         text = '\n\n' + section
@@ -193,7 +193,7 @@ class TextProcessor:
             if p in self.drugbox_params or p in add_params:
                 p_value = self.drugbox_params.get(p, '').strip()
                 # ---
-                if p_value.strip() == '':
+                if not p_value.strip():
                     p_value = params_placeholders.get(p, '').strip()
                 # ---
                 p2 = p.ljust(18)

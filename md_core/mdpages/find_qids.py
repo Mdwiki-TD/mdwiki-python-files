@@ -119,7 +119,7 @@ def start():
     for x, q in new_title_qid.items():
         ll = f'"{q}":"{x}",\n'
         # ---
-        if q == '':
+        if not q:
             no += ll
             empty_qids.append(x)
             continue

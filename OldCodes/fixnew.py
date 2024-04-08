@@ -65,7 +65,7 @@ def work_on_title(title):
     # ---
     text = page.get_text()
     # ---
-    if text == "":
+    if not text:
         printe.output("<<red>> notext")
         return
     # ---

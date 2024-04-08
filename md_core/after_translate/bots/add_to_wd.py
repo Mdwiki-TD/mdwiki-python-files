@@ -132,7 +132,7 @@ def add_wd(qid, enlink, lang, target):
         if qii:
             qid2 = qii.group(1)
             # ---
-            if qid == "":
+            if not qid:
                 qids_from_wiki = wiki_api.Get_page_qids("en", [enlink])
                 # ---
                 for _, tab in qids_from_wiki.items():

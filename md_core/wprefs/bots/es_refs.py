@@ -30,7 +30,7 @@ def mv_es_refs(text):
         if group not in refs:
             refs[group] = {}
         # ---
-        if name == '':
+        if not name:
             numb += 1
             name = f'autogen_{numb}'
             x.set_attr('name', name)

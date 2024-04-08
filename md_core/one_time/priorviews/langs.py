@@ -150,7 +150,7 @@ def make_lang_textso(lang):
                 # ---
                 tr_type = ''
                 # ---
-                if ar_tra == '':
+                if not ar_tra:
                     ar_tra = creators_as_translators.get(lang, {}).get(ar, '')
                     if ar_tra != '':
                         tr_type = 'creator'

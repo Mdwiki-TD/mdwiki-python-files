@@ -45,7 +45,7 @@ def work(title, Find, Replace, nn):
     # ---
     text = page.get_text()
     # ---
-    if text.strip() == '':
+    if not text.strip():
         print(f"page:{title} text = ''")
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
         with codecs.open(file_name[1], 'a', encoding="utf-8") as file:

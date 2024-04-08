@@ -24,7 +24,7 @@ def printn(s):
 
 def add_resources(new_text, drug_resources):
     # ---
-    if page_identifier_params == {}:
+    if not page_identifier_params:
         return new_text, ''
     to_add = ''.join(f"| {pa} = {pap}\n" for pa, pap in page_identifier_params.items())
     # ---
@@ -97,7 +97,7 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         if name in ['drug resources']:
             resources_temp = temp
     # ---
-    if infobox_temp == {}:
+    if not infobox_temp:
         return text
     # ---
     infobox_old = infobox_temp.string

@@ -204,7 +204,7 @@ class work_in_one_lang_link:
             attrs = x.attrs
             name = attrs.get('name', '').replace('/', '').lower().strip()
             # ---
-            if name == '':
+            if not name:
                 continue
             # ---
             contents = x.contents
@@ -305,7 +305,7 @@ class work_in_one_lang_link:
                 continue
             # ---
             name = x.attrs.get('name', '').replace('/', '').lower().strip()
-            if name == '':
+            if not name:
                 continue
             # ---
             contents = x.contents
@@ -407,7 +407,7 @@ class get_old:
             attrs = x.attrs
             name = attrs.get('name', '').replace('/', '').lower().strip()
             # ---
-            if name == '':
+            if not name:
                 continue
             # ---
             contents = x.contents
@@ -482,7 +482,7 @@ class get_old:
                 continue
             # ---
             name = x.attrs.get('name', '').replace('/', '').lower().strip()
-            if name == '':
+            if not name:
                 continue
             # ---
             contents = x.contents

@@ -49,7 +49,7 @@ def Expend_Infobox(text, title, section_0):
     # ---
     newtext = text
     # ---
-    if section_0 == '':
+    if not section_0:
         if newtext.find('==') != -1:
             section_0 = newtext.split('==')[0]
         else:

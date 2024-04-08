@@ -115,9 +115,9 @@ def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
     # ---
     rows = sql_new(queries, wiki=wiki)
     # ---
-    if t1 == '':
+    if not t1:
         t1 = "page_title"
-    if t2 == '':
+    if not t2:
         t2 = "page_namespace"
     # ---
     newlist = []

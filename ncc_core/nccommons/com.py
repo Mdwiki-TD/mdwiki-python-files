@@ -73,7 +73,7 @@ def make_page(x, tab):
     # ---
     x2 = x.split("(")[0].split("-")[0].strip()
     # ---
-    if x2.strip() == "":
+    if not x2.strip():
         x2 = x
     # ---
     text = "{{" + f"Imagestack\n|width=850\n|title={x2}\n|align=centre\n|loop=no\n{lines}"

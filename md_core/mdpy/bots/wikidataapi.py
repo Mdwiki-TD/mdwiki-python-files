@@ -179,7 +179,7 @@ def post_to_qs(data):
         }, timeout=10
     )
     # ---
-    if not r2 or r2 == {}:
+    if not r2:
         return False
     # ---
     print(f"QS_New_API: {r2.text}")
@@ -300,7 +300,7 @@ def WD_Merge(q1, q2):
 
 def Labels_API(Qid, label, lang, remove=False):
     # ---
-    if Qid == '':
+    if not Qid:
         printe.output("Labels_API Qid == '' ")
         return False
     # ---
@@ -368,7 +368,7 @@ def new_item(data, summary, returnid=False):
     # ---
     req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---
-    if not req or req == {}:
+    if not req:
         printe.output(f'req:str({req})')
         return False
     # ---
@@ -402,7 +402,7 @@ def Claim_API_str(qid, property, string):
     # ---
     req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---
-    if not req or req == {}:
+    if not req:
         printe.output(f'req:str({req})')
         return False
     # ---
@@ -421,7 +421,7 @@ def Delete_claim(claimid):
     # ---
     req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---
-    if not req or req == {}:
+    if not req:
         printe.output(f'req:str({req})')
         return False
     # ---
@@ -455,7 +455,7 @@ def Claim_API_qid(qid, property, numeric):
     # ---
     req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
     # ---
-    if not req or req == {}:
+    if not req:
         printe.output(f'req:str({req})')
         return False
     # ---
@@ -539,7 +539,7 @@ def wbsearchentities(search, language):
     # ---
     req = post(params, apiurl="https://www.wikidata.org/w/api.php")
     # ---
-    if not req or req == {}:
+    if not req:
         printe.output(' wbsearchentities no req ')
         return False
     # ---
@@ -592,7 +592,7 @@ def Get_claim(q, property, get_claim_id=False):
     # ---
     listo = []
     # ---
-    if not json1 or json1 == {}:
+    if not json1:
         return []
     # ---
     claims_p = json1.get('claims', {}).get(property, {})

@@ -476,7 +476,7 @@ def wordcount(title, srlimit='30'):
     }
     data = post_s(params)
     # ---
-    if not data or data == {}:
+    if not data:
         return 0
     # ---
     search = data.get('query', {}).get('search', [])
@@ -724,7 +724,7 @@ def GetPageText(title, redirects=False):
         printe.output('no parse in json1:')
         printe.output(json1)
     # ---
-    if text == "":
+    if not text:
         printe.output(f'page {title} text == "".')
     # ---
     return text
@@ -748,7 +748,7 @@ def Get_Newpages(limit="max", namespace="0", rcstart="", user=''):
     # ---
     json1 = post_s(params)
     # ---
-    if not json1 or json1 == {}:
+    if not json1:
         return []
     # ---
     newp = json1.get("query", {}).get("recentchanges", {})
@@ -873,7 +873,7 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir='', limit_all
         # ---
         json1 = post_s(params)
         # ---
-        if not json1 or json1 == {}:
+        if not json1:
             break
         # ---
         apcontinue = json1.get("continue", {}).get("apcontinue", '')
@@ -908,7 +908,7 @@ def get_section(title, level):
     # ---
     json1 = post_s(params)
     # ---
-    if not json1 or json1 == {}:
+    if not json1:
         return ""
     return json1.get("parse", {}).get("wikitext", {}).get("*", '')
 
@@ -951,7 +951,7 @@ def Search(value="", lang="", family='', ns="", offset='', srlimit="max", RETURN
     # ---
     printe.output(f'mdwiki_api.Search for "{value}",ns:{ns}')
     # ---
-    if srlimit == "":
+    if not srlimit:
         srlimit = "max"
     # ---
     # srlimit = "max"
@@ -965,7 +965,7 @@ def Search(value="", lang="", family='', ns="", offset='', srlimit="max", RETURN
     # ---
     nsvalue = ns
     # ---
-    if nsvalue == "":
+    if not nsvalue:
         for arg in sys.argv:
             arg, _, value = arg.partition(':')
             # ---
@@ -991,7 +991,7 @@ def Search(value="", lang="", family='', ns="", offset='', srlimit="max", RETURN
                 tit = pag["title"]
                 Lidy.append(tit)
     # ---
-    # if Lidy == []:
+    # if not Lidy:
     printe.output(f'mdwiki_api.Search find "{len(Lidy)}" result. s')
     # ---
     return Lidy
@@ -1041,7 +1041,7 @@ def Find_pages_exists_or_not(liste):
         # ---
         json1 = post_s(params)
         # ---
-        if not json1 or json1 == {}:
+        if not json1:
             return table
         # ---
         query = json1.get("query", {})

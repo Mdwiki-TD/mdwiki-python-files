@@ -71,7 +71,7 @@ def get_views_last_30_days(langcode, titles):
             pywikibot.output(traceback.format_exc())
             pywikibot.output('CRITICAL:')
         # ---
-        if not data or data == {}:
+        if not data:
             pywikibot.output(url)
         # ---
         _sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]

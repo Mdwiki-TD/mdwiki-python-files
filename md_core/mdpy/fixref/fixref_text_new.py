@@ -56,7 +56,7 @@ def add_title(temp):
     # ---
     title = make_title_bot.make_title(url)
     # ---
-    if title == '':
+    if not title:
         return temp
     # ---
     if title_arg:

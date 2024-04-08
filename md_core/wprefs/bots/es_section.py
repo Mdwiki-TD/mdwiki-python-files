@@ -36,7 +36,7 @@ def make_date(timestamp):
     m_ky = int(m)
     m_ky = m_keys.get(m_ky, '').strip()
     # ---
-    if m_ky == '':
+    if not m_ky:
         return timestamp
     # ---
     return f"{d} de {m_ky} de {y}"
@@ -58,7 +58,7 @@ def add_section(text, title):
     # ---
     for r in revisions:
         # user = r.get('user', '')
-        # if user == '':  continue
+        # if not user:  continue
         # ---
         timestamp = r.get('timestamp', '')
         # ---

@@ -136,7 +136,7 @@ def page_put(NewText, title):
 
 def get_new_text(title, text=''):
     # ---
-    if text == "":
+    if not text:
         text = GetPageText(title)
     # ---
     newtext = text
@@ -167,7 +167,7 @@ def work_on_title(title, returntext=False, text_O=""):
         elif text == new_text:
             print("no changes")
             return
-        elif new_text == '':
+        elif not new_text:
             print("notext")
             return
         elif "save" in sys.argv:

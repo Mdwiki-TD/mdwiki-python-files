@@ -79,7 +79,7 @@ for cat in to_update:
     # ---
     md_text = mdwiki_api.GetPageText(cat)
     # ---
-    if md_text == '':
+    if not md_text:
         continue
     # ---
     nc_text = nspage.get_text()

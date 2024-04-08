@@ -58,7 +58,7 @@ for lang, links in links_by_lang.items():
         _time_ = _creator.get("time", "")
         _time_x = ''
         # ---
-        if actor == '':
+        if not actor:
             continue
         # ---
         year = '0'

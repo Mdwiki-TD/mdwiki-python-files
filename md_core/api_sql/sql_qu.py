@@ -135,7 +135,7 @@ def resolve_bytes(rows):
 
 def make_sql_connect(query, db='', host='', update=False, Return=[], return_dict=False, values=None):
     # ---
-    if query == '':
+    if not query:
         printe.output("query == ''")
         return Return
     # ---

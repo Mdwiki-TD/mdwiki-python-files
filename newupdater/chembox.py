@@ -24,7 +24,7 @@ class fix_Chembox:
     def run(self):
         self.get_params()
         # ---
-        if self.all_params == {}:
+        if not self.all_params:
             return self.new_text
         # ---
         # create self.newchembox
@@ -69,7 +69,7 @@ class fix_Chembox:
             params = {str(param.name).strip(): str(param.value) for param in template.arguments}
             # ---
             for x, v in params.items():
-                if v.strip() == '':
+                if not v.strip():
                     continue
                 # ---
                 if x.lower().startswith("section"):
