@@ -64,7 +64,7 @@ def get_user_infos(url):
         if a:
             user_url = a.get('href')
             if user_url and user_url.startswith("/"):
-                user_url = "https://radiopaedia.org" + user_url
+                user_url = f"https://radiopaedia.org{user_url}"
     # ---
     if user_url:
         soup2 = get_soup(user_url)

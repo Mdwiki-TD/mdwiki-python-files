@@ -100,7 +100,7 @@ def fix_ref_template(text, returnsummary=False):
                 temp_new = re.sub(r'\n', '', temp_new, flags=re.DOTALL)
             # ---
             if laysource != '':
-                temp_new = temp_new + "\n" + laysource
+                temp_new = f"{temp_new}\n{laysource}"
                 summary = 'Normalize references, move lay source params'
             # ---
             newtext = newtext.replace(temp_str, temp_new)

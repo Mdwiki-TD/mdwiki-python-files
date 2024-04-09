@@ -153,7 +153,7 @@ def create_Page(text, title, summary="create page"):
     # ---
     if success:
         printe.output(f"** true ..  [[{title}]] ")
-        printe.output("Done True... time.sleep(%d) " % time_sleep)
+        printe.output(f"Done True... time.sleep({int(time_sleep)}) ")
         time.sleep(time_sleep)
         return True
     elif error != {}:

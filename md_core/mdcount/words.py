@@ -105,8 +105,8 @@ def mmain():
         # leadword = lead.count_lead(x)
         leadword, pageword = lead.count_all(title='', text=text)
         # ---
-        printe.output('\t\t pageword:%d' % pageword)
-        printe.output('\t\t leadword:%d' % leadword)
+        printe.output(f'\t\t pageword:{int(pageword)}')
+        printe.output(f'\t\t leadword:{int(leadword)}')
         # ---
         all_words_n[x] = pageword
         words_n[x] = leadword

@@ -102,7 +102,7 @@ def find_redirects(links):
     newlen = len(from_to.items())
     nn = newlen - oldlen
     # ---
-    printe.output("def find_redirects: find %d lenth" % nn)
+    printe.output(f"def find_redirects: find {int(nn)} lenth")
     # printe.output( "def find_redirects: find %d for normalized" % normalized_numb )
 
 

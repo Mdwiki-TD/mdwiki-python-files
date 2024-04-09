@@ -15,8 +15,14 @@ Dir2 = os.path.dirname(Dir)
 file = f"{Dir2}/jsons/old/quarry.json"
 file_json2 = f"{Dir2}/jsons/old/niosh.json"
 # ---
-data = json.load(codecs.open(file, 'r', encoding='utf-8'))
-new = json.load(codecs.open(file_json2, 'r', encoding='utf-8'))
+data = {}
+# ---
+with open(file, "r", encoding="utf-8") as f:
+    data = json.load(f)
+new = {}
+# ---
+with open(file_json2, "r", encoding="utf-8") as f:
+    new = json.load(f)
 # ---
 result = {}
 '''

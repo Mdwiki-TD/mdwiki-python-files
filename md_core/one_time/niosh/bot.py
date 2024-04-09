@@ -21,7 +21,10 @@ if not os.path.isfile(file_json1):
     with open(file_json1, 'w', encoding='utf-8') as aa:
         json.dump({}, aa)
 
-totox = json.load(open(file_json1, 'r', encoding='utf-8'))
+totox = {}
+# ---
+with open(file_json1, "r", encoding="utf-8") as f:
+    totox = json.load(f)
 # ---
 file_json2 = f"{Dir}/jsons/niosh.json"
 file_all_links = f"{Dir}/jsons/all_links.json"

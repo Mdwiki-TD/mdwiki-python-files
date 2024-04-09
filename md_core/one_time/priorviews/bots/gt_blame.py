@@ -79,7 +79,7 @@ class FindInHistory:
         # ---
         self.lang = lang
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
         self.author = ''
         # ---
         self.revisions = []

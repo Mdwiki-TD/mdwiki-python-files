@@ -128,7 +128,7 @@ def count_refs(title):
     # ---
     lead_ref[title] = lead_c
     # ---
-    printe.output('<<lightgreen>> all:%d \t lead:%d' % (all_c, lead_c))
+    printe.output(f'<<lightgreen>> all:{int(all_c)} \t lead:{int(lead_c)}')
 
 
 def logaa(file, table):

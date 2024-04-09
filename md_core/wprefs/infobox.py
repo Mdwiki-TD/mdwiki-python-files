@@ -25,7 +25,7 @@ def expend_new(main_temp):
             continue
         # ---
         template_name = str(template.normal_name()).strip()
-        template.name = template_name + '\n'
+        template.name = f"{template_name}\n"
         # ---
         for arg in template.arguments:
             param = arg.name.rstrip()
@@ -37,7 +37,7 @@ def expend_new(main_temp):
             newparam = param.ljust(17)
             # ---
             arg.name = newparam
-            arg.value = value + '\n'
+            arg.value = f"{value}\n"
         # ---
         new_temp = template.string
         break
@@ -103,6 +103,6 @@ def Expend_Infobox(text, title, section_0):
         # ---
         if new_temp != main_temp_text:
             newtext = newtext.replace(main_temp_text, new_temp)
-            newtext = newtext.replace(new_temp + "'''", new_temp + "\n'''")
+            newtext = newtext.replace(f"{new_temp}'''", f"{new_temp}\n'''")
     # ---
     return newtext

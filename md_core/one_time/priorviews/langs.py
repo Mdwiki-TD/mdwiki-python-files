@@ -192,7 +192,7 @@ def make_lang_textso(lang):
             # ---
             secs_texts += "|}\n"
     # ---
-    newtext = '[https://:' + f'{lang}.wikipedia.org {lang}.wikipedia.org] statistics:\n'
+    newtext = f"[https://:{lang}.wikipedia.org {lang}.wikipedia.org] statistics:\n"
     newtext += f'* All links: {all_links:,}\n'
     newtext += f'** With ({lang}) translations: {all_links_with_ar:,}\n'
     newtext += f"*** With translators: {tr_all:,}\n"

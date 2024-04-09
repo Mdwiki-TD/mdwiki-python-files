@@ -26,7 +26,7 @@ from mdpy import wpref
 from wprefs.api import submitAPI  # (params, lang='', Type='post')
 
 # ---
-or_url = 'https://' + 'or.wikipedia.org/w/api.php'
+or_url = f"https://or.wikipedia.org/w/api.php"
 
 
 def Find_pages_exists_or_not(liste, apiurl=''):

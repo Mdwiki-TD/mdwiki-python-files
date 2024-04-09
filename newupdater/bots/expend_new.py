@@ -14,7 +14,7 @@ def expend_new(template, min_len=1):
     if not template:
         return template
     template_name = str(template.normal_name()).strip()
-    template.name = template_name + '\n'
+    template.name = f"{template_name}\n"
     to_del = []
 
     template.rm_dup_args_safe()
@@ -23,7 +23,7 @@ def expend_new(template, min_len=1):
         value = arg.value.rstrip()
         if len(arg.name.strip()) <= min_len:
             continue
-        arg.value = value + '\n'
+        arg.value = f"{value}\n"
         arg.name = arg.name.strip().ljust(16)
 
     for aa in to_del:

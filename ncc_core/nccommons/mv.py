@@ -24,7 +24,10 @@ from pathlib import Path
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-cats = json.load(open(f'{Dir}/mv.json', 'r', encoding='utf-8'))
+cats = {}
+# ---
+with open(f'{Dir}/mv.json', "r", encoding="utf-8") as f:
+    cats = json.load(f)
 # ---
 printe.output(f'len of cats: {len(cats)}')
 # ---

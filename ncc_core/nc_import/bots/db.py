@@ -27,7 +27,7 @@ def add_to_txt(data):
             f.write("")
     
     with open(jsonl_path, "a", encoding="utf-8") as f:
-        f.write(json.dumps(data, ensure_ascii=False) + "\n")
+        f.write(f"{json.dumps(data, ensure_ascii=False)}\n")
 
 def add_to_jsonl(data):
     if not os.path.exists(jsonl_path):

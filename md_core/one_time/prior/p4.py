@@ -233,8 +233,8 @@ def start_all():
         # ---
         titles = links[i: i + 100]
         # ---
-        main_File = project_js_new + f'{n}.json'
-        main_File_en = project_js_newen + f'en_{n}.json'
+        main_File = f"{project_js_new}{n}.json"
+        main_File_en = f"{project_js_newen}en_{n}.json"
         # ---
         tanko[str(n)] = {'file': main_File, 'file_en': main_File_en, 'links': titles}
         # ---

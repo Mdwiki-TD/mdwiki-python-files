@@ -25,7 +25,7 @@ class InOldText:
         # ---
         self.lang = lang
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
         self.oldtext = ''
         self.newtext = ''
         self.words = 0

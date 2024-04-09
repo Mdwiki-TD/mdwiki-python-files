@@ -58,7 +58,7 @@ def get_red(title):
     # ---
     lista = []
     # ---
-    r22 = Session.post('https://' + 'en.wikipedia.org/w/api.php', data=params)
+    r22 = Session.post(f"https://en.wikipedia.org/w/api.php", data=params)
     json1 = r22.json()
     # ---
     pages = json1.get('query', {}).get('pages', {})
@@ -80,7 +80,7 @@ def get_red(title):
 
 def work(title, num, lenth, From=''):
     # ---
-    printe.output('-------------------------------------------\n*<<lightyellow>> >%d/%d title:"%s".' % (num, lenth, title))
+    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{int(num)}/{int(lenth)} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
@@ -104,7 +104,7 @@ def work(title, num, lenth, From=''):
     for tit, o in ing.items():
         num += 1
         if o:
-            printe.output("page n:%d, title:'%s' already in mdwiki.org.." % (num, tit))
+            printe.output(f"page n:{int(num)}, title:'{tit}' already in mdwiki.org..")
             continue
         # ---
         if not valid_title(tit):

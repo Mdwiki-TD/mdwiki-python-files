@@ -67,7 +67,7 @@ def main():
     # ---
     for nu, title in enumerate(redirects, start=1):
         From = title["from"]
-        printe.output('-------\n*<<lightyellow>> >%d/%d From:"%s".' % (nu, len(redirects), From))
+        printe.output(f'-------\n*<<lightyellow>> >{int(nu)}/{len(redirects)} From:"{From}".')
         To = title["to"]
         if To in from_to:
             fix_dup(From, To)

@@ -72,7 +72,7 @@ def talk_url(lang, user, labl):
     old = f'[[w:{lang}:User talk:{user}|{user}]]'
     # --
     pas = {'title': f'User_talk:{user}', 'action': 'edit', 'section': 'new'}
-    url = f"//{lang}.wikipedia.org/w/index.php?" + urlencode(pas)
+    url = f"//{lang}.wikipedia.org/w/index.php?{urlencode(pas)}"
     # ---
     return f'[{url} {labl}]'
 
