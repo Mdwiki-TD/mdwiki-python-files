@@ -8,8 +8,33 @@ import urllib.request
 from tempfile import mkstemp
 from shutil import move, copymode
 from os import fdopen, remove
+import xml.etree.ElementTree as ET
 
 def remove_svg_dtd(file_path, url=""):
+    """
+    function to remove dtd tags like: <!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/Graphics/SVG/1.0/DTD/svg10.dtd'>
+    """
+    
+    # If no file_path provided but a URL is provided, download the file
+    if not file_path and url:
+        file_path, _ = urllib.request.urlretrieve(url)
+    
+    # Parse the SVG file
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+    
+    # Remove the DOCTYPE declaration
+    for elem in root.iter():
+        # if elem.tag.startswith('{http://www.w3.org/2000/svg}') and elem.text and elem.text.startswith('<!DOCTYPE svg'):
+        if elem.text and elem.text.startswith('<!DOCTYPE svg'):
+            elem.text = ''
+    
+    # Write the modified SVG to the file
+    tree.write(file_path)
+
+    return file_path
+
+def remove_svg_dtd_o(file_path, url=""):
     """
     function to remove dtd tags like: <!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/Graphics/SVG/1.0/DTD/svg10.dtd'>
     Args:

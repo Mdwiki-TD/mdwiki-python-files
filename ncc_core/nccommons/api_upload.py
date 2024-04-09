@@ -129,6 +129,10 @@ def upload_by_url(file_name, text, url, comment="", return_file_name=False, do_e
 
     """
     # ---
+    if not url:
+        printe.output("<<lightred>>upload_by_url: no url")
+        return False
+    # ---
     if file_name.startswith("File:"):
         file_name = file_name.replace("File:", "")
     # ---
@@ -164,6 +168,8 @@ def upload_by_url(file_name, text, url, comment="", return_file_name=False, do_e
         error_code = error.get("code", "")
         error_info = error.get("info", "")
         printe.output(f"<<lightred>> error when upload_by_url, error_code:{error_code}")
+        # ---
+        printe.output(f"<<lightred>> url: {url}")
         # ---
         printe.output(error)
         # ---
