@@ -92,6 +92,7 @@ def import_file(title):
 
     page = wiki_MainPage(title_file, "commons", family="wikimedia")
     file_text = page.get_text()
+    file_text = file_text.replaces("{{PD-user|norro}}", "")
 
     api_commons = wiki_NEW_API("commons", family="wikimedia")
     img_url = api_commons.Get_image_url(title_file)
@@ -119,7 +120,13 @@ def get_wanted_images():
 
 def start():
     images = get_wanted_images()
-    for n, image in enumerate(images, 1):
+    check_titles = api_new.Find_pages_exists_or_not(images)
+    # ---
+    missing_images = [ x for x in images if x not in check_titles ]
+    # ---
+    printe.output(f"<<yellow>> wanted images: {len(images)}, missing_images: {len(missing_images)}")
+    # ---
+    for n, image in enumerate(missing_images, 1):
         printe.output(f"<<yellow>> file: {n}/{len(images)} - {image}")
         import_file(image)
 
