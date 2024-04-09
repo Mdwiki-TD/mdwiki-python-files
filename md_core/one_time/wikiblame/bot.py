@@ -36,7 +36,7 @@ class WikiBlame:
 
     def fetch_content(self) -> None:
         """Fetch the content of the web page."""
-        url = self.base_url + "?" + urlencode(self.params)
+        url = f"{self.base_url}?{urlencode(self.params)}"
         # ---
         if 'printurl' in sys.argv:
             print(url)

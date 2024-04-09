@@ -67,7 +67,7 @@ def work_one_lang(list_, lang):
     if 'lala' not in sys.argv:
         newlist = [x for x in list_ if f"{lang}:{x}" not in reffixed_list]
         dd = int(len(list_)) - int(len(newlist))
-        print("already in reffixed_list :%d" % dd)
+        print(f"already in reffixed_list :{int(dd)}")
     # ---
     if len(newlist) > 0:
         log(lang)
@@ -80,7 +80,7 @@ def work_one_lang(list_, lang):
         # ---
         lio = f'{lang}:{title}'
         number += 1
-        print_s('<<lightyellow>> %d from %d, page: %s' % (number, len(newlist), lio))
+        print_s(f'<<lightyellow>> {int(number)} from {len(newlist)}, page: {lio}')
         # ---
         if lio in reffixed_list and 'lala' not in sys.argv:
             print_s('<<lightred>>\talready in reffixed_list.')

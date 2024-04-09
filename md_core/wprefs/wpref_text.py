@@ -92,7 +92,7 @@ def move_dots_text(newtext, lang=''):
     # ---
     regline = r'((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)'
     # ---
-    newtext = re.sub(dot + r'\s*' + regline, r'\g<2>\g<1>', newtext)
+    newtext = re.sub(f"{dot}\\s*{regline}", r'\g<2>\g<1>', newtext)
     # ---
     return newtext
 

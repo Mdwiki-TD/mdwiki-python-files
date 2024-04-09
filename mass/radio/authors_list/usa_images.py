@@ -57,7 +57,7 @@ def add_pd_to_images(not_in_pd: list) -> None:
             new_text = new_text.replace("[[Category:", f"{pd_temp}\n[[Category:", 1)
         # ---
         if new_text == text:
-            new_text = new_text + f"\n{pd_temp}"
+            new_text = f"{new_text}\n{pd_temp}"
         # ---
         if new_text != text:
             page.save(newtext=new_text, summary=f"Bot: add {pd_temp}")

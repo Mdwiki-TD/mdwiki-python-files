@@ -33,7 +33,7 @@ for arg in sys.argv:
         # ---
     # ---
 # start of himoBOT3.py file
-himoBOT3.log('https://' + 'en.wikipedia.org/w/api.php')
+himoBOT3.log(f"https://en.wikipedia.org/w/api.php")
 # ---
 # himoBOT3.get_Export_xml( title )
 
@@ -72,7 +72,7 @@ def export_en_history(title):
     texts = {}
     # ---
     revisione = xmldata.replace(first, '').split('</page>')[0].split('</revision>')
-    revisions = [x + '</revision>' for x in revisione if x.strip().startswith('<revision>')]
+    revisions = [f"{x}</revision>" for x in revisione if x.strip().startswith('<revision>')]
     if 'teest' in sys.argv:
         printe.output(revisions)
     # ---
@@ -100,7 +100,7 @@ def export_en_history(title):
             # ---
             if len(texts[num]) > La_si[1]:
                 # ---
-                path = 'mdwiki/xml/%s-%d.xml' % (title2, num)
+                path = f'mdwiki/xml/{title2}-{int(num)}.xml'
                 # tf = tempfile.NamedTemporaryFile()
                 # path = tf.name
                 # ---
@@ -117,7 +117,7 @@ def export_en_history(title):
         # ---
         if num not in numbdone and num in texts and texts[num] != '':
             # ---
-            path2 = 'mdwiki/xml/%s-%d.xml' % (title2, num)
+            path2 = f'mdwiki/xml/{title2}-{int(num)}.xml'
             # ---
             with codecs.open(path2, "w", encoding="utf-8") as oodfo:
                 oodfo.write(first + texts[num] + last)
@@ -150,7 +150,7 @@ def export(title):
     # ---
     # if title == 'Pubic lice' : paramse['pages'] =
     # ---
-    urll = "https://" + 'en.wikipedia.org/w/index.php?title=Special:Export/' + title.replace(' ', '_')
+    urll = f"https://en.wikipedia.org/w/index.php?title=Special:Export/{title.replace(' ', '_')}"
     # urll = "https://" + 'en.wikipedia.org/wiki/Special:Export/' + title.replace(' ','_')
     # ---
     gg = Session.post(url=urll, data=paramse)

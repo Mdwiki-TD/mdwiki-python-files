@@ -40,7 +40,7 @@ def printt(s):
 def login():
     # ---
     SS["ss"] = requests.Session()
-    SS["url"] = 'https://' + 'en.wikipedia.org/w/api.php'
+    SS["url"] = f"https://en.wikipedia.org/w/api.php"
     SS["ss"] = requests.Session()
     # ---
     r11 = SS["ss"].get(

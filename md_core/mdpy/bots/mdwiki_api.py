@@ -219,7 +219,7 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
     # ---
     if 'Success' in str(r4):
         printe.output(f'<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) ')
-        printe.output('Save True.. time.sleep(%d) ' % tts)
+        printe.output(f'Save True.. time.sleep({int(tts)}) ')
         time.sleep(tts)
         if return_table:
             return r4
@@ -264,7 +264,7 @@ def page_put(oldtext='', newtext='', summary='', title='', time_sleep="", family
 
 def Add_To_Bottom2(aptext, summary, title, poss="", family="", minor=""):
     if title.strip() != "":
-        printe.output('** Add_To_Bottom2 .. ' + '[[' + title + ']] ')
+        printe.output(f"** Add_To_Bottom2 .. [[{title}]] ")
         # pywikibot.showDiff("" , aptext)
         # ---
         Paramso = {
@@ -276,9 +276,9 @@ def Add_To_Bottom2(aptext, summary, title, poss="", family="", minor=""):
         }
         # ---
         if poss == "Head":
-            Paramso["prependtext"] = aptext.strip() + "\n"
+            Paramso["prependtext"] = f"{aptext.strip()}\n"
         else:
-            Paramso["appendtext"] = "\n" + aptext.strip()
+            Paramso["appendtext"] = f"\n{aptext.strip()}"
         # ---
         if sys.argv and "workibrahem" in sys.argv:
             Paramso["summary"] = ""
@@ -287,7 +287,7 @@ def Add_To_Bottom2(aptext, summary, title, poss="", family="", minor=""):
         # ---
         if 'Success' in r4:
             printe.output(f"<<lightgreen>>** true .. [[{title}]] ")
-            printe.output('Save True... time.sleep(%d) ' % timesleep)
+            printe.output(f'Save True... time.sleep({int(timesleep)}) ')
         else:
             outbot(r4)
     else:
@@ -445,7 +445,7 @@ def move(From, to, reason, lang='ar', nosleep=False, retry=True):
         r4 = post_s(Params, addtoken=True)
         # ---
         if 'Success' in r4.text or "redirectcreated" in r4.text:
-            printe.output('<<lightgreen>>** true .. ' + '[[' + to + ']] ')
+            printe.output(f"<<lightgreen>>** true .. [[{to}]] ")
             printe.output('Save True... time.sleep(%d) ' % 7)
             if nosleep:
                 time.sleep(7)
@@ -526,7 +526,7 @@ def Get_cat(enlink, ns, lllang="", tempyes=[], lang_no='', print_url=True):
         params["tltemplates"] = "|".join(tempyes)
     # ---
     if lllang != "" or lang_no:  # مع وصلة لغة معينة
-        params["prop"] = params["prop"] + "|langlinks"
+        params["prop"] = f"{params['prop']}|langlinks"
         # params["lllang"] = lllang
         params["lllimit"] = "max"
     # ---all
@@ -541,7 +541,7 @@ def Get_cat(enlink, ns, lllang="", tempyes=[], lang_no='', print_url=True):
     # ---
     if print_url or "printurl" in sys.argv:
         lis = [f"{x}={y}" for x, y in params.items()]
-        url = "api.php?" + "&".join(lis)
+        url = f"api.php?{'&'.join(lis)}"
         printe.output(url)
     # ----
     continue_p = ''
@@ -691,7 +691,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False, without_lang="", 
     # ---
     # if "printresult" in sys.argv: printe.output(result_table)
     # ---
-    printe.output('<<lightblue>>catdepth.py: find %d pages(%s) in %s:%s, depth:%d in %d seconds' % (len(result_table), str(ns), '', title, depth, delta))
+    printe.output(f'<<lightblue>>catdepth.py: find {len(result_table)} pages({str(ns)}) in :{title}, depth:{int(depth)} in {int(delta)} seconds')
     # ---
     result_tab = list(result_table.keys())
     # ---

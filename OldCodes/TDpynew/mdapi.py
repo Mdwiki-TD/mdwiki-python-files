@@ -39,7 +39,7 @@ def printt(s):
 def login():
     # ---
     SS["ss"] = requests.Session()
-    SS["url"] = 'https://' + 'mdwiki.org/w/api.php'
+    SS["url"] = f"https://mdwiki.org/w/api.php"
     SS["ss"] = requests.Session()
     # ---
     r11 = SS["ss"].get(

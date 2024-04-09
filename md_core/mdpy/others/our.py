@@ -57,7 +57,7 @@ def work(title):
         # ---
         if namestrip.lower() == 'ourworldindatamirror':
             # ---
-            pas += str(params) + '\n'
+            pas += f"{str(params)}\n"
             # ---
             param = params.get(1) or params.get('1') or ''
             # ---
@@ -127,7 +127,7 @@ def make_log(dad):
         # ---
         vav = errors.get(x, False)
         # ---
-        ta += 'used %d times.\n' % va
+        ta += f'used {int(va)} times.\n'
         # ---
         if x.find('https') == -1:
             ta += f"[https://owidm.wmcloud.org/grapher/{x.replace(' ', '%20')} {x}]"
@@ -142,8 +142,8 @@ def make_log(dad):
         else:
             text += ta
     # ---
-    te = '= errors = \n' + text_error + '\n'
-    te += '= no errors = \n' + text + '\n'
+    te = f"= errors = \n{text_error}\n"
+    te += f"= no errors = \n{text}\n"
     # ---
     mdwiki_api.page_put(newtext=te, summary='update', title='User:Mr. Ibrahem/Ourworldindatamirror', diff=False)
 

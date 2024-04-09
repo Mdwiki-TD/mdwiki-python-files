@@ -260,14 +260,14 @@ def page_put(oldtext, NewText, summary, title, lang):
     r4 = session[1].post(session["url"], data=pparams)
     # ---
     if 'Success' in r4.text:
-        print_s('<<lightgreen>> ** true .. ' + f"[[{session['lang']}:{session['family']}:{title}]]")
+        print_s(f"<<lightgreen>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
         return True
     # ---
     else:
         print_s(r4.text)
     # ---
     if 'savetofile' in sys.argv:
-        with codecs.open(str(Dir) + '/wpref_1.txt', "w", encoding="utf-8") as ggg:
+        with codecs.open(f"{str(Dir)}/wpref_1.txt", "w", encoding="utf-8") as ggg:
             ggg.write(NewText)
     # ---
     return False

@@ -70,7 +70,7 @@ def filter_urls(links):
     for x in links:
         # ---
         if x.startswith('//'):
-            x = 'https:' + x
+            x = f"https:{x}"
         # ---
         x = x.replace('//www.', '//').replace('http://', 'https://')
         # ---
@@ -127,7 +127,7 @@ class work_in_one_lang_link:
         self.lang = change_codes.get(lang) or lang
         # ---
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
         self.text = ''
         self.section0 = ''
         self.lead = {'extlinks': [], 'refsname': {}}
@@ -325,7 +325,7 @@ class get_old:
         # ---
         self.lang = lang
         self.title = title
-        self.url = 'https://' + self.lang + '.wikipedia.org/w/api.php'
+        self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
         self.oldtext = ''
         self.text = ''
         self.section0 = ''

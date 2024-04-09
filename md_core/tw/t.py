@@ -39,7 +39,7 @@ bearer_token = twet_config.bearer_token
 # ---
 title = 'WikiProjectMed:List'
 # ---
-json_file = Dir + '/done.json'
+json_file = f"{Dir}/done.json"
 
 
 def auth_ready(tweet, link=None):
@@ -66,7 +66,7 @@ def auth(tweet, link=None):
     api = tweepy.API(auth)
     # ---
     # t = api.update_status(tweet)
-    t = api.update_status_with_media(tweet, Dir + '/a.png')
+    t = api.update_status_with_media(tweet, f"{Dir}/a.png")
     print(t)
     # ---
     dataid = getattr(t, 'id')
@@ -80,7 +80,7 @@ def do_api(params):
     params["format"] = "json"
     params["utf8"] = 1
     # ---
-    url = 'https://' + 'mdwiki.org/w/api.php'
+    url = f"https://mdwiki.org/w/api.php"
     # ---
     json1 = {}
     try:
@@ -187,7 +187,7 @@ def start_md():
     link = get_one_link(done, links)
     # ---
     article = link.replace("_", " ")
-    link = 'https://mdwiki.org/wiki/' + link.replace(" ", "_")
+    link = f"https://mdwiki.org/wiki/{link.replace(' ', '_')}"
     tweet = f'''Today article is: {article}\n{link}'''
     # ---
     print(f'tweet: {tweet}')

@@ -178,7 +178,7 @@ def submitAPI(params, apiurl='', returnjson=False):
     # ---
     if "printurl" in sys.argv:
         url2 = url.replace("&format=json", "").replace("?format=json", "?")
-        printe.output('printboturl:\t\t' + url2)
+        printe.output(f"printboturl:\t\t{url2}")
     # ---
     json1 = {}
     # ---
@@ -424,7 +424,7 @@ def _get_page_views_(titles, site='en', days=30):
         if len(titles_1) < 1:
             continue
         # ---
-        printe.output('<<lightgreen>> views:%d, done:%d from %d titles.' % (len(Main_table.keys()), done, len(titles)))
+        printe.output(f'<<lightgreen>> views:{len(Main_table.keys())}, done:{int(done)} from {len(titles)} titles.')
         # ---
         params['titles'] = "|".join(titles_1)
         # ---
@@ -511,14 +511,14 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         # ---
         pa = urllib.parse.quote(page)
         # ---
-        url = 'https:' + '//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/' + langcode + '.wikipedia/all-access/all-agents/' + pa.replace('/', '%2F') + '/daily/' + date_start + '00/' + date_end + '00'
+        url = f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{langcode}.wikipedia/all-access/all-agents/{pa.replace('/', '%2F')}/daily/{date_start}00/{date_end}00"
         # ---
         if "printurl" in sys.argv or printurl:
-            printe.output('printboturl:\t\t' + url)
+            printe.output(f"printboturl:\t\t{url}")
         # ---
         if printstr:
             printe.output('-------------------')
-            printe.output('a %d/%d page:%s' % (numb, len(titles), page))
+            printe.output(f'a {int(numb)}/{len(titles)} page:{page}')
         # ---
         req = http.fetch(url)
         # req = requests.Session().get( url )

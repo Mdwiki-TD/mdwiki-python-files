@@ -116,7 +116,7 @@ if UPDATE != []:
                 tt = "\n".join(texts)
                 # ---
                 printe.output('====')
-                printe.output('%d run sql for %s lines.' % (n, len(texts)))
+                printe.output(f'{int(n)} run sql for {len(texts)} lines.')
                 # ---
                 printe.output(tt)
                 # ---

@@ -82,7 +82,7 @@ def make_title(url):
     url2 = url2.replace('&', '%26')
     url2 = url2.replace('#', '%23')
     # ---
-    urlr = 'https://' + 'en.wikipedia.org/api/rest_v1/data/citation/mediawiki-basefields/' + url2
+    urlr = f"https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki-basefields/{url2}"
     # ---
     _json1_ = [{"key": "JSJVMKE6", "version": 0, "itemType": "webpage", "creators": [], "tags": [], "title": "NCATS Inxight: Drugs — OXITRIPTAN", "url": "https://drugs.ncats.io/drug/C1LJO185Q9", "abstractNote": "Chemical", "language": "en", "accessDate": "2019-12-02", "shortTitle": "NCATS Inxight", "websiteTitle": "drugs.ncats.io"}]
     # ---

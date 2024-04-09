@@ -15,7 +15,10 @@ Dir2 = os.path.dirname(Dir)
 both_file = f"{Dir2}/jsons/both.json"
 file_all_links = f"{Dir2}/jsons/all_links.json"
 # ---
-both = json.load(codecs.open(both_file, 'r', encoding='utf-8'))
+both = {}
+# ---
+with open(both_file, "r", encoding="utf-8") as f:
+    both = json.load(f)
 # ---
 print(f'all pages:{len(both.keys())}')
 # ---

@@ -36,7 +36,7 @@ def print_py(s):
 
 def put(title, text):
     # ---
-    suus = 'from https://mdwiki.org/wiki/' + title.replace(' ', '_')
+    suus = f"from https://mdwiki.org/wiki/{title.replace(' ', '_')}"
     # ---
     title2 = f'User:Mr. Ibrahem/{title}'
     if wholearticle[1]:

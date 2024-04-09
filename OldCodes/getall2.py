@@ -68,7 +68,7 @@ for pyfile in os.listdir(drivepath):
     # ---
     printe("blue", pyfile)
     # ---
-    pyfilepath = drivepath + '/' + pyfile
+    pyfilepath = f"{drivepath}/{pyfile}"
     # ---
     if os.path.isfile(pyfilepath) and pyfile.endswith('.py'):
         # printe( "red" , "%s found in: %s" % (pyfile,floder) )
@@ -97,5 +97,5 @@ sort = sorted(shared_paths.items(), key=lambda x: x[1], reverse=True)
 # ---
 for key, value in sort:
     if value > 1:
-        printe("yellow", "%s: %d" % (key, value))
+        printe("yellow", f"{key}: {int(value)}")
 # ---

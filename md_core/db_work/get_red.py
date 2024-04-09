@@ -87,8 +87,8 @@ def get_pages():
         printe.output(tat)
         printe.output('===================')
     # ---
-    printe.output('replace %d pages. ' % rep)
-    printe.output('remove %d pages. ' % remo)
+    printe.output(f'replace {int(rep)} pages. ')
+    printe.output(f'remove {int(remo)} pages. ')
     # ---
     if to_del:
         printe.output(f'delete {len(to_del)} pages. ')

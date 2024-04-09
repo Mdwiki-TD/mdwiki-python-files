@@ -48,10 +48,10 @@ def get_views_last_30_days(langcode, titles):
         # ---
         pa = urllib.parse.quote(page)
         # ---
-        url = 'https:' + '//wikimedia.org/api/rest_v1/metrics/pageviews/per-article/' + langcode + '.wikipedia/all-access/all-agents/' + pa.replace('/', '%2F') + '/daily/' + startDate + '/' + endDate
+        url = f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{langcode}.wikipedia/all-access/all-agents/{pa.replace('/', '%2F')}/daily/{startDate}/{endDate}"
         # ---
         if "printurl" in sys.argv:
-            printe.output('printboturl:\t\t' + url)
+            printe.output(f"printboturl:\t\t{url}")
         # ---
         req = http.fetch(url)
         # req = requests.Session().get( url )

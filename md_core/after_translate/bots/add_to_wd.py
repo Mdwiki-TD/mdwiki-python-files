@@ -177,7 +177,7 @@ def Add_to_wikidata(mdtitle, lang, target, user):
     # ---
     line = f'[[{lang}:{target}]]'
     if tat != '' and tat.find(line) == -1 and tat.find(lalas) == -1:
-        mdwiki_api.Add_To_Bottom('\n' + line, f'add link to {line}', mdtitle, False)
+        mdwiki_api.Add_To_Bottom(f"\n{line}", f'add link to {line}', mdtitle, False)
     # ---
     if lang == "or":
         orred.create_redirect(target, mdtitle)
@@ -210,7 +210,7 @@ def add_tab_to_wd(table):
             number += 1
             # ---
             printe.output('=========================')
-            printe.output('<<lightgreen>>p %d/%d: mdtitle:%s,lang:%s,target:%s' % (number, len(tab), mdtitle, lang, target))
+            printe.output(f'<<lightgreen>>p {int(number)}/{len(tab)}: mdtitle:{mdtitle},lang:{lang},target:{target}')
             # ---
             Add_to_wikidata(mdtitle, lang, target, user)
 
