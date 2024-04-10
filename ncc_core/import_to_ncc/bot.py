@@ -110,7 +110,7 @@ def import_file(title):
     summary = "Bot: import from commons.wikimedia.org"
     # ---
     # upload = upload_file.upload_by_url(title, file_text, img_url, comment=summary, code="www", family="nccommons")
-    upload = upload = api.upload_by_url(title, file_text, img_url, comment=summary)
+    upload = api.upload_by_url(title, file_text, img_url, comment=summary)
     # ---
     return upload
 
