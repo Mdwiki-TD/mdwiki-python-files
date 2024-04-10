@@ -28,12 +28,16 @@ def extract_images_from_tag(soup):
 
     images_info = {}
     urls = soup.find_all("a")
+    imgs = soup.find_all("img")
     
     # filter only urls with /cases-i/
-    new_urls = [url for url in urls if url.get('href') and url.get('href').find("/cases-i/") != -1]
-
-    printe.output(f'new_urls: {len(new_urls)=}, urls: {len(urls)}')
-    if not new_urls:
+    new_urls = [q for q in urls if q.get('href') and q.get('href').find("/cases-i/") != -1]
+    new_imgs = [v for v in imgs if v.get('src') and v.get('src').find("/cases-i/") != -1]
+    # ---
+    imgs_done = []
+    # ---
+    printe.output(f'new_urls: {len(new_urls)=}, new_imgs: {len(new_imgs)=}, urls: {len(urls)}')
+    if not new_urls and not new_imgs:
         return {}
     # Iterate over each 'figure' tag
 
@@ -48,11 +52,28 @@ def extract_images_from_tag(soup):
 
         img_tag = url.find('img')
         if img_tag:
+            img2_url = img_tag.get('src', '')
+            if img2_url:
+                imgs_done.append(img2_url)
             img_alt = img_tag.get('alt', '')
             img_alt = re.sub(r'\(please see: .*?\)', '', img_alt)
             
         # printe.output(f'\t\t <<yellow>> img_url: {img_url}')
 
+        if img_url:
+            if img_url.startswith('../cases-i/'):
+                img_url = 'https://eyerounds.org/cases-i/' + img_url.replace('../cases-i/', '')
+            images_info[img_url.strip()] = img_alt.strip()
+
+    for img_tag in tqdm.tqdm(new_imgs):
+
+        img_url = img_tag.get('src', '')
+        if img_url in imgs_done:
+            continue
+        
+        img_alt = img_tag.get('alt', '')
+        img_alt = re.sub(r'\(please see: .*?\)', '', img_alt)
+            
         if img_url:
             if img_url.startswith('../cases-i/'):
                 img_url = 'https://eyerounds.org/cases-i/' + img_url.replace('../cases-i/', '')
@@ -142,6 +163,7 @@ def extract_infos_from_url(url):
 
 if __name__ == '__main__':
     # python3 core8/pwb.py mass/eyerounds/bots/get_case_info
-    url = "https://eyerounds.org/cases/239-post-vit-cataract-surgery.htm"
+    # url = "https://eyerounds.org/cases/239-post-vit-cataract-surgery.htm"
+    url = "https://eyerounds.org/cases/41-Herpes-Zoster-Post-Herpetic-Neuralgia.htm"
     data = extract_infos_from_url(url)
     printe.output(json.dumps(data, indent=4))

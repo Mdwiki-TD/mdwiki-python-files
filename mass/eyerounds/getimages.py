@@ -18,6 +18,7 @@ def read_json_file(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)
     return data
+
 def dump_data(json_data):
     # sort json_data by len of images
     json_data = dict(sorted(json_data.items(), key=lambda item: len(item[1].get("images", [])), reverse=True))
