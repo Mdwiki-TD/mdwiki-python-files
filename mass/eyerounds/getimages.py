@@ -36,6 +36,10 @@ def get_images(data):
         printe.output(f"<<green>> added {len(added)} new urls to json")
         json_data.update(added)
     # ---
+    if "onlyempty" in sys.argv:
+        data = [ x for x in data if not json_data[x].get("images", {}) ]
+        printe.output(f"<<green>> Only {len(data)} urls have no images, from {len(data)} ")
+    # ---
     # [ { "title": "Cataract", "url": "https://eyerounds.org/cataract_cases.htm", "cases": [ { "url": "https://eyerounds.org/cases/254-anterior-chamber-cilium.htm", ... } ] }, ... ]
     # ---
     # Iterate over each section and its corresponding data
