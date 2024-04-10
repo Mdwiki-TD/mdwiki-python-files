@@ -18,7 +18,15 @@ def read_json_file(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)
     return data
-
+def dump_data(json_data):
+    # sort json_data by len of images
+    json_data = dict(sorted(json_data.items(), key=lambda item: len(item[1].get("images", [])), reverse=True))
+    
+    if 'test' not in sys.argv:
+        # Save the updated json_data back to the JSON file
+        with open(jsonimages, 'w', encoding="utf-8") as file:
+            json.dump(json_data, file, indent=2)
+    
 def get_images(data):
     # ---
     json_data = read_json_file(jsonimages)
@@ -41,6 +49,9 @@ def get_images(data):
     
         # Extract images from the URL
         # { "authors": {}, "date": "", "images": {} }
+        if not url.startswith("https://eyerounds.org/cases/"):
+            printe.output(f"<<red>> Skip url {url}")
+            continue
         case_info = extract_infos_from_url(url)
 
         printe.output(f"<<green>> Found {len(case_info['images'])} images in url {url}")
@@ -50,6 +61,10 @@ def get_images(data):
         if 'break' in sys.argv:
             print(json.dumps(case_info, indent=4))
             break
+    
+        if n % 50 == 0:
+            dump_data(json_data)
+
     # ---
     return json_data
 
@@ -61,25 +76,15 @@ def main():
 
     for _, d in data.items():
         cases_urls.update({ x["url"] : {} for x in d["cases"] })
-    
-    if "urlkeys" in sys.argv:
-        with open(jsonimages, 'w', encoding="utf-8") as file:
-            json.dump(cases_urls, file, indent=2)
 
+    # ---
+    if "urlkeys" in sys.argv:
+        dump_data(cases_urls)
+    # ---
     url_by_images = get_images(cases_urls)
     # ---
-    for x, va in url_by_images.copy().items():
-        if not va:
-            url_by_images[x] = { "authors": {}, "date": "", "images": {} }
+    dump_data(url_by_images)
     # ---
-    # sort url_by_images by len of images
-    url_by_images = dict(sorted(url_by_images.items(), key=lambda item: len(item[1].get("images", [])), reverse=True))
-    
-    if 'test' not in sys.argv:
-        # Save the updated url_by_images back to the JSON file
-        with open(jsonimages, 'w', encoding="utf-8") as file:
-            json.dump(url_by_images, file, indent=2)
-
     # print how many has images and how many has no images
     d_with = [k for k, v in url_by_images.items() if len(v["images"]) > 0]
     printe.output(f"<<green>> Number of sections with images: {len(d_with)}")

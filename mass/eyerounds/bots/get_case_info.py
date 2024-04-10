@@ -18,6 +18,7 @@ import json
 import re
 import requests
 from bs4 import BeautifulSoup
+import tqdm
 from newapi import printe
 
 def extract_images_from_tag(soup):
@@ -32,11 +33,13 @@ def extract_images_from_tag(soup):
     new_urls = [url for url in urls if url.get('href') and url.get('href').find("/cases-i/") != -1]
 
     printe.output(f'new_urls: {len(new_urls)=}, urls: {len(urls)}')
+    if not new_urls:
+        return {}
     # Iterate over each 'figure' tag
 
-    for n, url in enumerate(new_urls, 1):
-        printe.output(f'<<purple>> >> url {n}/{len(new_urls)}')
-        printe.output(f'\t<<yellow>>{url}')
+    for url in tqdm.tqdm(new_urls):
+        # printe.output(f'<<purple>> >> url {n}/{len(new_urls)}')
+        # printe.output(f'\t<<yellow>>{url}')
         # <a href="../cases-i/case254/Fig1-LRG.jpg"><img alt="Figure 1: Slit lamp photograph showing 6mm cilium with overlying pigment on the iris at 6 o'clock just nasal to an area of iris atrophy. The cilium extends towards the pupil." class="figure" src="../cases-i/case254/Fig1.jpg" width="100%"/></a>
 
         img_url = url.get('href')
@@ -48,7 +51,7 @@ def extract_images_from_tag(soup):
             img_alt = img_tag.get('alt', '')
             img_alt = re.sub(r'\(please see: .*?\)', '', img_alt)
             
-        printe.output(f'\t\t <<yellow>> img_url: {img_url}')
+        # printe.output(f'\t\t <<yellow>> img_url: {img_url}')
 
         if img_url:
             if img_url.startswith('../cases-i/'):
@@ -70,59 +73,64 @@ def extract_infos_from_url(url):
     # Send a GET request to the URL and get the response
     response = requests.get(url)
 
+    data = { "authors": {}, "date": "", "images": {} }
     # Check if the response status code is 200 (OK)
     if response.status_code != 200:
         # Print an error message if the request failed
         printe.output(f"\t\t Failed to fetch content from {url}")
 
         # Return an empty dictionary
-        return {}
+        return data
 
-    data = {}
     # Parse the HTML content of the response using BeautifulSoup
     soup = BeautifulSoup(response.text, 'html.parser')
 
     # Find the specific div
     div = soup.find("div", class_="col-md-12 mt-4 text-left")
+    if not div:
+        return data
 
+    authors = {}
     # Find the h5 tags inside the div
     author_h5 = div.find("h5", class_="mt-4")
+    # ---
+    if author_h5:
+        authors = { fix_auth(a.text) : a.get("href") or "" for a in author_h5.find_all("a") }
 
-    authors = { fix_auth(a.text) : a.get("href") or "" for a in author_h5.find_all("a") }
+        # Extract authors
+        author_h5_text = author_h5.text.strip("\n")
+        author_h5_text = re.sub(r'\s+', ' ', author_h5_text)
 
-    # Extract authors
-    author_h5_text = author_h5.text.strip("\n")
-    author_h5_text = re.sub(r'\s+', ' ', author_h5_text)
-
-    if author_h5_text.find(";") != -1:
-        auths_text = [ x.strip() for x in author_h5_text.split(";")]
-    else:
-        u = author_h5_text
-        # ---
-        for au in authors:
-            if au in u:
-                u = u.replace(au, "")
-        # ---
-        u = re.sub(r"[\s,]+$", "", u)
-        # ---
-        auths_text = [ u.strip() ]
-    
-    for x in auths_text:
-        if x not in authors:
-            authors[x] = ""
-    
-    # add https://eyerounds.org/bio/ to authors links
-    for k, v in authors.copy().items():
-        if v and v.startswith("../bio/"):
-            authors[k] = "https://eyerounds.org/bio/" + v.replace("../bio/", "")
-
+        if author_h5_text.find(";") != -1:
+            auths_text = [ x.strip() for x in author_h5_text.split(";")]
+        else:
+            u = author_h5_text
+            # ---
+            for au in authors:
+                if au in u:
+                    u = u.replace(au, "")
+            # ---
+            u = re.sub(r"[\s,]+$", "", u)
+            # ---
+            auths_text = [ u.strip() ]
+        
+        for x in auths_text:
+            if x not in authors:
+                authors[x] = ""
+        
+        # add https://eyerounds.org/bio/ to authors links
+        for k, v in authors.copy().items():
+            if v and v.startswith("../bio/"):
+                authors[k] = "https://eyerounds.org/bio/" + v.replace("../bio/", "")
+    # ---
     # Combine authors and date into a dictionary
     data["authors"] = authors
 
     # Extract date
     # <h5 class=" mt-2 text-muted"> posted July 5, 2017 </h5>
     date_h5 = div.find("h5", class_="mt-2 text-muted")
-    data["date"] = date_h5.text.strip()
+    if date_h5:
+        data["date"] = date_h5.text.strip()
 
     
     images_info = extract_images_from_tag(soup)
