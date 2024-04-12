@@ -28,23 +28,20 @@ def dump_data(json_data):
         with open(jsonimages, 'w', encoding="utf-8") as file:
             json.dump(json_data, file, indent=2)
     
-def get_images(data):
+def get_images(json_data):
     # ---
     json_data = read_json_file(jsonimages)
     # ---
-    added = { x : { "authors": {}, "date": "", "images": {} } for x in data if x not in json_data }
-    if added:
-        printe.output(f"<<green>> added {len(added)} new urls to json")
-        json_data.update(added)
+    data = json_data.copy()
     # ---
     if "onlyempty" in sys.argv:
-        data = [ x for x in data if not json_data[x].get("images", {}) ]
+        data = {k: v for k, v in data.items() if len(v.get("images", [])) == 0}
         printe.output(f"<<green>> Only {len(data)} urls have no images, from {len(data)} ")
     # ---
     # [ { "title": "Cataract", "url": "https://eyerounds.org/cataract_cases.htm", "cases": [ { "url": "https://eyerounds.org/cases/254-anterior-chamber-cilium.htm", ... } ] }, ... ]
     # ---
     # Iterate over each section and its corresponding data
-    for n, url in enumerate(data, 1):
+    for n, (url, _tab) in enumerate(data.items(), 1):
         printe.output(f"<<yellow>> Processing section {n}/{len(data)}: {url}")
 
         d_in = json_data.get(url, {}).get("images", {})
@@ -69,7 +66,8 @@ def get_images(data):
     
         if n % 50 == 0:
             dump_data(json_data)
-
+    # ---
+    dump_data(json_data)
     # ---
     return json_data
 
@@ -77,18 +75,14 @@ def main():
     # Read the JSON file
     data = read_json_file(jsonfile)
     
-    cases_urls = {}
+    cases_urls = read_json_file(jsonimages)
 
     for _, d in data.items():
-        cases_urls.update({ x["url"] : {} for x in d["cases"] })
-
-    # ---
-    if "urlkeys" in sys.argv:
-        dump_data(cases_urls)
+        for x in d["cases"]:
+            if x["url"] not in cases_urls:
+                cases_urls[x["url"]] = { "authors": {}, "date": "", "images": {} }
     # ---
     url_by_images = get_images(cases_urls)
-    # ---
-    dump_data(url_by_images)
     # ---
     # print how many has images and how many has no images
     d_with = [k for k, v in url_by_images.items() if len(v["images"]) > 0]
