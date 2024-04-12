@@ -11,6 +11,7 @@ from mdpy.bots import sql_for_mdwiki
 # sql_for_mdwiki.add_titles_to_qids(tab, add_empty_qid=False)
 # sql_for_mdwiki.set_title_where_qid(new_title, qid)
 # sql_for_mdwiki.set_target_where_id(new_target, iid)
+# sql_for_mdwiki.set_deleted_where_id(iid)
 # ---
 
 """
@@ -184,6 +185,18 @@ def set_target_where_id(new_target, iid):
     printe.output(f'<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}')
     # ---
     if new_target == '' or iid == '':
+        return
+    # ---
+    # return mdwiki_sql(query, return_dict=True, values=[new_target, iid])
+    return mdwiki_sql(query, return_dict=True)
+
+
+def set_deleted_where_id(iid):
+    query = f"""UPDATE pages set deleted = 1 where id = {iid};"""
+    # ---
+    printe.output(f'<<yellow>> set_deleted_where_id(), id:{iid}')
+    # ---
+    if iid == '':
         return
     # ---
     # return mdwiki_sql(query, return_dict=True, values=[new_target, iid])
