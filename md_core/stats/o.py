@@ -64,7 +64,7 @@ def work_in_one_site(site, links):
         return
     # ---
     if 'dump' in sys.argv:
-        print('json.dumps(editors, indent=4)')
+        print('json.dumps(editors, indent=2)')
         return
     # ---
     title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_2023/{site}"

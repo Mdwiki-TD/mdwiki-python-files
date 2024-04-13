@@ -93,7 +93,7 @@ def new_vals():
     new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
     # ---
     with open(file_json2, 'w', encoding='utf-8') as ee:
-        json.dump(new, ee, ensure_ascii=False, indent=4)
+        json.dump(new, ee, ensure_ascii=False, indent=2)
 
 
 def start():
@@ -117,7 +117,7 @@ def start():
     # ---
     # ---
     with open(file_all_links, 'w', encoding='utf-8') as ff:
-        json.dump(all_links, ff, ensure_ascii=False, indent=4)
+        json.dump(all_links, ff, ensure_ascii=False, indent=2)
     # ---
     len_all_links = len(all_links)
     # ---

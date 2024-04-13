@@ -1,5 +1,5 @@
 """
-from mass.radio.st3sort.count_files.Case_co import CaseDo
+from fix_mass.radio.st3sort.count_files.Case_co import CaseDo
 """
 import sys
 import os
@@ -9,8 +9,8 @@ import traceback
 
 # ---
 from newapi import printe
-from mass.radio.get_studies import get_images_stacks, get_images
-from mass.radio.bots.studies_utf import dump_studies_urls_to_files
+from fix_mass.radio.get_studies import get_images_stacks, get_images
+from fix_mass.radio.bots.studies_utf import dump_studies_urls_to_files
 
 # ---
 try:

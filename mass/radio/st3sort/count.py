@@ -130,7 +130,7 @@ def start():
     sa()
 
     with open(cases_count_file, "w", encoding="utf-8") as f:
-        json.dump(images_count, f, ensure_ascii=False, indent=4)
+        json.dump(images_count, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":

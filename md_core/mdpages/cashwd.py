@@ -210,7 +210,7 @@ def cash_wd():
     with open(f'{Dashboard_path}/Tables/sitelinks.json', 'w', encoding='utf-8') as aa:
         json.dump(lists, aa)
     # ---
-    # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w', encoding="utf-8"), ensure_ascii=False, indent=4 )
+    # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w', encoding="utf-8"), ensure_ascii=False, indent=2 )
     # ---
     # table_to_log = { "redirects": redirects_qids, "missing": mis_qids }
     # ---
@@ -233,7 +233,7 @@ def cash_wd():
         # dump miss_list to json_file
         try:
             with open(json_file, 'w', encoding="utf-8") as aa:
-                json.dump(miss_list, aa, ensure_ascii=False, indent=4)
+                json.dump(miss_list, aa, ensure_ascii=False, indent=2)
             printe.output(f'<<lightgreenn>>dump to cash_exists/{site}.json done..')
         except Exception:
             pywikibot.output('Traceback (most recent call last):')

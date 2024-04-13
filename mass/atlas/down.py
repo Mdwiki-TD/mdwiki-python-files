@@ -124,7 +124,7 @@ def create_folder(folder_name, disease_name, disease_url, images_info):
 
     info_file_path = os.path.join(folder_name, "info.json")
     with open(info_file_path, 'w', encoding="utf-8") as info_file:
-        json.dump(info_data, info_file, indent=4)
+        json.dump(info_data, info_file, indent=2)
 
 
 if __name__ == "__main__":

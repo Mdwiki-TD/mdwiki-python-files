@@ -18,7 +18,7 @@ def dump_studies_urls_to_files(tab):
     for study, files in tab.items():
         file = studies_urls_to_files_dir / f"{study}.json"
         with open(file, "w", encoding="utf-8") as f:
-            json.dump(files, f, ensure_ascii=False, indent=4)
+            json.dump(files, f, ensure_ascii=False, indent=2)
             print(f"dump_studies_urls_to_files {file}, {len(files)=}")
 
     print(f"dump_studies_urls_to_files {len(tab)}")

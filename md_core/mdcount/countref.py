@@ -133,7 +133,7 @@ def count_refs(title):
 
 def logaa(file, table):
     with open(file, 'w', encoding='utf-8') as outfile:
-        json.dump(table, outfile, sort_keys=True, indent=4)
+        json.dump(table, outfile, sort_keys=True, indent=2)
     # ---
     printe.output(f'<<lightgreen>> {len(table)} lines to {file}')
 
