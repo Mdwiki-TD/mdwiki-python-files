@@ -59,14 +59,15 @@ def get_images(url):
                             image["modality"] = modality
                         image_info.append(image)
 
-    print(f"len image_info: {len(image_info)}")
-
+    printe.output(f"<<green>> len image_info: {len(image_info)}")
+    # sort images by "id"
+    image_info = sorted(image_info, key=lambda x: x["id"])
     return image_info
 
 
 def get_images_stacks(study_id):
     new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
-    print(f"study_id: {study_id}, new_url: {new_url}")
+    print(f"get_images_stacks: study_id: {study_id}, new_url: {new_url}")
     # ---
     response = requests.get(new_url, timeout=10)
 
@@ -92,7 +93,10 @@ def get_images_stacks(study_id):
                 image["modality"] = modality
             image_info.append(image)
 
-    print(f"len image_info: {len(image_info)}")
+    printe.output(f"<<green>> len image_info: {len(image_info)}")
+    
+    # sort images by "id"
+    # image_info = sorted(image_info, key=lambda x: x["id"])
 
     return image_info
 

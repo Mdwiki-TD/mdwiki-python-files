@@ -1,5 +1,5 @@
 """
-from mass.radio.st3.One_Case_New import OneCase
+from mass.radio.st3sort.One_Case_New import OneCase
 """
 import sys
 import os
@@ -14,6 +14,8 @@ from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
 from mass.radio.get_studies import get_images_stacks, get_images
 from mass.radio.bots.bmp import work_bmp
 from mass.radio.bots.update import update_text_new
+from mass.radio.bots.add_cat import add_cat_to_images  # add_cat_to_images(sets, cat_title)
+from mass.radio.bots.studies_utf import dump_studies_urls_to_files
 from mass.radio.jsons_files import jsons  # , dumps_jsons, ids_to_urls, urls_to_ids
 
 # ---
@@ -29,12 +31,12 @@ except ImportError:
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-studies_dir = Path('/data/project/mdwiki/studies')
+studies_dir = Path("/data/project/mdwiki/studies")
 # ---
 if not os.path.exists(studies_dir):
-    printe.output(f'<<red>> studies_dir {studies_dir} not found')
-    studies_dir = main_dir / 'studies'
-    printe.output(f'<<red>> studies_dir set to {studies_dir}')
+    printe.output(f"<<red>> studies_dir {studies_dir} not found")
+    studies_dir = main_dir / "studies"
+    printe.output(f"<<red>> studies_dir set to {studies_dir}")
 # ---
 with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), encoding="utf-8") as f:
     authors_infos = json.load(f)
@@ -70,7 +72,6 @@ def printt(s):
 
 
 class OneCase:
-
     def __init__(self, case_url, caseId, title, studies_ids, author):
         self.author = author
         self.caseId = caseId
@@ -78,6 +79,7 @@ class OneCase:
         self.title = title
         self.studies_ids = studies_ids
         self.images_count = 0
+        self.img_to_url = {}
         self.files = []
         self.studies = {}
         self.set_title = f"Radiopaedia case {self.caseId} {self.title}"
@@ -164,7 +166,7 @@ class OneCase:
                     json.dump(images, f, ensure_ascii=False, indent=4)
             # ---
             # sort images by "id"
-            images = sorted(images, key=lambda x: x["id"])
+            # images = sorted(images, key=lambda x: x["id"])
             # ---
             self.studies[study] = images
             printt(f"study:{study} : len(images) = {len(images)}, st_file:{st_file}")
@@ -206,7 +208,8 @@ class OneCase:
             "{{CC-BY-NC-SA-3.0}}\n"
             f"{usa_license}\n"
             f"[[{self.category}]]\n"
-            "[[Category:Uploads by Mr. Ibrahem]]")
+            "[[Category:Uploads by Mr. Ibrahem]]"
+        )
         return image_text
 
     def upload_image(self, image_url, image_name, image_id, plane, modality, study_id):
@@ -241,6 +244,8 @@ class OneCase:
         # ---
         to_up = {}
         # ---
+        self.img_to_url[study] = {}
+        # ---
         for i, image in enumerate(images, 1):
             image_url = image.get("public_filename", "")
             # ---
@@ -261,7 +266,10 @@ class OneCase:
                 extension = image["fullscreen_filename"].split(".")[-1].lower()
             # ---
             if extension == "bmp":
-                image_url, extension = work_bmp(image_url)
+                if "dump_studies_urls_to_files" not in sys.argv:
+                    image_url, extension = work_bmp(image_url)
+                else:
+                    extension = "jpg"
             # ---
             urls_done.append(image_url)
             # ---
@@ -280,6 +288,11 @@ class OneCase:
             file_name = file_name.replace(":", ".").replace("/", ".")
             # ---
             to_up[f"File:{file_name}"] = (image_url, file_name, image_id, plane, modality, study)
+            # ---
+            self.img_to_url[study][f"File:{file_name}"] = {"url": image_url, "id": image_id}
+        # ---
+        if "dump_studies_urls_to_files" in sys.argv:
+            return
         # ---
         to_c = list(to_up.keys())
         # ---
@@ -312,10 +325,7 @@ class OneCase:
                 # update_text(file_title, image_text)
                 update_text_new(file_title)
         # ---
-        not_in = {
-            k: v
-            for k, v in to_up.items() if not pages.get(k)
-        }
+        not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
         # ---
         printt(f"not_in: {len(not_in)}")
         # ---
@@ -336,8 +346,10 @@ class OneCase:
         if "updatetext" not in sys.argv:
             if self.images_count > 1:
                 self.create_set(set_title, sets)
+                self.create_set_category(set_title, sets, study)
 
     def start(self):
+        
         self.get_studies()
 
         for study, images in self.studies.items():
@@ -345,13 +357,20 @@ class OneCase:
             # ---
             self.upload_images(study, images)
 
-        printt(f"Images count: {self.images_count}")
+        if self.img_to_url:
+            dump_studies_urls_to_files(self.img_to_url)
+        
+        if "dump_studies_urls_to_files" in sys.argv:
+            return
 
+        printt(f"Images count: {self.images_count}")
+        
         if self.images_count == 0:
             printt("no category created")
             return
 
         self.create_category()
+
 
     def create_set(self, set_title, sets):
         text = ""
@@ -398,6 +417,41 @@ class OneCase:
                 return True
             ssa = page.save(newtext=text, summary="update", nocreate=0, minor="")
             return ssa
+
+    def create_set_category(self, set_title, sets, study_id):
+        # ---
+        study_url = f"https://radiopaedia.org/cases/{self.caseId}/studies/{study_id}"
+        # ---
+        cat_title = f"Category:{set_title}"
+        # --- 
+        printe.output(f"len of sets: {len(sets)} /// cat_title:{cat_title}")
+        # ---
+        text = f"* [{study_url} study: {study_id}]"
+        text += f"\n[[{self.category}|*]]"
+        text += f"\n[[Category:Radiopaedia studies|{study_id}]]"
+        # ---
+        done = False
+        # ---
+        if self.title_exists(cat_title):
+            done = True
+        # ---
+        if not done:
+            cat = ncc_MainPage(cat_title, "www", family="nccommons")
+            # ---
+            if cat.exists():
+                printt(f"<<lightyellow>> {cat_title} already exists")
+                done = True
+        # ---
+        if not done:
+            new = cat.Create(text=text, summary="create")
+            # ---
+            if new:
+                done = True
+            # ---
+            printt(f"Category {cat_title} created..{new=}")
+        # ---
+        if done:
+            add_cat_to_images(sets, cat_title)
 
     def add_category(self, file_name):
         # ---
