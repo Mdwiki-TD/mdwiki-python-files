@@ -21,6 +21,7 @@ from newapi import printe
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
 from mass.radio.lists.cases_to_cats import cases_cats  # cases_cats()
+from mass.radio.bots.add_cat import add_cat_bot
 
 # ---
 main_dir = Path(__file__).parent.parent
@@ -34,7 +35,6 @@ with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), "r", e
 print(f"Length of authors_to_cases: {len(authors_to_cases)}")
 # ---
 
-
 def create_cat(cat, text):
     page = ncc_MainPage(cat, "www", family="nccommons")
 
@@ -46,44 +46,6 @@ def create_cat(cat, text):
         page.save(newtext=text, summary="create")
     else:
         page.Create(text=text, summary="create")
-
-
-def add(da=[], title="", cat=""):
-    if da:
-        title, cat = da[0], da[1]
-    # ---
-    page = ncc_MainPage(title, "www", family="nccommons")
-
-    if not page.exists():
-        return
-
-    text = page.get_text()
-    # ---
-    if text.find(cat) != -1:
-        printe.output(f"cat {title} already has it.")
-        return
-    # ---
-    newtext = text
-    newtext += f"\n[[{cat}]]"
-    # ---
-    page.save(newtext=newtext, summary=f"Bot: added [[:{cat}]]")
-
-
-def mu(tab):
-    pool = Pool(processes=3)
-    pool.map(add, tab)
-    pool.close()
-    pool.terminate()
-
-
-def add_cat(pages, cat):
-    if "multi" in sys.argv:
-        tab = [[x, cat] for x in pages]
-        mu(tab)
-    else:
-        for title in pages:
-            add(title=title, cat=cat)
-
 
 def one_auth(auth, cat_list):
     printe.output(f"Author: {auth}, {len(cat_list)=}")
@@ -110,7 +72,7 @@ def one_auth(auth, cat_list):
     printe.output(f"{len(done)=}, {len(new_cat_list)=}")
     # ---
     if "noadd" not in sys.argv:
-        add_cat(new_cat_list, cat)
+        add_cat_bot(new_cat_list, cat)
 
 
 def get_auth_cats(cats, auth):

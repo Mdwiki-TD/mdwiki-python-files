@@ -9,7 +9,7 @@ import sys
 import json
 import os
 from pathlib import Path
-from mass.radio.st3.start3 import main
+from mass.radio.st3sort.start3 import main
 
 # ---
 main_dir = Path(__file__).parent.parent
@@ -18,7 +18,6 @@ with open(os.path.join(str(main_dir), "jsons/all_ids.json"), encoding="utf-8") a
 # ---
 lista = """
     182746
-    176190
     """
 # ---
 new_ids = [x.strip() for x in lista.split("\n") if x.strip()]
