@@ -55,7 +55,7 @@ def make_authors_infos():
     # ---
     if "nodump" not in sys.argv:
         with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'w', encoding='utf-8') as f:
-            json.dump(auths_infos, f, ensure_ascii=False, indent=4)
+            json.dump(auths_infos, f, ensure_ascii=False, indent=2)
 
 
 def start():

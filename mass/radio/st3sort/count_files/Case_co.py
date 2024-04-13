@@ -73,7 +73,7 @@ class CaseDo:
                     images = get_images(f"https://radiopaedia.org/cases/{self.caseId}/studies/{study}")
                 # ---
                 with open(st_file, "w", encoding="utf-8") as f:
-                    json.dump(images, f, ensure_ascii=False, indent=4)
+                    json.dump(images, f, ensure_ascii=False, indent=2)
             # ---
             self.studies[study] = images
             printt(f"study:{study} : len(images) = {len(images)}, st_file:{st_file}")

@@ -114,4 +114,4 @@ stw_infos_file = os.path.join(str(main_dir), f"jsons/{system_to_work}_infos.json
 
 # dump infos
 with open(stw_infos_file, "w", encoding="utf-8") as f:
-    json.dump(new_infos, f, ensure_ascii=False, indent=4)
+    json.dump(new_infos, f, ensure_ascii=False, indent=2)

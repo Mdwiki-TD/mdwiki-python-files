@@ -166,4 +166,4 @@ if __name__ == '__main__':
     # url = "https://eyerounds.org/cases/239-post-vit-cataract-surgery.htm"
     url = "https://eyerounds.org/cases/41-Herpes-Zoster-Post-Herpetic-Neuralgia.htm"
     data = extract_infos_from_url(url)
-    printe.output(json.dumps(data, indent=4))
+    printe.output(json.dumps(data, indent=2))

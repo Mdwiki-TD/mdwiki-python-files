@@ -69,7 +69,7 @@ def get_missing_authors():
     if "nodump" not in sys.argv:
         # with open(os.path.join(str(main_dir), 'authors_list/authors_new.json'), 'w', encoding='utf-8') as f:
         with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'w', encoding='utf-8') as f:
-            json.dump(updated_authors, f, ensure_ascii=False, indent=4)
+            json.dump(updated_authors, f, ensure_ascii=False, indent=2)
     # ---
     # len of empty authors
     print("empty authors:", len([x for x, v in updated_authors.items() if not v]))
@@ -103,7 +103,7 @@ def make_authors_list(authors_n):
     # ---
     if "nodump" not in sys.argv:
         with open(os.path.join(str(main_dir), 'authors_list/authors_to_cases.json'), 'w', encoding='utf-8') as f:
-            json.dump(new_authors, f, ensure_ascii=False, indent=4)
+            json.dump(new_authors, f, ensure_ascii=False, indent=2)
     # ---
     # print sum of all new_authors values
     print("sum of all new_authors values:", sum([len(x) for x in new_authors.values()]))

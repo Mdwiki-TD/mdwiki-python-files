@@ -120,14 +120,14 @@ def run(x, urls):
     file1 = f"{Dir}/by_title/{x}.json"
     # ---
     with open(file1, 'w', encoding='utf-8') as outfile:
-        json.dump(by_title, outfile, ensure_ascii=False, indent=4)
+        json.dump(by_title, outfile, ensure_ascii=False, indent=2)
     # ---
     printe.output(f'wrote {file1}')
     # ---
     file2 = f"{Dir}/by_url/{x}.json"
     # ---
     with open(file2, 'w', encoding='utf-8') as outfile:
-        json.dump(by_url, outfile, ensure_ascii=False, indent=4)
+        json.dump(by_url, outfile, ensure_ascii=False, indent=2)
     # ---
     printe.output(f'wrote {file2}')
     # ---
@@ -144,14 +144,14 @@ for x, urls in data.items():
 file3 = f"{Dir}/by_url/all.json"
 # ---
 with open(file3, 'w', encoding='utf-8') as outfile:
-    json.dump(by_url_all, outfile, ensure_ascii=False, indent=4)
+    json.dump(by_url_all, outfile, ensure_ascii=False, indent=2)
 # ---
 printe.output(f'wrote {file3}')
 # ---
 file4 = f"{Dir}/by_title/all.json"
 # ---
 with open(file4, 'w', encoding='utf-8') as hh:
-    json.dump(by_title_all, hh, ensure_ascii=False, indent=4)
+    json.dump(by_title_all, hh, ensure_ascii=False, indent=2)
 # ---
 printe.output(f'wrote {file4}')
 # ---

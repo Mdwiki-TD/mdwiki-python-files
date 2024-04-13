@@ -104,7 +104,7 @@ def dump_secs_links(d_links):
     # ---
     if d_links != {}:
         printe.output(f'<<lightyellow>> d_links(): lenth: {len(d_links.keys())}')
-        json.dump(d_links, codecs.open(sect_file, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+        json.dump(d_links, codecs.open(sect_file, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
 
 
 def get_section_links(new=False):

@@ -50,8 +50,8 @@ else:
     ns_0_pages = api.Get_All_pages("", limit="max", namespace="0", limit_all=limit_0)
     all_files = api.Get_All_pages("", limit="max", namespace="6", limit_all=limitall)
     # ---
-    codecs.open(file_dir + "ns_0_pages.json", "w", "utf-8").write(json.dumps(ns_0_pages, indent=4, ensure_ascii=False))
-    codecs.open(file_dir + "all_files.json", "w", "utf-8").write(json.dumps(all_files, indent=4, ensure_ascii=False))
+    codecs.open(file_dir + "ns_0_pages.json", "w", "utf-8").write(json.dumps(ns_0_pages, indent=2, ensure_ascii=False))
+    codecs.open(file_dir + "all_files.json", "w", "utf-8").write(json.dumps(all_files, indent=2, ensure_ascii=False))
 # ---
 if 'onlyread' in sys.argv:
     sys.exit(0)

@@ -145,7 +145,7 @@ def main():
                     ux = get_images(study)
                 # ---
                 with open(st_file, "w", encoding="utf-8") as f:
-                    json.dump(ux, f, ensure_ascii=False, indent=4)
+                    json.dump(ux, f, ensure_ascii=False, indent=2)
                 # ---
 
 

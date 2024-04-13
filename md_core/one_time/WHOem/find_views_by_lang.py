@@ -107,7 +107,7 @@ def get_lang_links_mdtitles(lang_links):
         lang_links_mdtitles[lang] = {tab['langs'][lang]: md for md, tab in lang_links.items() if lang in tab['langs']}
     # ---
     with codecs.open(f'{Dir}/lists/lang_links_mdtitles.json', 'w', encoding='utf-8') as f:
-        json.dump(lang_links_mdtitles, f, ensure_ascii=False, indent=4)
+        json.dump(lang_links_mdtitles, f, ensure_ascii=False, indent=2)
     # ---
     # sort lang_links_mdtitles by lenth
     lang_links_mdtitles = dict(sorted(lang_links_mdtitles.items(), key=lambda x: len(x[1]), reverse=True))

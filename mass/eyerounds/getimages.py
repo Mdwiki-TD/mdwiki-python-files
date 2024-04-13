@@ -61,7 +61,7 @@ def get_images(json_data):
         json_data[url] = case_info
         
         if 'break' in sys.argv:
-            print(json.dumps(case_info, indent=4))
+            print(json.dumps(case_info, indent=2))
             break
     
         if n % 50 == 0:

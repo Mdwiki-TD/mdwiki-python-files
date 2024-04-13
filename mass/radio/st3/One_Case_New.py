@@ -161,7 +161,7 @@ class OneCase:
                     images = get_images(f"https://radiopaedia.org/cases/{self.caseId}/studies/{study}")
                 # ---
                 with open(st_file, "w", encoding="utf-8") as f:
-                    json.dump(images, f, ensure_ascii=False, indent=4)
+                    json.dump(images, f, ensure_ascii=False, indent=2)
             # ---
             # sort images by "id"
             images = sorted(images, key=lambda x: x["id"])
