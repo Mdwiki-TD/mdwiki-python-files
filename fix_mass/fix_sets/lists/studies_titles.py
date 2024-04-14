@@ -39,3 +39,4 @@ with open(file, "w", encoding="utf-8") as f:
     printe.output(f"<<green>> write {len(sets)} to {file=}")
 # ---
 printe.output(f"not match: {not_match}")
+print(f"{len(sets)=}")

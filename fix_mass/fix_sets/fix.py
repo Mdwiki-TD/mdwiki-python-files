@@ -12,6 +12,7 @@ from fix_mass.fix_sets.bots.get_img_info import one_img_info
 from fix_mass.fix_sets.bots.stacks import get_stacks  # get_stacks(study_id)
 from fix_mass.fix_sets.bots.set_text import make_text_one_study
 from fix_mass.fix_sets.bots.study_files import get_study_files
+from fix_mass.fix_sets.bots.mv_files import to_move_work
 from fix_mass.fix_sets.jsons.files import studies_titles, study_to_case_cats
 
 from newapi.ncc_page import MainPage as ncc_MainPage
@@ -19,8 +20,29 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 main_dir = Path(__file__).parent
 
 
-def work_text(study_id, study_title):
+def update_set_text(title, n_text):
+    # ---
+    page = ncc_MainPage(title, "www", family="nccommons")
+    # ---
+    p_text = page.get_text()
+    # ---
+    # split p_text get after first [[Category:
+    # ---
+    cat_text = "[[Category:" + p_text.split("[[Category:", maxsplit=1)[1]
+    # ---
+    # cats = page.get_categories()
+    # # ---
+    printe.output(cat_text)
+    # # ---
+    # cats_text = "\n".join([f"[[Category:{x}]]" for x in cats])
+    # ---
+    n_text += f"\n\n{cat_text}"
+    # ---
+    if p_text != n_text:
+        page.save(newtext=n_text, summary="update")
 
+
+def work_text(study_id, study_title):
     files = get_study_files(study_id)
     # ---
     data = one_img_info(files, study_id)
@@ -34,27 +56,9 @@ def work_text(study_id, study_title):
     # ---
     json_data = get_stacks(study_id)
     # ---
-    text = make_text_one_study(json_data, url_to_file, study_title)
+    text, to_move = make_text_one_study(json_data, url_to_file, study_title)
     # ---
-    return text
-
-
-def update_set_text(title, text):
-    # ---
-    page = ncc_MainPage(title, "www", family="nccommons")
-    # ---
-    p_text = page.get_text()
-    # ---
-    cats = page.get_categories()
-    # ---
-    printe.output(cats)
-    # ---
-    cats_text = "\n".join([f"[[Category:{x}]]" for x in cats])
-    # ---
-    text += f"\n\n{cats_text}"
-    # ---
-    if p_text != text:
-        page.save(newtext=text, summary="update")
+    return text, to_move
 
 
 def work_one_study(study_id):
@@ -64,9 +68,12 @@ def work_one_study(study_id):
     # ---
     printe.output(f"study_id: {study_id}, study_title: {study_title}")
     # ---
-    text = work_text(study_id, study_title)
+    text, to_move = work_text(study_id, study_title)
+    # ---
+    text = to_move_work(text, to_move)
     # ---
     update_set_text(study_title, text)
+    # ---
 
 
 def main(ids):

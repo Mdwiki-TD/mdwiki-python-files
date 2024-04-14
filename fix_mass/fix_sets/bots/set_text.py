@@ -28,6 +28,8 @@ def make_text_one_study(json_data, url_to_file, study_title):
     # ---
     text = ""
     # ---
+    to_move = {}
+    # ---
     for x in json_data:
         # ---
         noo = 0
@@ -60,5 +62,7 @@ def make_text_one_study(json_data, url_to_file, study_title):
         # ---
         text += make_text(modality, files, study_title)
         # ---
+        to_move[modality] = files
+        # ---
     # ---
-    print(text)
+    return text, to_move
