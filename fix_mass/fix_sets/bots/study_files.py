@@ -41,7 +41,7 @@ def filter_members(cat_members):
         if not se:
             printe.output(f"!{x}")
             not_match += 1
-            # continue
+            continue
         # ---
         study_id = se.group(1)
         # ---
