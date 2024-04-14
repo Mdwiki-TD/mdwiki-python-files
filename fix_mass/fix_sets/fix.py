@@ -13,7 +13,7 @@ from fix_mass.fix_sets.bots.stacks import get_stacks  # get_stacks(study_id)
 from fix_mass.fix_sets.bots.set_text import make_text_one_study
 from fix_mass.fix_sets.bots.study_files import get_study_files
 from fix_mass.fix_sets.bots.mv_files import to_move_work
-from fix_mass.fix_sets.jsons.files import studies_titles, study_to_case_cats
+from fix_mass.fix_sets.jsons.files import studies_titles, studies_titles2
 from fix_mass.fix_sets.bots.done import studies_done_append
 from fix_mass.fix_sets.bots.done import studies_done_append, find_done #find_done(study_id)
 
@@ -23,6 +23,8 @@ main_dir = Path(__file__).parent
 
 
 def update_set_text(title, n_text, study_id):
+    # ---
+    printe.output(f"<<yellow>> update_set_text: {title}")
     # ---
     page = ncc_MainPage(title, "www", family="nccommons")
     # ---
@@ -69,9 +71,13 @@ def work_text(study_id, study_title):
 def work_one_study(study_id):
     # one_img_info
     # ---
-    study_title = studies_titles.get(study_id, "")
+    study_title = studies_titles.get(study_id)# or studies_titles2.get(study_id)
     # ---
     printe.output(f"study_id: {study_id}, study_title: {study_title}")
+    # ---
+    if not study_title:
+        printe.output(f"<<red>> study_title for: {study_id=} not found")
+        return
     # ---
     if find_done(study_id):
         printe.output(f"<<purple>> study_id: {study_id} already done")

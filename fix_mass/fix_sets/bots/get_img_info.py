@@ -27,12 +27,12 @@ def dump_st(data, s_id):
         json.dump(data, f, ensure_ascii=False, indent=2)
         printe.output(f"<<green>> write {len(data)} to file: {file}")
 
-def gt_img_info(title):
+def gt_img_info(titles):
     # ---
-    title = [title] if not isinstance(title, list) else title
+    titles = [titles] if not isinstance(titles, list) else titles
     # ---
     info = {}
-    printe.output(f"one_img_info: {len(title)=}")
+    printe.output(f"one_img_info: {len(titles)=}")
     # ---
     _x = {
         "pages": [
@@ -54,7 +54,7 @@ def gt_img_info(title):
     # ---
     params = {
         "action": "query",
-        "titles": "|".join(title),
+        "titles": "|".join(titles),
         # "prop": "revisions|categories|info|extlinks",
         "prop": "extlinks",
         # "clprop": "sortkey|hidden", # categories
@@ -64,10 +64,12 @@ def gt_img_info(title):
         "formatversion": "2",
     }
     # ---
-    # work with 40 title at once
-    for i in range(0, len(title), 40):
-        group = title[i : i + 40]
+    # work with 40 titles at once
+    for i in range(0, len(titles), 40):
+        group = titles[i : i + 40]
         params["titles"] = "|".join(group)
+        # ---
+        # print("|".join(group))
         # ---
         data = api_new.post_params(params)
         # ---
