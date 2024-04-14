@@ -14,13 +14,15 @@ from fix_mass.fix_sets.bots.set_text import make_text_one_study
 from fix_mass.fix_sets.bots.study_files import get_study_files
 from fix_mass.fix_sets.bots.mv_files import to_move_work
 from fix_mass.fix_sets.jsons.files import studies_titles, study_to_case_cats
+from fix_mass.fix_sets.bots.done import studies_done_append
+from fix_mass.fix_sets.bots.done import studies_done_append, find_done #find_done(study_id)
 
 from newapi.ncc_page import MainPage as ncc_MainPage
 
 main_dir = Path(__file__).parent
 
 
-def update_set_text(title, n_text):
+def update_set_text(title, n_text, study_id):
     # ---
     page = ncc_MainPage(title, "www", family="nccommons")
     # ---
@@ -32,7 +34,7 @@ def update_set_text(title, n_text):
     # ---
     # cats = page.get_categories()
     # # ---
-    printe.output(cat_text)
+    # printe.output(cat_text)
     # # ---
     # cats_text = "\n".join([f"[[Category:{x}]]" for x in cats])
     # ---
@@ -40,6 +42,9 @@ def update_set_text(title, n_text):
     # ---
     if p_text != n_text:
         page.save(newtext=n_text, summary="update")
+        # ---
+        studies_done_append(study_id)
+        # ---
 
 
 def work_text(study_id, study_title):
@@ -68,18 +73,24 @@ def work_one_study(study_id):
     # ---
     printe.output(f"study_id: {study_id}, study_title: {study_title}")
     # ---
+    if find_done(study_id):
+        printe.output(f"<<purple>> study_id: {study_id} already done")
+        return
+    # ---
     text, to_move = work_text(study_id, study_title)
     # ---
     text = to_move_work(text, to_move)
     # ---
-    update_set_text(study_title, text)
+    update_set_text(study_title, text, study_id)
     # ---
 
 
 def main(ids):
     # ---
     for study_id in ids:
+        
         work_one_study(study_id)
+
 
 
 if __name__ == "__main__":
