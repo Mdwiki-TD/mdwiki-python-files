@@ -1,5 +1,6 @@
 """
 
+python3 core8/pwb.py fix_mass/fix_sets/fix studies_titles ask
 python3 core8/pwb.py fix_mass/fix_sets/fix 134732
 
 """
@@ -101,4 +102,8 @@ def main(ids):
 
 if __name__ == "__main__":
     ids = [arg for arg in sys.argv[1:] if arg.isdigit()]
+    # ---
+    if "studies_titles" in sys.argv:
+        ids = list(studies_titles.keys())
+    # ---
     main(ids)
