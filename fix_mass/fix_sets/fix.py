@@ -7,7 +7,7 @@ python3 core8/pwb.py fix_mass/fix_sets/fix 134732
 import json
 import sys
 from pathlib import Path
-import xxlimited
+# import xxlimited
 from newapi import printe
 
 from fix_mass.fix_sets.bots.get_img_info import one_img_info
@@ -17,6 +17,7 @@ from fix_mass.fix_sets.bots.study_files import get_study_files
 from fix_mass.fix_sets.bots.mv_files import to_move_work
 from fix_mass.fix_sets.jsons.files import studies_titles, studies_titles2
 from fix_mass.fix_sets.bots.done import studies_done_append, find_done #find_done(study_id)
+from fix_mass.fix_sets.bots.has_url import has_url_append
 
 from newapi.ncc_page import MainPage as ncc_MainPage
 
@@ -93,7 +94,12 @@ def work_one_study(study_id):
     # ---
     if text.find("|http") != -1:
         printe.output(f"<<red>> text has http links... study_id: {study_id}")
-        printe.output(text)
+        has_url_append(study_id)
+        # printe.output(text)
+        return
+    # ---
+    if not text:
+        printe.output(f"<<red>> text is empty... study_id: {study_id}")
         return
     # ---
     text = to_move_work(text, to_move)
