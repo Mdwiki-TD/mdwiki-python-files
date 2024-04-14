@@ -124,9 +124,6 @@ def main():
     if "nodump" not in sys.argv:
         with open(enwiki_pageviews, "w", encoding="utf-8") as outfile:
             json.dump(n_views, outfile, sort_keys=True, indent=2)
-    # ---
-    # add_to_mdwiki_sql(numbers , lange)
-    # ---
 
 
 if __name__ == "__main__":
