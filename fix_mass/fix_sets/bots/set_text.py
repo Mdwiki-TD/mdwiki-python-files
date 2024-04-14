@@ -34,10 +34,10 @@ def make_text_one_study(json_data, url_to_file, study_title):
         # ---
         noo = 0
         # ---
-        print(x.keys())
-        # ---
         modality = x["modality"]
         images = x["images"]
+        # ---
+        print(f"modality: {modality}, images: {len(images)}")
         # ---
         files = {}
         # ---

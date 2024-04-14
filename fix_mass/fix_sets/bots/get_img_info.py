@@ -34,19 +34,6 @@ def gt_img_info(title):
     info = {}
     printe.output(f"one_img_info: {len(title)=}")
     # ---
-    params = {
-        "action": "query",
-        "titles": "|".join(title),
-        # "prop": "revisions|categories|info|extlinks",
-        "prop": "extlinks",
-        # "clprop": "sortkey|hidden", # categories
-        # "rvprop": "timestamp|content|user|ids", # revisions
-        # "cllimit": "max",  # categories
-        "ellimit": "max",  # extlinks
-        "formatversion": "2",
-    }
-    data = api_new.post_params(params)
-    # ---
     _x = {
         "pages": [
             {
@@ -65,27 +52,50 @@ def gt_img_info(title):
         ]
     }
     # ---
-    pages = data.get("query", {}).get("pages", [])
+    params = {
+        "action": "query",
+        "titles": "|".join(title),
+        # "prop": "revisions|categories|info|extlinks",
+        "prop": "extlinks",
+        # "clprop": "sortkey|hidden", # categories
+        # "rvprop": "timestamp|content|user|ids", # revisions
+        # "cllimit": "max",  # categories
+        "ellimit": "max",  # extlinks
+        "formatversion": "2",
+    }
     # ---
-    for page in pages:
-        extlinks = page.get("extlinks", [])
-        title = page.get("title")
+    # work with 40 title at once
+    for i in range(0, len(title), 40):
+        group = title[i : i + 40]
+        params["titles"] = "|".join(group)
         # ---
-        info[title] = {"img_url": "", "case_url": "", "study_url": "", "caseId": "", "studyId": ""}
+        data = api_new.post_params(params)
         # ---
-        for extlink in extlinks:
-            url = extlink.get("url")
-            ma = re.match("https://radiopaedia.org/cases/(\d+)/studies/(\d+)", url)
-            if url.find("/images/") != -1:
-                info[title]["img_url"] = url
+        error = data.get("error", {})
+        if error:
+            printe.output(json.dumps(error, indent=2))
+        # ---
+        pages = data.get("query", {}).get("pages", [])
+        # ---
+        for page in pages:
+            extlinks = page.get("extlinks", [])
+            title = page.get("title")
+            # ---
+            info[title] = {"img_url": "", "case_url": "", "study_url": "", "caseId": "", "studyId": ""}
+            # ---
+            for extlink in extlinks:
+                url = extlink.get("url")
+                ma = re.match("https://radiopaedia.org/cases/(\d+)/studies/(\d+)", url)
+                if url.find("/images/") != -1:
+                    info[title]["img_url"] = url
 
-            elif re.match(r"^https://radiopaedia.org/cases/[^\d\/]+$", url):
-                info[title]["case_url"] = url
+                elif re.match(r"^https://radiopaedia.org/cases/[^\d\/]+$", url):
+                    info[title]["case_url"] = url
 
-            elif ma:
-                info[title]["study_url"] = url
-                info[title]["caseId"] = ma.group(1)
-                info[title]["studyId"] = ma.group(2)
+                elif ma:
+                    info[title]["study_url"] = url
+                    info[title]["caseId"] = ma.group(1)
+                    info[title]["studyId"] = ma.group(2)
     # ---
     # printe.output(json.dumps(pages, indent=2))
     # ---
