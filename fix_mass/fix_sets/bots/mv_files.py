@@ -80,6 +80,11 @@ def to_move_work(text, to_move):
     if "mv" in sys.argv:
         for ty, files in to_move.items():
             # ---
+            # if any file start with http return text
+            if any(x.startswith("http") for x in files.values()):
+                printe.output(f"<<red>> {ty} {len(files)} x.startswith(http)")
+                return text
+            # ---
             printe.output(f"<<blue>> {ty} {len(files)}")
             # printe.output(files)
             # ---
