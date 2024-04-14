@@ -8,6 +8,7 @@ from mass.radio.jsons_files import jsons, dumps_jsons, ids_to_urls, urls_to_ids
 #  jsons.cases_dup
 #  jsons.to_work
 #  jsons.all_ids
+#  jsons.cases_cats
 # dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0, systems=0, url_to_sys=0)
 
 '''
@@ -51,6 +52,7 @@ files = {
     "cases_dup": 'jsons/cases_dup.json',
     "cases_in_ids": 'jsons/cases_in_ids.json',
     "ids": 'jsons/ids.json',
+    "cases_cats": 'jsons/cases_cats.json',
     "all_ids": 'jsons/all_ids.json',
     "infos": 'jsons/infos.json',
     "to_work": 'jsons/to_work.json',
