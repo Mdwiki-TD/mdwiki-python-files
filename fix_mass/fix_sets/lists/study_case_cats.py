@@ -49,6 +49,7 @@ for _, va in tqdm.tqdm(all_ids.items()):
         study_to_case_cats[study] = case_cat
 # ---
 print(f"no cats: {len(no_cats)}")
+print(f"{len(study_to_case_cats)=}")
 # ---
 if __name__ == "__main__":
     file = main_dir / "jsons/study_to_case_cats.json"

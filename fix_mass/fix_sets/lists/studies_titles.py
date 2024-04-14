@@ -17,25 +17,45 @@ from newapi.ncc_page import CatDepth
 Dir = Path(__file__).parent.parent
 
 st_dit = Dir / "jsons"
-file = st_dit / "studies_titles.json"
 
-members = CatDepth("Category:Radiopaedia sets", sitecode="www", family="nccommons", depth=0, ns=0, onlyns=0)
+def get_mem(title):
+    members = CatDepth(title, sitecode="www", family="nccommons", depth=0, ns=0, onlyns=0)
 
-printe.output(f"Radiopaedia sets has: {len(members)} members")
-
-sets = {}
-not_match = 0
-# ---
-for x in members:
+    sets = {}
+    not_match = 0
     # ---
-    ma = re.match(r"^Radiopaedia case .*? id: \d+ study: (\d+)$", x)
-    if ma:
-        sets[ma.group(1)] = x
-    else:
-        not_match += 1
+    for x in members:
+        # ---
+        ma = re.match(r"^Radiopaedia case .*? id: \d+ study: (\d+)$", x)
+        ma2 = re.match(r"^.*? \(Radiopaedia \d+-(\d+) .*?$", x)
+        # ---
+        if ma:
+            sets[ma.group(1)] = x
+        elif ma2:
+            sets[ma2.group(1)] = x
+        else:
+            not_match += 1
+    # ---
+    printe.output(f"title: {title}")
+    printe.output(f"\tmembers: {len(members)}")
+    printe.output(f"\tnot match: {not_match}")
+    printe.output(f"\t{len(sets)=}")
+    # ---
+    return sets
+# ---
+sets = get_mem("Category:Radiopaedia sets")
+# ---
+file = st_dit / "studies_titles.json"
 # ---
 with open(file, "w", encoding="utf-8") as f:
     json.dump(sets, f, ensure_ascii=False, indent=2)
     printe.output(f"<<green>> write {len(sets)} to {file=}")
 # ---
-printe.output(f"not match: {not_match}")
+sets2 = get_mem("Category:Image set")
+# ---
+file2 = st_dit / "studies_titles2.json"
+# ---
+with open(file2, "w", encoding="utf-8") as f:
+    json.dump(sets2, f, ensure_ascii=False, indent=2)
+    printe.output(f"<<green>> write {len(sets2)} to {file2=}")
+# ---
