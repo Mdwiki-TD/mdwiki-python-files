@@ -203,7 +203,7 @@ def set_target_where_id(new_target, iid):
         return
     # ---
     query = "UPDATE pages set target = %s where id = %s;"
-    values = [new_targetnew_target, iid]
+    values = [new_target, iid]
     # ---
     return mdwiki_sql(query, return_dict=True, values=values)
 
