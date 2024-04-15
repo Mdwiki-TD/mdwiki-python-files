@@ -17,26 +17,16 @@ to_update = {}
 
 def get_pages_from_db(lang_o):
     # ---
-    que = "select title, user, lang, target from pages "
+    sq = sql_for_mdwiki.get_all_pages_all_keys(lang=lang_o)
     # ---
-    if lang_o != "":
-        langs_to_t_u[lang_o] = {}
-        que += f' where lang = "{lang_o}"'
-    # ---
-    que += " ;"
-    # ---
-    printe.output(que)
-    # ---
-    sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
-    # ---
-    len_no_target = 0
+    len_no_target   = 0
     len_done_target = 0
     # ---
     for tab in sq:
         mdtitle = tab["title"]
-        user = tab["user"]
-        target = tab["target"]
-        lang = tab["lang"].lower()
+        user    = tab["user"]
+        target  = tab["target"]
+        lang    = tab["lang"].lower()
         # ---
         if lang_o != "" and lang != lang_o.strip():
             continue
@@ -44,14 +34,9 @@ def get_pages_from_db(lang_o):
         tul = mdtitle + user + lang
         tit_user_lang[tul] = target
         # ---
-        if lang not in langs_to_t_u:
-            langs_to_t_u[lang] = {}
-        # ---
-        if lang not in to_update:
-            to_update[lang] = {}
-        # ---
-        if user not in to_update[lang]:
-            to_update[lang][user] = []
+        langs_to_t_u.setdefault(lang, {})
+        to_update.setdefault(lang, {})
+        to_update[lang].setdefault(user, [])
         # ---
         if not target:
             len_no_target += 1
