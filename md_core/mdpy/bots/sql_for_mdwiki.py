@@ -167,55 +167,57 @@ def get_db_categories():
 
 
 def add_qid(title, qid):
-    title2 = escape_string(title)
-    qua = f"""INSERT INTO qids (title, qid) SELECT '{title2}', '{qid}';"""
-    # ---
     printe.output(f"<<yellow>> add_qid()  title:{title}, qid:{qid}")
     # ---
-    return mdwiki_sql(qua, return_dict=True)
-
+    qua = "INSERT INTO qids (title, qid) SELECT %s, %s;"
+    # ---
+    values = [title, qid]
+    # ---
+    return mdwiki_sql(qua, return_dict=True, values=values)
 
 def set_qid_where_title(title, qid):
-    title2 = escape_string(title)
-    qua = f"""UPDATE qids set qid = '{qid}' where title = '{title2}';"""
     # ---
     printe.output(f"<<yellow>> set_qid_where_title()  title:{title}, qid:{qid}")
     # ---
-    return mdwiki_sql(qua, return_dict=True)
+    qua = "UPDATE qids set qid = %s where title = %s;"
+    values = [qid, title]
+    # ---
+    return mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def set_title_where_qid(new_title, qid):
-    title2 = escape_string(new_title)
-    qua = f"""UPDATE qids set title = '{title2}' where qid = '{qid}';"""
     # ---
     printe.output(f"<<yellow>> set_title_where_qid()  new_title:{new_title}, qid:{qid}")
     # ---
-    return mdwiki_sql(qua, return_dict=True)
+    qua = "UPDATE qids set title = %s where qid = %s;"
+    values = [new_title, qid]
+    # ---
+    return mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def set_target_where_id(new_target, iid):
-    title2 = escape_string(new_target)
-    query = f"""UPDATE pages set target = '{title2}' where id = {iid};"""
     # ---
     printe.output(f"<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}")
     # ---
     if new_target == "" or iid == "":
         return
     # ---
-    # return mdwiki_sql(query, return_dict=True, values=[new_target, iid])
-    return mdwiki_sql(query, return_dict=True)
+    query = "UPDATE pages set target = %s where id = %s;"
+    values = [new_targetnew_target, iid]
+    # ---
+    return mdwiki_sql(query, return_dict=True, values=values)
 
 
 def set_deleted_where_id(iid):
-    query = f"""UPDATE pages set deleted = 1 where id = {iid};"""
     # ---
     printe.output(f"<<yellow>> set_deleted_where_id(), id:{iid}")
     # ---
     if iid == "":
         return
     # ---
-    # return mdwiki_sql(query, return_dict=True, values=[new_target, iid])
-    return mdwiki_sql(query, return_dict=True)
+    query = "UPDATE pages set deleted = 1 where id = %s;"
+    # ---
+    return mdwiki_sql(query, return_dict=True, values=[iid])
 
 
 def add_titles_to_qids(tab, add_empty_qid=False):
