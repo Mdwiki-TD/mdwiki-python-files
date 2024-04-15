@@ -2,11 +2,13 @@
 
 python3 core8/pwb.py fix_mass/fix_sets/fix studies_titles ask
 python3 core8/pwb.py fix_mass/fix_sets/fix 134732
+tfj run fixmass --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/fix studies_titles"
 
 """
 import json
 import sys
 from pathlib import Path
+
 # import xxlimited
 from newapi import printe
 
@@ -16,8 +18,8 @@ from fix_mass.fix_sets.bots.set_text import make_text_one_study
 from fix_mass.fix_sets.bots.study_files import get_study_files
 from fix_mass.fix_sets.bots.mv_files import to_move_work
 from fix_mass.fix_sets.jsons.files import studies_titles, studies_titles2
-from fix_mass.fix_sets.bots.done import studies_done_append, find_done #find_done(study_id)
-from fix_mass.fix_sets.bots.has_url import has_url_append
+from fix_mass.fix_sets.bots.done import studies_done_append, find_done, already_done
+from fix_mass.fix_sets.bots.has_url import has_url_append, find_has_url, already_has_url
 
 from newapi.ncc_page import MainPage as ncc_MainPage
 
@@ -34,7 +36,9 @@ def update_set_text(title, n_text, study_id):
     # ---
     # split p_text get after first [[Category:
     # ---
-    cat_text = "[[Category:" + p_text.split("[[Category:", maxsplit=1)[1]
+    cat_text = ""
+    if p_text.find("[[Category:") != -1:
+        cat_text = "[[Category:" + p_text.split("[[Category:", maxsplit=1)[1]
     # ---
     # cats = page.get_categories()
     # # ---
@@ -64,7 +68,7 @@ def work_text(study_id, study_title):
     # ---
     # printe.output(json.dumps(url_to_file, indent=2))
     # ---
-    text, to_move = make_text_one_study(json_data, data, study_title)
+    text, to_move = make_text_one_study(json_data, data, study_title, study_id)
     # ---
     return text, to_move
 
@@ -72,7 +76,17 @@ def work_text(study_id, study_title):
 def work_one_study(study_id):
     # one_img_info
     # ---
-    study_title = studies_titles.get(study_id)# or studies_titles2.get(study_id)
+    if find_has_url(study_id):
+        printe.output(f"<<purple>> study_id: {study_id} already has url")
+        if "nohasurl" not in sys.argv:
+            return
+    # ---
+    if find_done(study_id):
+        printe.output(f"<<purple>> study_id: {study_id} already done")
+        if "nodone" not in sys.argv:
+            return
+    # ---
+    study_title = studies_titles.get(study_id)  # or studies_titles2.get(study_id)
     # ---
     if not study_title and "studies_titles2" in sys.argv:
         study_title = studies_titles2.get(study_id)
@@ -82,11 +96,6 @@ def work_one_study(study_id):
     if not study_title:
         printe.output(f"<<red>> study_title for: {study_id=} not found")
         return
-    # ---
-    if find_done(study_id):
-        printe.output(f"<<purple>> study_id: {study_id} already done")
-        if "nodone" not in sys.argv:
-            return
     # ---
     text, to_move = work_text(study_id, study_title)
     # ---
@@ -110,10 +119,18 @@ def work_one_study(study_id):
 
 def main(ids):
     # ---
+    if "nohasurl" not in sys.argv:
+        ids2 = [x for x in ids if x not in already_has_url]
+        printe.output(f"found {len(ids) - len(ids2)} has_url")
+        ids = ids2
+    # ---
+    if "nodone" not in sys.argv:
+        ids2 = [x for x in ids if x not in already_done]
+        printe.output(f"found {len(ids) - len(ids2)} done")
+        ids = ids2
+    # ---
     for study_id in ids:
-        
         work_one_study(study_id)
-
 
 
 if __name__ == "__main__":
@@ -124,8 +141,11 @@ if __name__ == "__main__":
         # ids = [ x for x in studies_titles.keys() if x not in studies_titles2 ]
         ids = list(studies_titles.keys())
     elif "studies_titles2" in sys.argv:
-        ids = [ x for x in studies_titles2.keys() if x not in studies_titles ]
+        ids = [x for x in studies_titles2.keys() if x not in studies_titles]
     # ---
     printe.output(f"len of ids: {len(ids)}")
+    # ---
+    # sort ids backwards
+    ids = sorted(ids, reverse=True)
     # ---
     main(ids)

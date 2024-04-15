@@ -1,10 +1,11 @@
 """
 
 from fix_mass.fix_sets.bots.set_text import make_text_one_study
-
+from fix_mass.fix_sets.bots.done import studies_done_append
 
 """
 from newapi import printe
+from fix_mass.fix_sets.bots.has_url import has_url_append
 
 def make_text(modality, files, set_title, leen):
     # ---
@@ -26,7 +27,7 @@ def make_text(modality, files, set_title, leen):
     return text
 
 
-def make_text_one_study(json_data, data, study_title):
+def make_text_one_study(json_data, data, study_title, study_id):
     # ---
     url_to_file    = {v["img_url"]: x for x, v in data.items()}
     img_id_to_file = {str(v["img_id"]): x for x, v in data.items()}
@@ -53,7 +54,7 @@ def make_text_one_study(json_data, data, study_title):
         # sort images by position key
         # images = sorted(images, key=lambda x: x["position"])
         # ---
-        for n, image in enumerate(images, start=1):
+        for _n, image in enumerate(images, start=1):
             # ---
             plane_projection = image["plane_projection"]
             # ---
@@ -99,6 +100,7 @@ def make_text_one_study(json_data, data, study_title):
     # ---
     if all_files == len(to_move):
         printe.output("len to_move == all_files")
+        has_url_append(study_id)
         return text, to_move
     # ---
     for ty, files in to_move.items():
