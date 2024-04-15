@@ -41,22 +41,6 @@ def count_text(text):
     # print(f'count_text: {lenth}')
     return tem_text, lenth
 
-
-def count_lead(x):
-    # ---
-    page_text = mdwiki_api.GetPageText(x)
-    # ---
-    parsed = wtp.parse(page_text)
-    section = parsed.get_sections(level=0)[0].contents
-    # ---
-    te_1, lenth1 = get_lead_text(page_text)
-    te_2, lenth2 = count_text(page_text)
-    # ---
-    pywikibot.showDiff(te_1, f'count_text:\n{te_2}')
-    # ---
-    return lenth1
-
-
 def count_all(title='', text=''):
     # ---
     if text == '' and title != '':
