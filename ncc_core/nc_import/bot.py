@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py nc_import/bot
+python3 core8/pwb.py nc_import/bot ask
 
 """
 from nc_import.bots.gt_pages import get_pages
