@@ -1,0 +1,13 @@
+beautifulsoup4
+jsonlines
+mwparserfromhell
+MySQL-python
+Pillow
+psutil
+PyMySQL
+regex
+setuptools
+tqdm
+tweepy
+wikitextparser
+wikiwho_wrapper

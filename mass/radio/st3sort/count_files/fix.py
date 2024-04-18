@@ -6,8 +6,6 @@ python3 core8/pwb.py mass/radio/st3sort/count_files/fix 134732
 import sys
 import os
 from pathlib import Path
-from isort import file
-from regex import F
 import requests
 import json
 from newapi import printe
