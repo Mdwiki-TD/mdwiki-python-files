@@ -5,9 +5,8 @@ https://nccommons.org/wiki/User:Mr._Ibrahem/import_bot
 """
 import re
 import wikitextparser as wtp
-from newapi.ncc_page import MainPage as ncc_MainPage
+from nc_import.api_bots.ncc_page import ncc_MainPage
 from newapi import printe
-
 
 
 def get_text():
@@ -20,6 +19,7 @@ def get_text():
     # match all langs like: * ar\n* fr
     # ---
     return text
+
 
 def get_langs_codes():
     """
@@ -50,6 +50,7 @@ def get_langs_codes():
     printe.output(f"langs: {langs}")
     # ---
     return langs
+
 
 if __name__ == "__main__":
     # python3 core8/pwb.py nc_import/bots/get_langs

@@ -129,6 +129,10 @@ def main(ids):
         printe.output(f"found {len(ids) - len(ids2)} done")
         ids = ids2
     # ---
+    printe.output(f"<<purple>> len of ids: {len(ids)}")
+    printe.output(f"<<purple>> len of ids: {len(ids)}")
+    printe.output(f"<<purple>> len of ids: {len(ids)}")
+    # ---
     for study_id in ids:
         work_one_study(study_id)
 

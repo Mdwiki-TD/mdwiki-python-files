@@ -5,10 +5,11 @@ bot for importing files from nccommons to wikipedia
 """
 import re
 import sys
-from newapi.ncc_page import MainPage as ncc_MainPage, NEW_API as ncc_NEW_API
+from nc_import.api_bots.ncc_page import ncc_MainPage, ncc_NEW_API
 from newapi import printe
 from nc_import.bots import upload_file
 from nc_import.bots.db import add_to_db
+
 # upload = upload_file.upload_by_url(file_name, text, url, comment='', code="en", family="wikipedia")
 
 
@@ -24,6 +25,7 @@ def get_file_text(title):
 
     return text
 
+
 def categories_work(text):
     """
     remove all categories from the text
@@ -34,6 +36,7 @@ def categories_work(text):
     text += "\n[[Category:Files imported from NC Commons]]"
     # ---
     return text
+
 
 def import_file(title, code):
     """

@@ -17,7 +17,8 @@ from newapi import printe
 # ---
 sys.argv.append("botuser")
 # ---
-from newapi.wiki_page import NEW_API
+from nc_import.api_bots.wiki_page import NEW_API
+
 # api_new  = NEW_API('ar', family='wikipedia')
 # api_new.Login_to_wiki()
 # json1    = api_new.post_params(params, addtoken=False)
