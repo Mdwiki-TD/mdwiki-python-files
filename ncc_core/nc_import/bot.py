@@ -4,7 +4,7 @@ python3 core8/pwb.py nc_import/bot
 
 """
 from nc_import.bots.gt_pages import get_pages
-from nc_import.bots.wdrk_pages import work_on_pages
+from nc_import.bots.wrk_pages import work_on_pages
 from nc_import.bots.get_langs import get_langs_codes
 
 
