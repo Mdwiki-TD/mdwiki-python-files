@@ -1,4 +1,4 @@
-from newapi.wiki_page import NEW_API
+from nc_import.api_bots.wiki_page import NEW_API
 
 
 def get_pages(code):
