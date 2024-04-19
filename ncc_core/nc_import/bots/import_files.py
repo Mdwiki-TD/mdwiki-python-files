@@ -4,11 +4,13 @@ bot for importing files from nccommons to wikipedia
 
 """
 import re
-import sys
-from nc_import.api_bots.ncc_page import ncc_MainPage, ncc_NEW_API
 from newapi import printe
+from nc_import.api_bots.ncc_page import ncc_MainPage, ncc_NEW_API
 from nc_import.bots import upload_file
-from nc_import.bots.db import add_to_db
+from nc_import.bots.db import add_to_db, add_to_jsonl
+
+# add_to_db(title, code)
+# add_to_jsonl({"lang": code, "title": title})
 
 # upload = upload_file.upload_by_url(file_name, text, url, comment='', code="en", family="wikipedia")
 
@@ -57,5 +59,6 @@ def import_file(title, code):
     if upload:
         printe.output(f"<<lightgreen>>File:{title} imported to {code}wiki.")
         add_to_db(title, code)
+        add_to_jsonl({"lang": code, "title": title})
     # ---
     return upload

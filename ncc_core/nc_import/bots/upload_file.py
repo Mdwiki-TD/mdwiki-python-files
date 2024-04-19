@@ -10,13 +10,7 @@ from nc_import.bots import upload_file
 """
 import urllib.request
 import sys
-
-# ---
 from newapi import printe
-
-# ---
-sys.argv.append("botuser")
-# ---
 from nc_import.api_bots.wiki_page import NEW_API
 
 # api_new  = NEW_API('ar', family='wikipedia')
@@ -73,7 +67,7 @@ def upload_by_file(file_name, text, url, comment="", code="en", family="wikipedi
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
     error_code = result.get("error", {}).get("code", "")
-    error_info = result.get("error", {}).get("info", "")
+    _error_info = result.get("error", {}).get("info", "")
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
