@@ -10,13 +10,7 @@ from nc_import.bots import upload_file
 """
 import urllib.request
 import sys
-
-# ---
 from newapi import printe
-
-# ---
-sys.argv.append("botuser")
-# ---
 from nc_import.api_bots.wiki_page import NEW_API
 
 # api_new  = NEW_API('ar', family='wikipedia')
