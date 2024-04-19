@@ -3,7 +3,7 @@ this bot get langs from nccommons page:
 https://nccommons.org/wiki/User:Mr._Ibrahem/import_bot
 
 """
-import re
+# import re
 import wikitextparser as wtp
 from nc_import.api_bots.ncc_page import ncc_MainPage
 from newapi import printe

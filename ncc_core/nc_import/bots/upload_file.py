@@ -73,7 +73,7 @@ def upload_by_file(file_name, text, url, comment="", code="en", family="wikipedi
     success = upload_result.get("result") == "Success"
     error = result.get("error", {})
     error_code = result.get("error", {}).get("code", "")
-    error_info = result.get("error", {}).get("info", "")
+    _error_info = result.get("error", {}).get("info", "")
     # ---
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
