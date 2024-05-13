@@ -104,7 +104,7 @@ def start():
 
     # Save urls to JSON file
     with open(urlsfile, 'w') as json_file:
-        json.dump(urls_dict, json_file, indent=4)
+        json.dump(urls_dict, json_file, indent=2)
 
     print("URLs saved to urls.json")
 
