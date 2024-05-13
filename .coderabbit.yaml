@@ -14,7 +14,8 @@ reviews:
       - "WIP"
       - "DO NOT MERGE"
     drafts: false
+    path_filters:
+      - "!**/old/**"
+
 chat:
   auto_reply: true
-path_filters:
-  - "!**/old/**"
