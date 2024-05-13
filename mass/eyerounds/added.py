@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 main_dir = Path(__file__).parent
-jsonimages = main_dir / 'jsons/images.json'
+jsonimages = main_dir / "jsons/images.json"
 
 
 with open(jsonimages, "r") as file:

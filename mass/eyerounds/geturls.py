@@ -1,8 +1,8 @@
-'''
+"""
 
 python3 core8/pwb.py mass/eyerounds/geturls
 
-'''
+"""
 
 import requests
 from bs4 import BeautifulSoup
@@ -10,10 +10,11 @@ import json
 from pathlib import Path
 
 Dir = Path(__file__).parent
-urlsfile = Dir / 'jsons/urls.json'
+urlsfile = Dir / "jsons/urls.json"
 
 import requests
 from bs4 import BeautifulSoup
+
 
 def get_cases_from_url(url):
     """
@@ -29,35 +30,36 @@ def get_cases_from_url(url):
     response = requests.get(url)
 
     # Parse the HTML content
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, "html.parser")
 
     # Find the div with class "row d-flex justify-content-around"
-    case_div = soup.find('div', class_='row d-flex justify-content-around')
+    case_div = soup.find("div", class_="row d-flex justify-content-around")
 
     # Find all paragraphs containing case descriptions within the specified div
-    cases = case_div.find_all('p')
+    cases = case_div.find_all("p")
     print(f"Found {len(cases)} cases.")
 
     # Extract and store case details
     case_details = []
     for case in cases:
         case_dict = {}
-        case_link = case.find('a')
+        case_link = case.find("a")
         # ---
         if case_link:
             # Extract case details from href tags
-            href = case_link['href']
+            href = case_link["href"]
             # ---
-            if not href.startswith('http'):
-                href = 'https://eyerounds.org/' + href
+            if not href.startswith("http"):
+                href = "https://eyerounds.org/" + href
             # ---
-            case_dict['url'] = href
-            case_dict['title'] = case_link.get_text().strip()
-            case_dict['description'] = case.get_text(strip=True).replace(case_dict['title'], '').strip()
+            case_dict["url"] = href
+            case_dict["title"] = case_link.get_text().strip()
+            case_dict["description"] = case.get_text(strip=True).replace(case_dict["title"], "").strip()
 
         case_details.append(case_dict)
 
     return case_details
+
 
 def start():
     # Define the URL
@@ -75,23 +77,23 @@ def start():
         return
 
     # Step 2: Parse the HTML content
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, "html.parser")
     print("Step 2: Parsed the HTML content.")
 
     # Find all divs with class "col-xs-12 col-sm-6 col-md-6 col-lg-4"
-    divs = soup.find_all('div', class_='col-xs-12 col-sm-6 col-md-6 col-lg-4')
+    divs = soup.find_all("div", class_="col-xs-12 col-sm-6 col-md-6 col-lg-4")
 
     # Initialize a dictionary to store URLs
-    with open(urlsfile, 'r', encoding='utf-8') as f:
+    with open(urlsfile, "r", encoding="utf-8") as f:
         urls_dict = json.load(f)
     add_new = 0
     # Iterate through each div
     for n, div in enumerate(divs, 1):
         # Extract href and title
-        href = div.find('a')['href']
-        if not href.startswith('http'):
-            href = 'https://eyerounds.org/' + href
-        title = div.find('strong').text.strip()
+        href = div.find("a")["href"]
+        if not href.startswith("http"):
+            href = "https://eyerounds.org/" + href
+        title = div.find("strong").text.strip()
 
         # Add title to the dictionary with URL
         tab = {"title": title, "url": href, "cases": {}}
@@ -102,13 +104,13 @@ def start():
             add_new += 1
             urls_dict[href] = tab
 
-
     # Save urls to JSON file
-    with open(urlsfile, 'w', encoding='utf-8') as f:
+    with open(urlsfile, "w", encoding="utf-8") as f:
         json.dump(urls_dict, f, indent=2)
 
     print(f"{add_new} new urls added to urls.json")
     print("URLs saved to urls.json")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     start()

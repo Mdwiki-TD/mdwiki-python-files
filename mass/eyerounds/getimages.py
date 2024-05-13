@@ -11,22 +11,25 @@ from mass.eyerounds.bots.get_case_info import extract_infos_from_url
 from newapi import printe
 
 main_dir = Path(__file__).parent
-jsonfile = main_dir / 'jsons/urls.json'
-jsonimages = main_dir / 'jsons/images.json'
+jsonfile = main_dir / "jsons/urls.json"
+jsonimages = main_dir / "jsons/images.json"
+
 
 def read_json_file(file_path):
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         data = json.load(file)
     return data
+
 
 def dump_data(json_data):
     # sort json_data by len of images
     json_data = dict(sorted(json_data.items(), key=lambda item: len(item[1].get("images", [])), reverse=True))
 
-    if 'test' not in sys.argv:
+    if "test" not in sys.argv:
         # Save the updated json_data back to the JSON file
-        with open(jsonimages, 'w', encoding="utf-8") as file:
+        with open(jsonimages, "w", encoding="utf-8") as file:
             json.dump(json_data, file, indent=2)
+
 
 def get_images(json_data):
     # ---
@@ -60,7 +63,7 @@ def get_images(json_data):
 
         json_data[url] = case_info
 
-        if 'break' in sys.argv:
+        if "break" in sys.argv:
             print(json.dumps(case_info, indent=2))
             break
 
@@ -71,6 +74,7 @@ def get_images(json_data):
     # ---
     return json_data
 
+
 def main():
     # Read the JSON file
     data = read_json_file(jsonfile)
@@ -80,7 +84,7 @@ def main():
     for _, d in data.items():
         for x in d["cases"]:
             if x["url"] not in cases_urls:
-                cases_urls[x["url"]] = { "authors": {}, "date": "", "images": {} }
+                cases_urls[x["url"]] = {"authors": {}, "date": "", "images": {}}
     # ---
     url_by_images = get_images(cases_urls)
     # ---
