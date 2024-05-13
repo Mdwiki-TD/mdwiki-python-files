@@ -30,7 +30,15 @@ from mass.eyerounds.bots.url_to_title import urls_to_title
 main_dir = Path(__file__).parent
 
 with open(main_dir / 'jsons/images.json', 'r', encoding='utf-8') as f:
-    data = json.load(f)
+    dataimages = json.load(f)
+
+data_done = []
+data = {}
+for url, da in dataimages.items():
+    if url in data_done:
+        continue
+    data_done.append(url)
+    data[url] = da
 
 data = dict(sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True))
 
