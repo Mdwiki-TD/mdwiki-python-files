@@ -15,8 +15,9 @@ main_dir = Path(__file__).parent
 from mass.eyerounds.bots.url_to_title import urls_to_title
 from mass.eyerounds.bots.catbot import category_name
 
+
 def doo():
-    with open(main_dir / 'jsons/images.json', 'r', encoding='utf-8') as f:
+    with open(main_dir / "jsons/images.json", "r", encoding="utf-8") as f:
         data = json.load(f)
 
     # names = {}
@@ -38,13 +39,15 @@ def doo():
         #     names[name] += 1
 
     done = {}
-    text = '{| class="wikitable sortable"\n|-\n' + '! # !! Category !! Image set !! Case number !! Url !! Number of images\n'
+    text = '{| class="wikitable sortable"\n|-\n' + "! # !! Category !! Image set !! Case number !! Url !! Number of images\n"
+
     # ---
     def background_color(numb):
         if done.get(numb, 1) > 1:
             # style="background-color:#c79d9d"|
             return ' style="background-color:#c79d9d"| '
         return False
+
     # ---
     for n, (url, count) in enumerate(cases.items(), start=1):
         x = urls_to_title.get(url)
@@ -66,25 +69,25 @@ def doo():
         done.setdefault(cat, 0)
         done[cat] += 1
         # ---
-        bc = background_color(cat) or background_color(numb) or background_color(x)
+        bc = background_color(cat) or background_color(numb) or background_color(x) or ""
         # ---
-        text += f'|- {bc}\n'
-        text += f'! {n}\n'
-        text += f'| [[:Category:{cat}]]\n'
-        text += f'| [[{cat}|set]]\n'  # + '|| {{#ifexist:' + x2 + '|1|0}}\n'
-        text += f'| {numb}\n'
-        text += f'| [{url} ]\n'  # + '|| {{#ifexist:' + x2 + '|1|0}}\n'
-        text += f'| {count}\n'
+        text += f"|- {bc}\n"
+        text += f"! {n}\n"
+        text += f"| [[:Category:{cat}]]\n"
+        text += f"| [[{cat}|set]]\n"  # + '|| {{#ifexist:' + x2 + '|1|0}}\n'
+        text += f"| {numb}\n"
+        text += f"| [{url} ]\n"  # + '|| {{#ifexist:' + x2 + '|1|0}}\n'
+        text += f"| {count}\n"
 
-    text += '|}'
-    text += '\n[[Category:EyeRounds|*]]'
+    text += "|}"
+    text += "\n[[Category:EyeRounds|*]]"
 
-    page = ncc_MainPage('User:Mr._Ibrahem/EyeRounds', 'www', family='nccommons')
+    page = ncc_MainPage("User:Mr._Ibrahem/EyeRounds", "www", family="nccommons")
     # ---
     old_text = page.get_text()
     # ---
     if old_text != text:
-        page.save(newtext=text, summary='update', nocreate=0, minor='')
+        page.save(newtext=text, summary="update", nocreate=0, minor="")
 
     # sort names by count
     done = dict(sorted(done.items(), key=lambda x: x[1], reverse=True))
@@ -92,7 +95,7 @@ def doo():
     # print done
     for naa, count in done.items():
         if count > 1:
-            print(f'{count}\t\t{naa}')
+            print(f"{count}\t\t{naa}")
 
 
 if __name__ == "__main__":
