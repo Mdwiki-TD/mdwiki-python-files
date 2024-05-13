@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 Dir = Path(__file__).parent
-urlsfile = Dir / 'urls.json'
+urlsfile = Dir / 'jsons/urls.json'
 
 import requests
 from bs4 import BeautifulSoup
@@ -29,17 +29,17 @@ def get_cases_from_url(url):
     """
     # Send a GET request to the URL
     response = requests.get(url)
-    
+
     # Parse the HTML content
     soup = BeautifulSoup(response.text, 'html.parser')
-    
+
     # Find the div with class "row d-flex justify-content-around"
     case_div = soup.find('div', class_='row d-flex justify-content-around')
-    
+
     # Find all paragraphs containing case descriptions within the specified div
     cases = case_div.find_all('p')
     print(f"Found {len(cases)} cases.")
-    
+
     # Extract and store case details
     case_details = []
     for case in cases:
@@ -56,9 +56,9 @@ def get_cases_from_url(url):
             case_dict['url'] = href
             case_dict['title'] = case_link.get_text().strip()
             case_dict['description'] = case.get_text(strip=True).replace(case_dict['title'], '').strip()
-        
+
         case_details.append(case_dict)
-    
+
     return case_details
 
 def start():
@@ -92,7 +92,7 @@ def start():
         if not href.startswith('http'):
             href = 'https://eyerounds.org/' + href
         title = div.find('strong').text.strip()
-        
+
         # Add title to the dictionary with URL
         tab = {"title": title, "url": href, "cases": {}}
         tab["cases"] = get_cases_from_url(href)
