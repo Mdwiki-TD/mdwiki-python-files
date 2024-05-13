@@ -6,9 +6,7 @@ python3 core8/pwb.py mass/eyerounds/geturls
 
 import requests
 from bs4 import BeautifulSoup
-import os
 import json
-import sys
 from pathlib import Path
 
 Dir = Path(__file__).parent
@@ -84,7 +82,9 @@ def start():
     divs = soup.find_all('div', class_='col-xs-12 col-sm-6 col-md-6 col-lg-4')
 
     # Initialize a dictionary to store URLs
-    urls_dict = {}
+    with open(urlsfile, 'r', encoding='utf-8') as f:
+        urls_dict = json.load(f)
+    add_new = 0
     # Iterate through each div
     for n, div in enumerate(divs, 1):
         # Extract href and title
@@ -98,14 +98,16 @@ def start():
         tab["cases"] = get_cases_from_url(href)
 
         print(f"url {n}/{len(divs)}: {href} has {len(tab['cases'])} cases")
-
-        urls_dict[href] = tab
+        if href not in urls_dict:
+            add_new += 1
+            urls_dict[href] = tab
 
 
     # Save urls to JSON file
-    with open(urlsfile, 'w') as json_file:
-        json.dump(urls_dict, json_file, indent=2)
+    with open(urlsfile, 'w', encoding='utf-8') as f:
+        json.dump(urls_dict, f, indent=2)
 
+    print(f"{add_new} new urls added to urls.json")
     print("URLs saved to urls.json")
 
 if __name__ == '__main__':

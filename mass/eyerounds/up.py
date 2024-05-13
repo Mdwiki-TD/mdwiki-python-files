@@ -23,20 +23,14 @@ from nccommons import api
 from newapi.ncc_page import CatDepth
 from newapi.ncc_page import MainPage as ncc_MainPage
 
+from mass.eyerounds.bots.catbot import category_name
+from mass.eyerounds.bots.url_to_title import urls_to_title
+
 # Specify the root folder
 main_dir = Path(__file__).parent
 
-with open(os.path.join(str(main_dir), 'jsons/images.json'), 'r') as f:
+with open(main_dir / 'jsons/images.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
-
-with open(os.path.join(str(main_dir), 'jsons/urls.json'), 'r', encoding='utf-8') as f:
-    urls = json.load(f)
-
-urls_to_title = {}
-for url, tab in urls.items():
-    urls_to_title[url] = tab['title']
-    for x in tab['cases']:
-        urls_to_title[x['url']] = x['title']
 
 data = dict(sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True))
 
@@ -125,7 +119,7 @@ def create_category(chapter_name):
     return cat_title
 
 
-def upload_image(category, image_url, image_name, chapter_url, chapter_name):
+def upload_image(category, image_url, image_name, chapter_url):
     # get image base name
     # add extension to image_name
     image_name = make_file(image_name, image_url)
@@ -133,6 +127,8 @@ def upload_image(category, image_url, image_name, chapter_url, chapter_name):
     if f'File:{image_name}' in pages:
         printe.output(f'<<lightyellow>> File:{image_name} already exists')
         return
+    # ---
+    chapter_name = urls_to_title.get(chapter_url)
     # ---
     _, base_name = os.path.split(image_url)
     # ---
@@ -160,16 +156,17 @@ def upload_image(category, image_url, image_name, chapter_url, chapter_name):
 
 
 def process_folder():
-    for chapter_name, info_data in data.items():
+    for chapter_url, info_data in data.items():
         images_info = info_data.get("images", {})
-        chapter_url = info_data.get("url")
+        title = info_data.get("title")
 
-        chapter_name2 = f'{chapter_name} (EyeRounds)'
-        print(f'Processing {chapter_name2}')
+        cat, numb = category_name(chapter_url)
+
+        print(f'Processing {cat}')
         # Create category
 
         if images_info:
-            category = create_category(chapter_name2)
+            category = create_category(cat)
 
             if category and 'noup' not in sys.argv:
                 # Upload images
@@ -177,9 +174,9 @@ def process_folder():
                 for image_url, image_name in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
                     n += 1
                     print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
-                    upload_image(category, image_url, image_name, chapter_url, chapter_name)
+                    upload_image(category, image_url, image_name, chapter_url)
 
-            create_set(chapter_name2, images_info)
+            create_set(cat, images_info)
             if 'break' in sys.argv:
                 break
 

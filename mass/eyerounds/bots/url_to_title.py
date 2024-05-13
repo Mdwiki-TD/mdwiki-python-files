@@ -19,10 +19,9 @@ with open(main_dir / 'jsons/images.json', 'r', encoding='utf-8') as f:
 
 with open(main_dir / 'jsons/urls.json', 'r', encoding='utf-8') as f:
     urls = json.load(f)
-with open(main_dir / 'jsons/urls_to_title_new.json', 'r', encoding='utf-8') as f:
-    urls_to_title_new = json.load(f)
 
-urls_to_title = urls_to_title_new.copy()
+with open(main_dir / 'jsons/urls_to_title.json', 'r', encoding='utf-8') as f:
+    urls_to_title = json.load(f)
 
 for url, tab in urls.items():
 
@@ -33,12 +32,9 @@ for url, tab in urls.items():
         if not urls_to_title.get(x['url'], ''):
             urls_to_title[x['url']] = x['title']
 
-for url, info_data in tqdm.tqdm(data.copy().items()):
+for url, info_data in data.items():
     if url not in urls_to_title:
         urls_to_title[url] = ''
-
-with open(main_dir / 'jsons/urls_to_title.json', 'w', encoding='utf-8') as f:
-    json.dump(urls_to_title, f, indent=2)
 
 no_title = [ url for url, title in urls_to_title.items() if not title ]
 
@@ -50,16 +46,27 @@ def start():
     # get title from <meta name="Keywords" content="Cataract Formation after Pars Plana Vitrectomy" />
     # save title in urls_to_title
     # write urls_to_title to urls_to_title.json
+    no_2 = 0
     for url in tqdm.tqdm(no_title):
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         meta = soup.find('meta', attrs={'name': 'Keywords'})
         if meta:
             title = meta['content']
-            urls_to_title_new[url] = title
+            urls_to_title[url] = title
+            continue
+        meta2 = soup.find('meta', attrs={'name': 'description'})
+        if meta2:
+            title = meta2['content']
+            urls_to_title[url] = title
+            continue
 
-    with open(main_dir / 'jsons/urls_to_title_new.json', 'w', encoding='utf-8') as f:
-        json.dump(urls_to_title_new, f, indent=2)
+        no_2 += 1
+
+    with open(main_dir / 'jsons/urls_to_title.json', 'w', encoding='utf-8') as f:
+        json.dump(urls_to_title, f, indent=2)
+
+    print(f"Number of urls without title: {no_2} new!! ")
 
 
 if __name__ == '__main__':
