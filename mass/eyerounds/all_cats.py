@@ -3,10 +3,9 @@
 python3 core8/pwb.py mass/eyerounds/all_cats ask
 
 """
-import re
-import os
 import json
 from pathlib import Path
+from newapi import printe
 from newapi.ncc_page import MainPage as ncc_MainPage
 
 # Specify the root folder
@@ -88,6 +87,8 @@ def doo():
     # ---
     if old_text != text:
         page.save(newtext=text, summary="update", nocreate=0, minor="")
+    else:
+        printe.output("<<lightyellow>> No changes")
 
     # sort names by count
     done = dict(sorted(done.items(), key=lambda x: x[1], reverse=True))

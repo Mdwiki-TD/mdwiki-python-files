@@ -36,8 +36,8 @@ for url, info_data in data.items():
         urls_to_title[url] = ""
 
 no_title = [url for url, title in urls_to_title.items() if not title]
-
-print(f"Number of urls without title: {len(no_title)}")
+if no_title:
+    print(f"Number of urls without title: {len(no_title)}")
 
 
 def start() -> None:
