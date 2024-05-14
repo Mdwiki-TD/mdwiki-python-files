@@ -7,7 +7,10 @@ write python code to do:
 * upload images to nccommons.org using def upload_image(chapter_name, image_url, image_name, chapter_url)
 
 python3 I:/mdwiki/pybot/mass/eyerounds/up.py
-python3 core8/pwb.py mass/eyerounds/up break
+python3 core8/pwb.py mass/eyerounds/up break ask
+
+
+tfj run eyeroundsx --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/eyerounds/up"
 
 """
 
@@ -15,7 +18,7 @@ import sys
 import os
 import time
 import json
-from tqdm import tqdm
+# from tqdm import tqdm
 from pathlib import Path
 from nccommons import api
 
@@ -25,6 +28,8 @@ from newapi.ncc_page import CatDepth
 from mass.eyerounds.bots.catbot import category_name
 from mass.eyerounds.bots.url_to_title import urls_to_title
 from mass.eyerounds.bots.set_bot import create_set
+from mass.eyerounds.bots.category_bot import create_category # create_category(chapter_name, pages)
+from mass.eyerounds.bots.names import make_files_names
 
 # Specify the root folder
 main_dir = Path(__file__).parent
@@ -41,9 +46,9 @@ def get_data() -> dict:
     data_done = []
     data = {}
     for url, da in dataimages.items():
-        if url in data_done:
+        if url.lower() in data_done:
             continue
-        data_done.append(url)
+        data_done.append(url.lower())
         data[url] = da
 
     data = dict(sorted(data.items(), key=lambda item: len(item[1]["images"]), reverse=True))
@@ -57,49 +62,6 @@ def get_data() -> dict:
     printe.output(f"<<green>> Number of images: {sum(len(v['images']) for k, v in data.items())}")
 
     return data
-
-
-def get_image_extension(image_url) -> str:
-    # Split the URL to get the filename and extension
-    _, filename = os.path.split(image_url)
-
-    # Split the filename to get the name and extension
-    _name, extension = os.path.splitext(filename)
-
-    # Return the extension (without the dot)
-    return extension[1:]
-
-
-def make_file(image_name, image_url) -> str:
-    image_name = image_name.replace("_", " ").replace("  ", " ")
-    # base_name = os.path.basename(image_url)
-
-    # get image extension from image_url
-    print(image_url)
-    extension = get_image_extension(image_url)
-
-    # add extension to image_name
-    image_name = f"{image_name}.{extension}"
-    image_name = image_name.replace("..", ".")
-    return image_name
-
-
-def create_category(chapter_name) -> str:
-    cat_text = f"* Image set: [[{chapter_name}]]\n[[Category:EyeRounds]]"
-    cat_title = f"Category:{chapter_name}"
-    # ---
-    if "nocat" in sys.argv:
-        return cat_title
-    # ---
-    chapter_name = chapter_name.replace("_", " ").replace("  ", " ")
-    if cat_title in pages:
-        printe.output(f"<<lightyellow>>{cat_title} already exists")
-        return cat_title
-    # ---
-    api.create_Page(cat_text, cat_title)
-    # ---
-    return cat_title
-
 
 def make_image_text(category, image_url, chapter_url):
     # ---
@@ -122,16 +84,16 @@ def make_image_text(category, image_url, chapter_url):
         "== {{int:license}} ==\n"
         "{{Cc-by-nc-nd-3.0}}\n"
         f"[[{category}]]\n"
-        "[[Category:EyeRounds]]"
+        "[[Category:EyeRounds images]]\n"
     )
 
     return image_text
 
 
-def upload_image(category, image_url, image_name, chapter_url) -> None:
+def upload_image(category, image_url, image_name, chapter_url) -> bool:
     if f"File:{image_name}" in pages:
         printe.output(f"<<lightyellow>> File:{image_name} already exists")
-        return
+        return "exists"
     # ---
     image_text = make_image_text(category, image_url, chapter_url)
     # ---
@@ -139,25 +101,37 @@ def upload_image(category, image_url, image_name, chapter_url) -> None:
     # ---
     print(f"upload result: {upload}")
 
-def process_images(images_info, category, chapter_url) -> dict:
+    return upload
+
+def process_images(images_info, category, numb, chapter_url) -> dict:
     files = {}
     if category and "noup" not in sys.argv:
-        # Upload images
+        # ---
+        files_names = make_files_names(images_info, numb)
+        # ---
         n = 0
-        for image_url, image_name in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
+        # ---
+        # for image_url, image_name in tqdm(images_info.items(), desc="Uploading images", total=len(images_info.keys())):
+        for image_url, image_name in files_names.items():
             n += 1
 
-            # add extension to image_name
-            image_name = make_file(image_name, image_url)
-
             print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
-            upload_image(category, image_url, image_name, chapter_url)
 
-            files[len(files) + 1] = image_name
+            upload = upload_image(category, image_url, image_name, chapter_url)
+
+            if upload:
+                files[len(files) + 1] = image_name
 
     return files
+
 def process_folder() -> None:
     data = get_data()
+    # ---
+    if "test" in sys.argv:
+        url= "https://eyerounds.org/cases/164-Toric-IOL-exchange.htm"
+        data = {url: data[url]}
+    # ---
+    done = []
     # ---
     for chapter_url, info_data in data.items():
         images_info = info_data.get("images", {})
@@ -168,14 +142,19 @@ def process_folder() -> None:
 
         _title = info_data.get("title")
 
-        cat, _numb = category_name(chapter_url)
+        cat, numb = category_name(chapter_url)
 
         print(f"Processing {cat}")
+        if numb in done or chapter_url.lower() in done:
+            continue
+
+        done.append(numb)
+        done.append(chapter_url.lower())
 
         # Create category
-        category = create_category(cat)
+        category = create_category(cat, chapter_url, pages)
         # ---
-        files = process_images(images_info, category, chapter_url)
+        files = process_images(images_info, category, numb, chapter_url)
         # ---
         if files:
             create_set(cat, files)

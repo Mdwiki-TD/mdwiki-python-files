@@ -155,6 +155,7 @@ def upload_by_url(file_name, text, url, comment="", return_file_name=False, do_e
     # {'upload': {'result': 'Warning', 'warnings': {'duplicate': ['Buckle_fracture_of_distal_radius_(Radiopaedia_46707).jpg']}, 'filekey': '1amgwircbots.rdrfjg.13.', 'sessionkey': '1amgwircbots.rdrfjg.13.'}}
     # ---
     duplicate = upload_result.get("warnings", {}).get("duplicate", [""])[0].replace("_", " ")
+    exists = upload_result.get("warnings", {}).get("exists", False)
     # ---
     if success:
         printe.output(f"<<lightgreen>> ** true .. [[File:{file_name}]] ")
