@@ -14,7 +14,7 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 def format_text(chapter_name, files) -> str:
     # files_sorted = sorted(files.items(), key=lambda item: item[1], reverse=True)
     # ---
-    fils = '\n'.join([f"|File:{file_name}|" for _, file_name in files.items()])
+    files_list = '\n'.join([f"|File:{file_name}|" for _, file_name in files.items()])
     # ---
     text = (
         "{{Imagestack\n"
@@ -22,7 +22,7 @@ def format_text(chapter_name, files) -> str:
         f"|title={chapter_name}\n"
         "|align=centre\n"
         "|loop=no\n"
-        f"{fils}\n"
+        f"{files_list}\n"
         "}}\n"
         "[[Category:Image set]]\n"
         f"[[Category:{chapter_name}|*]]\n"
