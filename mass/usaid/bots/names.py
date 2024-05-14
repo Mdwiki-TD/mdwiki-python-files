@@ -36,24 +36,14 @@ def make_file(image_name, image_url) -> str:
     image_name = image_name.replace("..", ".")
     return image_name
 
-def make_files_names(img_infos, numb) -> dict:
+def make_files_names(img_infos, album_id, title) -> dict:
     names = {}
     # ---
-    printe.output(f"___________\nMaking names for case {numb}:")
+    printe.output(f"___________\nMaking names for {album_id}:")
     # ---
     used_names = {}
     # ---
-    duplict_names = {}
-    # ---
-    for image_url, image_name in img_infos.items():
-        if image_name in duplict_names:
-            duplict_names[image_name] += 1
-        else:
-            duplict_names[image_name] = 1
-    # ---
-    duplict_names = {key: value for key, value in duplict_names.items() if value > 1}
-    # ---
-    printe.output(f"Duplicate names: len(duplict_names) = {len(duplict_names)}")
+    numb = 0
     # ---
     for image_url, img_name in img_infos.items():
         # add extension to image_name
@@ -72,7 +62,9 @@ def make_files_names(img_infos, numb) -> dict:
             printe.output(f"Invalid extension: {extension}")
             continue
         # ---
-        image_name = f"EyeRounds Case {numb}, {name}"
+        numb += 1
+        # ---
+        image_name = f"USAID Album {album_id}, image {numb}"
         # ---
         image_name = f"{image_name}.{extension}"
         image_name = image_name.replace("..", ".")
@@ -84,10 +76,5 @@ def make_files_names(img_infos, numb) -> dict:
     # ---
     if len(list(set(names.values()))) == len(names):
         printe.output("<<green>> All image names are unique")
-        return names
-    # ---
-    for image_name, count in used_names.items():
-        if count > 1:
-            printe.output(f"Image name [[{image_name}]] <<yellow>>used {count} times")
     # ---
     return names
