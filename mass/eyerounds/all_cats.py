@@ -48,6 +48,8 @@ def doo():
         return False
 
     # ---
+    all_images = 0
+    # ---
     for n, (url, count) in enumerate(cases.items(), start=1):
         x = urls_to_title.get(url)
         # ---
@@ -69,6 +71,10 @@ def doo():
         done[cat] += 1
         # ---
         bc = background_color(cat) or background_color(numb) or background_color(x) or ""
+        if not bc:
+            all_images += count
+        else:
+            count = "-"
         # ---
         text += f"|- {bc}\n"
         text += f"! {n}\n"
@@ -77,7 +83,17 @@ def doo():
         text += f"| {numb}\n"
         text += f"| [{url} ]\n"  # + '|| {{#ifexist:' + x2 + '|1|0}}\n'
         text += f"| {count}\n"
-
+    # ---
+    text += (
+        "|-\n"
+        "! #\n"
+        "! \n"
+        "! \n"
+        "! \n"
+        "! \n"
+        f"! {all_images}\n"
+    )
+    # ---
     text += "|}"
     text += "\n[[Category:EyeRounds|*]]"
 

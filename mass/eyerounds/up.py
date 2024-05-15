@@ -34,7 +34,8 @@ from mass.eyerounds.bots.names import make_files_names
 # Specify the root folder
 main_dir = Path(__file__).parent
 
-pages = CatDepth("Category:EyeRounds", sitecode="www", family="nccommons", depth=2, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
+pages_images = CatDepth("Category:EyeRounds images", sitecode="www", family="nccommons", depth=0, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
+pages = CatDepth("Category:EyeRounds", sitecode="www", family="nccommons", depth=0, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
 time.sleep(1)
 print("time.sleep(1)")
 
@@ -91,11 +92,10 @@ def make_image_text(category, image_url, chapter_url):
 
 
 def upload_image(category, image_url, image_name, chapter_url) -> bool:
-    if f"File:{image_name}" in pages:
-        printe.output(f"<<lightyellow>> File:{image_name} already exists")
-        return "exists"
     # ---
     image_text = make_image_text(category, image_url, chapter_url)
+    # ---
+    image_url = image_url.replace(" ", "%20")
     # ---
     upload = api.upload_by_url(image_name, image_text, image_url, comment="")
     # ---
@@ -115,6 +115,10 @@ def process_images(images_info, category, numb, chapter_url) -> dict:
         for image_url, image_name in files_names.items():
             n += 1
 
+            if f"File:{image_name}" in pages_images:
+                files[len(files) + 1] = image_name
+                continue
+
             print(f"Uploading image {n}/{len(images_info.keys())}: {image_name}")
 
             upload = upload_image(category, image_url, image_name, chapter_url)
@@ -128,7 +132,7 @@ def process_folder() -> None:
     data = get_data()
     # ---
     if "test" in sys.argv:
-        url= "https://eyerounds.org/cases/164-Toric-IOL-exchange.htm"
+        url= "https://eyerounds.org/cases/89_Phlyctenular-Keratoconjunctivitis-Staphylococcal-Blepharitis.htm"
         data = {url: data[url]}
     # ---
     done = []
