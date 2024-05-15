@@ -10,7 +10,7 @@
 
 
 
-https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=c74ac20e4105b3bd301d1400572d73ba&photoset_id=72177720316668580&format=json&nojsoncallback=1
+https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=##&photoset_id=72177720316668580&format=json&nojsoncallback=1
 
 https://api.flickr.com/services/rest?extras=can_addmeta%2Ccan_comment%2Ccan_download%2Ccan_print%2Ccan_share%2Ccontact%2Ccontent_type%2Ccount_comments%2Ccount_faves%2Ccount_views%2Cdate_taken%2Cdate_upload%2Cdescription%2Cicon_urls_deep%2Cisfavorite%2Cispro%2Clicense%2Cmedia%2Cneeds_interstitial%2Cowner_name%2Cowner_datecreate%2Cpath_alias%2Cperm_print%2Crealname%2Crotation%2Csafety_level%2Csecret_k%2Csecret_h%2Curl_sq%2Curl_q%2Curl_t%2Curl_s%2Curl_n%2Curl_w%2Curl_m%2Curl_z%2Curl_c%2Curl_l%2Curl_h%2Curl_k%2Curl_3k%2Curl_4k%2Curl_f%2Curl_5k%2Curl_6k%2Curl_o%2Cvisibility%2Cvisibility_source%2Co_dims%2Cpubliceditability%2Csystem_moderation&per_page=500&page=1&get_user_info=1&primary_photo_extras=url_c%2C+url_h%2C+url_k%2C+url_l%2C+url_m%2C+url_n%2C+url_o%2C+url_q%2C+url_s%2C+url_sq%2C+url_t%2C+url_z%2C+needs_interstitial%2C+can_share&jump_to=&photoset_id=72157714381416766&viewerNSID=200672992%40N03&method=flickr.photosets.getPhotos&csrf=1715752980%3Aid3yvgzpgmo%3Ad1e5822e3dca3ea98015e43f81bcddb2&api_key=7ee1c7f52475dd05970ec245e8976645&format=json&hermes=1&hermesClient=1&reqId=7be4de8d-12ee-434b-b6eb-b7473dba5faa&nojsoncallback=1
 

@@ -9,23 +9,26 @@ tfj run usaid --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 
 import sys
 import json
-import re
 import requests
-from bs4 import BeautifulSoup
-import tqdm
 from newapi import printe
 from pathlib import Path
 
 main_dir = Path(__file__).parent
 albums_file = main_dir / "jsons/albums.json"
 
+api_key = ''
+# read api key from .env
+with open(main_dir / ".env", "r") as file:
+    for line in file:
+        if line.startswith("api_key"):
+            api_key = line.split("=")[1].strip()
 
 with open(albums_file, "r") as file:
     albums_list = json.load(file)
 
 
 def get_img_titles(album_id):
-    url = f"https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&photoset_id={album_id}&api_key=c74ac20e4105b3bd301d1400572d73ba&format=json&nojsoncallback=1"
+    url = f"https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&photoset_id={album_id}&api_key={api_key}&format=json&nojsoncallback=1"
     response = requests.get(url)
 
     if response.status_code != 200:
@@ -42,7 +45,7 @@ def get_img_titles(album_id):
 
 def extract_infos_from_url(x):
     # Print the URL being processed
-    url = f"https://api.flickr.com/services/rest?extras=title,description,url_o&per_page=500&page=1&get_user_info=1&primary_photo_extras=url_o&photoset_id={x}&method=flickr.photosets.getPhotos&api_key=c74ac20e4105b3bd301d1400572d73ba&format=json&nojsoncallback=1"
+    url = f"https://api.flickr.com/services/rest?extras=title,description,url_o&per_page=500&page=1&get_user_info=1&primary_photo_extras=url_o&photoset_id={x}&method=flickr.photosets.getPhotos&api_key={api_key}&format=json&nojsoncallback=1"
     # ---
     printe.output(f"\t Processing URL: {url}")
 
