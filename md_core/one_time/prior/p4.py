@@ -9,7 +9,7 @@ python3 core8/pwb.py prior/p4 test
 import sys
 import os
 import json
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -57,12 +57,12 @@ def log_all(main_File):
     if 'enonly' in sys.argv or 'newenonly' in sys.argv:
         return
     # ---
-    with codecs.open(main_File, 'w', encoding='utf-8') as file:
+    with open(main_File, "w", encoding="utf-8") as file:
         file.write(json.dumps(All))
 
 
 def log_allen(main_File):
-    with codecs.open(main_File, 'w', encoding='utf-8') as file:
+    with open(main_File, "w", encoding="utf-8") as file:
         file.write(json.dumps(allen))
 
 
@@ -180,12 +180,12 @@ def work_in_links(links, main_File, main_File_en, Log=True):
     basefilename = os.path.basename(main_File_en)
     # ---
     if os.path.exists(main_File_en):
-        en_in = json.load(open(main_File_en, encoding='utf-8'))
+        en_in = json.load(open(main_File_en, encoding="utf-8"))
         allen = en_in
         printe.output(f'<<green>> There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links...')
     # ---
     if os.path.exists(main_File):
-        All = json.load(open(main_File, encoding='utf-8'))
+        All = json.load(open(main_File, encoding="utf-8"))
     # ---
     for x in links:
         n_al += 1

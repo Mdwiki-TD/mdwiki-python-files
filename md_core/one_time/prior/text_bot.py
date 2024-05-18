@@ -5,7 +5,7 @@
 import sys
 import json
 from pathlib import Path
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -187,7 +187,7 @@ def log_all_pages_states():
     # ---
     if all_pages_states != {}:
         printe.output(f'<<lightyellow>> log_all_pages_states(): lenth: {len(all_pages_states.keys())}')
-        json.dump(all_pages_states, codecs.open(file, 'w', encoding='utf-8'))
+        json.dump(all_pages_states, open(file, "w", encoding="utf-8"))
 
     # ---
 

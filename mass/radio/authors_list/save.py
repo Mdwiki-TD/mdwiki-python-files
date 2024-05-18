@@ -15,7 +15,7 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(str(main_dir), 'authors_list/authors_infos.json'), "r", encoding="utf-8") as f:
     authors_infos = json.load(f)
 # ---
 

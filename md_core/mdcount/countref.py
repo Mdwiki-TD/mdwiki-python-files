@@ -16,7 +16,7 @@ python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
 #
 #
 import json
-import codecs
+
 import re
 import os
 import sys
@@ -44,13 +44,13 @@ file_lead = f'{dir2}/public_html/Translation_Dashboard/Tables/lead_refcount.json
 # ---
 a = {}
 # ---
-a = json.loads(codecs.open(file_all, "r", encoding="utf-8").read())
+a = json.loads(open(file_all, "r", encoding="utf-8").read())
 # ---
 all_ref = {x: ref for x, ref in a.items() if ref > 0}
 # ---
 la = {}
 # ---
-la = json.loads(codecs.open(file_lead, "r", encoding="utf-8").read())
+la = json.loads(open(file_lead, "r", encoding="utf-8").read())
 # ---
 lead_ref = {x: ref for x, ref in la.items() if ref > 0}
 # ---
@@ -132,7 +132,7 @@ def count_refs(title):
 
 
 def logaa(file, table):
-    with open(file, 'w', encoding='utf-8') as outfile:
+    with open(file, "w", encoding="utf-8") as outfile:
         json.dump(table, outfile, sort_keys=True, indent=2)
     # ---
     printe.output(f'<<lightgreen>> {len(table)} lines to {file}')

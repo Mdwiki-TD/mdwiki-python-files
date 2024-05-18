@@ -42,7 +42,7 @@ if __name__ == '__main__':
 | pronounce         =
 | tradename         = Netromycin, others
 | synonyms          = 1-N-ethylsisomicin
-| IUPAC_name        = (2''R'',3''R'',4''R'',5''R'')-2-{[(1''S'',2''S'',3''R'',4''S'',6''R'')-4-Amino-3-{[(2''S'',3''R'')-3-amino-6-(aminomethyl)-3,4-dihydro-2''H''-pyran-2-yl]oxy}-6-(ethylamino)-2-hydroxycyclohexyl]oxy}-5-methyl-4-(methylamino)oxane-3,5-diol
+| IUPAC_name        = (2'"R"',3'"R"',4'"R"',5'"R"')-2-{[(1''S'',2''S'',3'"R"',4''S'',6'"R"')-4-Amino-3-{[(2''S'',3'"R"')-3-amino-6-(aminomethyl)-3,4-dihydro-2''H''-pyran-2-yl]oxy}-6-(ethylamino)-2-hydroxycyclohexyl]oxy}-5-methyl-4-(methylamino)oxane-3,5-diol
 
 <!-- Clinical data -->
 | class             = [[Aminoglycoside]]<ref name=SPS2020/>

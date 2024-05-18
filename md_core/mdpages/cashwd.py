@@ -207,14 +207,14 @@ def cash_wd():
     # ---
     lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
-    with open(f'{Dashboard_path}/Tables/sitelinks.json', 'w', encoding='utf-8') as aa:
+    with open(f'{Dashboard_path}/Tables/sitelinks.json', "w", encoding="utf-8") as aa:
         json.dump(lists, aa)
     # ---
-    # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , 'w', encoding="utf-8"), ensure_ascii=False, indent=2 )
+    # json.dump( table_l, open( Dashboard_path + '/Tables/sitelinks_list.json' , "w", encoding="utf-8"), ensure_ascii=False, indent=2 )
     # ---
     # table_to_log = { "redirects": redirects_qids, "missing": mis_qids }
     # ---
-    # json.dump( table_to_log, open( Dashboard_path + '/Tables/qid_redirects_missing.json' , 'w', encoding="utf-8") )
+    # json.dump( table_to_log, open( Dashboard_path + '/Tables/qid_redirects_missing.json' , "w", encoding="utf-8") )
     # ---
     for site, miss_list in main_table_sites.items():
         # printe.output('<<lightblue>> main_table_sites:%s, len:%d.' % (site, len(miss_list)) )
@@ -232,7 +232,7 @@ def cash_wd():
         # ---
         # dump miss_list to json_file
         try:
-            with open(json_file, 'w', encoding="utf-8") as aa:
+            with open(json_file, "w", encoding="utf-8") as aa:
                 json.dump(miss_list, aa, ensure_ascii=False, indent=2)
             printe.output(f'<<lightgreenn>>dump to cash_exists/{site}.json done..')
         except Exception:
@@ -252,7 +252,7 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    with open(f'{Dashboard_path}/Tables/noqids.json', 'w', encoding="utf-8") as dd:
+    with open(f'{Dashboard_path}/Tables/noqids.json', "w", encoding="utf-8") as dd:
         json.dump(noqids, dd)
     # ---
     # redirects_qids
@@ -267,7 +267,7 @@ def cash_wd():
     printe.output(f' len of redirects_qids:  {len(redirects_qids.keys())}')
     printe.output(f' len of missing_qids:    {len(mis_qids)}')
     # ---
-    with open(f'{Dashboard_path}/Tables/missing.json', 'w', encoding="utf-8") as xx:
+    with open(f'{Dashboard_path}/Tables/missing.json', "w", encoding="utf-8") as xx:
         json.dump(missing, xx)
     printe.output(' log to missing.json true.... ')
     printe.output(f"{missing['all']=}")

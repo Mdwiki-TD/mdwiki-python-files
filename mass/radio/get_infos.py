@@ -39,7 +39,7 @@ def get_id_infos(url):
     soup = BeautifulSoup(response.content, 'html.parser')
     # ---
     # <a class="view-fullscreen-link" href="/cases/97085/studies/117071?lang=us">
-    studies_ = soup.find_all('a', class_='view-fullscreen-link')
+    studies_ = soup.find_all("a", class_='view-fullscreen-link')
     # ---
     studies = []
     for link in studies_:
@@ -73,7 +73,7 @@ def get_id_infos(url):
     # <div class='case-link'><a class="link-on-dark" href="/cases/cervical-rib-21?lang=us">Cervical rib</a></div>
     case_link = soup.find('div', class_='case-link')
     if case_link:
-        title = case_link.find('a', class_='link-on-dark').text.strip()
+        title = case_link.find("a", class_='link-on-dark').text.strip()
     # ---
     author = ''
     # <meta name="author" content="Frank Gaillard"/>

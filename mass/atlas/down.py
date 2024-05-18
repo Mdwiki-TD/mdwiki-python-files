@@ -72,7 +72,7 @@ def process_disease_page(disease_url, disease_name):
     response = requests.get(disease_url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    image_links = soup.find_all('a', class_='thumbWrapper')
+    image_links = soup.find_all("a", class_='thumbWrapper')
     images_info = {}
 
     for index, link in enumerate(image_links):
@@ -98,7 +98,7 @@ def scrape_data(url):
         disease_name = item.find('span', itemprop='name').get_text().strip()
         disease_name = disease_name.title()
 
-        disease_href = item.find('a')['href']
+        disease_href = item.find("a")['href']
         disease_url = urljoin("https://www.atlasdermatologico.com.br/", disease_href)
         disease_url = remove_session_id_from_url(disease_url)
 
@@ -123,7 +123,7 @@ def create_folder(folder_name, disease_name, disease_url, images_info):
     info_data = {"disease_name": disease_name, "disease_url": disease_url, "images_info": images_info}
 
     info_file_path = os.path.join(folder_name, "info.json")
-    with open(info_file_path, 'w', encoding="utf-8") as info_file:
+    with open(info_file_path, "w", encoding="utf-8") as info_file:
         json.dump(info_data, info_file, indent=2)
 
 

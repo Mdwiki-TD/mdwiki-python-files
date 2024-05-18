@@ -2,7 +2,7 @@ import re
 import sys
 
 from pathlib import Path
-import codecs
+
 import wikitextparser
 
 
@@ -135,13 +135,13 @@ if __name__ == "__main__":
     # ---
     text = GetPageText(sys.argv[1])
     # ---
-    # text = codecs.open(Dir+ "/texts/section.txt", "r", "utf-8").read()
+    # text = open(Dir+ "/texts/section.txt", "r", encoding="utf-8").read()
     # ---
-    codecs.open(f"{Dir}/texts/section.txt", "w", "utf-8").write(text)
+    open(f"{Dir}/texts/section.txt", "w", encoding="utf-8").write(text)
     # ---
     bot = move_External_links_section(str(text))
     # ---
     new_text = bot.make_new_txt()
     # ---
     pywikibot.showDiff(text, new_text)
-    codecs.open(f"{Dir}/texts/secnew.txt", "w", "utf-8").write(new_text)
+    open(f"{Dir}/texts/secnew.txt", "w", encoding="utf-8").write(new_text)

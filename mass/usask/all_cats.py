@@ -13,7 +13,7 @@ main_dir = Path(__file__).parent
 
 
 def doo():
-    with open(os.path.join(str(main_dir), 'images.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(str(main_dir), 'images.json'), "r", encoding="utf-8") as f:
         data = json.load(f)
 
     names = {}

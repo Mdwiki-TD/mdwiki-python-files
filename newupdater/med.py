@@ -6,7 +6,7 @@
 # (C) Ibrahem Qasim, 2023
 #
 #
-import codecs
+
 import sys
 import os
 import requests
@@ -182,14 +182,14 @@ def work_on_title(title, returntext=False, text_O=""):
     try:
         filename = f"{dir2}/public_html/updatercash/{title2}_1.txt"
         # ---
-        codecs.open(filename, "w", encoding="utf-8").write(new_text)
+        open(filename, "w", encoding="utf-8").write(new_text)
         # ---
         print(filename)
         # ---
     except Exception:
         filename = f"{dir2}/public_html/updatercash/title2.txt"
         # ---
-        codecs.open(filename, "w", encoding="utf-8").write(new_text)
+        open(filename, "w", encoding="utf-8").write(new_text)
         # ---
         print(filename)
 

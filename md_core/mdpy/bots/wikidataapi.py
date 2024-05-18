@@ -487,7 +487,7 @@ def open_url(url, return_json=False):
     # ---
     html = ""
     try:
-        html = req.read().strip().decode('utf-8')
+        html = req.read().strip().decode("utf-8")
     except Exception:
         pywikibot.output('Traceback (most recent call last):')
         pywikibot.output(traceback.format_exc())

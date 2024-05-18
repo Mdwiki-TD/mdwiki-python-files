@@ -13,7 +13,7 @@ python3 core8/pwb.py mdpy/imp -page:Infertility
 #
 import sys
 import json
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -166,7 +166,7 @@ def main():
             # if value == 'redirectlist.txt' :
             # value = '/data/project/mdwiki/public_html/redirectlist.txt'
             # ---
-            text2 = codecs.open(value, 'r', 'utf8')
+            text2 = open(value, "r", 'utf8')
             text = text2.read()
             pages.extend(x.strip() for x in text.split("\n"))
         # ---

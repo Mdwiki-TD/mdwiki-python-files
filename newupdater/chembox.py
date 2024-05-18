@@ -1,6 +1,6 @@
 import wikitextparser as wtp
 from pathlib import Path
-import codecs
+
 
 # ---
 Dir = Path(__file__).parent
@@ -94,7 +94,13 @@ class fix_Chembox:
 if __name__ == '__main__':
     import pywikibot
 
-    text = codecs.open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8").read()
+    text = {}
+
+    # ---
+
+    with open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8") as f:
+
+        text = f.read(f)
     bot = fix_Chembox(text)
     newtext = bot.run()
     pywikibot.showDiff(text, newtext)

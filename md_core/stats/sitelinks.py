@@ -77,7 +77,7 @@ def start():
     # dump each site to file
     for site, links in sits.items():
         # ---
-        with open(Dir / 'sites' / f'{site}.json', 'w', encoding='utf-8') as f:
+        with open(Dir / 'sites' / f'{site}.json', "w", encoding="utf-8") as f:
             json.dump(links, f, sort_keys=True)
             printe.output(f'dump <<lightgreen>> {site} of {len(links)}')
 

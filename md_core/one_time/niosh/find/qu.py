@@ -5,7 +5,7 @@ python3 core8/pwb.py niosh/bot
 import os
 from pathlib import Path
 import re
-import codecs
+
 import json
 
 # ---
@@ -36,7 +36,7 @@ for item in data:
         result[page_title] = [el_to]
     result[page_title] = list(set(result[page_title]))
     result[page_title].sort()
-json.dump(result, codecs.open(file, 'w', encoding='utf-8'))
+json.dump(result, open(file, "w", encoding="utf-8"))
 '''
 # ---
 # sort
@@ -83,5 +83,5 @@ print(f'all pages:{len(new.keys())}, {len_all_links=}')
 # sort dict keys
 new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
 # ---
-with codecs.open(f"{Dir2}/jsons/both.json", 'w', encoding='utf-8') as ii:
+with open(f"{Dir2}/jsons/both.json", "w", encoding="utf-8") as ii:
     json.dump(new, ii, ensure_ascii=False, indent=2)

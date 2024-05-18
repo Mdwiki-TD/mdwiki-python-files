@@ -26,7 +26,7 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 # Specify the root folder
 main_dir = Path(__file__).parent
 
-with open(os.path.join(str(main_dir), 'images.json'), 'r') as f:
+with open(os.path.join(str(main_dir), 'images.json'), "r") as f:
     data = json.load(f)
 
 data = dict(sorted(data.items(), key=lambda item: len(item[1]['images']), reverse=True))

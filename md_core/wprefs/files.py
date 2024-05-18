@@ -6,7 +6,7 @@ from wprefs.files import reffixed_list, setting, append_reffixed_file
 #
 #
 import json
-import codecs
+
 import os
 import sys
 from pathlib import Path
@@ -32,7 +32,7 @@ setting = {}
 # ---
 if os.path.isfile(fixwikirefs):
     try:
-        setting = json.load(codecs.open(fixwikirefs, "r", encoding="utf-8-sig"))
+        setting = json.load(open(fixwikirefs, "r", encoding="utf-8-sig"))
         # print(setting)
     except Exception:
         setting = {}
@@ -43,7 +43,7 @@ def make_ref_done_list():
     reffixed = ''
     # ---
     try:
-        with codecs.open(reffixed_file, "r", encoding="utf-8-sig") as mama:
+        with open(reffixed_file, "r", encoding="utf-8-sig") as mama:
             reffixed = mama.read()
     except Exception:
         exepts()
@@ -64,7 +64,7 @@ def append_reffixed_file(lang, title, titles=[]):
         nan = "\n".join([f'{lang}:{t}' for t in titles])
         lio += f"\n{nan}"
     # ---
-    with codecs.open(reffixed_file, "a", encoding="utf-8") as ggg:
+    with open(reffixed_file, "a", encoding="utf-8") as ggg:
         ggg.write('\n' + lio)
 
 
@@ -75,7 +75,7 @@ def save_wprefcash(title, newtext):
     # ---
     try:
         filename = dir2 + '/public_html/wprefcash/' + title2 + '.txt'
-        with codecs.open(filename, "w", encoding="utf-8") as uy:
+        with open(filename, "w", encoding="utf-8") as uy:
             uy.write(newtext)
         # ---
         print(filename)
@@ -84,7 +84,7 @@ def save_wprefcash(title, newtext):
         exepts()
 
         filename = dir2 + '/public_html/wprefcash/title2.txt'
-        with codecs.open(filename, "w", encoding="utf-8") as gf:
+        with open(filename, "w", encoding="utf-8") as gf:
             gf.write(newtext)
         # ---
         print(filename)

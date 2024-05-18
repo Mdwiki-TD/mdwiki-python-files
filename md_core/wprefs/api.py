@@ -7,7 +7,7 @@ from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 #
 #
 import json
-import codecs
+
 import os
 import sys
 import requests
@@ -267,7 +267,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         print_s(r4.text)
     # ---
     if 'savetofile' in sys.argv:
-        with codecs.open(f"{str(Dir)}/wpref_1.txt", "w", encoding="utf-8") as ggg:
+        with open(f"{str(Dir)}/wpref_1.txt", "w", encoding="utf-8") as ggg:
             ggg.write(NewText)
     # ---
     return False

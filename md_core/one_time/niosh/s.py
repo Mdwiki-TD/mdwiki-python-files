@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import re
 import json
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -31,7 +31,10 @@ cite_all_links = {}
 def work_in_file(filename):
     filename2 = os.path.join(Dird_js, filename)
     # ---
-    text = codecs.open(filename2, 'r', encoding='utf-8').read()
+    text = {}
+    # ---
+    with open(filename2, "r", encoding="utf-8") as f:
+        text = f.read(f)
     # ---
     n = 0
     # ---
@@ -73,7 +76,7 @@ def work_in_file(filename):
     # ---
     cite_all_links[filename.replace('.txt', '')] = lista
     # ---
-    with open(f"{filename2}.json", 'w', encoding='utf-8') as ee:
+    with open(f"{filename2}.json", "w", encoding="utf-8") as ee:
         json.dump(tab, ee, ensure_ascii=False, indent=2)
 
 
@@ -87,5 +90,5 @@ for filename in os.listdir(Dird):
         work_in_file(filename)
         # break
 # ---
-with open(cite_file, 'w', encoding='utf-8') as gg:
+with open(cite_file, "w", encoding="utf-8") as gg:
     json.dump(cite_all_links, gg, ensure_ascii=False, indent=2)

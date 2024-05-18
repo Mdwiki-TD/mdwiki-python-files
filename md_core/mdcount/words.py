@@ -18,7 +18,7 @@ python3 core8/pwb.py mdcount/words sql
 #
 import os
 import json
-import codecs
+
 import sys
 
 # ---
@@ -49,11 +49,11 @@ def get_word_files():
     # ---
     json_file[1] = f'{dir2}/public_html/Translation_Dashboard/Tables/allwords.json'
     # ---
-    all_words_n = json.loads(codecs.open(json_file[1], "r", encoding="utf-8").read())
+    all_words_n = json.loads(open(json_file[1], "r", encoding="utf-8").read())
     # ---
     json_file[0] = f'{dir2}/public_html/Translation_Dashboard/Tables/words.json'
     # ---
-    words_n = json.loads(codecs.open(json_file[0], "r", encoding="utf-8").read())
+    words_n = json.loads(open(json_file[0], "r", encoding="utf-8").read())
     # ---
     printe.output(f'len of words_n:{len(words_n.keys())}')
 
@@ -65,7 +65,7 @@ get_word_files()
 
 
 def log(file, table):
-    with open(file, 'w', encoding='utf-8') as aa:
+    with open(file, "w", encoding="utf-8") as aa:
         json.dump(table, aa, sort_keys=True)
     # ---
     printe.output(f'<<lightgreen>> {len(table)} lines to {file}')

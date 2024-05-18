@@ -44,7 +44,7 @@ print("Step 2: Parsed the HTML content.")
 # Step 3 and 4: Extract href and title, and add to the dictionary
 urls_dict = {}
 for p_tag in soup.find_all('p', class_='toc__title'):
-    if a_tag := p_tag.find('a'):
+    if a_tag := p_tag.find("a"):
         title = a_tag.text.strip()
         href = a_tag['href']
         urls_dict[title] = {"url": href, "images": {}}
@@ -53,6 +53,6 @@ for p_tag in soup.find_all('p', class_='toc__title'):
 print(f"lenth of urls_dict: {len(urls_dict)}")
 
 # Step 5: Save the dictionary to a JSON file
-with open(urlsfile, 'w') as json_file:
+with open(urlsfile, "w") as json_file:
     json.dump(urls_dict, json_file, indent=2)
 print("Step 5: Saved the dictionary to 'urls.json'.")

@@ -87,7 +87,7 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
             # Step 2: Parse the HTML content
             soup = BeautifulSoup(response.content, 'html.parser')
             # find  <a class="next_page" aria-label="Next page" rel="next" href="/search?lang=us&amp;page=2&amp;scope=cases&amp;sort=title&amp;system=Spine">Next &#8594;</a>
-            next_page = soup.find('a', class_='next_page')
+            next_page = soup.find("a", class_='next_page')
             if next_page:
                 url = "https://radiopaedia.org" + next_page.get('href').strip()
             else:
@@ -102,14 +102,14 @@ def get_urls_system(system, only_one=False, return_tab=False, len_all=0):
                 # ---
                 if pagination:
                     # get the link before the last one
-                    last_href = pagination.find_all('a')
+                    last_href = pagination.find_all("a")
                     if len(last_href) > 2:
                         last_href = last_href[-2].text.strip()
                 # ---
                 print(f"last_href: {last_href}")
                 return last_href
             # ---
-            links = soup.find_all('a', class_='search-result search-result-case')
+            links = soup.find_all("a", class_='search-result search-result-case')
             # ---
             for link in links:
                 # ---

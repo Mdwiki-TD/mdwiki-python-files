@@ -7,7 +7,7 @@
 #
 #
 from API import himoBOT3
-import codecs
+
 from mdpy import printe
 
 # ---
@@ -47,7 +47,10 @@ def export_en_history(title):
     # if title == 'Pubic lice' : paramse['pages'] =
     # ---
     if 'teest' in sys.argv:
-        xmldata = codecs.open('mdwiki/xml/w.xml', "r", encoding="utf-8").read()
+        xmldata = {}
+        # ---
+        with open('mdwiki/xml/w.xml', "r", encoding="utf-8") as f:
+            xmldata = f.read(f)
     else:
         # ---
         # gg = Session.post( url= "https://" + 'en.wikipedia.org/w/index.php?' , data = paramse )
@@ -106,7 +109,7 @@ def export_en_history(title):
                 # ---
                 # oodfo.write( first + texts[num] + last )
                 # ---
-                with codecs.open(path, "w", encoding="utf-8") as oodfo:
+                with open(path, "w", encoding="utf-8") as oodfo:
                     oodfo.write(first + texts[num] + last)
                 # ---
                 FILE_PATHS.append(path)
@@ -119,7 +122,7 @@ def export_en_history(title):
             # ---
             path2 = f'mdwiki/xml/{title2}-{int(num)}.xml'
             # ---
-            with codecs.open(path2, "w", encoding="utf-8") as oodfo:
+            with open(path2, "w", encoding="utf-8") as oodfo:
                 oodfo.write(first + texts[num] + last)
             # ---
             FILE_PATHS.append(path2)
@@ -131,7 +134,7 @@ def export_en_history(title):
         # ---
     else:
         FILE_PATH = f'mdwiki/xml/{title2}.xml'
-        with codecs.open(FILE_PATH, "w", encoding="utf-8") as ooo:
+        with open(FILE_PATH, "w", encoding="utf-8") as ooo:
             ooo.write(xmldata)
         # ---
         printe.output(' revisions in one file.')
@@ -165,7 +168,7 @@ def export(title):
     title2 = title.replace(':', '-').replace('/', '-')
     # ---
     FILE_PATH = f'mdwiki/xml/{title2}.xml'
-    with codecs.open(FILE_PATH, "w", encoding="utf-8") as ooo:
+    with open(FILE_PATH, "w", encoding="utf-8") as ooo:
         ooo.write(xmldata)
     # ---
     # printe.output( ' revisions in one file.' )

@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 import json
 import sys
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -40,10 +40,10 @@ Dir2 = os.path.dirname(Dir)
 file = f'{Dir2}/lists/blames.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-new_data = json.load(codecs.open(file, 'r', 'utf-8'))
+new_data = json.load(open(file, "r", encoding="utf-8"))
 
 
 def gtblame_value(title, lang):

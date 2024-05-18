@@ -12,7 +12,7 @@ import sys
 import os
 import json
 import wikitextparser
-import codecs
+
 
 # ---
 from newapi.mdwiki_page import MainPage as md_MainPage
@@ -204,7 +204,7 @@ class WorkAll:
             text = text_bot.make_text(_all_, ttt=t)
             # ---
             if 'dontsave' not in sys.argv:
-                codecs.open(filetitle, 'w', encoding='utf-8').write(text)
+                open(filetitle, "w", encoding="utf-8").write(text)
                 # ---
                 page_x = md_MainPage(ttt, 'www', family='mdwiki')
                 # ---

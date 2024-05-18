@@ -14,7 +14,7 @@ import re
 import sys
 import json
 import os
-import codecs
+
 
 # ---
 from nccommons import api
@@ -44,14 +44,20 @@ file_dir = __file__.replace("com.py", "")
 print(f"file_dir : {file_dir}")
 # ---
 if 'usefiles' in sys.argv:
-    ns_0_pages = codecs.open(file_dir + "ns_0_pages.json", "r", "utf-8").read()
-    all_files = codecs.open(file_dir + "all_files.json", "r", "utf-8").read()
+    ns_0_pages = {}
+    # ---
+    with open(file_dir + "ns_0_pages.json", "r", encoding="utf-8") as f:
+        ns_0_pages = f.read(f)
+    all_files = {}
+    # ---
+    with open(file_dir + "all_files.json", "r", encoding="utf-8") as f:
+        all_files = f.read(f)
 else:
     ns_0_pages = api.Get_All_pages("", limit="max", namespace="0", limit_all=limit_0)
     all_files = api.Get_All_pages("", limit="max", namespace="6", limit_all=limitall)
     # ---
-    codecs.open(file_dir + "ns_0_pages.json", "w", "utf-8").write(json.dumps(ns_0_pages, indent=2, ensure_ascii=False))
-    codecs.open(file_dir + "all_files.json", "w", "utf-8").write(json.dumps(all_files, indent=2, ensure_ascii=False))
+    open(file_dir + "ns_0_pages.json", "w", encoding="utf-8").write(json.dumps(ns_0_pages, indent=2, ensure_ascii=False))
+    open(file_dir + "all_files.json", "w", encoding="utf-8").write(json.dumps(all_files, indent=2, ensure_ascii=False))
 # ---
 if 'onlyread' in sys.argv:
     sys.exit(0)

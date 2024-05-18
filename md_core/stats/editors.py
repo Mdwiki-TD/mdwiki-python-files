@@ -91,7 +91,7 @@ def get_editors(links, site):
     editors = {}
     # ---
     if os.path.exists(editors_dir / f'{site}.json'):
-        with open(editors_dir / f'{site}.json', 'r', encoding='utf-8') as f:
+        with open(editors_dir / f'{site}.json', "r", encoding="utf-8") as f:
             editors = json.load(f)
             return editors
     # ---
@@ -101,7 +101,7 @@ def get_editors(links, site):
         editors = get_editors_sql(links, site)
     # ---
     if 'dump' in sys.argv and editors:
-        with open(editors_dir / f'{site}.json', 'w', encoding='utf-8') as f:
+        with open(editors_dir / f'{site}.json', "w", encoding="utf-8") as f:
             json.dump(editors, f, sort_keys=True)
     # ---
     return editors

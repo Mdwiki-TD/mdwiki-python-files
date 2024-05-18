@@ -68,11 +68,11 @@ def add_to_translators():
     file = f'{Dir}/lists/translators_mdwiki_langs.json'
     # ---
     helps.dump_data(file, tra_by_lang)
-    # with codecs.open(file, 'w', 'utf-8') as zf: json.dump(tra_by_lang, zf, ensure_ascii=False)
+    # with open(file, "w", encoding="utf-8") as zf: json.dump(tra_by_lang, zf, ensure_ascii=False)
 
 
 def sea55():
-    data = json.load(open(f'{Dir}/sea55.json', encoding='utf-8'))
+    data = json.load(open(f'{Dir}/sea55.json', encoding="utf-8"))
     # ---
     n = 0
     # ---
@@ -89,7 +89,7 @@ def sea55():
     # ---
     file = f'{Dir}/lists/blames.json'
     # ---
-    # with open(file, 'w', encoding='utf-8') as zf:   json.dump(new_data, zf, ensure_ascii=False)
+    # with open(file, "w", encoding="utf-8") as zf:   json.dump(new_data, zf, ensure_ascii=False)
     helps.dump_data(file, new_data)
 
     # ---

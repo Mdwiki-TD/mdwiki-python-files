@@ -60,7 +60,7 @@ def get_user_infos(url):
     user_url = ""
     div = soup.find('div', class_='author-info')
     if div:
-        a = div.find('a')
+        a = div.find("a")
         if a:
             user_url = a.get('href')
             if user_url and user_url.startswith("/"):

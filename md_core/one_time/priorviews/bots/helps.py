@@ -12,7 +12,7 @@ import sys
 import json
 from pathlib import Path
 import re
-import codecs
+
 import datetime
 from urllib.parse import urlencode
 from datetime import timedelta
@@ -80,12 +80,12 @@ def talk_url(lang, user, labl):
 def dump_data(file, data):
     printe.output(f'<<green>> dump_data() file:{file}.')
     try:
-        with codecs.open(file, 'w', encoding='utf-8') as f:
+        with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
         printe.output('<<red>> keyboard interrupt sys.exit()')
         # ---
-        with codecs.open(f'{file}_1', 'w', encoding='utf-8') as f:
+        with open(f'{file}_1', "w", encoding="utf-8") as f:
             json.dump(data, f)
         # ---
         sys.exit()

@@ -7,7 +7,7 @@
 # (C) Ibrahem Qasim, 2023
 #
 #
-import codecs
+
 import sys
 
 # ---
@@ -48,7 +48,7 @@ def work(title, Find, Replace, nn):
     if not text.strip():
         print(f"page:{title} text = ''")
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
-        with codecs.open(file_name[1], 'a', encoding="utf-8") as file:
+        with open(file_name[1], "a", encoding="utf-8") as file:
             file.write(line)
         return
     # ---
@@ -61,7 +61,7 @@ def work(title, Find, Replace, nn):
     # ---
     if new_text == text:
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
-        with codecs.open(file_name[1], 'a', encoding="utf-8") as file:
+        with open(file_name[1], "a", encoding="utf-8") as file:
             file.write(line)
         return
     # ---
@@ -84,7 +84,7 @@ def work(title, Find, Replace, nn):
             line = '"%s":%d,\n' % (title.replace('"', '\\"'), newrevid)
             # ---
     # ---
-    with codecs.open(file_name[1], 'a', encoding="utf-8") as file:
+    with open(file_name[1], "a", encoding="utf-8") as file:
         file.write(line)
 
 
@@ -105,9 +105,9 @@ def main():
     # ---
     print(nn)
     # ---
-    find = codecs.open(f'{public_html}/find/{nn}_find.txt', 'r', 'utf8').read()
+    find = open(f'{public_html}/find/{nn}_find.txt', "r", 'utf8').read()
     # ---
-    replace = codecs.open(f'{public_html}/find/{nn}_replace.txt', 'r', 'utf8').read()
+    replace = open(f'{public_html}/find/{nn}_replace.txt', "r", 'utf8').read()
     # ---
     if replace.strip() == "empty":
         replace = ""
@@ -119,7 +119,7 @@ def main():
     # ---
     file_name[1] = f'{public_html}/find/log/{nn}.txt'
     # ---
-    with codecs.open(Path(file_name[1]), 'w', encoding="utf-8") as file:
+    with open(Path(file_name[1]), "w", encoding="utf-8") as file:
         file.write('')
     # ---
     file_name[2] = f'{public_html}/find/log/{nn}-text.txt'
@@ -134,7 +134,7 @@ def main():
     # ---
     text = f"start work in {len(titles)} pages."
     line = f"<span style='font-size:12px'>{text}</span>"
-    codecs.open(file_name[2], 'w', encoding="utf-8").write(line)
+    open(file_name[2], "w", encoding="utf-8").write(line)
     # ---
     num = 0
     # ---

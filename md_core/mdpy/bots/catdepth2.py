@@ -11,7 +11,7 @@ python3 core8/pwb.py mdpy/bots/catdepth2
 import sys
 import json
 import traceback
-import codecs
+
 import time
 import os
 from datetime import datetime
@@ -189,7 +189,7 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
     if not os.path.isfile(filename):
         # ---
         try:
-            with open(filename, 'w', encoding='utf8') as uu:
+            with open(filename, "w", encoding='utf8') as uu:
                 json.dump({}, uu)
         except Exception as e:
             print('Traceback (most recent call last):')
@@ -198,7 +198,7 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
             # ---
     # ---
     try:
-        with codecs.open(filename, "r", encoding="utf-8") as file:
+        with open(filename, "r", encoding="utf-8") as file:
             textn = file.read()
     except Exception:
         print('Traceback (most recent call last):')
@@ -219,7 +219,7 @@ def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
         # ---
         Table['Day_History'] = Day_History
         # ---
-        with open(filename, 'w', encoding='utf8') as aa:
+        with open(filename, "w", encoding='utf8') as aa:
             json.dump(Table, aa)
         # ---
     # ---

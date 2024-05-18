@@ -14,7 +14,7 @@ python3 core8/pwb.py mdpyget/getas newpages
 #
 #
 import json
-import codecs
+
 import os
 import sys
 
@@ -44,7 +44,7 @@ printe.output(f"len of vaild_links: {len(vaild_links)}")
 json_file = {0: f"{dir2}/public_html/Translation_Dashboard/Tables/assessments.json"}
 lala = ""
 # ---
-with codecs.open(json_file[0], "r", encoding="utf-8-sig") as listt:
+with open(json_file[0], "r", encoding="utf-8-sig") as listt:
     lala = listt.read()
 # ---
 printe.output(f"file_name:{json_file[0]}")

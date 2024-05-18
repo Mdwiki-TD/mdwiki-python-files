@@ -129,7 +129,7 @@ class OneCase:
             # ---
             if os.path.exists(st_file):
                 try:
-                    with open(st_file, encoding='utf-8') as f:
+                    with open(st_file, encoding="utf-8") as f:
                         images = json.loads(f.read())
                 except Exception as e:
                     pywikibotoutput("<<lightred>> Traceback (most recent call last):")
@@ -149,7 +149,7 @@ class OneCase:
                 if not images:
                     images = get_images(f'https://radiopaedia.org/cases/{self.caseId}/studies/{study}')
                 # ---
-                with open(st_file, 'w', encoding='utf-8') as f:
+                with open(st_file, "w", encoding="utf-8") as f:
                     json.dump(images, f, ensure_ascii=False, indent=2)
             # ---
             self.studies[study] = images

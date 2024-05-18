@@ -4,7 +4,7 @@ python3 core8/pwb.py WHOem/make_text
 
 """
 import sys
-import codecs
+
 import json
 from pathlib import Path
 
@@ -80,7 +80,7 @@ def make_text(ViewsData):
     langs_keys = [lang for mdtitle, tab in ViewsData.items() for lang in tab.keys()]
     langs_keys = sorted(set(langs_keys))
     # ---
-    with codecs.open(f'{Dir}/lists/lang_links_mdtitles.json', 'r', encoding='utf-8') as f:
+    with open(f'{Dir}/lists/lang_links_mdtitles.json', "r", encoding="utf-8") as f:
         lang_links_mdtitles = json.load(f)
     # ---
     # sort lang_links_mdtitles by lenth
@@ -140,7 +140,7 @@ def make_text(ViewsData):
 
 def start():
     # ---
-    with codecs.open(f'{Dir}/lists/views.json', 'r', 'utf-8') as f:
+    with open(f'{Dir}/lists/views.json', "r", encoding="utf-8") as f:
         Views_Data = json.load(f)
     # ---
     print(f'len ViewsData: {len(Views_Data)}')
@@ -150,7 +150,7 @@ def start():
     if 'test' in sys.argv:
         print(ntext)
     # ---
-    with codecs.open(f'{Dir}/text.txt', 'w', 'utf-8') as f:
+    with open(f'{Dir}/text.txt', "w", encoding="utf-8") as f:
         f.write(ntext)
     # ---
     title = 'User:Mr. Ibrahem/WHOem'

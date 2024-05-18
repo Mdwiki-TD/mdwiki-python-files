@@ -15,14 +15,14 @@ python3 c8/pwb.py updates/io
 from mdpy.bots import mdwiki_api
 import sys
 from pathlib import Path
-import codecs
+
 
 # ---
 Dir = Path(__file__).parent
 # ---
 NewList = {}
 # ---
-fska = codecs.open(f'{Dir}/date_before_20200701.txt', "r", encoding="utf-8").read()
+fska = open(f'{Dir}/date_before_20200701.txt', "r", encoding="utf-8").read()
 fakalist = fska.split('\n')
 fakalist = [x.strip().split(']]')[0].replace('[[', '').strip() for x in fakalist]
 # ---
@@ -78,12 +78,12 @@ print(f'we have {len(new)} pages with date > 20200701. ')
 # ---
 masha = '\n'.join([f"{s}" for d, s in new])
 # ---
-with codecs.open(f'{Dir}/date_after_20200701.txt', "w", encoding="utf-8") as logfil3e:
+with open(f'{Dir}/date_after_20200701.txt', "w", encoding="utf-8") as logfil3e:
     logfil3e.write(masha)
 # ---
 masha3 = '\n'.join([f"{ss}" for ds, ss in old])
 # ---
-with codecs.open(f'{Dir}/date_before_20200701.txt', "w", encoding="utf-8") as ooo:
+with open(f'{Dir}/date_before_20200701.txt', "w", encoding="utf-8") as ooo:
     ooo.write(masha3)
 # ---
 text = f'''

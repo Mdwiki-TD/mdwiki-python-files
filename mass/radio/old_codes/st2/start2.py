@@ -19,18 +19,18 @@ from mass.radio.st2.One_Case import OneCase
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / 'jsons/authors.json', encoding='utf-8') as f:
+with open(main_dir / 'jsons/authors.json', encoding="utf-8") as f:
     authors = json.load(f)
 # ---
-with open(main_dir / 'jsons/infos.json', encoding='utf-8') as f:
+with open(main_dir / 'jsons/infos.json', encoding="utf-8") as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), encoding='utf-8') as f:
+with open(os.path.join(str(main_dir), 'jsons/all_ids.json'), encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
-with open(main_dir / 'jsons/cases_in_ids.json', encoding='utf-8') as f:
+with open(main_dir / 'jsons/cases_in_ids.json', encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
 ids_by_caseId = {
