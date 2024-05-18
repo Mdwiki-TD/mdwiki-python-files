@@ -44,13 +44,19 @@ file_lead = f'{dir2}/public_html/Translation_Dashboard/Tables/lead_refcount.json
 # ---
 a = {}
 # ---
-a = json.loads(open(file_all, "r", encoding="utf-8").read())
+a = {}
+# ---
+with open(file_all, "r", encoding="utf-8") as f:
+    a = json.load(f)
 # ---
 all_ref = {x: ref for x, ref in a.items() if ref > 0}
 # ---
 la = {}
 # ---
-la = json.loads(open(file_lead, "r", encoding="utf-8").read())
+la = {}
+# ---
+with open(file_lead, "r", encoding="utf-8") as f:
+    la = json.load(f)
 # ---
 lead_ref = {x: ref for x, ref in la.items() if ref > 0}
 # ---

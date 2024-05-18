@@ -49,11 +49,17 @@ def get_word_files():
     # ---
     json_file[1] = f'{dir2}/public_html/Translation_Dashboard/Tables/allwords.json'
     # ---
-    all_words_n = json.loads(open(json_file[1], "r", encoding="utf-8").read())
+    all_words_n = {}
+    # ---
+    with open(json_file[1], "r", encoding="utf-8") as f:
+        all_words_n = json.load(f)
     # ---
     json_file[0] = f'{dir2}/public_html/Translation_Dashboard/Tables/words.json'
     # ---
-    words_n = json.loads(open(json_file[0], "r", encoding="utf-8").read())
+    words_n = {}
+    # ---
+    with open(json_file[0], "r", encoding="utf-8") as f:
+        words_n = json.load(f)
     # ---
     printe.output(f'len of words_n:{len(words_n.keys())}')
 
