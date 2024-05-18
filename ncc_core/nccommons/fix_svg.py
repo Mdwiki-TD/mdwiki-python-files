@@ -49,7 +49,7 @@ def remove_svg_dtd_o(file_path, url=""):
         file_path, _ = urllib.request.urlretrieve(url)
     
     # Open original file
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         lines = f.readlines()
 
     # Remove the lines containing the DTD declaration
@@ -57,7 +57,7 @@ def remove_svg_dtd_o(file_path, url=""):
 
     # Write the modified content to a temporary file
     fd, temp_path = mkstemp()
-    with fdopen(fd, 'w') as tmp:
+    with fdopen(fd, "w") as tmp:
         tmp.writelines(lines)
 
     # Copy the file permissions from the original file

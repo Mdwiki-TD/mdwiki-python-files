@@ -129,7 +129,7 @@ def start():
         if p_site and f'{p_site}wiki' != site:
             continue
         # ---
-        with open(sites_dir / file, 'r', encoding='utf-8') as f:
+        with open(sites_dir / file, "r", encoding="utf-8") as f:
             links = json.load(f)
         # ---
         work_in_one_site(site, links)

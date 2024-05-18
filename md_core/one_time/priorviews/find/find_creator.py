@@ -9,7 +9,7 @@ import sys
 import json
 import os
 from pathlib import Path
-import codecs
+
 from pymysql.converters import escape_string
 
 # ---
@@ -26,10 +26,10 @@ Dir2 = os.path.dirname(Dir)
 file = f'{Dir2}/lists/creators_by_lang.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-CreatorsData = json.load(codecs.open(file, 'r', 'utf-8'))
+CreatorsData = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_Data():

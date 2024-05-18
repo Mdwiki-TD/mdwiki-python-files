@@ -7,7 +7,7 @@ import sys
 import json
 import os
 from pathlib import Path
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -21,10 +21,10 @@ Dir = Path(__file__).parent
 file = f'{Dir}/lists/views.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding='utf-8') as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-with codecs.open(file, 'r', encoding='utf-8') as f:
+with open(file, "r", encoding="utf-8") as f:
     ViewsData = json.load(f)
 # ---
 N_g = 0
@@ -34,12 +34,12 @@ def dump_data(file, data):
     printe.output(f'<<green>> dump_data() file:{file}.')
     printe.output(f'<<yellow>> dump_data {len(data)} views')
     try:
-        with codecs.open(file, 'w', encoding='utf-8') as f:
+        with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
         printe.output('<<red>> keyboard interrupt sys.exit()')
         # ---
-        with codecs.open(f'{file}_1', 'w', encoding='utf-8') as f:
+        with open(f'{file}_1', "w", encoding="utf-8") as f:
             json.dump(data, f)
         # ---
         sys.exit()
@@ -106,7 +106,7 @@ def get_lang_links_mdtitles(lang_links):
     for lang in lang_links_mdtitles.keys():
         lang_links_mdtitles[lang] = {tab['langs'][lang]: md for md, tab in lang_links.items() if lang in tab['langs']}
     # ---
-    with codecs.open(f'{Dir}/lists/lang_links_mdtitles.json', 'w', encoding='utf-8') as f:
+    with open(f'{Dir}/lists/lang_links_mdtitles.json', "w", encoding="utf-8") as f:
         json.dump(lang_links_mdtitles, f, ensure_ascii=False, indent=2)
     # ---
     # sort lang_links_mdtitles by lenth
@@ -123,7 +123,7 @@ def get_lang_links_mdtitles(lang_links):
 
 def start():
     # ---
-    with codecs.open(f'{Dir}/lists/lang_links.json', 'r', encoding='utf-8') as f:
+    with open(f'{Dir}/lists/lang_links.json', "r", encoding="utf-8") as f:
         lang_links = json.load(f)  # {'en': 'enwiki', 'redirect_to': '', 'langs': {'ar': 'arwiki'}}
     # ---
     lang_links_mdtitles = get_lang_links_mdtitles(lang_links)

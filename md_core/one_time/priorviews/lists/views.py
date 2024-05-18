@@ -14,7 +14,7 @@ python3 core8/pwb.py priorviews/views
 import json
 import os
 from pathlib import Path
-import codecs
+
 
 # ---
 from priorviews.bots import helps
@@ -25,10 +25,10 @@ Dir = Path(__file__).parent
 file = f'{Dir}/views_mdwiki_langs.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-ViewsData = json.load(codecs.open(file, 'r', 'utf-8'))
+ViewsData = json.load(open(file, "r", encoding="utf-8"))
 # ---
 _data = {"mdtitle": {"ar": {"title": "artitle", "views": 0}, "en": {"title": "entitle", "views": 0}}}
 # ---
@@ -91,7 +91,7 @@ makeviews()
 filee = f'{Dir}/count_views_by_lang.json'
 # ---
 if __name__ == '__main__':
-    # with codecs.open(filee, 'w', 'utf-8') as f:  json.dump(count_views_by_lang, f)
+    # with open(filee, "w", encoding="utf-8") as f:  json.dump(count_views_by_lang, f)
     helps.dump_data(filee, count_views_by_lang)
     # ---
     print(f'len of views_by_mdtitle_langs: {len(views_by_mdtitle_langs)}')

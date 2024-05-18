@@ -17,13 +17,13 @@ from mass.radio.authors_list.auths_infos import get_author_infos
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-with open(main_dir / 'jsons/infos.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/infos.json', "r", encoding="utf-8") as f:
     infos = json.load(f)
 # ---
-with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'r', encoding='utf-8') as f:
+with open(os.path.join(str(main_dir), 'jsons/authors.json'), "r", encoding="utf-8") as f:
     authors = json.load(f)
 # ---
-with open(main_dir / 'jsons/all_ids.json', 'r', encoding='utf-8') as f:
+with open(main_dir / 'jsons/all_ids.json', "r", encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 print(f"Length of all_ids: {len(all_ids)}")
@@ -67,8 +67,8 @@ def get_missing_authors():
     updated_authors = dict(sorted(updated_authors.items(), key=lambda x: int(x[0])))
     # ---
     if "nodump" not in sys.argv:
-        # with open(os.path.join(str(main_dir), 'authors_list/authors_new.json'), 'w', encoding='utf-8') as f:
-        with open(os.path.join(str(main_dir), 'jsons/authors.json'), 'w', encoding='utf-8') as f:
+        # with open(os.path.join(str(main_dir), 'authors_list/authors_new.json'), "w", encoding="utf-8") as f:
+        with open(os.path.join(str(main_dir), 'jsons/authors.json'), "w", encoding="utf-8") as f:
             json.dump(updated_authors, f, ensure_ascii=False, indent=2)
     # ---
     # len of empty authors
@@ -102,7 +102,7 @@ def make_authors_list(authors_n):
             break
     # ---
     if "nodump" not in sys.argv:
-        with open(os.path.join(str(main_dir), 'authors_list/authors_to_cases.json'), 'w', encoding='utf-8') as f:
+        with open(os.path.join(str(main_dir), 'authors_list/authors_to_cases.json'), "w", encoding="utf-8") as f:
             json.dump(new_authors, f, ensure_ascii=False, indent=2)
     # ---
     # print sum of all new_authors values

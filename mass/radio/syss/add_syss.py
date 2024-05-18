@@ -39,7 +39,7 @@ def po(file, data, lnn):
 # ---
 for file in urls_files:
     # ---
-    with open(os.path.join(files_path, file), encoding='utf-8') as f:
+    with open(os.path.join(files_path, file), encoding="utf-8") as f:
         data = json.loads(f.read())
     # ---
     lnn = (lenth_of_systems[file.replace('.json', '')] * 20) - 10
@@ -68,7 +68,7 @@ get_infos = {}
 # ---
 for file in infos_files:
     # ---
-    with open(os.path.join(files_path, file), encoding='utf-8') as f:
+    with open(os.path.join(files_path, file), encoding="utf-8") as f:
         data = json.loads(f.read())
     # ---
     lnn = (lenth_of_systems[file.replace('_infos.json', '')] * 20) - 10

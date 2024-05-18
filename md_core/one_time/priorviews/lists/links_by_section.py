@@ -10,7 +10,7 @@ import sys
 import json
 import os
 from pathlib import Path
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -24,7 +24,7 @@ Dir = Path(__file__).parent
 # ---
 _Dir_ = os.path.dirname(os.path.dirname(Dir))
 # ---
-all_pages_states = json.load(codecs.open(f'{_Dir_}/priorviews/lists/all_pages_states.json', 'r', 'utf-8'))
+all_pages_states = json.load(open(f'{_Dir_}/priorviews/lists/all_pages_states.json', "r", encoding="utf-8"))
 # ---
 printe.output(f'<<lightgreen>> len of all_pages_states: {len(all_pages_states)}')
 # ---

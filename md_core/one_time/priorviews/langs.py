@@ -7,7 +7,7 @@ import sys
 import json
 from pathlib import Path
 import datetime
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -263,5 +263,5 @@ if __name__ == "__main__":
     if wrtire:
         w_all.work_all(translators_all)
     # ---
-    json.dump(tab_new, codecs.open(sql_file, 'w', 'utf-8'), indent=2)
+    json.dump(tab_new, open(sql_file, "w", encoding="utf-8"), indent=2)
     # ---

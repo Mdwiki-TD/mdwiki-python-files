@@ -167,11 +167,11 @@ def main():
             if '50' in sys.argv and num > 50:
                 break
         # ---
-        with open(f'{Dir}/our.json', 'w', encoding="utf-8") as f:
+        with open(f'{Dir}/our.json', "w", encoding="utf-8") as f:
             json.dump(values, f)
             # ---
     else:
-        with open(f'{Dir}/our.json', 'r', encoding='utf-8') as f:
+        with open(f'{Dir}/our.json', "r", encoding="utf-8") as f:
             values = json.load(f)
     # ---
     make_log(values)

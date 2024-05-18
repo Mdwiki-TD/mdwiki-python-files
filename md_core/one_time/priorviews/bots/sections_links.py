@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 import json
 import wikitextparser
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -23,10 +23,10 @@ Dir = os.path.dirname(Dir)
 # ---
 sect_file = f'{Dir}/lists/secs_links.json'
 if not os.path.exists(sect_file):
-    with open(sect_file, 'w', encoding="utf-8") as f:
+    with open(sect_file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-old = json.load(codecs.open(sect_file, 'r', 'utf-8'))
+old = json.load(open(sect_file, "r", encoding="utf-8"))
 # ---
 replaces = {
     "Syncope": "Syncope (medicine)",
@@ -104,7 +104,7 @@ def dump_secs_links(d_links):
     # ---
     if d_links != {}:
         printe.output(f'<<lightyellow>> d_links(): lenth: {len(d_links.keys())}')
-        json.dump(d_links, codecs.open(sect_file, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+        json.dump(d_links, open(sect_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
 def get_section_links(new=False):

@@ -34,7 +34,7 @@ nonredirects = mdwiki_api.Get_All_pages('!', namespace='0', apfilterredir='nonre
 printe.output(f'len of nonredirects {len(nonredirects)} ')
 # printe.output( str(nonredirects) )
 # ---
-# fatosha = codecs.open( 'mdwiki/date_before_20200701.txt' , "r", encoding="utf-8").read()
+# fatosha = open( 'mdwiki/date_before_20200701.txt' , "r", encoding="utf-8").read()
 # fatosha = [ x.replace('[[','').split(']]')[0].strip() for x in fatosha.split('\n') ]
 # ---
 # listo = [ x for x in listo if not x in fatosha ]

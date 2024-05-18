@@ -10,7 +10,7 @@ python3 core8/pwb.py priorviews/words
 import json
 import os
 from pathlib import Path
-import codecs
+
 
 # ---
 Dir = Path(__file__).parent
@@ -18,10 +18,10 @@ Dir = Path(__file__).parent
 file = f'{Dir}/words_mdwiki_langs.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-words_by_lang = json.load(codecs.open(file, 'r', 'utf-8'))
+words_by_lang = json.load(open(file, "r", encoding="utf-8"))
 # ---
 _data = {"ar": {"artitle": 0, "artitle2": 0}}
 # ---

@@ -5,7 +5,7 @@ python3 core8/pwb.py WHOem/lists/lang_links new
 '''
 import sys
 import json
-import codecs
+
 from pathlib import Path
 
 # ---
@@ -31,7 +31,7 @@ def get_md_links():
     # ---
     all_p = list(set(all_p))
     # ---
-    with codecs.open(f'{Dir}/lists/md_links.json', 'w', encoding='utf-8') as f:
+    with open(f'{Dir}/lists/md_links.json', "w", encoding="utf-8") as f:
         json.dump(all_p, f, ensure_ascii=False, indent=2)
     # ---
     return all_p
@@ -41,7 +41,7 @@ def get_lang_links(md_links):
     # ---
     links_not_found = []
     # ---
-    with codecs.open(f'{Dir}/lists/lang_links.json', 'r', encoding='utf-8') as f:
+    with open(f'{Dir}/lists/lang_links.json', "r", encoding="utf-8") as f:
         lang_links = json.load(f)
     # ---
     printe.output(f'list len of it: {len(md_links)}')
@@ -91,12 +91,12 @@ def get_lang_links(md_links):
             lang_links[title]['langs'][lang] = tit
 
     # ---
-    with codecs.open(f'{Dir}/lists/lang_links.json', 'w', encoding='utf-8') as f:
+    with open(f'{Dir}/lists/lang_links.json', "w", encoding="utf-8") as f:
         json.dump(lang_links, f, ensure_ascii=False, indent=2)
     # ---
     printe.output(f'<<lightred>> len of links_not_found: {len(links_not_found)}:')
     # ---
-    with codecs.open(f'{Dir}/lists/links_not_found.json', 'w', encoding='utf-8') as f:
+    with open(f'{Dir}/lists/links_not_found.json', "w", encoding="utf-8") as f:
         json.dump(links_not_found, f, ensure_ascii=False, indent=2)
     # ---
     for title in links_not_found:

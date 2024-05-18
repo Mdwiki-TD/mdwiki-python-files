@@ -20,10 +20,10 @@ cases_cats_file = main_dir / 'jsons/cases_cats.json'
 cases_cats_list = []
 # ---
 if not os.path.exists(cases_cats_file):
-    with open(cases_cats_file, 'w', encoding='utf-8') as f:
+    with open(cases_cats_file, "w", encoding="utf-8") as f:
         json.dump(cases_cats_list, f)
 # ---
-with open(cases_cats_file, 'r', encoding='utf-8') as f:
+with open(cases_cats_file, "r", encoding="utf-8") as f:
     cases_cats_list = json.load(f)
 # ---
 
@@ -43,7 +43,7 @@ def new_list():
     # ---
     print(f"cases_cats, lenth of members: {len(members)}, lenth of id2cat: {len(id2cat)} ")
     # ---
-    with open(cases_cats_file, 'w', encoding='utf-8') as f:
+    with open(cases_cats_file, "w", encoding="utf-8") as f:
         json.dump(id2cat, f)
     # ---
     return id2cat

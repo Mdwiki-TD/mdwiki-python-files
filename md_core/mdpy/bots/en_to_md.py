@@ -24,7 +24,7 @@ from mdpy.bots import en_to_md
 # (C) Ibrahem Qasim, 2023
 #
 #
-import codecs
+
 import os
 import json
 from mdpy.bots import sql_for_mdwiki
@@ -54,7 +54,7 @@ def make_mdwiki_list():
     # ---
     # read the file without errors
     try:
-        From_json = json.loads(codecs.open(ffile, "r", encoding="utf-8-sig").read())
+        From_json = json.loads(open(ffile, "r", encoding="utf-8-sig").read())
     except Exception as e:
         print(e)
         return

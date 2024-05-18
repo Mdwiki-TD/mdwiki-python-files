@@ -21,7 +21,7 @@ for root, dirs, files in os.walk(folder_path):
             print("size before: ", file_size_before)
 
             # كتابة الملف بدون تنسيق
-            with open(file_path, 'w', encoding="utf-8") as file:
+            with open(file_path, "w", encoding="utf-8") as file:
                 json.dump(json.loads(json_data), file)
 
             # طباعة حجم الملف بعد التعديل

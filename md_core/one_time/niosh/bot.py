@@ -18,7 +18,7 @@ Dir2 = os.path.dirname(Dir)
 file_json1 = f"{Dir}/jsons/extlinks.json"
 # ---
 if not os.path.isfile(file_json1):
-    with open(file_json1, 'w', encoding='utf-8') as aa:
+    with open(file_json1, "w", encoding="utf-8") as aa:
         json.dump({}, aa)
 
 totox = {}
@@ -30,10 +30,10 @@ file_json2 = f"{Dir}/jsons/niosh.json"
 file_all_links = f"{Dir}/jsons/all_links.json"
 # ---
 if not os.path.isfile(file_json2):
-    with open(file_json2, 'w', encoding='utf-8') as aa:
+    with open(file_json2, "w", encoding="utf-8") as aa:
         json.dump({}, aa)
 
-with open(file_json2, 'r', encoding='utf-8') as cc:
+with open(file_json2, "r", encoding="utf-8") as cc:
     new = json.load(cc)
 
 
@@ -56,7 +56,7 @@ def new_search():
         extlinks = page.get_extlinks()
         totox[x] = extlinks
     # ---
-    with open(file_json1, 'w', encoding='utf-8') as dd:
+    with open(file_json1, "w", encoding="utf-8") as dd:
         json.dump(totox, dd)
 
 
@@ -92,7 +92,7 @@ def new_vals():
     # ---
     new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
     # ---
-    with open(file_json2, 'w', encoding='utf-8') as ee:
+    with open(file_json2, "w", encoding="utf-8") as ee:
         json.dump(new, ee, ensure_ascii=False, indent=2)
 
 
@@ -116,7 +116,7 @@ def start():
     all_links = sorted(set(all_links))
     # ---
     # ---
-    with open(file_all_links, 'w', encoding='utf-8') as ff:
+    with open(file_all_links, "w", encoding="utf-8") as ff:
         json.dump(all_links, ff, ensure_ascii=False, indent=2)
     # ---
     len_all_links = len(all_links)

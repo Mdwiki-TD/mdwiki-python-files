@@ -73,7 +73,7 @@ class PriorAddOld:
             # ---
             print(f'filename: {filename}..')
             # ---
-            with open(filename, 'r', encoding='utf-8') as file:
+            with open(filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
             data_new = data
             # ---
@@ -120,7 +120,7 @@ class PriorAddOld:
             print(f'no change: {filename}')
         else:
             # ---
-            with open(filename, 'w', encoding='utf-8') as file:
+            with open(filename, "w", encoding="utf-8") as file:
                 json.dump(data_new, file)
 
 

@@ -28,7 +28,7 @@ for f in urls_files:
     # ---
     system = f.replace('.json', '').replace('_', ' ')
     # ---
-    with open(os.path.join(files_path, f), 'r', encoding='utf-8') as f:
+    with open(os.path.join(files_path, f), "r", encoding="utf-8") as f:
         data = json.loads(f.read())
     # ---
     print(f'system: {system.ljust(20)} len of urls: {len(data)}')

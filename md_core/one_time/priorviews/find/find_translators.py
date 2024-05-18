@@ -9,7 +9,7 @@ import sys
 import json
 import os
 from pathlib import Path
-import codecs
+
 
 # ---
 from mdpy import printe
@@ -33,10 +33,10 @@ Dir2 = os.path.dirname(Dir)
 file = f'{Dir2}/lists/translators_mdwiki_langs.json'
 # ---
 if not os.path.exists(file):
-    with open(file, 'w', encoding="utf-8") as f:
+    with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-tra_by_lang = json.load(codecs.open(file, 'r', 'utf-8'))
+tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
 
 def logem():

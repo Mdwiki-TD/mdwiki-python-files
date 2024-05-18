@@ -95,7 +95,7 @@ def start():
         if f'{site}wiki' in skip_sites:
             continue
         # ---
-        with open(editors_dir / f'{site}.json', 'r', encoding='utf-8') as f:
+        with open(editors_dir / f'{site}.json', "r", encoding="utf-8") as f:
             editors = json.load(f)
         # ---
         for user, count in editors.items():

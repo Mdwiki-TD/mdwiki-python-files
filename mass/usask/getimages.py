@@ -25,7 +25,7 @@ jsonimages = main_dir / 'images.json'
 
 
 def read_json_file(file_path):
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         data = json.load(file)
     return data
 
@@ -135,7 +135,7 @@ def main():
 
     if 'test' not in sys.argv:
         # Save the updated data back to the JSON file
-        with open(jsonimages, 'w', encoding="utf-8") as file:
+        with open(jsonimages, "w", encoding="utf-8") as file:
             json.dump(data, file, indent=2)
 
 

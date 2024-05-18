@@ -7,7 +7,7 @@ python3 core8/pwb.py mdpy/fixref
 # (C) Ibrahem Qasim, 2023
 #
 #
-import codecs
+
 import sys
 import os
 
@@ -57,7 +57,7 @@ def main():
             thenumbers[1] = int(value)
         # ---
         if arg == '-file':
-            text = codecs.open(f'{dir2}/public_html/find/{value.strip()}', 'r', 'utf8').read()
+            text = open(f'{dir2}/public_html/find/{value.strip()}', "r", 'utf8').read()
             List = [x.strip() for x in text.split('\n') if x.strip() != '']
         # ---
         if arg == 'allpages':

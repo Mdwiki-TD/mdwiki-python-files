@@ -55,7 +55,7 @@ def work_on_title(title, returntext=False, text_O=""):
     printe.showDiff(text, new_text)
     # ---
     ask = input(f"<<yellow>> save title:{title}? ")
-    if ask in ['y', '', 'a']:
+    if ask in ['y', '', "a"]:
         return med.page_put(new_text, title)
     print("not saved")
     return

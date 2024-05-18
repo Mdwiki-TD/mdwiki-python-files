@@ -9,7 +9,7 @@ import sys
 def execute_command(command):
     if command.endswith('.sh'):
         # read the contents of the file
-        with open(command, 'r') as f:
+        with open(command, "r") as f:
             command = f.read()
     # execute the command
     print(command)

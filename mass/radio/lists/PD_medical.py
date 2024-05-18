@@ -20,10 +20,10 @@ pd_file = main_dir / 'jsons/PD_medical_pages.json'
 PD_medical_pages = []
 # ---
 if not os.path.exists(pd_file):
-    with open(pd_file, 'w', encoding='utf-8') as f:
+    with open(pd_file, "w", encoding="utf-8") as f:
         json.dump(PD_medical_pages, f)
 # ---
-with open(pd_file, 'r', encoding='utf-8') as f:
+with open(pd_file, "r", encoding="utf-8") as f:
     PD_medical_pages = json.load(f)
 # ---
 
@@ -33,7 +33,7 @@ def new_list():
     # ---
     print(f"lenth of members: {len(members)} ")
     # ---
-    with open(pd_file, 'w', encoding='utf-8') as f:
+    with open(pd_file, "w", encoding="utf-8") as f:
         json.dump(PD_medical_pages, f)
     # ---
     return members

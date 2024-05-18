@@ -16,7 +16,7 @@ python3 core8/pwb.py tw/t
 import re
 import sys
 import os
-import codecs
+
 import json
 import requests
 import random
@@ -144,7 +144,7 @@ def get_done():
     # ---
     if not os.path.exists(json_file):
         print(f'create new file {json_file}')
-        with codecs.open(json_file, "w", encoding="utf-8") as ffe:
+        with open(json_file, "w", encoding="utf-8") as ffe:
             json.dump(['XX'], ffe)
         return jsj
     # ---
@@ -199,7 +199,7 @@ def start_md():
     # ---
     if u is True:
         done.append(article)
-        with codecs.open(json_file, "w", encoding="utf-8") as ii:
+        with open(json_file, "w", encoding="utf-8") as ii:
             json.dump(done, ii)
             print('json.dump(done, ii)')
 

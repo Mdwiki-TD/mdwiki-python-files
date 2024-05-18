@@ -14,12 +14,12 @@ Dir = Path(__file__).parent
 qids_file = Dir / 'qids.json'
 
 if not os.path.exists(qids_file):
-    with open(qids_file, 'w', encoding='utf-8') as f:
+    with open(qids_file, "w", encoding="utf-8") as f:
         json.dump({}, f, sort_keys=True)
 
 qids_list = {}
 
-with open(qids_file, 'r', encoding='utf-8') as f:
+with open(qids_file, "r", encoding="utf-8") as f:
     qids_list = json.load(f)
 
 
@@ -48,7 +48,7 @@ def start():
     qids_list = list(articles.values())
     # ---
     # dump
-    with open(qids_file, 'w', encoding='utf-8') as f:
+    with open(qids_file, "w", encoding="utf-8") as f:
         json.dump(qids_list, f, sort_keys=True)
 
 

@@ -81,7 +81,7 @@ if __name__ == '__main__':
     import pywikibot
 
     text = """{{Ficha de medicamento
-        | IUPAC_name      = (''R'',''R'')-(+)-Methyl 2-phenyl-2-(2-piperidyl)acetate
+        | IUPAC_name      = ('"R"','"R"')-(+)-Methyl 2-phenyl-2-(2-piperidyl)acetate
 
         <!--Clinical data-->
         | image           = Dexmethylphenidate structure.svg
