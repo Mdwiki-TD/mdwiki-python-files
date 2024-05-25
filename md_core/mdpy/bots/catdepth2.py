@@ -174,7 +174,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
     # ---
     if 'newlist' in sys.argv:
         delta = int(final - start)
-        print(f'<<lightblue>>catdepth.py: find {len(result_table)} pages(ns:{str(ns)}) in {title}, depth:{int(depth)}, subcat:{len(cat_done)} in {int(delta)} seconds')
+        print(f'<<lightblue>>catdepth.py: find {len(result_table)} pages(ns:{str(ns)}) in {title}, depth:{depth}, subcat:{len(cat_done)} in {delta} seconds')
         if cat_done:
             print(f"subcats:{', '.join(cat_done)}")
     return list(result_table.keys())

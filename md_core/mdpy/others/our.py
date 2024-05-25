@@ -127,7 +127,7 @@ def make_log(dad):
         # ---
         vav = errors.get(x, False)
         # ---
-        ta += f'used {int(va)} times.\n'
+        ta += f'used {va} times.\n'
         # ---
         if x.find('https') == -1:
             ta += f"[https://owidm.wmcloud.org/grapher/{x.replace(' ', '%20')} {x}]"

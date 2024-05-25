@@ -65,7 +65,7 @@ def dodo_sql():
         # targets_done[lang][py_tools.ec_de_code(target , 'encode')] = { "user" : user , "target" : target, "mdtitle" : title }
         targets_done[lang][target] = {"user": user, "target": target, "mdtitle": title}
     # ---
-    printe.output(f"<<lightyellow>> find {int(len_done_target)} with target, and {len_no_target} without ")
+    printe.output(f"<<lightyellow>> find {len_done_target} with target, and {len_no_target} without ")
 
 
 def do_it_sql(lange, targets):
@@ -121,8 +121,8 @@ def do_it_sql(lange, targets):
             itemdiff = [t for t in group if t.strip() != "" and t not in result_n]
             len_missing = len(itemdiff)
             if len_missing > 0:
-                printe.output(f"recheck.py {int(diff)} missing from {len(group)}")
-                printe.output(f"recheck.py missing:({int(len_missing)}):{','.join(itemdiff)}")
+                printe.output(f"recheck.py {diff} missing from {len(group)}")
+                printe.output(f"recheck.py missing:({len_missing}):{','.join(itemdiff)}")
 
 
 def do_it_api(lange, targets):
@@ -182,9 +182,9 @@ def do_it_api(lange, targets):
             # ---
             target_tab = {"mdtitle": md_title, "lang": lange, "qid": qid}
     # ---
-    printe.output(f"<<lightyellow>> noqid {int(noqid)}")
-    printe.output(f"<<lightyellow>> nomd  {int(nomd)}")
-    printe.output(f"<<lightyellow>> withqid {int(withqid)}")
+    printe.output(f"<<lightyellow>> noqid {noqid}")
+    printe.output(f"<<lightyellow>> nomd  {nomd}")
+    printe.output(f"<<lightyellow>> withqid {withqid}")
 
     # ---
     # return asde

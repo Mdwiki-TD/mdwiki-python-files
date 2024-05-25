@@ -97,5 +97,5 @@ sort = sorted(shared_paths.items(), key=lambda x: x[1], reverse=True)
 # ---
 for key, value in sort:
     if value > 1:
-        printe("yellow", f"{key}: {int(value)}")
+        printe("yellow", f"{key}: {value}")
 # ---

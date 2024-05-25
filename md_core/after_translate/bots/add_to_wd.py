@@ -210,7 +210,7 @@ def add_tab_to_wd(table):
             number += 1
             # ---
             printe.output('=========================')
-            printe.output(f'<<lightgreen>>p {int(number)}/{len(tab)}: mdtitle:{mdtitle},lang:{lang},target:{target}')
+            printe.output(f'<<lightgreen>>p {number}/{len(tab)}: mdtitle:{mdtitle},lang:{lang},target:{target}')
             # ---
             Add_to_wikidata(mdtitle, lang, target, user)
 

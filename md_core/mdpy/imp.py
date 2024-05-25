@@ -42,7 +42,7 @@ api_new.Login_to_wiki()
 
 def work(title, num, lenth, From=''):
     # ---
-    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{int(num)}/{int(lenth)} title:"{title}".')
+    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{lenth} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
@@ -74,7 +74,7 @@ def work(title, num, lenth, From=''):
     # ---
     done = ing_js.get("import", [{}])[0].get("revisions", 0)
     # ---
-    printe.output(f"<<lightgreen>> imported {int(done)} revisions")
+    printe.output(f"<<lightgreen>> imported {done} revisions")
     # ---
     if done > 0:
         # ---

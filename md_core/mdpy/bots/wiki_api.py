@@ -424,7 +424,7 @@ def _get_page_views_(titles, site='en', days=30):
         if len(titles_1) < 1:
             continue
         # ---
-        printe.output(f'<<lightgreen>> views:{len(Main_table.keys())}, done:{int(done)} from {len(titles)} titles.')
+        printe.output(f'<<lightgreen>> views:{len(Main_table.keys())}, done:{done} from {len(titles)} titles.')
         # ---
         params['titles'] = "|".join(titles_1)
         # ---
@@ -518,7 +518,7 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         # ---
         if printstr:
             printe.output('-------------------')
-            printe.output(f'a {int(numb)}/{len(titles)} page:{page}')
+            printe.output(f'a {numb}/{len(titles)} page:{page}')
         # ---
         req = http.fetch(url)
         # req = requests.Session().get( url )
