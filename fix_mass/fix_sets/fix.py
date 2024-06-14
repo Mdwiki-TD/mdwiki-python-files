@@ -142,7 +142,7 @@ def main(ids):
 
 
 if __name__ == "__main__":
-    ids = [arg for arg in sys.argv[1:] if arg.isdigit()]
+    ids = [arg.strip() for arg in sys.argv if arg.strip().isdigit()]
     # ---
     if "studies_titles" in sys.argv:
         # studies_titles keys not in studies_titles2

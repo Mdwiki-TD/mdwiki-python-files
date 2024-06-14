@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py mass/radio/st3sort/start3 nomulti ask
+python3 core8/pwb.py mass/radio/st3sort/start3 nomulti ask 97387
 python3 core8/pwb.py mass/radio/st3sort/start3 get:500
 python3 core8/pwb.py mass/radio/st3sort/start3 dump_studies_urls_to_files nomulti
 python3 /data/project/mdwiki/pybot/mass/radio/st3/start3.py test
@@ -24,27 +24,30 @@ from multiprocessing import Pool
 # ---
 from newapi import printe
 from mass.radio.st3sort.One_Case_New import OneCase
+
 # ---
-main_dir = Path(__file__).parent.parent
+radio_jsons_dir = Path(__file__).parent.parent / "jsons"
 # ---
-with open(main_dir / "jsons/authors.json", encoding="utf-8") as f:
+with open(radio_jsons_dir / "authors.json", encoding="utf-8") as f:
     authors = json.load(f)
 # ---
-with open(main_dir / "jsons/infos.json", encoding="utf-8") as f:
+with open(radio_jsons_dir / "infos.json", encoding="utf-8") as f:
     infos = json.load(f)
 # ---
-with open(main_dir / "jsons/all_ids.json", encoding="utf-8") as f:
+with open(radio_jsons_dir / "all_ids.json", encoding="utf-8") as f:
     all_ids = json.load(f)
 # ---
 # cases_in_ids = []
 # ---
-with open(main_dir / "jsons/cases_in_ids.json", encoding="utf-8") as f:
+with open(radio_jsons_dir / "cases_in_ids.json", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = {
-    x: v
-    for x, v in all_ids.items() if x not in cases_in_ids
-}
+ids_by_caseId = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
+# ---
+if "allids" in sys.argv:
+    ids_by_caseId = all_ids.copy()
+# ---
+printe.output(f"{len(ids_by_caseId)=}, {len(cases_in_ids)=}")
 # ---
 del cases_in_ids
 
@@ -75,7 +78,7 @@ def do_it(va):
 def multi_work(tab, numb=10):
     done = 0
     for i in range(0, len(tab), numb):
-        group = tab[i:i + numb]
+        group = tab[i : i + numb]
         # ---
         done += numb
         printe.output(f"<<purple>> done: {done}:")
@@ -99,9 +102,9 @@ def ddo(taba):
     length = (len(ids_tabs) // 6) + 1
     for i in range(0, len(ids_tabs), length):
         num = i // length + 1
-        tabs[str(num)] = dict(list(ids_tabs.items())[i:i + length])
+        tabs[str(num)] = dict(list(ids_tabs.items())[i : i + length])
         # print(f'tab {num} : {len(tabs[str(num)])}')
-        print(f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 get:{num} {len(tabs[str(num)])}"')
+        print(f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3sort/start3 get:{num} {len(tabs[str(num)])}"')
 
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
@@ -143,15 +146,10 @@ def main(ids_tab):
         studies = [study.split("/")[-1] for study in va["studies"]]
         # ---
         if not studies:
+            printe.output(f"!!! studies not found: {caseId=}.")
             continue
         # ---
-        tab.append({
-            "caseId": caseId,
-            "case_url": case_url,
-            "title": title,
-            "studies": studies,
-            "author": author
-        })
+        tab.append({"caseId": caseId, "case_url": case_url, "title": title, "studies": studies, "author": author})
     # ---
     del ids_tab
     # ---
@@ -161,10 +159,7 @@ def main(ids_tab):
 def main_by_ids(ids):
     printe.output(f"<<purple>> start.py main_by_ids: {len(ids)=}:")
     # ---
-    ids_tab = {
-        caseId: all_ids[caseId]
-        for caseId in ids if caseId in all_ids
-    }
+    ids_tab = {caseId: all_ids[caseId] for caseId in ids if caseId in all_ids}
     # ---
     not_in = [c for c in ids if c not in all_ids]
     # ---
@@ -174,4 +169,11 @@ def main_by_ids(ids):
 
 
 if __name__ == "__main__":
-    main(ids_by_caseId)
+    ids = [arg.strip() for arg in sys.argv if arg.strip().isdigit()]
+    # ---
+    ids = {x: all_ids[x] for x in ids if x in all_ids}
+    # ---
+    if ids:
+        main(ids)
+    else:
+        main(ids_by_caseId)
