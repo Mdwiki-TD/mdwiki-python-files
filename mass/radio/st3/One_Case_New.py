@@ -29,12 +29,12 @@ except ImportError:
 # ---
 main_dir = Path(__file__).parent.parent
 # ---
-studies_dir = Path('/data/project/mdwiki/studies')
+studies_dir = Path("/data/project/mdwiki/studies")
 # ---
 if not os.path.exists(studies_dir):
-    printe.output(f'<<red>> studies_dir {studies_dir} not found')
-    studies_dir = main_dir / 'studies'
-    printe.output(f'<<red>> studies_dir set to {studies_dir}')
+    printe.output(f"<<red>> studies_dir {studies_dir} not found")
+    studies_dir = main_dir / "studies"
+    printe.output(f"<<red>> studies_dir set to {studies_dir}")
 # ---
 with open(os.path.join(str(main_dir), "authors_list/authors_infos.json"), encoding="utf-8") as f:
     authors_infos = json.load(f)
@@ -70,7 +70,6 @@ def printt(s):
 
 
 class OneCase:
-
     def __init__(self, case_url, caseId, title, studies_ids, author):
         self.author = author
         self.caseId = caseId
@@ -206,7 +205,8 @@ class OneCase:
             "{{CC-BY-NC-SA-3.0}}\n"
             f"{usa_license}\n"
             f"[[{self.category}]]\n"
-            "[[Category:Uploads by Mr. Ibrahem]]")
+            "[[Category:Uploads by Mr. Ibrahem]]"
+        )
         return image_text
 
     def upload_image(self, image_url, image_name, image_id, plane, modality, study_id):
@@ -312,10 +312,7 @@ class OneCase:
                 # update_text(file_title, image_text)
                 update_text_new(file_title)
         # ---
-        not_in = {
-            k: v
-            for k, v in to_up.items() if not pages.get(k)
-        }
+        not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
         # ---
         printt(f"not_in: {len(not_in)}")
         # ---

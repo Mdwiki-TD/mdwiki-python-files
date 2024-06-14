@@ -1,6 +1,7 @@
 """
 
-python3 core8/pwb.py mass/radio/st3/start3 get:500
+python3 core8/pwb.py mass/radio/st3sort/start3 nomulti ask
+python3 core8/pwb.py mass/radio/st3sort/start3 get:500
 python3 core8/pwb.py mass/radio/st3sort/start3 dump_studies_urls_to_files nomulti
 python3 /data/project/mdwiki/pybot/mass/radio/st3/start3.py test
 

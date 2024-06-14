@@ -1,7 +1,9 @@
 """
 
 python3 core8/pwb.py fix_mass/fix_sets/start3 get:500
-python3 core8/pwb.py fix_mass/radio/st3sort/start3 dump_studies_urls_to_files nomulti
+python3 core8/pwb.py fix_mass/radio/st3sort/start3 nomulti
+
+python3 core8/pwb.py fix_mass/fix_sets/start3 nomulti ask
 
 tfj run mnx1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/start3 get:1 157"
 tfj run mnx2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/start3 get:2 157"
@@ -22,6 +24,7 @@ from multiprocessing import Pool
 # ---
 from newapi import printe
 from mass.radio.st3sort.One_Case_New import OneCase
+
 # ---
 radio_jsons_dir = Path(__file__).parent.parent.parent / "mass/radio/jsons/"
 # ---
@@ -39,10 +42,7 @@ with open(radio_jsons_dir / "all_ids.json", encoding="utf-8") as f:
 with open(radio_jsons_dir / "cases_in_ids.json", encoding="utf-8") as f:
     cases_in_ids = json.load(f)
 # ---
-ids_by_caseId = {
-    x: v
-    for x, v in all_ids.items() if x not in cases_in_ids
-}
+ids_by_caseId = {x: v for x, v in all_ids.items() if x not in cases_in_ids}
 # ---
 del cases_in_ids
 
@@ -73,7 +73,7 @@ def do_it(va):
 def multi_work(tab, numb=10):
     done = 0
     for i in range(0, len(tab), numb):
-        group = tab[i:i + numb]
+        group = tab[i : i + numb]
         # ---
         done += numb
         printe.output(f"<<purple>> done: {done}:")
@@ -97,7 +97,7 @@ def ddo(taba):
     length = (len(ids_tabs) // 6) + 1
     for i in range(0, len(ids_tabs), length):
         num = i // length + 1
-        tabs[str(num)] = dict(list(ids_tabs.items())[i:i + length])
+        tabs[str(num)] = dict(list(ids_tabs.items())[i : i + length])
         # print(f'tab {num} : {len(tabs[str(num)])}')
         print(f'tfj run mnx{num} --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/start3 get:{num} {len(tabs[str(num)])}"')
 
@@ -143,13 +143,7 @@ def main(ids_tab):
         if not studies:
             continue
         # ---
-        tab.append({
-            "caseId": caseId,
-            "case_url": case_url,
-            "title": title,
-            "studies": studies,
-            "author": author
-        })
+        tab.append({"caseId": caseId, "case_url": case_url, "title": title, "studies": studies, "author": author})
     # ---
     del ids_tab
     # ---
@@ -159,10 +153,7 @@ def main(ids_tab):
 def main_by_ids(ids):
     printe.output(f"<<purple>> start.py main_by_ids: {len(ids)=}:")
     # ---
-    ids_tab = {
-        caseId: all_ids[caseId]
-        for caseId in ids if caseId in all_ids
-    }
+    ids_tab = {caseId: all_ids[caseId] for caseId in ids if caseId in all_ids}
     # ---
     not_in = [c for c in ids if c not in all_ids]
     # ---
@@ -172,4 +163,11 @@ def main_by_ids(ids):
 
 
 if __name__ == "__main__":
-    main(ids_by_caseId)
+    ids = [arg for arg in sys.argv[1:] if arg.isdigit()]
+    # ---
+    ids = {x: all_ids[x] for x in ids if x in all_ids}
+    # ---
+    if ids:
+        main(ids)
+    else:
+        main(ids_by_caseId)
