@@ -80,7 +80,7 @@ def get_red(title):
 
 def work(title, num, lenth, From=''):
     # ---
-    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{int(num)}/{int(lenth)} title:"{title}".')
+    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{lenth} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
@@ -104,7 +104,7 @@ def work(title, num, lenth, From=''):
     for tit, o in ing.items():
         num += 1
         if o:
-            printe.output(f"page n:{int(num)}, title:'{tit}' already in mdwiki.org..")
+            printe.output(f"page n:{num}, title:'{tit}' already in mdwiki.org..")
             continue
         # ---
         if not valid_title(tit):

@@ -74,7 +74,7 @@ def log():
         json.dump(assessments, outfile, sort_keys=True)
     # ---
     printe.output(f"<<lightgreen>> {len(assessments)} lines to {json_file[0]}")
-    printe.output(f"<<lightgreen>> len old assessments {int(len_old)}")
+    printe.output(f"<<lightgreen>> len old assessments {len_old}")
 
 
 def work_for_list(listn):

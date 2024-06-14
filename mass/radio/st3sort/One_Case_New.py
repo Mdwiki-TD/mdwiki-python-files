@@ -349,7 +349,6 @@ class OneCase:
                 self.create_set_category(set_title, sets, study)
 
     def start(self):
-        
         self.get_studies()
 
         for study, images in self.studies.items():
@@ -359,18 +358,17 @@ class OneCase:
 
         if self.img_to_url:
             dump_studies_urls_to_files(self.img_to_url)
-        
+
         if "dump_studies_urls_to_files" in sys.argv:
             return
 
         printt(f"Images count: {self.images_count}")
-        
+
         if self.images_count == 0:
             printt("no category created")
             return
 
         self.create_category()
-
 
     def create_set(self, set_title, sets):
         text = ""
@@ -423,7 +421,7 @@ class OneCase:
         study_url = f"https://radiopaedia.org/cases/{self.caseId}/studies/{study_id}"
         # ---
         cat_title = f"Category:{set_title}"
-        # --- 
+        # ---
         printe.output(f"len of sets: {len(sets)} /// cat_title:{cat_title}")
         # ---
         text = f"* [{study_url} study: {study_id}]"

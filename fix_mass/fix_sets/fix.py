@@ -2,6 +2,7 @@
 
 python3 core8/pwb.py fix_mass/fix_sets/fix studies_titles ask
 python3 core8/pwb.py fix_mass/fix_sets/fix 134732
+python3 core8/pwb.py fix_mass/fix_sets/fix 127660 nomulti
 tfj run fixmass --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/fix studies_titles"
 
 """
@@ -48,12 +49,14 @@ def update_set_text(title, n_text, study_id):
     # ---
     n_text += f"\n\n{cat_text}"
     # ---
-    if p_text != n_text:
-        tyy = page.save(newtext=n_text, summary="update")
-        # ---
-        if tyy:
-            studies_done_append(study_id)
-        # ---
+    if p_text == n_text:
+        printe.output("no changes..")
+        return
+    # ---
+    tyy = page.save(newtext=n_text, summary="update")
+    # ---
+    if tyy:
+        studies_done_append(study_id)
 
 
 def work_text(study_id, study_title):
@@ -77,12 +80,12 @@ def work_one_study(study_id):
     # one_img_info
     # ---
     if find_has_url(study_id):
-        printe.output(f"<<purple>> study_id: {study_id} already has url")
+        printe.output(f"<<purple>> study_id: {study_id} already has url, add 'nohasurl' to sys.argv")
         if "nohasurl" not in sys.argv:
             return
     # ---
     if find_done(study_id):
-        printe.output(f"<<purple>> study_id: {study_id} already done")
+        printe.output(f"<<purple>> study_id: {study_id} already done, add 'nodone' to sys.argv")
         if "nodone" not in sys.argv:
             return
     # ---
@@ -104,7 +107,8 @@ def work_one_study(study_id):
     if text.find("|http") != -1:
         printe.output(f"<<red>> text has http links... study_id: {study_id}")
         has_url_append(study_id)
-        # printe.output(text)
+        if "printtext" in sys.argv:
+            printe.output(text)
         return
     # ---
     if not text:

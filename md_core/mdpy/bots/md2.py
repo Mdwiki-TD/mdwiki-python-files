@@ -95,7 +95,7 @@ def main():
             ttab = mdwiki_api.Get_All_pages('!', namespace='0', apfilterredir='nonredirects')
     # ---
     for numb, title in enumerate(ttab, start=1):
-        printe.output(f'<<lightyellow>> tit:{int(numb)} / {len(ttab)}\t title: {title}.')
+        printe.output(f'<<lightyellow>> tit:{numb} / {len(ttab)}\t title: {title}.')
         text = mdwiki_api.GetPageText(title)
         treat_page(title, text)
     # ---

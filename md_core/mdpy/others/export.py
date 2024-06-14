@@ -103,7 +103,7 @@ def export_en_history(title):
             # ---
             if len(texts[num]) > La_si[1]:
                 # ---
-                path = f'mdwiki/xml/{title2}-{int(num)}.xml'
+                path = f'mdwiki/xml/{title2}-{num}.xml'
                 # tf = tempfile.NamedTemporaryFile()
                 # path = tf.name
                 # ---
@@ -120,7 +120,7 @@ def export_en_history(title):
         # ---
         if num not in numbdone and num in texts and texts[num] != '':
             # ---
-            path2 = f'mdwiki/xml/{title2}-{int(num)}.xml'
+            path2 = f'mdwiki/xml/{title2}-{num}.xml'
             # ---
             with open(path2, "w", encoding="utf-8") as oodfo:
                 oodfo.write(first + texts[num] + last)

@@ -219,7 +219,7 @@ def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", min
     # ---
     if 'Success' in str(r4):
         printe.output(f'<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) ')
-        printe.output(f'Save True.. time.sleep({int(tts)}) ')
+        printe.output(f'Save True.. time.sleep({tts}) ')
         time.sleep(tts)
         if return_table:
             return r4
@@ -287,7 +287,7 @@ def Add_To_Bottom2(aptext, summary, title, poss="", family="", minor=""):
         # ---
         if 'Success' in r4:
             printe.output(f"<<lightgreen>>** true .. [[{title}]] ")
-            printe.output(f'Save True... time.sleep({int(timesleep)}) ')
+            printe.output(f'Save True... time.sleep({timesleep}) ')
         else:
             outbot(r4)
     else:
@@ -691,7 +691,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False, without_lang="", 
     # ---
     # if "printresult" in sys.argv: printe.output(result_table)
     # ---
-    printe.output(f'<<lightblue>>catdepth.py: find {len(result_table)} pages({str(ns)}) in :{title}, depth:{int(depth)} in {int(delta)} seconds')
+    printe.output(f'<<lightblue>>catdepth.py: find {len(result_table)} pages({str(ns)}) in :{title}, depth:{depth} in {delta} seconds')
     # ---
     result_tab = list(result_table.keys())
     # ---
