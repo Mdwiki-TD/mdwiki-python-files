@@ -50,6 +50,7 @@ def main(ids_tab):
         studies = [study.split("/")[-1] for study in va["studies"]]
         # ---
         if not studies:
+            printe.output(f"!!! studies not found: {caseId=}.")
             continue
         # ---
         tab.append({"caseId": caseId, "title": title, "studies": studies})

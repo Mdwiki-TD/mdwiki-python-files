@@ -12,10 +12,24 @@ api_new.Login_to_wiki()
 
 study_done = []
 
+skip_titles = [
+    "File:Angiodysplasia - cecal active bleed (Radiopaedia 168775-136954 Coronal 91).jpeg",
+]
 
-def add(da=[], title="", cat=""):
+def add(da=None, title="", cat=""):
     if da:
         title, cat = da[0], da[1]
+    # ---
+    if title.find("_") != -1:
+        title = title.replace("_", " ")
+    # ---
+    if title in skip_titles:
+        printe.output(f"Skipping {title}...")
+        return
+    # ---
+    if not title or not cat:
+        printe.output("no title or cat")
+        return
     # ---
     cat_line = f"\n[[{cat}]]"
     summary = f"Bot: added [[:{cat}]]"

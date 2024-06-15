@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py fix_mass/radio/st3sort/count_files/b
+python3 core8/pwb.py mass/radio/st3sort/count_files/b
 
 """
 import os
@@ -7,7 +7,7 @@ import sys
 import tqdm
 import json
 from pathlib import Path
-from fix_mass.radio.bots.studies_utf import studies_urls_to_files_dir
+from mass.radio.bots.studies_utf import studies_urls_to_files_dir
 # ---
 Dir = Path(__file__).parent
 # ---
