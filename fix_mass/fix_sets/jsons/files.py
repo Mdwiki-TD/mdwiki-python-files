@@ -17,8 +17,8 @@ with open( jsons_dir / "studies_titles.json", "r", encoding="utf-8") as f:
 # ---
 with open( jsons_dir / "studies_titles2.json", "r", encoding="utf-8") as f:
     studies_titles2 = json.load(f)
-    print(f"{len(studies_titles2)=}")
+    print(f"studies_titles2: {len(studies_titles2)=}")
 # ---
 with open( jsons_dir / "study_to_case_cats.json", "r", encoding="utf-8") as f:
     study_to_case_cats = json.load(f)
-    print(f"{len(study_to_case_cats)=}")
+    print(f"study_to_case_cats: {len(study_to_case_cats)=}")

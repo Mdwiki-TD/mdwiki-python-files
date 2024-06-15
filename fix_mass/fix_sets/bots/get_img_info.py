@@ -5,10 +5,10 @@ python3 core8/pwb.py fix_mass/fix_sets/bots/get_img_info
 from fix_mass.fix_sets.bots.get_img_info import one_img_info
 
 """
-import sys
+# import sys
 import re
 import json
-import os
+# import os
 from pathlib import Path
 
 from newapi import printe
@@ -23,13 +23,17 @@ st_dic_infos = Dir / "jsons/studies_files_infos"
 
 
 def dump_st(data, file):
-    
+
     with open(file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
         printe.output(f"<<green>> write {len(data)} to file: {file}")
 
 
-def gt_img_info(titles, id_to_url={}):
+def gt_img_info(titles, id_to_url=None):
+    # ---
+    if not id_to_url:
+        id_to_url = {}
+    # ---
     # ---
     titles = [titles] if not isinstance(titles, list) else titles
     # ---
@@ -137,7 +141,7 @@ def one_img_info(title, study_id, json_data):
     id_to_url = {}
     # ---
     for x in json_data:
-        for n, image in enumerate(x["images"], start=1):
+        for _, image in enumerate(x["images"], start=1):
             id_to_url[str(image["id"])] = image["public_filename"]
     # ---
     info = gt_img_info(title, id_to_url)
