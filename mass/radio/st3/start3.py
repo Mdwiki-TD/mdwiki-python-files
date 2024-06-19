@@ -1,5 +1,7 @@
 """
 
+tfj run allids --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 allids"
+
 python3 core8/pwb.py mass/radio/st3/start3 nomulti ask 97387
 python3 core8/pwb.py mass/radio/st3/start3 get:500
 python3 core8/pwb.py mass/radio/st3/start3 dump_studies_urls_to_files nomulti
@@ -85,7 +87,7 @@ def multi_work(tab, numb=10):
         # ---
         print_memory()
         # ---
-        if "nomulti" in sys.argv or len(tab) < 10:
+        if "nomulti" in sys.argv or "ask" in sys.argv or len(tab) < 10:
             for x in group:
                 do_it(x)
         else:

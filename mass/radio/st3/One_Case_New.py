@@ -1,23 +1,30 @@
 """
 from mass.radio.st3.One_Case_New import OneCase
+
 """
 import sys
+import tqdm
 import os
 from pathlib import Path
 import json
-import traceback
 
 # ---
 from nccommons import api
 from newapi import printe
 from newapi.ncc_page import NEW_API, MainPage as ncc_MainPage
-from mass.radio.get_studies import get_images_stacks, get_images
+
+# from mass.radio.get_studies import get_images_stacks, get_images, get_studies_from_cach
+from mass.radio.get_studies import get_stacks_fixed  # (study_id, case_id, get_cach=False)
 from mass.radio.bots.bmp import work_bmp
-from mass.radio.bots.update import update_text_new
+from mass.radio.bots.update import update_text_add_pd_medical, update_text
 from mass.radio.bots.add_cat import add_cat_to_images  # add_cat_to_images(sets, cat_title)
 from mass.radio.bots.studies_utf import dump_studies_urls_to_files
 from mass.radio.jsons_files import jsons  # , dumps_jsons, ids_to_urls, urls_to_ids
+from fix_mass.fix_sets.bots2.files_names_bot import get_files_names
 
+add_studies_cat_del_case = [
+    "20060",
+]
 # ---
 try:
     import pywikibot
@@ -81,9 +88,14 @@ class OneCase:
         self.images_count = 0
         self.img_to_url = {}
         self.files = []
+        self.urls_rep = {}
+        self.studies_names_cach = {}
         self.studies = {}
         self.set_title = f"Radiopaedia case {self.caseId} {self.title}"
         self.category = f"Category:Radiopaedia case {self.caseId} {self.title}"
+        # ---
+        auth_location = authors_infos.get(self.author, {}).get("location", "")
+        self.usa_auth = auth_location.lower().find("united states") != -1
         # ---
         self.published = ""
         self.system = ""
@@ -98,7 +110,16 @@ class OneCase:
         else:
             if self.case_url in jsons.url_to_sys:
                 self.system = jsons.url_to_sys[self.case_url]
+
+    def get_files_names_from_urls(self, study, images):
         # ---
+        maain_uurls = [x["public_filename"] for x in images]
+        # ---
+        maain_uurls = list(set(maain_uurls))
+        # ---
+        files_names = get_files_names(maain_uurls, {}, study)
+        # ---
+        self.studies_names_cach[study] = files_names
 
     def title_exists(self, title):
         # ---
@@ -136,40 +157,20 @@ class OneCase:
 
         printt(f"Category {self.category} created..{new=}")
 
-    def get_studies(self):
+    def get_studies_d(self):
         for study in self.studies_ids:
-            st_file = studies_dir / f"{study}.json"
             # ---
-            images = {}
+            images = get_stacks_fixed(study, self.caseId, get_cach=True)
             # ---
-            if os.path.exists(st_file):
-                try:
-                    with open(st_file, encoding="utf-8") as f:
-                        images = json.loads(f.read())
-                except Exception as e:
-                    pywikibotoutput("<<lightred>> Traceback (most recent call last):")
-                    printt(f"{study} : error")
-                    pywikibotoutput(e)
-                    pywikibotoutput(traceback.format_exc())
-                    pywikibotoutput("CRITICAL:")
+            # sort images by position key
+            # images = sorted(images, key=lambda x: x["position"])
             # ---
-            images = [image for image in images if image]
+            self.get_files_names_from_urls(study, images)
             # ---
-            if not images:
-                printt(f"{study} : not found")
-                images = get_images_stacks(study)
-                # ---
-                if not images:
-                    images = get_images(f"https://radiopaedia.org/cases/{self.caseId}/studies/{study}")
-                # ---
-                with open(st_file, "w", encoding="utf-8") as f:
-                    json.dump(images, f, ensure_ascii=False, indent=2)
-            # ---
-            # sort images by "id"
-            # images = sorted(images, key=lambda x: x["id"])
+            print(f"len of self.studies_names_cach[{study}] : {len(self.studies_names_cach.get(study))}")
             # ---
             self.studies[study] = images
-            printt(f"study:{study} : len(images) = {len(images)}, st_file:{st_file}")
+            printt(f"study:{study} : len(images) = {len(images)}..")
 
     def make_image_text(self, image_url, image_id, plane, modality, study_id):
         auth_line = f"{self.author}"
@@ -179,12 +180,25 @@ class OneCase:
         if auth_url:
             auth_line = f"[{auth_url} {self.author}]"
         # ---
+        image_url = self.urls_rep.get(image_url, image_url)
+        # ---
         usa_license = ""
         # ---
-        if auth_location.lower().find("united states") != -1:
+        if self.usa_auth:
             usa_license = "{{PD-medical}}"
         # ---
         study_url = f"https://radiopaedia.org/cases/{self.caseId}/studies/{study_id}"
+        # ---
+        set_cat = ""
+        # ---
+        if len(self.studies) > 1 or str(study_id) in add_studies_cat_del_case or "del2" in sys.argv:
+            set_cat = f"[[Category:Radiopaedia case {self.title} id: {self.caseId} study: {study_id}]]"
+        # ---
+        cat_case = f"[[{self.category}]]"
+        # ---
+        if str(study_id) in add_studies_cat_del_case or "del2" in sys.argv:
+            if set_cat:
+                cat_case = ""
         # ---
         image_text = "== {{int:summary}} ==\n"
 
@@ -192,7 +206,6 @@ class OneCase:
             "{{Information\n"
             f"|Description = \n"
             f"* Radiopaedia case ID: [{self.case_url} {self.caseId}]\n"
-            # f'* Image ID: {image_id}\n'
             f"* Study ID: [{study_url} {study_id}]\n"
             f"* Image ID: [{image_url} {image_id}]\n"
             f"* Plane projection: {plane}\n"
@@ -207,8 +220,9 @@ class OneCase:
             "== {{int:license}} ==\n"
             "{{CC-BY-NC-SA-3.0}}\n"
             f"{usa_license}\n"
-            f"[[{self.category}]]\n"
-            "[[Category:Uploads by Mr. Ibrahem]]"
+            f"{cat_case}\n"
+            "[[Category:Uploads by Mr. Ibrahem]]\n"
+            f"{set_cat}"
         )
         return image_text
 
@@ -223,6 +237,8 @@ class OneCase:
         if exists:
             return image_name
         # ---
+        image_url = self.urls_rep.get(image_url, image_url)
+        # ---
         image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
 
         file_name = api.upload_by_url(image_name, image_text, image_url, return_file_name=True, do_ext=True)
@@ -230,15 +246,72 @@ class OneCase:
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
             # ---
-            if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages:
-                update_text_new(f"File:{file_name}")
+            if self.usa_auth:
+                if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages:
+                    update_text_add_pd_medical(f"File:{file_name}")
             # ---
             self.add_category(file_name)
 
         return file_name
 
+    def update_images_text(self, to_up, already_in):
+        # ---
+        tits1 = [x for x in already_in if x in to_up]
+        # ---
+        if self.usa_auth:
+            tits2 = [x for x in tits1 if f"File:{x}" not in PD_medical_pages]
+            printt(f"{len(tits1)=}, not in PD_medical_pages: {len(tits2)=}")
+        else:
+            tits2 = tits1
+            printt(f"{len(tits1)=}, {len(tits2)=}")
+        # ---
+        for fa in tqdm.tqdm(tits2):
+            image_url, file_name, image_id, plane, modality, study_id = to_up[fa]
+            # ---
+            image_url = self.urls_rep.get(image_url, image_url)
+            # ---
+            image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
+            # ---
+            file_title = f"File:{file_name}"
+            # ---
+            if self.usa_auth:
+                update_text_add_pd_medical(file_title)
+            else:
+                update_text(file_title, image_text)
+
+    def study_set_works(self, to_up, pages, study, already_in):
+        # ---
+        set_files = []
+        # ---
+        for fa in already_in:
+            if fa not in set_files:
+                self.images_count += 1
+                set_files.append(fa)
+        # ---
+        not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
+        # ---
+        printt(f"not_in: {len(not_in)}")
+        # ---
+        for i, (image_url, file_name, image_id, plane, modality, study_o) in enumerate(not_in.values(), 1):
+            # ---
+            printt(f"file: {i}/{len(not_in)} :{file_name}")
+            # ---
+            new_name = self.upload_image(image_url, file_name, image_id, plane, modality, study_o)
+            # ---
+            file_n = f"File:{new_name}" if new_name else f"File:{file_name}"
+            # ---
+            if file_n not in set_files:
+                self.images_count += 1
+                set_files.append(file_n)
+        # ---
+        set_title = f"Radiopaedia case {self.title} id: {self.caseId} study: {study}"
+        # ---
+        if "updatetext" not in sys.argv or "del2" in sys.argv:
+            if self.images_count > 1:
+                self.create_set(set_title, set_files)
+                self.create_set_category(set_title, set_files, study)
+
     def upload_images(self, study, images):
-        sets = []
         planes = {}
         modality = ""
         # ---
@@ -246,7 +319,8 @@ class OneCase:
         # ---
         self.img_to_url[study] = {}
         # ---
-        for i, image in enumerate(images, 1):
+        for _i, image in enumerate(images, 1):
+            public_filename = image.get("public_filename", "")
             image_url = image.get("public_filename", "")
             # ---
             if not image_url:
@@ -267,7 +341,9 @@ class OneCase:
             # ---
             if extension == "bmp":
                 if "dump_studies_urls_to_files" not in sys.argv:
-                    image_url, extension = work_bmp(image_url)
+                    image_url2, extension = work_bmp(image_url)
+                    self.urls_rep[image_url2] = image_url
+                    image_url = image_url2
                 else:
                     extension = "jpg"
             # ---
@@ -287,6 +363,13 @@ class OneCase:
             # fix BadFileName
             file_name = file_name.replace(":", ".").replace("/", ".")
             # ---
+            na_in_cach = self.studies_names_cach[study].get(public_filename)
+            # print(f"{na_in_cach=}")
+            # ---
+            if na_in_cach and "noc" not in sys.argv:
+                file_name = na_in_cach.replace("File:", "")
+                printe.output(f"<<yellow>> make File name from studies_names_cach: {file_name}")
+            # ---
             to_up[f"File:{file_name}"] = (image_url, file_name, image_id, plane, modality, study)
             # ---
             self.img_to_url[study][f"File:{file_name}"] = {"url": image_url, "id": image_id}
@@ -304,52 +387,15 @@ class OneCase:
         # ---
         printt(f"already_in: {len(already_in)}")
         # ---
-        for fa in already_in:
-            if fa not in sets:
-                self.images_count += 1
-                sets.append(fa)
-        # ---
         if "updatetext" in sys.argv:
             # ---
-            tits1 = [x for x in already_in if x in to_up]
-            tits2 = [x for x in tits1 if f"File:{x}" not in PD_medical_pages]
-            # ---
-            printt(f"{len(tits1)=}, {len(tits2)=}")
-            # ---
-            for fa in tits2:
-                image_url, file_name, image_id, plane, modality, study_id = to_up[fa]
-                image_text = self.make_image_text(image_url, image_id, plane, modality, study_id)
-                # ---
-                file_title = f"File:{file_name}"
-                # ---
-                # update_text(file_title, image_text)
-                update_text_new(file_title)
+            self.update_images_text(to_up, already_in)
         # ---
-        not_in = {k: v for k, v in to_up.items() if not pages.get(k)}
+        self.study_set_works(to_up, pages, study, already_in)
         # ---
-        printt(f"not_in: {len(not_in)}")
-        # ---
-        for i, (image_url, file_name, image_id, plane, modality, study_o) in enumerate(not_in.values(), 1):
-            # ---
-            printt(f"file: {i}/{len(not_in)} :")
-            # ---
-            new_name = self.upload_image(image_url, file_name, image_id, plane, modality, study_o)
-            # ---
-            file_n = f"File:{new_name}" if new_name else f"File:{file_name}"
-            # ---
-            if file_n not in sets:
-                self.images_count += 1
-                sets.append(file_n)
-        # ---
-        set_title = f"Radiopaedia case {self.title} id: {self.caseId} study: {study}"
-        # ---
-        if "updatetext" not in sys.argv:
-            if self.images_count > 1:
-                self.create_set(set_title, sets)
-                self.create_set_category(set_title, sets, study)
 
     def start(self):
-        self.get_studies()
+        self.get_studies_d()
 
         for study, images in self.studies.items():
             printt(f"{study} : len(images) = {len(images)}")
@@ -370,15 +416,15 @@ class OneCase:
 
         self.create_category()
 
-    def create_set(self, set_title, sets):
+    def create_set(self, set_title, set_files):
         text = ""
         # ---
         if "noset" in sys.argv:
             return
         # ---
-        sets = [x.strip() for x in sets if x.strip()]
+        set_files = [x.strip() for x in set_files if x.strip()]
         # ---
-        if len(sets) < 2:
+        if len(set_files) < 2:
             return
         # ---
         if self.title_exists(set_title):
@@ -387,7 +433,7 @@ class OneCase:
         text += "{{Imagestack\n|width=850\n"
         text += f"|title={set_title}\n|align=centre\n|loop=no\n"
         # ---
-        for image_name in sets:
+        for image_name in set_files:
             text += f"|{image_name}|\n"
         # ---
         text += "\n}}\n[[Category:Image set]]\n"
@@ -416,13 +462,21 @@ class OneCase:
             ssa = page.save(newtext=text, summary="update", nocreate=0, minor="")
             return ssa
 
-    def create_set_category(self, set_title, sets, study_id):
+    def create_set_category(self, set_title, set_files, study_id):
+        # ---
+        if "create_set_category" in sys.argv:
+            return
         # ---
         study_url = f"https://radiopaedia.org/cases/{self.caseId}/studies/{study_id}"
         # ---
         cat_title = f"Category:{set_title}"
         # ---
-        printe.output(f"len of sets: {len(sets)} /// cat_title:{cat_title}")
+        printe.output(f"len of set_files: {len(set_files)} /// cat_title:{cat_title}")
+        # ---
+        if len(self.studies) == 1 and "c_it" not in sys.argv:
+            printe.output(f"len of self.studies: {len(self.studies)}, return (don't create set cats for 1 study)")
+            printe.output("add 'c_it' to sys.argv to create set cats for 1 study")
+            return
         # ---
         text = f"* [{study_url} study: {study_id}]"
         text += f"\n[[{self.category}|*]]"
@@ -449,7 +503,7 @@ class OneCase:
             printt(f"Category {cat_title} created..{new=}")
         # ---
         if done:
-            add_cat_to_images(sets, cat_title)
+            add_cat_to_images(set_files, cat_title, self.category)
 
     def add_category(self, file_name):
         # ---

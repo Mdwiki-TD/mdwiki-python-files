@@ -3,7 +3,7 @@
 python3 core8/pwb.py fix_mass/fix_sets/lists/study_case_cats
 
 Usage:
-from fix_mass.fix_sets.jsons.files import studies_titles, study_to_case_cats
+from fix_mass.jsons.files import studies_titles, study_to_case_cats
 
 # ---
 
@@ -11,12 +11,12 @@ from fix_mass.fix_sets.jsons.files import studies_titles, study_to_case_cats
 import tqdm
 import json
 from pathlib import Path
-
+from fix_mass.fix_sets.jsons_dirs import jsons_dir
 from mass.radio.jsons_files import jsons
 
 #  jsons.all_ids
 #  jsons.cases_cats
-main_dir = Path(__file__).parent.parent
+
 # ---
 all_ids = jsons.all_ids.copy()
 # ---
@@ -53,7 +53,7 @@ print(f"no cats: {len(no_cats)}")
 print(f"{len(study_to_case_cats)=}")
 # ---
 if __name__ == "__main__":
-    file = main_dir / "jsons/study_to_case_cats.json"
+    file = jsons_dir / "study_to_case_cats.json"
 
     with open(file, "w", encoding="utf-8") as f:
         json.dump(study_to_case_cats, f, ensure_ascii=False, indent=2)

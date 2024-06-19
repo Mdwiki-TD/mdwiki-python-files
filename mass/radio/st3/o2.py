@@ -1,552 +1,317 @@
 """
-python3 core8/pwb.py mass/radio/st3/o2 nomulti ask add_category
-python3 core8/pwb.py mass/radio/st3/o2 missing nomulti ask
+python3 core8/pwb.py mass/radio/st3/o2 nomulti ask
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 178589
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 154053
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 98093
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 95353
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 93705
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 93383
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 93330
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 91916
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 90499
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 89348
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 87426
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 87318
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 87214
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 86986
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 86524
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 85766
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 85725
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 85517
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 84330
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 84030
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 83667
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 83455
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 83345
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 83338
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 82959
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 82339
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 78588
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 73389
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 72391
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 71910
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 71226
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 71000
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 70242
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 70122
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 68741
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 68401
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 67273
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 67253
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 65260
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 62812
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 61599
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 60964
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 60929
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 60362
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 59255
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 58904
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 58182
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 58043
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 57552
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 57481
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 57421
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 57395
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 57288
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 55955
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 55844
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 55596
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 55572
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 54389
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 53862
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 53486
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 52574
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 52019
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 51799
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 51360
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 51300
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 50278
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 50046
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 49837
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 49206
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 49006
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 48742
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 48584
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 48289
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 47999
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 47968
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 47693
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 46619
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 46104
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 45183
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 45051
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 44737
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 44489
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 43966
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 43911
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 43008
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 42950
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 42855
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 42571
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 42561
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 42323
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 42290
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 41790
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 41615
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 41043
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 40475
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 40224
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 39984
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 39856
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 39477
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 39157
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 38144
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 37995
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 37882
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 37759
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 37577
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 37539
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 37216
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 35752
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 35748
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 35729
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 34702
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 33881
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 33437
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 33298
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 33135
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 32829
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 32719
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 31214
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 30456
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 29659
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 29253
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 28534
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 28504
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 28328
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 27268
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 25822
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 25792
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 24272
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 23816
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 23383
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 23229
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 22420
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 22417
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 22188
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 22161
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 21800
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 20476
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 20024
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 18617
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 18557
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 17207
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 16520
+python3 core8/pwb.py mass/radio/st3/o del2 updatetext 16447
+
+
+14225
+
 """
 import sys
 
-# ---
 from mass.radio.st3.start3 import main_by_ids
 
+ids = """
+    10902
+    11037
+    11068
+    11171
+    11238
+    11276
+    12200
+    14410
+    14948
+    154053
+    15701
+    16447
+    16520
+    17207
+    178589
+    18557
+    18617
+    20024
+    20476
+    21800
+    22161
+    22188
+    22417
+    22420
+    23229
+    23383
+    23816
+    24272
+    25792
+    25822
+    27268
+    28328
+    28504
+    28534
+    29253
+    29659
+    30456
+    31214
+    32719
+    32829
+    33135
+    33298
+    33437
+    33881
+    34702
+    35729
+    35748
+    35752
+    37216
+    37539
+    37577
+    37759
+    37882
+    37995
+    38144
+    39157
+    39477
+    39856
+    39984
+    40224
+    40475
+    41043
+    41615
+    41790
+    42290
+    42323
+    42561
+    42571
+    42855
+    42950
+    43008
+    43911
+    43966
+    4443
+    4447
+    44489
+    44737
+    45051
+    45183
+    46104
+    46619
+    47693
+    47968
+    47999
+    48289
+    48584
+    48742
+    49006
+    49206
+    49837
+    50046
+    50278
+    51300
+    51360
+    51799
+    52019
+    52574
+    53486
+    53862
+    54389
+    55572
+    55596
+    55844
+    55955
+    57288
+    57395
+    57421
+    57481
+    57552
+    58043
+    58182
+    58904
+    59255
+    5930
+    60362
+    60929
+    60964
+    61599
+    62812
+    65260
+    67253
+    67273
+    68401
+    68741
+    70122
+    70242
+    71000
+    71226
+    71910
+    72391
+    73389
+    78588
+    82339
+    82959
+    83338
+    83345
+    83455
+    83667
+    84030
+    84330
+    85517
+    85725
+    85766
+    86524
+    86986
+    87214
+    87318
+    87426
+    89348
+    90499
+    91916
+    93330
+    93383
+    93705
+    95353
+    98093
+"""
 # ---
-missing = [
-    "176931",
-    "173066",
-    "172095",
-    "166651",
-    "160453",
-    "160082",
-    "156312",
-    "96174",
-    "94404",
-    "93009",
-    "90899",
-    "89702",
-    "88716",
-    "71635",
-    "66104",
-    "64221",
-    "59208",
-    "58276",
-    "56595",
-    "56418",
-    "55424",
-    "55351",
-    "51892",
-    "47707",
-    "46682",
-    "39370",
-    "31234",
-    "30031",
-    "24775",
-    "23795",
-    "19445",
-    "17318",
-    "15823",
-]
-# ---
-ids = [
-    "182746",
-    "176190",
-    "156754",
-    "146973",
-    "24131",
-    "24128",
-    "24125",
-    "24123",
-    "24110",
-    "24087",
-    "23985",
-    "23971",
-    "23911",
-    "23910",
-    "23909",
-    "23908",
-    "23903",
-    "23902",
-    "23901",
-    "23900",
-    "23889",
-    "23859",
-    "23853",
-    "23837",
-    "23833",
-    "23797",
-    "23790",
-    "23770",
-    "23677",
-    "23650",
-    "23625",
-    "23594",
-    "23393",
-    "23344",
-    "23343",
-    "23338",
-    "23322",
-    "23269",
-    "23232",
-    "23076",
-    "23017",
-    "22986",
-    "22978",
-    "22949",
-    "22906",
-    "22890",
-    "22889",
-    "22782",
-    "22700",
-    "22571",
-    "22547",
-    "22500",
-    "22408",
-    "22368",
-    "22304",
-    "22218",
-    "22217",
-    "22165",
-    "22163",
-    "22143",
-    "22134",
-    "22129",
-    "22108",
-    "22101",
-    "22002",
-    "21978",
-    "21914",
-    "21900",
-    "21892",
-    "21891",
-    "21841",
-    "21806",
-    "21805",
-    "21750",
-    "21744",
-    "21742",
-    "21597",
-    "21596",
-    "21541",
-    "21518",
-    "21506",
-    "21485",
-    "21473",
-    "21442",
-    "21441",
-    "21342",
-    "21310",
-    "21307",
-    "21305",
-    "21300",
-    "21295",
-    "21277",
-    "21270",
-    "21262",
-    "21245",
-    "21226",
-    "21225",
-    "21223",
-    "21216",
-    "21204",
-    "21175",
-    "21155",
-    "21139",
-    "21129",
-    "21075",
-    "21065",
-    "21044",
-    "21002",
-    "20956",
-    "20941",
-    "20937",
-    "20924",
-    "20908",
-    "20907",
-    "20906",
-    "20905",
-    "20899",
-    "20870",
-    "20869",
-    "20864",
-    "20857",
-    "20784",
-    "20739",
-    "20673",
-    "20571",
-    "20570",
-    "20529",
-    "20528",
-    "20495",
-    "20333",
-    "20331",
-    "20309",
-    "20092",
-    "20031",
-    "20016",
-    "20002",
-    "19941",
-    "19883",
-    "19804",
-    "19788",
-    "19784",
-    "19755",
-    "19712",
-    "19695",
-    "19651",
-    "19634",
-    "19628",
-    "19614",
-    "19542",
-    "19519",
-    "19514",
-    "19512",
-    "19508",
-    "19472",
-    "19446",
-    "19374",
-    "19373",
-    "19372",
-    "19370",
-    "19367",
-    "19347",
-    "19338",
-    "19336",
-    "19211",
-    "19185",
-    "19174",
-    "19164",
-    "19158",
-    "19140",
-    "19139",
-    "19086",
-    "19084",
-    "19048",
-    "19045",
-    "19041",
-    "19035",
-    "19031",
-    "19002",
-    "18977",
-    "18966",
-    "18960",
-    "18959",
-    "18958",
-    "18956",
-    "18937",
-    "18936",
-    "18935",
-    "18921",
-    "18918",
-    "18917",
-    "18889",
-    "18813",
-    "18792",
-    "18784",
-    "18783",
-    "18780",
-    "18777",
-    "18765",
-    "18762",
-    "18728",
-    "18716",
-    "18660",
-    "18659",
-    "18655",
-    "18653",
-    "18652",
-    "18620",
-    "18512",
-    "18510",
-    "18481",
-    "18474",
-    "18468",
-    "18431",
-    "18394",
-    "18383",
-    "18287",
-    "18229",
-    "18074",
-    "18023",
-    "18014",
-    "17997",
-    "17950",
-    "17928",
-    "17913",
-    "17885",
-    "17847",
-    "17808",
-    "17735",
-    "17710",
-    "17706",
-    "17600",
-    "17511",
-    "17500",
-    "17482",
-    "17481",
-    "17477",
-    "17414",
-    "17399",
-    "17337",
-    "17309",
-    "17302",
-    "17292",
-    "17274",
-    "17212",
-    "17157",
-    "17033",
-    "17031",
-    "16921",
-    "16913",
-    "16890",
-    "16871",
-    "16817",
-    "16768",
-    "16756",
-    "16743",
-    "16721",
-    "16720",
-    "16654",
-    "16627",
-    "16433",
-    "16395",
-    "16378",
-    "16269",
-    "16241",
-    "16144",
-    "16116",
-    "15953",
-    "15934",
-    "15897",
-    "15895",
-    "15890",
-    "15889",
-    "15887",
-    "15886",
-    "15885",
-    "15880",
-    "15876",
-    "15873",
-    "15870",
-    "15868",
-    "15866",
-    "15863",
-    "15862",
-    "15852",
-    "15851",
-    "15850",
-    "15837",
-    "15769",
-    "15756",
-    "15736",
-    "15698",
-    "15696",
-    "15683",
-    "15664",
-    "15656",
-    "15458",
-    "15457",
-    "15417",
-    "15416",
-    "15394",
-    "15380",
-    "15313",
-    "15290",
-    "15252",
-    "14859",
-    "14816",
-    "14755",
-    "14745",
-    "14703",
-    "14679",
-    "14662",
-    "14547",
-    "14492",
-    "14485",
-    "14379",
-    "14369",
-    "14356",
-    "14352",
-    "14346",
-    "14326",
-    "14264",
-    "14244",
-    "14227",
-    "14214",
-    "14195",
-    "14190",
-    "14179",
-    "14176",
-    "14170",
-    "14166",
-    "14164",
-    "14160",
-    "14158",
-    "14153",
-    "14149",
-    "14148",
-    "14048",
-    "14037",
-    "14036",
-    "14035",
-    "14034",
-    "13978",
-    "13960",
-    "13951",
-    "13875",
-    "13836",
-    "13822",
-    "13819",
-    "13811",
-    "13799",
-    "13772",
-    "13757",
-    "13740",
-    "13706",
-    "13703",
-    "13695",
-    "13674",
-    "13661",
-    "13629",
-    "13614",
-    "13540",
-    "13519",
-    "13456",
-    "13443",
-    "13327",
-    "13262",
-    "13219",
-    "13203",
-    "13192",
-    "13191",
-    "13167",
-    "13155",
-    "13154",
-    "13153",
-    "13141",
-    "13140",
-    "13119",
-    "13082",
-    "13038",
-    "13023",
-    "13007",
-    "12962",
-    "12959",
-    "12958",
-    "12923",
-    "12872",
-    "12853",
-    "12845",
-    "12771",
-    "12760",
-    "12738",
-    "12697",
-    "12572",
-    "12570",
-    "12556",
-    "12541",
-    "12505",
-    "12495",
-    "12398",
-    "12365",
-    "12343",
-    "12298",
-    "12259",
-    "12222",
-    "12207",
-    "12086",
-    "12007",
-    "11970",
-    "11770",
-    "11757",
-    "11731",
-    "11728",
-    "11692",
-    "11678",
-    "11675",
-    "11635",
-    "11603",
-    "11602",
-    "11600",
-    "11598",
-    "11591",
-    "11590",
-    "11577",
-    "11571",
-    "11569",
-    "11499",
-    "11436",
-    "11434",
-    "11410",
-    "11385",
-    "11378",
-    "11370",
-    "11350",
-    "11339",
-    "11315",
-    "11296",
-    "11292",
-    "11282",
-    "11270",
-    "11265",
-    "11264",
-    "11259",
-    "11222",
-    "11185",
-    "11184",
-    "11177",
-    "11132",
-    "11076",
-    "11051",
-    "11011",
-    "10885",
-    "10856",
-    "10854",
-    "10817",
-    "10816",
-    "10793",
-    "10768",
-    "10767",
-    "10735",
-    "10728",
-    "10723",
-    "10709",
-    "10666",
-    "10664",
-    "10654",
-    "10653",
-    "10636",
-    "10632",
-    "10597",
-    "10564",
-    "10556",
-    "10555",
-    "10535",
-    "10495",
-    "10493",
-    "10476",
-    "10404",
-    "10381",
-    "10345",
-    "10343",
-    "10318",
-    "10307",
-    "10296",
-    "10277",
-    "10264",
-    "10230",
-    "10225",
-    "10173",
-    "10172",
-    "10145",
-    "10125",
-    "10106",
-    "10089",
-    "10063",
-    "10058",
-    "10049",
-    "10036",
-    "10035",
-]
-# ---
-if "missing" in sys.argv:
-    ids = missing
+ids = [ x.strip() for x in ids.split("\n") if x.strip() ]
 # ---
 print(f"len ids: {len(ids)}")
 # ---
