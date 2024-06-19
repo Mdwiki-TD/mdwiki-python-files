@@ -2,6 +2,7 @@
 from mass.radio.bots.add_cat import add_cat_to_images, add_cat_bot
 
 """
+import re
 import sys
 from multiprocessing import Pool
 from newapi import printe
@@ -16,9 +17,10 @@ skip_titles = [
     "File:Angiodysplasia - cecal active bleed (Radiopaedia 168775-136954 Coronal 91).jpeg",
 ]
 
-def add(da=None, title="", cat=""):
+
+def add(da=None, title="", cat="", cat2=""):
     if da:
-        title, cat = da[0], da[1]
+        title, cat, cat2 = da[0], da[1], da[2]
     # ---
     if title.find("_") != -1:
         title = title.replace("_", " ")
@@ -46,12 +48,28 @@ def add(da=None, title="", cat=""):
 
     text = page.get_text()
     # ---
+    newtext = text
+    # ---
     if text.find(cat) != -1:
         printe.output(f"cat {title} already has it.")
-        return
+        summary = f"Bot: remove [[:{cat2}]]"
+        if "del2" not in sys.argv:
+            return
+    else:
+        newtext += cat_line
     # ---
-    newtext = text
-    newtext += cat_line
+    if cat2 and "del2" in sys.argv:
+        newtext = newtext.replace(f"[[{cat2}]]", "")
+        # ---
+        if newtext.find(f"[[{cat2}") != -1:
+            for x in newtext.split("\n"):
+                if x.startswith(f"[[{cat2}"):
+                    newtext = newtext.replace(x, "")
+                    break
+    # ---
+    if newtext.strip() == text.strip():
+        printe.output("no changes..")
+        return
     # ---
     page.save(newtext=newtext, summary=summary)
 
@@ -63,23 +81,26 @@ def mu(tab):
     pool.terminate()
 
 
-def add_cat_bot(pages, cat):
+def add_cat_bot(pages, cattitle, cat2):
     if "multi" in sys.argv:
-        tab = [[x, cat] for x in pages]
+        tab = [[x, cattitle, cat2] for x in pages]
         mu(tab)
     else:
         for title in pages:
-            add(title=title, cat=cat)
+            add(title=title, cat=cattitle, cat2=cat2)
 
 
-def add_cat_to_images(cat_list, cat_title):
+def add_cat_to_images(cat_list, cat_title, cat):
     # ---
     done = CatDepth(cat_title, sitecode="www", family="nccommons", depth=0, ns="")
     # ---
     study_done.extend(done)
     # ---
-    new_cat_list = [x for x in cat_list if x not in study_done and x not in done]
+    new_cat_list = cat_list
+    # ---
+    if "del2" not in sys.argv:
+        new_cat_list = [x for x in cat_list if x not in study_done and x not in done]
     # ---
     printe.output(f"{len(done)=}, {len(new_cat_list)=}")
     # ---
-    add_cat_bot(new_cat_list, cat_title)
+    add_cat_bot(new_cat_list, cat_title, cat)
