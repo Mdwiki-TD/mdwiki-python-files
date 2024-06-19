@@ -1,25 +1,20 @@
 """
 
-from fix_mass.fix_sets.bots.set_text2 import make_text_study
+from fix_mass.fix_sets.bots.set_text import make_text_one_study
+from fix_mass.fix_sets.bots.done import studies_done_append
+
 """
-import sys
 from newapi import printe
 from fix_mass.fix_sets.bots.has_url import has_url_append
-from fix_mass.fix_sets.bots2.files_names_bot import get_files_names
+from fix_mass.fix_sets.bots.find_from_url import find_file_name_from_url
+from fix_mass.fix_sets.lists.sf_infos import from_sf_infos  # from_sf_infos(url, study_id)
 
 
-def make_text_study(json_data, data, study_title, study_id):
+def make_text_one_study(json_data, data, study_title, study_id):
     # ---
     url_to_file = {v["img_url"]: x for x, v in data.items()}
     # ---
-    maain_uurls = []
-    # ---
-    for x in json_data:
-        maain_uurls.extend([x["public_filename"] for x in x["images"]])
-    # ---
-    maain_uurls = list(set(maain_uurls))
-    # ---
-    files_names = get_files_names(maain_uurls, url_to_file, study_id)
+    to_move = {}
     # ---
     modalities = set([x["modality"] for x in json_data])
     # ---
@@ -28,8 +23,6 @@ def make_text_study(json_data, data, study_title, study_id):
     noo = 0
     # ---
     urlls = {}
-    # ---
-    to_move = {}
     # ---
     texts = {}
     # ---
@@ -47,8 +40,8 @@ def make_text_study(json_data, data, study_title, study_id):
         # ---
         for _n, image in enumerate(images, start=1):
             # ---
-            plane_projection = image["plane_projection"] or modality or ""
-            aux_modality = image["aux_modality"] or ""
+            plane_projection = image["plane_projection"]
+            aux_modality = image["aux_modality"]
             # ---
             # if len(modalities) == 1 and plane_projection:
             ty = plane_projection
@@ -56,30 +49,38 @@ def make_text_study(json_data, data, study_title, study_id):
             if aux_modality:
                 ty = f"{plane_projection} {aux_modality}"
             # ---
-            ty = ty.strip()
-            # ---
-            if not ty:
-                ty = ""
-            # ---
             if ty not in texts:
                 texts[ty] = ""
             # ---
             if ty not in to_move:
                 to_move[ty] = {}
             # ---
-            url = image["public_filename"]
+            public_filename = image["public_filename"]
             # ---
-            texts[ty] += f"|{url}|\n"
+            texts[ty] += f"|{public_filename}|\n"
             # ---
-            file_name = files_names.get(url)
+            file_name = ""
+            # ---
+            # file_name = url_to_file.get(public_filename)
+            # # ---
+            # if not file_name:
+            #     file_name = from_sf_infos(public_filename, study_id)
+            # ---
+            if not file_name:
+                file_name = find_file_name_from_url(public_filename)
+            # ---
+            if file_name and not file_name.startswith("File:"):
+                file_name = "File:" + file_name
             # ---
             if file_name:
-                urlls[url] = file_name
+                urlls[public_filename] = file_name
             else:
                 noo += 1
-                file_name = url
+                file_name = public_filename
             # ---
-            to_move[ty][len(to_move[ty]) + 1] = file_name
+            numb = len(to_move[ty]) + 1
+            # ---
+            to_move[ty][numb] = file_name
     # ---
     print(f"noo: {noo}")
     # ---
@@ -105,11 +106,11 @@ def make_text_study(json_data, data, study_title, study_id):
         # ---
         print(f"ty: {ty}, files: {len(files)}")
         # ---
-        if ty.strip():
-            text += f"== {ty} ==\n"
+        text += f"== {ty} ==\n"
         text += "{{Imagestack\n|width=850\n"
         text += f"|title={study_title2}\n|align=centre\n|loop=no\n"
         text += texts[ty].strip()
         text += "\n}}\n"
+        # ---
     # ---
     return text, to_move
