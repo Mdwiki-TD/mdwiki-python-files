@@ -8,50 +8,32 @@ from fix_mass.fix_sets.bots.get_img_info import one_img_info
 # import sys
 import re
 import json
-
 # import os
 from pathlib import Path
 
 from newapi import printe
 from newapi.ncc_page import NEW_API
-from fix_mass.fix_sets.jsons_dirs import get_study_dir, jsons_dir
 
 api_new = NEW_API("www", family="nccommons")
 api_new.Login_to_wiki()
 
-# st_dic_infos = jsons_dir / "studies_files_infos"
+Dir = Path(__file__).parent.parent
+
+st_dic_infos = Dir / "jsons/studies_files_infos"
 
 
-def dump_st(data, study_id):
-    # ---
-    study_id_dir = get_study_dir(study_id)
-    # ---
-    file = study_id_dir / "img_info.json"
-    # ---
+def dump_st(data, file):
+
     with open(file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
         printe.output(f"<<green>> write {len(data)} to file: {file}")
 
 
-def get_cach_img_info(study_id):
-    # ---
-    # file = st_dic_infos / f"{study_id}_s_id.json"
-    # ---
-    study_id_dir = get_study_dir(study_id)
-    # ---
-    file = study_id_dir / "img_info.json"
-    # ---
-    if file.exists():
-        printe.output(f"<<green>> get_cach_img_info: {file} exists")
-        with open(file, encoding="utf-8") as f:
-            return json.load(f)
-    # ---
-    return False
-
 def gt_img_info(titles, id_to_url=None):
     # ---
     if not id_to_url:
         id_to_url = {}
+    # ---
     # ---
     titles = [titles] if not isinstance(titles, list) else titles
     # ---
@@ -135,7 +117,7 @@ def gt_img_info(titles, id_to_url=None):
             # ---
             revisions = revisions[0]["content"]
             # match * Image ID: 58331091 in revisions.split("\n")
-            ma = re.search(r"Image ID: (\d+)", revisions, re.IGNORECASE)
+            ma = re.search(r"Image ID: (\d+)", revisions)
             if ma:
                 info[title]["img_id"] = ma.group(1)
                 info[title]["img_url"] = id_to_url.get(str(ma.group(1)), "")
@@ -149,31 +131,34 @@ def gt_img_info(titles, id_to_url=None):
 
 def one_img_info(title, study_id, json_data):
     # ---
-    cach = get_cach_img_info(study_id)
-    if cach:
-        return cach
+    file = st_dic_infos / f"{study_id}_s_id.json"
+    # ---
+    if file.exists():
+        printe.output(f"<<green>> one_img_info: {file} exists")
+        with open(file, encoding="utf-8") as f:
+            return json.load(f)
     # ---
     id_to_url = {}
     # ---
     for x in json_data:
-        for image in x["images"]:
+        for _, image in enumerate(x["images"], start=1):
             id_to_url[str(image["id"])] = image["public_filename"]
     # ---
     info = gt_img_info(title, id_to_url)
     # ---
-    dump_st(info, study_id)
+    # printe.output(json.dumps(pages, indent=2))
+    # ---
+    dump_st(info, file)
     # ---
     return info
 
 
 def test():
-    title = [
-        "File:1st metatarsal head fracture (Radiopaedia 99187-120594 Frontal 1).png",
-        "File:Appendicitis (CT angiogram) (Radiopaedia 154713-134732 This comic explains the pathophysiology of appendicitis. 02).jpg",
-    ]
+    title = ["File:1st metatarsal head fracture (Radiopaedia 99187-120594 Frontal 1).png", "File:Appendicitis (CT angiogram) (Radiopaedia 154713-134732 This comic explains the pathophysiology of appendicitis. 02).jpg"]
     info = gt_img_info(title)
     # ---
     print(json.dumps(info, indent=2))
+    # ---
 
 
 if __name__ == "__main__":

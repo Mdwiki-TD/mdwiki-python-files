@@ -3,7 +3,7 @@
 python3 core8/pwb.py fix_mass/fix_sets/lists/studies_titles
 
 Usage:
-from fix_mass.jsons.files import studies_titles, study_to_case_cats
+from fix_mass.fix_sets.jsons.files import studies_titles, study_to_case_cats
 
 
 """
@@ -14,8 +14,9 @@ from pathlib import Path
 from newapi import printe
 from newapi.ncc_page import CatDepth
 
-from fix_mass.fix_sets.jsons_dirs import jsons_dir
+Dir = Path(__file__).parent.parent
 
+st_dit = Dir / "jsons"
 
 def get_mem(title):
     members = CatDepth(title, sitecode="www", family="nccommons", depth=0, ns=0, onlyns=0)
@@ -41,12 +42,10 @@ def get_mem(title):
     printe.output(f"\t{len(sets)=}")
     # ---
     return sets
-
-
 # ---
 sets = get_mem("Category:Radiopaedia sets")
 # ---
-file = jsons_dir / "studies_titles.json"
+file = st_dit / "studies_titles.json"
 # ---
 with open(file, "w", encoding="utf-8") as f:
     json.dump(sets, f, ensure_ascii=False, indent=2)
@@ -54,7 +53,7 @@ with open(file, "w", encoding="utf-8") as f:
 # ---
 sets2 = get_mem("Category:Image set")
 # ---
-file2 = jsons_dir / "studies_titles2.json"
+file2 = st_dit / "studies_titles2.json"
 # ---
 with open(file2, "w", encoding="utf-8") as f:
     json.dump(sets2, f, ensure_ascii=False, indent=2)

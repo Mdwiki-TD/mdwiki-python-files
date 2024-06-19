@@ -2,20 +2,20 @@
 
 python3 core8/pwb.py mass/radio/get_studies test
 
-from mass.radio.get_studies import get_stacks_fixed#(study_id, case_id, get_cach=False)
-
 """
 import os
+from pathlib import Path
+from bs4 import BeautifulSoup
 import re
 import requests
 import json
-from pathlib import Path
-from bs4 import BeautifulSoup
 from newapi import printe
 
+# ---
 from mass.radio.jsons_files import jsons, urls_to_ids
 
-
+# dumps_jsons(infos=0, urls=0, cases_in_ids=0, cases_dup=0, authors=0, to_work=0, all_ids=0, urls_to_get_info=0)
+# ---
 main_dir = Path(__file__).parent
 # ---
 studies_dir = "/data/project/mdwiki/studies"
@@ -23,32 +23,6 @@ studies_dir = "/data/project/mdwiki/studies"
 if not os.path.exists(studies_dir):
     printe.output(f"<<red>> studies_dir {studies_dir} not found")
     studies_dir = main_dir / "studies"
-    printe.output(f"<<red>> studies_dir set to {studies_dir}")
-
-
-def dump_it(study_id, data):
-    # ---
-    st_file = studies_dir / f"{study_id}.json"
-    # ---
-    with open(st_file, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        printe.output(f"<<green>> get_studies: write {len(data)} to file: {st_file}")
-
-
-def get_studies_from_cach(study_id):
-    # ---
-    st_file = studies_dir / f"{study_id}.json"
-    # ---
-    if st_file.exists():
-        printe.output(f"<<green>> get_studies: get_cach: {st_file} exists")
-        try:
-            with open(st_file, encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            printe.output(f"<<red>> get_studies: get_cach: {st_file} error: {e}")
-            return {}
-    # ---
-    return {}
 
 
 def get_images(url):
@@ -120,29 +94,11 @@ def get_images_stacks(study_id):
             image_info.append(image)
 
     printe.output(f"<<green>> len image_info: {len(image_info)}")
-
+    
     # sort images by "id"
     # image_info = sorted(image_info, key=lambda x: x["id"])
 
     return image_info
-
-
-def get_stacks_fixed(study_id, case_id, get_cach=False):
-    # ---
-    if get_cach:
-        images = get_studies_from_cach(study_id)
-        if images:
-            return images
-    # ---
-    images = get_images_stacks(study_id)
-    # ---
-    if not images:
-        images = get_images(f"https://radiopaedia.org/cases/{case_id}/studies/{study_id}")
-    # ---
-    if images:
-        dump_it(study_id, images)
-    # ---
-    return images
 
 
 def main():
@@ -162,7 +118,10 @@ def main():
         # ---
         no_id += 1 if not caseid else 0
         # ---
-        tab = {"url": url, "studies": []}
+        tab = {
+            "url": url,
+            "studies": []
+        }
         if caseid and jsons.all_ids.get(caseid):
             tab.update(jsons.all_ids[caseid])
         # ---
@@ -175,24 +134,19 @@ def main():
             n += 1
             print(f"n: {n}/ f {len(ids_to_work)}")
             # study id
-            # ---
             st_id = study.split("/")[-1]
+            st_file = studies_dir / f"{st_id}.json"
             # ---
-            from_cach = get_studies_from_cach(st_id)
-            # ---
-            if from_cach:
-                continue
-            # ---
-            # st_file = studies_dir / f"{st_id}.json"
-            # if os.path.exists(st_file): continue
-            # ---
-            ux = get_images_stacks(st_id)
-            # ---
-            if not ux:
-                ux = get_images(study)
-            # ---
-            if ux:
-                dump_it(st_id, ux)
+            if not os.path.exists(st_file):
+                # ---
+                ux = get_images_stacks(st_id)
+                # ---
+                if not ux:
+                    ux = get_images(study)
+                # ---
+                with open(st_file, "w", encoding="utf-8") as f:
+                    json.dump(ux, f, ensure_ascii=False, indent=2)
+                # ---
 
 
 if __name__ == "__main__":
