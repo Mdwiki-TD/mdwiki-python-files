@@ -23,8 +23,12 @@ def get_stacks(study_id):
     new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
     print(f"get_images_stacks: study_id: {study_id}, new_url: {new_url}")
     # ---
-    response = requests.get(new_url, timeout=10)
-
+    try:
+        response = requests.get(new_url, timeout=10)
+    except Exception as e:
+        print(f"Failed to retrieve content from the URL. Error: {e}")
+        return {}
+    # ---
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")

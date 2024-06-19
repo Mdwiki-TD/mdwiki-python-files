@@ -21,6 +21,7 @@ move_dir = Dir / "move_text"
 if not move_dir.exists():
     move_dir.mkdir()
 
+
 def change_names(file_dict, ty, study_id):
     modified_file_dict = {}
     new_t = []
@@ -98,11 +99,19 @@ def log(same_titles, diff_titles, study_id):
     # ---
     file2 = move_dir / f"{study_id}.txt"
     # ---
-    with open(file2, "w", encoding="utf-8") as f:
-        f.write(text)
+    try:
+        with open(file2, "w", encoding="utf-8") as f:
+            f.write(text)
+
+    except Exception as e:
+        printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
     # ---
-    with open(file, "w", encoding="utf-8") as f:
-        f.write(text)
+    try:
+        with open(file, "w", encoding="utf-8") as f:
+            f.write(text)
+
+    except Exception as e:
+        printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
 
 
 def mv_files_change_text(text, tab, study_id):

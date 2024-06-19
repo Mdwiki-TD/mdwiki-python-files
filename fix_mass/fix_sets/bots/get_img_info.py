@@ -28,9 +28,13 @@ def dump_st(data, study_id):
     # ---
     file = study_id_dir / "img_info.json"
     # ---
-    with open(file, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        printe.output(f"<<green>> write {len(data)} to file: {file}")
+    try:
+        with open(file, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+            printe.output(f"<<green>> write {len(data)} to file: {file}")
+
+    except Exception as e:
+        printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
 
 
 def get_cach_img_info(study_id):
@@ -47,6 +51,7 @@ def get_cach_img_info(study_id):
             return json.load(f)
     # ---
     return False
+
 
 def gt_img_info(titles, id_to_url=None):
     # ---
