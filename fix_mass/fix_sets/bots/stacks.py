@@ -15,10 +15,13 @@ def dump_it(data, study_id):
     # ---
     file = study_id_dir / "stacks.json"
     # ---
-    with open(file, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-        printe.output(f"<<green>> write {len(data)} to file: {file}")
+    try:
+        with open(file, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+            printe.output(f"<<green>> write {len(data)} to file: {file}")
 
+    except Exception as e:
+        printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
 
 def get_stacks_o(study_id):
     new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
@@ -29,6 +32,7 @@ def get_stacks_o(study_id):
     except Exception as e:
         print(f"Failed to retrieve content from the URL. Error: {e}")
         return {}
+
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")

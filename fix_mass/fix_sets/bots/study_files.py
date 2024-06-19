@@ -5,15 +5,16 @@ from fix_mass.fix_sets.bots.study_files import get_study_files
 """
 import re
 import json
-import sys
-from pathlib import Path
+
+# import sys
+# from pathlib import Path
 from newapi import printe
 from newapi.ncc_page import CatDepth
-from fix_mass.fix_sets.jsons_dirs import get_study_dir, jsons_dir
+from fix_mass.fix_sets.jsons_dirs import get_study_dir  # , jsons_dir
 
 # st_dit = jsons_dir / "studies_files"
 
-from fix_mass.jsons.files import studies_titles, study_to_case_cats
+from fix_mass.jsons.files import study_to_case_cats
 
 
 def dump_it(data):
@@ -24,10 +25,13 @@ def dump_it(data):
         # ---
         file = study_id_dir / "study_files.json"
         # ---
-        with open(file, "w", encoding="utf-8") as f:
-            json.dump(files, f, ensure_ascii=False, indent=2)
-            printe.output(f"<<green>> write {len(files)} to studies_files/{s_id}.json")
+        try:
+            with open(file, "w", encoding="utf-8") as f:
+                json.dump(files, f, ensure_ascii=False, indent=2)
+                printe.output(f"<<green>> write {len(files)} to studies_files/{s_id}.json")
 
+        except Exception as e:
+            printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
 
 def get_from_cach(study_id):
     # ---

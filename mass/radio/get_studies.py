@@ -53,8 +53,13 @@ def get_studies_from_cach(study_id):
 
 def get_images(url):
     print(f"url: {url}")
+    # ---
+    try:
+        response = requests.get(url, timeout=10)
+    except Exception as e:
+        print(f"Failed to retrieve content from the URL. Error: {e}")
+        return "", []
 
-    response = requests.get(url, timeout=10)
     # Check if the request was successful (status code 200)
     if response.status_code != 200:
         print(f"Failed to retrieve content from the URL. Status Code: {response.status_code}")
@@ -95,9 +100,14 @@ def get_images_stacks(study_id):
     new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
     print(f"get_images_stacks: study_id: {study_id}, new_url: {new_url}")
     # ---
-    response = requests.get(new_url, timeout=10)
-
     image_info = []
+    # ---
+    try:
+        response = requests.get(new_url, timeout=10)
+    except Exception as e:
+        print(f"Failed to retrieve content from the URL. Error: {e}")
+        return image_info
+    # ---
 
     # Check if the request was successful (status code 200)
     if response.status_code != 200:

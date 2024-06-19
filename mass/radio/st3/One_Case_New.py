@@ -113,9 +113,7 @@ class OneCase:
 
     def get_files_names_from_urls(self, study, images):
         # ---
-        maain_uurls = [x["public_filename"] for x in images]
-        # ---
-        maain_uurls = list(set(maain_uurls))
+        maain_uurls = list({x["public_filename"] for x in images})
         # ---
         files_names = get_files_names(maain_uurls, {}, study)
         # ---
@@ -196,9 +194,8 @@ class OneCase:
         # ---
         cat_case = f"[[{self.category}]]"
         # ---
-        if str(study_id) in add_studies_cat_del_case or "del2" in sys.argv:
-            if set_cat:
-                cat_case = ""
+        if (str(study_id) in add_studies_cat_del_case or "del2" in sys.argv) and set_cat:
+            cat_case = ""
         # ---
         image_text = "== {{int:summary}} ==\n"
 
@@ -246,9 +243,8 @@ class OneCase:
         printt(f"upload result: {file_name}")
         if file_name and file_name != image_name:
             # ---
-            if self.usa_auth:
-                if "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages:
-                    update_text_add_pd_medical(f"File:{file_name}")
+            if self.usa_auth and "updatetext" in sys.argv and f"File:{file_name}" not in PD_medical_pages:
+                update_text_add_pd_medical(f"File:{file_name}")
             # ---
             self.add_category(file_name)
 
@@ -306,10 +302,9 @@ class OneCase:
         # ---
         set_title = f"Radiopaedia case {self.title} id: {self.caseId} study: {study}"
         # ---
-        if "updatetext" not in sys.argv or "del2" in sys.argv:
-            if self.images_count > 1:
-                self.create_set(set_title, set_files)
-                self.create_set_category(set_title, set_files, study)
+        if ("updatetext" not in sys.argv or "del2" in sys.argv) and self.images_count > 1:
+            self.create_set(set_title, set_files)
+            self.create_set_category(set_title, set_files, study)
 
     def upload_images(self, study, images):
         planes = {}
@@ -336,7 +331,6 @@ class OneCase:
             extension = image_url.split(".")[-1].lower()
             # ---
             if not extension:
-                # extension = get_image_extension(image['fullscreen_filename'])
                 extension = image["fullscreen_filename"].split(".")[-1].lower()
             # ---
             if extension == "bmp":
