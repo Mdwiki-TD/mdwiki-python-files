@@ -8,7 +8,7 @@ from pathlib import Path
 from newapi.ncc_page import NEW_API
 from newapi import printe
 from fix_mass.fix_sets.jsons_dirs import get_study_dir, jsons_dir
-
+# from fix_mass.dp_infos.db_duplict import insert_url_file # insert_url_file(url, file)
 api_new = NEW_API("www", family="nccommons")
 api_new.Login_to_wiki()
 
@@ -24,8 +24,10 @@ data = {d["url"]: d["file_name"] for d in data}
 def append_data(url, file_name):
     data[url] = file_name
     # ---
-    with jsonlines.open(url_to_file_file, mode="a") as writer:
-        writer.write({"url": url, "file_name": file_name})
+    # insert_url_file(url, file_name)
+    # ---
+    # with jsonlines.open(url_to_file_file, mode="a") as writer:
+    #     writer.write({"url": url, "file_name": file_name})
 
 
 def get_from_api(url):
@@ -74,7 +76,7 @@ def find_file_name_from_url(url, do_api=True):
     if do_api:
         na = get_from_api(url)
     # ---
-    # if na:
-    # append_data(url, na)
+    if na:
+        append_data(url, na)
     # ---
     return na

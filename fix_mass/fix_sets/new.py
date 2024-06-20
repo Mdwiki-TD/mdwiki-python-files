@@ -5,7 +5,7 @@ tfj run cdcf --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py m
 python3 core8/pwb.py fix_mass/fix_sets/new ask 143304
 python3 core8/pwb.py fix_mass/fix_sets/new ask 80304 printtext
 python3 core8/pwb.py fix_mass/fix_sets/new ask 14038 printtext
-python3 core8/pwb.py fix_mass/fix_sets/new ask
+python3 core8/pwb.py fix_mass/fix_sets/new ask 62191 printtext
 python3 core8/pwb.py fix_mass/fix_sets/new ask
 python3 core8/pwb.py fix_mass/fix_sets/new ask
 python3 core8/pwb.py fix_mass/fix_sets/new ask 71160
@@ -13,6 +13,7 @@ python3 core8/pwb.py fix_mass/fix_sets/new ask 80302
 python3 core8/pwb.py fix_mass/fix_sets/new ask 14090
 python3 core8/pwb.py fix_mass/fix_sets/new ask all
 """
+import re
 import sys
 from newapi import printe
 from newapi.ncc_page import MainPage as ncc_MainPage

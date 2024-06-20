@@ -23,6 +23,12 @@ def fix_cats(text, p_text):
     # ---
     for x in cat_list:
         xtest = x.split("|", maxsplit=1)[0]
+        # ---
+        xma = re.match(r"^\[\[Category:Radiopaedia case \d+ .*?$", x)
+        # ---
+        if "del2" in sys.argv and xma and x.find("study:") == -1:
+            continue
+        # ---
         if text.find(xtest) == -1:
             text += f"\n{x}"
     # ---
