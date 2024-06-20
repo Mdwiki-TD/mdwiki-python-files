@@ -1,9 +1,9 @@
 """
-python3 core8/pwb.py fix_mass/fix_sets/read_sf_infos
-python3 core8/pwb.py fix_mass/fix_sets/read_sf_infos dump
-python3 core8/pwb.py fix_mass/fix_sets/read_sf_infos read_all
+python3 core8/pwb.py fix_mass/sf_infos/read_sf_infos
+python3 core8/pwb.py fix_mass/sf_infos/read_sf_infos dump
+python3 core8/pwb.py fix_mass/sf_infos/read_sf_infos read_all
 
-tfj run --mem 4Gi readall --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/read_sf_infos read_all"
+tfj run --mem 4Gi readall --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/sf_infos/read_sf_infos read_all"
 
 """
 import sys
@@ -11,27 +11,33 @@ import os
 import psutil
 import json
 import tqdm
+from pathlib import Path
 from newapi import printe
 from fix_mass.fix_sets.jsons_dirs import jsons_dir
 
+Dir = Path(__file__).parent
 # ---
 numbs = 1000 if "2" not in sys.argv else 2
 # ---
 starts_with = "https://prod-images-static.radiopaedia.org/images"
 
-sf_infos_dir = jsons_dir / "sf_infos_json"
+Dir_json = Dir / "jsons"
+
+if not Dir_json.exists():
+    Dir_json.mkdir()
+
+sf_infos_dir = Dir / "sf_infos_json"
 
 if not sf_infos_dir.exists():
     sf_infos_dir.mkdir()
 
-
 def print_memory():
-    _red_ = "\033[91m%s\033[00m"
+    yellow, purple = "\033[93m%s\033[00m", "\033[95m%s\033[00m"
 
     usage = psutil.Process(os.getpid()).memory_info().rss
     usage = usage / 1024 // 1024
 
-    print(_red_ % f"memory usage: psutil {usage} MB")
+    print(yellow % "Memory usage:", purple % f"{usage} MB")
 
 
 def dump_them():
@@ -85,7 +91,7 @@ def dump_them():
 def read_all():
     all_data = {}
     # ---
-    all_data_file = jsons_dir / "sf_infos_all_new.json"
+    all_data_file = Dir_json / "sf_infos_all_new.json"
     # ---
     list_files = list(sf_infos_dir.glob("*.json"))
     # ---
@@ -112,7 +118,7 @@ def read_all():
     # ---
     printe.output(f"<<green>> write all_data: {len(all_data)} to file: {all_data_file}")
     # ---
-    all_data_file_more = jsons_dir / "sf_infos_all_more.json"
+    all_data_file_more = Dir_json / "sf_infos_all_more.json"
     # ---
     urls_with_more = {}
     # ---
@@ -129,7 +135,7 @@ def read_all():
 
 def start():
     # ---
-    all_data_file = jsons_dir / "sf_infos_all_more.json"
+    all_data_file = Dir_json / "sf_infos_all_more.json"
     # ---
     urls_with_more = {}
     # ---

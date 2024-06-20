@@ -1,5 +1,8 @@
 """
 
+tfj run cdcd --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 noapi get:1 allids del2 updatetext"
+
+
 tfj run allids --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/start3 allids"
 
 python3 core8/pwb.py mass/radio/st3/start3 nomulti ask 97387
@@ -55,12 +58,12 @@ del cases_in_ids
 
 
 def print_memory():
-    _red_ = "\033[91m%s\033[00m"
+    yellow, purple = "\033[93m%s\033[00m", "\033[95m%s\033[00m"
 
     usage = psutil.Process(os.getpid()).memory_info().rss
     usage = usage / 1024 // 1024
 
-    print(_red_ % f"memory usage: psutil {usage} MB")
+    print(yellow % "Memory usage:", purple % f"{usage} MB")
 
 
 def do_it(va):

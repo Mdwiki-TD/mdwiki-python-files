@@ -13,6 +13,7 @@ from fix_mass.fix_sets.bots2.find_from_url import find_file_name_from_url
 from fix_mass.fix_sets.lists.sf_infos import from_sf_infos  # from_sf_infos(url, study_id)
 from fix_mass.fix_sets.bots2.get_rev import get_images_ids, get_file_urls_new  # get_file_urls_new(study_id)
 from fix_mass.fix_sets.jsons_dirs import get_study_dir
+from fix_mass.dp_infos.db_duplict import insert_all_infos
 
 data_uu = {}
 
@@ -39,6 +40,10 @@ def dump_it(data2, cach, study_id):
 
     except Exception as e:
         printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
+    # ---
+    new_data = [{"url": url, "urlid": "", "file": file} for url, file in data.items()]
+    # ---
+    insert_all_infos(new_data, prnt=False)
 
 def get_cach(study_id):
     # ---
