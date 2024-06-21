@@ -6,7 +6,6 @@ from fix_mass.fix_sets.lists.sf_infos import from_sf_infos # from_sf_infos(url, 
 """
 import json
 from newapi import printe
-from pathlib import Path
 
 from fix_mass.fix_sets.jsons_dirs import jsons_dir
 

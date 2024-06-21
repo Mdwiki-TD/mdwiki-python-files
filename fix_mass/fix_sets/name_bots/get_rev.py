@@ -1,9 +1,9 @@
 """
 
-python3 core8/pwb.py fix_mass/fix_sets/bots2/get_rev 20060
-python3 core8/pwb.py fix_mass/fix_sets/bots2/get_rev 132518
+python3 core8/pwb.py fix_mass/fix_sets/name_bots/get_rev 20060
+python3 core8/pwb.py fix_mass/fix_sets/name_bots/get_rev 132518
 
-from fix_mass.fix_sets.bots2.get_rev import get_images_ids, get_file_urls_new # get_file_urls_new(study_id)
+from fix_mass.fix_sets.name_bots.get_rev import get_images_ids, get_file_urls_rev # get_file_urls_rev(study_id)
 
 """
 import tqdm
@@ -27,6 +27,7 @@ ids_to_images = {}
 
 # studies_rev_dir = jsons_dir / "studies_rev"
 
+
 def dump_st(data, study_id):
     # ---
     # file = studies_rev_dir / f"{study_id}.json"
@@ -42,6 +43,7 @@ def dump_st(data, study_id):
 
     except Exception as e:
         printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
+
 
 def get_cach_one_study(study_id):
     # ---
@@ -60,7 +62,7 @@ def get_cach_one_study(study_id):
     return False
 
 
-def get_img_url_from_content(content):
+def match_img_url_from_content(content):
     # find urls
     urls = re.findall(r"(?P<url>https?://[^\s]+)", content)
     # ---
@@ -137,7 +139,7 @@ def get_file_rev(title):
                 img_id = match_id(content, title)
             # ---
             if not urlx:
-                url = get_img_url_from_content(content)
+                url = match_img_url_from_content(content)
                 # ---
                 if url:
                     urlx = url
@@ -165,7 +167,7 @@ def get_rev_infos(files):
     return info
 
 
-def get_file_urls_new(study_id):
+def get_file_urls_rev(study_id):
     na = {}
     # ---
     cach = get_cach_one_study(study_id)
@@ -196,7 +198,7 @@ if __name__ == "__main__":
     ids = [arg.strip() for arg in sys.argv if arg.strip().isdigit()]
     # ---
     for x in ids:
-        ii = get_file_urls_new(x)
+        ii = get_file_urls_rev(x)
         # ---
         printe.output(json.dumps(ii, indent=2))
     # ---
