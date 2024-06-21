@@ -152,6 +152,9 @@ def get_file_rev(title):
 
 def get_rev_infos(files):
     # ---
+    if "norevip" in sys.argv:
+        return {}
+    # ---
     printe.output(f"get_rev_infos: {len(files)=}")
     # ---
     info = {}

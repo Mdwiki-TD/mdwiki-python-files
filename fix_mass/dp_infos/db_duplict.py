@@ -6,7 +6,6 @@ from fix_mass.dp_infos.db_duplict import insert_url_file # insert_url_file(url, 
 """
 import sys
 import re
-from datetime import datetime
 from pathlib import Path
 
 from newapi.db_bot import LiteDB
@@ -55,11 +54,13 @@ def insert_url_file(url, file):
     return insert_infos({"url": url, "urlid": "", "file": file})
 
 
-def insert_all_infos(data_list, prnt=True):
+def insert_all_infos(data_list_or, prnt=True):
     # ---
-    data_list = [fix_data(x) for x in data_list]
+    data_list = [fix_data(x) for x in data_list_or]
     # ---
     data_list = [x for x in data_list if x["urlid"]]
+    # ---
+    print(f"insert_all_infos: data_list_or: {len(data_list_or)}, with 'urlid': {len(data_list)} ")
     # ---
     infos_db.insert_all("infos", data_list, prnt=prnt)
 
@@ -209,7 +210,20 @@ def test3():
     # update_data(url="https://prod-images-static.radiopaedia.org/images/1159635/1159635.jpg", urlid="1159635", file="")
 
 
+def check():
+    infos_db.create_table(
+        "infos",
+        {"id": int, "url": str, "urlid": str, "file": str},
+        pk="id",
+        defaults={
+            "url": "",
+            "file": "",
+            "urlid": "",
+        },
+    )
+
 if __name__ == "__main__":
+    check()
     if "test" in sys.argv:
         test()
     elif "test3" in sys.argv:

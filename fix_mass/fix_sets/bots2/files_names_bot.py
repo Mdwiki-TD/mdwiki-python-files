@@ -7,6 +7,7 @@ import re
 import json
 import tqdm
 import sys
+
 # from pathlib import Path
 from newapi import printe
 from fix_mass.fix_sets.bots2.find_from_url import find_file_name_from_url
@@ -14,6 +15,7 @@ from fix_mass.fix_sets.lists.sf_infos import from_sf_infos  # from_sf_infos(url,
 from fix_mass.fix_sets.bots2.get_rev import get_images_ids, get_file_urls_new  # get_file_urls_new(study_id)
 from fix_mass.fix_sets.jsons_dirs import get_study_dir
 from fix_mass.dp_infos.db_duplict import insert_all_infos
+from fix_mass.file_infos.db import find_data  # find_data(url="", urlid="", file="")
 
 data_uu = {}
 
@@ -44,6 +46,7 @@ def dump_it(data2, cach, study_id):
     new_data = [{"url": url, "urlid": "", "file": file} for url, file in data.items()]
     # ---
     insert_all_infos(new_data, prnt=False)
+
 
 def get_cach(study_id):
     # ---
@@ -88,6 +91,26 @@ def get_file_name(url, url_to_file, study_id):
     return file_name
 
 
+def find_from_data_db(url, urlid):
+    # ---
+    if "nodb" in sys.argv:
+        return ""
+    # ---
+    data = find_data(url=url, urlid=urlid, file="")
+    # ---
+    if not data:
+        return ""
+    # ---
+    if len(data) == 1:
+        return data[0]["file"]
+    # ---
+    for d in data:
+        if d["url"] == url and d["file"]:
+            return d["file"]
+    # ---
+    return ""
+
+
 def get_files_names(urls, url_to_file, study_id):
     # ---
     if study_id not in data_uu:
@@ -115,6 +138,11 @@ def get_files_names(urls, url_to_file, study_id):
             url_id = mat.group(1)
         # ---
         file_name = cach.get(url)
+        # ---
+        if not file_name:
+            file_name = find_from_data_db(url, url_id)
+            if file_name:
+                printe.output(f"<<green>> find_from_data_db: {url} -> {file_name}")
         # ---
         if not file_name:
             file_name = url_data_to_file.get(url, "")

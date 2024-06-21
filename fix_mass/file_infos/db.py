@@ -1,20 +1,20 @@
 """
-python3 core8/pwb.py fix_mass/sf_infos/db 54575469
+python3 core8/pwb.py fix_mass/file_infos/db test3
 
-from fix_mass.sf_infos.db import insert_url_file # insert_url_file(url, file)
+from fix_mass.file_infos.db import find_data # find_data(url="", urlid="", file="")
+from fix_mass.file_infos.db import insert_all_infos # insert_all_infos(data_list, prnt=True)
+from fix_mass.file_infos.db import insert_url_file # insert_url_file(url, file)
 
 """
 import sys
 import re
-from datetime import datetime
 from pathlib import Path
 
 from newapi.db_bot import LiteDB
 
-
 Dir = Path(__file__).parent
-db_path = Dir / "sf_infos.sqlite"
-infos_db = LiteDB(db_path)
+db_path = Dir / "db.sqlite"
+files_db = LiteDB(db_path)
 
 table_keys = {
     "infos": ["url", "urlid", "file"],
@@ -45,7 +45,7 @@ def insert_infos(data):
     # ---
     data = fix_data(data)
     # ---
-    infos_db.insert(
+    files_db.insert(
         "infos",
         data,
     )
@@ -63,7 +63,9 @@ def insert_all_infos(data_list_or, prnt=True):
     # ---
     print(f"insert_all_infos: data_list_or: {len(data_list_or)}, with 'urlid': {len(data_list)} ")
     # ---
-    infos_db.insert_all("infos", data_list, prnt=prnt)
+    files_db.insert_all("infos", data_list, prnt=prnt)
+    # ---
+    del data_list, data_list_or
 
 
 def insert(data):
@@ -73,7 +75,7 @@ def insert(data):
     # ---
     data = {k: v for k, v in data.items() if k in table_keys["infos"]}
     # ---
-    infos_db.insert(
+    files_db.insert(
         "infos",
         data,
     )
@@ -92,7 +94,7 @@ def find_data(url="", urlid="", file=""):
     if not to_s:
         return []
     # ---
-    data = infos_db.select_or("infos", to_s)
+    data = files_db.select_or("infos", to_s)
     return data
 
 
@@ -126,11 +128,13 @@ def update_data(url="", urlid="", file=""):
             # ---
             print(sql)
             # ---
-            infos_db.update(sql)
+            files_db.update(sql)
+    # ---
+    del new_data, data_in
 
 
 def query(sql):
-    return infos_db.query(sql)
+    return files_db.query(sql)
 
 
 def test():
@@ -145,13 +149,13 @@ def test():
     insert(
         {
             "url": "",
-            "urlid": "33264355",
-            "file": "File:Postoperative lumbar nerve root enhancement (Radiopaedia 14096-13943 Sagittal 2).jpg",
+            "urlid": "020202",
+            "file": "File:tests.jpg",
         }
     )
 
     # Retrieve data
-    data = infos_db.get_data("infos")
+    data = files_db.get_data("infos")
     for row in data:
         print(row)
 
@@ -160,7 +164,7 @@ def test2():
     print("________")
 
     # Retrieve data
-    # data = infos_db.get_data("infos")
+    # data = files_db.get_data("infos")
     # for row in data: print(row)
     # ---
     ids = [arg.strip() for arg in sys.argv if arg.isdigit()]
@@ -168,26 +172,41 @@ def test2():
     ids.extend([""])
     # ---
     for x in ids:
-        data = infos_db.select("infos", {"urlid": x})
+        data = files_db.select("infos", {"urlid": x})
         # ---
         print(data)
     # ---
-    print(infos_db.select("infos", {"url": ""}))
+    print(files_db.select("infos", {"url": ""}))
 
 
 def test3():
-    qua = """
-    select * from infos
-    where urlid = ""
-    """
-
-    # print(qua)
-    # print(query(qua))
+    qua = "SELECT * from infos"
     # ---
-    update_data(url="https://prod-images-static.radiopaedia.org/images/1159635/1159635.jpg", urlid="1159635", file="")
+    print(qua)
+    # ---
+    result = query(qua)
+    # ---
+    print(f"len result: {len(result)}")
+    # ---
+    if "printall" in sys.argv:
+        for row in result:
+            print(row)
 
+
+def check():
+    files_db.create_table(
+        "infos",
+        {"id": int, "url": str, "urlid": str, "file": str},
+        pk="id",
+        defaults={
+            "url": "",
+            "file": "",
+            "urlid": "",
+        },
+    )
 
 if __name__ == "__main__":
+    check()
     if "test" in sys.argv:
         test()
     elif "test3" in sys.argv:

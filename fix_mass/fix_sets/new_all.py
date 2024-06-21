@@ -1,6 +1,11 @@
 """
-python3 core8/pwb.py fix_mass/fix_sets/new_all
+python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi nodb reverse
 
+python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi nodb reverse
+python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi norevip reverse
+python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi norevip
+
+tfj run unio1ss --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi nodb reverse"
 tfj run fixg1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all get:1 9725"
 tfj run fixg2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all get:2 9725"
 tfj run fixg3 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all get:3 9725"
@@ -49,6 +54,11 @@ def main():
     # ---
     ids = list(studies_titles.keys())
     ids = ddo(ids)
+    # ---
+    ids.sort()
+    # ---
+    if "reverse" in sys.argv:
+        ids.reverse()
     # ---
     printe.output(f"<<purple>> len of ids: {len(ids)}")
     printe.output(f"<<purple>> len of ids: {len(ids)}")
