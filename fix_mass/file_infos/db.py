@@ -1,6 +1,6 @@
 """
 python3 core8/pwb.py fix_mass/file_infos/db test3
-python3 core8/pwb.py fix_mass/file_infos/db 54575469
+python3 core8/pwb.py fix_mass/file_infos/db 52960001
 
 from fix_mass.file_infos.db import find_data # find_data(url="", urlid="", file="")
 from fix_mass.file_infos.db import insert_all_infos # insert_all_infos(data_list, prnt=True)
@@ -87,6 +87,8 @@ def test2():
     for x in ids:
         data = main_db_bot.select({"urlid": x}, "infos")
         # ---
+        print(f"x: {x}, data:")
+        # ---
         print(data)
     # ---
     # print(main_db_bot.select({"url": ""}, "infos"))
@@ -100,6 +102,9 @@ def test3():
     result = query(qua)
     # ---
     print(f"len result: {len(result)}")
+    # ---
+    ux = find_from_data_db("", "52960001")
+    print(f"ux: {ux}")
     # ---
     if "printall" in sys.argv:
         for row in result:

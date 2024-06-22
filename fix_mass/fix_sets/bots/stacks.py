@@ -23,6 +23,25 @@ def dump_it(data, study_id):
     except Exception as e:
         printe.output(f"<<red>> Error writing to file {file}: {str(e)}")
 
+
+def stacks_from_cach(study_id):
+    # ---
+    study_id_dir = get_study_dir(study_id)
+    # ---
+    file = study_id_dir / "stacks.json"
+    # ---
+    if file.exists():
+        # printe.output(f"<<green>> stacks_from_cach: {file} exists")
+        try:
+            with open(file, encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            printe.output(f"<<red>> stacks_from_cach: {file} error: {e}")
+            return {}
+    # ---
+    return {}
+
+
 def get_stacks_o(study_id):
     new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
     print(f"get_images_stacks: study_id: {study_id}, new_url: {new_url}")
@@ -48,7 +67,12 @@ def get_stacks_o(study_id):
     return json_data
 
 
-def get_stacks(study_id):
+def get_stacks(study_id, only_cached=False):
+    # ---
+    data_in = stacks_from_cach(study_id)
+    # ---
+    if data_in or only_cached:
+        return data_in
     # ---
     data = get_stacks_o(study_id)
     # ---

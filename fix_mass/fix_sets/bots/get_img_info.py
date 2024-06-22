@@ -5,16 +5,14 @@ python3 core8/pwb.py fix_mass/fix_sets/bots/get_img_info
 from fix_mass.fix_sets.bots.get_img_info import one_img_info
 
 """
-# import sys
+import sys
 import re
 import json
 
 # import os
-from pathlib import Path
-
 from newapi import printe
 from newapi.ncc_page import NEW_API
-from fix_mass.fix_sets.jsons_dirs import get_study_dir, jsons_dir
+from fix_mass.fix_sets.jsons_dirs import get_study_dir  # , jsons_dir
 
 api_new = NEW_API("www", family="nccommons")
 api_new.Login_to_wiki()
@@ -153,6 +151,9 @@ def gt_img_info(titles, id_to_url=None):
 
 
 def one_img_info(title, study_id, json_data):
+    # ---
+    if "oo" not in sys.argv:
+        return {}
     # ---
     cach = get_cach_img_info(study_id)
     if cach:

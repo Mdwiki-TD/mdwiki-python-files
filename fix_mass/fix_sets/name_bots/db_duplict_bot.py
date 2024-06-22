@@ -1,6 +1,6 @@
 """
 
-from fix_mass.fix_sets.name_bots.url_name_upload import find_url_file_upload
+from fix_mass.fix_sets.name_bots.db_duplict_bot import find_url_file_upload
 
 """
 import jsonlines
@@ -8,9 +8,10 @@ import jsonlines
 # from pathlib import Paths
 from newapi.ncc_page import NEW_API
 from newapi import printe
-from fix_mass.fix_sets.jsons_dirs import jsons_dir
 
-# from fix_mass.dp_infos.db_duplict import insert_url_file # insert_url_file(url, file)
+from fix_mass.fix_sets.jsons_dirs import jsons_dir
+from fix_mass.dp_infos.db_duplict import find_from_data_db as find_from_db_dp, insert_url_file  # insert_url_file(url, file)
+
 api_new = NEW_API("www", family="nccommons")
 api_new.Login_to_wiki()
 
@@ -19,14 +20,14 @@ url_to_file_file = jsons_dir / "find_from_url.jsonl"
 if not url_to_file_file.exists():
     url_to_file_file.write_text('{"url": "", "file_name": ""}')
 
-data = jsonlines.open(url_to_file_file)
-data = {d["url"]: d["file_name"] for d in data}
+data1x = jsonlines.open(url_to_file_file)
+data_maain = {d["url"]: d["file_name"] for d in data1x}
 
 
 def append_data(url, file_name):
-    data[url] = file_name
+    data_maain[url] = file_name
     # ---
-    # insert_url_file(url, file_name)
+    insert_url_file(url, file_name)
     # ---
     # with jsonlines.open(url_to_file_file, mode="a") as writer:
     #     writer.write({"url": url, "file_name": file_name})
@@ -67,13 +68,31 @@ def get_from_api(url):
     return du
 
 
-def find_url_file_upload(url, do_api=True):
-    na = ""
-    if url in data:
-        da = data[url]
+def from_cach(url):
+    # ---
+    if url in data_maain:
+        da = data_maain[url]
         if da.find("https") == -1:
-            # printe.output(f"find_url_file_upload: {data[url]}")
+            # printe.output(f"find_url_file_upload: {data_maain[url]}")
             return da
+    # ---
+    file_name = ""
+    # ---
+    file_name = find_from_db_dp(url, "")
+    if file_name:
+        printe.output(f"<<green>> find_from_data_db: {url} -> {file_name}")
+    # ---
+    return file_name
+
+
+def find_url_file_upload(url, do_api=True):
+    in_cach = from_cach(url)
+    # ---
+    if in_cach and in_cach.find("https") == -1:
+        # printe.output(f"find_url_file_upload, from_cach: {in_cach}")
+        return in_cach
+    # ---
+    na = ""
     # ---
     if do_api:
         na = get_from_api(url)

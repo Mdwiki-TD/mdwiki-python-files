@@ -2,6 +2,7 @@
 
 tfj run cdcf --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py mass/radio/st3/o updatetex 90505 nodone noid noc del2 multi"
 
+python3 core8/pwb.py fix_mass/fix_sets/new ask 109711 # 2files
 python3 core8/pwb.py fix_mass/fix_sets/new ask 143304
 python3 core8/pwb.py fix_mass/fix_sets/new ask 80304 printtext
 python3 core8/pwb.py fix_mass/fix_sets/new ask 14038 printtext
@@ -13,19 +14,21 @@ python3 core8/pwb.py fix_mass/fix_sets/new ask 80302
 python3 core8/pwb.py fix_mass/fix_sets/new ask 14090
 python3 core8/pwb.py fix_mass/fix_sets/new ask all
 """
-import re
+# import re
 import sys
 from newapi import printe
 from newapi.ncc_page import MainPage as ncc_MainPage
 
-from fix_mass.fix_sets.bots.get_img_info import one_img_info
 from fix_mass.fix_sets.bots.stacks import get_stacks  # get_stacks(study_id)
-from fix_mass.fix_sets.bots2.set_text2 import make_text_study
-from fix_mass.fix_sets.bots.study_files import get_study_files
-from fix_mass.fix_sets.bots2.move_files2 import to_move_work
-from fix_mass.jsons.files import studies_titles  # , studies_titles2
 from fix_mass.fix_sets.bots.has_url import has_url_append
+
+from fix_mass.fix_sets.bots2.filter_ids import filter_no_title, filter_done
+from fix_mass.fix_sets.bots2.set_text2 import make_text_study
+from fix_mass.fix_sets.bots2.move_files2 import to_move_work
 from fix_mass.fix_sets.bots2.done2 import find_done_study  # find_done_study(title)
+
+from fix_mass.jsons.files import studies_titles
+
 
 def fix_cats(text, p_text):
     cat_text = ""
@@ -80,31 +83,36 @@ def update_set_text(title, n_text, study_id):
 
 def work_text(study_id, study_title):
     # ---
-    files = get_study_files(study_id)
-    # ---
     json_data = get_stacks(study_id)
     # ---
-    data = one_img_info(files, study_id, json_data)
+    all_files = []
     # ---
-    text, to_move = make_text_study(json_data, data, study_title, study_id)
+    for x in json_data:
+        all_files.extend([x["public_filename"] for x in x["images"]])
+    # ---
+    all_files = list(set(all_files))
+    # ---
+    printe.output(f"all_files: {len(all_files)}")
+    # ---
+    if len(all_files) < 3:
+        printe.output(f"\t\t<<lightred>>SKIP: <<yellow>> {study_id=}, all_files < 3")
+        return "", {}
+    # ---
+    text, to_move = make_text_study(json_data, study_title, study_id)
     # ---
     return text, to_move
 
 
-def work_one_study(study_id):
-    # ---
-    study_title = studies_titles.get(study_id)  # or studies_titles2.get(study_id)
-    # ---
-    printe.output(f"study_id: {study_id}, study_title: {study_title}")
+def work_one_study(study_id, study_title=""):
     # ---
     if not study_title:
-        printe.output(f"<<red>> study_title for: {study_id=} not found")
+        study_title = studies_titles.get(study_id)
+    # ---
+    if not study_title:
+        printe.output(f"<<red>> study_title is empty... study_id: {study_id}")
         return
     # ---
-    if find_done_study(study_title):
-        printe.output(f"<<purple>> {study_id=}, ({study_title}) already done, add 'nodone' to sys.argv")
-        if "nodone" not in sys.argv:
-            return
+    printe.output(f"_____________\n {study_id=}, {study_title=}")
     # ---
     text, to_move = work_text(study_id, study_title)
     # ---
@@ -132,8 +140,12 @@ def main(ids):
     printe.output(f"<<purple>> len of ids: {len(ids)}")
     printe.output(f"<<purple>> len of ids: {len(ids)}")
     # ---
-    for study_id in ids:
-        work_one_study(study_id)
+    ids_titles = filter_no_title(ids)
+    # ---
+    ids_titles = filter_done(ids_titles)
+    # ---
+    for study_id, study_title in ids_titles.items():
+        work_one_study(study_id, study_title)
 
 
 if __name__ == "__main__":

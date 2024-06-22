@@ -1,4 +1,6 @@
 """
+python3 core8/pwb.py fix_mass/dp_infos/db_duplict test3 fs_infos_duplict-old.sqlite
+python3 core8/pwb.py fix_mass/dp_infos/db_duplict test3
 python3 core8/pwb.py fix_mass/dp_infos/db_duplict 54575469
 
 from fix_mass.dp_infos.db_duplict import insert_url_file # insert_url_file(url, file)
@@ -9,7 +11,12 @@ from pathlib import Path
 from fix_mass.sqlite_bot import SqlLiteFilesDB
 
 Dir = Path(__file__).parent
-db_path = Dir / "sf_infos_duplict.sqlite"
+
+db_path = Dir / "fs_infos_duplict.sqlite"
+
+if "fs_infos_duplict-old.sqlite" in sys.argv:
+    db_path = Dir / "fs_infos_duplict-old.sqlite"
+
 main_db_bot = SqlLiteFilesDB(db_path)
 
 
@@ -110,3 +117,4 @@ if __name__ == "__main__":
         test3()
     else:
         test2()
+[]
