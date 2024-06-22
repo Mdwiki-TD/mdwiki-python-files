@@ -1,7 +1,7 @@
 """
-python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi nodb reverse get:1
+python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi studies_titles2
 
-python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi nodb reverse
+python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi reverse
 python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi norevip reverse
 python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi norevip
 
@@ -19,7 +19,7 @@ import sys
 
 from newapi import printe
 from fix_mass.fix_sets.new import work_one_study
-from fix_mass.jsons.files import studies_titles
+from fix_mass.jsons.files import studies_titles, studies_titles2
 
 
 def ddo(taba):
@@ -54,6 +54,10 @@ def ddo(taba):
 def main():
     # ---
     ids = list(studies_titles.keys())
+    # ---
+    if "studies_titles2" in sys.argv:
+        ids = list(studies_titles2.keys())
+    # ---
     ids = ddo(ids)
     # ---
     ids.sort()

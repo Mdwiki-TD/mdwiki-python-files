@@ -9,11 +9,13 @@ python3 core8/pwb.py fix_mass/fix_sets/skiped ask
 """
 import json
 import tqdm
+import re
 import sys
 from pathlib import Path
 from newapi import printe
 from newapi.ncc_page import MainPage as ncc_MainPage
 
+from fix_mass.fix_sets.bots2.text_cat_bot import add_cat_to_set, fix_cats
 from fix_mass.fix_sets.bots2.filter_ids import filter_no_title, filter_done
 from fix_mass.fix_sets.bots.stacks import get_stacks  # get_stacks(study_id)
 from fix_mass.fix_sets.jsons_dirs import st_ref_infos
@@ -23,7 +25,7 @@ Dir = Path(__file__).parent
 count_cach = {}
 
 
-def update_text(title):
+def update_text(title, study_id):
     # ---
     printe.output(f"<<yellow>> update_text: {title}")
     # ---
@@ -31,11 +33,11 @@ def update_text(title):
     # ---
     p_text = page.get_text()
     # ---
-    if p_text.find("Category:Sort studies fixed") != -1:
-        printe.output("no changes..")
-        return
+    if p_text.find("Category:Sort studies fixed") == -1:
+        p_text += "\n[[Category:Sort studies fixed]]"
     # ---
-    p_text += "\n[[Category:Sort studies fixed]]"
+    if p_text.find("[[Category:Radiopaedia case ") == -1:
+        p_text = add_cat_to_set(p_text, study_id, title)
     # ---
     page.save(newtext=p_text, summary="Added [[:Category:Sort studies fixed]]")
 
@@ -70,7 +72,7 @@ def one_st(study_id, study_title):
     if all_files > 1:
         return False
     # ---
-    update_text(study_title)
+    update_text(study_title, study_id)
 
 
 def from_files():
@@ -121,7 +123,7 @@ def main(ids):
     ids_titles = filter_no_title(ids)
     # ---
     ids_titles = filter_done(ids_titles)
-    # ---
+    # ---F
     ids_titles = {k: v for k, v in ids_titles.items() if count_files(k) == 1}
     # ---
     printe.output(f"<<yellow>> titles_only_one: {len(ids_titles):,}")
