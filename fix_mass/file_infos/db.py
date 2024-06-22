@@ -1,7 +1,10 @@
 """
-python3 core8/pwb.py fix_mass/sf_infos/db 54575469
+python3 core8/pwb.py fix_mass/file_infos/db test3
+python3 core8/pwb.py fix_mass/file_infos/db 54575469
 
-from fix_mass.sf_infos.db import insert_url_file # insert_url_file(url, file)
+from fix_mass.file_infos.db import find_data # find_data(url="", urlid="", file="")
+from fix_mass.file_infos.db import insert_all_infos # insert_all_infos(data_list, prnt=True)
+from fix_mass.file_infos.db import insert_url_file # insert_url_file(url, file)
 
 """
 import sys
@@ -9,7 +12,7 @@ from pathlib import Path
 from fix_mass.sqlite_bot import SqlLiteFilesDB
 
 Dir = Path(__file__).parent
-db_path = Dir / "sf_infos.sqlite"
+db_path = Dir / "db.sqlite"
 main_db_bot = SqlLiteFilesDB(db_path)
 
 

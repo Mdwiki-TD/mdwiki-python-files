@@ -43,3 +43,4 @@ ncc_core/nc_import/long_bots.py
 /tutorial
 mass/usaid/.env
 *.sqlite
+/infos

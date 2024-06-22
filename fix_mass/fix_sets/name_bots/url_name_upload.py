@@ -1,13 +1,15 @@
 """
 
-from fix_mass.fix_sets.bots2.find_from_url import find_file_name_from_url
+from fix_mass.fix_sets.name_bots.url_name_upload import find_url_file_upload
 
 """
 import jsonlines
-from pathlib import Path
+
+# from pathlib import Paths
 from newapi.ncc_page import NEW_API
 from newapi import printe
-from fix_mass.fix_sets.jsons_dirs import get_study_dir, jsons_dir
+from fix_mass.fix_sets.jsons_dirs import jsons_dir
+
 # from fix_mass.dp_infos.db_duplict import insert_url_file # insert_url_file(url, file)
 api_new = NEW_API("www", family="nccommons")
 api_new.Login_to_wiki()
@@ -58,19 +60,19 @@ def get_from_api(url):
         du = "File:" + duplicate[0]
         du = du.replace("_", " ")
         # ---
-        printe.output(f"duplicate, find_file_name_from_url: {du}")
+        printe.output(f"duplicate, find_url_file_upload: {du}")
     else:
         print(data)
     # ---
     return du
 
 
-def find_file_name_from_url(url, do_api=True):
+def find_url_file_upload(url, do_api=True):
     na = ""
     if url in data:
         da = data[url]
         if da.find("https") == -1:
-            # printe.output(f"find_file_name_from_url: {data[url]}")
+            # printe.output(f"find_url_file_upload: {data[url]}")
             return da
     # ---
     if do_api:

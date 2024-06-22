@@ -5,7 +5,7 @@ from fix_mass.fix_sets.bots.set_text2 import make_text_study
 import sys
 from newapi import printe
 from fix_mass.fix_sets.bots.has_url import has_url_append
-from fix_mass.fix_sets.bots2.files_names_bot import get_files_names
+from fix_mass.fix_sets.name_bots.files_names_bot import get_files_names
 
 
 def make_text_study(json_data, data, study_title, study_id):
