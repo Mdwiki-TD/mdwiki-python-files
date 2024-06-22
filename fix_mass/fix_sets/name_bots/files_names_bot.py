@@ -9,10 +9,10 @@ import tqdm
 import sys
 from newapi import printe
 
-from fix_mass.fix_sets.name_bots.url_name_upload import find_url_file_upload
+from fix_mass.fix_sets.name_bots.db_duplict_bot import find_url_file_upload
 from fix_mass.fix_sets.name_bots.get_rev import get_file_urls_rev  # get_file_urls_rev(study_id)
 
-# from fix_mass.fix_sets.lists.sf_infos import from_sf_infos  # from_sf_infos(url, study_id)
+# from fix_mass.fix_sets.lists.sf_infos import from_sf_infs  # from_sf_infs(url, study_id)
 from fix_mass.fix_sets.jsons_dirs import get_study_dir
 
 from fix_mass.dp_infos.db_duplict import insert_all_infos
@@ -20,8 +20,8 @@ from fix_mass.file_infos.db import find_from_data_db  # find_from_data_db(url, u
 
 data_uu = {}
 
-# studies_names_dir = jsons_dir / "studies_names"
 
+# studies_names_dir = jsons_dir / "studies_names"
 def dump_it(data2, cach, study_id):
     # ---
     # file = studies_names_dir / f"{study_id}.json"
@@ -33,6 +33,7 @@ def dump_it(data2, cach, study_id):
             data[x] = data2[x]
     # ---
     study_id_dir = get_study_dir(study_id)
+    # ---
     file = study_id_dir / "names.json"
     # ---
     try:
@@ -64,6 +65,8 @@ def get_names_from_cach(study_id):
 
 def get_file_name_dd(url, study_id, url_data_to_file, rev_id_to_file):
     # ---
+    data_uu.setdefault(study_id, {})
+    # ---
     if url in data_uu.get(study_id, {}):
         return data_uu[study_id][url]
     # ---
@@ -73,8 +76,6 @@ def get_file_name_dd(url, study_id, url_data_to_file, rev_id_to_file):
     mat = re.match(r"https://prod-images-static.radiopaedia.org/images/(\d+)/.*?$", url)
     if mat:
         url_id = mat.group(1)
-    # ---
-    data_uu.setdefault(study_id, {})
     # ---
     file_name = ""
     # ---
@@ -90,10 +91,8 @@ def get_file_name_dd(url, study_id, url_data_to_file, rev_id_to_file):
         file_name = rev_id_to_file.get(url_id, "")
     # ---
     if not file_name:
-        file_name = find_url_file_upload(url, do_api=False)
-    # ---
-    if not file_name and "noapi" not in sys.argv:
-        file_name = find_url_file_upload(url, do_api=True)
+        do_api = "noapi" not in sys.argv
+        file_name = find_url_file_upload(url, do_api=do_api)
     # ---
     data_uu[study_id][url] = file_name
     # ---
@@ -107,7 +106,7 @@ def get_file_name_no_dd(url, url_to_file):
         if "oo" in sys.argv:
             file_name = url_to_file.get(url)
     # ---
-    # if not file_name: file_name = from_sf_infos(url, study_id)
+    # if not file_name: file_name = from_sf_infs(url, study_id)
     # ---
     return file_name
 
@@ -119,13 +118,13 @@ def get_files_names(urls, url_to_file, study_id):
     # ---
     cach = get_names_from_cach(study_id)
     # ---
-    files_names = {}
-    # ---
     url_data2 = get_file_urls_rev(study_id)
     # ---
     url_data_to_file = {d["url"]: file for file, d in url_data2.items() if d.get("url")}
     # ---
     rev_id_to_file = {d["id"]: file for file, d in url_data2.items() if d.get("id")}
+    # ---
+    files_names = {}
     # ---
     for url in tqdm.tqdm(urls):
         # ---

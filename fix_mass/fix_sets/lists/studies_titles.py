@@ -1,6 +1,7 @@
 """
 
 python3 core8/pwb.py fix_mass/fix_sets/lists/studies_titles
+python3 core8/pwb.py fix_mass/fix_sets/lists/studies_titles nodump
 
 Usage:
 from fix_mass.jsons.files import studies_titles, study_to_case_cats
@@ -8,9 +9,8 @@ from fix_mass.jsons.files import studies_titles, study_to_case_cats
 
 """
 import re
-import json
 import sys
-from pathlib import Path
+import json
 from newapi import printe
 from newapi.ncc_page import CatDepth
 
@@ -43,20 +43,47 @@ def get_mem(title):
     return sets
 
 
-# ---
-sets = get_mem("Category:Radiopaedia sets")
-# ---
 file = jsons_dir / "studies_titles.json"
-# ---
-with open(file, "w", encoding="utf-8") as f:
-    json.dump(sets, f, ensure_ascii=False, indent=2)
-    printe.output(f"<<green>> write {len(sets)} to {file=}")
-# ---
-sets2 = get_mem("Category:Image set")
-# ---
-file2 = jsons_dir / "studies_titles2.json"
-# ---
-with open(file2, "w", encoding="utf-8") as f:
-    json.dump(sets2, f, ensure_ascii=False, indent=2)
-    printe.output(f"<<green>> write {len(sets2)} to {file2=}")
-# ---
+
+
+def read_new(cat, file):
+    # ---
+    printe.output(f"read_new: {cat=}, {file=}")
+    # ---
+    file = jsons_dir / file
+    # ---
+    # read file
+    with open(file, "r", encoding="utf-8") as f:
+        in_file = json.load(f)
+        printe.output(f"<<green>> read {len(in_file)} from {file=}")
+    # ---
+    sets = get_mem(cat)
+    # ---
+    new_sets = {k: v for k, v in sets.items() if k not in in_file}
+    # ---
+    # merge the 2 dictionaries
+    new_data = in_file.copy()
+    new_data.update(new_sets)
+    # ---
+    printe.output(f"new_sets: {len(new_sets)}, in_file: {len(in_file)}, new_data: {len(new_data)}")
+    # ---
+    if "nodump" in sys.argv:
+        return
+    # ---
+    with open(file, "w", encoding="utf-8") as f:
+        json.dump(new_data, f, ensure_ascii=False, indent=2)
+        printe.output(f"<<green>> write {len(new_data)} to {file=}")
+
+
+def main():
+    cats_files = {
+        "Category:Radiopaedia sets": "studies_titles.json",
+        "Category:Image set": "studies_titles2.json",
+    }
+    # ---
+    for cat, file in cats_files.items():
+        read_new(cat, file)
+
+
+if __name__ == "__main__":
+    main()

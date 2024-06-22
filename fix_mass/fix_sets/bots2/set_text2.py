@@ -2,13 +2,21 @@
 
 from fix_mass.fix_sets.bots.set_text2 import make_text_study
 """
-import sys
+# import sys
 from newapi import printe
+
+from fix_mass.fix_sets.bots.study_files import get_study_files
+from fix_mass.fix_sets.bots.get_img_info import one_img_info
 from fix_mass.fix_sets.bots.has_url import has_url_append
+
 from fix_mass.fix_sets.name_bots.files_names_bot import get_files_names
 
 
-def make_text_study(json_data, data, study_title, study_id):
+def get_files_names_2(study_id, json_data):
+    # ---
+    files = get_study_files(study_id)
+    # ---
+    data = one_img_info(files, study_id, json_data)
     # ---
     url_to_file = {v["img_url"]: x for x, v in data.items()}
     # ---
@@ -20,6 +28,13 @@ def make_text_study(json_data, data, study_title, study_id):
     maain_uurls = list(set(maain_uurls))
     # ---
     files_names = get_files_names(maain_uurls, url_to_file, study_id)
+    # ---
+    return files_names
+
+
+def make_text_study(json_data, study_title, study_id):
+    # ---
+    files_names = get_files_names_2(study_id, json_data)
     # ---
     modalities = set([x["modality"] for x in json_data])
     # ---
@@ -64,9 +79,6 @@ def make_text_study(json_data, data, study_title, study_id):
             if ty not in texts:
                 texts[ty] = ""
             # ---
-            if ty not in to_move:
-                to_move[ty] = {}
-            # ---
             url = image["public_filename"]
             # ---
             texts[ty] += f"|{url}|\n"
@@ -78,6 +90,9 @@ def make_text_study(json_data, data, study_title, study_id):
             else:
                 noo += 1
                 file_name = url
+            # ---
+            if ty not in to_move:
+                to_move[ty] = {}
             # ---
             to_move[ty][len(to_move[ty]) + 1] = file_name
     # ---

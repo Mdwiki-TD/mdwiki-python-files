@@ -19,7 +19,7 @@ if not os.path.exists(studies_urls_to_files_dir):
     studies_urls_to_files_dir = main_dir / "studies_urls_to_files"
     print(f"<<red>> studies_urls_to_files_dir set to {studies_urls_to_files_dir}")
 
-def get_stacks(study_id):
+def get_stcks(study_id):
     new_url = f"https://radiopaedia.org/studies/{study_id}/stacks"
     print(f"get_images_stacks: study_id: {study_id}, new_url: {new_url}")
     # ---
@@ -114,7 +114,7 @@ def main(ids):
         # ---
         url_to_file = { v["url"]: x for x, v in data.items() }
         # ---
-        json_data = get_stacks(study_id)
+        json_data = get_stcks(study_id)
         # ---
         if not json_data:
             printe.output(f"<<red>> {json_file} not found")

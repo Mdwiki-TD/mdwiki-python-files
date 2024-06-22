@@ -1,20 +1,28 @@
 """
 
 python3 core8/pwb.py fix_mass/sf_infos/fix
+
 tfj run --mem 1Gi fix --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/sf_infos/fix new"
 
 """
 import tqdm
 import sys
-import re
 from pathlib import Path
 
 from newapi.db_bot import LiteDB
 
 Dir = Path(__file__).parent
 
-db_path = Dir / "sf_infos.sqlite"
-db_path_new = Dir / "sf_infos_new.sqlite"
+db_path_value = "sf_infos.sqlite"
+
+for arg in sys.argv:
+    arg, _, value = arg.partition(":")
+    if arg == "-path":
+        db_path_value = value
+
+db_path_new = Dir / db_path_value.replace(".sqlite", "_new.sqlite")
+
+db_path = Dir / db_path_value
 
 infos_db = LiteDB(db_path)
 infos_db_new = LiteDB(db_path_new)
@@ -29,8 +37,18 @@ main_urlid_table = {}
 
 
 def delete():
+    # ---
+    print(f"db_path: {db_path}")
+    # ---
+    len_before = infos_db.query("select count(*) from infos")
+    # ---
     sql = "delete from infos where urlid = '' and url = ''"
     infos_db.update(sql)
+    # ---
+    len_after = infos_db.query("select count(*) from infos")
+    # ---
+    print(f"len_befor: {len_before}")
+    print(f"len_after: {len_after}")
 
 
 def fix():
@@ -113,6 +131,8 @@ def fix():
         for i in tqdm.tqdm(range(0, len(lista), 1000)):
             rows = lista[i : i + 1000]
             infos_db_new.insert_all("infos", rows, prnt=False)
+    else:
+        print("Add 'new' to sys.argv to make the new database..")
 
 
 if __name__ == "__main__":
