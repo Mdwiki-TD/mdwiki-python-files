@@ -90,8 +90,7 @@ def get_file_name_dd(url, study_id, url_id):
         # file_name = find_from_data_db(url, url_id)
         file_name = db_data.get(url) or (db_data.get(url_id) if url_id else "")
         # ---
-        if file_name:
-            printe.output(f"<<green>> find_from_data_db: {url} -> {file_name}")
+        # if file_name: printe.output(f"<<1green>> find_from_data_db: {url} -> {file_name}")
     # ---
     if not file_name:
         do_api = "noapi" not in sys.argv

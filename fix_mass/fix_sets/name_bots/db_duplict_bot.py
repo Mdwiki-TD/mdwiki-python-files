@@ -96,8 +96,7 @@ def from_cach_or_db(url, url_id=""):
     # ---
     file_name = db_data.get(url) or (db_data.get(url_id) if url_id else "")
     # ---
-    if file_name:
-        printe.output(f"<<green>> find_from_data_db: {url} -> {file_name}")
+    # if file_name: printe.output(f"<<green>> find_from_data_db: {url} -> {file_name}")
     # ---
     return file_name
 

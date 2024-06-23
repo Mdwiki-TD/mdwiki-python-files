@@ -7,7 +7,7 @@ python3 core8/pwb.py fix_mass/fix_sets/new ask 143304
 python3 core8/pwb.py fix_mass/fix_sets/new ask 80304 printtext
 python3 core8/pwb.py fix_mass/fix_sets/new ask 14038 printtext
 python3 core8/pwb.py fix_mass/fix_sets/new ask 62191 printtext
-python3 core8/pwb.py fix_mass/fix_sets/new ask
+python3 core8/pwb.py fix_mass/fix_sets/new ask 144866 nodudb
 python3 core8/pwb.py fix_mass/fix_sets/new ask
 python3 core8/pwb.py fix_mass/fix_sets/new ask 71160
 python3 core8/pwb.py fix_mass/fix_sets/new ask 80302
@@ -23,12 +23,13 @@ from fix_mass.fix_sets.bots.stacks import get_stacks  # get_stacks(study_id)
 from fix_mass.fix_sets.bots.has_url import has_url_append
 
 from fix_mass.fix_sets.bots2.text_cat_bot import add_cat_to_set, fix_cats
-from fix_mass.fix_sets.bots2.filter_ids import filter_no_title, filter_done
+from fix_mass.fix_sets.bots2.filter_ids import filter_no_title
+from fix_mass.fix_sets.bots2.done2 import filter_done
 from fix_mass.fix_sets.bots2.set_text2 import make_text_study
 from fix_mass.fix_sets.bots2.move_files2 import to_move_work
-# from fix_mass.fix_sets.bots2.done2 import find_done_study  # find_done_study(title)
 
 from fix_mass.jsons.files import studies_titles, studies_titles2
+
 
 def update_set_text(title, n_text, study_id):
     # ---
@@ -59,6 +60,10 @@ def update_set_text(title, n_text, study_id):
     # ---
     n_text = fix_cats(n_text, p_text)
     # ---
+    if n_text.find("[[Category:Image set]]") != -1 and n_text.find("[[Category:Radiopaedia sets]]") != -1:
+        if n_text.find("[[Category:Sort studies fixed]]") != -1:
+            n_text = n_text.replace("[[Category:Image set]]", "")
+    # ---
     if p_text == n_text:
         printe.output("no changes..")
         return
@@ -79,7 +84,7 @@ def work_text(study_id, study_title):
     # ---
     printe.output(f"all_files: {len(all_files)}")
     # ---
-    if len(all_files) < 3:
+    if len(all_files) < 3 and len(all_files) != 1:
         printe.output(f"\t\t<<lightred>>SKIP: <<yellow>> {study_id=}, all_files < 3")
         return "", {}
     # ---
