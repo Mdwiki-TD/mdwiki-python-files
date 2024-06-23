@@ -1,7 +1,8 @@
 """
 python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi get:5 ask nodudb norevip
 
-tfj run gtt5 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi get:5 nodudb norevip"
+tfj run fiaa6 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi nodudb get:6"
+tfj run fiaa4 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all del2 norevip noapi nodudb get:4"
 
 
 python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi studies_titles2
@@ -27,13 +28,23 @@ import sys
 from newapi import printe
 from fix_mass.fix_sets.new import work_one_study
 from fix_mass.jsons.files import studies_titles, studies_titles2
+from fix_mass.fix_sets.lists.studies_fixed import studies_fixed_done
 
 
 def ddo(taba):
     ids = taba
     tabs = {}
     # ---
-    print(f"all ids: {len(ids)}")
+    Done = []
+    # ---
+    if "nodone" not in sys.argv:
+        Done = studies_fixed_done
+    # ---
+    after_done = [x for x in ids if x not in Done]
+    # ---
+    print(f"all ids: {len(ids)}, after done: {len(after_done)}")
+    # ---
+    ids = after_done
     # ---
     length = (len(ids) // 10) + 1
     # ---

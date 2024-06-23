@@ -60,7 +60,10 @@ def dump_it(data2, cach, study_id):
     # ---
     new_data = [{"url": url, "urlid": "", "file": file} for url, file in data.items()]
     # ---
-    insert_all_infos(new_data, prnt=False)
+    try:
+        insert_all_infos(new_data, prnt=False)
+    except Exception as e:
+        printe.output(f"<<red>> Error insert_all_infos: {str(e)}")
 
 
 def get_names_from_cach(study_id):
