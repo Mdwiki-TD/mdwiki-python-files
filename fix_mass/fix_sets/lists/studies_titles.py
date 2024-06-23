@@ -2,6 +2,7 @@
 
 python3 core8/pwb.py fix_mass/fix_sets/lists/studies_titles
 python3 core8/pwb.py fix_mass/fix_sets/lists/studies_titles nodump
+python3 core8/pwb.py fix_mass/fix_sets/lists/studies_titles nodump fix_2
 
 Usage:
 from fix_mass.jsons.files import studies_titles, study_to_case_cats
@@ -16,10 +17,12 @@ from newapi.ncc_page import CatDepth
 
 from fix_mass.fix_sets.jsons_dirs import jsons_dir
 
+mem_cach = {}
+
 
 def get_mem(title):
     members = CatDepth(title, sitecode="www", family="nccommons", depth=0, ns=0, onlyns=0)
-
+    # ---
     sets = {}
     not_match = 0
     # ---
@@ -40,10 +43,23 @@ def get_mem(title):
     printe.output(f"\tnot match: {not_match}")
     printe.output(f"\t{len(sets)=}")
     # ---
+    mem_cach[title] = sets
+    # ---
     return sets
 
 
-file = jsons_dir / "studies_titles.json"
+def dumpit(file, data):
+    file = jsons_dir / file
+    # ---
+    if "nodump" in sys.argv:
+        return
+    # ---
+    # sort data
+    data = dict(sorted(data.items(), key=lambda x: x[0]))
+    # ---
+    with open(file, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+        printe.output(f"<<green>> write {len(data)} to {file=}")
 
 
 def read_new(cat, file):
@@ -67,12 +83,28 @@ def read_new(cat, file):
     # ---
     printe.output(f"new_sets: {len(new_sets)}, in_file: {len(in_file)}, new_data: {len(new_data)}")
     # ---
-    if "nodump" in sys.argv:
-        return
+    return new_data
+
+
+def fix_2():
     # ---
-    with open(file, "w", encoding="utf-8") as f:
-        json.dump(new_data, f, ensure_ascii=False, indent=2)
-        printe.output(f"<<green>> write {len(new_data)} to {file=}")
+    file1 = jsons_dir / "studies_titles.json"
+    file2 = jsons_dir / "studies_titles2.json"
+    # ---
+    with open(file1, "r", encoding="utf-8") as f:
+        data_1 = json.load(f)
+        printe.output(f"<<green>> read {len(data_1)} from {file1=}")
+    # ---
+    with open(file2, "r", encoding="utf-8") as f:
+        data_2 = json.load(f)
+        printe.output(f"<<green>> read {len(data_2)} from {file2=}")
+    # ---
+    # items in data_2 and not in data_1
+    new_data = {x: v for x, v in data_2.items() if x not in data_1}
+    # ---
+    printe.output(f"len(new_data): {len(new_data)}")
+    # ---
+    dumpit("studies_titles2.json", new_data)
 
 
 def main():
@@ -81,9 +113,21 @@ def main():
         "Category:Image set": "studies_titles2.json",
     }
     # ---
+    data_all = {}
+    # ---
     for cat, file in cats_files.items():
-        read_new(cat, file)
+        # ---
+        data = read_new(cat, file)
+        # ---
+        data_all[file] = data
+        # ---
+        dumpit(file, data)
+    # ---
+    fix_2()
 
 
 if __name__ == "__main__":
-    main()
+    if "fix_2" in sys.argv:
+        fix_2()
+    else:
+        main()

@@ -48,7 +48,7 @@ def dump_st(data, study_id):
 def get_cach_one_study(study_id):
     # ---
     if "nocach" in sys.argv:
-        return False
+        return {}
     # ---
     study_id_dir = get_study_dir(study_id)
     # ---
@@ -59,7 +59,7 @@ def get_cach_one_study(study_id):
         with open(file, encoding="utf-8") as f:
             return json.load(f)
     # ---
-    return False
+    return {}
 
 
 def match_img_url_from_content(content):
@@ -167,11 +167,11 @@ def get_rev_infos(files):
     return info
 
 
-def get_file_urls_rev(study_id):
+def get_file_urls_rev(study_id, only_cach=False):
     na = {}
     # ---
     cach = get_cach_one_study(study_id)
-    if cach:
+    if cach or only_cach:
         return cach
     # ---
     cat = study_to_case_cats.get(study_id)

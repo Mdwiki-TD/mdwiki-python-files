@@ -52,6 +52,29 @@ def find_from_data_db(url, urlid):
     return main_db_bot.find_from_data_db(url, urlid)
 
 
+def get_all_key_url_urlid():
+    data = {}
+    # ---
+    print("get_all_key_url_urlid")
+    # ---
+    for row in main_db_bot.get_data("infos"):
+        url = row["url"]
+        urlid = row["urlid"]
+        file = row["file"]
+        # ---
+        if not file:
+            continue
+        # ---
+        if url:
+            data[url] = file
+        # ---
+        if urlid:
+            data[urlid] = file
+    # ---
+    print(f"len get_all_key_url_urlid(fs_infos_duplict): {len(data)}")
+    # ---
+    return data
+
 def test():
     # Insert sample data
     insert(

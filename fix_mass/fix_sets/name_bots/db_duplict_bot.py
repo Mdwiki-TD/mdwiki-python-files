@@ -3,6 +3,7 @@
 from fix_mass.fix_sets.name_bots.db_duplict_bot import find_url_file_upload
 
 """
+import re
 import jsonlines
 
 # from pathlib import Paths
@@ -10,7 +11,7 @@ from newapi.ncc_page import NEW_API
 from newapi import printe
 
 from fix_mass.fix_sets.jsons_dirs import jsons_dir
-from fix_mass.dp_infos.db_duplict import find_from_data_db as find_from_db_dp, insert_url_file  # insert_url_file(url, file)
+from fix_mass.dp_infos.db_duplict import get_all_key_url_urlid, insert_url_file  # ,find_from_data_db as find_from_db_dp # insert_url_file(url, file)
 
 api_new = NEW_API("www", family="nccommons")
 api_new.Login_to_wiki()
@@ -22,6 +23,20 @@ if not url_to_file_file.exists():
 
 data1x = jsonlines.open(url_to_file_file)
 data_maain = {d["url"]: d["file_name"] for d in data1x}
+
+db_data = get_all_key_url_urlid()
+
+
+def match_urlid(url):
+    # ---
+    url_id = ""
+    # ---
+    # find id from url like: https://prod-images-static.radiopaedia.org/images/(\d+)/.*?$
+    mat = re.match(r"https://prod-images-static.radiopaedia.org/images/(\d+)/.*?$", url)
+    if mat:
+        url_id = mat.group(1)
+    # ---
+    return url_id
 
 
 def append_data(url, file_name):
@@ -68,7 +83,7 @@ def get_from_api(url):
     return du
 
 
-def from_cach(url):
+def from_cach_or_db(url, url_id=""):
     # ---
     if url in data_maain:
         da = data_maain[url]
@@ -76,9 +91,11 @@ def from_cach(url):
             # printe.output(f"find_url_file_upload: {data_maain[url]}")
             return da
     # ---
+    # file_name = find_from_db_dp(url, "")
     file_name = ""
     # ---
-    file_name = find_from_db_dp(url, "")
+    file_name = db_data.get(url) or (db_data.get(url_id) if url_id else "")
+    # ---
     if file_name:
         printe.output(f"<<green>> find_from_data_db: {url} -> {file_name}")
     # ---
@@ -86,10 +103,13 @@ def from_cach(url):
 
 
 def find_url_file_upload(url, do_api=True):
-    in_cach = from_cach(url)
+    # ---
+    url_id = match_urlid(url)
+    # ---
+    in_cach = from_cach_or_db(url, url_id)
     # ---
     if in_cach and in_cach.find("https") == -1:
-        # printe.output(f"find_url_file_upload, from_cach: {in_cach}")
+        # printe.output(f"find_url_file_upload, from_cach_or_db: {in_cach}")
         return in_cach
     # ---
     na = ""

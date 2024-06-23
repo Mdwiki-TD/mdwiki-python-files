@@ -22,31 +22,13 @@ from newapi.ncc_page import MainPage as ncc_MainPage
 from fix_mass.fix_sets.bots.stacks import get_stacks  # get_stacks(study_id)
 from fix_mass.fix_sets.bots.has_url import has_url_append
 
+from fix_mass.fix_sets.bots2.text_cat_bot import add_cat_to_set, fix_cats
 from fix_mass.fix_sets.bots2.filter_ids import filter_no_title, filter_done
 from fix_mass.fix_sets.bots2.set_text2 import make_text_study
 from fix_mass.fix_sets.bots2.move_files2 import to_move_work
-from fix_mass.fix_sets.bots2.done2 import find_done_study  # find_done_study(title)
+# from fix_mass.fix_sets.bots2.done2 import find_done_study  # find_done_study(title)
 
-from fix_mass.jsons.files import studies_titles
-
-
-def fix_cats(text, p_text):
-    cat_text = ""
-    # ---
-    if p_text.find("[[Category:") != -1:
-        cat_text = "[[Category:" + p_text.split("[[Category:", maxsplit=1)[1]
-    # ---
-    text = text.strip()
-    # ---
-    cat_list = [x.strip() for x in cat_text.split("\n") if x.strip()]
-    # ---
-    for x in cat_list:
-        xtest = x.split("|", maxsplit=1)[0]
-        if text.find(xtest) == -1:
-            text += f"\n{x}"
-    # ---
-    return text
-
+from fix_mass.jsons.files import studies_titles, studies_titles2
 
 def update_set_text(title, n_text, study_id):
     # ---
@@ -71,6 +53,9 @@ def update_set_text(title, n_text, study_id):
     # n_text += f"\n\n{cat_text}"
     # ---
     n_text += "\n[[Category:Sort studies fixed]]"
+    # ---
+    if p_text.find("[[Category:Radiopaedia case ") == -1:
+        n_text = add_cat_to_set(n_text, study_id, title)
     # ---
     n_text = fix_cats(n_text, p_text)
     # ---
@@ -106,7 +91,7 @@ def work_text(study_id, study_title):
 def work_one_study(study_id, study_title=""):
     # ---
     if not study_title:
-        study_title = studies_titles.get(study_id)
+        study_title = studies_titles.get(study_id) or studies_titles2.get(study_id)
     # ---
     if not study_title:
         printe.output(f"<<red>> study_title is empty... study_id: {study_id}")

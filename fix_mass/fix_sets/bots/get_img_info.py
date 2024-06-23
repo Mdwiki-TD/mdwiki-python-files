@@ -48,7 +48,7 @@ def get_cach_img_info(study_id):
         with open(file, encoding="utf-8") as f:
             return json.load(f)
     # ---
-    return False
+    return {}
 
 
 def gt_img_info(titles, id_to_url=None):

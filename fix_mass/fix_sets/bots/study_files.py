@@ -46,7 +46,7 @@ def get_from_cach(study_id):
         with open(file, encoding="utf-8") as f:
             return json.load(f)
     # ---
-    return False
+    return {}
 
 
 def filter_members(cat_members):
