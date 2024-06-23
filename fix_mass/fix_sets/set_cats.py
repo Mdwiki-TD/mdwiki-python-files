@@ -6,6 +6,8 @@ tfj run catpages --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.
 python3 core8/pwb.py fix_mass/fix_sets/set_cats catpages ask
 python3 core8/pwb.py fix_mass/fix_sets/set_cats studies_titles2 ask
 
+إضافة تصنيف الحالة إلى صفحات الدراسات
+
 """
 import tqdm
 import re
@@ -19,7 +21,7 @@ from fix_mass.fix_sets.bots2.filter_ids import filter_no_title
 from fix_mass.jsons.files import studies_titles, studies_titles2
 
 
-def work_one_study(study_id, study_title=""):
+def work_one_study(study_id, study_title="", categories=[]):
     # ---
     if not study_title:
         study_title = studies_titles.get(study_id) or studies_titles2.get(study_id)
@@ -34,9 +36,15 @@ def work_one_study(study_id, study_title=""):
     # ---
     p_text = page.get_text()
     # ---
-    if p_text.find("[[Category:Radiopaedia case ") != -1:
-        printe.output("page has cat.")
-        return
+    if categories:
+        for cat in categories:
+            if cat.find("Category:Radiopaedia case ") != -1:
+                printe.output(f"page has cat. {cat}")
+                return
+    else:
+        if p_text.find("[[Category:Radiopaedia case ") != -1:
+            printe.output("page has cat.")
+            return
     # ---
     n_text = p_text
     # ---
@@ -50,20 +58,25 @@ def work_one_study(study_id, study_title=""):
 
 
 def cat_pages():
-    cat1 = CatDepth("Category:Image set", sitecode="www", family="nccommons", depth=0)
-    cat2 = CatDepth("Category:Radiopaedia sets", sitecode="www", family="nccommons", depth=0)
+    cat1 = CatDepth("Category:Image set", sitecode="www", family="nccommons", depth=0, props="categories")
+    cat2 = CatDepth("Category:Radiopaedia sets", sitecode="www", family="nccommons", depth=0, only_titles=True)
     # ---
     # new_list = cat1 items not in cat2 items
-    new_list = list(set(cat1) - set(cat2))
+    new_list = list(set(cat1.keys()) - set(cat2.keys()))
+    # ---
+    # new_list: 8280, Category:Image set:66627, Category:Radiopaedia sets:58348
+    printe.output(f"new_list: {len(new_list)}, Category:Image set:{len(cat1)}, Category:Radiopaedia sets:{len(cat2)}")
     # ---
     for title in tqdm.tqdm(new_list):
+        # ---
+        categories = cat1.get(title, {}).get("categories", [])
         # ---
         # match text like (Radiopaedia 84641-100054
         ma = re.search(r"\(Radiopaedia (\d+)-(\d+) ", title)
         if ma:
             study_id = ma.group(2)
             # ---
-            work_one_study(study_id, title)
+            work_one_study(study_id, title, categories=categories)
 
 
 def main(ids):

@@ -55,6 +55,9 @@ def find_from_data_db(url, urlid):
 def get_all_key_url_urlid():
     data = {}
     # ---
+    if "nodudb" in sys.argv:
+        return data
+    # ---
     print("get_all_key_url_urlid")
     # ---
     for row in main_db_bot.get_data("infos"):

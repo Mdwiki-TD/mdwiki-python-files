@@ -1,5 +1,12 @@
 """
+python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi get:5 ask nodudb norevip
+
+tfj run gtt5 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi get:5 nodudb norevip"
+
+
 python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi studies_titles2
+
+tfj run sst2 --mem 1Gi --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_mass/fix_sets/new_all noapi studies_titles2"
 
 python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi reverse
 python3 core8/pwb.py fix_mass/fix_sets/new_all del2 noapi norevip reverse

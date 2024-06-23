@@ -21,7 +21,7 @@ def work(na="names"):
     lisst_of_files = []
     na = na if na in ["names", "rev"] else "names"
 
-    for subdir in tqdm.tqdm(Dir.iterdir(), total=60000):
+    for subdir in tqdm.tqdm(Dir.iterdir(), total=80000):
         # ---
         if not subdir.is_dir():
             continue
