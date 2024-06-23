@@ -60,13 +60,13 @@ def update_set_text(title, n_text, study_id):
     # ---
     n_text = fix_cats(n_text, p_text)
     # ---
-    if n_text.find("[[Category:Image set]]") != -1 and n_text.find("[[Category:Radiopaedia sets]]") != -1:
-        if n_text.find("[[Category:Sort studies fixed]]") != -1:
-            n_text = n_text.replace("[[Category:Image set]]", "")
-    # ---
-    if p_text == n_text:
+    if p_text.strip() == n_text.strip():
         printe.output("no changes..")
         return
+    # ---
+    if n_text.find("[[Category:Image set]]") != -1 and n_text.find("[[Category:Radiopaedia sets]]") != -1:
+        if n_text.find("[[Category:Sort studies fixed]]") != -1:
+            n_text = n_text.replace("[[Category:Image set]]\n", "")
     # ---
     page.save(newtext=n_text, summary="Fix sort.")
 
