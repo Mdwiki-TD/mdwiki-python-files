@@ -12,6 +12,8 @@ import requests
 # import wikitextparser as wtp
 from newapi import printe
 
+journal_cach = {}
+
 
 def get_pmid_json(pmid):
     url = f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={pmid}&resulttype=core&format=json"
@@ -27,6 +29,13 @@ def get_pmid_json(pmid):
 
 
 def pmid_journal(pmid, param):
+    # ---
+    if param not in journal_cach:
+        journal_cach[param] = {}
+    # ---
+    if pmid in journal_cach[param]:
+        printe.output(f"** journal_cach has {param} for {pmid} - {journal_cach[param][pmid]}")
+        return journal_cach[param][pmid]
     # ---
     journal = ""
     # ---
@@ -87,6 +96,7 @@ def pmid_journal(pmid, param):
     # ---
     if journal:
         printe.output(f"{n}/{len(hit)}: <<green>> id_in: {id_in} - journal: {journal}")
+        journal_cach[param][pmid] = journal
     else:
         printe.output(f"{n}/{len(hit)}: <<red>> |{param}={pmid} - journal: {journal}")
     # ---

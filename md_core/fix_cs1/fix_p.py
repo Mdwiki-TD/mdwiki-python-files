@@ -25,7 +25,7 @@ def fix_one_temp(temp):
     for param in find_params:
         va = get_param(temp, param)
         if va:
-            printe.output(f"** temp has |{param} = {va}")
+            # printe.output(f"** temp has |{param} = {va}")
             return temp
     # ---
     journal = get_journal_value(temp)
@@ -34,6 +34,7 @@ def fix_one_temp(temp):
         temp.set_arg("journal", journal)
     else:
         printe.output("Journal value not found for template.")
+        printe.output(temp)
     # ---
     return temp
 

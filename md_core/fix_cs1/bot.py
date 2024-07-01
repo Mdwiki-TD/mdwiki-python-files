@@ -2,6 +2,8 @@
 
 python3 core8/pwb.py fix_cs1/bot
 
+tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_cs1/bot"
+
 """
 # import re
 # import sys
@@ -20,6 +22,9 @@ def one_page(title):
     text = page.get_text()
     # ---
     newtext = fix_it(text)
+    # ---
+    if text == newtext:
+        return
     # ---
     page.save(newtext=newtext, summary="Fix missing periodical")
 
