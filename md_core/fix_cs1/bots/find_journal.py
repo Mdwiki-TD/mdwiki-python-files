@@ -8,9 +8,9 @@ https://pubmed.ncbi.nlm.nih.gov/29083719/
 Verifies that it is StatPearls and if so adds "|journal=StatPearls" to the template. Let me know if that makes sense.
 
 """
-import re
-import sys
-import wikitextparser as wtp
+# import re
+# import sys
+# import wikitextparser as wtp
 from newapi import printe
 from fix_cs1.bots.pmid import pmid_journal
 
@@ -21,6 +21,8 @@ def get_param(temp, arg):
     if va and va.value and va.value.strip():
         do = va.value.strip()
         return do
+    else:
+        printe.output(f"Parameter {arg} not found in template.")
     # ---
     return ""
 

@@ -3,8 +3,8 @@
 python3 core8/pwb.py fix_cs1/bot
 
 """
-import re
-import sys
+# import re
+# import sys
 
 # import wikitextparser as wtp
 from newapi import printe

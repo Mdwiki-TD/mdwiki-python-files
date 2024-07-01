@@ -1,5 +1,5 @@
 # ---
-# from fix_cs1.temps_list import ref_temps
+# from fix_cs1.bots.temps_list import ref_temps
 # ---
 ref_temps = [
     "Cite web",
