@@ -75,7 +75,7 @@ def fix_ref_template(text, returnsummary=False):
     # ---
     parsed = wtp.parse(text)
     # ---
-    for tag in parsed.tags("ref"):
+    for tag in parsed.get_tags(name="ref"):
         # ---
         content = tag.contents
         # ---
