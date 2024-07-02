@@ -1,5 +1,45 @@
 # ---
 # from fix_cs1.bots.temps_list import ref_temps
+# from fix_cs1.bots.temps_list import in_params_en, in_params_ar
+# ---
+in_params_en = [
+    "journal",
+    "magazine",
+    "newspaper",
+    "periodical",
+    "website",
+    "work",
+]
+# ---
+in_params_ar = [
+    "journal",
+    "magazine",
+    "nespaper",
+    "newpaper",
+    "news",
+    "news-paper",
+    "newspaper",
+    "periodical",
+    "site",
+    "website",
+    "work",
+    "اسم الدورية",
+    "اسم الصحيفة",
+    "اسم المجلة",
+    "اسم الموقع",
+    "الصحيفة",
+    "العمل",
+    "المجلة",
+    "الموقع الرسمي",
+    "الموقع",
+    "جريدة",
+    "دورية",
+    "صحيفة",
+    "عمل",
+    "مجلة",
+    "من عمل",
+    "موقع",
+]
 # ---
 ref_temps = [
     "Cite web",

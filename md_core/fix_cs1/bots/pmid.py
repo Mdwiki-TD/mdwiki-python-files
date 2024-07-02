@@ -76,8 +76,8 @@ def pmid_journal(pmid, param):
     # ---
     hit = result.get("resultList", {}).get("result", [])
     if not hit:
-        printe.output(f"no hit for |{param}={pmid}")
-        printe.output(result)
+        # printe.output(f"no hit for |{param}={pmid}")
+        # printe.output(result)
         return journal
     # ---
     da_true = {}

@@ -9,18 +9,9 @@ import wikitextparser as wtp
 from newapi import printe
 
 from fix_cs1.bots.find_journal import get_journal_value, get_param
+from fix_cs1.bots.temps_list import in_params_en, in_params_ar
 
-
-def fix_one_temp(temp):
-    # ---
-    find_params = [
-        "journal",
-        "magazine",
-        "newspaper",
-        "periodical",
-        "website",
-        "work",
-    ]
+def fix_one_temp(temp, find_params):
     # ---
     for param in find_params:
         va = get_param(temp, param)
@@ -32,9 +23,9 @@ def fix_one_temp(temp):
     # ---
     if journal:
         temp.set_arg("journal", journal)
-    else:
-        printe.output("Journal value not found for template.")
-        printe.output(temp)
+    # else:
+    #     printe.output("Journal value not found for template.")
+    #     printe.output(temp)
     # ---
     return temp
 
@@ -62,9 +53,11 @@ def get_temps(parsed, valid_list):
     return Template_list
 
 
-def fix_it(text):
+def fix_it(text, site=""):
     # ---
-    ref_temps_n = ["cite journal", "cite magazine"]
+    ref_temps_n = ["cite journal", "cite magazine", "استشهاد بمجلة", "استشهاد بدورية محكمة"]
+    # ---
+    find_params = in_params_ar if site == "ar" else in_params_en
     # ---
     newtext = text
     # ---
@@ -73,7 +66,7 @@ def fix_it(text):
     temps = get_temps(parsed, ref_temps_n)
     # ---
     for temp in temps:
-        temp = fix_one_temp(temp)
+        temp = fix_one_temp(temp, find_params)
     # ---
     newtext = parsed.string
     # ---

@@ -37,6 +37,7 @@ def get_journal_value(temp):
         "jfm",
         "jstor",
         "lccn",
+        "دوي",
     ]
     # ---
     for param in to_do_params:
