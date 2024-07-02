@@ -5,11 +5,14 @@ https://pubmed.ncbi.nlm.nih.gov/29083719/
 
 python pwb.py pub type:PMC id:29083719
 """
-import re
+# import re
 import requests
-import sys
-import wikitextparser as wtp
+
+# import sys
+# import wikitextparser as wtp
 from newapi import printe
+
+journal_cach = {}
 
 
 def get_pmid_json(pmid):
@@ -26,6 +29,13 @@ def get_pmid_json(pmid):
 
 
 def pmid_journal(pmid, param):
+    # ---
+    if param not in journal_cach:
+        journal_cach[param] = {}
+    # ---
+    if pmid in journal_cach[param]:
+        printe.output(f"** journal_cach has {param} for {pmid} - {journal_cach[param][pmid]}")
+        return journal_cach[param][pmid]
     # ---
     journal = ""
     # ---
@@ -66,8 +76,8 @@ def pmid_journal(pmid, param):
     # ---
     hit = result.get("resultList", {}).get("result", [])
     if not hit:
-        printe.output(f"no hit for |{param}={pmid}")
-        printe.output(result)
+        # printe.output(f"no hit for |{param}={pmid}")
+        # printe.output(result)
         return journal
     # ---
     da_true = {}
@@ -86,6 +96,7 @@ def pmid_journal(pmid, param):
     # ---
     if journal:
         printe.output(f"{n}/{len(hit)}: <<green>> id_in: {id_in} - journal: {journal}")
+        journal_cach[param][pmid] = journal
     else:
         printe.output(f"{n}/{len(hit)}: <<red>> |{param}={pmid} - journal: {journal}")
     # ---

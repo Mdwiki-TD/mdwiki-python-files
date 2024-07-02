@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py fix_cs1/bot
+python3 core8/pwb.py fix_cs1/bot_ar
 
 tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_cs1/bot"
 
@@ -10,31 +10,31 @@ tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 
 # import wikitextparser as wtp
 from newapi import printe
-from newapi.mdwiki_page import MainPage as md_MainPage, CatDepth, CatDepthLogin
+from newapi.page import MainPage, CatDepth, CatDepthLogin
 
 from fix_cs1.fix_p import fix_it
 
 
 def one_page(title):
     # ---
-    page = md_MainPage(title, "www", family="mdwiki")
+    page = MainPage(title, "ar", family="wikipedia")
     # ---
     text = page.get_text()
     # ---
-    newtext = fix_it(text)
+    newtext = fix_it(text, site="ar")
     # ---
     if text == newtext:
         return
     # ---
-    page.save(newtext=newtext, summary="Fix missing periodical")
+    page.save(newtext=newtext, summary="بوت: إصلاح أخطاء الاستشهاد: دورية مفقودة")
 
 
 def main():
-    CatDepthLogin(sitecode="www", family="mdwiki")
+    CatDepthLogin(sitecode="ar", family="wikipedia")
     # ---
-    cat = "Category:CS1 errors: missing periodical"
+    cat = "تصنيف:أخطاء الاستشهاد: دورية مفقودة"
 
-    cat_members = CatDepth(cat, sitecode="www", family="mdwiki", depth=0, ns="all")
+    cat_members = CatDepth(cat, sitecode="ar", family="wikipedia", depth=0, ns="all")
 
     for n, page in enumerate(cat_members):
         # ---
