@@ -2,7 +2,7 @@
 
 python3 core8/pwb.py fix_cs1/bot_ar
 
-tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_cs1/bot"
+tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_cs1/bot_ar"
 
 """
 # import re
