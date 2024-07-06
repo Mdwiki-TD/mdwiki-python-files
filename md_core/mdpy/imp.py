@@ -16,7 +16,7 @@ import json
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import py_tools
 from mdpy.bots import mdwiki_api
 from newapi.mdwiki_page import MainPage, NEW_API

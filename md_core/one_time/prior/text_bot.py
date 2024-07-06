@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 # ---
 from priorviews.lists import translators

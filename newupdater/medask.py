@@ -25,7 +25,7 @@ Dir = Path(__file__).parent
 sys.path.append(str(Dir))
 # ---
 from newupdater import med
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import mdwiki_api
 from newapi.mdwiki_page import NEW_API
 

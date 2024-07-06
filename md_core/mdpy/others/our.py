@@ -16,7 +16,7 @@ from pywikibot.comms import http
 
 # ---
 from mdpy.bots import txtlib2
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import mdwiki_api
 
 # ---

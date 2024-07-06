@@ -13,7 +13,7 @@ import datetime
 from datetime import timedelta
 
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import wiki_api
 from priorviews.bots import helps
 

@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import wikidataapi
 from stats.qids import qids_list
 

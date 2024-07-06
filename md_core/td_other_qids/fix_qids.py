@@ -8,7 +8,7 @@ python3 core8/pwb.py td_other_qids/fix_qids redirects
 import sys
 from mdpy.bots import catdepth2
 from mdpy.bots import wikidataapi
-from mdpy import printe
+from newapi import printe
 from mdpy.bots.check_title import valid_title
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import sql_qids_others

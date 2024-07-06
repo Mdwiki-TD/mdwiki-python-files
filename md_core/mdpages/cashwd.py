@@ -16,7 +16,7 @@ from datetime import datetime
 import pywikibot
 from pathlib import Path
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
 from mdpy.bots import mdwiki_api

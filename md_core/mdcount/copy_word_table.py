@@ -16,7 +16,7 @@ from pathlib import Path
 
 # ---
 from mdpy.bots import sql_for_mdwiki
-from mdpy import printe
+from newapi import printe
 from pymysql.converters import escape_string
 
 # ---

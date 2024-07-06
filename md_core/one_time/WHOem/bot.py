@@ -10,7 +10,7 @@ from pathlib import Path
 
 # ---
 from newapi.wiki_page import MainPage, change_codes
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import mdwiki_api
 
 # ---

@@ -15,7 +15,7 @@ import os
 from mdpy.fixref.fixref_text_new import fix_ref_template
 from mdpy.bots import catdepth2
 from mdpy.bots import mdwiki_api
-from mdpy import printe
+from newapi import printe
 
 # ---
 from pathlib import Path

@@ -9,7 +9,7 @@ from pathlib import Path
 import json
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 # ---
 from priorviews.find.find_blame import new_data

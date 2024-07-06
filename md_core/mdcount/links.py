@@ -6,7 +6,7 @@ import re
 from mdpy.bots import catdepth2
 from mdpy.bots import mdwiki_api
 from mdpy.bots import sql_for_mdwiki
-from mdpy import printe
+from newapi import printe
 
 # ---
 link_regex = re.compile(r'\[\[(.*?)\]\]')

@@ -8,7 +8,7 @@ import os
 import sys
 
 from mdpy.bots import sql_for_mdwiki
-from mdpy import printe
+from newapi import printe
 from mdpy.bots.check_title import valid_title
 from mdpy.bots import sql_qids_others
 

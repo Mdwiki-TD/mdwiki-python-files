@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 from urllib.parse import urlencode
 import requests
 import wikitextparser
-from mdpy import printe
+from newapi import printe
 
 # ---
 '''

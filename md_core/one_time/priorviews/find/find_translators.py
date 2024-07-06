@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 # ---
 from priorviews.bots import get_translator

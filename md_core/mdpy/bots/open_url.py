@@ -16,7 +16,7 @@ import requests
 import sys
 
 # ---
-from mdpy import printe
+from newapi import printe
 import pywikibot
 
 # ---

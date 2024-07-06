@@ -8,7 +8,7 @@
 #
 from API import himoBOT3
 
-from mdpy import printe
+from newapi import printe
 
 # ---
 

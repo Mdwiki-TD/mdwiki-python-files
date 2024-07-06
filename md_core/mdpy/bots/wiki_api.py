@@ -33,7 +33,7 @@ import requests
 # ---
 from pywikibot.comms import http
 import pywikibot.data.api as apit
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import user_account_new
 
 # ---

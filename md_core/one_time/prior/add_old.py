@@ -31,7 +31,7 @@ from pathlib import Path
 
 # ---
 from prior import get_them
-from mdpy import printe
+from newapi import printe
 
 # ---
 Dir = str(Path(__file__).parents[0])

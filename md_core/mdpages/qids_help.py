@@ -12,7 +12,7 @@ import sys
 # ---
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import sql_qids_others
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import catdepth2
 from mdpy.bots import wiki_api
 from mdpy.bots import mdwiki_api

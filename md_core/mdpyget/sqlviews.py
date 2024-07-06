@@ -16,7 +16,7 @@ import sys
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import wiki_api
 from pymysql.converters import escape_string
-from mdpy import printe
+from newapi import printe
 
 # ---
 already_in_sql = {}

@@ -7,7 +7,7 @@
 import sys
 # ---
 from mdpy.bots import mdwiki_api
-from mdpy import printe
+from newapi import printe
 
 # ---
 offset = {1: 0}

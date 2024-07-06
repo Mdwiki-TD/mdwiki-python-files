@@ -12,7 +12,7 @@ import json
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 from newapi.mdwiki_page import MainPage as md_MainPage
 from newapi.wiki_page import MainPage, change_codes
 
