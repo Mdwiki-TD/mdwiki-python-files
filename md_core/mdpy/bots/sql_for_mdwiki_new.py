@@ -17,6 +17,7 @@ from mdpy.bots import sql_for_mdwiki
 
 """
 import sys
+import configparser
 import pymysql
 
 # ---
@@ -43,10 +44,15 @@ if config.db_connect_file is None:
     credentials = {"user": db_username, "password": db_password}
 else:
     credentials = {"read_default_file": config.db_connect_file}
+    # read default file
+    confg = configparser.ConfigParser()
+    confg.read(config.db_connect_file)
+    db_username = confg["client"]["user"]
 # ---
 main_args = {
     "host": "tools.db.svc.wikimedia.cloud",
-    "db": "s54732__mdwiki",
+    # "db": "s54732__mdwiki",
+    "db": f"{db_username}__mdwiki",
     "charset": "utf8mb4",
     # 'collation':  'utf8_general_ci',
     "use_unicode": True,
