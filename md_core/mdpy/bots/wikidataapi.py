@@ -20,7 +20,7 @@ from datetime import datetime
 import requests
 
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import py_tools
 from mdpy.bots import user_account_new
 

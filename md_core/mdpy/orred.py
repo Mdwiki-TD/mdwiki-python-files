@@ -21,7 +21,7 @@ from mdpy.bots import sql_for_mdwiki
 
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy import wpref
 from wprefs.api import submitAPI  # (params, lang='', Type='post')
 

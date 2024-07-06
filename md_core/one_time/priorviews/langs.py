@@ -10,7 +10,7 @@ import datetime
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 # ---
 from priorviews.lists.links_by_section import sects_links_langlinks, links_by_lang

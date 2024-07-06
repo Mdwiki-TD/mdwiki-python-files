@@ -11,7 +11,7 @@ python3 core8/pwb.py unlinked_wb/bots add
 import sys
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import sql_qids_others
 # ---
 from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage

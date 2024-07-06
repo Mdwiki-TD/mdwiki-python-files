@@ -12,7 +12,7 @@ import sys
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 from priorviews.bots import gt_blame
 from priorviews.lists.links_by_section import links_by_lang
 from priorviews.lists.translators import tra_by_lang

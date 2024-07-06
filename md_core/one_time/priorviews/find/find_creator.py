@@ -13,7 +13,7 @@ from pathlib import Path
 from pymysql.converters import escape_string
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 # ---
 from priorviews.lists.links_by_section import links_by_lang

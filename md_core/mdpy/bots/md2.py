@@ -16,7 +16,7 @@ import pywikibot
 import sys
 
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import mdwiki_api
 from medUpdater import med
 

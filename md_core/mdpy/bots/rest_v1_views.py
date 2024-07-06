@@ -20,7 +20,7 @@ from datetime import timedelta
 
 # ---
 from pywikibot.comms import http
-from mdpy import printe
+from newapi import printe
 
 
 def get_views_last_30_days(langcode, titles):

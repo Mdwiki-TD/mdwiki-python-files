@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 # ---
 from priorviews.bots.sections_links import get_section_links

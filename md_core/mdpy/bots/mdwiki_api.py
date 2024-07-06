@@ -14,7 +14,7 @@ import json
 import time
 import pywikibot
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 # ---
 from newapi.mdwiki_page import NEW_API

@@ -17,7 +17,7 @@ import pywikibot
 
 # ---
 from mdpy.bots import rest_v1_views
-from mdpy import printe
+from newapi import printe
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 
 # ---

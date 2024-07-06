@@ -16,7 +16,7 @@ import sys
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import wiki_api
 from mdpy.bots import wikidataapi
-from mdpy import printe
+from newapi import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 from unlinked_wb.bot import work_un
 # ---

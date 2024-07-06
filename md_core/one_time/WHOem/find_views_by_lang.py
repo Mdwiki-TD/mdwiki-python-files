@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import wiki_api
 
 # ---

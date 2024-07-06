@@ -17,7 +17,7 @@ import sys
 import time as tttime
 
 # ---
-from mdpy import printe
+from newapi import printe
 from api_sql import sql_qu
 
 # ---

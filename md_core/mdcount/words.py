@@ -23,7 +23,7 @@ import sys
 
 # ---
 from mdpy.bots import mdwiki_api
-from mdpy import printe
+from newapi import printe
 from mdcount.links import get_valid_Links
 from mdcount import lead
 

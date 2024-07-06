@@ -7,7 +7,7 @@ from priorviews.bots import helps
 import sys
 from urllib.parse import urlencode
 import requests
-from mdpy import printe
+from newapi import printe
 
 # ---
 '''

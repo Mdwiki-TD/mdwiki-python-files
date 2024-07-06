@@ -20,7 +20,7 @@ import sys
 import pymysql
 
 # ---
-from mdpy import printe
+from newapi import printe
 from pywikibot import config
 from newapi import pymysql_bot
 

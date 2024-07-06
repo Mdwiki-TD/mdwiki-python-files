@@ -11,7 +11,7 @@ from mdpages.qids_others import sql_qids_others
 #
 #
 from pymysql.converters import escape_string
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import sql_for_mdwiki
 
 # sql_for_mdwiki.mdwiki_sql(query, update = False)

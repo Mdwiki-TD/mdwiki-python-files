@@ -14,7 +14,7 @@ import os
 from datetime import datetime
 
 # ---
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import mdwiki_api
 

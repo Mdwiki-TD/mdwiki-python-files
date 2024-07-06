@@ -19,7 +19,7 @@ import time
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import sql_qids_others
 from mdpy.bots import wikidataapi
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import catdepth2
 # ---
 sys.argv.append('workhimo')

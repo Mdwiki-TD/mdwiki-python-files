@@ -15,7 +15,7 @@ import requests
 
 # ---
 from newapi.mdwiki_page import MainPage, NEW_API
-from mdpy import printe
+from newapi import printe
 from mdpy.bots import py_tools
 from mdpy.bots import mdwiki_api
 from mdpy.bots.check_title import valid_title  # valid_title(title)

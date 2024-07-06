@@ -18,7 +18,7 @@ from urllib.parse import urlencode
 from datetime import timedelta
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 Dir = Path(__file__).parent
 

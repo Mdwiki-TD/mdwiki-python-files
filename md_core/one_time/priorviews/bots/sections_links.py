@@ -12,7 +12,7 @@ import wikitextparser
 
 
 # ---
-from mdpy import printe
+from newapi import printe
 
 # ---
 from newapi.mdwiki_page import MainPage as md_MainPage

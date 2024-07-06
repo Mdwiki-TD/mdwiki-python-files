@@ -30,7 +30,7 @@ import traceback
 
 import pywikibot
 # ---
-from mdpy import printe
+from newapi import printe
 from pywikibot import config
 
 # ---

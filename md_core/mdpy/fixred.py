@@ -14,7 +14,7 @@ python3 core8/pwb.py mdpy/fixred
 import re
 import sys
 from mdpy.bots import mdwiki_api
-from mdpy import printe
+from newapi import printe
 
 # ---
 NewList = {}

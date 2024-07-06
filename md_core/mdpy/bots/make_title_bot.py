@@ -12,7 +12,7 @@ import urllib.parse
 import re
 
 from mdpy.bots import open_url
-from mdpy import printe
+from newapi import printe
 import pywikibot
 
 # ---

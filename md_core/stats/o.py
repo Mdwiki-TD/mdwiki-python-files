@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 # ---
-from mdpy import printe
+from newapi import printe
 from newapi.mdwiki_page import MainPage as md_MainPage
 from stats.editors import get_editors, validate_ip
 
