@@ -18,7 +18,7 @@ def get_url(url):
         html = session.get(url)
         return html.text
     except Exception as e:
-        printe.output(f'except: {e}')
+        print(f'except: {e}')
     return ''
 
 

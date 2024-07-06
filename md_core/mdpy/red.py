@@ -192,7 +192,6 @@ def main():
         if arg == "-file":
             # ---
             # if value == 'redirectlist.txt' :
-            # value = '/data/project/mdwiki/public_html/redirectlist.txt'
             # ---
             text2 = open(value, "r", 'utf8')
             text = text2.read()

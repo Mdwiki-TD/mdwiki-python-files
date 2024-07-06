@@ -4,8 +4,6 @@ page views bot
 
 python3 core8/pwb.py mdpyget/sqlviews testtest -lang:ar
 
-python3 core8/pwb.py /data/project/mdwiki/mdpyget/sqlviews -lang:or
-
 """
 #
 # (C) Ibrahem Qasim, 2022

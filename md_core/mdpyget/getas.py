@@ -3,8 +3,6 @@
 
 إنشاء قائمة بالاهمية من الانجليزية
 
-python3 core8/pwb.py /data/project/mdwiki/mdpyget/getas
-
 python3 core8/pwb.py mdpyget/getas newpages
 
 """
@@ -31,8 +29,8 @@ from pathlib import Path
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace("\\", "/")
-dir2 = dir2.split("/mdwiki/")[0] + "/mdwiki"
+Dir = str(Path(__file__).parents[0])
+dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
 printe.output("Get vaild_links from cat : RTT")
 # ---

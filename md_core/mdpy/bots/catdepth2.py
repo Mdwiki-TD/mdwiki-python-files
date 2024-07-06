@@ -29,8 +29,8 @@ from pathlib import Path
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+Dir = str(Path(__file__).parents[0])
+dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
 # sql_for_mdwiki.mdwiki_sql(query, update = False)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()

@@ -12,7 +12,13 @@ import sys
 from pathlib import Path
 
 # ---
-sys.path.append('/data/project/mdwiki/pybot/md_core/')
+pathse = [
+    "/data/project/mdwiki/pybot/md_core/",
+    "/data/project/medwiki/pybot/md_core/",
+]
+# ---
+for path in pathse:
+    sys.path.append(path)
 # ---
 from wprefs.helps import exepts
 
@@ -22,8 +28,8 @@ from pathlib import Path
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
+Dir = str(Path(__file__).parents[0])
+dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
 fixwikirefs = dir2 + '/confs/fixwikirefs.json'
 reffixed_file = f'{Dir}/reffixed.csv'
