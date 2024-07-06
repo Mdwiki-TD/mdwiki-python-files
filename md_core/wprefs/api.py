@@ -27,7 +27,10 @@ for path in pathse:
     sys.path.append(path)
 # ---
 from wprefs.helps import print_s
-
+# ---
+from mdpy.bots import user_account_new
+lgname_enwiki   = user_account_new.lgname_enwiki
+lgpass_enwiki   = user_account_new.lgpass_enwiki
 # ---
 from pathlib import Path
 
@@ -85,8 +88,8 @@ def log(lang):
         data={
             "format": "json",
             "action": "login",
-            "lgname": "Mr. Ibrahem",
-            "lgpassword": "Mr._Ibrahem@9usrv463ql983qrulnani14t3hqs1g27",
+            "lgname": lgname_enwiki,
+            "lgpassword": lgpass_enwiki,
             "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
         },
         timeout=10,
