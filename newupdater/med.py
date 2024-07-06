@@ -2,10 +2,6 @@
 """
 !
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 
 import sys
 import os
@@ -13,11 +9,13 @@ import requests
 import urllib
 import urllib.parse
 from pathlib import Path
-
-# ---
-import user_account_new
-import MedWorkNew
-
+# --
+Dir = str(Path(__file__).parents[0])
+dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+sys.path.append(dir2 + "/pybot")
+# --
+from newupdater import user_account_new
+from newupdater import MedWorkNew
 # ---
 from_toolforge = True
 printe = False
@@ -25,12 +23,6 @@ printe = False
 if "from_toolforge" not in sys.argv:
     from_toolforge = False
     import printe
-# ---
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
@@ -41,10 +33,6 @@ SS = {}
 def print_new(s):
     if not from_toolforge:
         printe.output(s)
-
-
-MedWorkNew.printn = print_new
-
 
 def login():
     # ---
@@ -173,7 +161,7 @@ def work_on_title(title, returntext=False, text_O=""):
         elif "save" in sys.argv:
             return page_put(new_text, title)
     # ---
-    title2 = title
+    title2 = title.replace(" ", "_")
     title2 = title2.replace(":", "-").replace("/", "-")
     # ---
     if 'xx' in sys.argv:
@@ -196,11 +184,16 @@ def work_on_title(title, returntext=False, text_O=""):
 
 def main():
     # ---
-    if sys.argv and sys.argv[1]:
+    title = ''
+    # ---
+    for arg in sys.argv:
+        arg, _, value = arg.partition(':')
+        arg = arg[1:] if arg.startswith("-") else arg
         # ---
-        title = sys.argv[1]
-        # ---
-        work_on_title(title)
+        if arg == 'page':
+            title = value.replace("_", " ")
+    # ---
+    work_on_title(title)
 
 
 if __name__ == "__main__":

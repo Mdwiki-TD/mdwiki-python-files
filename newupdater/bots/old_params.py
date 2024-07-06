@@ -1,5 +1,5 @@
 """
-from bots.old_params import rename_params
+from newupdater.bots.old_params import rename_params
 """
 # ---
 import wikitextparser as wtp

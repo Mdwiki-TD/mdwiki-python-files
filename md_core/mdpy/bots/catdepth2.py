@@ -181,7 +181,7 @@ def subcatquery(title, depth=0, ns="all", limit=0, test=False):
 
 
 def subcatquery2(cat, depth=0, ns="all", limit=0, test=False):
-    filename = f'{dir2}/public_html/Translation_Dashboard/cats_cash/{cat}.json'
+    filename = f'{dir2}/public_html/Translation_Dashboard/Tables/cats_cash/{cat}.json'
     # ---
     if cat == 'RTT':
         depth = 2

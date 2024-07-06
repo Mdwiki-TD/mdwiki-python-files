@@ -39,7 +39,7 @@ vaild_links = tabe["list"]
 # ---
 printe.output(f"len of vaild_links: {len(vaild_links)}")
 # ---
-json_file = {0: f"{dir2}/public_html/Translation_Dashboard/Tables/assessments.json"}
+json_file = {0: f"{dir2}/public_html/Translation_Dashboard/Tables/jsons/assessments.json"}
 lala = ""
 # ---
 with open(json_file[0], "r", encoding="utf-8-sig") as listt:

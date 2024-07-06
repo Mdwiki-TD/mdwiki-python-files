@@ -5,8 +5,8 @@
 import re
 import sys
 import wikitextparser as wtp
-from bots.Remove import remove_cite_web, portal_remove
-from lists.identifier_params import identifiers_params
+from newupdater.bots.Remove import remove_cite_web, portal_remove
+from newupdater.lists.identifier_params import identifiers_params
 
 # ---
 printn_t = {1: False}

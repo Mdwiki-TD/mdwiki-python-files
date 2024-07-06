@@ -33,7 +33,7 @@ dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 def get_RTT():
     RTT = []
     # ---
-    filename = Path(dir2) / "public_html/Translation_Dashboard/cats_cash/RTT.json"
+    filename = Path(dir2) / "public_html/Translation_Dashboard/Tables/cats_cash/RTT.json"
     # ---
     try:
         with open(filename, "r", encoding="utf-8") as file:
@@ -56,7 +56,7 @@ def get_RTT2():
     # ---
     RTT = []
     # ---
-    sitelinks_file = Path(dir2) / "public_html/Translation_Dashboard/Tables/sitelinks.json"
+    sitelinks_file = Path(dir2) / "public_html/Translation_Dashboard/Tables/jsons/sitelinks.json"
     # ---
     print(f"get sitelinks from {sitelinks_file}")
     # ---
@@ -100,7 +100,7 @@ def main():
     # ---
     no_views = 0
     # ---
-    enwiki_pageviews = Path(dir2) / "public_html/Translation_Dashboard/Tables/enwiki_pageviews.json"
+    enwiki_pageviews = Path(dir2) / "public_html/Translation_Dashboard/Tables/jsons/enwiki_pageviews.json"
     # ---
     old_views = {}
     # ---

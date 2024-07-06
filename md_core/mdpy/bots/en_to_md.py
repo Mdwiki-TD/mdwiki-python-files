@@ -48,7 +48,7 @@ lala = ''
 
 def make_mdwiki_list():
     # ---
-    ffile = f'{dir2}/public_html/Translation_Dashboard/Tables/medwiki_to_enwiki.json'
+    ffile = f'{dir2}/public_html/Translation_Dashboard/Tables/jsons/medwiki_to_enwiki.json'
     # ---
     From_json = {}
     # ---

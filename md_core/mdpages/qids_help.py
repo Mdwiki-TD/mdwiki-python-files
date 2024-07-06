@@ -23,7 +23,7 @@ from pathlib import Path
 Dir = str(Path(__file__).parents[0])
 # ---
 dir2 = Dir.replace("\\", "/")
-dir2 = dir2.split("/pybot/")[0] + "/public_html/Translation_Dashboard/Tables/"
+dir2 = dir2.split("/pybot/")[0] + "/public_html/Translation_Dashboard/Tables/jsons"
 # ---
 print(f'{dir2=}')
 
@@ -35,13 +35,13 @@ def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
     # ---
     json_ext = "_other.json" if "other" == ty else ".json"
     # ---
-    with open(f"{dir2}medwiki_to_enwiki{json_ext}", "w", encoding="utf-8") as aa:
+    with open(f"{dir2}/medwiki_to_enwiki{json_ext}", "w", encoding="utf-8") as aa:
         json.dump(medwiki_to_enwiki, aa)
     # ---
-    with open(f"{dir2}missing_in_enwiki{json_ext}", "w", encoding="utf-8") as bb:
+    with open(f"{dir2}/missing_in_enwiki{json_ext}", "w", encoding="utf-8") as bb:
         json.dump(missing_in_enwiki, bb)
     # ---
-    with open(f"{dir2}sames{json_ext}", "w", encoding="utf-8") as cc:
+    with open(f"{dir2}/sames{json_ext}", "w", encoding="utf-8") as cc:
         json.dump(sames, cc)
     # ---
 def check(work_list, all_pages, ty):
