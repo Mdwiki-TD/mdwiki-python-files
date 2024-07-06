@@ -20,8 +20,13 @@ python3 core8/pwb.py wprefs/bot ask
 import os
 import sys
 # ---
-if '/data/project/mdwiki/pybot/md_core/' not in sys.path:
-    sys.path.append('/data/project/mdwiki/pybot/md_core/')
+pathse = [
+    "/data/project/mdwiki/pybot/md_core/",
+    "/data/project/medwiki/pybot/md_core/",
+]
+# ---
+for path in pathse:
+    sys.path.append(path)
 # ---
 if 'returnfile' not in sys.argv:
     from mdpy.bots import sql_for_mdwiki

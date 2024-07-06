@@ -24,8 +24,7 @@ Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # split path before "mdwiki"
 dir2 = Dir.replace('\\', '/')
-dir2 = dir2.split('/mdwiki/')[0] + '/mdwiki'
-# print(f'dir2 : {dir2}')
+dir2 = dir2.split('/bybot/')[0]
 # ---
 que = '''select DISTINCT w_title, w_lead_words, w_all_words from words;'''
 # ---

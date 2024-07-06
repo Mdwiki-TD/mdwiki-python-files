@@ -7,7 +7,7 @@ Pages in WikiProjectMed:List missing Category:RTT
 
 python mdwiki/mdpy/listo.py save
 
-python3 /data/project/mdwiki/pybot/md_core/mdpy/listo.py save
+python3 $HOME/pybot/md_core/mdpy/listo.py save
 
 python3 core8/pwb.py mdpy/listo save
 
