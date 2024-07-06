@@ -47,14 +47,14 @@ def get_word_files():
     # ---
     global json_file, words_n, all_words_n
     # ---
-    json_file[1] = f'{dir2}/public_html/Translation_Dashboard/Tables/allwords.json'
+    json_file[1] = f'{dir2}/public_html/Translation_Dashboard/Tables/jsons/allwords.json'
     # ---
     all_words_n = {}
     # ---
     with open(json_file[1], "r", encoding="utf-8") as f:
         all_words_n = json.load(f)
     # ---
-    json_file[0] = f'{dir2}/public_html/Translation_Dashboard/Tables/words.json'
+    json_file[0] = f'{dir2}/public_html/Translation_Dashboard/Tables/jsons/words.json'
     # ---
     words_n = {}
     # ---

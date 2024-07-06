@@ -1,8 +1,8 @@
 """
-from bots.expend import expend_infoboxs_and_fix
+from newupdater.bots.expend import expend_infoboxs_and_fix
 """
 import wikitextparser as wtp
-from lists.expend_lists import IMC_params, dup_params
+from newupdater.lists.expend_lists import IMC_params, dup_params
 
 
 def printn(s):

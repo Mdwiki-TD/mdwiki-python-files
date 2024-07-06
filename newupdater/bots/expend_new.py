@@ -1,9 +1,9 @@
 """
-from bots.expend_new import expend_infoboxs
+from newupdater.bots.expend_new import expend_infoboxs
 """
 import wikitextparser as wtp
 
-from lists.expend_lists import main_temps_list
+from newupdater.lists.expend_lists import main_temps_list
 
 
 def printn(s):

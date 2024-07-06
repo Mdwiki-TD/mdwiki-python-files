@@ -5,7 +5,7 @@ from pathlib import Path
 # ---
 Dir = Path(__file__).parent
 # ---
-from lists.chem_params import rename_chem_params
+from newupdater.lists.chem_params import rename_chem_params
 
 
 def printn(s):
