@@ -44,3 +44,6 @@ ncc_core/nc_import/long_bots.py
 mass/usaid/.env
 *.sqlite
 /infos
+md_core/mdpages/findqids.sh
+md_core/mdpages/findqids_1.sh
+md_core/mdpages/findqids.sh

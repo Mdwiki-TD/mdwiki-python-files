@@ -20,12 +20,14 @@ from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---
 from pathlib import Path
+
 Dir = str(Path(__file__).parents[0])
 # ---
 dir2 = Dir.replace("\\", "/")
 dir2 = dir2.split("/pybot/")[0] + "/public_html/Translation_Dashboard/Tables/jsons"
 # ---
-print(f'{dir2=}')
+print(f"{dir2=}")
+
 
 def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
     # ---
@@ -44,6 +46,8 @@ def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
     with open(f"{dir2}/sames{json_ext}", "w", encoding="utf-8") as cc:
         json.dump(sames, cc)
     # ---
+
+
 def check(work_list, all_pages, ty):
     """
     function retrieves QIDs for a list of items. It uses the MediaWiki API to query for page properties and extracts the Wikidata item property. The function handles redirects and normalizes the titles. It also groups the items into batches of 50 to avoid exceeding the API's limit for the number of titles in a single request. This is a good practice for working with APIs.
@@ -192,7 +196,5 @@ def get_o_qids_new(o_qids, t_qids_in):
     # ---
     for x in diff:
         printe.output(f"x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")
-    # ---
-    printe.output(f'<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}, add "add" to sys.argv to add to sql')
     # ---
     return o_qids_new
