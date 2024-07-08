@@ -60,7 +60,10 @@ else:
     # read default file
     confg = configparser.ConfigParser()
     confg.read(config.db_connect_file)
-    db_username = confg["client"]["user"]
+    if confg:
+        kk = list(confg.keys())[0]
+        if kk and "user" in confg[kk]:
+            db_username = confg[kk]["user"]
 
 # ---
 main_args = {

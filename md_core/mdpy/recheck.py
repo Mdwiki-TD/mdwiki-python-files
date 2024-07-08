@@ -13,6 +13,7 @@ python3 core8/pwb.py mdpy/recheck
 
 import sys
 from pymysql.converters import escape_string
+
 # ---
 from api_sql import wiki_sql
 from newapi import printe
@@ -21,6 +22,7 @@ from mdpy.bots import py_tools
 from mdpy.bots import wikidataapi
 from mdpy.bots import wiki_api
 from mdpy.bots import en_to_md
+
 # ---
 targets_done = {}
 wd_tt = {}
@@ -50,10 +52,10 @@ def dodo_sql():
     len_done_target = 0
     # ---
     for tab in sq:
-        title = tab['title']
-        user = tab['user']
-        target = tab['target']
-        lang = tab['lang'].lower()
+        title = tab["title"]
+        user = tab["user"]
+        target = tab["target"]
+        lang = tab["lang"].lower()
         # ---
         if lang_o != "" and lang != lang_o.strip():
             continue
@@ -73,7 +75,7 @@ def do_it_sql(lange, targets):
     titles = list(targets.keys())
     # ---
     for i in range(0, len(titles), 100):
-        group = titles[i: i + 100]
+        group = titles[i : i + 100]
         # ---
         ase = [escape_string(t.strip().replace(" ", "_")) for t in group if t.strip() != ""]
         # ---
@@ -140,7 +142,7 @@ def do_it_api(lange, targets):
     nomd = 0
     # ---
     for i in range(0, len(New_targets), limits):
-        group = New_targets[i: i + limits]
+        group = New_targets[i : i + limits]
         # ---
         # get all pages qid
         qids_from_wiki = wiki_api.Get_page_qids(lange, group)
@@ -218,7 +220,7 @@ def work_with_2_qids(oldq, new_q):
             printe.output("<<lightred>> **remove sitelink false.")
             printe.output(remove)
         # ---
-        remove2 = wikidataapi.Labels_API(oldq, '', 'en', remove=True)
+        remove2 = wikidataapi.Labels_API(oldq, "", "en", remove=True)
         # ---
         if remove2:
             len_sites -= 1

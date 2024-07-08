@@ -14,8 +14,9 @@ from mdpy.bots import sql_qids_others
 from mdpy.bots import sql_for_mdwiki
 from unlinked_wb.bot import work_un
 
-# ---
+from newapi import printe
 from mdpages import qids_help
+
 # qids_help.get_o_qids_new(o_qids, t_qids_in)
 # qids_help.get_pages_to_work(ty="td|other")
 # qids_help.check(work_list, all_pages)
@@ -53,8 +54,16 @@ def do(ty):
     # ---
     o_qids_new = wrk_in(ty, t_qids_in)
     # ---
+    ta = f"<<lightgreen>> new len of o_qids_new:{len(o_qids_new)}"
+    # ---
+    if "add" not in sys.argv:
+        ta += ", add 'add' to sys.argv to add to sql"
+    # ---
     if o_qids_new:
+        printe.output(ta)
+        # ---
         if "add" in sys.argv:
+            # ---
             if ty == "other":
                 sql_qids_others.add_titles_to_qids(o_qids_new, add_empty_qid=True)
             else:

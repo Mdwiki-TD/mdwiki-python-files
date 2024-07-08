@@ -15,79 +15,85 @@ from p11143_bot import bot as p143_bot
 """
 import sys
 import time
+
 # ---
 from mdpy.bots import sql_for_mdwiki
 from mdpy.bots import sql_qids_others
 from mdpy.bots import wikidataapi
 from newapi import printe
 from mdpy.bots import catdepth2
+
 # ---
-sys.argv.append('workhimo')
+sys.argv.append("workhimo")
 # ---
 wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
+
 
 def add_q(new_qids):
     # ---
     TD_list = catdepth2.make_cash_to_cats(return_all_pages=True)
     # ---
-    print(f'len of new_qids: {len(new_qids)}')
+    print(f"len of new_qids: {len(new_qids)}")
     # ---
     if len(new_qids) < 10:
-        print("\n".join([f'{k}:{v}' for k, v in new_qids.items()]))
+        print("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
     # ---
-    newtitles_not_td = { title: qid for qid, title in new_qids.items() if title not in TD_list }
+    newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in TD_list}
     # ---
-    newtitles_in_td  = { title: qid for qid, title in new_qids.items() if title in TD_list }
+    newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in TD_list}
     # ---
-    print(f'add_q: {len(newtitles_in_td)=}, {len(newtitles_not_td)=}')
+    print(f"add_q: {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
     # ---
     if newtitles_in_td or newtitles_not_td:
         printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
         # ---
-        if 'addq' not in sys.argv:
+        if "addq" not in sys.argv:
             return
         # ---
         sql_for_mdwiki.add_titles_to_qids(newtitles_in_td)
         # ---
         sql_qids_others.add_titles_to_qids(newtitles_not_td)
-    
+
+
 def make_in_wd_tab():
     # ---
     in_wd = {}
     # ---
-    query = '''select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}'''
+    query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
     # ---
     wdlist = wikidataapi.sparql_generator_url(query, printq=False, add_date=True)
     # ---
     for wd in wdlist:
-        prop = wd['prop']
+        prop = wd["prop"]
         # ---
-        qid = wd['item'].split('/entity/')[1]
+        qid = wd["item"].split("/entity/")[1]
         # ---
         in_wd[qid] = prop
     # ---
     return in_wd
 
+
 def add_P11143_to_qids(newlist):
     # ---
-    print(f'len of newlist: {len(newlist)}')
+    print(f"len of newlist: {len(newlist)}")
     # ---
     if len(newlist) > 0:
         # ---
-        printe.output(f'<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}')
+        printe.output(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
         if len(newlist.items()) < 100:
-            print("\n".join([f'{k}\t:\t{v}' for k, v in newlist.items()]))
+            print("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
         # ---
-        if 'add' not in sys.argv:
+        if "add" not in sys.argv:
             printe.output('<<puruple>> add "add" to sys.argv to add them?')
             return
         # ---
         for n, (q, value) in enumerate(newlist.items(), start=1):
-            printe.output(f'<<yellow>> q {n} from {len(newlist)}')
-            wikidataapi.Claim_API_str(q, 'P11143', value)
+            printe.output(f"<<yellow>> q {n} from {len(newlist)}")
+            wikidataapi.Claim_API_str(q, "P11143", value)
             if n % 30 == 0:
-                printe.output(f'<<yellow>> n: {n}')
+                printe.output(f"<<yellow>> n: {n}")
                 time.sleep(5)
+
 
 def fix(merge_qids, qids):
     # mdwiki != P11143
@@ -98,29 +104,30 @@ def fix(merge_qids, qids):
         if md_title == wd_value:
             continue
         # ---
-        print(f'wd_value:{wd_value} != md_title:{md_title}, qid:{q}')
+        print(f"wd_value:{wd_value} != md_title:{md_title}, qid:{q}")
         # ---
         merge_qids[q] = md_title
         # ---
         # delete the old
-        ae = wikidataapi.Get_claim(q, 'P11143', get_claim_id=True)
+        ae = wikidataapi.Get_claim(q, "P11143", get_claim_id=True)
         if ae:
             for x in ae:
-                value = x['value']
-                claimid = x['id']
+                value = x["value"]
+                claimid = x["id"]
                 if value == wd_value:
                     uxx = wikidataapi.Delete_claim(claimid)
                     if uxx:
-                        print(f'True.. Deleted {claimid}')
+                        print(f"True.. Deleted {claimid}")
                     else:
-                        print(f'Failed to delete {claimid}')
+                        print(f"Failed to delete {claimid}")
         # ---
         # add the correct claim
-        ase = wikidataapi.Claim_API_str(q, 'P11143', md_title)
+        ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
         if ase:
-            print(f'True.. Added P11143:{md_title}')
+            print(f"True.. Added P11143:{md_title}")
         else:
-            print(f'Failed to add P11143:{md_title}')
+            print(f"Failed to add P11143:{md_title}")
+
 
 def duplicate(merge_qids):
     # ايجاد عناصر ويكي بيانات بها قيمة الخاصية في أكثر من عنصر
@@ -137,22 +144,23 @@ def duplicate(merge_qids):
     va_tab_x = {k: v for k, v in va_tab.items() if len(v) > 1}
     # ---
     if va_tab_x:
-        printe.output(f'<<lightyellow>> len of va_tab_x: {len(va_tab_x)}')
+        printe.output(f"<<lightyellow>> len of va_tab_x: {len(va_tab_x)}")
         # ---
         for va, qs in va_tab_x.items():
-            print(f'va:{va}, qs:{qs}')
+            print(f"va:{va}, qs:{qs}")
     # ---
-    printe.output('<<lightyellow>> duplicate() end...')
+    printe.output("<<lightyellow>> duplicate() end...")
+
 
 def work_qids(qids_list):
     # ---
     in_wd = make_in_wd_tab()
     # ---
-    qids = {q: title for title, q in qids_list.items() if q != ''}
+    qids = {q: title for title, q in qids_list.items() if q != ""}
     # ---
     new_qids = {q: p for q, p in in_wd.items() if q not in qids.keys() and p not in qids.values()}
     # ---
-    print(f'len of in_wd: {len(in_wd)}')
+    print(f"len of in_wd: {len(in_wd)}")
     # ---
     newlist = {q: tt for q, tt in qids.items() if q not in in_wd.keys()}
     # ---
@@ -161,17 +169,18 @@ def work_qids(qids_list):
     # merge_qids = {**newlist, **in_wd}
     merge_qids = {**newlist, **in_wd}
     # ---
-    if 'fix' in sys.argv:
+    if "fix" in sys.argv:
         fix(merge_qids, qids)
     # ---
     duplicate(merge_qids)
     # ---
     add_q(new_qids)
 
+
 def start():
     # ---
     others = sql_qids_others.get_others_qids()
-    allq   = sql_for_mdwiki.get_all_qids()
+    allq = sql_for_mdwiki.get_all_qids()
     # ---
     to_do = [allq]
     # ---
@@ -184,5 +193,6 @@ def start():
     for qids_list in to_do:
         work_qids(qids_list)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     start()
