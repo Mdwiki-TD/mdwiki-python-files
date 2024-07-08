@@ -6,15 +6,6 @@ def test():
     # ---
     # python3 pwb.py newupdater/MedWorkNew
     import pywikibot
-
-    # ---
-    old_params.printn = print
-    mv_section.printn = print
-    chembox.printn = print
-    drugbox.printn = print
-    expend.printn = print
-    expend_new.printn = print
-    # ---
     Dir = Path(__file__).parent
     # ---
     with open(os.path.join(Dir, "bots/resources.txt"), "r", encoding="utf-8") as f:

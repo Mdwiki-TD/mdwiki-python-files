@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #   himo
 """
 python3 core8/pwb.py mdpages/cashwd

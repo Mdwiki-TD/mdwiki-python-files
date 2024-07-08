@@ -3,11 +3,7 @@ from newupdater.bots.expend import expend_infoboxs_and_fix
 """
 import wikitextparser as wtp
 from newupdater.lists.expend_lists import IMC_params, dup_params
-
-
-def printn(s):
-    return
-
+from newupdater.helps import print_s
 
 def expend_infoboxs_and_fix(new_text):
     parseds = wtp.parse(new_text)
@@ -23,7 +19,7 @@ def expend_infoboxs_and_fix(new_text):
                 # ---
                 dups = dup_params.get(name.lower(), {})
                 # ---
-                printn(f'expend_and_fix: name:{name}')
+                print_s(f'expend_and_fix: name:{name}')
                 # ---
                 new_temp = "{{" + name + "\n"
                 # ---

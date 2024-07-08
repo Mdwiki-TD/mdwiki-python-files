@@ -18,7 +18,7 @@ import sys
 # ---
 from newapi import printe
 from mdpy.bots import mdwiki_api
-from medUpdater import med
+from medUpdater import MedWorkNew
 
 # ---
 
@@ -27,7 +27,7 @@ printe.output(sys.argv)
 
 def treat_page(title, textn):
     # ---
-    newtext = med.work(title, returntext=True, text_O=textn)
+    newtext = MedWorkNew.work_on_text(title, textn)
     # ---
     if 'test' in sys.argv:
         pywikibot.showDiff(textn, newtext)

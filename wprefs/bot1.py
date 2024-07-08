@@ -20,15 +20,15 @@ python3 core8/pwb.py wprefs/bot ask
 import os
 import sys
 # ---
-# ---
 pathse = [
     "/data/project/mdwiki/pybot/md_core/",
     "/data/project/medwiki/pybot/md_core/",
+    "/data/project/mdwiki/pybot/",
+    "/data/project/medwiki/pybot/",
 ]
 # ---
 for path in pathse:
     sys.path.append(path)
-# ---
 # ---
 if 'returnfile' not in sys.argv:
     from mdpy.bots import sql_for_mdwiki
@@ -199,8 +199,14 @@ def maine():
             print('notext')
             return ''
         # ---
-        filee = save_wprefcash(title, newtext)
-        print(filee)
+        if 'save' in sys.argv:
+            a = page_put(text, newtext, 'Fix references, Expend infobox mdwiki.toolforge.org.', title, lange)
+            if a:
+                print('ok')
+                return ''
+        else:
+            filee = save_wprefcash(title, newtext)
+            print(filee)
         # ---
         return ''
     # ---

@@ -15,6 +15,8 @@ from pathlib import Path
 pathse = [
     "/data/project/mdwiki/pybot/md_core/",
     "/data/project/medwiki/pybot/md_core/",
+    "/data/project/mdwiki/pybot/",
+    "/data/project/medwiki/pybot/",
 ]
 # ---
 for path in pathse:
@@ -22,12 +24,6 @@ for path in pathse:
 # ---
 from wprefs.helps import exepts
 
-# ---
-from pathlib import Path
-
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
@@ -59,7 +55,6 @@ def make_ref_done_list():
     return reffixed_list
 
 
-# ---
 reffixed_list = make_ref_done_list()
 
 

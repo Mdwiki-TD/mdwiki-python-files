@@ -1,11 +1,7 @@
 import re
 
 import wikitextparser as wtp
-
-
-def printn(s):
-    return
-
+from newupdater.helps import print_s
 
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
@@ -13,8 +9,6 @@ lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Leg
 lkj2 = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status)\s*-->)"
 # ---
 from newupdater.lists.bot_params import all_params, params_to_add, params_placeholders, all_formola_params
-
-# ---
 
 
 class TextProcessor:
@@ -55,7 +49,7 @@ class TextProcessor:
                 "infobox medical condition (new)",
                 "infobox medical condition",
             }:
-                printn(f"*find temp:[{name}].")
+                print_s(f"*find temp:[{name}].")
                 continue
             # ---
             if name.lower() in ["drugbox", "infobox drug"]:

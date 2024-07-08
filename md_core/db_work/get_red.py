@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #   himo
 """
 اصلاح التحويلات في قواعد البيانات

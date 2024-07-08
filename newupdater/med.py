@@ -1,128 +1,24 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """
-!
+python3 I:/mdwiki/pybot/newupdater/med.py Aspirin from_toolforge
 """
-
 import sys
-import os
-import requests
-import urllib
-import urllib.parse
 from pathlib import Path
-# --
+
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
-sys.path.append(dir2 + "/pybot")
+
+dir3 = dir2 + "/pybot"
+sys.path.append(dir3)
 # --
-from newupdater import user_account_new
-from newupdater import MedWorkNew
-# ---
-from_toolforge = True
-printe = False
-# ---
-if "from_toolforge" not in sys.argv:
-    from_toolforge = False
-    import printe
-# ---
-username = user_account_new.my_username
-password = user_account_new.mdwiki_pass
-# ---
-SS = {}
+from newupdater.helps import ec_de_code
+from newupdater.MedWorkNew import work_on_text
+from newupdater.mdapi import GetPageText2, GetPageText, page_put
 
 
-def print_new(s):
-    if not from_toolforge:
-        printe.output(s)
-
-def login():
+def get_new_text(title):
     # ---
-    SS["ss"] = requests.Session()
-    SS["url"] = "https://" + "mdwiki.org/w/api.php"
-    SS["ss"] = requests.Session()
-    # ---
-    r11 = SS["ss"].get(
-        SS["url"],
-        params={
-            "format": "json",
-            "action": "query",
-            "meta": "tokens",
-            "type": "login",
-        }, timeout=10
-    )
-    r11.raise_for_status()
-    # log in
-    SS["ss"].post(
-        SS["url"],
-        data={
-            # fz"assert": "user",
-            "format": "json",
-            "action": "login",
-            "lgname": username,
-            "lgtoken": r11.json()["query"]["tokens"]["logintoken"],
-            "lgpassword": password,
-        }, timeout=10
-    )
-    # ---
-    # get edit token
-    SS["r33"] = SS["ss"].get(
-        SS["url"],
-        params={
-            "format": "json",
-            "action": "query",
-            "meta": "tokens",
-        }, timeout=10
-    )
-    # ---
-    SS["r3_token"] = SS["r33"].json()["query"]["tokens"]["csrftoken"]
-
-
-def GetPageText(title):
-    # ---
-    print_new(f'get text for {title}')
-    # ---
-    params = {"action": "parse", "format": "json", "prop": "wikitext", "page": title, "utf8": 1}
-    # ---
-    url = "https://" + "mdwiki.org/w/api.php?action=parse&prop=wikitext&utf8=1&format=json&page=" + title
-    # ---
-    r4 = {}
-    # ---
-    try:
-        r4 = SS["ss"].post(SS["url"], data=params, timeout=10).json()
-    except Exception as e:
-        print_new(e)
-        r4 = {}
-    return r4.get("parse", {}).get("wikitext", {}).get("*", "")
-
-
-def page_put(NewText, title):
-    # ---
-    pparams = {
-        "action": "edit",
-        "format": "json",
-        "title": title,
-        "text": NewText,
-        "summary": "mdwiki changes.",
-        "bot": 1,
-        "nocreate": 1,
-        "token": SS["r3_token"],
-    }
-    # ---
-    r4 = {}
-    # ---
-    try:
-        r4 = SS["ss"].post(SS["url"], data=pparams, timeout=10).json()
-    except Exception as e:
-        print(f"save error: {str(e)}")
-        return
-    # ---
-    if "success" in str(r4).lower():
-        print("True")
-    else:
-        print(r4.get("error", {}).get("info", ""))
-        print("False")
-
-
-def get_new_text(title, text=''):
+    text = GetPageText2(title)
     # ---
     if not text:
         text = GetPageText(title)
@@ -130,42 +26,31 @@ def get_new_text(title, text=''):
     newtext = text
     # ---
     if newtext != "":
-        newtext = MedWorkNew.work_on_text(title, newtext)
+        newtext = work_on_text(title, newtext)
     # ---
     return text, newtext
 
 
-def work_on_title(title, returntext=False, text_O=""):
+def work_on_title(title):
     # ---
-    login()
+    title = ec_de_code(title, "decode")
     # ---
-    title = urllib.parse.unquote(title)
+    text, new_text = get_new_text(title)
     # ---
-    text, new_text = get_new_text(title, text=text_O)
-    # ---
-    if "from_toolforge" not in sys.argv:
-        print(new_text)
+    if text.strip() == "" or new_text.strip() == "":
+        print("notext")
         return
-    # ---
-    if 'xx' not in sys.argv:
-        # ---
-        if text.strip() == "" or new_text.strip() == "":
-            print("notext")
-            return
-        elif text == new_text:
-            print("no changes")
-            return
-        elif not new_text:
-            print("notext")
-            return
-        elif "save" in sys.argv:
-            return page_put(new_text, title)
+    elif text == new_text:
+        print("no changes")
+        return
+    elif not new_text:
+        print("notext")
+        return
+    elif "save" in sys.argv:
+        return page_put(text, new_text, "", title, "")
     # ---
     title2 = title.replace(" ", "_")
     title2 = title2.replace(":", "-").replace("/", "-")
-    # ---
-    if 'xx' in sys.argv:
-        title2 = 'xx'
     # ---
     try:
         filename = f"{dir2}/public_html/updatercash/{title2}_1.txt"
@@ -184,14 +69,18 @@ def work_on_title(title, returntext=False, text_O=""):
 
 def main():
     # ---
-    title = ''
+    title = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         arg = arg[1:] if arg.startswith("-") else arg
         # ---
-        if arg == 'page':
+        if arg == "page":
             title = value.replace("_", " ")
+    # ---
+    if title == "":
+        print("no page")
+        return
     # ---
     work_on_title(title)
 

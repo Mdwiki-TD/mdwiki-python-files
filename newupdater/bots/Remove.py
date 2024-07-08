@@ -2,14 +2,6 @@
 
 """
 import re
-import sys
-
-printn_t = {1: False}
-
-
-def printn(s):
-    if printn_t[1] or 'test' in sys.argv:
-        print(s)
 
 
 def remove_cite_web(text, resources_get_NLM, line, title):
@@ -18,7 +10,7 @@ def remove_cite_web(text, resources_get_NLM, line, title):
     # ---
     title2 = re.escape(title)
     # ---
-    ioireg = fr"\s*cite web\s*\|\s*url\s*=\s*https\:\/\/druginfo\.nlm\.nih\.gov\/drugportal\/(?:name|category)\/{title2}\s*\|\s*publisher\s*=\s*U\.S\. National Library of Medicine\s*\|\s*work\s*=\s*Drug Information Portal\s*\|\s*title\s*=\s*{title2}\s*"
+    ioireg = rf"\s*cite web\s*\|\s*url\s*=\s*https\:\/\/druginfo\.nlm\.nih\.gov\/drugportal\/(?:name|category)\/{title2}\s*\|\s*publisher\s*=\s*U\.S\. National Library of Medicine\s*\|\s*work\s*=\s*Drug Information Portal\s*\|\s*title\s*=\s*{title2}\s*"
     ioireg = r"(\*\s*{{" + ioireg + "}})"
     if vavo := re.search(ioireg, new_text, flags=re.IGNORECASE):
         vas = vavo.group(1)
@@ -55,4 +47,4 @@ def portal_remove(text):
 
 if __name__ == "__main__":
     printn_t[1] = True
-    remove_cite_web('temptext', {}, '', '')
+    remove_cite_web("temptext", {}, "", "")

@@ -1,20 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """
 python3 pwb.py newupdater/med Aspirin from_toolforge
 python3 pwb.py newupdater/med Retinol from_toolforge
 
 """
-import os
 import re
 import sys
-# ---
-pathse = [
-    "/data/project/mdwiki/pybot/",
-    "/data/project/medwiki/pybot/",
-]
-# ---
-for path in pathse:
-    sys.path.append(path)
 # ---
 from newupdater.bots import expend  # expend_infoboxs_and_fix(text)
 from newupdater.bots import expend_new  # expend_infoboxs(text)
@@ -24,15 +15,10 @@ from newupdater import mv_section  # mv_section.move_External_links_section
 from newupdater import drugbox  # drugbox.TextProcessor
 from newupdater import resources_new
 from newupdater import chembox  # fix_Chembox
-
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
 # ---
 lkj2 = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status)\s*-->)"
-
-
-def printn(s):
-    return
 
 
 def work_on_text_md(title, text):
