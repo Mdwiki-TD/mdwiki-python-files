@@ -67,7 +67,6 @@ def work_un_linked_wb(title, qid):
         # ---
         m = re.search(patern, text)
         if m:
-            printe.output("no qid in text")
             qid_in = m.group(1)
         # ---
         printe.output(f"page already tagged. {qid_in=}, {qid=}")
@@ -83,26 +82,40 @@ def work_un_linked_wb(title, qid):
 def work_un(tab):
     for numb, (title, new_q) in enumerate(tab.items(), start=1):
         # ---
-        printe.output(f"<<yellow>> work_un: {numb}, {title=}, {new_q=}")
+        printe.output(f"-----------------\n<<yellow>> work_un: {numb}, {title=}, {new_q=}")
         # ---
         if new_q:
             work_un_linked_wb(title, new_q)
 
 
-def get_pages_in_use():
-    pages_props = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", Max=50000)
+def get_pages_in_use(all_pages):
     # ---
-    pages = {x["title"]: x["value"] for x in pages_props}
+    pages_has = {}
+    pages_hasnt = []
     # ---
-    printe.output(f"<<yellow>> len of get_pages_in_use: {len(pages)}.")
+    for x, ta in all_pages.items():
+        qid = ta.get("pageprops", {}).get("unlinkedwikibase_id")
+        if qid:
+            pages_has[x] = qid
+        else:
+            pages_hasnt.append(x)
     # ---
-    return pages
+    printe.output(f"<<yellow>> len of all_pages qids: {len(pages_has)}.")
+    # ---
+    # pages_props = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", Max=500000)
+    # pages = {x["title"]: x["value"] for x in pages_props}
+    # printe.output(f"<<yellow>> len of get_pages_in_use: {len(pages)}.")
+    # ---
+    return pages_has, pages_hasnt
 
 
 def add_to_pages(pages_to_add):
     # ---
+    if "noadd" in sys.argv:
+        return
+    # ---
     for n, (x, qid) in enumerate(pages_to_add.items(), start=1):
-        printe.output(f"p:{n}/{len(pages_to_add)}: t:{x}::")
+        printe.output(f"-----------------\np:<<yellow>> {n}/{len(pages_to_add)}: t:{x}::")
         # ---
         if not qid:
             printe.output("no qid")
@@ -113,7 +126,7 @@ def add_to_pages(pages_to_add):
 
 def pages_has_to_work(qids, pages_has):
     # ---
-    f_to_work = {page: qids[page] for page in pages_has if page in qids}
+    f_to_work = {page: qids[page] for page in pages_has if page in qids and qids[page] != pages_has[page]}
     # ---
     printe.output(f"len of pages_has: {len(pages_has)}, f_to_work: {len(f_to_work)}")
     # ---
@@ -133,19 +146,22 @@ def add_tag():
     # ---
     qids, vals_d = get_qids()
     # ---
-    all_pages = api_new.Get_All_pages(start="!", namespace="0", apfilterredir="nonredirects")
+    # all_pages = api_new.Get_All_pages(start="", namespace="0", apfilterredir="nonredirects", ppprop="")
+    all_pages_tab = api_new.Get_All_pages_generator(start="", namespace="0", limit="max", filterredir="nonredirects", ppprop="unlinkedwikibase_id", limit_all=100000)
     # ---
-    all_pages = [x for x in all_pages if valid_title(x)]
+    pages_has, pages_hasnt = get_pages_in_use(all_pages_tab)
     # ---
-    pages_has = get_pages_in_use()
+    all_pages = [x for x in all_pages_tab if valid_title(x)]
     # ---
-    pages_to_add = {page: qids[page] for page in all_pages if page in qids and page not in pages_has}
+    printe.output(f"<<purple>> {len(all_pages)=}, {len(pages_has)=}")
     # ---
-    printe.output(f"len of all_pages: {len(all_pages)}, pages_to_add: {len(pages_to_add)}")
+    pages_to_add = {page: qids[page] for page in pages_hasnt if page in qids}
     # ---
-    add_to_pages(pages_to_add)
+    printe.output(f"<<purple>> {len(pages_hasnt)=}, {len(pages_to_add)=}")
     # ---
     pages_has_to_work(qids, pages_has)
+    # ---
+    add_to_pages(pages_to_add)
     # ---
     for q, v in vals_d.items():
         if len(v) > 1:
@@ -154,3 +170,4 @@ def add_tag():
 
 if __name__ == "__main__":
     add_tag()
+    #
