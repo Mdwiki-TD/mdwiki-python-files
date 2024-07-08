@@ -23,6 +23,8 @@ import sys
 pathse = [
     "/data/project/mdwiki/pybot/md_core/",
     "/data/project/medwiki/pybot/md_core/",
+    "/data/project/mdwiki/pybot/",
+    "/data/project/medwiki/pybot/",
 ]
 # ---
 for path in pathse:

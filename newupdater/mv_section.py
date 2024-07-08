@@ -4,11 +4,7 @@ import sys
 from pathlib import Path
 
 import wikitextparser
-
-
-def printn(s):
-    return
-
+from newupdater.helps import print_s
 
 class move_External_links_section:
     def __init__(self, text):
@@ -90,8 +86,8 @@ class move_External_links_section:
         if self.last_sec.title.lower().strip() == 'references':
             l_c = self.last_sec.contents
             # ---
-            printn(f'title: {self.last_sec.title}')
-            printn(f'contents: {l_c}')
+            print_s(f'title: {self.last_sec.title}')
+            print_s(f'contents: {l_c}')
             # ---
             mata = re.search(r'^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}', l_c, flags=re.IGNORECASE)
             # ---
@@ -102,13 +98,13 @@ class move_External_links_section:
                 # ---
                 l_c2 = l_c[index:]
                 # ---
-                # printn(f'index : {index}')
-                # printn(f'l_c2 : {l_c2}')
+                # print_s(f'index : {index}')
+                # print_s(f'l_c2 : {l_c2}')
                 # ---
                 g = mata.group()
                 g_to = f'== {self.last_sec.title.strip()} ==\n{g}\n'
                 # ---
-                printn(f'g_to: {g_to}')
+                print_s(f'g_to: {g_to}')
                 # ---
                 self.ext_sec = f'{g_to}\n{self.ext_sec}'
                 self.new_ext_sec = self.ext_sec
@@ -127,7 +123,7 @@ if __name__ == "__main__":
     import pywikibot
 
     # ---
-    printn = print
+    print_s = print
     # ---
     Dir = Path(__file__).parent
     from newupdater.med import GetPageText

@@ -7,19 +7,13 @@ import sys
 import wikitextparser as wtp
 from newupdater.bots.Remove import remove_cite_web, portal_remove
 from newupdater.lists.identifier_params import identifiers_params
-
+from newupdater.helps import print_s
 # ---
-printn_t = {1: False}
 page_identifier_params = {}
 # ---
 _lkj_ = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
 # ---
 _lkj2_ = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->)"
-
-
-def printn(s):
-    if printn_t[1] or 'test' in sys.argv:
-        print(s)
 
 
 def add_resources(new_text, drug_resources):
@@ -113,10 +107,10 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
             fa = re.search(lkj2, value)
             # ---
             if fa:
-                printn(f'fa = {fa}')
-                printn(dir(fa))
+                print_s(f'fa = {fa}')
+                print_s(dir(fa))
                 tt = fa.group()
-                printn(f'tt = {tt}')
+                print_s(f'tt = {tt}')
                 value = value.replace(tt, '').strip()
             # ---
             page_identifier_params[param] = value
@@ -142,18 +136,18 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         # ---
         resources_old = resources_temp.string
         # ---
-        printn(f'resources_temp = {resources_temp}')
+        print_s(f'resources_temp = {resources_temp}')
         # ---
         resources_params = resources_temp.arguments
         # ---
-        printn(f'resources_params = {resources_params}')
+        print_s(f'resources_params = {resources_params}')
         # ---
         for param, value in page_identifier_params.items():
             value = value.strip()
             # ---
             if resources_temp.has_arg(param):
                 # ---
-                printn(f'resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}')
+                print_s(f'resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}')
                 # ---
                 old_value = resources_temp.get_arg(param).value
                 # ---
@@ -166,7 +160,7 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         resources_new = resources_temp.string
         # resources_new = resources_temp.pformat()
         # ---
-        printn(f'resources_new = {resources_new}')
+        print_s(f'resources_new = {resources_new}')
         # ---
         resources_new = re.sub(r'\n\n\n+<', '\n\n<', resources_new, flags=re.DOTALL | re.MULTILINE)
         # ---

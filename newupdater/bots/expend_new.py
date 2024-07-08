@@ -5,11 +5,6 @@ import wikitextparser as wtp
 
 from newupdater.lists.expend_lists import main_temps_list
 
-
-def printn(s):
-    return
-
-
 def expend_new(template, min_len=1):
     if not template:
         return template

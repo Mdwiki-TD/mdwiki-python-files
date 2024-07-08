@@ -3,11 +3,7 @@ from newupdater.bots.old_params import rename_params
 """
 # ---
 import wikitextparser as wtp
-
-
-def printn(s):
-    return
-
+from newupdater.helps import print_s
 
 def rename_params(temptext):
     # ---
@@ -38,29 +34,29 @@ def rename_params(temptext):
         if str(name).lower() in temps_okay:
             _temps_.append(temp)
         else:
-            printn(f"*+name ({[name]}) not in temps_okay .")
+            print_s(f"*+name ({[name]}) not in temps_okay .")
             # ---
     # ---
     if not _temps_:
-        printn("*+_temps_ == 0 .")
+        print_s("*+_temps_ == 0 .")
         return new_temptext
     # ---
     for temp in _temps_:
         old_temp = temp.string
         # ---
         if new_temptext.find(old_temp) == -1:
-            printn(f"*+new_temptext find ({[old_temp]}) == -1 .")
+            print_s(f"*+new_temptext find ({[old_temp]}) == -1 .")
             continue
         # ---
         # Replace the old parameter with the new parameter
         for old, new in to_replace.items():
             if temp.has_arg(old):
                 value = temp.get_arg(old).value
-                printn(f'value: {value}')
+                print_s(f'value: {value}')
                 temp.set_arg(new, value, before=old)
                 temp.del_arg(old)
         # ---
-        printn('diff:')
+        print_s('diff:')
         # ---
         new_temptext = new_temptext.replace(old_temp, temp.string)
     # ---
@@ -74,7 +70,7 @@ if __name__ == "__main__":
     # ---
     import pywikibot
 
-    printn = print
+    print_s = print
     o = '''
 {{drugbox
 |side effects=test

@@ -1,15 +1,9 @@
 import wikitextparser as wtp
 from pathlib import Path
 
-
-# ---
 Dir = Path(__file__).parent
-# ---
+
 from newupdater.lists.chem_params import rename_chem_params
-
-
-def printn(s):
-    return
 
 
 class fix_Chembox:
@@ -30,7 +24,7 @@ class fix_Chembox:
         # create self.newchembox
         self.new_temp()
         # ---
-        if self.oldchembox != '' and self.newchembox != '':
+        if self.oldchembox != "" and self.newchembox != "":
             self.new_text = self.new_text.replace(self.oldchembox, self.newchembox)
         # ---
         return self.new_text
@@ -47,19 +41,19 @@ class fix_Chembox:
             name = str(template.normal_name()).strip()
             # ---
             boxes = [
-                'chembox',
-                'chembox identifiers',
-                'chembox properties',
-                'chembox hazards',
-                'chembox thermochemistry',
-                'chembox explosive',
-                'chembox pharmacology',
-                'chembox related',
-                'chembox structure',
-                'chembox supplement',
+                "chembox",
+                "chembox identifiers",
+                "chembox properties",
+                "chembox hazards",
+                "chembox thermochemistry",
+                "chembox explosive",
+                "chembox pharmacology",
+                "chembox related",
+                "chembox structure",
+                "chembox supplement",
             ]
             # ---
-            if name.lower() == 'chembox':
+            if name.lower() == "chembox":
                 self.oldchembox = template.string
             # ---
             # if name.lower().startswith("chembox"):
@@ -81,9 +75,9 @@ class fix_Chembox:
         # ---
         for p, value in self.all_params.items():
             # ---
-            p = rename_chem_params.get(p, '') if rename_chem_params.get(p, '') != '' else p
+            p = rename_chem_params.get(p, "") if rename_chem_params.get(p, "") != "" else p
             # ---
-            p_v = f'\n| {p}= {value}'
+            p_v = f"\n| {p}= {value}"
             # ---
             self.newchembox += p_v
             # ---
@@ -91,7 +85,7 @@ class fix_Chembox:
         self.newchembox += "\n}}"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import pywikibot
 
     text = {}
@@ -99,7 +93,6 @@ if __name__ == '__main__':
     # ---
 
     with open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8") as f:
-
         text = f.read(f)
     bot = fix_Chembox(text)
     newtext = bot.run()

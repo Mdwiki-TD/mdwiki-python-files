@@ -1,14 +1,8 @@
 #!/usr/bin/python3
 """
-from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
+from newupdater.api import login, submitAPI, GetPageText, missingtitles, page_put
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 import json
-
-import os
 import sys
 import requests
 
@@ -18,28 +12,13 @@ try:
 except ImportError:
     pywikibot = None
 # ---
-pathse = [
-    "/data/project/mdwiki/pybot/md_core/",
-    "/data/project/medwiki/pybot/md_core/",
-    "/data/project/mdwiki/pybot/",
-    "/data/project/medwiki/pybot/",
-]
-# ---
-for path in pathse:
-    sys.path.append(path)
-# ---
-from wprefs.helps import print_s
-# ---
-from mdpy.bots import user_account_new
-lgname_enwiki   = user_account_new.lgname_enwiki
-lgpass_enwiki   = user_account_new.lgpass_enwiki
-# ---
-from pathlib import Path
+from newupdater.helps import print_s
 
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
-SS = {"token": ""}
+from newupdater import user_account_new
+
+username = user_account_new.my_username
+password = user_account_new.mdwiki_pass
+
 session = {}
 session[1] = requests.Session()
 session["url"] = ""
@@ -55,21 +34,24 @@ ask_a = {1: False}
 missingtitles = {}
 
 
-def log(lang):
+def login(lang):
+    # ---
+    if not lang:
+        lang = "www"
     # ---
     if login_done[1] == lang:
         return ""
     # ---
-    api_urle = f"https://{lang}.wikipedia.org/w/api.php"
+    api_urle = "https://www.mdwiki.org/w/api.php"
     # ---
     Url_To_login[1] = api_urle
     # ---
     session[1] = requests.Session()
     # ---
-    # if api_urle != session["url"]: print_s( "himoBOT3.py: log to %s. user:%s" % (api_urle , username)  )
+    # if api_urle != session["url"]: print_s( "himoBOT3.py: login to %s. user:%s" % (api_urle , username)  )
     # ---
     session["url"] = api_urle
-    session["family"] = "wikipedia"
+    session["family"] = "mdwiki"
     session["lang"] = lang
     # ---
     # get login token
@@ -90,8 +72,8 @@ def log(lang):
         data={
             "format": "json",
             "action": "login",
-            "lgname": lgname_enwiki,
-            "lgpassword": lgpass_enwiki,
+            "lgname": username,
+            "lgpassword": password,
             "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
         },
         timeout=10,
@@ -102,7 +84,7 @@ def log(lang):
         print_s(r2.json()["login"]["reason"])
         # raise RuntimeError(r2.json()['login']['reason'])
     else:
-        print_s(f"wpref.py login Success to {lang}.wikipedia.org")
+        print_s(f"wpref.py login Success to {lang}.mdwiki.org")
         login_done[1] = lang
     # ---
     # if r2.json()['login']['result'] != 'Success': print(r2.json()['login']['reason'])
@@ -127,9 +109,9 @@ def Gettoken():
     return session["token"]
 
 
-def submitAPI(params, lang="", Type="post"):
+def submitAPI(params, lang="www", Type="post"):
     # ---
-    log(lang)
+    login(lang)
     # ---
     json1 = {}
     # ---
@@ -187,6 +169,19 @@ def get_revisions(title, lang=""):
             revisions.extend(_revisions)
     # ---
     return revisions
+
+
+def GetPageText2(title):
+    # ---
+    url = "https://mdwiki.org/wiki/" + title + "?action=raw"
+    # ---
+    try:
+        r = requests.get(url, timeout=5)
+        # r.raise_for_status()
+        return r.text
+    except Exception as e:
+        print_s(f"GetPageText2 Error {e}")
+        return ""
 
 
 def GetPageText(title, lang="", Print=True):
@@ -279,9 +274,5 @@ def page_put(oldtext, NewText, summary, title, lang):
     # ---
     else:
         print_s(r4.text)
-    # ---
-    if "savetofile" in sys.argv:
-        with open(f"{str(Dir)}/wpref_1.txt", "w", encoding="utf-8") as ggg:
-            ggg.write(NewText)
     # ---
     return False

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """
 python3 core8/pwb.py newupdater/medask -page:Haemophilus_influenzae
 python3 core8/pwb.py newupdater/medask -page:Crohn's_disease
@@ -32,17 +32,13 @@ from newapi.mdwiki_page import NEW_API
 # ---
 api_new = NEW_API('www', family='mdwiki')
 api_new.Login_to_wiki()
-# pages   = api_new.Find_pages_exists_or_not(liste)
-# pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
-
-
-def work_on_title(title, returntext=False, text_O=""):
+def work_on_title(title, returntext=False):
     # ---
     med.login()
     # ---
     title = urllib.parse.unquote(title)
     # ---
-    text, new_text = med.get_new_text(title, text=text_O)
+    text, new_text = med.get_new_text(title)
     # ---
     if text == "" or new_text == "":
         printe.output("<<red>> notext")
