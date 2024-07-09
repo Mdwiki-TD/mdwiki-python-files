@@ -18,6 +18,7 @@ from newupdater import user_account_new
 
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
+user_agent = user_account_new.user_agent
 
 session = {}
 session[1] = requests.Session()
@@ -35,6 +36,7 @@ missingtitles = {}
 
 session["url"] = "https://www.mdwiki.org/w/api.php"
 session["family"] = "mdwiki"
+
 
 def login(lang):
     # ---
@@ -67,6 +69,7 @@ def login(lang):
                 "type": "login",
             },
             timeout=10,
+            headers={"User-Agent": user_agent},
         )
         r1.raise_for_status()
     except Exception as e:
@@ -84,6 +87,7 @@ def login(lang):
                 "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
             },
             timeout=10,
+            headers={"User-Agent": user_agent},
         )
     except Exception as e:
         print(f"login to {lang}.mdwiki.org Error {e}")
@@ -111,6 +115,7 @@ def login(lang):
                 "meta": "tokens",
             },
             timeout=10,
+            headers={"User-Agent": user_agent},
         )
     except Exception as e:
         print(f"login to {lang}.mdwiki.org Error {e}")
@@ -136,9 +141,9 @@ def submitAPI(params, Type="post", add_token=False):
     # ---
     try:
         if Type == "post":
-            r4 = session[1].post(session["url"], data=params, timeout=10)
+            r4 = session[1].post(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
         else:
-            r4 = session[1].get(session["url"], data=params, timeout=10)
+            r4 = session[1].get(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
         # ---
         r4_text = r4.text
     except Exception as e:
@@ -287,7 +292,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         # "minor": minor,
         # "notminor": 1,
         "bot": 1,
-        "nocreate": 1
+        "nocreate": 1,
     }
     # ---
     json1 = submitAPI(pparams, add_token=True)
@@ -295,7 +300,7 @@ def page_put(oldtext, NewText, summary, title, lang):
     if not json1:
         return ""
     # ---
-    if 'Success' in str(json1):
+    if "Success" in str(json1):
         print_s(f"<<lightgreen>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
         return True
     # ---

@@ -27,7 +27,6 @@ from pymysql.converters import escape_string
 import pkg_resources
 import pymysql
 import traceback
-import configparser
 import pywikibot
 # ---
 from newapi import printe

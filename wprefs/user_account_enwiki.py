@@ -3,6 +3,7 @@
 from wprefs import user_account_enwiki
 lgname_enwiki = user_account_enwiki.lgname_enwiki
 lgpass_enwiki = user_account_enwiki.lgpass_enwiki
+user_agent    = user_account_enwiki.user_agent
 # ---
 """
 
@@ -21,3 +22,4 @@ config.read(f"{dir2}/confs/user.ini")
 
 lgname_enwiki = config["DEFAULT"]["lgname_enwiki"]
 lgpass_enwiki = config["DEFAULT"]["lgpass_enwiki"]
+user_agent = config["DEFAULT"]["user_agent"]

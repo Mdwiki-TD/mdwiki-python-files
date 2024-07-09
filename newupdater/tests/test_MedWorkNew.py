@@ -1,12 +1,12 @@
 import os
-from MedWorkNew import *
-
+import pywikibot
+from MedWorkNew import work_on_text
 from pathlib import Path
 
 def test():
     # ---
     # python3 pwb.py newupdater/MedWorkNew
-    import pywikibot
+    
     Dir = Path(__file__).parent
     # ---
     with open(os.path.join(Dir, "bots/resources.txt"), "r", encoding="utf-8") as f:
