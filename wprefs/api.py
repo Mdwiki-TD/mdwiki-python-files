@@ -2,15 +2,10 @@
 """
 from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 import json
-
-import os
 import sys
 import requests
+from pathlib import Path
 
 # ---
 try:
@@ -18,24 +13,18 @@ try:
 except ImportError:
     pywikibot = None
 # ---
-pathse = [
-    "/data/project/mdwiki/pybot/md_core/",
-    "/data/project/medwiki/pybot/md_core/",
-    "/data/project/mdwiki/pybot/",
-    "/data/project/medwiki/pybot/",
-]
+Dir = Path(__file__).parent.parent
 # ---
-for path in pathse:
-    sys.path.append(path)
+sys.path.append(Dir)
 # ---
 from wprefs.helps import print_s
-# ---
-from mdpy.bots import user_account_new
-lgname_enwiki   = user_account_new.lgname_enwiki
-lgpass_enwiki   = user_account_new.lgpass_enwiki
-# ---
-from pathlib import Path
 
+# ---
+from wprefs import user_account_enwiki
+
+lgname_enwiki = user_account_enwiki.lgname_enwiki
+lgpass_enwiki = user_account_enwiki.lgpass_enwiki
+# ---
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
@@ -162,7 +151,16 @@ def submitAPI(params, lang="", Type="post"):
 
 
 def get_revisions(title, lang=""):
-    params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "formatversion": "2", "rvprop": "comment|user|timestamp", "rvdir": "newer", "rvlimit": "max"}
+    params = {
+        "action": "query",
+        "format": "json",
+        "prop": "revisions",
+        "titles": title,
+        "formatversion": "2",
+        "rvprop": "comment|user|timestamp",
+        "rvdir": "newer",
+        "rvlimit": "max",
+    }
     # ---
     rvcontinue = "x"
     # ---

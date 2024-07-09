@@ -33,6 +33,8 @@ ask_a = {1: False}
 # ---
 missingtitles = {}
 
+session["url"] = "https://www.mdwiki.org/w/api.php"
+session["family"] = "mdwiki"
 
 def login(lang):
     # ---
@@ -40,7 +42,7 @@ def login(lang):
         lang = "www"
     # ---
     if login_done[1] == lang:
-        return ""
+        return "done"
     # ---
     api_urle = "https://www.mdwiki.org/w/api.php"
     # ---
@@ -55,50 +57,64 @@ def login(lang):
     session["lang"] = lang
     # ---
     # get login token
-    r1 = session[1].get(
-        api_urle,
-        params={
-            "format": "json",
-            "action": "query",
-            "meta": "tokens",
-            "type": "login",
-        },
-        timeout=10,
-    )
-    r1.raise_for_status()
+    try:
+        r1 = session[1].get(
+            api_urle,
+            params={
+                "format": "json",
+                "action": "query",
+                "meta": "tokens",
+                "type": "login",
+            },
+            timeout=10,
+        )
+        r1.raise_for_status()
+    except Exception as e:
+        print(f"login to {lang}.mdwiki.org Error {e}")
+        return False
     # ---
-    r2 = session[1].post(
-        api_urle,
-        data={
-            "format": "json",
-            "action": "login",
-            "lgname": username,
-            "lgpassword": password,
-            "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
-        },
-        timeout=10,
-    )
+    try:
+        r2 = session[1].post(
+            api_urle,
+            data={
+                "format": "json",
+                "action": "login",
+                "lgname": username,
+                "lgpassword": password,
+                "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
+            },
+            timeout=10,
+        )
+    except Exception as e:
+        print(f"login to {lang}.mdwiki.org Error {e}")
+        return False
     # ---
     print_s(r2)
     if r2.json()["login"]["result"] != "Success":
         print_s(r2.json()["login"]["reason"])
         # raise RuntimeError(r2.json()['login']['reason'])
+        return False
     else:
         print_s(f"wpref.py login Success to {lang}.mdwiki.org")
         login_done[1] = lang
+
     # ---
     # if r2.json()['login']['result'] != 'Success': print(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
-    r3 = session[1].get(
-        api_urle,
-        params={
-            "format": "json",
-            "action": "query",
-            "meta": "tokens",
-        },
-        timeout=10,
-    )
+    try:
+        r3 = session[1].get(
+            api_urle,
+            params={
+                "format": "json",
+                "action": "query",
+                "meta": "tokens",
+            },
+            timeout=10,
+        )
+    except Exception as e:
+        print(f"login to {lang}.mdwiki.org Error {e}")
+        return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
     # ---
@@ -109,13 +125,11 @@ def Gettoken():
     return session["token"]
 
 
-def submitAPI(params, lang="www", Type="post"):
-    # ---
-    login(lang)
+def submitAPI(params, Type="post", add_token=False):
     # ---
     json1 = {}
     # ---
-    if "token" in params and params["token"] == "":
+    if add_token:
         params["token"] = session["token"]
     # ---
     r4_text = ""
@@ -128,15 +142,14 @@ def submitAPI(params, lang="www", Type="post"):
         # ---
         r4_text = r4.text
     except Exception as e:
-        print_s(f"submitAPI r4 Error {e}")
+        print(f"submitAPI Error {e}")
         return json1
     # ---
     if r4_text != "":
         try:
             json1 = json.loads(r4_text)
         except Exception as e:
-            print_s(f"submitAPI Error {e}")
-            # print_s(r4_text)
+            print(f"submitAPI Error {e}")
             print_s(params)
             return json1
     # ---
@@ -144,7 +157,16 @@ def submitAPI(params, lang="www", Type="post"):
 
 
 def get_revisions(title, lang=""):
-    params = {"action": "query", "format": "json", "prop": "revisions", "titles": title, "formatversion": "2", "rvprop": "comment|user|timestamp", "rvdir": "newer", "rvlimit": "max"}
+    params = {
+        "action": "query",
+        "format": "json",
+        "prop": "revisions",
+        "titles": title,
+        "formatversion": "2",
+        "rvprop": "comment|user|timestamp",
+        "rvdir": "newer",
+        "rvlimit": "max",
+    }
     # ---
     rvcontinue = "x"
     # ---
@@ -155,7 +177,7 @@ def get_revisions(title, lang=""):
         if rvcontinue != "x":
             params["rvcontinue"] = rvcontinue
         # ---
-        json1 = submitAPI(params, lang=lang)
+        json1 = submitAPI(params, Type="get")
         # ---
         if not json1 or not isinstance(json1, dict):
             return ""
@@ -197,7 +219,7 @@ def GetPageText(title, lang="", Print=True):
         # "normalize": 1,
     }
     # ---
-    json1 = submitAPI(params, lang=lang)
+    json1 = submitAPI(params, Type="get")
     # ---
     if not json1 or not isinstance(json1, dict):
         if Print:
@@ -234,6 +256,9 @@ def GetPageText(title, lang="", Print=True):
 
 def page_put(oldtext, NewText, summary, title, lang):
     # ---
+    if not login(lang):
+        return {}
+    # ---
     if "ask" in sys.argv and not ask_a[1]:
         # ---
         if pywikibot:
@@ -262,17 +287,19 @@ def page_put(oldtext, NewText, summary, title, lang):
         # "minor": minor,
         # "notminor": 1,
         "bot": 1,
-        "nocreate": 1,
-        "token": session["token"],
+        "nocreate": 1
     }
     # ---
-    r4 = session[1].post(session["url"], data=pparams)
+    json1 = submitAPI(pparams, add_token=True)
     # ---
-    if "Success" in r4.text:
+    if not json1:
+        return ""
+    # ---
+    if 'Success' in str(json1):
         print_s(f"<<lightgreen>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
         return True
     # ---
     else:
-        print_s(r4.text)
+        print_s(json1)
     # ---
     return False

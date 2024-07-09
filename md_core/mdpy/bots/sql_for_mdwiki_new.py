@@ -45,12 +45,10 @@ if config.db_connect_file is None:
 else:
     credentials = {"read_default_file": config.db_connect_file}
     # read default file
-    confg = configparser.ConfigParser()
-    confg.read(config.db_connect_file)
-    if confg:
-        kk = list(confg.keys())[0]
-        if kk and "user" in confg[kk]:
-            db_username = confg[kk]["user"]
+    if dir2.find("medwiki") != -1:
+        db_username = "s55992"
+    else:
+        db_username = "s54732"
 # ---
 main_args = {
     "host": "tools.db.svc.wikimedia.cloud",

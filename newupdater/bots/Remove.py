@@ -46,5 +46,4 @@ def portal_remove(text):
 
 
 if __name__ == "__main__":
-    printn_t[1] = True
     remove_cite_web("temptext", {}, "", "")
