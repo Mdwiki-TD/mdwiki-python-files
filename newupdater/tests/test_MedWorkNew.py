@@ -1,3 +1,4 @@
+import os
 from MedWorkNew import *
 
 from pathlib import Path

@@ -11,6 +11,9 @@ dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 dir3 = dir2 + "/pybot"
 sys.path.append(dir3)
 # --
+if "dir3" in sys.argv:
+    print("dir3: ", dir3)
+# --
 from newupdater.helps import ec_de_code
 from newupdater.MedWorkNew import work_on_text
 from newupdater.mdapi import GetPageText2, GetPageText, page_put
@@ -18,10 +21,10 @@ from newupdater.mdapi import GetPageText2, GetPageText, page_put
 
 def get_new_text(title):
     # ---
-    text = GetPageText2(title)
+    # text = GetPageText2(title)
     # ---
-    if not text:
-        text = GetPageText(title)
+    # if not text:
+    text = GetPageText(title)
     # ---
     newtext = text
     # ---
@@ -29,6 +32,25 @@ def get_new_text(title):
         newtext = work_on_text(title, newtext)
     # ---
     return text, newtext
+
+
+def save_cash(title, new_text):
+    # ---
+    title2 = title
+    title2 = title2.replace(":", "-").replace("/", "-").replace(" ", "_")
+    # ---
+    filename = f"{dir2}/public_html/updatercash/{title2}_1.txt"
+    # ---
+    try:
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(new_text)
+    except Exception:
+        filename = f"{dir2}/public_html/updatercash/title2.txt"
+        # ---
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(new_text)
+    # ---
+    return filename
 
 
 def work_on_title(title):
@@ -40,31 +62,26 @@ def work_on_title(title):
     if text.strip() == "" or new_text.strip() == "":
         print("notext")
         return
-    elif text == new_text:
+    # ---
+    if text == new_text:
         print("no changes")
         return
-    elif not new_text:
+    # ---
+    if not new_text:
         print("notext")
         return
-    elif "save" in sys.argv:
-        return page_put(text, new_text, "", title, "")
     # ---
-    title2 = title.replace(" ", "_")
-    title2 = title2.replace(":", "-").replace("/", "-")
+    if "save" in sys.argv:
+        a = page_put(text, new_text, "", title, "")
+        if a:
+            print("save ok")
+            return ""
     # ---
-    try:
-        filename = f"{dir2}/public_html/updatercash/{title2}_1.txt"
-        # ---
-        open(filename, "w", encoding="utf-8").write(new_text)
-        # ---
-        print(filename)
-        # ---
-    except Exception:
-        filename = f"{dir2}/public_html/updatercash/title2.txt"
-        # ---
-        open(filename, "w", encoding="utf-8").write(new_text)
-        # ---
-        print(filename)
+    filee = save_cash(title, new_text)
+    # ---
+    print(filee)
+    # ---
+    return ""
 
 
 def main():
@@ -80,9 +97,11 @@ def main():
     # ---
     if title == "":
         print("no page")
-        return
+        return ""
     # ---
     work_on_title(title)
+    # ---
+    return ""
 
 
 if __name__ == "__main__":

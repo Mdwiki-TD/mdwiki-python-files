@@ -6,20 +6,14 @@ import traceback
 import urllib.parse
 
 try:
-    import printe
-except ImportError:
-    printe = None
-try:
     import pywikibot
 except ImportError:
     pywikibot = None
 
 
 def print_s(s):
-    if not printe:
-        return
     if 'returnfile' not in sys.argv:
-        printe.output(s)
+        print(s)
 
 
 def ec_de_code(tt, type1):

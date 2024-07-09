@@ -1,16 +1,14 @@
 #!/usr/bin/python3
 """
+
 from wprefs.wpref_text import fix_page
 # fix_page(text, title)
+
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 import re
-from mdpy.bots import txtlib2
 import wikitextparser as wtp
 from wprefs.helps import print_s
+from wprefs.bots import txtlib2
 
 
 def expend_new(main_temp):
@@ -83,8 +81,8 @@ def Expend_Infobox(text, title, section_0):
     main_temp = {}
     # ---
     if len(tempse_by_u) == 1:
-        for x in tempse_by_u:
-            main_temp = tempse_by_u[x]
+        for x, v in tempse_by_u.items():
+            main_temp = v
     else:
         PP = [[y1, u1] for u1, y1 in tempse.items()]
         PP.sort(reverse=True)
