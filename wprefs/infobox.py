@@ -81,7 +81,7 @@ def Expend_Infobox(text, title, section_0):
     main_temp = {}
     # ---
     if len(tempse_by_u) == 1:
-        for x, v in tempse_by_u.items():
+        for _x, v in tempse_by_u.items():
             main_temp = v
     else:
         PP = [[y1, u1] for u1, y1 in tempse.items()]

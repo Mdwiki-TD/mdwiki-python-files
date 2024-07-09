@@ -24,6 +24,7 @@ from wprefs import user_account_enwiki
 
 lgname_enwiki = user_account_enwiki.lgname_enwiki
 lgpass_enwiki = user_account_enwiki.lgpass_enwiki
+user_agent = user_account_enwiki.user_agent
 # ---
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
@@ -70,7 +71,7 @@ def log(lang):
             "meta": "tokens",
             "type": "login",
         },
-        timeout=10,
+        timeout=10, headers={"User-Agent": user_agent},
     )
     r1.raise_for_status()
     # ---
@@ -84,6 +85,7 @@ def log(lang):
             "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
         },
         timeout=10,
+        headers={"User-Agent": user_agent},
     )
     # ---
     print_s(r2)
@@ -105,6 +107,7 @@ def log(lang):
             "meta": "tokens",
         },
         timeout=10,
+        headers={"User-Agent": user_agent},
     )
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
@@ -129,9 +132,9 @@ def submitAPI(params, lang="", Type="post"):
     # ---
     try:
         if Type == "post":
-            r4 = session[1].post(session["url"], data=params, timeout=10)
+            r4 = session[1].post(session["url"], data=params, timeout=10, headers={"User-Agent": user_agent})
         else:
-            r4 = session[1].get(session["url"], data=params, timeout=10)
+            r4 = session[1].get(session["url"], data=params, timeout=10, headers={"User-Agent": user_agent})
         # ---
         r4_text = r4.text
     except Exception as e:
@@ -269,7 +272,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         "token": session["token"],
     }
     # ---
-    r4 = session[1].post(session["url"], data=pparams)
+    r4 = session[1].post(session["url"], data=pparams, headers={"User-Agent": user_agent})
     # ---
     if "Success" in r4.text:
         print_s(f"<<lightgreen>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")

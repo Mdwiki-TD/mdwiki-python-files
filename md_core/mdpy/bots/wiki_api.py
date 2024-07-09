@@ -37,10 +37,10 @@ from newapi import printe
 from mdpy.bots import user_account_new
 
 # ---
-SS = {"token": ''}
+SS = {"token": ""}
 session = {1: requests.Session(), "url": ""}
 # ---
-Url_To_login = {1: '', 'not': True}
+Url_To_login = {1: "", "not": True}
 # ---
 login_done = {1: False}
 # ---
@@ -49,12 +49,13 @@ login_done = {1: False}
 # ---
 lgname = user_account_new.bot_username  # user_account_new.my_username
 lgpassword = user_account_new.bot_password  # user_account_new.my_password      #user_account_new.mdwiki_pass
+user_agent = user_account_new.user_agent
 
 
 def log(api_urle):
     # ---
-    if login_done[1] == api_urle or api_urle == '':
-        return ''
+    if login_done[1] == api_urle or api_urle == "":
+        return ""
     # ---
     # api_urle = 'https://' + 'www.wikidata.org/w/api.php'
     Url_To_login[1] = api_urle
@@ -69,11 +70,13 @@ def log(api_urle):
     r1 = session[1].get(
         api_urle,
         params={
-            'format': 'json',
-            'action': 'query',
-            'meta': 'tokens',
-            'type': 'login',
-        }, timeout=10
+            "format": "json",
+            "action": "query",
+            "meta": "tokens",
+            "type": "login",
+        },
+        headers={"User-Agent": user_agent},
+        timeout=10,
     )
     r1.raise_for_status()
     # log in
@@ -82,19 +85,21 @@ def log(api_urle):
     r2 = session[1].post(
         api_urle,
         data={
-            'format': 'json',
-            'action': 'login',
-            'lgname': lgname,
-            'lgpassword': lgpassword,
-            'lgtoken': r1.json()['query']['tokens']['logintoken'],
-        }, timeout=10
+            "format": "json",
+            "action": "login",
+            "lgname": lgname,
+            "lgpassword": lgpassword,
+            "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
+        },
+        headers={"User-Agent": user_agent},
+        timeout=10,
     )
     # ---
-    if r2.json()['login']['result'] != 'Success':
-        pywikibot.output('Traceback (most recent call last):')
-        pywikibot.output(f'<<lightred>> {__file__} log():')
-        warn(f'Exception:{str(r2.json())}', UserWarning)
-        pywikibot.output('CRITICAL:')
+    if r2.json()["login"]["result"] != "Success":
+        pywikibot.output("Traceback (most recent call last):")
+        pywikibot.output(f"<<lightred>> {__file__} log():")
+        warn(f"Exception:{str(r2.json())}", UserWarning)
+        pywikibot.output("CRITICAL:")
     else:
         pywikibot.output(f"<<lightgreen>> mdwiki/mdpy/wiki_api.py: log to {api_urle} user:{lgname} Success... ")
     # ---
@@ -102,13 +107,15 @@ def log(api_urle):
     r3 = session[1].get(
         api_urle,
         params={
-            'format': 'json',
-            'action': 'query',
-            'meta': 'tokens',
-        }, timeout=10
+            "format": "json",
+            "action": "query",
+            "meta": "tokens",
+        },
+        headers={"User-Agent": user_agent},
+        timeout=10,
     )
     # ---
-    token = r3.json()['query']['tokens']['csrftoken']
+    token = r3.json()["query"]["tokens"]["csrftoken"]
     # ---
     login_done[1] = api_urle
     # ---
@@ -141,7 +148,7 @@ def split_list_to_numbers(lise, numbs=100):
     return titles
 
 
-def submitAPI_token(params, apiurl='', returnjson=False):
+def submitAPI_token(params, apiurl="", returnjson=False):
     # ---
     log(apiurl)
     # ---
@@ -150,7 +157,7 @@ def submitAPI_token(params, apiurl='', returnjson=False):
     params["token"] = session["token"]
     params["format"] = "json"
     # ---
-    r4 = session[1].post(session["url"], data=params, timeout=10)
+    r4 = session[1].post(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
     # ---
     if returnjson:
         return r4
@@ -160,21 +167,21 @@ def submitAPI_token(params, apiurl='', returnjson=False):
     try:
         json1 = json.loads(r4.text)
     except Exception:
-        pywikibot.output('Traceback (most recent call last):')
+        pywikibot.output("Traceback (most recent call last):")
         pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
+        pywikibot.output("CRITICAL:")
         return {}
     # ---
     # ---
     return json1
 
 
-def submitAPI(params, apiurl='', returnjson=False):
+def submitAPI(params, apiurl="", returnjson=False):
     # ---
     log(apiurl)
     # ---
     encode_params = apit.encode_url(params)
-    url = f'{apiurl}?{encode_params}'
+    url = f"{apiurl}?{encode_params}"
     # ---
     if "printurl" in sys.argv:
         url2 = url.replace("&format=json", "").replace("?format=json", "?")
@@ -184,7 +191,7 @@ def submitAPI(params, apiurl='', returnjson=False):
     # ---
     params["format"] = "json"
     # ---
-    r4 = session[1].post(session["url"], data=params, timeout=10)
+    r4 = session[1].post(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
     # ---
     if returnjson:
         return r4
@@ -194,20 +201,20 @@ def submitAPI(params, apiurl='', returnjson=False):
     try:
         json1 = json.loads(r4.text)
     except Exception:
-        pywikibot.output('Traceback (most recent call last):')
+        pywikibot.output("Traceback (most recent call last):")
         pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
+        pywikibot.output("CRITICAL:")
         return {}
     # ---
     return json1
 
 
-def Find_pages_exists_or_not(liste, apiurl=''):
+def Find_pages_exists_or_not(liste, apiurl=""):
     # ---
     params = {
         "action": "query",
         "format": "json",
-        "titles": '|'.join(liste),
+        "titles": "|".join(liste),
         # "redirects": 0,
         # "prop": "templates|langlinks",
         "utf8": 1,
@@ -238,22 +245,22 @@ def get_langlinks(title, lang):
         "lllimit": "max",  # langlinks
         "formatversion": "2",
     }
-    ta = submitAPI(params, apiurl=f'https://{lang}.wikipedia.org/w/api.php')
+    ta = submitAPI(params, apiurl=f"https://{lang}.wikipedia.org/w/api.php")
     # ---
     if not ta:
         return {}
     # ---
-    langlinks = {ta["lang"]: ta.get("*") or ta.get("title") for ta in ta.get('langlinks', [])}
+    langlinks = {ta["lang"]: ta.get("*") or ta.get("title") for ta in ta.get("langlinks", [])}
     # ---
     return langlinks
 
 
-def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
+def Get_page_qids(sitecode, titles, apiurl="", normalize=0):
     # ---
     if sitecode.endswith("wiki"):
         sitecode = sitecode[:-4]
     # ---
-    if apiurl == '' and sitecode != "":
+    if apiurl == "" and sitecode != "":
         apiurl = f"https://{sitecode}.wikipedia.org/w/api.php"
     # ---
     if isinstance(titles, str):
@@ -279,29 +286,29 @@ def Get_page_qids(sitecode, titles, apiurl='', normalize=0):
     for i in range(0, len(titles), 50):
         # ---
         # group = dict(list(liste.items())[i:i+50])
-        group = titles[i: i + 50]
+        group = titles[i : i + 50]
         # ---
         params["titles"] = "|".join(group)
         # ---
         json1 = submitAPI(params, apiurl=apiurl)
         # ---
         if json1:
-            js_query = json1.get('query', {})
+            js_query = json1.get("query", {})
             # ---
-            for red in js_query.get('redirects', {}):
+            for red in js_query.get("redirects", {}):
                 # redirects_table[ red["from"] ] = red["to"]
-                Main_table[red["from"]] = {'isRedirectPage': True, 'missing': True, 'from': red["from"], 'to': red["to"], 'title': red["from"], 'ns': '', 'q': ''}
+                Main_table[red["from"]] = {"isRedirectPage": True, "missing": True, "from": red["from"], "to": red["to"], "title": red["from"], "ns": "", "q": ""}
             # ---
-            for id in js_query.get('pages', {}):
-                kk = js_query['pages'][id]
+            for id in js_query.get("pages", {}):
+                kk = js_query["pages"][id]
                 title = ""
                 if "title" in kk:
                     title = kk["title"]
                     Main_table[title] = {}
                     if "missing" in kk:
-                        Main_table[title]['missing'] = True
+                        Main_table[title]["missing"] = True
                     if "pageprops" in kk and kk["pageprops"].get("wikibase_item", "") != "":
-                        Main_table[title]['q'] = kk["pageprops"].get("wikibase_item", "")
+                        Main_table[title]["q"] = kk["pageprops"].get("wikibase_item", "")
     # ---
     return Main_table
 
@@ -334,14 +341,14 @@ def Getpageassessments_from_wikipedia(titles, site="en", find_redirects=False, p
     langcode = "ar"
     # if pasubprojects == 1 : params["pasubprojects"] = 1
     # ---
-    json1 = submitAPI(params, apiurl=f'https://{site}.wikipedia.org/w/api.php')
+    json1 = submitAPI(params, apiurl=f"https://{site}.wikipedia.org/w/api.php")
     # ---
     if not json1:
         return Tables
     # ---
     query = json1.get("query", {})
     # ---
-    for xo, tayo in query.get('pages', {}).items():
+    for xo, tayo in query.get("pages", {}).items():
         # ---
         if "title" in tayo:
             titley = tayo["title"]
@@ -350,7 +357,7 @@ def Getpageassessments_from_wikipedia(titles, site="en", find_redirects=False, p
         # ---
         if "missing" in tayo:
             printe.output(f"<<lightred>> page:{titley} is missing")
-            Tables[titley] = {'missing': True}
+            Tables[titley] = {"missing": True}
     # ---
     redirects = query.get("redirects", [])
     if find_redirects and redirects:
@@ -379,12 +386,12 @@ def GetPageText(title, lang, redirects=False):
     if redirects:
         params["redirects"] = 1
     # ---
-    text = ''
-    json1 = submitAPI(params, apiurl=f'https://{lang}.wikipedia.org/w/api.php')
+    text = ""
+    json1 = submitAPI(params, apiurl=f"https://{lang}.wikipedia.org/w/api.php")
     if json1:
-        text = json1.get('parse', {}).get('wikitext', {}).get('*', '')
+        text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
     else:
-        printe.output('no parse in json1:')
+        printe.output("no parse in json1:")
         printe.output(json1)
     # ---
     if not text:
@@ -393,7 +400,7 @@ def GetPageText(title, lang, redirects=False):
     return text
 
 
-def _get_page_views_(titles, site='en', days=30):
+def _get_page_views_(titles, site="en", days=30):
     # ---
     if not site.strip():
         site = "en"
@@ -411,7 +418,7 @@ def _get_page_views_(titles, site='en', days=30):
         "pvipdays": str(days),
     }
     # ---
-    maxn = 500 if '500' in sys.argv else 50
+    maxn = 500 if "500" in sys.argv else 50
     # ---
     List = split_list_to_numbers(titles, numbs=maxn)
     # ---
@@ -424,44 +431,44 @@ def _get_page_views_(titles, site='en', days=30):
         if len(titles_1) < 1:
             continue
         # ---
-        printe.output(f'<<lightgreen>> views:{len(Main_table.keys())}, done:{done} from {len(titles)} titles.')
+        printe.output(f"<<lightgreen>> views:{len(Main_table.keys())}, done:{done} from {len(titles)} titles.")
         # ---
-        params['titles'] = "|".join(titles_1)
+        params["titles"] = "|".join(titles_1)
         # ---
-        json1 = submitAPI(params, apiurl=f'https://{site}.wikipedia.org/w/api.php')
+        json1 = submitAPI(params, apiurl=f"https://{site}.wikipedia.org/w/api.php")
         # ---
         if not json1:
             continue
         # ---
-        js = json1.get('query', {})
-        redirects = {red["from"]: red["to"] for red in js.get('redirects', [])}
+        js = json1.get("query", {})
+        redirects = {red["from"]: red["to"] for red in js.get("redirects", [])}
         # ---
-        for key in js.get('pages', []):
+        for key in js.get("pages", []):
             # ---
             kk = key
             # ---
-            if isinstance(js.get('pages'), dict):
-                kk = js['pages'][kk]
+            if isinstance(js.get("pages"), dict):
+                kk = js["pages"][kk]
             # ---
             # {'pageid': 46133, 'ns': 0, 'title': 'Cardiomyopathy', 'pageviews': {'2022-11-14': 3076, '2022-11-15': 2114, '2022-11-16': 2895, '2022-11-17': 2616, '2022-11-18': 2247, '2022-11-19': 2303, '2022-11-20': 2152, '2022-11-21': 1752, '2022-11-22': 1617, '2022-11-23': 1595, '2022-11-24': 1520, '2022-11-25': 1534, '2022-11-26': 1611, '2022-11-27': 1702, '2022-11-28': 1457, '2022-11-29': 1362, '2022-11-30': 1517, '2022-12-01': 1689, '2022-12-02': 1510, '2022-12-03': 1588, '2022-12-04': 1678, '2022-12-05': 1449, '2022-12-06': 1578, '2022-12-07': 1411, '2022-12-08': 1495, '2022-12-09': 1732, '2022-12-10': 1553, '2022-12-11': 1702, '2022-12-12': 1472, '2022-12-13': 1333}}
             # ---
-            title = kk['title']
+            title = kk["title"]
             # ---
             title2 = redirects.get(title)
             # ---
             if title2:
-                printe.output(f'page: {title} redirect to {title2}')
+                printe.output(f"page: {title} redirect to {title2}")
                 title = title2
             # ---
             if "missing" in kk:
                 Main_table[title] = 0
                 continue
             # ---
-            if 'pageviews' not in kk:
+            if "pageviews" not in kk:
                 no_pv.append(title)
                 continue
             # ---
-            pageviews = kk.get('pageviews', {})
+            pageviews = kk.get("pageviews", {})
             all_views = sum(views for date, views in pageviews.items() if isinstance(views, int))
             # ---
             Main_table[title] = all_views
@@ -470,12 +477,12 @@ def _get_page_views_(titles, site='en', days=30):
     # ---
     len_no_pv = len(no_pv)
     # ---
-    printe.output(f'get_page_views: no_pv:{len_no_pv}')
+    printe.output(f"get_page_views: no_pv:{len_no_pv}")
     # ---
     return Main_table, no_pv
 
 
-def get_page_views(titles, site='en', days=30):
+def get_page_views(titles, site="en", days=30):
     # ---
     numb = 0
     # ---
@@ -491,7 +498,7 @@ def get_page_views(titles, site='en', days=30):
     return views
 
 
-def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20300101', printurl=False, printstr=False, Type='daily'):
+def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20300101", printurl=False, printstr=False, Type="daily"):
     # ---
     numbers = {}
     # _Type = Type if Type in ["daily", "monthly"] else 'monthly'
@@ -504,9 +511,9 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         # ---
         # print when numb % 100 == 0
         if numb % 100 == 0:
-            print(f'get_views_with_rest_v1: {numb}/{len(titles)}')
+            print(f"get_views_with_rest_v1: {numb}/{len(titles)}")
         # ---
-        if 'limit5' in sys.argv and numb > 5:
+        if "limit5" in sys.argv and numb > 5:
             break
         # ---
         pa = urllib.parse.quote(page)
@@ -517,8 +524,8 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
             printe.output(f"printboturl:\t\t{url}")
         # ---
         if printstr:
-            printe.output('-------------------')
-            printe.output(f'a {numb}/{len(titles)} page:{page}')
+            printe.output("-------------------")
+            printe.output(f"a {numb}/{len(titles)} page:{page}")
         # ---
         req = http.fetch(url)
         # req = requests.Session().get( url )
@@ -526,17 +533,17 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         st = req.status_code
         # ---
         if 500 <= st < 600 or st == 404:
-            printe.output(f'received {st} status from:')
+            printe.output(f"received {st} status from:")
             printe.output(url)
         # ---
         data = {}
         try:
             data = json.loads(req.text)
         except Exception:
-            pywikibot.output('Traceback (most recent call last):')
+            pywikibot.output("Traceback (most recent call last):")
             pywikibot.output(req.text)
             pywikibot.output(traceback.format_exc())
-            pywikibot.output('CRITICAL:')
+            pywikibot.output("CRITICAL:")
         # ---
         if not data:
             pywikibot.output(url)
@@ -547,7 +554,7 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
         # ---
         tabl = {}
         # ---
-        for x in data.get('items', []):
+        for x in data.get("items", []):
             # ---
             number_all += x["views"]
             # ---
@@ -555,9 +562,9 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
             year = str(month)[:4]
             # ---
             if year not in tabl:
-                tabl[year] = {'all': 0}
+                tabl[year] = {"all": 0}
             # ---
-            tabl[year]['all'] += x["views"]
+            tabl[year]["all"] += x["views"]
             # ---
             if month not in tabl[year]:
                 tabl[year][month] = 0
@@ -566,12 +573,12 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
             # ---
         # ---
         if number_all > 0:
-            numbers[page] = {'all': number_all}
+            numbers[page] = {"all": number_all}
             # ---
-            txt = f'all_views:{number_all}'
+            txt = f"all_views:{number_all}"
             # ---
             for year, y_tab in tabl.items():
-                if y_tab.get('all', 0) > 0:
+                if y_tab.get("all", 0) > 0:
                     numbers[page][year] = y_tab
                     txt += f', {year}: {y_tab["all"]}'
             # ---
@@ -583,9 +590,9 @@ def get_views_with_rest_v1(langcode, titles, date_start='20150701', date_end='20
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # get_views_with_rest_v1('ar', ['yemen', 'صنعاء'], date_start='20040101', date_end='20300101')
-    get_views_with_rest_v1('ar', ['yemen', 'صنعاء'], date_start='20040101', date_end='20300101')
-    ux = get_page_views(['yemen', 'صنعاء'], site='ar', days=30)
+    get_views_with_rest_v1("ar", ["yemen", "صنعاء"], date_start="20040101", date_end="20300101")
+    ux = get_page_views(["yemen", "صنعاء"], site="ar", days=30)
     printe.output(ux)
 # ---

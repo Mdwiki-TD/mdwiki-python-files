@@ -54,7 +54,6 @@ def get_views_last_30_days(langcode, titles):
             printe.output(f"printboturl:\t\t{url}")
         # ---
         req = http.fetch(url)
-        # req = requests.Session().get( url )
         # ---
         st = req.status_code
         # ---

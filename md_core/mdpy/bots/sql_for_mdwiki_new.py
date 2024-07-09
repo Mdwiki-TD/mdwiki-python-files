@@ -17,7 +17,6 @@ from mdpy.bots import sql_for_mdwiki
 
 """
 import sys
-import configparser
 import pymysql
 
 # ---

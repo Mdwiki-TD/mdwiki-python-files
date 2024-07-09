@@ -3,6 +3,8 @@
 from newupdater import user_account_new
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
+user_agent = user_account_new.user_agent
+
 # ---
 '''
 
@@ -24,3 +26,5 @@ config.read(f'{dir2}/confs/user.ini')
 my_username = config['DEFAULT']['my_username']
 
 mdwiki_pass = config['DEFAULT']['mdwiki_pass']
+
+user_agent = config["DEFAULT"]["user_agent"]

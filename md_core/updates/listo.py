@@ -27,20 +27,8 @@ import re
 # menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
 import sys
 
-# ---
-
-# ---
-
-# ---
-# ---
-# ---
 from mdpy.bots import mdwiki_api
 
-# ---
-# import requests
-# Session = requests.Session()
-# ---# ---
-# ---
 limit_m = {1: 0}
 # ---
 for arg in sys.argv:
