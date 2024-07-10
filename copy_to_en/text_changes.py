@@ -1,8 +1,9 @@
 """
-python3 core8/pwb.py TDpynew/text_changes
+python3 core8/pwb.py copy_to_en/text_changes
 
 Usage:
-from TDpynew import text_changes
+from copy_to_en import text_changes# text = text_changes.work(text)
+
 """
 import re
 from newapi import printe
@@ -27,8 +28,10 @@ def remove_images(text):
 
     images = {}
     for link in matches:
+        link, v, c = link
+        print(link)
         file_name = link.split("|")[0]
-        new_text = f"{{subst:#ifexist:{file_name}|{link}}}"
+        new_text = "{{" + f"subst:#ifexist:{file_name}|{link}" + "}}"
         text = text.replace(link, new_text)
         images[file_name] = link
 
@@ -57,9 +60,11 @@ def del_temps(text):
 
 def work(text):
     # ---
-    text = remove_images(text)
+    # text = remove_images(text)
     # ---
     text = del_temps(text)
+    # ---
+    text += "\n[[Category:Mdwiki Translation Dashboard articles]]"
     # ---
     return text
 

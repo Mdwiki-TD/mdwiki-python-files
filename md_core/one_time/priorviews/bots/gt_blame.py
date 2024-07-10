@@ -159,7 +159,11 @@ class FindInHistory:
                 self.revisions.append(r)
 
 
-def search_history(title, lang, en="", refname=[], extlinks=[]):
+def search_history(title, lang, en="", refname=None, extlinks=None):
+    if refname is None:
+        refname = []
+    if extlinks is None:
+        extlinks = []
     # ---
     tab = {"lang": lang, "article": title, "needle": ""}
     # ---
