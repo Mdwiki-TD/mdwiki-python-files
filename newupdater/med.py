@@ -16,7 +16,7 @@ if "dir3" in sys.argv:
 # --
 from newupdater.helps import ec_de_code
 from newupdater.MedWorkNew import work_on_text
-from newupdater.mdapi import GetPageText2, GetPageText, page_put
+from newupdater.mdapi import GetPageText2, GetPageText, page_put, login
 
 
 def get_new_text(title):
@@ -72,7 +72,7 @@ def work_on_title(title):
         return
     # ---
     if "save" in sys.argv:
-        a = page_put(text, new_text, "", title, "")
+        a = page_put(text, new_text, "Med updater.", title, "")
         if a:
             print("save ok")
             return ""
@@ -98,6 +98,8 @@ def main():
     if title == "":
         print("no page")
         return ""
+    # ---
+    login("")
     # ---
     work_on_title(title)
     # ---
