@@ -348,7 +348,7 @@ def Getpageassessments_from_wikipedia(titles, site="en", find_redirects=False, p
     # ---
     query = json1.get("query", {})
     # ---
-    for xo, tayo in query.get("pages", {}).items():
+    for _xo, tayo in query.get("pages", {}).items():
         # ---
         if "title" in tayo:
             titley = tayo["title"]

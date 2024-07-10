@@ -193,8 +193,9 @@ def main():
             # ---
             # if value == 'redirectlist.txt' :
             # ---
-            text2 = open(value, "r", "utf8")
-            text = text2.read()
+            with open(value, "r", encoding="utf8") as text2:
+                text = text2.read()
+            
             pages.extend(x.strip() for x in text.split("\n"))
         # ---
         # python red.py -ns:0 search:drug
