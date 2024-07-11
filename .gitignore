@@ -47,3 +47,4 @@ mass/usaid/.env
 md_core/mdpages/findqids.sh
 md_core/mdpages/findqids_1.sh
 md_core/mdpages/findqids.sh
+copy_to_en/x.py
