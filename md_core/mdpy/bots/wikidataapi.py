@@ -96,7 +96,7 @@ def Log_to_wiki(url=""):
         printe.output("wikidataapi.py: Can't log in . ")
         return False
     # ---
-    if r22.json()["login"]["result"] != "Success":
+    if r22.json().get("login", {}).get("result", "") != "Success":
         printe.output(r22.json()["login"]["reason"])
         # raise RuntimeError(r22.json()['login']['reason'])
     else:
