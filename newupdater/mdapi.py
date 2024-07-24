@@ -3,6 +3,7 @@
 from newupdater.api import login, submitAPI, GetPageText, missingtitles, page_put
 """
 import json
+import urllib.parse
 import sys
 import requests
 
@@ -13,7 +14,6 @@ except ImportError:
     pywikibot = None
 # ---
 from newupdater.helps import print_s
-
 from newupdater import user_account_new
 
 username = user_account_new.my_username
@@ -26,7 +26,7 @@ session["url"] = ""
 # ---
 Url_To_login = {1: "", "not": True}
 # ---
-login_done = {1: False}
+login_done = {1: "sssd"}
 # ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
 # ---
@@ -34,11 +34,15 @@ ask_a = {1: False}
 # ---
 missingtitles = {}
 
-session["url"] = "https://www.mdwiki.org/w/api.php"
+session["url"] = "https://mdwiki.org/w/api.php"
 session["family"] = "mdwiki"
 
 
-def login(lang):
+def printx(s):
+    print(s, "</br>")
+
+
+def login(lang=""):
     # ---
     if not lang:
         lang = "www"
@@ -73,7 +77,7 @@ def login(lang):
         )
         r1.raise_for_status()
     except Exception as e:
-        print(f"login to {lang}.mdwiki.org Error {e}")
+        printx(f"login to {lang}.mdwiki.org Error {e}")
         return False
     # ---
     try:
@@ -90,7 +94,7 @@ def login(lang):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        print(f"login to {lang}.mdwiki.org Error {e}")
+        printx(f"login to {lang}.mdwiki.org Error {e}")
         return False
     # ---
     print_s(r2)
@@ -103,7 +107,7 @@ def login(lang):
         login_done[1] = lang
 
     # ---
-    # if r2.json()['login']['result'] != 'Success': print(r2.json()['login']['reason'])
+    # if r2.json()['login']['result'] != 'Success': printx(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
     try:
@@ -118,7 +122,7 @@ def login(lang):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        print(f"login to {lang}.mdwiki.org Error {e}")
+        printx(f"login to {lang}.mdwiki.org Error {e}")
         return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
@@ -132,31 +136,54 @@ def Gettoken():
 
 def submitAPI(params, Type="post", add_token=False):
     # ---
+    login()
+    # ---
     json1 = {}
     # ---
     if add_token:
         params["token"] = session["token"]
     # ---
-    r4_text = ""
-    # ---
     try:
-        if Type == "post":
-            r4 = session[1].post(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
-        else:
-            r4 = session[1].get(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        method = "POST"# if Type == "post" else "GET"
         # ---
-        r4_text = r4.text
+        r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        json1 = r4.json()
+        # ---
     except Exception as e:
-        print(f"submitAPI Error {e}")
+        printx(f"submitAPI Error {e}")
+        printx(params)
         return json1
     # ---
-    if r4_text != "":
-        try:
-            json1 = json.loads(r4_text)
-        except Exception as e:
-            print(f"submitAPI Error {e}")
-            print_s(params)
-            return json1
+    return json1
+
+
+def submitAPI_no_try(params, Type="post", add_token=False):
+    # ---
+    login()
+    # ---
+    json1 = {}
+    # ---
+    if add_token:
+        params["token"] = session["token"]
+    # ---
+    params["format"] = "json"
+    # ---
+    method = "POST"# if Type == "post" else "GET"
+    # ---
+    if "printurl" in sys.argv:
+        no_url = ["lgpassword", "format"]
+        no_remove = ["titles", "title"]
+        pams2 = {k: v[:100] if isinstance(v, str) and len(v) > 100 and k not in no_remove else v for k, v in params.items() if k not in no_url}
+        url_o_print = f"{session['url']}?{urllib.parse.urlencode(pams2)}".replace("&format=json", "")
+        print(url_o_print)
+    # ---
+    r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+    # ---
+    r_text = r4.text
+    # ---
+    print_s(r_text)
+    # ---
+    json1 = r4.json()
     # ---
     return json1
 
@@ -182,7 +209,7 @@ def get_revisions(title, lang=""):
         if rvcontinue != "x":
             params["rvcontinue"] = rvcontinue
         # ---
-        json1 = submitAPI(params, Type="get")
+        json1 = submitAPI(params, Type="post")
         # ---
         if not json1 or not isinstance(json1, dict):
             return ""
@@ -224,7 +251,7 @@ def GetPageText(title, lang="", Print=True):
         # "normalize": 1,
     }
     # ---
-    json1 = submitAPI(params, Type="get")
+    json1 = submitAPI(params, Type="post")
     # ---
     if not json1 or not isinstance(json1, dict):
         if Print:
@@ -308,3 +335,6 @@ def page_put(oldtext, NewText, summary, title, lang):
         print_s(json1)
     # ---
     return False
+
+if __name__ == "__main__":
+    login()

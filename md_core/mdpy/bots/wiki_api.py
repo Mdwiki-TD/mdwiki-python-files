@@ -38,14 +38,15 @@ from mdpy.bots import user_account_new
 
 # ---
 SS = {"token": ""}
-session = {1: requests.Session(), "url": ""}
+session = {
+    1: requests.Session(),
+    "url": "",
+    "token": "",
+}
 # ---
 Url_To_login = {1: "", "not": True}
 # ---
 login_done = {1: False}
-# ---
-# ---
-
 # ---
 lgname = user_account_new.bot_username  # user_account_new.my_username
 lgpassword = user_account_new.bot_password  # user_account_new.my_password      #user_account_new.mdwiki_pass
