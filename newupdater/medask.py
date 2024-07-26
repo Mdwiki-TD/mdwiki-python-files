@@ -26,7 +26,7 @@ sys.path.append(str(Dir))
 # ---
 from newupdater import med
 from newapi import printe
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 from newapi.mdwiki_page import NEW_API
 
 # ---

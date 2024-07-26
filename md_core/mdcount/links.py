@@ -3,9 +3,9 @@ import sys
 import re
 
 # ---
-from mdpy.bots import catdepth2
-from mdpy.bots import mdwiki_api
-from mdpy.bots import sql_for_mdwiki
+from apis import catdepth2
+from apis import mdwiki_api
+from api_sql import sql_for_mdwiki
 from newapi import printe
 
 # ---

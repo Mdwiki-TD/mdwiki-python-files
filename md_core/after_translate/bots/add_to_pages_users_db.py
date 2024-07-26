@@ -14,7 +14,7 @@ from pymysql.converters import escape_string
 
 # ---
 from newapi import printe
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 
 cat_for_pages = {}
 # from after_translate.bots.fixcat import cat_for_pages

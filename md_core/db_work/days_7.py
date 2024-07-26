@@ -7,7 +7,7 @@ python3 core8/pwb.py db_work/days_7
 # (C) Ibrahem Qasim, 2023
 #
 #
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # ---

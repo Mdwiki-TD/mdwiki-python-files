@@ -6,8 +6,8 @@ python3 core8/pwb.py copy_to_en/bot ask
 tfj run copyen --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/bot"
 
 """
-from mdpy.bots import catdepth2
-from mdpy.bots import mdwiki_api
+from apis import catdepth2
+from apis import mdwiki_api
 from newapi.wiki_page import MainPage
 
 from copy_to_en import text_changes  # text = text_changes.work(text)

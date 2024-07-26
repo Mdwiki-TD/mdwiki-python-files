@@ -8,7 +8,7 @@ python3 c8/pwb.py updates/io
 
 """
 
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 import sys
 from pathlib import Path
 

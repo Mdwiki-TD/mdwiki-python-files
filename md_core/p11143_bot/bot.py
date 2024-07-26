@@ -17,11 +17,11 @@ import sys
 import time
 
 # ---
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import sql_qids_others
-from mdpy.bots import wikidataapi
+from api_sql import sql_for_mdwiki
+from api_sql import sql_qids_others
+from apis import wikidataapi
 from newapi import printe
-from mdpy.bots import catdepth2
+from apis import catdepth2
 
 # ---
 sys.argv.append("workhimo")

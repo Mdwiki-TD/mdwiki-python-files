@@ -10,12 +10,12 @@ import json
 import sys
 
 # ---
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import sql_qids_others
+from api_sql import sql_for_mdwiki
+from api_sql import sql_qids_others
 from newapi import printe
-from mdpy.bots import catdepth2
-from mdpy.bots import wiki_api
-from mdpy.bots import mdwiki_api
+from apis import catdepth2
+from apis import wiki_api
+from apis import mdwiki_api
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---

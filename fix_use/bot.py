@@ -11,7 +11,7 @@ import re
 sys.path.append("I:/core/bots/")
 # ---
 from newapi import printe
-from fix_py.write_bot import write  # write(oldtext, text, filepath)
+from fix_use.write_bot import write  # write(oldtext, text, filepath)
 from fix_use.mtab import make_find_rep
 
 path = ""

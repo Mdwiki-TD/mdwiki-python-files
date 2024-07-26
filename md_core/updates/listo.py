@@ -27,7 +27,7 @@ import re
 # menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
 import sys
 
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 
 limit_m = {1: 0}
 # ---

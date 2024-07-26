@@ -11,7 +11,7 @@ from mdpy.bots import make_title_bot
 import urllib.parse
 import re
 
-from mdpy.bots import open_url
+from apis import open_url
 from newapi import printe
 import pywikibot
 

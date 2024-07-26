@@ -44,11 +44,18 @@ ask_a = {1: False}
 # ---
 missingtitles = {}
 
+session["url"] = "https://mdwiki.org/w/api.php"
+session["family"] = "mdwiki"
+
+
+def printx(s):
+    print(s)
+
 
 def log(lang):
     # ---
     if login_done[1] == lang:
-        return ""
+        return "done"
     # ---
     api_urle = f"https://{lang}.wikipedia.org/w/api.php"
     # ---
@@ -56,59 +63,77 @@ def log(lang):
     # ---
     session[1] = requests.Session()
     # ---
-    # if api_urle != session["url"]: print_s( "himoBOT3.py: log to %s. user:%s" % (api_urle , username)  )
+    # if api_urle != session["url"]: print_s( "himoBOT3.py: login to %s. user:%s" % (api_urle , username)  )
+    # ---
+    family = "wikipedia"
     # ---
     session["url"] = api_urle
-    session["family"] = "wikipedia"
+    session["family"] = family
     session["lang"] = lang
     # ---
     # get login token
-    r1 = session[1].get(
-        api_urle,
-        params={
-            "format": "json",
-            "action": "query",
-            "meta": "tokens",
-            "type": "login",
-        },
-        timeout=10, headers={"User-Agent": user_agent},
-    )
-    r1.raise_for_status()
+    try:
+        r1 = session[1].get(
+            api_urle,
+            params={
+                "format": "json",
+                "action": "query",
+                "meta": "tokens",
+                "type": "login",
+            },
+            timeout=10,
+            headers={"User-Agent": user_agent},
+        )
+        r1.raise_for_status()
+    except Exception as e:
+        print(f"login to {lang}.{family}.org Error {e}")
+        return False
     # ---
-    r2 = session[1].post(
-        api_urle,
-        data={
-            "format": "json",
-            "action": "login",
-            "lgname": lgname_enwiki,
-            "lgpassword": lgpass_enwiki,
-            "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
-        },
-        timeout=10,
-        headers={"User-Agent": user_agent},
-    )
+    try:
+        r2 = session[1].post(
+            api_urle,
+            data={
+                "format": "json",
+                "action": "login",
+                "lgname": lgname_enwiki,
+                "lgpassword": lgpass_enwiki,
+                "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
+            },
+            timeout=10,
+            headers={"User-Agent": user_agent},
+        )
+    except Exception as e:
+        printx(f"login to {lang}.{family}.org Error {e}")
+        return False
     # ---
     print_s(r2)
+    # ---
     if r2.json()["login"]["result"] != "Success":
         print_s(r2.json()["login"]["reason"])
         # raise RuntimeError(r2.json()['login']['reason'])
+        return False
     else:
-        print_s(f"wpref.py login Success to {lang}.wikipedia.org")
+        print_s(f"wpref.py login Success to {lang}.{family}.org")
         login_done[1] = lang
+
     # ---
-    # if r2.json()['login']['result'] != 'Success': print(r2.json()['login']['reason'])
+    # if r2.json()['login']['result'] != 'Success': printx(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
-    r3 = session[1].get(
-        api_urle,
-        params={
-            "format": "json",
-            "action": "query",
-            "meta": "tokens",
-        },
-        timeout=10,
-        headers={"User-Agent": user_agent},
-    )
+    try:
+        r3 = session[1].get(
+            api_urle,
+            params={
+                "format": "json",
+                "action": "query",
+                "meta": "tokens",
+            },
+            timeout=10,
+            headers={"User-Agent": user_agent},
+        )
+    except Exception as e:
+        printx(f"login to {lang}.{family}.org Error {e}")
+        return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
     # ---
@@ -119,36 +144,25 @@ def Gettoken():
     return session["token"]
 
 
-def submitAPI(params, lang="", Type="post"):
+def submitAPI(params, lang="", Type="post", add_token=False):
     # ---
     log(lang)
     # ---
     json1 = {}
     # ---
-    if "token" in params and params["token"] == "":
+    if add_token or ("token" in params and params["token"] == ""):
         params["token"] = session["token"]
     # ---
-    r4_text = ""
-    # ---
     try:
-        if Type == "post":
-            r4 = session[1].post(session["url"], data=params, timeout=10, headers={"User-Agent": user_agent})
-        else:
-            r4 = session[1].get(session["url"], data=params, timeout=10, headers={"User-Agent": user_agent})
+        method = "POST" if Type == "post" else "GET"
         # ---
-        r4_text = r4.text
+        r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        json1 = r4.json()
+        # ---
     except Exception as e:
-        print_s(f"submitAPI r4 Error {e}")
+        printx(f"submitAPI Error {e}")
+        printx(params)
         return json1
-    # ---
-    if r4_text != "":
-        try:
-            json1 = json.loads(r4_text)
-        except Exception as e:
-            print_s(f"submitAPI Error {e}")
-            # print_s(r4_text)
-            print_s(params)
-            return json1
     # ---
     return json1
 
@@ -240,6 +254,9 @@ def GetPageText(title, lang="", Print=True):
 
 def page_put(oldtext, NewText, summary, title, lang):
     # ---
+    if not log(lang):
+        return {}
+    # ---
     if "ask" in sys.argv and not ask_a[1]:
         # ---
         if pywikibot:
@@ -272,17 +289,24 @@ def page_put(oldtext, NewText, summary, title, lang):
         "token": session["token"],
     }
     # ---
-    r4 = session[1].post(session["url"], data=pparams, headers={"User-Agent": user_agent})
+    json1 = submitAPI(pparams, lang=lang)
     # ---
-    if "Success" in r4.text:
+    if not json1:
+        return ""
+    # ---
+    if "Success" in str(json1):
         print_s(f"<<lightgreen>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
         return True
     # ---
     else:
-        print_s(r4.text)
+        print_s(json1)
     # ---
     if "savetofile" in sys.argv:
         with open(f"{str(Dir)}/wpref_1.txt", "w", encoding="utf-8") as ggg:
             ggg.write(NewText)
     # ---
     return False
+
+
+if __name__ == "__main__":
+    log()

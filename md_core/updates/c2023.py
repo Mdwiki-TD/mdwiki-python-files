@@ -16,7 +16,7 @@ import json
 import sys
 from pathlib import Path
 import wikitextparser as wtp
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 # ---
 Dir = Path(__file__).parent
 # ---
