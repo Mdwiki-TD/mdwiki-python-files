@@ -10,8 +10,8 @@ from apis import catdepth2
 from apis import wikidataapi
 from newapi import printe
 from mdpy.bots.check_title import valid_title
-from api_sql import sql_for_mdwiki
-from api_sql import sql_qids_others
+from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids_others
 from unlinked_wb.bot import work_un
 
 

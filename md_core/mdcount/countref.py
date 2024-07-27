@@ -20,7 +20,7 @@ import json
 import re
 import os
 import sys
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from mdcount import ref
 from apis import mdwiki_api
 from newapi import printe

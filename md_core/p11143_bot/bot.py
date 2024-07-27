@@ -17,8 +17,8 @@ import sys
 import time
 
 # ---
-from api_sql import sql_for_mdwiki
-from api_sql import sql_qids_others
+from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids_others
 from apis import wikidataapi
 from newapi import printe
 from apis import catdepth2

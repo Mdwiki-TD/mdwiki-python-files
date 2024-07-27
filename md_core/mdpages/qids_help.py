@@ -10,8 +10,8 @@ import json
 import sys
 
 # ---
-from api_sql import sql_for_mdwiki
-from api_sql import sql_qids_others
+from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids_others
 from newapi import printe
 from apis import catdepth2
 from apis import wiki_api

@@ -3,7 +3,7 @@
 python3 core8/pwb.py mdpy/sql_for_mdwiki
 
 # ---
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 # sql_for_mdwiki.mdwiki_sql(query, return_dict=False, values=None)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
 # pages = sql_for_mdwiki.get_all_pages()

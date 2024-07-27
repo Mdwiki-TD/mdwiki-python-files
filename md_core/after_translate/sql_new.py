@@ -21,7 +21,7 @@ from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 from after_translate import start_work
 
 # ---
-from api_sql import wiki_sql
+from mdapi_sql import wiki_sql
 
 # ---
 skip_langs = ["zh-yue", "ceb"]

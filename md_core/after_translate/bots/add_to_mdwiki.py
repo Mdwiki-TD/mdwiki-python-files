@@ -10,7 +10,7 @@ from pymysql.converters import escape_string
 
 # ---
 from newapi import printe
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from after_translate.bots.fixcat import cat_for_pages
 from after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
 

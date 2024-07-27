@@ -11,7 +11,7 @@ from mdpages.qids_others import sql_qids_others
 #
 #
 from newapi import printe
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 
 # sql_for_mdwiki.mdwiki_sql(query, update = False)
 # ---

@@ -20,7 +20,7 @@ from datetime import datetime
 
 # ---
 from apis import mdwiki_api
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---

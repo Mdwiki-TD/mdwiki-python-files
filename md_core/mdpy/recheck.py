@@ -15,9 +15,9 @@ import sys
 from pymysql.converters import escape_string
 
 # ---
-from api_sql import wiki_sql
+from mdapi_sql import wiki_sql
 from newapi import printe
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from mdpy.bots import py_tools
 from apis import wikidataapi
 from apis import wiki_api

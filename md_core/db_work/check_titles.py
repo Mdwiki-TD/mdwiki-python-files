@@ -18,7 +18,7 @@ import time
 
 # ---
 from newapi import printe
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from newapi.wiki_page import MainPage, NEW_API
 from newapi.mdwiki_page import MainPage as md_MainPage
 

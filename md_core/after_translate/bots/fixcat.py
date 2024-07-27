@@ -11,7 +11,7 @@ python3 core8/pwb.py after_translate/bots/fixcat
 #
 import sys
 from pymysql.converters import escape_string
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from apis import mdwiki_api
 from newapi import printe
 # ---

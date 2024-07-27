@@ -13,7 +13,7 @@ import re
 import sys
 
 # ---
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from apis import wiki_api
 from pymysql.converters import escape_string
 from newapi import printe

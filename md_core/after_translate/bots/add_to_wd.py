@@ -18,7 +18,7 @@ import re
 # ---
 from pymysql.converters import escape_string
 from newapi import printe
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from apis import wiki_api
 from apis import mdwiki_api
 from mdpy.bots import en_to_md

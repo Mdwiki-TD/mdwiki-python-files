@@ -12,7 +12,7 @@ from pymysql.converters import escape_string
 
 # ---
 from stats.ar import get_ar_results
-from api_sql import wiki_sql
+from mdapi_sql import wiki_sql
 
 Dir = Path(__file__).parent
 editors_dir = Dir / 'editors'

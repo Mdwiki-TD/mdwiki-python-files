@@ -27,7 +27,7 @@ from mdpy.bots import en_to_md
 
 import os
 import json
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 
 # ---
 from pathlib import Path

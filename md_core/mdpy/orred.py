@@ -8,7 +8,7 @@
 python3 core8/pwb.py mdpy/orred
 
 """
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from apis import wiki_api
 from newapi import printe
 

@@ -16,7 +16,7 @@ from mdpy.bots import en_to_md
 import sys
 
 # ---
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # mdtitle_to_qid = sql_for_mdwiki.get_all_qids()

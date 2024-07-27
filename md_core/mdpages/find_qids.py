@@ -13,7 +13,7 @@ python3 core8/pwb.py mdpages/find_qids
 import sys
 
 # ---
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from apis import wiki_api
 from apis import wikidataapi
 from newapi import printe
