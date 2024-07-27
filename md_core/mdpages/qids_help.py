@@ -8,25 +8,20 @@ from mdpages import qids_help
 """
 import json
 import sys
+from pathlib import Path
 
 # ---
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_qids_others
 from newapi import printe
-from apis import catdepth2
+from apis import cat_cach
 from apis import wiki_api
 from apis import mdwiki_api
 from mdpy.bots.check_title import valid_title  # valid_title(title)
-
-# ---
-from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
 # ---
 dir2 = Dir.replace("\\", "/")
 dir2 = dir2.split("/pybot/")[0] + "/public_html/Translation_Dashboard/Tables/jsons"
-# ---
-print(f"{dir2=}")
+
 
 
 def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
@@ -162,7 +157,7 @@ def get_pages_to_work(ty="td|other"):
     all_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
     all_pages = [x for x in all_pages if valid_title(x)]
     # ---
-    td_list = catdepth2.make_cash_to_cats(return_all_pages=True)
+    td_list = cat_cach.make_cash_to_cats(return_all_pages=True)
     td_list = [x for x in td_list if valid_title(x)]
     # ---
     if ty == "other":

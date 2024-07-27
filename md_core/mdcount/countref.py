@@ -11,29 +11,20 @@ python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
 
 """
 
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
 import json
-
-import re
-import os
 import sys
+from pathlib import Path
+
+
 from mdapi_sql import sql_for_mdwiki
-from mdcount import ref
 from apis import mdwiki_api
 from newapi import printe
-from apis import catdepth2
+from newapi.mdwiki_page import CatDepth
 from mdcount.regex_scanner import RegexScanner
 
 # ---
-from pathlib import Path
-# ---
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
-# ---
-# print(f"{dir2=}")
 # ---
 all_ref = {}
 lead_ref = {}
@@ -159,7 +150,8 @@ def from_sql():
 
 
 def get_links():
-    tabe = catdepth2.subcatquery2("RTT", depth="1", ns="0")
+    # ---
+    tabe = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=1, ns="0")
     lale = from_sql() if "sql" in sys.argv else tabe["list"]
     # ---
     if "newpages" in sys.argv:

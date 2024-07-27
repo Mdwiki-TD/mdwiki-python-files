@@ -14,7 +14,7 @@ from datetime import timedelta
 
 # ---
 from newapi import printe
-from apis import wiki_api
+from apis import views_rest
 from priorviews.bots import helps
 
 # ---
@@ -48,7 +48,7 @@ def api_views(title, lang):
     # d_start = d_start.strftime('%Y%m%d')
     d_start = "20110101"
     # ---
-    enviews = wiki_api.get_views_with_rest_v1(lang, [title], date_start=d_start, date_end=d_end, printurl=TEST)
+    enviews = views_rest.get_views_with_rest_v1(lang, [title], date_start=d_start, date_end=d_end, printurl=TEST)
     # ---
     if not enviews:
         return 0

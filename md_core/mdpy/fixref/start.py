@@ -3,21 +3,15 @@
 Change refs to newlines
 python3 core8/pwb.py mdpy/fixref
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 
 import sys
-import os
-
-# ---
 from mdpy.fixref.fixref_text_new import fix_ref_template
-from apis import catdepth2
 from apis import mdwiki_api
 from newapi import printe
 
 # ---
+from newapi.mdwiki_page import CatDepth
+# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
 from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
@@ -65,7 +59,7 @@ def main():
         # ---
         # python pwb.py mdpy/fixref/start -cat:CS1_errors:_deprecated_parameters ask
         if arg == '-cat':
-            List = catdepth2.subcatquery(value, depth='0', ns='0')
+            List = CatDepth(f"Category:{value}", sitecode="www", family="mdwiki", depth=0, ns="0")
         # ---
         # python pwb.py mdpy/fixref/start -page:Histrelin ask
         if arg in ['-page', '-title']:

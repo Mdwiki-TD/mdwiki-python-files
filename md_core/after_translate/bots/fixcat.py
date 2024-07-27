@@ -12,8 +12,9 @@ python3 core8/pwb.py after_translate/bots/fixcat
 import sys
 from pymysql.converters import escape_string
 from mdapi_sql import sql_for_mdwiki
-from apis import mdwiki_api
 from newapi import printe
+from newapi.mdwiki_page import CatDepth
+# result_table = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
 # ---
 cat_for_pages = {}
 
@@ -32,7 +33,7 @@ def get_cats_and_pages():
         # ---
         catlen[cat] = 0
         # ---
-        pages = mdwiki_api.subcatquery(cat, depth=depth, ns="0")
+        pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=depth, ns="0")
         # ---
         for page in pages:
             if page in cat_for_pages:

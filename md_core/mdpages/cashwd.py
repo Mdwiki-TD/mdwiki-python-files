@@ -20,10 +20,11 @@ from pathlib import Path
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
-from apis import mdwiki_api
 from apis import wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
+from newapi.mdwiki_page import CatDepth
+# result_table = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
 # ---
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
@@ -222,11 +223,11 @@ def cash_wd():
     # ---
     for cat, dep in cac.items():
         # ---
-        mdwiki_pages = mdwiki_api.subcatquery(cat, depth=dep, ns="0")
+        mdwiki_pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=dep, ns="0")
         # ---
         titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
     # ---
-    printe.output(f"<<lightgreen>> len of mdwiki_api.subcatquery:RTT:{len(titles)}.")
+    printe.output(f"<<lightgreen>> len of mdwiki_api.subcat:RTT:{len(titles)}.")
     # ---
     qids_list = {}
     # ---

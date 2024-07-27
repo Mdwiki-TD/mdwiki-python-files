@@ -116,7 +116,7 @@ def main():
             if value in searchlist:
                 value = searchlist[value]
             # ---
-            ccc = NEW_API.Search(value=value, ns="0", srlimit="max")
+            ccc = api_new.Search(value=value, ns="0", srlimit="max")
             pages.extend(iter(ccc))
     # ---
     if starts != '':

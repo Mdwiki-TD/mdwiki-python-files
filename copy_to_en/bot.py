@@ -6,7 +6,7 @@ python3 core8/pwb.py copy_to_en/bot ask
 tfj run copyen --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/bot"
 
 """
-from apis import catdepth2
+from apis import cat_cach
 from apis import mdwiki_api
 from newapi.wiki_page import MainPage
 
@@ -16,7 +16,7 @@ from copy_to_en.ref import fix_ref  # text = fix_ref(first, alltext)
 
 def main():
     # ---
-    all_pages = catdepth2.make_cash_to_cats(return_all_pages=True)
+    all_pages = cat_cach.make_cash_to_cats(return_all_pages=True)
     # ---
     for n, x in enumerate(all_pages):
         print(f"{n}/{len(all_pages)} : {x}")

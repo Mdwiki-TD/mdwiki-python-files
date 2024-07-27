@@ -9,7 +9,6 @@ from apis import wiki_api
 # wiki_api.Find_pages_exists_or_not( liste, apiurl = 'https://' + 'or.wikipedia.org/w/api.php' )
 # wiki_api.Getpageassessments_from_wikipedia( titles, site="en", find_redirects=False, pasubprojects=0 )
 # wiki_api.get_page_views(titles, site='en', days = 30)
-# wiki_api.get_views_with_rest_v1(langcode, titles, date_start='20040101', date_end='20300101', printurl=False, printstr=False)
 # wiki_api.GetPageText(title, lang, redirects=False)
 # wiki_api.get_langlinks(title, lang)
 # wiki_api.
@@ -37,6 +36,9 @@ import pywikibot.data.api as apit
 from newapi import printe
 from apis import user_account_new
 
+from newapi.wiki_page import NEW_API
+
+api_new = NEW_API("www", family="mdwiki")
 # ---
 SS = {"token": ""}
 session = {
@@ -122,32 +124,6 @@ def log(api_urle):
     login_done[1] = api_urle
     # ---
     session["token"] = token
-
-
-def split_list_to_numbers(lise, numbs=100):
-    # ---
-    titles = {}
-    DDone = []
-    # ---
-    num = 1
-    # ---
-    numbs2 = numbs - 1
-    # ---
-    for cc in lise:
-        # ---
-        if num not in titles:
-            titles[num] = []
-        # ---
-        if len(titles[num]) < numbs:
-            if cc not in DDone:
-                titles[num].append(cc)
-                DDone.append(cc)
-                # ---
-                if len(titles[num]) > numbs2:
-                    num += 1
-                # ---
-    # ---
-    return titles
 
 
 def submitAPI_token(params, apiurl="", returnjson=False):
@@ -422,16 +398,13 @@ def _get_page_views_(titles, site="en", days=30):
     # ---
     maxn = 500 if "500" in sys.argv else 50
     # ---
-    List = split_list_to_numbers(titles, numbs=maxn)
-    # ---
     Main_table = {}
     # ---
     no_pv = []
     done = 0
     # ---
-    for number, titles_1 in List.items():
-        if len(titles_1) < 1:
-            continue
+    for i in range(0, len(titles), 50):
+        titles_1 = titles[i : i + 50]
         # ---
         printe.output(f"<<lightgreen>> views:{len(Main_table.keys())}, done:{done} from {len(titles)} titles.")
         # ---
@@ -499,102 +472,6 @@ def get_page_views(titles, site="en", days=30):
     # ---
     return views
 
-
-def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20300101", printurl=False, printstr=False, Type="daily"):
-    # ---
-    numbers = {}
-    # _Type = Type if Type in ["daily", "monthly"] else 'monthly'
-    # ---
-    numb = 0
-    # ---
-    for page in titles:
-        # ---
-        numb += 1
-        # ---
-        # print when numb % 100 == 0
-        if numb % 100 == 0:
-            print(f"get_views_with_rest_v1: {numb}/{len(titles)}")
-        # ---
-        if "limit5" in sys.argv and numb > 5:
-            break
-        # ---
-        pa = urllib.parse.quote(page)
-        # ---
-        url = f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{langcode}.wikipedia/all-access/all-agents/{pa.replace('/', '%2F')}/daily/{date_start}00/{date_end}00"
-        # ---
-        if "printurl" in sys.argv or printurl:
-            printe.output(f"printboturl:\t\t{url}")
-        # ---
-        if printstr:
-            printe.output("-------------------")
-            printe.output(f"a {numb}/{len(titles)} page:{page}")
-        # ---
-        req = http.fetch(url)
-        # req = requests.Session().get( url )
-        # ---
-        st = req.status_code
-        # ---
-        if 500 <= st < 600 or st == 404:
-            printe.output(f"received {st} status from:")
-            printe.output(url)
-        # ---
-        data = {}
-        try:
-            data = json.loads(req.text)
-        except Exception:
-            pywikibot.output("Traceback (most recent call last):")
-            pywikibot.output(req.text)
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output("CRITICAL:")
-        # ---
-        if not data:
-            pywikibot.output(url)
-        # ---
-        sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
-        # ---
-        number_all = 0
-        # ---
-        tabl = {}
-        # ---
-        for x in data.get("items", []):
-            # ---
-            number_all += x["views"]
-            # ---
-            month = str(x["timestamp"])[:6]
-            year = str(month)[:4]
-            # ---
-            if year not in tabl:
-                tabl[year] = {"all": 0}
-            # ---
-            tabl[year]["all"] += x["views"]
-            # ---
-            if month not in tabl[year]:
-                tabl[year][month] = 0
-            # ---
-            tabl[year][month] += x["views"]
-            # ---
-        # ---
-        if number_all > 0:
-            numbers[page] = {"all": number_all}
-            # ---
-            txt = f"all_views:{number_all}"
-            # ---
-            for year, y_tab in tabl.items():
-                if y_tab.get("all", 0) > 0:
-                    numbers[page][year] = y_tab
-                    txt += f', {year}: {y_tab["all"]}'
-            # ---
-            if printstr:
-                printe.output(txt)
-            # ---
-    # ---
-    return numbers
-
-
-# ---
 if __name__ == "__main__":
-    # get_views_with_rest_v1('ar', ['yemen', 'صنعاء'], date_start='20040101', date_end='20300101')
-    get_views_with_rest_v1("ar", ["yemen", "صنعاء"], date_start="20040101", date_end="20300101")
     ux = get_page_views(["yemen", "صنعاء"], site="ar", days=30)
     printe.output(ux)
-# ---

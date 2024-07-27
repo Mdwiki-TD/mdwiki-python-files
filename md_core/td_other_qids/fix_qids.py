@@ -6,7 +6,7 @@ python3 core8/pwb.py td_other_qids/fix_qids redirects
 
 """
 import sys
-from apis import catdepth2
+from apis import cat_cach
 from apis import wikidataapi
 from newapi import printe
 from mdpy.bots.check_title import valid_title
@@ -50,7 +50,7 @@ def add_to_qids(sql_qids):
     # ---
     printe.output('<<lightyellow>> start add_to_qids()')
     # ---
-    all_pages = catdepth2.make_cash_to_cats(return_all_pages=True)
+    all_pages = cat_cach.make_cash_to_cats(return_all_pages=True)
     # ---
     all_pages = [x for x in all_pages[:] if valid_title(x)]
     # ---
