@@ -78,10 +78,10 @@ class InOldText:
         tem_text = re.sub(r"\d+", "", tem_text)
 
         # get counts of words
-        lenth = len(re.findall(r'\w+', tem_text))
+        length = len(re.findall(r'\w+', tem_text))
         # ---
-        # print(f'count_text: {lenth}')
-        self.words = lenth
+        # print(f'count_text: {length}')
+        self.words = length
 
     def post_to_json(self, params):
         json1 = {}

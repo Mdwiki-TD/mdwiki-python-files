@@ -5,7 +5,7 @@ from after_translate.bots.get_pages import get_pages_from_db
 from newapi import printe
 # ---
 from mdpy.bots import py_tools
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 # ---
 targets_done_by_mdtitle = {}
 targets_done = {}

@@ -89,8 +89,8 @@ if len(links_done) != len(mdtitles_lang_title.keys()):
 # ---
 # find the section with the least links
 print(f'least section: {least_section}')
-# print lenth of least_section in sects_links_langlinks
-print(f'lenth of least_section: {len(sects_links_langlinks[least_section])}')
+# print length of least_section in sects_links_langlinks
+print(f'length of least_section: {len(sects_links_langlinks[least_section])}')
 # ---
 # ---
 sects_links_langlinks = sects_links_langlinks.copy()

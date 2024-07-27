@@ -24,7 +24,7 @@ api_new.Login_to_wiki()
 # ---
 '''
 # ---
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 # mdwiki_api.post_s(params, addtoken=False)
 # mdwiki_api.wordcount(title, srlimit='30')
 # mdwiki_api.purge(title)

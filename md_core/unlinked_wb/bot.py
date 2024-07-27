@@ -10,10 +10,10 @@ python3 core8/pwb.py unlinked_wb/bot add
 # ---
 import re
 import sys
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from newapi import printe
-from mdpy.bots import sql_qids_others
+from api_sql import sql_qids_others
 
 # ---
 from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage

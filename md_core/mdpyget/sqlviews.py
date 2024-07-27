@@ -13,8 +13,8 @@ import re
 import sys
 
 # ---
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import wiki_api
+from api_sql import sql_for_mdwiki
+from apis import wiki_api
 from pymysql.converters import escape_string
 from newapi import printe
 
@@ -49,14 +49,12 @@ def update_2023(lang, table):
             print_test(f"page:{target} has same views.. skip")
             continue
         # ---
-        tar2 = escape_string(target)
-        # ---
-        qua = f"UPDATE views SET countall = '{all_v}', count2023 = '{n_2023}' WHERE target = '{tar2}' AND lang = '{lang}'; "
+        qua = "UPDATE views SET countall = %s, count2023 = %s WHERE target = %s AND lang = %s; "
         # ---
         print(qua)
         # ---
         if "nosql" not in sys.argv:
-            qu = sql_for_mdwiki.mdwiki_sql(qua, update=True)
+            qu = sql_for_mdwiki.mdwiki_sql(qua, update=True, values=[all_v, n_2023, target, lang])
             # ---
             printe.output(f"<<lightyellow>>sqlviews.py mdwiki_sql result:{str(qu)}")
 

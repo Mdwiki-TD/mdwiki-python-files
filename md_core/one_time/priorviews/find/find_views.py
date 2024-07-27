@@ -14,7 +14,7 @@ from datetime import timedelta
 
 # ---
 from newapi import printe
-from mdpy.bots import wiki_api
+from apis import wiki_api
 from priorviews.bots import helps
 
 # ---

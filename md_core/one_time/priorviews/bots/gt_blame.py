@@ -191,14 +191,14 @@ def search_history(title, lang, en="", refname=None, extlinks=None):
     # sort revisions by timestamp
     revisions.sort(key=lambda r: r.get("timestamp", ""))
     # ---
-    lenth_before = len(revisions)
+    length_before = len(revisions)
     # ---
     # skip bots
     revisions = [rev for rev in revisions if not rev.get("user", "").lower().endswith("bot")]
     # ---
-    bots_lenth = lenth_before - len(revisions)
+    bots_length = length_before - len(revisions)
     # ---
-    print(f"len of revisions: {len(revisions)}, bots_lents: {bots_lenth}")
+    print(f"len of revisions: {len(revisions)}, bots_lents: {bots_length}")
     # ---
     for r in revisions:
         # print(r.keys())

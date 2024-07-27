@@ -5,26 +5,14 @@
 python3 core8/pwb.py mdpy/wddone
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
-# ---
-from mdpy.bots import sql_for_mdwiki
-from pymysql.converters import escape_string
-
-# ---
+from api_sql import sql_for_mdwiki
 from mdpy.bots import py_tools
 
-# escape_string(string)
-
-# ---
-# ---
-que = '''
+que = """
 select title,user,lang,target
 from pages
 where target != ""
-;'''
+;"""
 # ---
 sq = sql_for_mdwiki.mdwiki_sql(que)
 # ---
@@ -34,24 +22,22 @@ for tab in sq:
     lang = py_tools.Decode_bytes(tab[2]).lower()
     target = py_tools.Decode_bytes(tab[3])
     # ---
-    mdtit = escape_string(mdtitle)
-    tar = escape_string(target)
-    user = escape_string(user)
-    # ---
-    done_qu = f"""
+    done_qu = """
         INSERT INTO wddone (mdtitle, target, lang, user)
-        SELECT '{mdtit}', '{tar}', '{lang}', '{user}'
+        SELECT %s, %s, %s, %s
         WHERE NOT EXISTS (SELECT 1
             FROM wddone
-                WHERE mdtitle = '{mdtit}'
-                AND lang = '{lang}'
-                AND user = '{user}'
+                WHERE mdtitle = %s
+                AND lang = %s
+                AND user = %s
             )
     """
     # ---
-    print('**************')
-    print(done_qu)
-    print('**************')
+    values = [mdtitle, target, lang, user, mdtitle, lang, user]
     # ---
-    vfg = sql_for_mdwiki.mdwiki_sql(done_qu, update=True)
+    print("**************")
+    print(done_qu)
+    print("**************")
+    # ---
+    vfg = sql_for_mdwiki.mdwiki_sql(done_qu, update=True, values=values)
 # ---

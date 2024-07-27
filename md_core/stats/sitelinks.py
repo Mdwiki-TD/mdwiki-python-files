@@ -9,7 +9,7 @@ from pathlib import Path
 
 # ---
 from newapi import printe
-from mdpy.bots import wikidataapi
+from apis import wikidataapi
 from stats.qids import qids_list
 
 # ---

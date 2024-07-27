@@ -112,7 +112,7 @@ def start():
     for x, exts in new.items():
         n += 1
         all_links.extend(exts)
-        # print(f'n:{n}/{ns}, title:{x} lenth:{len(exts)}')
+        # print(f'n:{n}/{ns}, title:{x} length:{len(exts)}')
     # ---
     all_links = sorted(set(all_links))
     # ---

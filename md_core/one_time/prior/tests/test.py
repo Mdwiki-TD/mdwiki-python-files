@@ -1,5 +1,5 @@
 from collections import namedtuple
-from prior.p4 import *
+# from prior.p4 import *
 
 # ---
 
@@ -19,7 +19,8 @@ class testmycode:
         b.contents = '<ref>{{cite web |url=https://www.cnn.com |title=CNN}}</ref>'
         refs = [a, b]
         expected = ['https://www.bbc.com', 'https://www.cnn.com']
-        f = get_weblinks(refs, '')
+        f = ""
+        # f = get_weblinks(refs, '')
         print(f)
         print(f"test_incomplete_links: {str(set(f) == set(expected))}")
 

@@ -20,11 +20,11 @@ import json
 import re
 import os
 import sys
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 from mdcount import ref
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 from newapi import printe
-from mdpy.bots import catdepth2
+from apis import catdepth2
 from mdcount.regex_scanner import RegexScanner
 
 # ---

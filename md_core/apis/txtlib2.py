@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-from mdpy.bots import txtlib2
+from apis import txtlib2
 # ingr = txtlib2.extract_templates_and_params(text)
 # for temp in ingr: name, namestrip, params, template = temp['name'], temp['namestrip'], temp['params'], temp['item']
 """

@@ -15,9 +15,9 @@ import sys
 from pywikibot.comms import http
 
 # ---
-from mdpy.bots import txtlib2
+from apis import txtlib2
 from newapi import printe
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 
 # ---
 from pathlib import Path

@@ -178,7 +178,7 @@ def start_md():
     # ---
     links = list(set(links) - set(done))
     # ---
-    print(f'lenth of links: {len(links)} links:')
+    print(f'length of links: {len(links)} links:')
     # ---
     if len(links) == 0:
         print('close')

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 # ---
-from mdpy.bots import open_url
+from apis import open_url
 # open_url.getURL(url)
 # open_url.open_json_url(url)
 # ---
@@ -71,19 +71,18 @@ def open_json_url(url, maxsleeps=0, **kwargs):
     bot = classgetURL(url)
     js_text = bot.open_it()
     # ---
-    if js_text.find('<!DOCTYPE html>') != -1 or js_text.find('<!doctype html>') != -1:
+    if '<!DOCTYPE html>' in js_text or '<!doctype html>' in js_text:
         printe.output(f'<<red>> open_json_url: url: {url} returns <!DOCTYPE html>!!')
         return {}
     # ---
     try:
         return json.loads(js_text)
+    except json.JSONDecodeError:
+        pywikibot.output(traceback.format_exc())
+        printe.output(js_text)
+        pywikibot.output(" CRITICAL:")
     except Exception:
         pywikibot.output(traceback.format_exc())
         printe.output(js_text)
         pywikibot.output(" CRITICAL:")
         return {}
-    # ---
-    return json1
-
-
-# ---

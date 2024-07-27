@@ -20,6 +20,6 @@ dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 config = configparser.ConfigParser()
 config.read(f"{dir2}/confs/user.ini")
 
-lgname_enwiki = config["DEFAULT"]["lgname_enwiki"]
-lgpass_enwiki = config["DEFAULT"]["lgpass_enwiki"]
-user_agent = config["DEFAULT"]["user_agent"]
+lgname_enwiki = config["DEFAULT"].get("lgname_enwiki", "")
+lgpass_enwiki = config["DEFAULT"].get("lgpass_enwiki", "")
+user_agent = config["DEFAULT"].get("user_agent", "")

@@ -1,4 +1,4 @@
-import os
+# import os
 from prior.p4 import work_in_links
 
 # ---
@@ -28,7 +28,7 @@ def start_test(links=[]):
     # log_all(main_File)
     # log_allen(main_File_en)
     # ---
-    return all, allen
+    return all#, allen
 
 
 # ---

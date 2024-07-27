@@ -18,10 +18,10 @@ from pathlib import Path
 
 # ---
 from newapi import printe
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
-from mdpy.bots import mdwiki_api
-from mdpy.bots import wikidataapi
+from apis import mdwiki_api
+from apis import wikidataapi
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---

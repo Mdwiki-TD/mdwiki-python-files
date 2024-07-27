@@ -3,13 +3,10 @@
 
 بوت للعمل على ويكيبيانات أو ويكيبيديا
 
+from apis import wikidataapi
+
 """
 
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
-# ---
 import traceback
 import re
 import urllib
@@ -22,14 +19,14 @@ import requests
 # ---
 from newapi import printe
 from mdpy.bots import py_tools
-from mdpy.bots import user_account_new
+from apis import user_account_new
 
 # ---
 menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
 # ---
 """
 # ---
-from mdpy.bots import wikidataapi
+from apis import wikidataapi
 # wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php" )
 # wikidataapi.post( params , apiurl = "https://www.wikidata.org/w/api.php" )
 # wikidataapi.Get_sitelinks_From_Qid( q )
@@ -475,7 +472,7 @@ def Claim_API_qid(qid, property, numeric):
 
 def open_url(url, return_json=False):
     # ---
-    result = {} and return_json or ""
+    result = {} if return_json else ""
     # ---
     # get the url
     req = False

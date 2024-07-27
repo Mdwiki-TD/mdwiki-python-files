@@ -6,7 +6,7 @@
 """
 import sys
 # ---
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 from newapi import printe
 
 # ---

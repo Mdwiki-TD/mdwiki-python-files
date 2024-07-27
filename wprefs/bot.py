@@ -18,7 +18,7 @@ python3 core8/pwb.py wprefs/bot ask
 #
 #
 import sys
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 
 # ---
 from wprefs.api import log, GetPageText, missingtitles, page_put

@@ -13,9 +13,9 @@ python3 core8/pwb.py mdpages/find_qids
 import sys
 
 # ---
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import wiki_api
-from mdpy.bots import wikidataapi
+from api_sql import sql_for_mdwiki
+from apis import wiki_api
+from apis import wikidataapi
 from newapi import printe
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 from unlinked_wb.bot import work_un

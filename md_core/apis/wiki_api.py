@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 # ---
-from mdpy.bots import wiki_api
+from apis import wiki_api
+from apis import wiki_api
 # wiki_api.Get_page_qids(sitecode, titles)
 # wiki_api.submitAPI( params, apiurl = 'https://' + 'www.wikidata.org/w/api.php', returnjson = False )
 # wiki_api.submitAPI_token( params, apiurl = 'https://' + 'www.wikidata.org/w/api.php', returnjson = False )
@@ -34,7 +35,7 @@ import requests
 from pywikibot.comms import http
 import pywikibot.data.api as apit
 from newapi import printe
-from mdpy.bots import user_account_new
+from apis import user_account_new
 
 # ---
 SS = {"token": ""}

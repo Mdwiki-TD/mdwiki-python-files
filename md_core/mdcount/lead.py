@@ -4,7 +4,7 @@ import pywikibot
 import wikitextparser as wtp
 
 # ---
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 
 
 def count_text(text):
@@ -36,10 +36,10 @@ def count_text(text):
     tem_text = re.sub(r"\d+", "", tem_text)
 
     # get counts of words
-    lenth = len(re.findall(r'\w+', tem_text))
+    length = len(re.findall(r'\w+', tem_text))
     # ---
-    # print(f'count_text: {lenth}')
-    return tem_text, lenth
+    # print(f'count_text: {length}')
+    return tem_text, length
 
 def count_all(title='', text=''):
     # ---

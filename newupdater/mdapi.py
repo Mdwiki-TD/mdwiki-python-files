@@ -58,8 +58,10 @@ def login(lang=""):
     # ---
     # if api_urle != session["url"]: print_s( "himoBOT3.py: login to %s. user:%s" % (api_urle , username)  )
     # ---
+    family = "mdwiki"
+    # ---
     session["url"] = api_urle
-    session["family"] = "mdwiki"
+    session["family"] = family
     session["lang"] = lang
     # ---
     # get login token
@@ -77,7 +79,7 @@ def login(lang=""):
         )
         r1.raise_for_status()
     except Exception as e:
-        printx(f"login to {lang}.mdwiki.org Error {e}")
+        printx(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     try:
@@ -94,16 +96,17 @@ def login(lang=""):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        printx(f"login to {lang}.mdwiki.org Error {e}")
+        printx(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     print_s(r2)
+    # ---
     if r2.json()["login"]["result"] != "Success":
         print_s(r2.json()["login"]["reason"])
         # raise RuntimeError(r2.json()['login']['reason'])
         return False
     else:
-        print_s(f"wpref.py login Success to {lang}.mdwiki.org")
+        print_s(f"wpref.py login Success to {lang}.{family}.org")
         login_done[1] = lang
 
     # ---
@@ -122,7 +125,7 @@ def login(lang=""):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        printx(f"login to {lang}.mdwiki.org Error {e}")
+        printx(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
@@ -140,11 +143,11 @@ def submitAPI(params, Type="post", add_token=False):
     # ---
     json1 = {}
     # ---
-    if add_token:
+    if add_token or ("token" in params and params["token"] == ""):
         params["token"] = session["token"]
     # ---
     try:
-        method = "POST"# if Type == "post" else "GET"
+        method = "POST"  # if Type == "post" else "GET"
         # ---
         r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
         json1 = r4.json()
@@ -153,37 +156,6 @@ def submitAPI(params, Type="post", add_token=False):
         printx(f"submitAPI Error {e}")
         printx(params)
         return json1
-    # ---
-    return json1
-
-
-def submitAPI_no_try(params, Type="post", add_token=False):
-    # ---
-    login()
-    # ---
-    json1 = {}
-    # ---
-    if add_token:
-        params["token"] = session["token"]
-    # ---
-    params["format"] = "json"
-    # ---
-    method = "POST"# if Type == "post" else "GET"
-    # ---
-    if "printurl" in sys.argv:
-        no_url = ["lgpassword", "format"]
-        no_remove = ["titles", "title"]
-        pams2 = {k: v[:100] if isinstance(v, str) and len(v) > 100 and k not in no_remove else v for k, v in params.items() if k not in no_url}
-        url_o_print = f"{session['url']}?{urllib.parse.urlencode(pams2)}".replace("&format=json", "")
-        print(url_o_print)
-    # ---
-    r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
-    # ---
-    r_text = r4.text
-    # ---
-    print_s(r_text)
-    # ---
-    json1 = r4.json()
     # ---
     return json1
 
@@ -223,19 +195,6 @@ def get_revisions(title, lang=""):
             revisions.extend(_revisions)
     # ---
     return revisions
-
-
-def GetPageText2(title):
-    # ---
-    url = "https://mdwiki.org/wiki/" + title + "?action=raw"
-    # ---
-    try:
-        r = requests.get(url, timeout=5)
-        # r.raise_for_status()
-        return r.text
-    except Exception as e:
-        print_s(f"GetPageText2 Error {e}")
-        return ""
 
 
 def GetPageText(title, lang="", Print=True):
@@ -320,6 +279,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         # "notminor": 1,
         "bot": 1,
         "nocreate": 1,
+        "token": session["token"],
     }
     # ---
     json1 = submitAPI(pparams, add_token=True)
@@ -335,6 +295,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         print_s(json1)
     # ---
     return False
+
 
 if __name__ == "__main__":
     login()

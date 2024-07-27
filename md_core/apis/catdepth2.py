@@ -3,6 +3,8 @@
 
 python3 core8/pwb.py mdpy/bots/catdepth2
 
+from apis import catdepth2
+from apis import catdepth2
 """
 #
 # (C) Ibrahem Qasim, 2022
@@ -17,8 +19,8 @@ import os
 from datetime import datetime
 
 # ---
-from mdpy.bots import mdwiki_api
-from mdpy.bots import sql_for_mdwiki
+from apis import mdwiki_api
+from api_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---
