@@ -13,8 +13,8 @@ import os
 
 # ---
 from mdpy.fixref.fixref_text_new import fix_ref_template
-from mdpy.bots import catdepth2
-from mdpy.bots import mdwiki_api
+from apis import catdepth2
+from apis import mdwiki_api
 from newapi import printe
 
 # ---

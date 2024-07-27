@@ -10,7 +10,6 @@ from mdpages.qids_others import sql_qids_others
 #
 #
 #
-from pymysql.converters import escape_string
 from newapi import printe
 from api_sql import sql_for_mdwiki
 
@@ -22,39 +21,36 @@ def get_others_qids():
     # ---
     mdtitle_to_qid = {}
     # ---
-    sq = sql_for_mdwiki.mdwiki_sql('select DISTINCT title, qid from qids_others;', return_dict=True)
+    sq = sql_for_mdwiki.mdwiki_sql("select DISTINCT title, qid from qids_others;", return_dict=True)
     # ---
     for ta in sq:
-        mdtitle_to_qid[ta['title']] = ta['qid']
+        mdtitle_to_qid[ta["title"]] = ta["qid"]
     # ---
     return mdtitle_to_qid
 
 
 def add_qid(title, qid):
-    title2 = escape_string(title)
-    qua = f"""INSERT INTO qids_others (title, qid) SELECT '{title2}', '{qid}';"""
+    qua = "INSERT INTO qids_others (title, qid) SELECT %s, %s;"
     # ---
-    printe.output(f'<<yellow>> add_qid()  title:{title}, qid:{qid}')
+    printe.output(f"<<yellow>> add_qid()  title:{title}, qid:{qid}")
     # ---
-    return sql_for_mdwiki.mdwiki_sql(qua, return_dict=True)
+    return sql_for_mdwiki.mdwiki_sql(qua, return_dict=True, values=[title, qid])
 
 
 def set_qid_where_title(title, qid):
-    title2 = escape_string(title)
-    qua = f"""UPDATE qids_others set qid = '{qid}' where title = '{title2}';"""
+    qua = "UPDATE qids_others set qid = %s where title = %s;"
     # ---
-    printe.output(f'<<yellow>> set_qid_where_title()  title:{title}, qid:{qid}')
+    printe.output(f"<<yellow>> set_qid_where_title()  title:{title}, qid:{qid}")
     # ---
-    return sql_for_mdwiki.mdwiki_sql(qua, return_dict=True)
+    return sql_for_mdwiki.mdwiki_sql(qua, return_dict=True, values=[qid, title])
 
 
 def set_title_where_qid(new_title, qid):
-    title2 = escape_string(new_title)
-    qua = f"""UPDATE qids_others set title = '{title2}' where qid = '{qid}';"""
+    qua = "UPDATE qids_others set title = %s where qid = %s;"
     # ---
-    printe.output(f'<<yellow>> set_title_where_qid()  new_title:{new_title}, qid:{qid}')
+    printe.output(f"<<yellow>> set_title_where_qid() new_title:{new_title}, qid:{qid}")
     # ---
-    return sql_for_mdwiki.mdwiki_sql(qua, return_dict=True)
+    return sql_for_mdwiki.mdwiki_sql(qua, return_dict=True, values=[new_title, qid])
 
 
 def add_titles_to_qids(tab, add_empty_qid=False):
@@ -62,7 +58,7 @@ def add_titles_to_qids(tab, add_empty_qid=False):
     new = {}
     # ---
     if not tab:
-        printe.output('<<red>> add_titles_to_qids tab empty..')
+        printe.output("<<red>> add_titles_to_qids tab empty..")
         return
     # ---
     for title, qid in tab.items():
@@ -71,7 +67,7 @@ def add_titles_to_qids(tab, add_empty_qid=False):
             print("title == ''")
             continue
         # ---
-        if qid == '' and not add_empty_qid:
+        if qid == "" and not add_empty_qid:
             print("qid == ''")
             continue
         # ---
@@ -88,14 +84,14 @@ def add_titles_to_qids(tab, add_empty_qid=False):
         # ---
         q_in = others_in[title]
         # ---
-        if qid != '':
+        if qid != "":
             if not q_in:
                 set_qid_where_title(title, qid)
             else:
                 if qid != q_in:
-                    printe.output(f'<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}')
+                    printe.output(f"<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}")
                 else:
                     same += 1
         # ---
     # ---
-    printe.output(f'<<yellow>> len of same qids: {same}')
+    printe.output(f"<<yellow>> len of same qids: {same}")

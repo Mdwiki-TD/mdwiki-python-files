@@ -8,8 +8,8 @@
 python3 core8/pwb.py mdpy/orred
 
 """
-from mdpy.bots import sql_for_mdwiki
-from mdpy.bots import wiki_api
+from api_sql import sql_for_mdwiki
+from apis import wiki_api
 from newapi import printe
 
 # wiki_api.Get_page_qids(sitecode, titles)

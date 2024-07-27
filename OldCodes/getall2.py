@@ -90,7 +90,7 @@ for pyfile in os.listdir(drivepath):
             shared_paths[name] += 1
         # ---
 # ---
-printe("yellow", f"lenth of shared_paths: {len(shared_paths)}")
+printe("yellow", f"length of shared_paths: {len(shared_paths)}")
 # ---
 
 sort = sorted(shared_paths.items(), key=lambda x: x[1], reverse=True)

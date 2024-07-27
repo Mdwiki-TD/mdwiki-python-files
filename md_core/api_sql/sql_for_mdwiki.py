@@ -16,35 +16,21 @@ from api_sql import sql_for_mdwiki
 # ---
 
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 import sys
 import pymysql
-import pymysql.cursors
-from pymysql.converters import escape_string
-import pkg_resources
-import pymysql
-import traceback
-import pywikibot
+
 # ---
 from newapi import printe
 from pywikibot import config
+from newapi import pymysql_bot
 
-# ---
 conversions = pymysql.converters.conversions
 conversions[pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
 # ---
 can_use_sql_db = {1: True}
 # ---
-py_v = pymysql.__version__
-if py_v.endswith(".None"):
-    py_v = py_v[: -len(".None")]
-# ---
-pymysql_version = pkg_resources.parse_version(py_v)
-# ---
 from pathlib import Path
+
 # ---
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
@@ -56,13 +42,8 @@ if config.db_connect_file is None:
     credentials = {"user": db_username, "password": db_password}
 else:
     credentials = {"read_default_file": config.db_connect_file}
-    # read default file
-    # read default file
-    if dir2.find("medwiki") != -1:
-        db_username = "s55992"
-    else:
-        db_username = "s54732"
-
+    # read default fil
+    db_username = "s55992" if dir2.find("medwiki") != -1 else "s54732"
 # ---
 main_args = {
     "host": "tools.db.svc.wikimedia.cloud",
@@ -82,51 +63,9 @@ if "localhost" in sys.argv or dir2 == "I:/mdwiki":
 
 def sql_connect_pymysql(query, return_dict=False, values=None):
     # ---
-    args = dict(main_args.items())
+    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args, credentials=credentials, conversions=conversions)
     # ---
-    args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
-    args["conv"] = conversions
-    # ---
-    params = values if values else None
-    # ---
-    try:
-        connection = pymysql.connect(**args, **credentials)
-
-    except Exception:
-        pywikibot.output("Traceback (most recent call last):")
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output("CRITICAL:")
-        return []
-    # ---
-    if pymysql_version < pkg_resources.parse_version("1.0.0"):
-        from contextlib import closing
-        connection = closing(connection)
-    # ---
-    with connection as conn, conn.cursor() as cursor:
-        # ---
-        # skip sql errors
-        try:
-            cursor.execute(query, params)
-
-        except Exception:
-            pywikibot.output("Traceback (most recent call last):")
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output("CRITICAL:")
-            return []
-        # ---
-        results = []
-        # ---
-        try:
-            results = cursor.fetchall()
-
-        except Exception:
-            pywikibot.output("Traceback (most recent call last):")
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output("CRITICAL:")
-            return []
-        # ---
-        # yield from cursor
-        return results
+    return results
 
 
 def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
@@ -178,6 +117,7 @@ def add_qid(title, qid):
     values = [title, qid]
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
+
 
 def set_qid_where_title(title, qid):
     # ---

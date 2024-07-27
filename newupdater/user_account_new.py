@@ -1,4 +1,4 @@
-'''
+"""
 # ---
 from newupdater import user_account_new
 username = user_account_new.my_username
@@ -6,7 +6,7 @@ password = user_account_new.mdwiki_pass
 user_agent = user_account_new.user_agent
 
 # ---
-'''
+"""
 
 import os
 import configparser
@@ -21,10 +21,10 @@ Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
 config = configparser.ConfigParser()
-config.read(f'{dir2}/confs/user.ini')
+config.read(f"{dir2}/confs/user.ini")
 
-my_username = config['DEFAULT']['my_username']
+my_username = config["DEFAULT"].get("my_username", "")
 
-mdwiki_pass = config['DEFAULT']['mdwiki_pass']
+mdwiki_pass = config["DEFAULT"].get("mdwiki_pass", "")
 
-user_agent = config["DEFAULT"]["user_agent"]
+user_agent = config["DEFAULT"].get("user_agent", "")

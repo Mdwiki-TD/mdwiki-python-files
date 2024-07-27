@@ -92,7 +92,7 @@ def main():
     # ---
     en_keys.append("Cisatracurium")
     # ---
-    print(f"start get_views_with_rest_v1: lenth: {len(en_keys)}")
+    print(f"start get_views_with_rest_v1: length: {len(en_keys)}")
     # ---
     enviews = rest_v1_views.get_views_last_30_days("en", en_keys)
     # ---

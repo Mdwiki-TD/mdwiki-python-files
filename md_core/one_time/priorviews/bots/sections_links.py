@@ -103,7 +103,7 @@ def dump_secs_links(d_links):
     global sect_file
     # ---
     if d_links != {}:
-        printe.output(f'<<lightyellow>> d_links(): lenth: {len(d_links.keys())}')
+        printe.output(f'<<lightyellow>> d_links(): length: {len(d_links.keys())}')
         json.dump(d_links, open(sect_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 

@@ -12,7 +12,7 @@ import requests
 from newapi.mdwiki_page import user_agent, MainPage, NEW_API
 from newapi import printe
 from mdpy.bots import py_tools
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 from mdpy.bots.check_title import valid_title  # valid_title(title)
 
 # ---
@@ -78,9 +78,9 @@ def get_red(title):
     return lista
 
 
-def work(title, num, lenth, From=""):
+def work(title, num, length, From=""):
     # ---
-    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{lenth} title:"{title}".')
+    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""

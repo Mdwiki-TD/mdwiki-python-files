@@ -83,7 +83,7 @@ def make_text(ViewsData):
     with open(f'{Dir}/lists/lang_links_mdtitles.json', "r", encoding="utf-8") as f:
         lang_links_mdtitles = json.load(f)
     # ---
-    # sort lang_links_mdtitles by lenth
+    # sort lang_links_mdtitles by length
     lang_to_wrks = dict(sorted(lang_links_mdtitles.items(), key=lambda x: len(x[1]), reverse=True))
     # change it to list
     lang_to_wrks = list(lang_to_wrks.keys())

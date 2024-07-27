@@ -18,7 +18,7 @@ import json
 # ---
 from newapi import printe
 from mdpy.bots import py_tools
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 from newapi.mdwiki_page import MainPage, NEW_API
 
 # ---
@@ -40,9 +40,9 @@ api_new.Login_to_wiki()
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 
 
-def work(title, num, lenth, From=''):
+def work(title, num, length, From=''):
     # ---
-    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{lenth} title:"{title}".')
+    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""

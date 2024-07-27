@@ -11,7 +11,7 @@ from pathlib import Path
 
 # ---
 from newapi import printe
-from mdpy.bots import wiki_api
+from apis import wiki_api
 
 # ---
 TEST = False
@@ -109,7 +109,7 @@ def get_lang_links_mdtitles(lang_links):
     with open(f'{Dir}/lists/lang_links_mdtitles.json', "w", encoding="utf-8") as f:
         json.dump(lang_links_mdtitles, f, ensure_ascii=False, indent=2)
     # ---
-    # sort lang_links_mdtitles by lenth
+    # sort lang_links_mdtitles by length
     lang_links_mdtitles = dict(sorted(lang_links_mdtitles.items(), key=lambda x: len(x[1]), reverse=True))
     # ---
     # print first 10 of lang_links_mdtitles
@@ -129,7 +129,7 @@ def start():
     lang_links_mdtitles = get_lang_links_mdtitles(lang_links)
     # ---
     # len of tab in lang_links
-    all_lenth = sum(len(tab.keys()) for tab in lang_links_mdtitles.values())
+    all_length = sum(len(tab.keys()) for tab in lang_links_mdtitles.values())
     # ---
     to_work = lang_links_mdtitles
     # ---
@@ -141,7 +141,7 @@ def start():
         # ---
         ViewsData.update({x: {} for x in tab.values() if x not in ViewsData})
         # ---
-        printe.output(f'<<blue>> p:{n}/{all_lenth} lang: {lang}, titles: {len(tab)}')
+        printe.output(f'<<blue>> p:{n}/{all_length} lang: {lang}, titles: {len(tab)}')
         # ---
         get_v(lang, tab, lang_links_mdtitles)
         # ---

@@ -17,10 +17,10 @@ from pymysql.converters import escape_string
 # ---
 from api_sql import wiki_sql
 from newapi import printe
-from mdpy.bots import sql_for_mdwiki
+from api_sql import sql_for_mdwiki
 from mdpy.bots import py_tools
-from mdpy.bots import wikidataapi
-from mdpy.bots import wiki_api
+from apis import wikidataapi
+from apis import wiki_api
 from mdpy.bots import en_to_md
 
 # ---

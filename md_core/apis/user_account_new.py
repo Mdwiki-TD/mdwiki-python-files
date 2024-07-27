@@ -26,20 +26,20 @@ dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 config = configparser.ConfigParser()
 config.read(f"{dir2}/confs/user.ini")
 
-username = config["DEFAULT"]["botusername"]
-password = config["DEFAULT"]["botpassword"]
+username = config["DEFAULT"].get("botusername", "")
+password = config["DEFAULT"].get("botpassword", "")
 
-bot_username = config["DEFAULT"]["botusername"]
-bot_password = config["DEFAULT"]["botpassword"]
+bot_username = config["DEFAULT"].get("botusername", "")
+bot_password = config["DEFAULT"].get("botpassword", "")
 
-my_username = config["DEFAULT"]["my_username"]
-my_password = config["DEFAULT"]["my_password"]
+my_username = config["DEFAULT"].get("my_username", "")
+my_password = config["DEFAULT"].get("my_password", "")
 
-mdwiki_pass = config["DEFAULT"]["mdwiki_pass"]
+mdwiki_pass = config["DEFAULT"].get("mdwiki_pass", "")
 
-lgname_enwiki = config["DEFAULT"]["lgname_enwiki"]
-lgpass_enwiki = config["DEFAULT"]["lgpass_enwiki"]
+lgname_enwiki = config["DEFAULT"].get("lgname_enwiki", "")
+lgpass_enwiki = config["DEFAULT"].get("lgpass_enwiki", "")
 
-qs_token = config["DEFAULT"]["qs_token"]
+qs_token = config["DEFAULT"].get("qs_token", "")
 
-user_agent = config["DEFAULT"]["user_agent"]
+user_agent = config["DEFAULT"].get("user_agent", "")

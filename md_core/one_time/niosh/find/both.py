@@ -22,7 +22,7 @@ with open(both_file, "r", encoding="utf-8") as f:
 # ---
 print(f'all pages:{len(both.keys())}')
 # ---
-# sort both keys by lenth of it list
+# sort both keys by length of it list
 
 
 def do_all():
@@ -61,7 +61,7 @@ n = 0
 for x, le in aa.items():
     n += 1
     x2 = x.ljust(60)
-    print(f'x: {x2}\t lenth:{len(le)}')
+    print(f'x: {x2}\t length:{len(le)}')
     if len(le) < 15:
         break
 # ---

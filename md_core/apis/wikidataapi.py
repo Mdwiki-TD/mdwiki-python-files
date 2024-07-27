@@ -472,7 +472,7 @@ def Claim_API_qid(qid, property, numeric):
 
 def open_url(url, return_json=False):
     # ---
-    result = {} and return_json or ""
+    result = {} if return_json else ""
     # ---
     # get the url
     req = False

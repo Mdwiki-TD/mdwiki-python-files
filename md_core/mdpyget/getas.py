@@ -18,8 +18,8 @@ import sys
 
 # ---
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
-from mdpy.bots import wiki_api
-from mdpy.bots import catdepth2
+from apis import wiki_api
+from apis import catdepth2
 from newapi import printe
 
 # ---

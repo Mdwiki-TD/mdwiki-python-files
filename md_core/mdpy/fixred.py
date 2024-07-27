@@ -13,7 +13,7 @@ python3 core8/pwb.py mdpy/fixred
 # ---
 import re
 import sys
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 from newapi import printe
 
 # ---
@@ -102,7 +102,7 @@ def find_redirects(links):
     newlen = len(from_to.items())
     nn = newlen - oldlen
     # ---
-    printe.output(f"def find_redirects: find {nn} lenth")
+    printe.output(f"def find_redirects: find {nn} length")
     # printe.output( "def find_redirects: find %d for normalized" % normalized_numb )
 
 

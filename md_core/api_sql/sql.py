@@ -384,4 +384,4 @@ if __name__ == '__main__':
     # ---
     ss = Make_sql_2_rows(arqueries, wiki="arwiki")
     # ss = MySQLdb_finder_2_rows("Fooian_fooers")
-    printe.output(f'sql py test:: Make_sql_2_rows lenth:{len(ss)}')
+    printe.output(f'sql py test:: Make_sql_2_rows length:{len(ss)}')

@@ -11,7 +11,7 @@ from pathlib import Path
 # ---
 from newapi.wiki_page import MainPage, change_codes
 from newapi import printe
-from mdpy.bots import mdwiki_api
+from apis import mdwiki_api
 
 # ---
 Dir = Path(__file__).parent
