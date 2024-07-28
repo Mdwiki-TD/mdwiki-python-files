@@ -1,4 +1,3 @@
-
 import sys
 import re
 
@@ -48,7 +47,8 @@ def get_valid_Links(words_tab):
         vav = [x.strip() for x in ttt.split("\n") if x.strip() != ""]
     # ---
     elif "fromlist" in sys.argv:
-        vav = mdwiki_api.Get_page_links_2("WikiProjectMed:List")
+        vav = mdwiki_api.Get_page_links("WikiProjectMed:List")
+        vav = vav.get("links", {}).keys()
         printe.output("Get vaild_links fromlist : WikiProjectMed:List")
     # ---
     else:

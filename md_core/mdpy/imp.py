@@ -12,13 +12,8 @@ python3 core8/pwb.py mdpy/imp -page:Infertility
 #
 #
 import sys
-import json
-
-
-# ---
 from newapi import printe
 from mdpy.bots import py_tools
-from apis import mdwiki_api
 from newapi.mdwiki_page import MainPage, NEW_API
 
 # ---
@@ -58,21 +53,12 @@ def work(title, num, length, From=''):
     # ---
     text = page.get_text()
     # ---
-    ing = mdwiki_api.import_page(title)
-    # ---
-    if text:
-        printe.output(ing)
+    ing = page.import_page(family="wikipedia")
     # ---
     if "test" in sys.argv:
         printe.output(ing)
     # ---
-    ing_js = {}
-    try:
-        ing_js = json.loads(ing)
-    except BaseException:
-        print("")
-    # ---
-    done = ing_js.get("import", [{}])[0].get("revisions", 0)
+    done = ing.get("import", [{}])[0].get("revisions", 0)
     # ---
     printe.output(f"<<lightgreen>> imported {done} revisions")
     # ---
@@ -80,7 +66,7 @@ def work(title, num, length, From=''):
         # ---
         save_page = page.save(newtext=text, summary='', nocreate=1)
         # ---
-        if save_page != True:
+        if save_page is not True:
             title2 = f'User:Mr._Ibrahem/{title}'
             # ---
             page2 = MainPage(title2, 'www', family='mdwiki')
@@ -209,13 +195,12 @@ def main():
     if newpages != "":
         lista = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        lista = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
+        lista = api_new.UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
     elif pages != []:
         lista = pages
+    # ---
     for num, page in enumerate(lista, start=1):
         work(page, num, len(lista))
-    # ---
-    # '''
     # ---
     if starts == 'all':
         while okay:

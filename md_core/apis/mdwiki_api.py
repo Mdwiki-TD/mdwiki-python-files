@@ -2,48 +2,33 @@
 """
 
 """
-
-import sys
-import json
-import time
-import pywikibot
-
 from newapi import printe
-from newapi.mdwiki_page import NEW_API
+from newapi.mdwiki_page import MainPage as md_MainPage, NEW_API
 
 api_new = NEW_API("www", family="mdwiki")
 api_new.Login_to_wiki()
-# json1   = api_new.post_params(params, addtoken=False)
-# ---
-"""
-# ---
-from apis import mdwiki_api
-# mdwiki_api.Find_pages_exists_or_not(title)
-# mdwiki_api.GetPageText(title)
-# mdwiki_api.Add_To_Bottom(appendtext, summary, title, ask)
-# mdwiki_api.wordcount(title, srlimit='30')
-# mdwiki_api.get_redirect(liste)
-# mdwiki_api.Get_page_links_2
-# mdwiki_api.Get_All_pages(start, limit="max", namespace="*", apfilterredir='')
-# mdwiki_api.page_put(oldtext='', newtext='', summary='', title='', returntrue=False, diff=True)
-# mdwiki_api.post_s(params, addtoken=False)
-# mdwiki_api.Get_page_links(title, namespace="*", limit="max")
-# mdwiki_api.Get_UserContribs(user, limit="max", namespace="*", ucshow="")
-# mdwiki_api.create_Page(text, summary, title, ask, sleep=0, duplicate4="")
-# mdwiki_api.import_page(title)
-# ---
-"""
-# ---
-yes_answer = ["y", "a", "", "Y", "A", "all"]
-# ---
-timesleep = 0
-# ---
-Save_2020 = {1: False}
-Save_2040 = {1: False}
 
-
-def py_input(s):
-    return pywikibot.input(s)
+# json1    = api_new.post_params(params, addtoken=False)
+# login    = api_new.Login_to_wiki()
+# move_it  = api_new.move(old_title, to, reason="", noredirect=False, movesubpages=False)
+# pages    = api_new.Find_pages_exists_or_not(liste, get_redirect=False)
+# pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
+# all_pages= api_new.Get_All_pages_generator(start="", namespace="0", limit="max", filterredir="", ppprop="", limit_all=100000)
+# search   = api_new.Search(value='', ns="", offset='', srlimit="max", RETURN_dict=False, addparams={})
+# newpages = api_new.Get_Newpages(limit="max", namespace="0", rcstart="", user='')
+# usercont = api_new.UserContribs(user, limit=5000, namespace="*", ucshow="")
+# l_links  = api_new.Get_langlinks_for_list(titles, targtsitecode="", numbes=50)
+# text_w   = api_new.expandtemplates(text)
+# subst    = api_new.Parse_Text('{{subst:page_name}}', title)
+# extlinks = api_new.get_extlinks(title)
+# revisions= api_new.get_revisions(title)
+# logs     = api_new.get_logs(title)
+# wantedcategories  = api_new.querypage_list(qppage='Wantedcategories|Wantedfiles', qplimit="max", Max=5000)
+# pages  = api_new.Get_template_pages(title, namespace="*", Max=10000)
+# pages_props  = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", Max=None)
+# img_url  = api_new.Get_image_url(title)
+# added    = api_new.Add_To_Bottom(text, summary, title, poss="Head|Bottom")
+# titles   = api_new.get_titles_redirects(titles)
 
 
 def post_s(params, addtoken=False, files=None):
@@ -56,321 +41,28 @@ def post_s(params, addtoken=False, files=None):
     return json1
 
 
-def outbot(text2):
-    text = {}
+def page_put(newtext="", summary="", title="", minor="", nocreate=1, **kwargs):
     # ---
-    if isinstance(text2, dict):
-        text = text2
-    else:
-        try:
-            text = json.loads(text2)
-        except BaseException:
-            printe.output("error when json loads text2")
-    # ---{'error': {'*': 'See https://mdwiki.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.', 'info': 'Invalid CSRF token.', 'code': 'badtoken'}}
-    # {'error': {'info': 'Invalid CSRF token.', '*': 'See https://mdwiki.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes.', 'code': 'badtoken'}}
+    page = md_MainPage(title, "www", family="mdwiki")
+    exists = page.exists()
     # ---
-    Invalid = ""
-    if isinstance(text.get("error", {}), dict):
-        Invalid = text.get("error", {}).get("info", "")
+    save_page = page.save(newtext=newtext, summary=summary, nocreate=nocreate, minor=minor)
     # ---
-    if Invalid == "Invalid CSRF token.":
-        pywikibot.output('<<lightred>> ** error "Invalid CSRF token.". ')
-        pywikibot.output(text)
-        # ---
-    elif "error" in text:
-        pywikibot.output("<<lightred>> ** error. ")
-        pywikibot.output(text)
-        # ---
-        if "code" in text["error"]:
-            if text["error"]["code"] == "articleexists":
-                pywikibot.output("<<lightred>> ** article already created. ")
-                return "articleexists"
-        else:
-            pywikibot.output(text)
-        # ---
-    elif "success" in text or "Success" in text:
-        pywikibot.output("<<lightgreen>> ** true. ")
-    else:
-        pywikibot.output(text2)
+    return save_page
 
 
-def import_history2(FILE_PATH, title):
-    # ---
-    printe.output(f"<<lightpurple>> import_history for page:{title}:")
-    # ---
-    namespace = 2 if title.lower().startswith("user:") else 0
-    # ---
-    pp = {
-        "action": "import",
-        # "xml": "...",
-        "interwikiprefix": "user:",
-        "fullhistory": 1,
-        "namespace": namespace,
-        # "assignknownusers": 1,
-        "utf8": 1,
-    }
-    # ---
-    NewList = []
-    # ---
-    if FILE_PATH:
-        if not isinstance(FILE_PATH, list):
-            NewList.append(FILE_PATH)
-        else:
-            NewList = FILE_PATH
-    # ---
-    for fff in NewList:
-        printe.output(f' file:"{fff}"')
-        with open(fff) as file:
-            FILE = {"xml": ("file.xml", file)}
-        # DATA = R.json()
-        # print(DATA)
-        r4 = post_s(pp, addtoken=True, files=FILE)
-        # ---
-        DATA = r4.json()
-        printe.output(DATA)
-        # ---
-        if "Success" in r4.text:
-            printe.output("<<lightgreen>> ** true .. . ")
-        # ---
-        outbot(r4.text)
+def Add_To_Bottom(appendtext, summary, title, **kwargs):
+    return api_new.Add_To_Bottom(appendtext, summary, title, poss="Bottom")
 
 
-def import_history(FILE_PATH, title):
+def create_Page(text, summary, title, ask, **kwargs):
     # ---
-    printe.output(f"<<lightpurple>> import_history for page:{title}:")
+    page = md_MainPage(title, "www", family="mdwiki")
     # ---
+    create = page.Create(text=text, summary=summary)
+    # ---
+    return create
 
-    namespace = 2 if title.lower().startswith("user:") else 0
-    # ---
-    pparams = {
-        "action": "import",
-        "interwikisource": "wikipedia",
-        "interwikipage": title,
-        # "summary": "",
-        "fullhistory": 1,
-        "namespace": namespace,
-    }
-    # ---
-    NewList = []
-    # ---
-    if FILE_PATH:
-        if not isinstance(FILE_PATH, list):
-            NewList.append(FILE_PATH)
-        else:
-            NewList = FILE_PATH
-    # ---
-    for fff in NewList:
-        printe.output(f' file:"{fff}"')
-        with open(fff) as file:
-            FILE = {"xml": ("file.xml", file)}
-        # DATA = R.json()
-        # print(DATA)
-        # ---
-        r4 = post_s(pparams, addtoken=True, files=FILE)
-        # ---
-        if "Success" in r4.text:
-            printe.output("<<lightgreen>> ** true .. . ")
-        # ---
-        DATA = r4
-        printe.output(DATA)
-
-
-def import_page(title):
-    params = {"action": "import", "format": "json", "interwikisource": "wikipedia", "interwikipage": title, "fullhistory": 1, "assignknownusers": 1}
-    # ---
-    r4 = post_s(params, addtoken=True)
-    # ---
-    outbot("import_page:")
-    outbot(r4)
-    # ---
-    return r4
-
-
-def page_put_new(NewText, summary, title, time_sleep="", family="", lang="", minor="", nocreate=1, tags="", returntrue=False, return_table=False):
-    # ---
-    printe.output(f" page_put {title}:")
-    # ---
-    pparams = {"action": "edit", "title": title, "text": NewText, "summary": summary, "nocreate": nocreate}
-    # ---
-    if sys.argv and "workibrahem" in sys.argv:
-        pparams["summary"] = ""
-    # ---
-    if tags != "":
-        pparams["tags"] = tags
-    # ---
-    tts = timesleep
-    if time_sleep != "":
-        tts = time_sleep
-    # ---
-    r4 = post_s(pparams, addtoken=True)
-    # ---
-    # Invalid = ''
-    # if isinstance(r4.get("error", {}), dict):
-    # Invalid = r4.get("error", {}).get("info", '')
-    # ---
-    if "Success" in str(r4):
-        printe.output(f"<<lightgreen>> ** true .. [[mdwiki:{title}]]   time.sleep({tts}) ")
-        printe.output(f"Save True.. time.sleep({tts}) ")
-        time.sleep(tts)
-        if return_table:
-            return r4
-        elif returntrue:
-            return True
-    else:
-        outbot(r4)
-        if returntrue:
-            return False
-        elif return_table:
-            return {}
-
-
-def page_put(oldtext="", newtext="", summary="", title="", time_sleep="", family="", lang="", minor="", nocreate=1, tags="", returntrue=False, diff=True):
-    # ---
-    if not Save_2020[1] and "ask" in sys.argv and "save" not in sys.argv:
-        if diff:
-            try:
-                pywikibot.showDiff(oldtext, newtext)
-            except BaseException:
-                printe.output(" -mdwiki cant showDiff")
-        printe.output(f" -Edit summary: {summary}:")
-        sa = py_input(f"<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {lang}:{title}.org")
-        # ---
-        if sa == "a":
-            printe.output("<<lightgreen>> ---------------------------------")
-            printe.output("<<lightgreen>> mdwiki.py save all without asking.")
-            printe.output("<<lightgreen>> ---------------------------------")
-            Save_2020[1] = True
-        # ---
-        if sa not in yes_answer:
-            printe.output("wrong answer")
-            return False
-    # ---
-    return page_put_new(newtext, summary, title, time_sleep=time_sleep, family=family, lang=lang, minor=minor, nocreate=nocreate, tags=tags, returntrue=returntrue)
-
-
-def Add_To_Bottom2(aptext, summary, title, poss="", family="", minor=""):
-    if title.strip() != "":
-        printe.output(f"** Add_To_Bottom2 .. [[{title}]] ")
-        # pywikibot.showDiff("" , aptext)
-        # ---
-        Paramso = {
-            "action": "edit",
-            "title": title,
-            "summary": summary,
-            "notminor": 1,
-            "nocreate": 1,
-        }
-        # ---
-        if poss == "Head":
-            Paramso["prependtext"] = f"{aptext.strip()}\n"
-        else:
-            Paramso["appendtext"] = f"\n{aptext.strip()}"
-        # ---
-        if sys.argv and "workibrahem" in sys.argv:
-            Paramso["summary"] = ""
-        # ---
-        r4 = post_s(Paramso, addtoken=True)
-        # ---
-        if "Success" in r4:
-            printe.output(f"<<lightgreen>>** true .. [[{title}]] ")
-            printe.output(f"Save True... time.sleep({timesleep}) ")
-        else:
-            outbot(r4)
-    else:
-        printe.output('** Add_To_Bottom2 ..  title == ""')
-
-def Add_To_Bottom(appendtext, summary, title, Ask, family="", minor=""):
-    if title.strip() != "":
-        # ---
-        printe.output(f" Add_To_Bottom for Page {title}:")
-        printe.output(appendtext)
-        if Ask or "ask" in sys.argv and "save" not in sys.argv:
-            # if Ask:
-            sa = py_input(f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: Add_To_Bottom of page "{title}" ? ([y]es, [N]o):')
-            if sa in yes_answer:
-                Add_To_Bottom2(appendtext, summary, title, family=family, minor=minor)
-            else:
-                printe.output("wrong answer")
-            return sa
-        else:
-            Add_To_Bottom2(appendtext, summary, title, family=family, minor=minor)
-        # ---
-    else:
-        printe.output('** Add_To_Bottom ..  title == ""')
-
-
-def create_Page(text, summary, title, ask, sleep=0, family="", duplicate4="", minor="", printtext=True):
-    printe.output(f" create Page {title}:")
-    time_sleep = timesleep
-    # ---
-    if title.startswith("نقاش القالب:") and title.endswith("/ملعب"):
-        printe.output(" skip make talk to sandboxes..")
-        return False
-    # ---
-    if sleep and sleep > 0:
-        time_sleep = sleep
-    # ---
-    params = {
-        "action": "edit",
-        "title": title,
-        "text": text,
-        "summary": summary,
-        "notminor": 1,
-        "createonly": 1,
-    }
-    # ---
-    if sys.argv and "workibrahem" in sys.argv:
-        params["summary"] = "+"
-    # ---
-    sa = {"error": {"code": "articleexists", "info": "The article you tried to create has been created already.", "*": "See https://ar.wikipedia.org/w/api.php for API usage. Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/mailman/listinfo/mediawiki-api-announce&gt; for notice of API deprecations and breaking changes."}, "servedby": "mw1284"}
-    Faco = False
-    # ---
-    if not Save_2040[1] and (ask or "ask" in sys.argv and "save" not in sys.argv):
-        # if ask or "ask" in sys.argv and "save" not in sys.argv:
-        # if ask:
-        # pywikibot.showDiff("" , text)
-        if printtext:
-            printe.output(f"<<lightgreen>> {text}")
-        printe.output(f" summary: {summary}")
-        sa = py_input(f'<<lightyellow>>mdwiki/mdpy/mdwiki_api.py: create {family}:"{title}" page ? ([y]es, [N]o)')
-        if sa.strip() in yes_answer:
-            # ---
-            if sa.strip() == "a":
-                printe.output("<<lightgreen>> ---------------------------------------------")
-                printe.output("<<lightgreen>> mdwiki.py create_Page save all without asking.")
-                printe.output("<<lightgreen>> ---------------------------------------------")
-                Save_2040[1] = True
-            # ---
-            r4 = post_s(params, addtoken=True)
-            Faco = True
-        else:
-            printe.output("wrong answer")
-            return False
-    else:
-        r4 = post_s(params)
-        Faco = True
-    # ---a
-    if Faco:
-        # ---
-        if "Success" in r4:
-            printe.output(f"<<lightgreen>>** true .. : [[{title}]] ")
-            printe.output(f"Save True... time.sleep({time_sleep}) ")
-            time.sleep(time_sleep)
-            return True
-        elif "error" in r4:
-            if "code" in r4["error"]:
-                if r4["error"]["code"] == "articleexists":
-                    printe.output("error when create_Page")
-            outbot(r4)
-        else:
-            printe.output("create_Page: outbot(r4.text)")
-            outbot(r4)
-            return False
-    # ---a
-    printe.output(f"<<lightred>> end of create_Page def return False title:({title})")
-    printe.output(r4)
-    # ---a
-    return False
 
 def wordcount(title, srlimit="30"):
     # srlimit = "30"
@@ -416,6 +108,7 @@ def GetPageText(title, redirects=False):
         params["redirects"] = 1
     # ---
     text = ""
+    # ---
     json1 = post_s(params)
     if json1:
         text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
@@ -427,6 +120,7 @@ def GetPageText(title, redirects=False):
         printe.output(f'page {title} text == "".')
     # ---
     return text
+
 
 def Get_page_links(title, namespace="0", limit="max"):
     # ---
@@ -440,8 +134,6 @@ def Get_page_links(title, namespace="0", limit="max"):
         "pllimit": limit,
         "converttitles": 1,
     }
-    # ---
-    # if apfilterredir in [ 'redirects' , 'all' , 'nonredirects' ] : params['apfilterredir'] = apfilterredir
     # ---
     json1 = post_s(params)
     # ---
@@ -471,206 +163,21 @@ def Get_page_links(title, namespace="0", limit="max"):
     return Main_table
 
 
-def Get_page_links_2(title):
-    Main_table = Get_page_links(title)
-    return Main_table.get("links", {}).keys()
-
-
 def Get_template_pages(title, namespace="*", limit="max"):
-    # ---
-    printe.output(f'Get_template_pages for template:"{title}", limit:"{limit}",namespace:"{namespace}"')
-    # ---
-    params = {"action": "query", "prop": "info", "titles": title, "generator": "transcludedin", "gtinamespace": namespace, "gtilimit": limit}
-    # ---
-    Main_table = []
-    gticontinue = "x"
-    # ---
-    while gticontinue != "":
-        # ---
-        if gticontinue != "x":
-            params["gticontinue"] = gticontinue
-        # ---
-        json1 = post_s(params)
-        # ---
-        if not json1:
-            break
-        # ---
-        gticontinue = json1.get("continue", {}).get("gticontinue", "")
-        # ---
-        pages = json1.get("query", {}).get("pages", {})
-        # ---
-        Main_table.extend(tab["title"] for _, tab in pages.items())
-        # ---
-        printe.output(f"len of Main_table:{len(Main_table)}.")
-    # ---
-    printe.output(f"mdwiki_api.py Get_template_pages : find {len(Main_table)} pages.")
-    # ---
-    return Main_table
+    return api_new.Get_template_pages(title, namespace=namespace)
 
 
 def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all=0):
-    # ---
-    printe.output(f"Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}")
-    # ---
-    numb = 0
-    # ---
-    params = {
-        "action": "query",
-        "list": "allpages",
-        # "apfrom": start,
-        "apnamespace": namespace,
-        "aplimit": limit,
-        "apfilterredir": "nonredirects",
-    }
-    # ---
-    if apfilterredir in ["redirects", "all", "nonredirects"]:
-        params["apfilterredir"] = apfilterredir
-    # ---
-    if start != "":
-        params["apfrom"] = start
-    # ---
-    apcontinue = "x"
-    # ---
-    Main_table = []
-    # ---
-    while apcontinue != "":
-        # ---
-        numb += 1
-        # ---
-        printe.output(f"Get_All_pages {numb}, apcontinue:{apcontinue}..")
-        # ---
-        if apcontinue != "x":
-            params["apcontinue"] = apcontinue
-        # ---
-        json1 = post_s(params)
-        # ---
-        if not json1:
-            break
-        # ---
-        apcontinue = json1.get("continue", {}).get("apcontinue", "")
-        # ---
-        newp = json1.get("query", {}).get("allpages", [])
-        printe.output(f"<<lightpurple>> --- Get_All_pages : find {len(newp)} pages.")
-        # ---
-        for x in newp:
-            if x["title"] not in Main_table:
-                Main_table.append(x["title"])
-        # ---
-        printe.output(f"len of Main_table {len(Main_table)}.")
-        # ---
-        if limit_all > 0 and len(Main_table) >= limit_all:
-            apcontinue = ""
-            printe.output("<<lightgreen>> limit_all >= len(Main_table) ")
-            break
-        # ---
-    # ---
-    if numb > 0 and apcontinue == "":
-        printe.output("<<lightgreen>> apcontinue == '' ")
-    # ---
-    printe.output(f"mdwiki_api.py Get_All_pages : find {len(Main_table)} pages.")
-    # ---
-    return Main_table
+    return api_new.Get_All_pages(start=start, namespace=namespace, limit=limit, apfilterredir=apfilterredir, limit_all=limit_all)
 
 
 def Get_UserContribs(user, limit="max", namespace="*", ucshow=""):
-    # ---
-    printe.output(f'Get_UserContribs for user:"{user}", limit:"{limit}"')
-    # ---
-    params = {
-        "action": "query",
-        "list": "usercontribs",
-        "ucdir": "older",
-        "ucnamespace": namespace,
-        "uclimit": limit,
-        "ucuser": user,
-        "ucprop": "title"
-        # "ucshow": "new"
-    }
-    # ---
-    if ucshow != "":
-        params["ucshow"] = ucshow
-    # ---
-    json1 = post_s(params)
-    # ---
-    Main_table = []
-    # ---
-    if json1:
-        newp = json1.get("query", {}).get("usercontribs", {})
-        # ---
-        Main_table = [x["title"] for x in newp]
-    # ---
-    printe.output(f"mdwiki_api.py Get_UserContribs : find {len(Main_table)} pages.")
-    # ---
-    return Main_table
+    return api_new.UserContribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
 
 
 def get_redirect(liste):
-    # ---
-    redirects = {}
-    # ---
-    for i in range(0, len(liste), 50):
-        titles = liste[i : i + 50]
-        # ---
-        params = {
-            "action": "query",
-            "format": "json",
-            "titles": "|".join(titles),
-            "redirects": 1,
-            # "prop": "templates|langlinks",
-            "utf8": 1,
-            # "normalize": 1,
-        }
-        # ---
-        json1 = post_s(params)
-        # ---
-        if json1:
-            redd = json1.get("query", {}).get("redirects", [])
-            for red in redd:
-                redirects[red["from"]] = red["to"]
-    # ---
-    return redirects
+    return api_new.get_titles_redirects(liste)
 
 
 def Find_pages_exists_or_not(liste):
-    # ---
-    normalized = {}
-    table = {}
-    # ---
-    for i in range(0, len(liste), 50):
-        titles = liste[i : i + 50]
-        # ---
-        params = {
-            "action": "query",
-            "titles": "|".join(titles),
-            # "redirects": 0,
-            # "normalize": 1,
-        }
-        # ---
-        json1 = post_s(params)
-        # ---
-        if not json1:
-            return table
-        # ---
-        query = json1.get("query", {})
-        normalz = query.get("normalized", {})
-        # ---
-        for red in normalz:
-            normalized[red["to"]] = red["from"]
-        # ---
-        query_pages = query.get("pages", {})
-        # ---
-        for _, kk in query_pages.items():
-            tit = kk.get("title", "")
-            if tit != "":
-                tit = normalized.get(tit, tit)
-                # ---
-                table[tit] = True
-                # ---
-                if "missing" in kk:
-                    table[tit] = False
-    # ---
-    return table
-
-
-if __name__ == "__main__":
-    Get_All_pages("", namespace=14)
+    return api_new.Find_pages_exists_or_not(liste)

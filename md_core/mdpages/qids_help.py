@@ -80,7 +80,7 @@ def check(work_list, all_pages, ty):
         # ---
         # { "error": { "code": "toomanyvalues", "info": "Too many values supplied for parameter \"titles\". The limit is 50.",
         # ---
-        jsone = wiki_api.submitAPI(params, apiurl="https://en.wikipedia.org/w/api.php", returnjson=False)
+        jsone = wiki_api.submitAPI(params, site="en", returnjson=False)
         # ---
         if jsone and "batchcomplete" in jsone:
             # ---

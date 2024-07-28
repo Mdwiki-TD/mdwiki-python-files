@@ -17,6 +17,10 @@ api_new = NEW_API("or", family="wikipedia")
 
 def create_redirect(target, mdtitle):
     # ---
+    if not target or not mdtitle:
+        printe.output(f"<<lightred>>** false .. {mdtitle=} | {target=} ")
+        return
+    # ---
     text = f"#redirect [[{target}]]"
     sus = f"Redirected page to [[{target}]]"
     # ---
@@ -60,17 +64,17 @@ def start():
     # ---
     targets_exists = {x: targets_to_titles.get(x) for x in pages}
     # ---
-    check_it, c_not_exists = check_all(list(targets_exists.values()))
+    mdtitle_exists, c_not_exists = check_all(list(targets_exists.values()))
     # ---
     printe.output(f"<<yellow>> check targets({len(targets_to_titles)}) exists:{len(pages):,} not_exists:{len(p_not_exists):,}")
     # ---
-    printe.output(f"<<yellow>> check mdwikis({len(targets_exists)}) exists:{len(check_it):,} not_exists:{len(c_not_exists):,}")
+    printe.output(f"<<yellow>> check mdwikis({len(targets_exists)}) exists:{len(mdtitle_exists):,} not_exists:{len(c_not_exists):,}")
     # ---
-    mdwiki_exists = {x: targets_exists.get(x) for x in check_it}
+    to_work = {x: v for x, v in targets_exists.items() if v in c_not_exists}
     # ---
-    for n, (target, mdtitle) in enumerate(mdwiki_exists.items(), start=1):
+    for n, (target, mdtitle) in enumerate(to_work.items(), start=1):
         # ---
-        printe.output(f"----------\n*<<lightyellow>> p{n}/{len(mdwiki_exists)} >{target=}, {mdtitle=}.")
+        printe.output(f"----------\n*<<lightyellow>> p{n}/{len(to_work)} >{target=}, {mdtitle=}.")
         # ---
         create_redirect(target, mdtitle)
 

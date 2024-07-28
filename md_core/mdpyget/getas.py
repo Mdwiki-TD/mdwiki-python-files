@@ -14,8 +14,9 @@ from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from apis import wiki_api
 from newapi import printe
 from newapi.mdwiki_page import CatDepth
+from newapi.wiki_page import NEW_API
+api_new = NEW_API('en', family='wikipedia')
 
-Dir = str(Path(__file__).parents[0])
 # ---
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
@@ -68,7 +69,9 @@ def work_for_list(listn):
     # من ميد إلى الإنجليزية
     # listo = [mdwiki_to_enwiki.get(cc, cc) for cc in listn]
     # ---
-    ase = wiki_api.Getpageassessments_from_wikipedia("|".join(listn), site="en")
+    result = api_new.get_pageassessments("|".join(listn))
+    # ---
+    ase = {x["title"]: x for x in result}
     # ---
     lenn = 0
     # ---

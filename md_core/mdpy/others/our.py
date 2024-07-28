@@ -77,15 +77,7 @@ def work(title):
                 values[param].append(title)
     # ---
     if newtext != text:
-        sa = True
-        # ---
-        if 'ask' in sys.argv:
-            pywikibot.showDiff(text, newtext)
-            sas = pywikibot.input(f'<<lightyellow>>API: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page {title}')
-            sa = sas in ['', 'y']
-        # ---
-        if sa:
-            mdwiki_api.page_put_new(newtext, 'fix ourworldindatamirror template.', title)
+        mdwiki_api.page_put(newtext=newtext, summary='fix ourworldindatamirror template.', title=title, returntrue=False, diff=True)
     # ---
     printe.output(pas)
 
