@@ -26,7 +26,7 @@ from wprefs.helps import print_s, ec_de_code
 from wprefs.files import reffixed_list, setting, append_reffixed_file, save_wprefcash
 from wprefs.wpref_text import fix_page
 
-# ---
+skip_langs = ["en"]
 move_dot = {1: False}
 expend_infobox = {1: False}
 
@@ -58,6 +58,10 @@ def fix_page_here(text, title, langcode):
 def work_one_lang(list_, lang):
     # ---
     print_s(f"<<lightblue>> work on lang: {lang}.wikipedia......................")
+    # ---
+    if lang in skip_langs:
+        print_s(f"<<lightblue>> skip lang: {lang}.wikipedia......................")
+        return
     # ---
     newlist = list_
     # ---
