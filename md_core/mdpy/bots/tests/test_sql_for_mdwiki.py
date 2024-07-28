@@ -2,7 +2,7 @@
 python3 core8/pwb.py mdpy/bots/tests/test_sql_for_mdwiki
 """
 
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from newapi import printe
 import json
 

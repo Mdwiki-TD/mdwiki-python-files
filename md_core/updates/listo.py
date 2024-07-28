@@ -12,21 +12,11 @@ python3 $HOME/pybot/md_core/mdpy/listo.py save
 python3 core8/pwb.py mdpy/listo save
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
-# ---
-# import pywikibot
-# ---
 import re
-
-# import datetime
-# import dateutil.parser
-# from datetime import datetime, date
-# menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
 import sys
 
+from newapi.mdwiki_page import CatDepth
+# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 from apis import mdwiki_api
 
 limit_m = {1: 0}
@@ -76,9 +66,8 @@ print(f'len of re_links: {len(re_links)}')
 print(f'len of links: {len(links)}')
 # print(str(links))
 # ---
-catpages = mdwiki_api.subcatquery('Category:RTT', depth='0', ns="0")
+catpages = CatDepth('Category:RTT', sitecode="www", family="mdwiki", depth=0, ns="0")
 catpages = [x.replace('_', ' ') for x in catpages]
-# catpages = mdwiki_api.Get_cat( 'RTT', '0' )
 # ---
 print(f'len of catpages: {len(catpages)}')
 if 'Biceps tendon rupture' in catpages:

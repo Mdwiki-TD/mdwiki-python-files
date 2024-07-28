@@ -2,7 +2,7 @@
 """
 
 بوت قواعد البيانات
-from api_sql import sql
+from mdapi_sql import sql
 
 """
 #
@@ -18,7 +18,7 @@ from pymysql.converters import escape_string
 
 # ---
 from API import printe
-from api_sql import sql_qu
+from mdapi_sql import sql_qu
 
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db

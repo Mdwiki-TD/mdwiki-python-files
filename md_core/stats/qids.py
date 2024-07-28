@@ -7,7 +7,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from api_sql import wiki_sql
+from mdapi_sql import wiki_sql
 
 Dir = Path(__file__).parent
 

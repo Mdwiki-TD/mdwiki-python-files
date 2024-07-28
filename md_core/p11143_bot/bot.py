@@ -17,11 +17,11 @@ import sys
 import time
 
 # ---
-from api_sql import sql_for_mdwiki
-from api_sql import sql_qids_others
+from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids_others
 from apis import wikidataapi
 from newapi import printe
-from apis import catdepth2
+from apis import cat_cach
 
 # ---
 sys.argv.append("workhimo")
@@ -31,7 +31,7 @@ wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
 
 def add_q(new_qids):
     # ---
-    TD_list = catdepth2.make_cash_to_cats(return_all_pages=True)
+    TD_list = cat_cach.make_cash_to_cats(return_all_pages=True)
     # ---
     print(f"len of new_qids: {len(new_qids)}")
     # ---

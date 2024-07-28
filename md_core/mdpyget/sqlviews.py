@@ -13,8 +13,8 @@ import re
 import sys
 
 # ---
-from api_sql import sql_for_mdwiki
-from apis import wiki_api
+from mdapi_sql import sql_for_mdwiki
+from apis import views_rest
 from pymysql.converters import escape_string
 from newapi import printe
 
@@ -250,7 +250,7 @@ def main():
             if lenlist < 5:
                 printe.output(", ".join(title_list))
             # ---
-            numbers = wiki_api.get_views_with_rest_v1(lange, title_list, date_start=start, date_end="20300101", printurl=False, printstr=False, Type="daily")
+            numbers = views_rest.get_views_with_rest_v1(lange, title_list, date_start=start, date_end="20300101", printurl=False, printstr=False, Type="daily")
             # ---
             if "numbers" in sys.argv and title_list[0] == "Tacalcitol":
                 printe.output(numbers)

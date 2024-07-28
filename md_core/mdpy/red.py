@@ -45,11 +45,8 @@ def get_red(title):
         "titles": title,
         "utf8": 1,
         "rdprop": "title",
-        # "rdprop": "pageid|title",
         "rdlimit": "max",
     }
-    # ---
-    # result = { "batchcomplete": "", "query": { "pages": { "1369": { "pageid": 1369, "ns": 0, "title": "اليمن", "redirects": [ { "ns": 0, "title": "جمهورية يمنية" } ] } } }, "limits": { "redirects": 500 } }
     # ---
     lista = []
     # ---
@@ -98,9 +95,10 @@ def work(title, num, length, From=""):
     text = f"#redirect [[{title}]]"
     sus = f"Redirected page to [[{title}]]"
     # ---
-    ing = mdwiki_api.Find_pages_exists_or_not(redirects)
+    ing = api_new.Find_pages_exists_or_not(redirects)
     # ---
     num = 0
+    # ---
     for tit, o in ing.items():
         num += 1
         if o:
@@ -195,7 +193,7 @@ def main():
             # ---
             with open(value, "r", encoding="utf8") as text2:
                 text = text2.read()
-            
+
             pages.extend(x.strip() for x in text.split("\n"))
         # ---
         # python red.py -ns:0 search:drug

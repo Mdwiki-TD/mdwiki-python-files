@@ -6,35 +6,24 @@
 python3 core8/pwb.py mdpyget/getas newpages
 
 """
-
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
 import json
-
-import os
 import sys
-
-# ---
-from mdpy.bots.en_to_md import enwiki_to_mdwiki
-from apis import wiki_api
-from apis import catdepth2
-from newapi import printe
-
-# ---
-# ---
 from pathlib import Path
 
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
+from mdpy.bots.en_to_md import enwiki_to_mdwiki
+from apis import wiki_api
+from newapi import printe
+from newapi.mdwiki_page import CatDepth
+from newapi.wiki_page import NEW_API
+api_new = NEW_API('en', family='wikipedia')
+
 # ---
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
 printe.output("Get vaild_links from cat : RTT")
-# ---
-tabe = catdepth2.subcatquery2("RTT", depth="2", ns="0")
+
+tabe = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=2, ns="0")
 vaild_links = tabe["list"]
 # ---
 printe.output(f"len of vaild_links: {len(vaild_links)}")
@@ -80,7 +69,9 @@ def work_for_list(listn):
     # من ميد إلى الإنجليزية
     # listo = [mdwiki_to_enwiki.get(cc, cc) for cc in listn]
     # ---
-    ase = wiki_api.Getpageassessments_from_wikipedia("|".join(listn), site="en")
+    result = api_new.get_pageassessments("|".join(listn))
+    # ---
+    ase = {x["title"]: x for x in result}
     # ---
     lenn = 0
     # ---

@@ -10,8 +10,8 @@ Usage:
 import sys
 
 # ---
-from api_sql import sql_qids_others
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids_others
+from mdapi_sql import sql_for_mdwiki
 from unlinked_wb.bot import work_un
 
 from newapi import printe

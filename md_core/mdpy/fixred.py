@@ -15,35 +15,26 @@ import re
 import sys
 from apis import mdwiki_api
 from newapi import printe
+from mdpy.bots import py_tools
+from newapi.mdwiki_page import MainPage as md_MainPage, NEW_API
 
-# ---
 NewList = {}
 
+redirects_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="redirects")
+print(f"len of redirects_pages {len(redirects_pages)} ")
+# ---
+nonredirects = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 
-def printtest(s):
-    if 'test' in sys.argv:
-        print(s)
+printe.output(f"len of nonredirects {len(nonredirects)} ")
 
-
-# ---
-redirects_pages = mdwiki_api.Get_All_pages('!', namespace='0', apfilterredir='redirects')
-print(f'len of redirects_pages {len(redirects_pages)} ')
-# ---
-nonredirects = mdwiki_api.Get_All_pages('!', namespace='0', apfilterredir='nonredirects')
-# nonredirects = []
-printe.output(f'len of nonredirects {len(nonredirects)} ')
-# printe.output( str(nonredirects) )
-# ---
-# fatosha = open( 'mdwiki/date_before_20200701.txt' , "r", encoding="utf-8").read()
-# fatosha = [ x.replace('[[','').split(']]')[0].strip() for x in fatosha.split('\n') ]
-# ---
-# listo = [ x for x in listo if not x in fatosha ]
-# print( dd )
-# ---
 from_to = {}
 normalized = {}
 # ---
-from mdpy.bots import py_tools
+
+
+def printtest(s):
+    if "test" in sys.argv:
+        print(s)
 
 
 def find_redirects(links):
@@ -52,24 +43,33 @@ def find_redirects(links):
     titles = []
     for x in links:
         if x not in from_to:
-            ns = links[x].get('ns', '')
-            if str(ns) == '0':
+            ns = links[x].get("ns", "")
+            if str(ns) == "0":
                 titles.append(x)
             else:
-                printe.output(f'ns:{str(ns)}')
+                printe.output(f"ns:{str(ns)}")
     # ---
     oldlen = len(from_to.items())
     # ---
     normalized_numb = 0
     # ---
     for i in range(0, len(titles), 300):
-        group = titles[i: i + 300]
+        group = titles[i : i + 300]
         # ---
         # printe.output(group)
         # ---
         line = "|".join(group)
         # ---
-        params = {"action": "query", "format": "json", "prop": "redirects", "titles": line, "redirects": 1, "converttitles": 1, "utf8": 1, "rdlimit": "max"}
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "redirects",
+            "titles": line,
+            "redirects": 1,
+            "converttitles": 1,
+            "utf8": 1,
+            "rdlimit": "max",
+        }
         if jsone := mdwiki_api.post_s(params):
             # ---
             query = jsone.get("query", {})
@@ -93,7 +93,7 @@ def find_redirects(links):
             for page in pages:
                 # tab = {"pageid": 4195,"ns": 0,"title": "Aspirin","redirects": [{"pageid": 4953,"ns": 0,"title": "Acetylsalicylic acid"}]}
                 tab = pages[page]
-                for pa in tab.get('redirects', []):
+                for pa in tab.get("redirects", []):
                     from_to[pa["title"]] = tab["title"]
                     # printe.output('<<lightyellow>> from_to["%s"] = "%s"' % ( pa["title"] , tab["title"] ) )
         else:
@@ -110,71 +110,60 @@ def replace_links2(text, oldlink, newlink):
     # ---
     oldlink2 = normalized.get(oldlink, oldlink)
     # ---
-    while text.find(f'[[{oldlink}]]') != -1 or text.find(f'[[{oldlink}|') != -1 or text.find(f'[[{oldlink2}]]') != -1 or text.find(f'[[{oldlink2}|') != -1:
+    while text.find(f"[[{oldlink}]]") != -1 or text.find(f"[[{oldlink}|") != -1 or text.find(f"[[{oldlink2}]]") != -1 or text.find(f"[[{oldlink2}|") != -1:
         # ---
         printe.output(f"text.replace( '[[{oldlink}]]' , '[[{newlink}|{oldlink}]]' )")
         # ---
-        text = text.replace(f'[[{oldlink}]]', f'[[{newlink}|{oldlink}]]')
-        text = text.replace(f'[[{oldlink}|', f'[[{newlink}|')
+        text = text.replace(f"[[{oldlink}]]", f"[[{newlink}|{oldlink}]]")
+        text = text.replace(f"[[{oldlink}|", f"[[{newlink}|")
         # ---
-        text = re.sub(r'\[\[%s(\|\]\])' % oldlink, r'[[%s\g<1>' % newlink, text, flags=re.IGNORECASE)
+        text = re.sub(r"\[\[%s(\|\]\])" % oldlink, r"[[%s\g<1>" % newlink, text, flags=re.IGNORECASE)
         # ---
         if oldlink != oldlink2:
-            text = re.sub(r'\[\[%s(\|\]\])' % oldlink2, r'[[%s\g<1>' % newlink, text, flags=re.IGNORECASE)
-            text = text.replace(f'[[{oldlink2}]]', f'[[{newlink}|{oldlink2}]]')
-            text = text.replace(f'[[{oldlink2}|', f'[[{newlink}|')
+            text = re.sub(r"\[\[%s(\|\]\])" % oldlink2, r"[[%s\g<1>" % newlink, text, flags=re.IGNORECASE)
+            text = text.replace(f"[[{oldlink2}]]", f"[[{newlink}|{oldlink2}]]")
+            text = text.replace(f"[[{oldlink2}|", f"[[{newlink}|")
     # ---
     return text
 
 
 def treat_page(title):
-    """Change all redirects from the current page to actual links."""
-    # links = current_page.linkedPages()
+    """
+    Change all redirects from the current page to actual links.
+    """
     # ---
-    text = mdwiki_api.GetPageText(title)
+    page = md_MainPage(title, "www", family="mdwiki")
+    exists = page.exists()
     # ---
-    # links = [ { 'ns' : "0" , 'title' : "title" } ]
+    text = page.get_text()
+    # ---
+    # links = page.page_links_query(plnamespace="0")
     links = mdwiki_api.Get_page_links(title, namespace="0", limit="max")
     # ---
-    # "normalized": [{"from": "tetracyclines","to": "Tetracyclines"}]
     normal = links.get("normalized", [])
-    printe.output(f'find {len(normal)} normalized..')
+    printe.output(f"find {len(normal)} normalized..")
+    # ---
     for nor in normal:
         normalized[nor["to"]] = nor["from"]
         printe.output(f"normalized[\"{nor['to']}\"] = \"{nor['from']}\"")
     # ---
     newtext = text
-    # i = None
     # ---
-    changed = 0
+    find_redirects(links["links"])
     # ---
-    # liinks = [ x.replace(x[0], x[0].upper() , 1) for x in links['links'] ]
-    liinks = [str.capitalize(x) for x in links['links']]
-    # ---
-    find_redirects(links['links'])
-    # ---
-    # for tt , page in links['links'].items() :
-    for tt in links['links']:
+    for tt in links["links"]:
         # ---
-        page = links['links'][tt]
-        tit = page['title']
-        tit2 = normalized.get(page['title'], page['title'])
+        page = links["links"][tt]
+        tit = page["title"]
+        tit2 = normalized.get(page["title"], page["title"])
+        # ---
         if fixed_tit := from_to.get(tit) or from_to.get(tit2):
-            # fixed_tit2 = normalized.get( fixed_tit , fixed_tit )
-            # ---
-            # fix_to = from_to.get( title ) or from_to.get( tit2 )
-            # if fixed_tit in nonredirects : or fixed_tit2 in nonredirects :
-            # ---
-            # if fixed_tit in nonredirects :
             newtext = replace_links2(newtext, tit, fixed_tit)
         elif tit not in nonredirects:
             if tit2 != tit:
                 printe.output(f'<<lightred>> tit:["{tit}"] and tit:["{tit2}"] not in from_to')
-            # else:
-            # printe.output('<<lightred>> tit:["%s"] not in from_to' % tit )
-            # ---
     # ---
-    mdwiki_api.page_put(oldtext=text, newtext=newtext, summary='Fix redirects', title=title, returntrue=False, diff=True)
+    save_page = page.save(newtext=newtext, summary="Fix redirects")
 
 
 def main():
@@ -187,16 +176,16 @@ def main():
     # python3 fixred.py test -page:Tetracycline_antibiotics
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         if arg in ["-page2", "page2"]:
-            value = py_tools.ec_de_code(value.strip(), 'decode')
+            value = py_tools.ec_de_code(value.strip(), "decode")
             ttab.append(value.strip())
         # ---
         if arg == "-page":
             ttab.append(value)
     # ---
-    if ttab in [[], ['all']]:
+    if ttab in [[], ["all"]]:
         ttab = nonredirects
     # ---
     for title in ttab:
@@ -206,6 +195,6 @@ def main():
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 # ---

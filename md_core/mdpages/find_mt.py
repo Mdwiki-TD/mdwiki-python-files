@@ -7,10 +7,10 @@ python3 core8/pwb.py mdpages/find_mt
 import os
 import sys
 
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from newapi import printe
 from mdpy.bots.check_title import valid_title
-from api_sql import sql_qids_others
+from mdapi_sql import sql_qids_others
 
 qids_othrs = sql_qids_others.get_others_qids()
 qids = sql_for_mdwiki.get_all_qids()

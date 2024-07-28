@@ -5,7 +5,7 @@
 python3 core8/pwb.py mdpy/wddone
 
 """
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from mdpy.bots import py_tools
 
 que = """

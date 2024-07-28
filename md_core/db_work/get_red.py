@@ -15,7 +15,7 @@ from datetime import datetime
 
 # ---
 from newapi import printe
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from apis import mdwiki_api
 
 mdwiki_to_qid = sql_for_mdwiki.get_all_qids()

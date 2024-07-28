@@ -20,20 +20,13 @@ from mdpy.bots import en_to_md
 # ---
 
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
-
-import os
 import json
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 
 # ---
 from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
 # ---
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]

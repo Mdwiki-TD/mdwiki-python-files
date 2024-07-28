@@ -40,10 +40,7 @@ def get_timestamp(titles):
     # ---
     global NewList
     # ---
-    num = 0
-    # ---
-    for page in titles:
-        num += 1
+    for num, page in enumerate(titles, start=1):
         params = {"action": "query", "format": "json", "prop": "revisions", "titles": page, "rvprop": "timestamp", "rvlimit": "1", "rvdir": "newer"}
         hh = mdwiki_api.post_s(params)
         # ---

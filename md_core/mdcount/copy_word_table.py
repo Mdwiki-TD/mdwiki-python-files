@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 # ---
-from api_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki
 from newapi import printe
 from pymysql.converters import escape_string
 

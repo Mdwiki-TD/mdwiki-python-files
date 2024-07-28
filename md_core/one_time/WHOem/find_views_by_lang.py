@@ -11,7 +11,7 @@ from pathlib import Path
 
 # ---
 from newapi import printe
-from apis import wiki_api
+from apis import views_rest
 
 # ---
 TEST = False
@@ -62,7 +62,7 @@ def get_v(lang, links, lang_links_mdtitle_s):
     for i in range(0, len(links), 10):
         group = dict(list(links.items())[i: i + 10])
         # ---
-        views_tab = wiki_api.get_views_with_rest_v1(lang, group.keys())
+        views_tab = views_rest.get_views_with_rest_v1(lang, group.keys())
         # ---
         for title, views in views_tab.items():
             # ---

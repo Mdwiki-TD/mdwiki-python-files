@@ -2,7 +2,7 @@
 """
 بوت قواعد البيانات
 # ---
-from api_sql import wiki_sql
+from mdapi_sql import wiki_sql
 # ---
 # if wiki_sql.GET_SQL():
 # result = wiki_sql.sql_new(qua, wiki="", printqua=False)
@@ -18,7 +18,7 @@ import time as tttime
 
 # ---
 from newapi import printe
-from api_sql import sql_qu
+from mdapi_sql import sql_qu
 
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db
