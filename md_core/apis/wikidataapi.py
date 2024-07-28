@@ -43,11 +43,11 @@ from apis import wikidataapi
 # ---
 user_agent = user_account_new.user_agent
 username = user_account_new.bot_username  # user_account_new.my_username
-password = user_account_new.bot_password  # user_account_new.my_password      #user_account_new.mdwiki_pass
+password = user_account_new.bot_password  #user_account_new.mdwiki_pass
 # ---
 if "workhimo" in sys.argv:
     username = user_account_new.my_username
-    password = user_account_new.my_password
+    password = user_account_new.lgpass_enwiki
 # ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
 r1_params = {

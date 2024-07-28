@@ -3,8 +3,7 @@
 from apis import user_account_new
 # ---
 username = user_account_new.bot_username     #user_account_new.my_username
-password = user_account_new.bot_password     #user_account_new.my_password      #user_account_new.mdwiki_pass
-lgname_enwiki   = user_account_new.lgname_enwiki
+password = user_account_new.bot_password     #user_account_new.mdwiki_pass
 lgpass_enwiki   = user_account_new.lgpass_enwiki
 user_agent   = user_account_new.user_agent
 # ---
@@ -33,12 +32,11 @@ bot_username = config["DEFAULT"].get("botusername", "")
 bot_password = config["DEFAULT"].get("botpassword", "")
 
 my_username = config["DEFAULT"].get("my_username", "")
-my_password = config["DEFAULT"].get("my_password", "")
 
 mdwiki_pass = config["DEFAULT"].get("mdwiki_pass", "")
 
-lgname_enwiki = config["DEFAULT"].get("lgname_enwiki", "")
 lgpass_enwiki = config["DEFAULT"].get("lgpass_enwiki", "")
+my_password = lgpass_enwiki
 
 qs_token = config["DEFAULT"].get("qs_token", "")
 
