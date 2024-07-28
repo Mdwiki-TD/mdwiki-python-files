@@ -29,7 +29,8 @@ def Cat_Depth(title, depth=0, ns="all"):
     # ---
     result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
     # ---
-    result_table = {key: result_table[key] for key in result_table if valid_title(key)}
+    # result_table = {key: result_table[key] for key in result_table if valid_title(key)}
+    result_table = dict(filter(lambda item: valid_title(item[0]), result_table.items()))
     # ---
     final = time.time()
     # ---
@@ -56,9 +57,7 @@ def make_cash_to_cats(return_all_pages=False):
         # ---
         lens[cat] = len(ca)
         # ---
-        for x in ca:
-            if x not in all_pages:
-                all_pages.append(x)
+        all_pages.extend([x for x in ca if x not in all_pages])
     # ---
     for cat, length in lens.items():
         print(f"len of pages in {cat}: {length}")

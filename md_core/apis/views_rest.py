@@ -25,11 +25,7 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
     numbers = {}
     # _Type = Type if Type in ["daily", "monthly"] else 'monthly'
     # ---
-    numb = 0
-    # ---
-    for page in titles:
-        # ---
-        numb += 1
+    for numb, page in enumerate(titles, start=1):
         # ---
         # print when numb % 100 == 0
         if numb % 100 == 0:
@@ -121,11 +117,7 @@ def get_views_last_30_days(langcode, titles):
     endDate = endDate.strftime("%Y%m%d%H")
     startDate = startDate.strftime("%Y%m%d%H")
     # ---
-    numb = 0
-    # ---
-    for page in titles:
-        # ---
-        numb += 1
+    for numb, page in enumerate(titles, start=1):
         # ---
         # print when numb % 100 == 0
         if numb % 100 == 0:

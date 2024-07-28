@@ -136,10 +136,7 @@ def main():
     line = f"<span style='font-size:12px'>{text}</span>"
     open(file_name[2], "w", encoding="utf-8").write(line)
     # ---
-    num = 0
-    # ---
-    for page in titles:
-        num += 1
+    for numb, page in enumerate(titles, start=1):
         # ---
         if numbers['done'] >= numbers[1]:
             break
