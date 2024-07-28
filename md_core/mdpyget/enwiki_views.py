@@ -14,7 +14,7 @@ import sys
 import json
 from pathlib import Path
 
-from mdpy.bots import views_rest
+from apis import views_rest
 from newapi import printe
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from apis import cat_cach
