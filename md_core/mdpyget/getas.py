@@ -23,8 +23,7 @@ dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
 printe.output("Get vaild_links from cat : RTT")
 
-tabe = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=2, ns="0")
-vaild_links = tabe["list"]
+vaild_links = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=2, ns="0")
 # ---
 printe.output(f"len of vaild_links: {len(vaild_links)}")
 # ---

@@ -76,11 +76,11 @@ def one_page(page, lang):
         print("notext")
         return ""
     # ---
-    if "save" in sys.argv:
-        a = page_put(text, newtext, "Fix references, Expend infobox mdwiki.toolforge.org.", title, lang)
-        if a:
-            print("save ok")
-            return ""
+    # if "save" in sys.argv:
+    #     a = page_put(text, newtext, "Fix references, Expend infobox mdwiki.toolforge.org.", title, lang)
+    #     if a:
+    #         print("save ok")
+    #         return ""
     # ---
     filee = save_wprefcash(title, newtext)
     print(filee)
