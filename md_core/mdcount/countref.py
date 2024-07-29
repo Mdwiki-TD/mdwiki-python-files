@@ -152,7 +152,7 @@ def from_sql():
 def get_links():
     # ---
     tabe = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=1, ns="0")
-    lale = from_sql() if "sql" in sys.argv else tabe["list"]
+    lale = from_sql() if "sql" in sys.argv else tabe
     # ---
     if "newpages" in sys.argv:
         lale = [x for x in lale if (x not in list_ma[1])]

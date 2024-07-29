@@ -176,7 +176,7 @@ def Add_to_wikidata(mdtitle, lang, target, user):
     # ---
     line = f"[[{lang}:{target}]]"
     if tat != "" and tat.find(line) == -1 and tat.find(lalas) == -1:
-        mdwiki_api.Add_To_Bottom(f"\n{line}", f"add link to {line}", mdtitle, False)
+        mdwiki_api.Add_To_Bottom(f"\n{line}", f"add link to {line}", mdtitle)
     # ---
     if lang == "or":
         orred.create_redirect(target, mdtitle)

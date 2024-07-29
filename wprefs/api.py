@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """
+
 from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
+
 """
-import json
 import sys
 import requests
 from pathlib import Path
@@ -18,11 +19,9 @@ Dir = Path(__file__).parent.parent
 sys.path.append(Dir)
 # ---
 from wprefs.helps import print_s
-
-# ---
 from wprefs import user_account_enwiki
 
-lgname_enwiki = user_account_enwiki.lgname_enwiki
+my_username = user_account_enwiki.my_username
 lgpass_enwiki = user_account_enwiki.lgpass_enwiki
 user_agent = user_account_enwiki.user_agent
 # ---
@@ -95,7 +94,7 @@ def log(lang):
             data={
                 "format": "json",
                 "action": "login",
-                "lgname": lgname_enwiki,
+                "lgname": my_username,
                 "lgpassword": lgpass_enwiki,
                 "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
             },
