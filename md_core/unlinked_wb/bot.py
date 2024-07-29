@@ -147,7 +147,14 @@ def add_tag():
     qids, vals_d = get_qids()
     # ---
     # all_pages = api_new.Get_All_pages(start="", namespace="0", apfilterredir="nonredirects", ppprop="")
-    all_pages_tab = api_new.Get_All_pages_generator(start="", namespace="0", limit="max", filterredir="nonredirects", ppprop="unlinkedwikibase_id", limit_all=100000)
+    all_pages_tab = api_new.Get_All_pages_generator(
+        start="",
+        namespace="0",
+        limit="max",
+        filterredir="nonredirects",
+        ppprop="unlinkedwikibase_id",
+        limit_all=100000,
+    )
     # ---
     pages_has, pages_hasnt = get_pages_in_use(all_pages_tab)
     # ---
@@ -170,4 +177,3 @@ def add_tag():
 
 if __name__ == "__main__":
     add_tag()
-    #
