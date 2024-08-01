@@ -55,7 +55,6 @@ def add_q(new_qids, ty):
         printe.output("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
     # ---
     newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in TD_list}
-    # ---
     newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in TD_list}
     # ---
     printe.output(f"<<yellow>> add_q: {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")

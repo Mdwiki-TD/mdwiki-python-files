@@ -20,9 +20,9 @@ def remove_from_others(qids_othrs, qids_td):
     # ---
     TD_list = cat_cach.make_cash_to_cats(return_all_pages=True, print_s=False)
     # ---
-    in_both = [x for x in qids_othrs.keys() if x in qids_td.keys()]
+    in_both = [x for x in qids_othrs if x in qids_td]
     # ---
-    in_both.extend([x for x in qids_td.keys() if x in qids_othrs.keys()])
+    in_both.extend([x for x in qids_td if x in qids_othrs])
     # ---
     in_both = list(set(in_both))
     # ---

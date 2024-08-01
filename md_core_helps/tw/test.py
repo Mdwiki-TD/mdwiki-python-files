@@ -16,7 +16,7 @@ python3 core8/pwb.py tw/t
 # ---
 # ---
 import tweepy
-import twet_config
+import twet_configs
 
 # Create variables for each key, secret, token
 consumer_key = twet_config.consumer_key

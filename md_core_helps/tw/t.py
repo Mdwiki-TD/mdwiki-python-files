@@ -27,8 +27,7 @@ from pathlib import Path
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-import twet_config
-
+import twet_configs
 # ---
 # Create variables for each key, secret, token
 consumer_key = twet_config.consumer_key
