@@ -17,7 +17,7 @@ def submitAPI(params, site="", returnjson=False):
     if site not in api_news:
         api_news[site] = NEW_API(site, family="wikipedia")
     # ---
-    json1 = api_news[site].api_new.post_params(params, addtoken=True)
+    json1 = api_news[site].post_params(params, addtoken=True)
     # ---
     return json1
 

@@ -21,10 +21,10 @@ import sys
 from mdapi_sql import sql_for_mdwiki
 
 # ---
-from wprefs.api import log, GetPageText, missingtitles, page_put
-from wprefs.helps import print_s, ec_de_code
-from wprefs.files import reffixed_list, setting, append_reffixed_file, save_wprefcash
+from wprefs.api import log, GetPageText, GetPageText_raw, missingtitles, page_put
+from wprefs.files import reffixed_list, setting, append_reffixed_file
 from wprefs.wpref_text import fix_page
+from newapi import printe
 
 skip_langs = ["en"]
 move_dot = {1: False}
@@ -57,10 +57,10 @@ def fix_page_here(text, title, langcode):
 
 def work_one_lang(list_, lang):
     # ---
-    print_s(f"<<lightblue>> work on lang: {lang}.wikipedia......................")
+    printe.output(f"<<lightblue>> work on lang: {lang}.wikipedia......................")
     # ---
     if lang in skip_langs:
-        print_s(f"<<lightblue>> skip lang: {lang}.wikipedia......................")
+        printe.output(f"<<lightblue>> skip lang: {lang}.wikipedia......................")
         return
     # ---
     newlist = list_
@@ -70,8 +70,7 @@ def work_one_lang(list_, lang):
         dd = int(len(list_)) - int(len(newlist))
         print(f"already in reffixed_list :{dd}")
     # ---
-    if len(newlist) > 0:
-        log(lang)
+    # if len(newlist) > 0: log(lang)
     # ---
     number = 0
     # ---
@@ -81,20 +80,20 @@ def work_one_lang(list_, lang):
         # ---
         lio = f"{lang}:{title}"
         number += 1
-        print_s(f"<<lightyellow>> {number} from {len(newlist)}, page: {lio}")
+        printe.output(f"<<lightyellow>> {number} from {len(newlist)}, page: {lio}")
         # ---
         if lio in reffixed_list and "lala" not in sys.argv:
-            print_s("<<lightred>>\talready in reffixed_list.")
+            printe.output("<<lightred>>\talready in reffixed_list.")
             continue
         # ---
         if "adddone" in sys.argv:
             dns.append(title)
             continue
         # ---
-        text = GetPageText(title, lang=lang)
+        text = GetPageText_raw(title, lang=lang)
         # ---
         if not text:
-            print_s('\ttext == ""')
+            printe.output('\ttext == ""')
             continue
         # ---
         newtext = fix_page_here(text, title, lang)
@@ -130,7 +129,7 @@ def work_sql_result(lange, nolange, year=2024):
     elif lange != "":
         que = f'select lang, target from pages where target != "" and lang = "{lange}" and date like "{year}-%";'
     # ---
-    print_s(que)
+    printe.output(que)
     # ---
     sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
     # ---
@@ -147,67 +146,35 @@ def work_sql_result(lange, nolange, year=2024):
 
 def maine():
     # ---
-    page = ""
     lange = ""
     nolange = ""
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
+        # ---
         arg = arg[1:] if arg.startswith("-") else arg
         # ---
         if arg == "infobox":
             expend_infobox[1] = True
+        # ---
         if arg == "movedots":
             move_dot[1] = True
         # ---
         if arg == "nolang":
             nolange = value
+        # ---
         if arg == "lang":
             lange = value
-        if arg == "page":
-            page = value.replace("_", " ")
     # ---
-    newtable = {}
-    # ---
-    if page != "" and lange != "":
-        newtable[lange] = [page]
-    # ---
-    if page != "" and lange != "" and "returnfile" in sys.argv:
-        # ---
-        title = ec_de_code(page, "decode")
-        log(lange)
-        text = GetPageText(title, lang=lange, Print=False)
-        # ---
-        if not text:
-            print("notext")
-            return ""
-        # ---
-        newtext = fix_page_here(text, title, lange)
-        # ---
-        if text == newtext:
-            print("no changes")
-            return ""
-        # ---
-        if not newtext:
-            print("notext")
-            return ""
-        # ---
-        filee = save_wprefcash(title, newtext)
-        print(filee)
-        # ---
-        return ""
-    # ---
-    if not page:
-        # ---
-        newtable = work_sql_result(lange, nolange)
+    newtable = work_sql_result(lange, nolange)
     # ---
     for lang, tab in newtable.items():
         work_one_lang(tab, lang)
     # ---
-    if "returnfile" not in sys.argv:
-        print_s(f"find {len(missingtitles)} pages in missingtitles")
-        for x, lang in missingtitles.items():
-            print_s(f"lang: {lang}, title: {x}")
+    printe.output(f"find {len(missingtitles)} pages in missingtitles")
+    # ---
+    for x, lang in missingtitles.items():
+        printe.output(f"lang: {lang}, title: {x}")
 
 
 if __name__ == "__main__":
