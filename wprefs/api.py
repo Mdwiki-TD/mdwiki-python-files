@@ -6,6 +6,8 @@ from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 """
 import sys
 import requests
+import urllib
+import urllib.parse
 from pathlib import Path
 
 # ---
@@ -247,6 +249,30 @@ def GetPageText(title, lang="", Print=True):
     if not text:
         if Print:
             print_s(f'page {title} text == "".')
+    # ---
+    return text
+
+
+def GetPageText_raw(title, lang="", Print=True):
+    # ---
+    # parse.quote
+    title2 = urllib.parse.quote(title)
+    # ---
+    url = f"https://{lang}.wikipedia.org/wiki/{title2}?action=raw"
+    # ---
+    try:
+        r = requests.get(url, headers={"User-Agent": user_agent})
+        # ---
+        text = r.text
+    except Exception as e:
+        if Print:
+            print_s(f"GetPageText_raw Error {e}")
+        return ""
+    # ---
+    if not text:
+        if Print:
+            print_s(f"page {title} text == ''.")
+        return ""
     # ---
     return text
 
