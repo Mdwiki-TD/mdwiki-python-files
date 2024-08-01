@@ -143,10 +143,10 @@ def start():
         if arg == "path":
             path = value.strip()
     # ---
-    print(f" <<lightblue>> work on path : {path}\n" * 3)
+    print(f" <<blue>> work on path : {path}\n" * 3)
     # ---
     if not os.path.exists(path):
-        print(" <<lightblue>> path not exist")
+        print(" <<blue>> path not exist")
         return
     # ---
     from fix_use.add import add_use

@@ -72,7 +72,7 @@ def make_title(url):
     Title_cash[url] = ''
     # ---
     if not url.strip():
-        pywikibot.output("<<lightred>> make_title url = '' return False")
+        pywikibot.output("<<red>> make_title url = '' return False")
         return {}
     # ---
     url2 = urllib.parse.quote(url)
@@ -104,12 +104,12 @@ def make_title(url):
     titleBlackList = re.compile(globalbadtitles, re.I | re.S | re.X)
     # ---
     if titleBlackList.match(title):
-        printe.output(f'<<lightred>> WARNING<<default>> {url} : ' 'Blacklisted title ({title})')
+        printe.output(f'<<red>> WARNING<<default>> {url} : ' 'Blacklisted title ({title})')
     # ---
     Title_cash[url] = title
     # ---
     if title != '':
-        printe.output(f'<<lightgreen>> make_title_bot: newtitle: ({title})')
+        printe.output(f'<<green>> make_title_bot: newtitle: ({title})')
     # ---
     return title
 

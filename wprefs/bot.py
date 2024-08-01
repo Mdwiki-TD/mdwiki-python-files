@@ -57,10 +57,10 @@ def fix_page_here(text, title, langcode):
 
 def work_one_lang(list_, lang):
     # ---
-    printe.output(f"<<lightblue>> work on lang: {lang}.wikipedia......................")
+    printe.output(f"<<blue>> work on lang: {lang}.wikipedia......................")
     # ---
     if lang in skip_langs:
-        printe.output(f"<<lightblue>> skip lang: {lang}.wikipedia......................")
+        printe.output(f"<<blue>> skip lang: {lang}.wikipedia......................")
         return
     # ---
     newlist = list_
@@ -80,10 +80,10 @@ def work_one_lang(list_, lang):
         # ---
         lio = f"{lang}:{title}"
         number += 1
-        printe.output(f"<<lightyellow>> {number} from {len(newlist)}, page: {lio}")
+        printe.output(f"<<yellow>> {number} from {len(newlist)}, page: {lio}")
         # ---
         if lio in reffixed_list and "lala" not in sys.argv:
-            printe.output("<<lightred>>\talready in reffixed_list.")
+            printe.output("<<red>>\talready in reffixed_list.")
             continue
         # ---
         if "adddone" in sys.argv:

@@ -89,7 +89,7 @@ def work(title, Find, Replace, nn):
 
 
 def main():
-    # pywikibot.output( '*<<lightred>> > main:')
+    # pywikibot.output( '*<<red>> > main:')
     # ---
     nn = ''
     # ---

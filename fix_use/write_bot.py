@@ -24,7 +24,7 @@ def write(oldtext, text, filepath):
     # ---
     if ASK_all:
         # ---
-        printe.output('<<lightgreen>> Save?')
+        printe.output('<<green>> Save?')
         ask = input(f"save new text?...{filepath}:")
         if ask in ["", "a", "y"]:
             print("save new text")
@@ -46,7 +46,7 @@ def write(oldtext, text, filepath):
         # ---
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(text)
-        printe.output("<<lightgreen>> save done..")
+        printe.output("<<green>> save done..")
         # ---
         return text
 

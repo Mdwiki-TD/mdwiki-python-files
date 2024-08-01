@@ -18,7 +18,7 @@ api_new = NEW_API("or", family="wikipedia")
 def create_redirect(target, mdtitle):
     # ---
     if not target or not mdtitle:
-        printe.output(f"<<lightred>>** false .. {mdtitle=} | {target=} ")
+        printe.output(f"<<red>>** false .. {mdtitle=} | {target=} ")
         return
     # ---
     text = f"#redirect [[{target}]]"
@@ -30,7 +30,7 @@ def create_redirect(target, mdtitle):
         create = page.Create(text=text, summary=sus)
         # ---
         if create:
-            printe.output(f"<<lightgreen>>** true .. [[or:{mdtitle}]] ")
+            printe.output(f"<<green>>** true .. [[or:{mdtitle}]] ")
 
 
 def check_all(links):
@@ -74,7 +74,7 @@ def start():
     # ---
     for n, (target, mdtitle) in enumerate(to_work.items(), start=1):
         # ---
-        printe.output(f"----------\n*<<lightyellow>> p{n}/{len(to_work)} >{target=}, {mdtitle=}.")
+        printe.output(f"----------\n*<<yellow>> p{n}/{len(to_work)} >{target=}, {mdtitle=}.")
         # ---
         create_redirect(target, mdtitle)
 

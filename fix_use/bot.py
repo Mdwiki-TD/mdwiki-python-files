@@ -110,7 +110,7 @@ def fix_used(filepath):
 
 
 def start():
-    printe.output(f"<<lightgreen>> fixpy: {path=}")
+    printe.output(f"<<green>> fixpy: {path=}")
     # ---
     pathss = []
     # ---
@@ -119,7 +119,7 @@ def start():
         scanroot = scan_root(root)
         # ---
         if not scanroot:
-            # printe.output(f"<<lightgreen>> root: {root}.")
+            # printe.output(f"<<green>> root: {root}.")
             continue
         # ---
         for f in files:
@@ -129,10 +129,10 @@ def start():
             scanit = scan_root(filepath)
             # ---
             if not scanit:
-                # printe.output(f"<<lightgreen>> filepath: {filepath}.")
+                # printe.output(f"<<green>> filepath: {filepath}.")
                 continue
             # ---
-            # printe.output(f"<<lightgreen>> file: {filepath}.")
+            # printe.output(f"<<green>> file: {filepath}.")
             # ---
             if filepath.endswith(".php"):
                 pathss.append(filepath)

@@ -5,7 +5,8 @@ It includes functions for filtering and processing page titles, checking page ex
 retrieving and modifying page content, and adding tags based on QIDs.
 
 Usage:
-python3 core8/pwb.py unlinked_wb/bot add
+python3 core8/pwb.py unlinked_wb/bot
+
 """
 # ---
 import re
