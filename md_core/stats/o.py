@@ -49,7 +49,7 @@ def work_in_one_site(site, links):
     # ---
     site = re.sub(r'wiki$', '', site)
     # ---
-    printe.output(f'<<lightgreen>> site:{site} links: {len(links)}')
+    printe.output(f'<<green>> site:{site} links: {len(links)}')
     # ---
     if len(links) < 100:
         printe.output('<<red>> less than 100 articles')
@@ -95,7 +95,7 @@ def work_in_one_site(site, links):
     if p_text != text:
         page.save(newtext=text, summary='update', nocreate=0, minor='')
     else:
-        printe.output('<<lightgreen>> no changes')
+        printe.output('<<green>> no changes')
     # ---
     return editors
 
@@ -116,7 +116,7 @@ def start():
     # ---
     for numb, file in enumerate(files, start=1):
         # ---
-        printe.output(f'<<lightgreen>> n: {numb} file: {file}:')
+        printe.output(f'<<green>> n: {numb} file: {file}:')
         # ---
         if not file.endswith('wiki.json'):
             continue

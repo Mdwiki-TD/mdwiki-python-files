@@ -74,7 +74,7 @@ def work_all(editors):
     if p_text != text:
         page.save(newtext=text, summary='update', nocreate=0, minor='')
     else:
-        printe.output('<<lightgreen>> no changes')
+        printe.output('<<green>> no changes')
     # ---
     return editors
 
@@ -88,7 +88,7 @@ def start():
     # ---
     for numb, file in enumerate(files, start=1):
         # ---
-        printe.output(f'<<lightgreen>> n: {numb} file: {file}:')
+        printe.output(f'<<green>> n: {numb} file: {file}:')
         # ---
         site = file[:-5]
         # ---

@@ -77,7 +77,7 @@ def get_red(title):
 
 def work(title, num, length, From=""):
     # ---
-    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{length} title:"{title}".')
+    printe.output(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
@@ -112,7 +112,7 @@ def work(title, num, length, From=""):
 
 
 def main():
-    printe.output("*<<lightred>> > main:")
+    printe.output("*<<red>> > main:")
     # ---
     # python3 red.py -page:Allopurinol
     # python3 red.py -page:Activated_charcoal_\(medication\)

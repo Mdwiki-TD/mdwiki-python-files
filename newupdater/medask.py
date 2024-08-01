@@ -65,7 +65,7 @@ def main1():
 
 
 def main():
-    printe.output('*<<lightred>> > main:')
+    printe.output('*<<red>> > main:')
     # ---
     user = ''
     user_limit = '3000'

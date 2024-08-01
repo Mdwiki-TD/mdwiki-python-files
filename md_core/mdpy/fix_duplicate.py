@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-اصلاح التحويلات المزدوجة
+اصلاح التحويلات المزدوجة في mdwiki.org
 
 """
 import sys
@@ -37,7 +37,7 @@ def fix_dup(From, To):
 
 
 def main():
-    printe.output("*<<lightred>> > main:")
+    printe.output("*<<red>> > main:")
     # ---
     # python3 dup.py -page:Allopurinol
     # python3 dup.py -page:Activated_charcoal_\(medication\)
@@ -46,13 +46,13 @@ def main():
     # python dup.py -newpages:20000
     # ---
     fop = {
-        "action": "query", 
-        "format": "json", 
-        "prop": "info", 
-        "generator": "querypage", 
-        "redirects": 1, 
-        "utf8": 1, 
-        "gqppage": "DoubleRedirects", 
+        "action": "query",
+        "format": "json",
+        "prop": "info",
+        "generator": "querypage",
+        "redirects": 1,
+        "utf8": 1,
+        "gqppage": "DoubleRedirects",
         "gqplimit": "max"
     }
     # ---
@@ -67,7 +67,7 @@ def main():
     # ---
     for nu, title in enumerate(redirects, start=1):
         From = title["from"]
-        printe.output(f'-------\n*<<lightyellow>> >{nu}/{len(redirects)} From:"{From}".')
+        printe.output(f'-------\n*<<yellow>> >{nu}/{len(redirects)} From:"{From}".')
         To = title["to"]
         if To in from_to:
             fix_dup(From, To)

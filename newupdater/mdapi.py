@@ -256,12 +256,12 @@ def page_put(oldtext, NewText, summary, title, lang):
             pywikibot.showDiff(oldtext, NewText)
         # ---
         print_s(f" -Edit summary: {summary}:")
-        sa = input(f"<<lightyellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})")
+        sa = input(f"<<yellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})")
         # ---
         if sa == "a" or sa == "all":
             ask_a[1] = True
-            print_s(" <<lightgreen>>mdwiki/wpref.py: All changes accepted.")
-            print_s(" <<lightgreen>>mdwiki/wpref.py: All changes accepted.")
+            print_s(" <<green>>mdwiki/wpref.py: All changes accepted.")
+            print_s(" <<green>>mdwiki/wpref.py: All changes accepted.")
         # ---
         if sa not in yes_answer:
             print_s("wrong answer")
@@ -288,7 +288,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         return ""
     # ---
     if "Success" in str(json1):
-        print_s(f"<<lightgreen>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
+        print_s(f"<<green>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
         return True
     # ---
     else:

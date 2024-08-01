@@ -37,7 +37,7 @@ api_new.Login_to_wiki()
 
 def work(title, num, length, From=''):
     # ---
-    printe.output(f'-------------------------------------------\n*<<lightyellow>> >{num}/{length} title:"{title}".')
+    printe.output(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
@@ -60,7 +60,7 @@ def work(title, num, length, From=''):
     # ---
     done = ing.get("import", [{}])[0].get("revisions", 0)
     # ---
-    printe.output(f"<<lightgreen>> imported {done} revisions")
+    printe.output(f"<<green>> imported {done} revisions")
     # ---
     if done > 0:
         # ---
@@ -74,7 +74,7 @@ def work(title, num, length, From=''):
 
 
 def main():
-    printe.output('*<<lightred>> > main:')
+    printe.output('*<<red>> > main:')
     # ---
     # python3 imp.py -page:Crohn's_disease
     # python imp.py -newpages:1000

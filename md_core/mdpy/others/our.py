@@ -100,7 +100,7 @@ def check_urls(urls):
         req = http.fetch(url)
         # ---
         if 500 <= req.status_code < 600:
-            printe.output(f'<<lightred>> received {req.uri} status from {req.status_code}')
+            printe.output(f'<<red>> received {req.uri} status from {req.status_code}')
             errors[u] = True
 
 
@@ -152,7 +152,7 @@ def main():
         for page in listas:
             num += 1
             # ---
-            printe.output(f'<<lightyellow>> work {num}/{len(listas)} page: {page}')
+            printe.output(f'<<yellow>> work {num}/{len(listas)} page: {page}')
             # ---
             work(page)
             # ---
