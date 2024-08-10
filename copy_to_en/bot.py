@@ -38,7 +38,7 @@ def main():
         # ---
         new_title = "User:Mr. Ibrahem/" + x
         # ---
-        page = MainPage(new_title, "en")
+        page = MainPage(new_title, "simple")
         # ---
         summary = "from https://mdwiki.org/wiki/" + x.replace(" ", "_")
         # ---
