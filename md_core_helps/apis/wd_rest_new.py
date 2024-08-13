@@ -1,0 +1,112 @@
+#!/usr/bin/python3
+"""
+
+python3 core8/pwb.py apis/wd_rest_new
+
+from apis import wd_rest_new
+wd_rest_new.open_url_get = open_url_get
+# Get_Claims_API(q="", p="")
+
+"""
+import json
+import sys
+
+from newapi import printe
+
+wd_cach = {}
+
+
+def open_url_get(url):
+    # ---
+    return
+
+
+def Get_one_qid_info(qid, only=None):
+    # ---
+    key_c = tuple([qid, only])
+    # ---
+    if key_c in wd_cach:
+        return wd_cach[key_c]
+    # ---
+    props = ["sitelinks", "labels", "descriptions", "aliases", "statements"]
+    # ---
+    main_table = {
+        "labels": {},
+        "descriptions": {},
+        "aliases": {},
+        "sitelinks": {},
+        "statements": {},
+        "qid": qid,
+    }
+    # ---
+    url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}"
+    # ---
+    if only in props:
+        url += "/" + only
+    # ---
+    if "printurl" in sys.argv:
+        printe.output(url)
+    # ---
+    result = open_url_get(url)
+    # ---
+    if only in props:
+        result = {only: result}
+    # ---
+    main_table["labels"] = result.get("labels", {})
+    main_table["descriptions"] = result.get("descriptions", {})
+    main_table["aliases"] = result.get("aliases", {})
+    # ---
+    main_table["sitelinks"] = {x: v["title"] for x, v in result.get("sitelinks", {}).items()}
+    # ---
+    main_table["statements"] = result.get("statements", {})
+    # ---
+    # if only in props: main_table = main_table[only]
+    # ---
+    wd_cach[key_c] = main_table
+    # ---
+    return main_table
+
+
+def Get_sitelinks_From_Qid(q):
+    # ---
+    sitelinks = Get_one_qid_info(q, only="sitelinks")
+    # ---
+    return sitelinks
+
+
+def Get_Claims_API(q="", p=""):
+    # ---
+    statements = Get_one_qid_info(q, only="statements").get("statements", {})
+    # ---
+    printe.output(f"Get_Claims_API: {len(statements)=}")
+    # ---
+    claims = statements.get(p, [])
+    # ---
+    claims_new = []
+    # ---
+    for c in claims:
+        claims_new.append(
+            {
+                "id": c.get("id", ""),
+                "value": c.get("value", {}).get("content", ""),
+                "rank": c.get("rank", ""),
+            }
+        )
+
+    # ---
+    return claims_new
+
+
+if __name__ == "__main__":
+    from apis import wikidataapi
+
+    open_url_get = wikidataapi.open_url_get
+    # ---
+    qids = ["Q26981430"]
+    # ---
+    for q in qids:
+        printe.output(f"<<blue>>_______\n{q} :")
+        # ---
+        j = Get_one_qid_info(q)
+        # ---
+        printe.output(json.dumps(j, indent=4, ensure_ascii=False))

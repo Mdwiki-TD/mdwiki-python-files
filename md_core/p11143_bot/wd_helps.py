@@ -8,24 +8,30 @@ import time
 
 from apis import wikidataapi
 from newapi import printe
+from newapi.wd_sparql import get_query_result
 
 sys.argv.append("workhimo")
-
 wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
 
 
-def make_in_wd_tab():
-    # ---
-    in_wd = {}
+def make_in_wd_tab(limit=None):
     # ---
     query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
     # ---
-    wdlist = wikidataapi.sparql_generator_url(query, printq=False, add_date=True)
+    if limit:
+        query += f" limit {limit}"
+    # ---
+    wdlist = get_query_result(query)
+    # ---
+    in_wd = {}
     # ---
     for wd in wdlist:
-        prop = wd["prop"]
         # ---
-        qid = wd["item"].split("/entity/")[1]
+        prop = wd.get("prop", {}).get("value", "")
+        # ---
+        qid = wd.get("item", {}).get("value", "")
+        if qid:
+            qid = qid.split("/entity/")[1]
         # ---
         in_wd[qid] = prop
     # ---
@@ -80,9 +86,17 @@ def fix_in_wd(merge_qids, qids):
                     else:
                         print(f"Failed to delete {claimid}")
         # ---
+
         # add the correct claim
         ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
         if ase:
             print(f"True.. Added P11143:{md_title}")
         else:
             print(f"Failed to add P11143:{md_title}")
+
+
+if __name__ == "__main__":
+    # python3 core8/pwb.py p11143_bot/wd_helps
+
+    op = make_in_wd_tab(limit=10)
+    printe.output("<<blue>>\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))

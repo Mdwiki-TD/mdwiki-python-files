@@ -58,14 +58,3 @@ def make_mdwiki_list():
 
 
 make_mdwiki_list()
-
-# ---
-if __name__ == "__main__":
-    text = ''
-    for x, q in mdtitle_to_qid.items():
-        line = f'\n{q}\tP11143\t"{x}"'
-        print(line.strip())
-        text += line
-    # ---
-    with open(Path(dir2) / 'uu.txt', "w", encoding="utf-8-sig") as f:
-        f.write(text)

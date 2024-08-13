@@ -4,12 +4,14 @@
 بوت للعمل على ويكيبيانات أو ويكيبيديا
 
 from apis import wikidataapi
+# q = wikidataapi.new_item(label="", lang="", returnid=True)
+
+python3 core8/pwb.py apis/wikidataapi
 
 """
 
 import traceback
 import re
-import urllib
 import json
 import sys
 import pywikibot
@@ -18,32 +20,16 @@ import requests
 
 # ---
 from newapi import printe
-from mdpy.bots import py_tools
 from apis import user_account_new
+
+from apis import wd_rest_new
 
 # ---
 menet = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
 # ---
-"""
-# ---
-from apis import wikidataapi
-# wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php" )
-# wikidataapi.post( params , apiurl = "https://www.wikidata.org/w/api.php" )
-# wikidataapi.Get_sitelinks_From_Qid( q )
-# wikidataapi.WD_Merge( q1, q2)
-# wikidataapi.Labels_API(Qid, label, lang, remove = False)
-# wikidataapi.sparql_generator_url(quary, printq = False, add_date = True)
-# wikidataapi.wbsearchentities(search, language)
-# wikidataapi.Claim_API_qid(qid, property, numeric)
-# wikidataapi.Claim_API_str(qid, property, string)
-# wikidataapi.
-# wikidataapi.
-# ---
-"""
-# ---
 user_agent = user_account_new.user_agent
 username = user_account_new.bot_username  # user_account_new.my_username
-password = user_account_new.bot_password  #user_account_new.mdwiki_pass
+password = user_account_new.bot_password  # user_account_new.mdwiki_pass
 # ---
 if "workhimo" in sys.argv:
     username = user_account_new.my_username
@@ -66,11 +52,15 @@ r2_params = {
 SS = {"ss": requests.Session()}
 # ---
 timesleep = 0
+wd_cach = {}
 # ---
 login_not_done = {1: True}
 
 
 def Log_to_wiki(url=""):
+    # ---
+    if not url:
+        url = "https://www.wikidata.org/w/api.php"
     # ---
     if not login_not_done[1]:
         return ""
@@ -143,8 +133,9 @@ def post(params, apiurl="", token=True):
     params["format"] = "json"
     # ---
     jsone = {}
+    # ---
     try:
-        r4 = SS["ss"].post(SS["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        r4 = SS["ss"].request("POST", SS["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
         jsone = r4.json()
     except Exception:
         pywikibot.output("Traceback (most recent call last):")
@@ -154,6 +145,7 @@ def post(params, apiurl="", token=True):
         return {}
     # ---
     status = get_status(r4)
+    # ---
     if status != 200:
         pywikibot.output(f"<<red>> wikidataapi.py: post error status: {str(status)}")
         return {}
@@ -161,90 +153,39 @@ def post(params, apiurl="", token=True):
     return jsone
 
 
-def post_to_qs(data):
-    menet = datetime.now().strftime("%Y-%b-%d %H:%M:%S")
+def open_url_get(url):
     # ---
-    r2 = requests.Session().post(
-        "https://quickstatements.toolforge.org/api.php",
-        data={
-            "format": "v1",
-            "action": "import",  # create
-            # 'type': 'item',
-            "compress": 1,
-            "submit": 1,
-            "batchname": menet,
-            "username": "Mr. Ibrahem",
-            "token": user_account_new.qs_token,
-            "data": data,
-        },
-        headers={"User-Agent": user_agent},
-        timeout=10,
-    )
+    Log_to_wiki()
     # ---
-    if not r2:
-        return False
+    jsone = {}
     # ---
-    print(f"QS_New_API: {r2.text}")
+    try:
+        r4 = SS["ss"].request("GET", url, headers={"User-Agent": user_agent}, timeout=10)
+        jsone = r4.json()
+    except Exception:
+        pywikibot.output("Traceback (most recent call last):")
+        pywikibot.output(traceback.format_exc())
+        pywikibot.output("CRITICAL:")
+        return {}
     # ---
-    return r2.json()
+    status = get_status(r4)
+    # ---
+    if status != 200:
+        pywikibot.output(f"<<red>> wikidataapi.py: post error status: {str(status)}")
+        return {}
+    # ---
+    return jsone
 
 
-def QS_New_API(data2):
-    # ---
-    CREATE = "CREATE||"
-    for ss in data2.get("sitelinks", {}):
-        dd = data2.get("sitelinks", {})
-        tit = dd[ss]["title"]
-        wik = dd[ss]["site"]
-        wik2 = dd[ss]["site"].replace("wiki", "")
-        CREATE += f'LAST|S{wik}|"{tit}"||'
-        CREATE += f'LAST|L{wik2}|"{tit}"||'
-    # ---
-    claims = data2.get("claims", {})
-    for Claim in claims:
-        for P in claims[Claim]:
-            value = P["mainsnak"]["datavalue"].get("value", {}).get("id", "")
-            # value = P["datavalue"].get("value",{}).get("id","")
-            if value != "":
-                CREATE += f"LAST|{P['mainsnak']['property']}|{value}||"
-    # ---
-    CREATE = f"{CREATE}XX"
-    CREATE = CREATE.replace("||XX", "")
-    # ---
-    return post_to_qs(CREATE)
+wd_rest_new.open_url_get = open_url_get
 
 
 def Get_sitelinks_From_Qid(q):
-    params = {
-        "action": "wbgetentities",
-        "format": "json",
-        "props": "sitelinks",
-        "ids": q,
-        "utf8": 1,
-    }
-    # ---
-    table = {"sitelinks": {}, "q": ""}
-    # ---
-    json1 = post(params, apiurl="https://www.wikidata.org/w/api.php")
-    # ---
-    if not json1 or "success" not in json1 or json1["success"] != 1:
-        return {}
-    # ---
-    if "entities" in json1:
-        if "-1" not in json1["entities"]:
-            qli = list(json1["entities"].keys())
-            q2 = qli[0]
-            # ---
-            if q2 in json1["entities"]:
-                table["q"] = q2
-                ppe = json1["entities"][q2]
-                # ---
-                if "sitelinks" in ppe:
-                    for site in ppe["sitelinks"].keys():
-                        fsai = ppe["sitelinks"][site]
-                        table["sitelinks"][fsai["site"]] = fsai["title"]
-    # ---
-    return table
+    return wd_rest_new.Get_sitelinks_From_Qid(q)
+
+
+def Get_claim(q, property, get_claim_id=False):
+    return wd_rest_new.Get_Claims_API(q=q, p=property)
 
 
 def WD_Merge(q1, q2):
@@ -274,7 +215,7 @@ def WD_Merge(q1, q2):
         "summary": "",
     }
     # ---
-    r4 = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
+    r4 = post(params, token=True)
     # ---
     if not r4:
         return False
@@ -288,7 +229,7 @@ def WD_Merge(q1, q2):
             # ---
             pams2 = {"action": "wbcreateredirect", "from": From, "to": To, "ignoreconflicts": "description", "summary": ""}
             # ---
-            r5 = post(pams2, apiurl="https://www.wikidata.org/w/api.php", token=True)
+            r5 = post(pams2, token=True)
             # ---
             if "success" in r5:
                 printe.output("<<green>> **createredirect true.")
@@ -320,7 +261,7 @@ def Labels_API(Qid, label, lang, remove=False):
         "value": label,
     }
     # ---
-    req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
+    req = post(params, token=True)
     # ---
     if req:
         text = str(req)
@@ -355,7 +296,7 @@ def get_redirects(liste):
             "utf8": 1,
         }
         # ---
-        json1 = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
+        json1 = post(params, token=True)
         # ---
         if json1:
             redd = json1.get("query", {}).get("redirects", [])
@@ -364,33 +305,41 @@ def get_redirects(liste):
     return redirects
 
 
-def new_item(data, summary, returnid=False):
+def new_item(label="", lang="", summary="", returnid=False):
     # ---
-    params = {"action": "wbeditentity", "new": "item", "summary": summary, "data": data}
+    data = {"labels": {lang: {"language": lang, "value": label}}}
     # ---
-    req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
+    params = {
+        "action": "wbeditentity",
+        "new": "item",
+        "summary": summary,
+        "data": json.JSONEncoder().encode(data),
+        "format": "json",
+    }
+    # ---
+    req = post(params, token=True)
     # ---
     if not req:
         printe.output(f"req:str({req})")
         return False
     # ---
-    if "success" in req:
-        printe.output("<<green>> **Claim_API true.")
-        if returnid:
-            # ---
-            Qid = False
-            # ---
-            if "entity" in req and "id" in req["entity"]:
-                Qid = req["entity"]["id"]
-                printe.output(f'<<green>> himoAPI.py New_API: returnid:"{Qid}" ')
-            # ---
-            return Qid
-        # ---
-        return True
-    else:
+    if "success" not in req:
         printe.output(f"<<red>> req{str(req)}")
+        return False
     # ---
-    return False
+    printe.output("<<green>> **Claim_API true.")
+    # ---
+    if returnid:
+        # ---
+        Qid = False
+        # ---
+        if "entity" in req and "id" in req["entity"]:
+            Qid = req["entity"]["id"]
+            printe.output(f'<<green>> new_item returnid:"{Qid}" ')
+        # ---
+        return Qid
+    # ---
+    return True
 
 
 def Claim_API_str(qid, property, string):
@@ -402,7 +351,7 @@ def Claim_API_str(qid, property, string):
     # ---
     params = {"action": "wbcreateclaim", "entity": qid, "snaktype": "value", "property": property, "value": json.JSONEncoder().encode(string)}
     # ---
-    req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
+    req = post(params, token=True)
     # ---
     if not req:
         printe.output(f"req:str({req})")
@@ -421,7 +370,7 @@ def Delete_claim(claimid):
     # ---
     params = {"action": "wbremoveclaims", "claim": claimid}
     # ---
-    req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
+    req = post(params, token=True)
     # ---
     if not req:
         printe.output(f"req:str({req})")
@@ -434,112 +383,20 @@ def Delete_claim(claimid):
         printe.output(f"<<red>> req{str(req)}")
     # ---
     return False
-
-
-def Claim_API_qid(qid, property, numeric):
-    # ---
-    printe.output(f"<<yellow>> Claim_API_qid: add claim to qid: {qid}, [{property}:{numeric}]")
-    # ---
-    #  remove Q from numeric
-    if "Q" in numeric:
-        numeric = numeric.replace("Q", "")
-    # ---
-    if numeric == "" or qid == "" or property == "":
-        return ""
-    # ---
-    params = {
-        "action": "wbcreateclaim",
-        "entity": qid,
-        "snaktype": "value",
-        "property": property,
-        "value": '{"entity-type":"item","numeric-id":' + numeric + "}",
-    }
-    # ---
-    req = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
-    # ---
-    if not req:
-        printe.output(f"req:str({req})")
-        return False
-    # ---
-    if "success" in req:
-        printe.output("<<green>> **Claim_API true.")
-        return True
-    else:
-        printe.output(f"<<red>> req{str(req)}")
-    # ---
-    return False
-
-
-def open_url(url, return_json=False):
-    # ---
-    result = {} if return_json else ""
-    # ---
-    # get the url
-    req = False
-    try:
-        req = urllib.request.urlopen(url)
-    except Exception:
-        pywikibot.output("Traceback (most recent call last):")
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output("CRITICAL:")
-    # ---
-    if not req:
-        printe.output(" open_url no req ")
-        return result
-    # ---
-    html = ""
-    try:
-        html = req.read().strip().decode("utf-8")
-    except Exception:
-        pywikibot.output("Traceback (most recent call last):")
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output("CRITICAL:")
-        return result
-    # ---
-    jsontab = {}
-    try:
-        jsontab = json.loads(html)
-    except Exception as e:
-        pywikibot.output(f" open_url: Exception {e} ")
-        return result
-    # ---
-    return jsontab
-
-
-def sparql_generator_url(quary, printq=False, add_date=True):
-    # ---
-    if add_date:
-        quary = quary + "\n#" + str(menet)
-    # ---
-    if printq is True:
-        printe.output(quary)
-    # ---
-    fao = py_tools.quoteurl(quary)
-    # ---
-    url = f"https://query.wikidata.org/bigdata/namespace/wdq/sparql?format=json&query={fao}"
-    # ---
-    json1 = open_url(url, return_json=False)
-    # ---
-    if json1 and "head" in json1:
-        var = sorted(list(json1["head"]["vars"]))
-    # ---
-    qlist = []
-    if json1:
-        if "results" in json1:
-            results = json1["results"]
-            if "bindings" in results:
-                for result in results["bindings"]:
-                    s = {vv: result[vv]["value"] if vv in result else "" for vv in var}
-                    qlist.append(s)
-    # ---
-    printe.output(f"#sparql_generator_url:<<green>> {len(qlist)} items found. {menet}")
-    return qlist
 
 
 def wbsearchentities(search, language):
-    params = {"action": "wbsearchentities", "format": "json", "search": search, "language": language, "strictlanguage": 1, "type": "item", "utf8": 1}
+    params = {
+        "action": "wbsearchentities",
+        "format": "json",
+        "search": search,
+        "language": language,
+        "strictlanguage": 1,
+        "type": "item",
+        "utf8": 1,
+    }
     # ---
-    req = post(params, apiurl="https://www.wikidata.org/w/api.php")
+    req = post(params)
     # ---
     if not req:
         printe.output(" wbsearchentities no req ")
@@ -577,45 +434,18 @@ def wbsearchentities(search, language):
                 table[id]["lang"] = s["match"]["language"]
             else:
                 table[id] = s
-            # ---
     # ---
     return table
 
 
-def Get_claim(q, property, get_claim_id=False):
-    # ---
-    params = {
-        "action": "wbgetclaims",
-        "entity": q,
-        "property": property,
-    }
-    # ---
-    json1 = post(params, apiurl="https://www.wikidata.org/w/api.php", token=True)
-    # ---
-    listo = []
-    # ---
-    if not json1:
-        return []
-    # ---
-    claims_p = json1.get("claims", {}).get(property, {})
-    # ---
-    for claims in claims_p:
-        claim_id = claims.get("id", "")
-        datavalue = claims.get("mainsnak", {}).get("datavalue", {})
-        # Type = datavalue.get("type", False)
-        value = datavalue.get("value", "")
-        # ---
-        if isinstance(value, dict):
-            if value.get("id", False):
-                value = value.get("id")
-        # ---
-        if get_claim_id:
-            listo.append({"id": claim_id, "value": value})
-        else:
-            listo.append(value)
-    # ---
-    return listo
-
-
 if __name__ == "__main__":
-    Log_to_wiki(url="https://www.wikidata.org/w/api.php")
+    qids = [
+        "Q26981430"
+    ]
+    # ---
+    for q in qids:
+        printe.output(f"<<blue>>_______\n{q} :")
+        # ---
+        j = wd_rest_new.Get_Claims_API(q=q, p="P11143")
+        # ---
+        printe.output(json.dumps(j, indent=4))

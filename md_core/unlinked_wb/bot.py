@@ -5,52 +5,30 @@ It includes functions for filtering and processing page titles, checking page ex
 retrieving and modifying page content, and adding tags based on QIDs.
 
 Usage:
-python3 core8/pwb.py unlinked_wb/bot
+    python3 core8/pwb.py unlinked_wb/bot
 
 """
 # ---
 import re
 import sys
-from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from newapi import printe
-from mdapi_sql import sql_qids_others
 
-# ---
+from unlinked_wb.hlps import get_pages_in_use, get_qids
+
+from newapi import printe
 from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage
 
+
 api_new = NEW_API("www", family="mdwiki")
-api_new.Login_to_wiki()
+# api_new.Login_to_wiki()
 
 
-def get_qids():
-    qids1 = sql_for_mdwiki.get_all_qids()
-    qids2 = sql_qids_others.get_others_qids()
-    # ---
-    qids1 = {x: v for x, v in qids1.items() if v != ""}
-    qids2 = {x: v for x, v in qids2.items() if v != ""}
-    # ---
-    vals_d = {}
-    # ---
-    for tab in [qids1, qids2]:
-        for x, q in tab.items():
-            if q not in vals_d:
-                vals_d[q] = [x]
-            elif x not in vals_d[q]:
-                vals_d[q].append(x)
-    # ---
-    qids = {v[0]: q for q, v in vals_d.items() if len(v) == 1}
-    # ---
-    return qids, vals_d
-
-
-def work_un_linked_wb(title, qid):
+def add_un_linked_wb(title, qid):
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
     # ---
-    exists = page.exists()
-    if not exists:
-        return
+    if not page.exists():
+        return False
     # ---
     # if page.isRedirect() :  return
     # target = page.get_redirect_target()
@@ -70,14 +48,16 @@ def work_un_linked_wb(title, qid):
         if m:
             qid_in = m.group(1)
         # ---
-        printe.output(f"page already tagged. {qid_in=}, {qid=}")
-        return
+        printe.output(f"page already tagged.{title=}\t{qid_in=}\t{qid=}")
+        return False
     # ---
     tag = "{{#unlinkedwikibase:id=" + qid + "}}\n"
     # ---
     newtext = tag + text.strip()
     # ---
-    page.save(newtext=newtext, summary="add tag:" + tag, nocreate=1, minor="")
+    save = page.save(newtext=newtext, summary="add tag:" + tag, nocreate=1, minor="")
+    # ---
+    return save
 
 
 def work_un(tab):
@@ -86,28 +66,7 @@ def work_un(tab):
         printe.output(f"-----------------\n<<yellow>> work_un: {numb}, {title=}, {new_q=}")
         # ---
         if new_q:
-            work_un_linked_wb(title, new_q)
-
-
-def get_pages_in_use(all_pages):
-    # ---
-    pages_has = {}
-    pages_hasnt = []
-    # ---
-    for x, ta in all_pages.items():
-        qid = ta.get("pageprops", {}).get("unlinkedwikibase_id")
-        if qid:
-            pages_has[x] = qid
-        else:
-            pages_hasnt.append(x)
-    # ---
-    printe.output(f"<<yellow>> len of all_pages qids: {len(pages_has)}.")
-    # ---
-    # pages_props = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", Max=500000)
-    # pages = {x["title"]: x["value"] for x in pages_props}
-    # printe.output(f"<<yellow>> len of get_pages_in_use: {len(pages)}.")
-    # ---
-    return pages_has, pages_hasnt
+            add_un_linked_wb(title, new_q)
 
 
 def add_to_pages(pages_to_add):
@@ -122,7 +81,7 @@ def add_to_pages(pages_to_add):
             printe.output("no qid")
             continue
         # ---
-        work_un_linked_wb(x, qid)
+        add_un_linked_wb(x, qid)
 
 
 def pages_has_to_work(qids, pages_has):
@@ -132,13 +91,15 @@ def pages_has_to_work(qids, pages_has):
     printe.output(f"len of pages_has: {len(pages_has)}, f_to_work: {len(f_to_work)}")
     # ---
     for n, (x, qid) in enumerate(f_to_work.items(), start=1):
+        printe.output("<<yellow>>-----------------")
+        # ---
         printe.output(f"p:{n}/{len(f_to_work)}: t:{x}::")
         # ---
         if not qid:
             printe.output("no qid")
             continue
         # ---
-        work_un_linked_wb(x, qid)
+        add_un_linked_wb(x, qid)
 
 
 def add_tag():

@@ -15,7 +15,7 @@ from newapi import printe
 from apis import cat_cach
 from apis import wiki_api
 from apis import mdwiki_api
-from mdpy.bots.check_title import valid_title  # valid_title(title)
+from mdpy.bots.check_title import valid_title
 
 Dir = str(Path(__file__).parents[0])
 # ---

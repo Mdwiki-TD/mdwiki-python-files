@@ -13,7 +13,7 @@ from newapi.mdwiki_page import user_agent, MainPage, NEW_API
 from newapi import printe
 from mdpy.bots import py_tools
 from apis import mdwiki_api
-from mdpy.bots.check_title import valid_title  # valid_title(title)
+from mdpy.bots.check_title import valid_title
 
 # ---
 Session = requests.Session()
@@ -31,7 +31,7 @@ for arg in sys.argv:
 # from export import * # export_en_history( title )
 # ---
 api_new = NEW_API("www", family="mdwiki")
-api_new.Login_to_wiki()
+# api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 
