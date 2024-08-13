@@ -233,7 +233,7 @@ def start():
             }
             LIMIT 100
     """
-    # newtabs = wikidataapi.sparql_generator_url(quary, printq = False, add_date = True)
+    # newtabs = get_query_result(quary)
     newtabs = wikidataapi.wbsearchentities("User:Mr. Ibrahem", "en")
     # ---
     numb = 0

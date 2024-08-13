@@ -191,15 +191,15 @@ def add_titles_to_qids(tab, add_empty_qid=False):
     all_in = get_all_qids()
     # ---
     for title, qid in new.items():
+        # ---
         if title not in all_in:
             add_qid(title, qid)
             continue
         # ---
         q_in = all_in[title]
         # ---
-        if qid != "":
-            if not q_in:
-                set_qid_where_title(title, qid)
-            else:
-                # set_qid_where_title(title, qid)
-                printe.output(f"<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}")
+        if qid and not q_in:
+            set_qid_where_title(title, qid)
+        else:
+            # set_qid_where_title(title, qid)
+            printe.output(f"<<yellow>> set_qid_where_title() qid_in:{q_in}, new_qid:{qid}")

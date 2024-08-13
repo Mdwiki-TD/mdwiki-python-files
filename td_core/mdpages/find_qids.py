@@ -12,37 +12,18 @@ python3 core8/pwb.py mdpages/find_qids
 """
 import sys
 
-# ---
 from mdapi_sql import sql_for_mdwiki
 from apis import wiki_api
-from apis import wikidataapi
 from newapi import printe
-from mdpy.bots.check_title import valid_title  # valid_title(title)
+from mdpy.bots.check_title import valid_title
 from unlinked_wb.bot import work_un
+from mdpages.create_qids import create_qids
 
-# ---
 qids = sql_for_mdwiki.get_all_qids()
 # ---
-# qids_already = [q for title, q in qids.items() if q != '']
 qids_already = {q: title for title, q in qids.items() if q != ""}
 # ---
 noqids = [title for title, q in qids.items() if q == "" and valid_title(title) and not title.lower().startswith("video:")]
-
-
-def create_qids(no_qids):
-    """create wikidata item for qids
-    creates new Wikidata items for those without QIDs. It uses a for loop to iterate over the list of items without QIDs and makes a POST request to the Wikidata API for each item. The function also prints the response from the API, which can be useful for debugging.
-    """
-    # ---
-    for x in no_qids:
-        # ---
-        CREATE = f'CREATE||LAST|Len|"{x}"||LAST|P11143|"{x}"'
-        # ---
-        new = wikidataapi.post_to_qs(CREATE)
-        # ---
-        print(new)
-        # ---
-        # break
 
 
 def get_qids(noqids_list):
@@ -102,6 +83,47 @@ def get_qids(noqids_list):
     return new_title_qids
 
 
+def to_add_wrk(to_add, noqids):
+    printe.output("===================")
+    printe.output(f"find qid to {len(to_add)} from {len(noqids)} pages.")
+    # ---
+    if to_add:
+        printe.output("<<yellow>>\n".join([f"{k}\t:\t{v}" for k, v in to_add.items()]))
+        # ---
+        printe.output('<<purple>> add "add" to sys.argv to add them?')
+        # ---
+        if "add" in sys.argv:
+            sql_for_mdwiki.add_titles_to_qids(to_add)
+        # ----
+        work_un(to_add)
+
+
+def empty_qids_wrk(empty_qids):
+    printe.output("===================")
+    # ---
+    printe.output(f"<<red>>no qids: {len(empty_qids)}")
+    # ---
+    if empty_qids:
+        # ---
+        for x in empty_qids:
+            printe.output(f"\t<<red>>{x}")
+        # ---
+        printe.output('<<purple>> add "createq" to sys.argv to create new items for them?')
+        # ---
+        if "createq" in sys.argv:
+            create_qids(empty_qids)
+
+
+def false_qids_wrk(false_qids):
+    printe.output("===================")
+    if false_qids:
+        printe.output("<<red>> flase qids:")
+        for xz, q in false_qids.items():
+            title_in = qids_already.get(q, "")
+            # ---
+            printe.output(f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
+
+
 def start():
     # ---
     if len(noqids) == 0:
@@ -126,40 +148,11 @@ def start():
         else:
             false_qids[x] = q
     # ---
-    printe.output("===================")
-    if false_qids:
-        printe.output("<<red>> flase qids:")
-        for xz, q in false_qids.items():
-            title_in = qids_already.get(q, "")
-            # ---
-            printe.output(f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
+    false_qids_wrk(false_qids)
     # ---
-    printe.output("===================")
+    empty_qids_wrk(empty_qids)
     # ---
-    printe.output(f"<<red>>no qids: {len(empty_qids)}")
-    # ---
-    if empty_qids:
-        # ---
-        for x in empty_qids:
-            printe.output(f"\t<<red>>{x}")
-        # ---
-        printe.output('<<purple>> add "createq" to sys.argv to create new items for them?')
-        # ---
-        if "createq" in sys.argv:
-            create_qids(empty_qids)
-    # ---
-    printe.output("===================")
-    printe.output(f"find qid to {len(to_add)} from {len(noqids)} pages.")
-    # ---
-    if to_add:
-        printe.output("<<yellow>>\n".join([f"{k}\t:\t{v}" for k, v in to_add.items()]))
-        # ---
-        printe.output('<<purple>> add "add" to sys.argv to add them?')
-        # ---
-        if "add" in sys.argv:
-            sql_for_mdwiki.add_titles_to_qids(to_add)
-        # ----
-        work_un(to_add)
+    to_add_wrk(to_add, noqids)
 
 
 if __name__ == "__main__":

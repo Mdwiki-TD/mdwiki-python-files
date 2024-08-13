@@ -13,7 +13,7 @@ from newapi.mdwiki_page import user_agent, MainPage, NEW_API
 from newapi import printe
 from mdpy.bots import py_tools
 from apis import mdwiki_api
-from mdpy.bots.check_title import valid_title  # valid_title(title)
+from mdpy.bots.check_title import valid_title
 
 # ---
 Session = requests.Session()

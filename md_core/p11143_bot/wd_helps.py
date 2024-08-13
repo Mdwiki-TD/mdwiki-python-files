@@ -8,19 +8,19 @@ import time
 
 from apis import wikidataapi
 from newapi import printe
+from newapi.wd_sparql import get_query_result
 
 sys.argv.append("workhimo")
-
 wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
 
 
 def make_in_wd_tab():
     # ---
-    in_wd = {}
-    # ---
     query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
     # ---
-    wdlist = wikidataapi.sparql_generator_url(query, printq=False, add_date=True)
+    wdlist = get_query_result(query)
+    # ---
+    in_wd = {}
     # ---
     for wd in wdlist:
         prop = wd["prop"]
@@ -80,6 +80,7 @@ def fix_in_wd(merge_qids, qids):
                     else:
                         print(f"Failed to delete {claimid}")
         # ---
+
         # add the correct claim
         ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
         if ase:
