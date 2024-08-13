@@ -38,7 +38,6 @@ def add_q(new_qids, ty):
         sql_qids_others.add_titles_to_qids(new_qids, add_empty_qid=True)
     else:
         sql_for_mdwiki.add_titles_to_qids(new_qids, add_empty_qid=True)
-    # ---
 
 
 def work_qids(ty):

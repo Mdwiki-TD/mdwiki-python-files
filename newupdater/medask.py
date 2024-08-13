@@ -31,7 +31,8 @@ from newapi.mdwiki_page import NEW_API
 
 # ---
 api_new = NEW_API('www', family='mdwiki')
-api_new.Login_to_wiki()
+# api_new.Login_to_wiki()
+
 def work_on_title(title, returntext=False):
     # ---
     title = urllib.parse.unquote(title)

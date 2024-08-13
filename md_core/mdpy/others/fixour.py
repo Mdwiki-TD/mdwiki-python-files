@@ -16,7 +16,7 @@ from newapi.mdwiki_page import MainPage, NEW_API
 numbers = {1: 20000, 'done': 0}
 # ---
 api_new = NEW_API('www', family='mdwiki')
-api_new.Login_to_wiki()
+# api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 # ---
