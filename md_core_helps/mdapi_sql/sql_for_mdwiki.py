@@ -158,6 +158,9 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
     # ---
     printe.output(f"<<yellow>> len of rest_qids: {len(rest_qids)} after remove empty qids..")
     # ---
+    if not rest_qids:
+        return
+    # ---
     for title, new_qid in rest_qids.items():
         # ---
         if not ids_in_db.get(title):
@@ -165,7 +168,7 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
     # ---
     has_diff_qid_in_db = {x: qid for x, qid in rest_qids.items() if ids_in_db.get(x)}
     # ---
-    printe.output(f"<<yellow>> len of last_qids: {len(has_diff_qid_in_db)} after remove empty qids..")
+    printe.output(f"<<yellow>> len of last_qids: {len(has_diff_qid_in_db)} after remove titles in db..")
     # ---
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)

@@ -14,18 +14,24 @@ sys.argv.append("workhimo")
 wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
 
 
-def make_in_wd_tab():
+def make_in_wd_tab(limit=None):
     # ---
     query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
+    # ---
+    if limit:
+        query += f" limit {limit}"
     # ---
     wdlist = get_query_result(query)
     # ---
     in_wd = {}
     # ---
     for wd in wdlist:
-        prop = wd["prop"]
         # ---
-        qid = wd["item"].split("/entity/")[1]
+        prop = wd.get("prop", {}).get("value", "")
+        # ---
+        qid = wd.get("item", {}).get("value", "")
+        if qid:
+            qid = qid.split("/entity/")[1]
         # ---
         in_wd[qid] = prop
     # ---
@@ -87,3 +93,10 @@ def fix_in_wd(merge_qids, qids):
             print(f"True.. Added P11143:{md_title}")
         else:
             print(f"Failed to add P11143:{md_title}")
+
+
+if __name__ == "__main__":
+    # python3 core8/pwb.py p11143_bot/wd_helps
+
+    op = make_in_wd_tab(limit=10)
+    printe.output("<<blue>>\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))
