@@ -3,7 +3,7 @@
 
 python3 core8/pwb.py apis/wd_rest_new
 
-from apis import wd_rest_new
+from apis.wd_bots import wd_rest_new
 wd_rest_new.open_url_get = open_url_get
 # Get_Claims_API(q="", p="")
 
