@@ -15,13 +15,12 @@ import json
 # ---
 from newapi import printe
 from apis.wd_bots import wd_rest_new
-from apis.wd_bots.wikidataapi_post import post_it, open_url_get
 
-wd_rest_new.open_url_get = open_url_get
+# from apis.wd_bots.wikidataapi_post import post_it
+from apis.wd_bots.wd_post_new import post_it
 
-
-def post(params, apiurl="", token=True):
-    return post_it(params, apiurl=apiurl, token=token)
+def post(params, token=True):
+    return post_it(params=params, token=token)
 
 
 def Get_sitelinks_From_Qid(q):
@@ -59,7 +58,7 @@ def WD_Merge(q1, q2):
         "summary": "",
     }
     # ---
-    r4 = post_it(params, token=True)
+    r4 = post_it(params=params, token=True)
     # ---
     if not r4:
         return False
@@ -73,7 +72,7 @@ def WD_Merge(q1, q2):
             # ---
             pams2 = {"action": "wbcreateredirect", "from": From, "to": To, "ignoreconflicts": "description", "summary": ""}
             # ---
-            r5 = post_it(pams2, token=True)
+            r5 = post_it(params=pams2, token=True)
             # ---
             if "success" in r5:
                 printe.output("<<green>> **createredirect true.")
@@ -105,7 +104,7 @@ def Labels_API(Qid, label, lang, remove=False):
         "value": label,
     }
     # ---
-    req = post_it(params, token=True)
+    req = post_it(params=params, token=True)
     # ---
     if req:
         text = str(req)
@@ -140,7 +139,7 @@ def get_redirects(liste):
             "utf8": 1,
         }
         # ---
-        json1 = post_it(params, token=True)
+        json1 = post_it(params=params, token=True)
         # ---
         if json1:
             redd = json1.get("query", {}).get("redirects", [])
@@ -161,7 +160,7 @@ def new_item(label="", lang="", summary="", returnid=False):
         "format": "json",
     }
     # ---
-    req = post_it(params, token=True)
+    req = post_it(params=params, token=True)
     # ---
     if not req:
         printe.output(f"req:str({req})")
@@ -195,7 +194,7 @@ def Claim_API_str(qid, property, string):
     # ---
     params = {"action": "wbcreateclaim", "entity": qid, "snaktype": "value", "property": property, "value": json.JSONEncoder().encode(string)}
     # ---
-    req = post_it(params, token=True)
+    req = post_it(params=params, token=True)
     # ---
     if not req:
         printe.output(f"req:str({req})")
@@ -214,7 +213,7 @@ def Delete_claim(claimid):
     # ---
     params = {"action": "wbremoveclaims", "claim": claimid}
     # ---
-    req = post_it(params, token=True)
+    req = post_it(params=params, token=True)
     # ---
     if not req:
         printe.output(f"req:str({req})")
@@ -240,7 +239,7 @@ def wbsearchentities(search, language):
         "utf8": 1,
     }
     # ---
-    req = post_it(params)
+    req = post_it(params=params)
     # ---
     if not req:
         printe.output(" wbsearchentities no req ")
@@ -283,7 +282,9 @@ def wbsearchentities(search, language):
 
 
 if __name__ == "__main__":
-    qids = ["Q26981430"]
+    qids = [
+        "Q4115189"
+    ]
     # ---
     for q in qids:
         printe.output(f"<<blue>>_______\n{q} :")
@@ -291,3 +292,13 @@ if __name__ == "__main__":
         j = wd_rest_new.Get_Claims_API(q=q, p="P11143")
         # ---
         printe.output(json.dumps(j, indent=4))
+        # ---
+        uu = Claim_API_str(qid=q, property="P11143", string="test")
+        # ---
+        printe.output(uu)
+        # ---
+        oo = Labels_API(q, "tesst!", "en")
+        # ---
+        oo = Labels_API(q, "تجربة!", "ar")
+        # ---
+        oo = Labels_API(q, "تجربة!", "axxr")

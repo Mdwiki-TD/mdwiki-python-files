@@ -7,7 +7,6 @@ from apis import views_rest
 # ---
 """
 import json
-import traceback
 from newapi.except_err import exception_err
 import pywikibot
 import sys
