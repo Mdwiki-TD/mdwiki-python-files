@@ -7,7 +7,7 @@ from apis import views_rest
 # ---
 """
 import json
-import traceback
+from newapi.except_err import exception_err
 import pywikibot
 import sys
 import urllib
@@ -57,11 +57,8 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
         data = {}
         try:
             data = json.loads(req.text)
-        except Exception:
-            pywikibot.output("Traceback (most recent call last):")
-            pywikibot.output(req.text)
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output("CRITICAL:")
+        except Exception as e:
+            exception_err(e, text=req.text)
         # ---
         if not data:
             pywikibot.output(url)
@@ -144,11 +141,8 @@ def get_views_last_30_days(langcode, titles):
         data = {}
         try:
             data = json.loads(req.text)
-        except Exception:
-            pywikibot.output("Traceback (most recent call last):")
-            pywikibot.output(req.text)
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output("CRITICAL:")
+        except Exception as e:
+            exception_err(e, text=req.text)
         # ---
         if not data:
             pywikibot.output(url)

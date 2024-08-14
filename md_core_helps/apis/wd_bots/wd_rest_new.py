@@ -3,22 +3,31 @@
 
 python3 core8/pwb.py apis/wd_rest_new
 
-from apis import wd_rest_new
-wd_rest_new.open_url_get = open_url_get
+from apis.wd_bots import wd_rest_new
 # Get_Claims_API(q="", p="")
 
 """
 import json
 import sys
+import requests
 
 from newapi import printe
+from newapi.except_err import exception_err
 
 wd_cach = {}
 
 
 def open_url_get(url):
     # ---
-    return
+    result = {}
+    # ---
+    try:
+        req = requests.get(url, timeout=10)
+        result = req.json()
+    except Exception as e:
+        exception_err(e, text=url)
+    # ---
+    return result
 
 
 def Get_one_qid_info(qid, only=None):
@@ -98,10 +107,6 @@ def Get_Claims_API(q="", p=""):
 
 
 if __name__ == "__main__":
-    from apis import wikidataapi
-
-    open_url_get = wikidataapi.open_url_get
-    # ---
     qids = ["Q26981430"]
     # ---
     for q in qids:
