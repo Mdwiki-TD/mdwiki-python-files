@@ -15,6 +15,7 @@ from pywikibot import config
 import os
 
 # ---
+from newapi.except_err import exception_err
 import pywikibot
 import traceback
 
@@ -70,10 +71,8 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
     # ---
     try:
         connection = pymysql.connect(**args2, **credentials)
-    except Exception:
-        pywikibot.output('Traceback (most recent call last):')
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
+    except Exception as e:
+        exception_err(e)
         return Return
     # ---
     if pymysql_version < pkg_resources.parse_version('1.0.0'):
@@ -87,10 +86,8 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
         try:
             cursor.execute(query, params)
 
-        except Exception:
-            pywikibot.output('Traceback (most recent call last):')
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output('CRITICAL:')
+        except Exception as e:
+            exception_err(e)
             return Return
         # ---
         results = Return
@@ -98,10 +95,8 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
         try:
             results = cursor.fetchall()
 
-        except Exception:
-            pywikibot.output('Traceback (most recent call last):')
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output('CRITICAL:')
+        except Exception as e:
+            exception_err(e)
             return Return
         # ---
         # yield from cursor

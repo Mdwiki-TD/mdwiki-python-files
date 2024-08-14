@@ -6,6 +6,7 @@ from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it, open_url_get
 """
 import traceback
 import sys
+from newapi.except_err import exception_err
 import pywikibot
 import requests
 # ---
@@ -118,11 +119,8 @@ def post_it(params, apiurl="", token=True):
     try:
         r4 = SS["ss"].request("POST", SS["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
         jsone = r4.json()
-    except Exception:
-        pywikibot.output("Traceback (most recent call last):")
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output(params)
-        pywikibot.output("CRITICAL:")
+    except Exception as e:
+        exception_err(e, text=params)
         return {}
     # ---
     status = get_status(r4)
@@ -142,10 +140,8 @@ def open_url_get(url):
     try:
         r4 = SS["ss"].request("GET", url, headers={"User-Agent": user_agent}, timeout=10)
         jsone = r4.json()
-    except Exception:
-        pywikibot.output("Traceback (most recent call last):")
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output("CRITICAL:")
+    except Exception as e:
+        exception_err(e)
         return {}
     # ---
     status = get_status(r4)

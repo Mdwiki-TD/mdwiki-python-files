@@ -13,6 +13,7 @@ from mdpy.bots import py_tools
 import sys
 import urllib
 import traceback
+from newapi.except_err import exception_err
 import pywikibot
 
 # ---
@@ -48,10 +49,8 @@ def quoteurl(fao):
     # ---
     try:
         fao = urllib.parse.quote(fao)
-    except Exception:
-        pywikibot.output('Traceback (most recent call last):')
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
+    except Exception as e:
+        exception_err(e)
     # ---
     if endash:
         fao = fao.replace("ioioioioio", "%E2%80%93")

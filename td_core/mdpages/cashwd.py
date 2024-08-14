@@ -13,6 +13,7 @@ import json
 import os
 import traceback
 from datetime import datetime
+from newapi.except_err import exception_err
 import pywikibot
 from pathlib import Path
 
@@ -204,10 +205,8 @@ def dump_all(main_table_sites, len_titles):
             with open(json_file, "w", encoding="utf-8") as aa:
                 json.dump(miss_list, aa, ensure_ascii=False, indent=2)
             printe.output(f"<<greenn>>dump to cash_exists/{site}.json done..")
-        except Exception:
-            pywikibot.output("Traceback (most recent call last):")
-            pywikibot.output(traceback.format_exc())
-            pywikibot.output("CRITICAL:")
+        except Exception as e:
+            exception_err(e)
             continue
     # ---
     return missing_langs
