@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 
+python3 core8/pwb.py apis/wd_bots/wd_post_new
+
 from apis.wd_bots.wd_post_new import post_it
 
 """
@@ -19,12 +21,14 @@ if "workhimo" in sys.argv:
     username = user_account_new.my_username
     password = user_account_new.lgpass_enwiki
 
-SS = {"r3_token": ""}
+SS = {"csrftoken": ""}
 
 wd_site = Get_MwClient_Site("www", "wikidata", username, password)
 
 
 def do_request(params=None, method="POST"):
+    # ---
+    params = params.copy()
     # ---
     action = params["action"]
     # ---
@@ -43,19 +47,18 @@ def do_request(params=None, method="POST"):
 def get_token(mk_new=False):
     # get edit token
     # ---
-    if SS["r3_token"] and not mk_new:
-        return SS["r3_token"]
+    if SS["csrftoken"] and not mk_new:
+        return SS["csrftoken"]
     # ---
-    params = {"format": "json", "action": "query", "meta": "tokens"}
+    try:
+        csrftoken = wd_site.get_token("csrf")
+    except Exception as e:
+        printe.error("Could not get token: %s" % e)
+        return False
     # ---
-    result = do_request(params=params)
+    SS["csrftoken"] = csrftoken
     # ---
-    r3_token = result.get("query", {}).get("tokens", {}).get("csrftoken")
-    # ---
-    SS["r3_token"] = r3_token
-    # ---
-    return r3_token
-
+    return csrftoken
 
 def post_it(params=None, url=None, token=True, method="POST"):
     # ---

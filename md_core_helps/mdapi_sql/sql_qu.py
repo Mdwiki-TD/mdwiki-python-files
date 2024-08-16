@@ -11,29 +11,14 @@ results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[
 # (C) Ibrahem Qasim, 2023
 #
 #
-from pywikibot import config
 import os
-
-# ---
-from newapi.except_err import exception_err
-import pywikibot
-import traceback
-
-# ---
 import pymysql
 import pymysql.cursors
-import pkg_resources
+from pywikibot import config
 
-# ---
+from newapi.except_err import exception_err
 from newapi import printe
 
-# ---
-py_v = pymysql.__version__
-if py_v.endswith('.None'):
-    py_v = py_v[: -len('.None')]
-# ---
-pymysql_version = pkg_resources.parse_version(py_v)
-# ---
 db_username = config.db_username
 db_password = config.db_password
 # ---
@@ -74,11 +59,6 @@ def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_d
     except Exception as e:
         exception_err(e)
         return Return
-    # ---
-    if pymysql_version < pkg_resources.parse_version('1.0.0'):
-        from contextlib import closing
-
-        connection = closing(connection)
     # ---
     with connection as conn, conn.cursor() as cursor:
         # ---

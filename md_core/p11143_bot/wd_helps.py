@@ -11,7 +11,7 @@ from newapi import printe
 from newapi.wd_sparql import get_query_result
 
 sys.argv.append("workhimo")
-wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
+# wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
 
 
 def make_in_wd_tab(limit=None):

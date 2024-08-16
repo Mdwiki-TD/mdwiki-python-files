@@ -108,7 +108,7 @@ def get_qids_sitelinks(qidslist):
         # ---
         printe.output(f"<<green>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.")
         # ---
-        json1 = wikidataapi.post(params_wd, apiurl="https://www.wikidata.org/w/api.php")
+        json1 = wikidataapi.post(params_wd)
         # ---
         if json1:
             # ---
