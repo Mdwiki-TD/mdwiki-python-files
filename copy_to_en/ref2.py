@@ -10,6 +10,23 @@ ref_short = re.compile(r"(<ref\s*name\s*\=\s*[\"\']*([^>]*)[\"\']*\s*\/\s*>)")
 
 
 def get_full_refs(alltext):
+    """Extract full references from the provided text.
+
+    This function searches through the input text for reference patterns and
+    compiles a dictionary of references. It utilizes regular expressions to
+    identify and extract the relevant reference strings, ensuring that any
+    trailing whitespace or quotation marks are removed before storing them
+    in the dictionary.
+
+    Args:
+        alltext (str): The input text containing potential references.
+
+    Returns:
+        dict: A dictionary where the keys are the cleaned reference names
+            and the values are the original reference strings found in
+            the input text.
+    """
+
     refs = {}
     # ---
     for m in ref_complite.finditer(alltext):
