@@ -77,7 +77,7 @@ def one_page(page, lang):
         return ""
     # ---
     # if "save" in sys.argv:
-    #     a = page_put(text, newtext, "Fix references, Expend infobox mdwiki.toolforge.org.", title, lang)
+    #     a = page_put(text, newtext, "Fix references, Expand infobox mdwiki.toolforge.org.", title, lang)
     #     if a:
     #         print("save ok")
     #         return ""

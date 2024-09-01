@@ -19,6 +19,30 @@ temps_to_delete = [
     "featured article",
     "redirect",
     "#unlinkedwikibase",
+    "anchor",
+    "defaultsort",
+    "distinguish",
+    "esborrany",
+    "fr",
+    "good article",
+    "italic title",
+    "other uses",
+    "redirect-distinguish",
+    "see also",
+    "tedirect-distinguish",
+    "use mdy dates",
+    "void",
+]
+
+temps_patterns = [
+    r"^pp(-.*)?$",
+    r"^articles (for|with|needing|containing).*$",
+    r"^engvar[ab]$",
+    r"^use[\sa-z]+(english|spelling|referencing)$",
+    r"^use [dmy]+ dates$",
+    r"^wikipedia articles (for|with|needing|containing).*$",
+    r"^(.*-)?stub$",
+    r"^.*? sidebar$",
 ]
 
 
@@ -46,6 +70,11 @@ def del_temps(text):
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
         if name in temps_to_delete:
             text = text.replace(temp.string.strip(), "")
+        else:
+            for pattern in temps_patterns:
+                if re.match(pattern, name):
+                    text = text.replace(temp.string.strip(), "")
+                    break
     # ---
     parsed = wtp.parse(text)
     # ---

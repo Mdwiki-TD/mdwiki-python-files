@@ -101,7 +101,7 @@ def work_one_lang(list_, lang):
         donee = False
         # ---
         if text != newtext:
-            aa = page_put(text, newtext, "Fix references, Expend infobox #mdwiki .toolforge.org.", title, lang)
+            aa = page_put(text, newtext, "Fix references, Expand infobox #mdwiki .toolforge.org.", title, lang)
             # ---
             if aa:
                 donee = True

@@ -187,6 +187,8 @@ def new_item(label="", lang="", summary="", returnid=False):
 
 def Claim_API_str(qid, property, string):
     # ---
+    qid = qid.strip()
+    # ---
     printe.output(f"<<yellow>> Claim_API_str: add claim to qid: {qid}, [{property}:{string}]")
     # ---
     if string == "" or qid == "" or property == "":
