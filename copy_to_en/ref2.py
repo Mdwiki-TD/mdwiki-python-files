@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Usage:
-from copy_to_en.ref import fix_ref# text = fix_ref(first, alltext)
+from copy_to_en.ref2 import fix_ref# text = fix_ref(first, alltext)
 """
 import re
 
@@ -16,6 +16,7 @@ def get_full_refs(alltext):
         name3 = re.sub(r"\s*\"$", "", m.group(2)).strip()
         if name3 != "":
             refs[name3] = m.group()
+    # ---
     return refs
 
 

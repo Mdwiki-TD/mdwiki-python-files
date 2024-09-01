@@ -42,3 +42,4 @@ md_core_helps/one_time/prior/en_old.py
 md_core_helps/one_time/prior/test.py
 md_core_helps/one_time/prior/test1.py
 md_core_helps/tw/twet_configs.py
+copy_to_en/medwiki_account.py
