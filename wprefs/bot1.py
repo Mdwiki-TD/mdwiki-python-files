@@ -58,6 +58,22 @@ def fix_page_here(text, title, langcode):
 
 
 def one_page(page, lang):
+    """Process a page and update its content based on specified language.
+
+    This function takes a page identifier and a language code, retrieves the
+    text associated with the page, and applies various transformations to
+    it. If the retrieved text is empty or unchanged after processing,
+    appropriate messages are printed. If changes are made, the updated text
+    is saved to a file.
+
+    Args:
+        page (str): The identifier of the page to be processed.
+        lang (str): The language code to be used for retrieving the page text.
+
+    Returns:
+        str: An empty string upon completion of the function.
+    """
+
     title = ec_de_code(page, "decode")
     # ---
     text = GetPageText(title, lang=lang, Print=False)
