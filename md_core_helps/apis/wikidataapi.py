@@ -186,6 +186,25 @@ def new_item(label="", lang="", summary="", returnid=False):
 
 
 def Claim_API_str(qid, property, string):
+    """Add a claim to a specified QID in the API.
+
+    This function constructs a request to add a claim to a given QID using
+    the specified property and string value. It first checks if any of the
+    input parameters are empty and returns an empty string if so. If the
+    parameters are valid, it sends a request to the API and processes the
+    response. The function logs the process and returns a boolean indicating
+    the success of the operation.
+
+    Args:
+        qid (str): The QID to which the claim is being added.
+        property (str): The property under which the claim is categorized.
+        string (str): The value of the claim being added.
+
+    Returns:
+        bool: True if the claim was successfully added, False otherwise.
+            An empty string is returned if any input parameter is empty.
+    """
+
     # ---
     qid = qid.strip()
     # ---
