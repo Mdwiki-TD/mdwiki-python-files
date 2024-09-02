@@ -25,7 +25,7 @@ sys.path.append(str(Dir))
 # ---
 # print(Dir)
 # ---
-from wprefs.api import GetPageText, page_put
+from wprefs.api import GetPageText#, page_put
 from wprefs.helps import ec_de_code
 from wprefs.files import setting, save_wprefcash
 from wprefs.wpref_text import fix_page
@@ -144,7 +144,7 @@ def maine():
             move_dot[1] = True
         # ---
         if arg == "lang":
-            lange = value
+            lange = value.strip()
         if arg == "page":
             page = value.replace("_", " ")
         if arg == "file":
