@@ -98,6 +98,7 @@ def work_with_2_qids(oldq, new_q):
 
 
 def add_wd(qid, enlink, lang, target):
+    print("add_wd:")
     params = {
         "action": "wbsetsitelink",
         "linktitle": target,
@@ -114,7 +115,7 @@ def add_wd(qid, enlink, lang, target):
     # ---
     ss = wikidataapi.post(params, token=True)
     # ---
-    printe.output(ss)
+    printe.output(str(ss))
     # ---
     if ss and "success" in ss:
         return True

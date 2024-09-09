@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """
+https://hashtags.wmcloud.org/json/?query=mdwikicx
+
 بوت قواعد البيانات
 
 python3 core8/pwb.py after_translate/sql_new
