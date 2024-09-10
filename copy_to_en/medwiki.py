@@ -72,6 +72,23 @@ def Create(title, text, summary):
 
 
 def get_text(x):
+    """Retrieve and process text from a specified page.
+
+    This function fetches the text content of a page identified by the
+    parameter `x` using the `mdwiki_api.GetPageText` method. It processes
+    the retrieved text by searching for specific patterns, modifying
+    references, and ensuring that the output is formatted correctly. The
+    function also handles cases where the page may not contain any text,
+    returning an empty string in such instances.
+
+    Args:
+        x (str): The identifier of the page from which to retrieve text.
+
+    Returns:
+        str: The processed text content from the specified page. If no
+        text is found, an empty string is returned.
+    """
+
     alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
     # ---
     revids[x] = revid
@@ -165,6 +182,16 @@ def start(all_pages):
 
 
 def main():
+    """Main entry point for the application.
+
+    This function orchestrates the workflow of the application by calling
+    various helper functions to retrieve and process data. It first gathers
+    a list of completed categories, then retrieves all available pages. If
+    the "nodone" argument is not provided, it filters out the completed
+    pages from the list of all pages. Finally, it initiates the processing
+    of the remaining pages and saves the revisions to a JSON file.
+    """
+
     # ---
     done = medwiki_cat_members()
     # ---

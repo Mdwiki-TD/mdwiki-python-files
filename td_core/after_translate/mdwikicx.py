@@ -23,6 +23,19 @@ from after_translate.bots import add_to_wd
 
 
 def get_result():
+    """Fetches the result from a specified URL and returns the rows of data.
+
+    This function makes a GET request to a predefined URL to retrieve JSON
+    data. It extracts the "Rows" key from the JSON response and returns its
+    value. If an error occurs during the request or while processing the
+    response, the function catches the exception, prints an error message,
+    and returns an empty list.
+
+    Returns:
+        list: A list of rows extracted from the JSON response.
+            If an error occurs, an empty list is returned.
+    """
+
     url = "https://hashtags.wmcloud.org/json/?query=mdwikicx"
     # ---
     try:
@@ -38,6 +51,24 @@ def get_result():
 
 
 def work_one_page(x):
+    """Process a single page based on the provided metadata.
+
+    This function retrieves the QID associated with a given markdown title
+    and checks if the corresponding Wikipedia page exists. If the page
+    exists and is in the main namespace, it retrieves the QID of the page.
+    If the page does not exist or is not in the main namespace, appropriate
+    actions are taken, including logging output and potentially adding data
+    to Wikidata.
+
+    Args:
+        x (dict): A dictionary containing metadata with keys "mdtitle",
+            "page_title", and "lang".
+
+    Returns:
+        None: The function does not return a value but may perform side
+            effects such as logging output or modifying data.
+    """
+
     # ---
     qid = en_to_md.mdtitle_to_qid.get(x["mdtitle"], "")
     # ---
@@ -65,6 +96,17 @@ def work_one_page(x):
 
 
 def main():
+    """Main function to process command-line arguments and extract specific
+    information
+    from a predefined result list.  This function iterates through command-
+    line arguments to check for a specified language option. It then
+    processes a hardcoded list of results, extracting relevant data such as
+    domain, timestamp, username, page title, and edit summary. The extracted
+    information is stored in a structured format and saved to a JSON file.
+    Additionally, the function filters out entries based on specific
+    usernames.
+    """
+
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
