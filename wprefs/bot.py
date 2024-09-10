@@ -56,6 +56,24 @@ def fix_page_here(text, title, langcode):
 
 
 def work_one_lang(list_, lang):
+    """Process a list of titles for a specified language on Wikipedia.
+
+    This function iterates through a list of titles and performs various
+    operations based on the specified language. It checks if the language
+    should be skipped, filters out titles that are already in a reference
+    list, and processes each title to potentially fix its content on
+    Wikipedia. The function also handles logging and appending processed
+    titles to a reference file.
+
+    Args:
+        list_ (list): A list of titles to be processed.
+        lang (str): The language code for the Wikipedia language to work on.
+
+    Returns:
+        None: This function does not return a value but performs actions
+        such as logging output and modifying files.
+    """
+
     # ---
     printe.output(f"<<blue>> work on lang: {lang}.wikipedia......................")
     # ---

@@ -63,6 +63,22 @@ def remove_images(text):
 
 
 def del_temps(text):
+    """Delete specified templates from the given text.
+
+    This function parses the input text to identify and remove specific
+    templates based on their names. It first processes the templates and
+    removes those that match predefined names or patterns. After that, it
+    checks for any parser functions that also match the specified names for
+    deletion. The result is a cleaned-up version of the input text with the
+    designated templates and functions removed.
+
+    Args:
+        text (str): The input text containing templates and functions.
+
+    Returns:
+        str: The modified text with specified templates and functions removed.
+    """
+
     # ---
     parsed = wtp.parse(text)
     for temp in parsed.templates:
