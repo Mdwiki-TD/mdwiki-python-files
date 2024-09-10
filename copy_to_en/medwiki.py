@@ -73,17 +73,17 @@ def Create(title, text, summary):
 
 def get_text(x):
     """Retrieve and process text from a specified page.
-    This function fetches the text content of a page identified by the
-    parameter `x` using the `mdwiki_api.GetPageText` method. It processes
-    the retrieved text by searching for specific patterns, modifying
-    references, and ensuring that the output is formatted correctly. The
-    function also handles cases where the page may not contain any text,
-    returning an empty string in such instances.
+    This function fetches the text content of a page using the
+    `mdwiki_api.GetPageText` method. It processes the retrieved text to
+    extract and format specific information, including handling unlinked
+    Wikibase IDs and adjusting the infobox formatting. The function also
+    ensures that references are properly formatted and included in the
+    output.
     Args:
         x (str): The identifier of the page from which to retrieve text.
     Returns:
-        str: The processed text content from the specified page. If no
-        text is found, an empty string is returned.
+        tuple: A tuple containing the processed text and the revision ID
+        of the page.
     """
     alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
     # ---
