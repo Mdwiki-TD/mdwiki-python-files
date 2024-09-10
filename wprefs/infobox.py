@@ -44,6 +44,23 @@ def expend_new(main_temp):
 
 
 def Expend_Infobox(text, title, section_0):
+    """Expand the infobox in the provided text.
+
+    This function processes the input text to expand an infobox based on the
+    specified title. It identifies sections within the text and modifies
+    them accordingly. If the section is empty, it attempts to extract
+    relevant information from the text. The function also handles template
+    extraction and ensures that the infobox is formatted correctly.
+
+    Args:
+        text (str): The input text containing the infobox to be expanded.
+        title (str): The title of the infobox to be processed.
+        section_0 (str): An optional section of text that may contain relevant information.
+
+    Returns:
+        str: The modified text with the expanded infobox.
+    """
+
     # ---
     newtext = text
     # ---

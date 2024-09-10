@@ -90,6 +90,24 @@ def one_page(page, lang):
 
 
 def one_file(file, lang):
+    """Process a file and apply transformations based on its content.
+
+    This function reads the content of a specified file, applies a
+    transformation using the `fix_page_here` function, and saves the
+    modified content if changes are made. It handles file paths and ensures
+    that the file is read with UTF-8 encoding. If any errors occur during
+    file reading, they are caught and logged, and an empty string is
+    returned. The function also generates a random title for the transformed
+    content.
+
+    Args:
+        file (str): The path to the input file.
+        lang (str): The language parameter used for transformation.
+
+    Returns:
+        str: An empty string indicating the result of the operation.
+    """
+
     # ---
     text = ""
     # ---
@@ -129,6 +147,18 @@ def one_file(file, lang):
 
 
 def maine():
+    """Process command-line arguments and execute corresponding actions.
+
+    This function parses command-line arguments to determine the desired
+    actions, such as loading a specific page or file, and setting the
+    language for processing. It checks for required parameters and invokes
+    the appropriate functions based on the provided arguments. If neither a
+    page nor a file is specified, it outputs an error message.
+
+    Returns:
+        str: An empty string upon completion of processing.
+    """
+
     # ---
     page = ""
     lange = ""
