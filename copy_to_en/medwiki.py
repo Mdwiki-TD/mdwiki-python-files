@@ -4,7 +4,8 @@
 python3 core8/pwb.py copy_to_en/medwiki ask
 
 tfj run copymulti --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki multi"
-tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki main2"
+tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki"
+tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki nodone"
 
 """
 
@@ -108,17 +109,18 @@ def get_text(x):
     # ---
     newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}"
     # ---
-    return newtext
+    return newtext, revid
 
 
 def one_page(x):
-    newtext = get_text(x)
+    newtext, revid = get_text(x)
     # ---
     new_title = "Md:" + x
     # ---
     x2 = x.replace(" ", "_")
     # ---
     summary = f"from [[:mdwiki:{x2}|{x}]]"
+    summary = f"from [[:mdwiki:Special:Redirect/revision/{revid}|{x}]]"
     # ---
     # Create(new_title, newtext, summary)
     # # ---
@@ -177,9 +179,8 @@ def main():
     # ---
     file = Dir / "all_pages_revids.json"
     # ---
-    with open(file, "w", encoding="utf-8") as f:
-        f.write(json.dumps(revids), ensure_ascii=False)
-    # ---
+    # with open(file, "w", encoding="utf-8") as f:
+    #     f.write(json.dumps(revids), ensure_ascii=False)
 
 
 def main2():
