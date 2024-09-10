@@ -92,13 +92,32 @@ def wordcount(title, srlimit="30"):
     return words
 
 
-def GetPageText(title, redirects=False):
+def GetPageText(title, redirects=False, get_revid=False):
+    """Retrieve the wikitext of a specified page from a wiki.
+
+    This function sends a request to a wiki API to retrieve the wikitext of
+    a page identified by its title. It can handle redirects and can
+    optionally return the revision ID of the page. If the page does not
+    exist or cannot be parsed, appropriate messages are logged.
+
+    Args:
+        title (str): The title of the page to retrieve.
+        redirects (bool?): Whether to follow redirects. Defaults to False.
+        get_revid (bool?): Whether to return the revision ID along with the wikitext.
+            Defaults to False.
+
+    Returns:
+        str: The wikitext of the specified page.
+        tuple: A tuple containing the wikitext and the revision ID if get_revid is
+            True.
+    """
+
     # printe.output( '**GetarPageText: ')
     # ---
     params = {
         "action": "parse",
         # "prop": "wikitext|sections",
-        "prop": "wikitext",
+        "prop": "wikitext|revid",
         "page": title,
         # "redirects": 1,
         # "normalize": 1,
@@ -118,6 +137,9 @@ def GetPageText(title, redirects=False):
     # ---
     if not text:
         printe.output(f'page {title} text == "".')
+    # ---
+    if get_revid:
+        return text, json1.get("parse", {}).get("revid", 0)
     # ---
     return text
 

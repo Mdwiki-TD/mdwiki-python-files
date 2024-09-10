@@ -98,6 +98,25 @@ def work_with_2_qids(oldq, new_q):
 
 
 def add_wd(qid, enlink, lang, target):
+    """Add a site link to a Wikidata item.
+
+    This function adds a site link to a specified Wikidata item based on the
+    provided parameters. It constructs the necessary API request to link the
+    given target to either an existing item identified by `qid` or a new
+    item identified by `enlink`. The function handles both cases and checks
+    for potential conflicts with existing site links.
+
+    Args:
+        qid (str): The unique identifier for the Wikidata item (QID).
+        enlink (str): The English link to the item if `qid` is not provided.
+        lang (str): The language code for the site link (e.g., 'ar' for Arabic).
+        target (str): The title of the site link to be added.
+
+    Returns:
+        bool: True if the site link was successfully added, False otherwise.
+    """
+
+    print("add_wd:")
     params = {
         "action": "wbsetsitelink",
         "linktitle": target,
@@ -114,7 +133,7 @@ def add_wd(qid, enlink, lang, target):
     # ---
     ss = wikidataapi.post(params, token=True)
     # ---
-    printe.output(ss)
+    printe.output(str(ss))
     # ---
     if ss and "success" in ss:
         return True
