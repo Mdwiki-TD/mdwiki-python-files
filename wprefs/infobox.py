@@ -58,7 +58,10 @@ def Expend_Infobox(text, title, section_0):
                 section_0 = newtext
                 print_s('section_0 = newtext')
     # ---
-    title2 = re.escape(title)
+    try:
+        title2 = re.escape(title)
+    except Exception as e:
+        title2 = title
     # ---
     newtext = re.sub(r"\}\s*(\'\'\'%s\'\'\')" % title2, r"}\n\n\g<1>", newtext)
     section_0 = re.sub(r"\}\s*(\'\'\'%s\'\'\')" % title2, r"}\n\n\g<1>", section_0)
