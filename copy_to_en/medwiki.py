@@ -72,6 +72,23 @@ def Create(title, text, summary):
 
 
 def get_text(x):
+    """Retrieve and process text from a specified page.
+
+    This function fetches the text content of a page using the
+    `mdwiki_api.GetPageText` method. It processes the retrieved text to
+    extract and format specific information, including handling unlinked
+    Wikibase IDs and adjusting the infobox formatting. The function also
+    ensures that references are properly formatted and included in the
+    output.
+
+    Args:
+        x (str): The identifier of the page from which to retrieve text.
+
+    Returns:
+        tuple: A tuple containing the processed text and the revision ID
+        of the page.
+    """
+
     alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
     # ---
     revids[x] = revid
@@ -113,6 +130,21 @@ def get_text(x):
 
 
 def one_page(x):
+    """Create or update a mediawiki page with the given title and content.
+
+    This function retrieves text associated with a given identifier,
+    constructs a new title for the mediawiki page, and creates a summary for
+    the page. It checks if the page already exists; if it does, it updates
+    the page with new content. If the page does not exist, it creates a new
+    page with the specified title and content.
+
+    Args:
+        x (str): The identifier used to retrieve and create the mediawiki page.
+
+    Returns:
+        None: This function does not return a value.
+    """
+
     newtext, revid = get_text(x)
     # ---
     new_title = "Md:" + x
