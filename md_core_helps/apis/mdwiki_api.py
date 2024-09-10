@@ -92,13 +92,13 @@ def wordcount(title, srlimit="30"):
     return words
 
 
-def GetPageText(title, redirects=False):
+def GetPageText(title, redirects=False, get_revid=False):
     # printe.output( '**GetarPageText: ')
     # ---
     params = {
         "action": "parse",
         # "prop": "wikitext|sections",
-        "prop": "wikitext",
+        "prop": "wikitext|revid",
         "page": title,
         # "redirects": 1,
         # "normalize": 1,
@@ -118,6 +118,9 @@ def GetPageText(title, redirects=False):
     # ---
     if not text:
         printe.output(f'page {title} text == "".')
+    # ---
+    if get_revid:
+        return text, json1.get("parse", {}).get("revid", 0)
     # ---
     return text
 

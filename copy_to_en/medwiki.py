@@ -36,6 +36,7 @@ CatDepth = catdepth_new.subcatquery
 MainPage = super_page.MainPage
 
 Dir = Path(__file__).parent
+revids = {}
 
 
 def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
@@ -70,7 +71,9 @@ def Create(title, text, summary):
 
 
 def get_text(x):
-    alltext = mdwiki_api.GetPageText(x)
+    alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
+    # ---
+    revids[x] = revid
     # ---
     if not alltext:
         print("no text: " + x)
@@ -101,7 +104,9 @@ def get_text(x):
     elif newtext.lower().find("{{drugbox") != -1:
         newtext = newtext[newtext.lower().find("{{drugbox") :]
     # ---
-    newtext = f"{unlinkedwikibase}\n\n{newtext}"
+    revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
+    # ---
+    newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}"
     # ---
     return newtext
 
@@ -169,6 +174,12 @@ def main():
         all_pages = [x for x in all_pages if x not in done]
     # ---
     start(all_pages)
+    # ---
+    file = Dir / "all_pages_revids.json"
+    # ---
+    with open(file, "w", encoding="utf-8") as f:
+        f.write(json.dumps(revids), ensure_ascii=False)
+    # ---
 
 
 def main2():
@@ -185,7 +196,7 @@ def main2():
 if __name__ == "__main__":
     if "test" in sys.argv:
         # one_page("Posaconazole")
-        one_page("COVID-19")
+        one_page("Tropicamide")
         # one_page("Chronic lymphocytic leukemia")
     elif "main2" in sys.argv:
         main2()
