@@ -72,14 +72,17 @@ def Create(title, text, summary):
 
 def get_text(x):
     """Retrieve and process text from a specified page.
+
     This function fetches the text content of a page using the
     `mdwiki_api.GetPageText` method. It processes the retrieved text to
     extract and format specific information, including handling unlinked
     Wikibase IDs and adjusting the infobox formatting. The function also
     ensures that references are properly formatted and included in the
     output.
+
     Args:
         x (str): The identifier of the page from which to retrieve text.
+
     Returns:
         tuple: A tuple containing the processed text and the revision ID
         of the page.
@@ -161,6 +164,20 @@ def get_all():
 
 
 def start(all_pages):
+    """Start processing a list of pages.
+
+    This function shuffles the input list of pages randomly and then
+    processes each page. If the script is run with the "multi" argument, it
+    utilizes multiprocessing to handle the pages in parallel. Otherwise, it
+    processes each page sequentially, printing the progress as it goes.
+
+    Args:
+        all_pages (list): A list of pages to be processed.
+
+    Returns:
+        None: This function does not return a value.
+    """
+
     # ---
     # sort all_pages randmly
     random.shuffle(all_pages)
@@ -180,6 +197,7 @@ def start(all_pages):
 
 def main():
     """Main entry point for the application.
+
     This function orchestrates the workflow of the application by calling
     various helper functions to retrieve and process data. It first gathers
     a list of completed categories, then retrieves all available pages. If
