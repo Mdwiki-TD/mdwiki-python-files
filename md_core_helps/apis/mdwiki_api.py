@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-
+# revid    = mdwiki_api.GetRevid(title)
 """
 from newapi import printe
 from newapi.mdwiki_page import MainPage as md_MainPage, NEW_API
@@ -142,6 +142,18 @@ def GetPageText(title, redirects=False, get_revid=False):
         return text, json1.get("parse", {}).get("revid", 0)
     # ---
     return text
+
+
+def GetRevid(title):
+    # ---
+    params = {"action": "parse", "prop": "revid", "page": title}
+    # ---
+    json1 = post_s(params)
+    if json1:
+        revid = json1.get("parse", {}).get("revid", 0)
+        return revid
+    # ---
+    return ""
 
 
 def Get_page_links(title, namespace="0", limit="max"):

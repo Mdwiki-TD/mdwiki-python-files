@@ -100,13 +100,13 @@ def make_template(title):
     else:
         oldid = ""
     # ---
-    section = "\n==Enlaces externos==\n{{"
-    # {{Traducido ref|en|User:Mr. Ibrahem/Herpes labialis|oldid=1138582883|trad=|fecha=10 Febrero 2023}}
-    # ---
     date = make_date(timestamp)
     # ---
-    section += f"Traducido ref|mdwiki|{_title}|oldid={oldid}|trad=|fecha={date}"
+    # {{Traducido ref|en|User:Mr. Ibrahem/Herpes labialis|oldid=1138582883|trad=|fecha=10 Febrero 2023}}
+    section = "\n==Enlaces externos==\n"
     # ---
+    section += "{{"
+    section += f"Traducido ref|mdwiki|{_title}|oldid={oldid}|trad=|fecha={date}"
     section += "}}"
     # ---
     if _title == "" or date == "":
@@ -116,7 +116,8 @@ def make_template(title):
 
 
 def add_section(text, title):
-    """Add a section to the provided text.
+    """
+    Add a section to the provided text.
     This function checks if the text already contains a specific section
     titled "==Enlaces externos==". If the section is present, it returns the
     original text. If the section is not present, it appends a new section

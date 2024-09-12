@@ -8,7 +8,7 @@ tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki nodone"
 
 """
-
+import random
 import json
 import sys
 import re
@@ -37,7 +37,6 @@ CatDepth = catdepth_new.subcatquery
 MainPage = super_page.MainPage
 
 Dir = Path(__file__).parent
-revids = {}
 
 
 def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
@@ -86,8 +85,6 @@ def get_text(x):
         of the page.
     """
     alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
-    # ---
-    revids[x] = revid
     # ---
     if not alltext:
         print("no text: " + x)
@@ -164,6 +161,10 @@ def get_all():
 
 
 def start(all_pages):
+    # ---
+    # sort all_pages randmly
+    random.shuffle(all_pages)
+    # ---
     if "multi" in sys.argv:
         pool = Pool(processes=2)
         pool.map(one_page, all_pages)
@@ -197,11 +198,6 @@ def main():
         all_pages = [x for x in all_pages if x not in done]
     # ---
     start(all_pages)
-    # ---
-    file = Dir / "all_pages_revids.json"
-    # ---
-    # with open(file, "w", encoding="utf-8") as f:
-    #     f.write(json.dumps(revids), ensure_ascii=False)
 
 
 def main2():
@@ -217,9 +213,9 @@ def main2():
 
 if __name__ == "__main__":
     if "test" in sys.argv:
-        # one_page("Posaconazole")
-        one_page("Tropicamide")
-        # one_page("Chronic lymphocytic leukemia")
+        one_page("Sudden infant death syndrome")
+        one_page("Menopause")
+        one_page("Panic attack")
     elif "main2" in sys.argv:
         main2()
     else:
