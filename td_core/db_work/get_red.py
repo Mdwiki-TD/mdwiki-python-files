@@ -52,20 +52,22 @@ def get_pages(tab):
     # ---
     for old_title, new_title in table.items():
         # ---
-        new_title_qid = tab.get(new_title, False)
-        old_title_qid = tab.get(old_title, False)
+        new_qid = tab.get(new_title, False)
+        old_qid = tab.get(old_title, False)
         # ---
-        if not old_title_qid:
+        if not old_qid:
             continue
         # ---
-        if not new_title_qid:
+        if not new_qid:
             # استبدال
             # ---
-            set_new_title[new_title] = old_title_qid
+            set_new_title[new_title] = old_qid
+            # ---
+            sql_for_mdwiki.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=True)
             # ---
             tat += f'old_title: "{old_title}" to: "{new_title}",\n'
             # ---
-        elif new_title_qid == old_title_qid:
+        elif new_qid == old_qid:
             to_del.append(old_title)
     # ---
     printe.output("===================")
@@ -81,12 +83,18 @@ def get_pages(tab):
     if "no" not in sys.argv:
         if set_new_title:
             # ---
-            for new_title, old_title_qid in set_new_title.items():
-                sql_for_mdwiki.set_title_where_qid(new_title, old_title_qid)
+            for new_title, old_qid in set_new_title.items():
+                sql_for_mdwiki.set_title_where_qid(new_title, old_qid)
             # ---
             sql_for_mdwiki.add_titles_to_qids(set_new_title)
 
 
-if __name__ == "__main__":
+def start():
     get_pages(mdwiki_to_qid)
-    get_pages(mdtitle_to_qid)
+
+    if "nothers" not in sys.argv:
+        get_pages(mdtitle_to_qid)
+
+
+if __name__ == "__main__":
+    start()
