@@ -21,7 +21,7 @@ cat_for_pages = {}
 
 def get_cats_and_pages():
     # ---
-    sq = sql_for_mdwiki.mdwiki_sql('select category, depth from categories;', return_dict=True)
+    sq = sql_for_mdwiki.select_md_sql('select category, depth from categories;', return_dict=True)
     # ---
     catlen = {}
     # ---
@@ -60,7 +60,7 @@ def get_pages_with_no_cat():
     # ---
     add_cat = {}
     # ---
-    ioi = sql_for_mdwiki.mdwiki_sql("select title from pages where cat = '';", return_dict=True)
+    ioi = sql_for_mdwiki.select_md_sql("select title from pages where cat = '';", return_dict=True)
     # ---
     for tab in ioi:
         title = tab['title']

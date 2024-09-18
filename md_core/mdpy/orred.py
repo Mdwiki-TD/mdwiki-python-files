@@ -48,7 +48,7 @@ def start():
     # ---
     que = """select title, target from pages where target != "" and lang = "or";"""
     # ---
-    sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
     targets_to_titles = {}
     # ---

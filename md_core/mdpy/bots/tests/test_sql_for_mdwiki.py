@@ -29,7 +29,7 @@ def tests():
     """
     # return
     # test_get_all_pages
-    # pages = mdwiki_sql(' select DISTINCT * from pages limit 10;', return_dict=True)
+    # pages = select_md_sql(' select DISTINCT * from pages limit 10;', return_dict=True)
     pages = sql_for_mdwiki.get_all_pages_all_keys(lang="ar", table="pages_users")
     printe.output(f"<<yellow>> len of pages:{len(pages)}")
     for x in pages:

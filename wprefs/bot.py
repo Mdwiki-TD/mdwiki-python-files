@@ -149,7 +149,7 @@ def work_sql_result(lange, nolange, year=2024):
     # ---
     printe.output(que)
     # ---
-    sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
     for tab in sq:
         lang = tab["lang"]

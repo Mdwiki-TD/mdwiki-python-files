@@ -4,12 +4,11 @@ python3 core8/pwb.py mdpy/sql_qids_others
 
 # ---
 from mdpages.qids_others import sql_qids_others
+# sql_qids_others. select_md_sql(query, return_dict=False, values=None)
 # sql_qids_others. mdwiki_sql(query, return_dict=False, values=None)
 # sql_qids_others. get_others_qids()
 # sql_qids_others. set_title_where_qid(new_title, qid)
 # sql_qids_others. add_titles_to_qids(tab, add_empty_qid=False)
-# sql_qids_others. set_target_where_id(new_target, iid)
-# sql_qids_others. set_deleted_where_id(iid)
 # ---
 """
 from newapi import printe
@@ -28,14 +27,21 @@ def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
     return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
-# qids defs
+def select_md_sql(query, *args, **kwargs):
+    # ---
+    if not query:
+        print("query == ''")
+        return {}
+    # ---
+    return mdwiki_sql(query, *args, **kwargs)
 
 
 def get_others_qids():
     # ---
-    sq = mdwiki_sql("select DISTINCT title, qid from qids_others;", return_dict=True)
+    # xxxx iiii oooo gggg
+    # ---
+    sq = select_md_sql("select DISTINCT title, qid from qids_others;", return_dict=True)
     return {ta["title"]: ta["qid"] for ta in sq}
-
 
 def add_qid(title, qid):
     printe.output(f"<<yellow>> add_qid()  title:{title}, qid:{qid}")
@@ -43,6 +49,15 @@ def add_qid(title, qid):
     qua = "INSERT INTO qids_others (title, qid) SELECT %s, %s;"
     # ---
     values = [title, qid]
+    # ---
+    return mdwiki_sql(qua, return_dict=True, values=values)
+
+
+def set_qid_where_qid(new_qid, old_qid):
+    printe.output(f"<<yellow>> set_qid_where_qid()  new_qid:{new_qid}, old_qid:{old_qid}")
+    # ---
+    qua = "UPDATE qids_others set qid = %s where qid = %s;"
+    values = [new_qid, old_qid]
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
 
@@ -74,30 +89,18 @@ def set_title_where_qid(new_title, qid):
     return mdwiki_sql(qua, return_dict=True, values=values)
 
 
-def set_target_where_id(new_target, iid):
+def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     # ---
-    printe.output(f"<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}")
+    printe.output(f"<<yellow>> qids_set_title_where_title_qid() {new_title=}, {qid=}, {old_title=}")
     # ---
-    if new_target == "" or iid == "":
+    qua = "UPDATE qids_others set title = %s where qid = %s and title = %s;"
+    values = [new_title, qid, old_title]
+    # ---
+    if no_do:
+        printe.output(qua % values)
         return
     # ---
-    query = "UPDATE pages set target = %s where id = %s;"
-    values = [new_target, iid]
-    # ---
-    return mdwiki_sql(query, return_dict=True, values=values)
-
-
-def set_deleted_where_id(iid):
-    # ---
-    printe.output(f"<<yellow>> set_deleted_where_id(), id:{iid}")
-    # ---
-    if iid == "":
-        return
-    # ---
-    query = "UPDATE pages set deleted = 1 where id = %s;"
-    # ---
-    return mdwiki_sql(query, return_dict=True, values=[iid])
-
+    return mdwiki_sql(qua, return_dict=True, values=values)
 
 def add_titles_to_qids(tab0, add_empty_qid=False):
     # ---
@@ -148,3 +151,9 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)
         printe.output(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
+
+
+if __name__ == "__main__":
+    # python3 core8/pwb.py md_core_helps/mdapi_sql/sql_for_mdwiki
+    d = get_others_qids()
+    print(f"{len(d)=}")
