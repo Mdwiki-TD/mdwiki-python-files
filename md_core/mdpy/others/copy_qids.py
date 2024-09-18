@@ -7,28 +7,13 @@ delete from qids q1 WHERE q1.qid = '' and EXISTS  (SELECT 1 FROM qids q2 WHERE q
 
 """
 
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
-# ---
-from mdpy.bots import en_to_md
 import sys
+from pathlib import Path
+from mdpy.bots import en_to_md
 
-# ---
 from mdapi_sql import sql_for_mdwiki
 
-# sql_for_mdwiki.mdwiki_sql(query , update = False)
-# mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
-# sql_for_mdwiki.add_titles_to_qids(tab)
-# ---
-# from sql import *
-# ---
-# ---
 in_qids = sql_for_mdwiki.get_all_qids()
-# ---
-if "rr" in sys.argv:
-    sys.exit()
 # ---
 len_qids_empty = len([x for x in in_qids if in_qids[x].find("Q") == -1])
 len_qids_not_empty = len([x for x in in_qids if in_qids[x] != ""])
@@ -36,12 +21,9 @@ len_qids_not_empty = len([x for x in in_qids if in_qids[x] != ""])
 print(f"len_qids_empty = {len_qids_empty}")
 print(f"len_qids_not_empty = {len_qids_not_empty}")
 # ---
-from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
-# en_to_md.mdtitle_to_qid
+
 qids_list = en_to_md.mdtitle_to_qid
 # ---
 num = 0

@@ -31,7 +31,7 @@ que = '''select DISTINCT w_title, w_lead_words, w_all_words from words;'''
 in_sql_lead = {}
 in_sql_all = {}
 # ---
-for q in sql_for_mdwiki.mdwiki_sql(que, return_dict=True):
+for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     # ---
     w_title = q['w_title']
     w_lead_words = q['w_lead_words']

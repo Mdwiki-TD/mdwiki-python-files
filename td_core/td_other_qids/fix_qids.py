@@ -31,7 +31,10 @@ def replace_in_sql(reds, ty):
         # ---
         if "fix" in sys.argv:
             # python3 core8/pwb.py mdpy/cashwd redirects fix
-            sql_for_mdwiki.mdwiki_sql(qua, update=True)
+            if table_name == "qids_others":
+                sql_qids_others.set_qid_where_qid(new_q, old_q)
+            else:
+                sql_for_mdwiki.set_qid_where_qid(new_q, old_q)
         else:
             printe.output(qua)
             printe.output('<<green>> add "fix" to sys.argv to fix them..')

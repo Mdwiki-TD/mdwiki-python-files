@@ -154,7 +154,7 @@ def get_targets(lang_o):
     {uu}
     ;"""
     # ---
-    sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
     for tab in sq:
         lang = tab["lang"].lower()
@@ -181,7 +181,7 @@ def get_views_sql(lang_o):
     ;
     """
     # ---
-    dad = sql_for_mdwiki.mdwiki_sql(que11, return_dict=True)
+    dad = sql_for_mdwiki.select_md_sql(que11, return_dict=True)
     # ---
     for tab in dad:
         target = tab["target"]

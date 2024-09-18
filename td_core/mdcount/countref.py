@@ -139,7 +139,7 @@ def from_sql():
     # ---
     que = """select title, word from pages;"""
     # ---
-    sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
     titles2 = [q["title"] for q in sq]
     # ---

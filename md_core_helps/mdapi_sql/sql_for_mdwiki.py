@@ -4,6 +4,7 @@ python3 core8/pwb.py mdpy/sql_for_mdwiki
 
 # ---
 from mdapi_sql import sql_for_mdwiki
+# sql_for_mdwiki. select_md_sql(query, return_dict=False, values=None)
 # sql_for_mdwiki. mdwiki_sql(query, return_dict=False, values=None)
 # sql_for_mdwiki. get_all_qids()
 # sql_for_mdwiki. set_title_where_qid(new_title, qid)
@@ -32,8 +33,17 @@ def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
     return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
+def select_md_sql(query, *args, **kwargs):
+    # ---
+    if not query:
+        print("query == ''")
+        return {}
+    # ---
+    return mdwiki_sql(query, *args, **kwargs)
+
+
 def get_all_pages():
-    return [ta["title"] for ta in mdwiki_sql("select DISTINCT title from pages;", return_dict=True)]
+    return [ta["title"] for ta in select_md_sql("select DISTINCT title from pages;", return_dict=True)]
 
 
 def get_all_pages_all_keys(lang=False, table="pages"):
@@ -46,20 +56,44 @@ def get_all_pages_all_keys(lang=False, table="pages"):
         table = "pages"
     # ---
     qua = f"select DISTINCT * from {table} {lang_line};"
-    return [ta for ta in mdwiki_sql(qua, return_dict=True)]
+    return [ta for ta in select_md_sql(qua, return_dict=True)]
 
 
 def get_db_categories():
-    return {c["category"]: c["depth"] for c in mdwiki_sql("select category, depth from categories;", return_dict=True)}
-
-
-# qids defs
+    return {c["category"]: c["depth"] for c in select_md_sql("select category, depth from categories;", return_dict=True)}
 
 
 def get_all_qids():
     # ---
-    sq = mdwiki_sql("select DISTINCT title, qid from qids;", return_dict=True)
+    # xxxx iiii oooo gggg
+    # ---
+    sq = select_md_sql("select DISTINCT title, qid from qids;", return_dict=True)
     return {ta["title"]: ta["qid"] for ta in sq}
+
+
+def set_target_where_id(new_target, iid):
+    # ---
+    printe.output(f"<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}")
+    # ---
+    if new_target == "" or iid == "":
+        return
+    # ---
+    query = "UPDATE pages set target = %s where id = %s;"
+    values = [new_target, iid]
+    # ---
+    return mdwiki_sql(query, return_dict=True, values=values)
+
+
+def set_deleted_where_id(iid):
+    # ---
+    printe.output(f"<<yellow>> set_deleted_where_id(), id:{iid}")
+    # ---
+    if iid == "":
+        return
+    # ---
+    query = "UPDATE pages set deleted = 1 where id = %s;"
+    # ---
+    return mdwiki_sql(query, return_dict=True, values=[iid])
 
 
 def add_qid(title, qid):
@@ -68,6 +102,15 @@ def add_qid(title, qid):
     qua = "INSERT INTO qids (title, qid) SELECT %s, %s;"
     # ---
     values = [title, qid]
+    # ---
+    return mdwiki_sql(qua, return_dict=True, values=values)
+
+
+def set_qid_where_qid(new_qid, old_qid):
+    printe.output(f"<<yellow>> set_qid_where_qid()  new_qid:{new_qid}, old_qid:{old_qid}")
+    # ---
+    qua = "UPDATE qids set qid = %s where qid = %s;"
+    values = [new_qid, old_qid]
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
 
@@ -99,30 +142,18 @@ def set_title_where_qid(new_title, qid):
     return mdwiki_sql(qua, return_dict=True, values=values)
 
 
-def set_target_where_id(new_target, iid):
+def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     # ---
-    printe.output(f"<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}")
+    printe.output(f"<<yellow>> qids_set_title_where_title_qid() {new_title=}, {qid=}, {old_title=}")
     # ---
-    if new_target == "" or iid == "":
+    qua = "UPDATE qids set title = %s where qid = %s and title = %s;"
+    values = [new_title, qid, old_title]
+    # ---
+    if no_do:
+        printe.output(qua % values)
         return
     # ---
-    query = "UPDATE pages set target = %s where id = %s;"
-    values = [new_target, iid]
-    # ---
-    return mdwiki_sql(query, return_dict=True, values=values)
-
-
-def set_deleted_where_id(iid):
-    # ---
-    printe.output(f"<<yellow>> set_deleted_where_id(), id:{iid}")
-    # ---
-    if iid == "":
-        return
-    # ---
-    query = "UPDATE pages set deleted = 1 where id = %s;"
-    # ---
-    return mdwiki_sql(query, return_dict=True, values=[iid])
-
+    return mdwiki_sql(qua, return_dict=True, values=values)
 
 def add_titles_to_qids(tab0, add_empty_qid=False):
     # ---
@@ -173,3 +204,9 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)
         printe.output(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
+
+
+if __name__ == "__main__":
+    # python3 core8/pwb.py md_core_helps/mdapi_sql/sql_for_mdwiki
+    d = get_all_pages()
+    print(f"{len(d)=}")

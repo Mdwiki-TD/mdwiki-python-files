@@ -39,7 +39,7 @@ from wddone
 ;
 """
 # ---
-sq_dd = sql_for_mdwiki.mdwiki_sql(que_wddone, return_dict=True)
+sq_dd = sql_for_mdwiki.select_md_sql(que_wddone, return_dict=True)
 # ---
 wddone_by_u_t = []
 wddone_by_u_l_mdt = []

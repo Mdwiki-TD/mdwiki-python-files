@@ -39,7 +39,7 @@ def dodo_sql():
     # ---
     printe.output(que)
     # ---
-    sq = sql_for_mdwiki.mdwiki_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
     len_no_target = 0
     len_done_target = 0

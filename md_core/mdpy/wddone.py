@@ -14,7 +14,7 @@ from pages
 where target != ""
 ;"""
 # ---
-sq = sql_for_mdwiki.mdwiki_sql(que)
+sq = sql_for_mdwiki.select_md_sql(que)
 # ---
 for tab in sq:
     mdtitle = py_tools.Decode_bytes(tab[0])
