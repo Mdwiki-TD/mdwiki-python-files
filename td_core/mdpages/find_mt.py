@@ -45,7 +45,7 @@ def remove_from_others(qids_othrs, qids_td):
     # ---
     if "delete" in sys.argv:
         for n, title in enumerate(same_q_in_td, start=1):
-            sql_qids_others.delete_title_from_db(title)
+            sql_qids_others.delete_title_from_db(title, pr=f"{n}/{len(same_q_in_td)}")
 
 
 def doo():

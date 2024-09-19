@@ -3,7 +3,7 @@
 
 python3 core8/pwb.py mdpy/copy_qids
 
-delete from qids q1 WHERE q1.qid = '' and EXISTS  (SELECT 1 FROM qids q2 WHERE q1.title = q2.title and q2.qid != '')
+delete from qids q1 WHERE q1.qid = '' and EXISTS (SELECT 1 FROM qids q2 WHERE q1.title = q2.title and q2.qid != '')
 
 """
 

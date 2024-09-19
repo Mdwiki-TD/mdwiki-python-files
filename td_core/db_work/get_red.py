@@ -12,8 +12,10 @@ from mdapi_sql import sql_for_mdwiki
 from mdapi_sql import sql_qids_others
 from apis import mdwiki_api
 
-mdwiki_to_qid = sql_for_mdwiki.get_all_qids()
-mdtitle_to_qid = sql_qids_others.get_others_qids()
+mdwiki_api.api_new.Login_to_wiki()
+
+qids_title_to_qid = sql_for_mdwiki.get_all_qids()
+qids_others_title_to_qid = sql_qids_others.get_others_qids()
 
 
 def get_table(titles):
@@ -50,6 +52,8 @@ def get_pages(tab):
     set_new_title = {}
     to_del = []
     # ---
+    just_test = "no" in sys.argv
+    # ---
     for old_title, new_title in table.items():
         # ---
         new_qid = tab.get(new_title, False)
@@ -61,39 +65,46 @@ def get_pages(tab):
         if not new_qid:
             # استبدال
             # ---
-            set_new_title[new_title] = old_qid
+            if qids_title_to_qid.get(old_title):
+                sql_for_mdwiki.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
             # ---
-            sql_for_mdwiki.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=True)
+            if qids_others_title_to_qid.get(old_title):
+                sql_qids_others.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
             # ---
             tat += f'old_title: "{old_title}" to: "{new_title}",\n'
+            # ---
+            set_new_title[new_title] = old_qid
             # ---
         elif new_qid == old_qid:
             to_del.append(old_title)
     # ---
-    printe.output("===================")
-    if tat != "":
-        printe.output("<<red>> redirects: ")
-        printe.output(tat)
-        printe.output("===================")
-    # ---
-    printe.output(f"len set_new_title {len(set_new_title)}.")
-    # ---
     printe.output(f"len to_del {len(to_del)}: \n" + "\n\t".join(to_del))
     # ---
-    if "no" not in sys.argv:
-        if set_new_title:
-            # ---
-            for new_title, old_qid in set_new_title.items():
-                sql_for_mdwiki.set_title_where_qid(new_title, old_qid)
-            # ---
-            sql_for_mdwiki.add_titles_to_qids(set_new_title)
+    old_way = False
+    # ---
+    if old_way:
+        printe.output("===================")
+        if tat != "":
+            printe.output("<<red>> redirects: ")
+            printe.output(tat)
+            printe.output("===================")
+        # ---
+        printe.output(f"len set_new_title {len(set_new_title)}.")
+        # ---
+        if "no" not in sys.argv:
+            if set_new_title:
+                # ---
+                for new_title, old_qid in set_new_title.items():
+                    sql_for_mdwiki.set_title_where_qid(new_title, old_qid)
+                # ---
+                sql_for_mdwiki.add_titles_to_qids(set_new_title)
 
 
 def start():
-    get_pages(mdwiki_to_qid)
+    get_pages(qids_title_to_qid)
 
     if "nothers" not in sys.argv:
-        get_pages(mdtitle_to_qid)
+        get_pages(qids_others_title_to_qid)
 
 
 if __name__ == "__main__":
