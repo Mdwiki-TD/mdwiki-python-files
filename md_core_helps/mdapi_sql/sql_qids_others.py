@@ -51,8 +51,8 @@ def add_qid(title, qid):
     qua = """
         INSERT INTO qids_others (title, qid)
         SELECT %s, %s
-        WHERE NOT EXISTS ( SELECT 1 FROM qids WHERE title = % and qid = %s)
-        AND NOT EXISTS   (SELECT 1 FROM qids_others WHERE title = % and qid = %s)
+        WHERE NOT EXISTS ( SELECT 1 FROM qids WHERE title = %s and qid = %s)
+        AND NOT EXISTS   (SELECT 1 FROM qids_others WHERE title = %s and qid = %s)
         ;
         """
     # ---
