@@ -26,10 +26,13 @@ def create_qids(no_qids):
             print(f"Skip.. {new_qid=}")
             continue
         # ---
-        wikidataapi.Claim_API_str(new_qid, "P11143", x)
+        new_qid = new_qid.strip()
         # ---
-        # add new qid to article
-        add_un_linked_wb(x, new_qid)
-        # ---
-        # add new qid to db
-        sql_for_mdwiki.add_titles_to_qids({x: new_qid})
+        if new_qid:
+            wikidataapi.Claim_API_str(new_qid, "P11143", x)
+            # ---
+            # add new qid to article
+            add_un_linked_wb(x, new_qid)
+            # ---
+            # add new qid to db
+            sql_for_mdwiki.add_titles_to_qids({x: new_qid})

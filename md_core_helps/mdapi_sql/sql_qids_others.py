@@ -46,9 +46,17 @@ def get_others_qids():
 def add_qid(title, qid):
     printe.output(f"<<yellow>> add_qid()  title:{title}, qid:{qid}")
     # ---
-    qua = "INSERT INTO qids_others (title, qid) SELECT %s, %s;"
+    qua_old = "INSERT INTO qids_others (title, qid) SELECT %s, %s;"
     # ---
-    values = [title, qid]
+    qua = """
+        INSERT INTO qids_others (title, qid)
+        SELECT %s, %s
+        WHERE NOT EXISTS ( SELECT 1 FROM qids WHERE title = %s and qid = %s)
+        AND NOT EXISTS   (SELECT 1 FROM qids_others WHERE title = %s and qid = %s)
+        ;
+        """
+    # ---
+    values = [title, qid, title, qid, title, qid]
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
 
@@ -71,10 +79,10 @@ def set_qid_where_title(title, qid):
     return mdwiki_sql(qua, return_dict=True, values=values)
 
 
-def delete_title_from_db(title):
+def delete_title_from_db(title, pr=""):
     qua = "DELETE FROM qids_others where title = %s;"
     # ---
-    printe.output(f"<<yellow>> delete_title_from_db() title:{title}")
+    printe.output(f"<<yellow>> {pr} delete_title_from_db(qids_others) title:{title}")
     # ---
     return mdwiki_sql(qua, return_dict=True, values=[title])
 
@@ -91,14 +99,14 @@ def set_title_where_qid(new_title, qid):
 
 def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     # ---
-    printe.output(f"<<yellow>> qids_set_title_where_title_qid() {new_title=}, {qid=}, {old_title=}")
-    # ---
     qua = "UPDATE qids_others set title = %s where qid = %s and title = %s;"
     values = [new_title, qid, old_title]
     # ---
     if no_do:
-        printe.output(qua % values)
+        printe.output(qua % (f'"{new_title}"', f'"{qid}"', f'"{old_title}"'))
         return
+    # ---
+    printe.output(f"<<yellow>> qids_set_title_where_title_qid() {new_title=}, {qid=}, {old_title=}")
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
 

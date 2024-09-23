@@ -310,6 +310,8 @@ if __name__ == "__main__":
     for q in qids:
         printe.output(f"<<blue>>_______\n{q} :")
         # ---
+        q = q.strip()
+        # ---
         j = wd_rest_new.Get_Claims_API(q=q, p="P11143")
         # ---
         printe.output(json.dumps(j, indent=4))

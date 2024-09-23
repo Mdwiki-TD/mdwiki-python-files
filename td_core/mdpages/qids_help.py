@@ -99,9 +99,9 @@ def check(work_list, all_pages, ty):
     #     params["redirects"] = 1
     #     params["rdlimit"] = "max"
     # ---
-    for i in range(0, len(work_list), 100):
+    for i in range(0, len(work_list), 50):
         # ---
-        group = work_list[i : i + 100]
+        group = work_list[i : i + 50]
         # ---
         params["titles"] = "|".join(group)
         # ---
