@@ -28,6 +28,10 @@ wd_site = Get_MwClient_Site("www", "wikidata", username, password)
 
 def do_request(params=None, method="POST"):
     # ---
+    if not wd_site:
+        print("no wd_site")
+        return {}
+    # ---
     params = params.copy()
     # ---
     action = params["action"]
@@ -59,6 +63,7 @@ def get_token(mk_new=False):
     SS["csrftoken"] = csrftoken
     # ---
     return csrftoken
+
 
 def post_it(params=None, url=None, token=True, method="POST"):
     # ---

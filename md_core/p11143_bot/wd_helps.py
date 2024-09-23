@@ -54,10 +54,12 @@ def add_P11143_to_qids_in_wd(newlist):
         # ---
         for n, (q, value) in enumerate(newlist.items(), start=1):
             printe.output(f"<<yellow>> q {n} from {len(newlist)}")
-            wikidataapi.Claim_API_str(q, "P11143", value)
-            if n % 30 == 0:
-                printe.output(f"<<yellow>> n: {n}")
-                time.sleep(5)
+            q = q.strip()
+            if q:
+                wikidataapi.Claim_API_str(q, "P11143", value)
+                if n % 30 == 0:
+                    printe.output(f"<<yellow>> n: {n}")
+                    time.sleep(5)
 
 
 def fix_in_wd(merge_qids, qids):
