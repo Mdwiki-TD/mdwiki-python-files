@@ -4,6 +4,7 @@
 from mdpy.find_replace_bot.one_job import do_one_job
 """
 import json
+import tqdm
 import os
 import sys
 from newapi.mdwiki_page import MainPage, NEW_API
@@ -129,7 +130,7 @@ def do_one_job(nn):
     # ---
     numbers_done = 0
     # ---
-    for n, page in enumerate(titles, start=1):
+    for n, page in tqdm.tqdm(enumerate(titles, start=1)):
         # ---
         if n % 10 == 0:
             stop = check_for_stop(nn, text_file)

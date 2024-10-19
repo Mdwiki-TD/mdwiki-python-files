@@ -9,18 +9,12 @@ user_agent   = user_account_new.user_agent
 # ---
 """
 
-# import sys
-# import os
+import os
 import configparser
 
-# ---
-from pathlib import Path
+home_dir = os.getenv("HOME")
 
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
 # ---
 config = configparser.ConfigParser()
 config.read(f"{dir2}/confs/user.ini")
