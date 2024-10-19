@@ -17,6 +17,7 @@ work_dir = f"{dir2}/public_html/replace/find"
 
 api_new = NEW_API("www", family="mdwiki")
 
+
 def write_text(text_file, line, w_or_a="w"):
     try:
         with open(text_file, w_or_a, encoding="utf-8") as file:
@@ -78,6 +79,20 @@ def work(title, Find, Replace, nn, log_file):
     return 1
 
 
+def check_for_stop(nn, text_file):
+    # ---
+    stop_file = f"{work_dir}/{nn}/stop.txt"
+    # ---
+    if Path(stop_file).exists():
+        line = "<span style='font-size:12px; color:red'>This job was stopped by stop button.</span>"
+        # ---
+        write_text(text_file, line)
+        # ---
+        return True
+    # ---
+    return False
+
+
 def do_one_job(nn):
     # ---
     print(nn)
@@ -115,6 +130,11 @@ def do_one_job(nn):
     numbers_done = 0
     # ---
     for n, page in enumerate(titles, start=1):
+        # ---
+        if n % 10 == 0:
+            stop = check_for_stop(nn, text_file)
+            if stop:
+                break
         # ---
         if numbers_done >= max_numbers and max_numbers > 0:
             break
