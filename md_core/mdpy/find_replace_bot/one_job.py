@@ -20,6 +20,8 @@ api_new = NEW_API("www", family="mdwiki")
 
 
 def write_text(text_file, line, w_or_a="w"):
+    if w_or_a == "a" and not os.path.exists(text_file):
+        w_or_a = "w"
     try:
         with open(text_file, w_or_a, encoding="utf-8") as file:
             file.write(line)
