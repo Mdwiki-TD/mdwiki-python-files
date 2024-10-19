@@ -76,10 +76,12 @@ def work(title, Find, Replace, nn, log_file):
         if newrevid not in [revid, ""]:
             # ---
             line = '"%s":%d,\n' % (title.replace('"', '\\"'), newrevid)
+        # ---
+        write_text(log_file, line, w_or_a="a")
+        # ---
+        return 1
     # ---
-    write_text(log_file, line, w_or_a="a")
-    # ---
-    return 1
+    return 0
 
 
 def check_for_stop(nn, text_file):
@@ -147,9 +149,10 @@ def do_one_job(nn):
         if result:
             numbers_done += 1
     # ---
-    done_file = f"{work_dir}/{nn}/done.txt"
-    # ---
-    write_text(done_file, "done")
+    if numbers_done:
+        done_file = f"{work_dir}/{nn}/done.txt"
+        # ---
+        write_text(done_file, "done")
 
 
 def get_titles(find, listtype):
