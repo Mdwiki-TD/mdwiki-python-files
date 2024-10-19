@@ -43,9 +43,8 @@ def main():
 
     logging.info(f"Found {len(jobs)} jobs to process")
 
-    for job in tqdm(jobs, desc="Processing jobs"):
+    for job in jobs:
         do_one_job(job)
-        logging.info(f"Successfully processed job: {job}")xx
 
 
 if __name__ == "__main__":
