@@ -125,6 +125,8 @@ def do_one_job(nn):
     # ---
     if max_numbers.isdigit():
         max_numbers = int(max_numbers)
+    else:
+        max_numbers = 1000000
     # ---
     titles = get_titles(find, listtype)
     # ---
