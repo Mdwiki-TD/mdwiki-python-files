@@ -6,8 +6,13 @@ python3 core8/pwb.py mdpy/find_replace_bot/bot
 """
 import sys
 import os
-from pathlib import Path
+
+import logging
+from tqdm import tqdm
+
 from mdpy.find_replace_bot.one_job import do_one_job
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 home_dir = os.getenv("HOME")
 
@@ -34,11 +39,19 @@ def get_jobs():
 
 
 def main():
-    jobs = get_jobs()
+    try:
+        jobs = get_jobs()
+        logging.info(f"Found {len(jobs)} jobs to process")
 
-    for job in jobs:
-        do_one_job(job)
+        for job in tqdm(jobs, desc="Processing jobs"):
+            try:
+                do_one_job(job)
+                logging.info(f"Successfully processed job: {job}")
+            except Exception as e:
+                logging.error(f"Error processing job {job}: {str(e)}")
 
+    except Exception as e:
+        logging.error(f"An error occurred in the main function: {str(e)}")
 
 if __name__ == "__main__":
     main()

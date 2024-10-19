@@ -2,40 +2,24 @@
 """
 
 """
-
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
-
 import sys
-
-# ---
 from newapi.mdwiki_page import MainPage, NEW_API
-
-# ---
 from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
-Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 # ---
-public_html = f'{dir2}/public_html'
+work_dir = f"{dir2}/public_html/replace/find"
 # ---
-api_new = NEW_API('www', family='mdwiki')
-# api_new.Login_to_wiki()
-# pages   = api_new.Find_pages_exists_or_not(liste)
-# pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
-# ---
+api_new = NEW_API("www", family="mdwiki")
 file_name = {}
-numbers = {1: 20000, 'done': 0}
+
+numbers = {1: 20000, "done": 0}
 
 
 def work(title, Find, Replace, nn):
     # ---
-    page = MainPage(title, 'www', family='mdwiki')
+    page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         return
@@ -54,7 +38,7 @@ def work(title, Find, Replace, nn):
     # ---
     new_text = text
     # ---
-    if 'testtest' in sys.argv:
+    if "testtest" in sys.argv:
         new_text = new_text.replace(Find, Replace, 1)
     else:
         new_text = new_text.replace(Find, Replace)
@@ -65,11 +49,11 @@ def work(title, Find, Replace, nn):
             file.write(line)
         return
     # ---
-    numbers['done'] += 1
+    numbers["done"] += 1
     # ---
     revid = page.revid
     # ---
-    sus = f'replace {nn} [[toolforge:mdwiki/qdel.php?job=replace{nn}|(stop)]] '
+    sus = f"replace {nn} [[toolforge:mdwiki/qdel.php?job=replace{nn}|(stop)]] "
     # ---
     save_page = page.save(newtext=new_text, summary=sus)
     # ---
@@ -79,7 +63,7 @@ def work(title, Find, Replace, nn):
         # ---
         newrevid = page.newrevid
         # ---
-        if newrevid not in [revid, '']:
+        if newrevid not in [revid, ""]:
             # ---
             line = '"%s":%d,\n' % (title.replace('"', '\\"'), newrevid)
             # ---
@@ -89,65 +73,65 @@ def work(title, Find, Replace, nn):
 
 
 def main():
-    # pywikibot.output( '*<<red>> > main:')
     # ---
-    nn = ''
+    nn = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         if arg == "-rand":
             nn = value
         # ---
         if arg == "-number" and value.isdigit():
-            # if re.match(r'^(\d|\d+)$' , value.strip() ) :
             numbers[1] = int(value)
     # ---
     print(nn)
     # ---
-    find = open(f'{public_html}/find/{nn}_find.txt', "r", 'utf8').read()
+    find_file = f"{work_dir}/{nn}/find.txt"
+    replace_file = f"{work_dir}/{nn}/replace.txt"
+    log_file = f"{work_dir}/{nn}/log.txt"
+    text_file = f"{work_dir}/{nn}/text.txt"
     # ---
-    replace = open(f'{public_html}/find/{nn}_replace.txt', "r", 'utf8').read()
+    with open(find_file, "r", encoding="utf-8") as file:
+        find = file.read()
+    # ---
+    with open(replace_file, "r", encoding="utf-8") as file:
+        replace = file.read()
     # ---
     if replace.strip() == "empty":
         replace = ""
     # ---
-    if 'testtest' in sys.argv:
-        find = ','
-        replace = ', '
+    if "testtest" in sys.argv:
+        find = ","
+        replace = ", "
         nn = 0
     # ---
-    file_name[1] = f'{public_html}/find/log/{nn}.txt'
+    file_name[1] = log_file
     # ---
     with open(Path(file_name[1]), "w", encoding="utf-8") as file:
-        file.write('')
+        file.write("")
     # ---
-    file_name[2] = f'{public_html}/find/log/{nn}-text.txt'
+    file_name[2] = text_file
     # ---
-    if 'newlist' in sys.argv:
+    if "newlist" in sys.argv:
         Add_pa = {"srsort": "just_match", "srwhat": "text"}
         # ---
         titles = api_new.Search(value=find, ns="0", srlimit="max", RETURN_dict=False, addparams=Add_pa)
     else:
         titles = api_new.Get_All_pages()
-        # ---
     # ---
     text = f"start work in {len(titles)} pages."
     line = f"<span style='font-size:12px'>{text}</span>"
     open(file_name[2], "w", encoding="utf-8").write(line)
     # ---
-    for numb, page in enumerate(titles, start=1):
+    for n, page in enumerate(titles, start=1):
         # ---
-        if numbers['done'] >= numbers[1]:
+        if numbers["done"] >= numbers[1]:
             break
         # ---
         work(page, find, replace, nn)
 
-    # ---
 
-
-# python py/replace1.py
-# ---
 if __name__ == "__main__":
+    # python py/replace1.py
     main()
-# ---

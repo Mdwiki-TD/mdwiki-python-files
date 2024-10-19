@@ -139,9 +139,9 @@ def do_one_job(nn):
         if numbers_done >= max_numbers and max_numbers > 0:
             break
         # ---
-        nn = work(page, find, replace, nn, log_file)
+        result = work(page, find, replace, nn, log_file)
         # ---
-        if nn:
+        if result:
             numbers_done += 1
     # ---
     done_file = f"{work_dir}/{nn}/done.txt"
@@ -165,11 +165,22 @@ def get_find_and_replace(nn):
     find_file = f"{work_dir}/{nn}/find.txt"
     replace_file = f"{work_dir}/{nn}/replace.txt"
     # ---
-    with open(find_file, "r", encoding="utf-8") as file:
-        find = file.read()
+    find = ""
+    replace = ""
     # ---
-    with open(replace_file, "r", encoding="utf-8") as file:
-        replace = file.read()
+    try:
+        with open(find_file, "r", encoding="utf-8") as file:
+            find = file.read()
+    except Exception as e:
+        print(f"Error reading find file: {e}")
+        # return
+    # ---
+    try:
+        with open(replace_file, "r", encoding="utf-8") as file:
+            replace = file.read()
+    except Exception as e:
+        print(f"Error reading replace file: {e}")
+        # return
     # ---
     if replace.strip() == "empty":
         replace = ""
