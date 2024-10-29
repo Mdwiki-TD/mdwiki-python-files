@@ -109,9 +109,24 @@ def work(text):
     # ---
     text = del_temps(text)
     # ---
-    text += "\n[[Category:Mdwiki Translation Dashboard articles]]"
+    # text += "\n[[Category:Mdwiki Translation Dashboard articles]]"
     # ---
     return text
+
+
+def do_text_fixes(newtext):
+    newtext = work(newtext)
+    # ---
+    newtext = newtext.replace("{{Drugbox", "{{Infobox drug")
+    newtext = newtext.replace("{{drugbox", "{{Infobox drug")
+    # ---
+    # remove any text before {{Infobox or {{Drugbox
+    if newtext.lower().find("{{infobox") != -1:
+        newtext = newtext[newtext.lower().find("{{infobox") :]
+    elif newtext.lower().find("{{drugbox") != -1:
+        newtext = newtext[newtext.lower().find("{{drugbox") :]
+    # ---
+    return newtext
 
 
 if __name__ == "__main__":

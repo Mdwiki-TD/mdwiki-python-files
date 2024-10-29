@@ -5,10 +5,6 @@ python3 core8/pwb.py mdpages/cashwd
 
 """
 
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
 import json
 import os
 import traceback
@@ -47,13 +43,13 @@ missing = {"all": 0, "date": Day_History, "langs": {}}
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---
 change_codes = {
-    "nb": "no",
     "bat_smg": "bat-smg",
-    "be_x_old": "be-tarask",
     "be-x-old": "be-tarask",
+    "be_x_old": "be-tarask",
     "cbk_zam": "cbk-zam",
     "fiu_vro": "fiu-vro",
     "map_bms": "map-bms",
+    "nb": "no",
     "nds_nl": "nds-nl",
     "roa_rup": "roa-rup",
     "zh_classical": "zh-classical",

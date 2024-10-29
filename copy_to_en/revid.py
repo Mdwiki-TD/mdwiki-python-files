@@ -21,7 +21,7 @@ if not dir2:
 # ---
 file = Dir / "all_pages_revids.json"
 # ---
-file2 = Path(dir2) / "public_html" / "Translation_Dashboard" / "publish" / "all_pages_revids.json"
+file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
 
 
 def dump(revids):

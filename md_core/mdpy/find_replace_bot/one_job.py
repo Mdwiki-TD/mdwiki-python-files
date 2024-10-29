@@ -20,6 +20,8 @@ api_new = NEW_API("www", family="mdwiki")
 
 
 def write_text(text_file, line, w_or_a="w"):
+    if w_or_a == "a" and not os.path.exists(text_file):
+        w_or_a = "w"
     try:
         with open(text_file, w_or_a, encoding="utf-8") as file:
             file.write(line)
@@ -74,10 +76,12 @@ def work(title, Find, Replace, nn, log_file):
         if newrevid not in [revid, ""]:
             # ---
             line = '"%s":%d,\n' % (title.replace('"', '\\"'), newrevid)
+        # ---
+        write_text(log_file, line, w_or_a="a")
+        # ---
+        return 1
     # ---
-    write_text(log_file, line, w_or_a="a")
-    # ---
-    return 1
+    return 0
 
 
 def check_for_stop(nn, text_file):
@@ -121,6 +125,8 @@ def do_one_job(nn):
     # ---
     if max_numbers.isdigit():
         max_numbers = int(max_numbers)
+    else:
+        max_numbers = 1000000
     # ---
     titles = get_titles(find, listtype)
     # ---
@@ -145,9 +151,10 @@ def do_one_job(nn):
         if result:
             numbers_done += 1
     # ---
-    done_file = f"{work_dir}/{nn}/done.txt"
-    # ---
-    write_text(done_file, "done")
+    if numbers_done:
+        done_file = f"{work_dir}/{nn}/done.txt"
+        # ---
+        write_text(done_file, "done")
 
 
 def get_titles(find, listtype):
