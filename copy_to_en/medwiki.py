@@ -86,13 +86,17 @@ def get_text_revid(x):
 
 
 def get_un_wb_tag(alltext, x):
-    unlinkedwikibase = ""
     # search for text like {{#unlinkedwikibase:id=Q423364}}
     pattern = r"\{\{#unlinkedwikibase:id=Q[0-9]+\}\}"
-    matches = re.findall(pattern, alltext)
-    for m in matches:
-        unlinkedwikibase = m
-        break
+    # ---
+    match = re.search(pattern, alltext)
+    # ---
+    unlinkedwikibase = match.group(0) if match else ""
+    # ---
+    # matches = re.findall(pattern, alltext)
+    # for m in matches:
+    #     unlinkedwikibase = m
+    #     break
     # ---
     un_wb_tag_cache[x] = unlinkedwikibase
     # ---

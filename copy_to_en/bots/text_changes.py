@@ -114,6 +114,36 @@ def work(text):
     return text
 
 
+def do_text_fixes_newxx(newtext):
+    """Process and clean up article text.
+
+    Args:
+        newtext (str): The input text to process
+
+    Returns:
+        str: Processed text with:
+            - Templates and parser functions removed
+            - Drugbox templates standardized to "Infobox drug"
+            - Content before first infobox removed
+
+    """
+    # ---
+    newtext = work(newtext)
+    # ---
+    # Case-insensitive template replacement
+    newtext = re.sub(r"\{\{drugbox", "{{Infobox drug", newtext, flags=re.IGNORECASE)
+    # ---
+    # Find first occurrence of infobox
+    infobox_match = re.search(r"{{(infobox|drugbox)", newtext, re.IGNORECASE)
+    if infobox_match:
+        prefix = newtext[: infobox_match.start()].strip()
+        if prefix:
+            printe.output(f"Warning: Removing content before infobox: {prefix[:100]}...")
+        newtext = newtext[infobox_match.start() :]
+    # ---
+    return newtext
+
+
 def do_text_fixes(newtext):
     newtext = work(newtext)
     # ---
