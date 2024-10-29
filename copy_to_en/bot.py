@@ -10,8 +10,8 @@ from apis import cat_cach
 from apis import mdwiki_api
 from newapi.wiki_page import MainPage
 
-from copy_to_en import text_changes  # text = text_changes.work(text)
-from copy_to_en.ref import fix_ref  # text = fix_ref(first, alltext)
+from copy_to_en.bots import text_changes  # text = text_changes.work(text)
+from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 
 
 def main():

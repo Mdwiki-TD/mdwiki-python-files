@@ -19,10 +19,10 @@ from apis import cat_cach
 from apis import mdwiki_api
 from newapi.super import super_page
 from newapi.super import catdepth_new
-from copy_to_en import medwiki_account
+from copy_to_en.bots import medwiki_account
 
-from copy_to_en import text_changes  # text = text_changes.work(text)
-from copy_to_en.ref import fix_ref  # text = fix_ref(first, alltext)
+from copy_to_en.bots import text_changes  # text = text_changes.work(text)
+from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 
 # ---
 User_tables = {
@@ -66,7 +66,8 @@ def Create(title, text, summary):
     # ---
     try:
         print(response.json())
-    except:
+    except Exception as e:
+        print(f"Exception: {e}")
         print(response.text)
 
 

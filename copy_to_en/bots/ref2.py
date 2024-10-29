@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Usage:
-from copy_to_en.ref2 import fix_ref# text = fix_ref(first, alltext)
+from copy_to_en.bots.ref2 import fix_ref# text = fix_ref(first, alltext)
 """
 import re
 
