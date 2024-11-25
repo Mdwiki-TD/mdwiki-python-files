@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 
-اصلاح التحويلات المزدوجة في mdwiki.org
+Category:CS1 errors: redundant parameter
+
 
 """
 import sys
