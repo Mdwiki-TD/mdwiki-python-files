@@ -5,6 +5,11 @@ from cite.archive_bots.archive_date_maker import make_archive_date_and_url, make
 """
 import re
 
+# Wayback Machine format
+##r"^https?://web\.archive\.org/web/(\d{4})(\d{2})(\d{2})\d*/(https?://.+)$",
+# archive.today/ph format with optional separators
+##r"^https?://archive\.\w+/(\d{4})[-.]?(\d{2})[-.]?(\d{2})(?:[-\d.]+)?/(https?://.+)$",
+
 matches = [
     r"^https*\:\/\/web\.archive\.org\/web\/(\d\d\d\d)(\d\d)(\d\d)\d*\/(http.*?)$",
     r"^https*\:\/\/archive\.\w+\/(\d\d\d\d)\.*(\d\d)\.*(\d\d)-*\d+\/(.*?)$",

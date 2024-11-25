@@ -320,7 +320,8 @@ def main():
         titles = CatDepth(cat, sitecode="www", family="mdwiki")
     # ---
     if "re" in sys.argv:
-        reversed(titles)
+        titles = list(reversed(titles))
+        # titles.reverse()
     # ---
     for n, page in enumerate(titles):
         printe.output(f"n: {n}/{len(titles)} - Page: {page}")
