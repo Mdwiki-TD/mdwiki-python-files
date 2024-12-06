@@ -1,7 +1,7 @@
 """
 
-python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/public_html/td2/actions
-python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/public_html/td2/enwiki
+python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/mdwiki/public_html/td2/actions
+python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 
 """
 import json

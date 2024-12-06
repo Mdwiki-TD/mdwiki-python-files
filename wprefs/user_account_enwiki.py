@@ -7,11 +7,10 @@ user_agent    = user_account_enwiki.user_agent
 """
 
 import configparser
+import os
 
-from pathlib import Path
-
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+home_dir = os.getenv("HOME")
+dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
 # ---
 config = configparser.ConfigParser()
 config.read(f"{dir2}/confs/user.ini")

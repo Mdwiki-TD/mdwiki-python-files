@@ -18,8 +18,6 @@ from newapi.mdwiki_page import CatDepth
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 
 Day_History = datetime.now().strftime("%Y-%m-%d")
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
 
 
 def Cat_Depth(title, depth=0, ns="all", print_s=True):

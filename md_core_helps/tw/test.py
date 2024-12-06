@@ -19,11 +19,11 @@ import tweepy
 import twet_configs
 
 # Create variables for each key, secret, token
-consumer_key = twet_config.consumer_key
-consumer_secret = twet_config.consumer_secret
-access_token = twet_config.access_token
-access_token_secret = twet_config.access_token_secret
-bearer_token = twet_config.bearer_token
+consumer_key = twet_configs.consumer_key
+consumer_secret = twet_configs.consumer_secret
+access_token = twet_configs.access_token
+access_token_secret = twet_configs.access_token_secret
+bearer_token = twet_configs.bearer_token
 # ---
 # ---
 # ---

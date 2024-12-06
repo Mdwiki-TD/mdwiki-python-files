@@ -10,6 +10,7 @@ python3 core8/pwb.py mdpyget/enwiki_views
 # (C) Ibrahem Qasim, 2022
 #
 #
+import os
 import sys
 import json
 from pathlib import Path
@@ -19,8 +20,10 @@ from newapi import printe
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from apis import cat_cach
 
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+if os.getenv("HOME"):
+    Dashboard_path = os.getenv("HOME") + "/public_html/Translation_Dashboard"
+else:
+    Dashboard_path = "I:/mdwiki/Translation_Dashboard"
 
 
 def main():
@@ -39,7 +42,7 @@ def main():
     # ---
     no_views = 0
     # ---
-    enwiki_pageviews = Path(dir2) / "public_html/Translation_Dashboard/Tables/jsons/enwiki_pageviews.json"
+    enwiki_pageviews = Dashboard_path + "/Tables/jsons/enwiki_pageviews.json"
     # ---
     old_views = {}
     # ---

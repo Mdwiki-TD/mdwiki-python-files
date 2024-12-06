@@ -1,22 +1,26 @@
 """
 from wprefs.files import reffixed_list, setting, append_reffixed_file
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
-import json
 
+import json
 import os
-import sys
+
 from pathlib import Path
 from wprefs.helps import exepts
 
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+Dir = Path(__file__).parents[0]
+dir2 = os.getenv("HOME")
+# ---
+if not dir2:
+    dir2 = "I:/mdwiki"
+# ---
+public_html_dir = dir2 + "/public_html"
+# ---
+if dir2 == "I:/mdwiki":
+    public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
 fixwikirefs = dir2 + "/confs/fixwikirefs.json"
-reffixed_file = f"{Dir}/reffixed.csv"
+reffixed_file = Dir / "reffixed.csv"
 # ---
 setting = {}
 # ---
@@ -62,18 +66,18 @@ def append_reffixed_file(lang, title, titles=None):
 def save_wprefcash(title, newtext):
     # ---
     title2 = title
-    title2 = title2.replace(":", "-").replace("/", "-").replace(" ", "_")
+    title2 = title2.replace(":", "-").replace("/", "-").replace(" ", "_").replace("'", "_").replace('"', "_")
     # ---
     filename = ""
     # ---
     try:
-        filename = dir2 + "/public_html/wprefcash/" + title2 + ".txt"
+        filename = public_html_dir + "/wprefcash/" + title2 + ".txt"
         with open(filename, "w", encoding="utf-8") as uy:
             uy.write(newtext)
     except Exception:
         exepts()
         # ---
-        filename = dir2 + "/public_html/wprefcash/title2.txt"
+        filename = public_html_dir + "/wprefcash/title2.txt"
         with open(filename, "w", encoding="utf-8") as gf:
             gf.write(newtext)
     # ---

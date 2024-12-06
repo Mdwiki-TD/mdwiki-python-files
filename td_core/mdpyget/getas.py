@@ -6,20 +6,23 @@
 python3 core8/pwb.py mdpyget/getas newpages
 
 """
+import os
 import json
 import sys
-from pathlib import Path
-
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
-from apis import wiki_api
+
+# from apis import wiki_api
 from newapi import printe
 from newapi.mdwiki_page import CatDepth
 from newapi.wiki_page import NEW_API
-api_new = NEW_API('en', family='wikipedia')
+
+api_new = NEW_API("en", family="wikipedia")
 
 # ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+if os.getenv("HOME"):
+    Dashboard_path = os.getenv("HOME") + "/public_html/Translation_Dashboard"
+else:
+    Dashboard_path = "I:/mdwiki/Translation_Dashboard"
 # ---
 printe.output("Get vaild_links from cat : RTT")
 
@@ -27,7 +30,7 @@ vaild_links = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=2,
 # ---
 printe.output(f"len of vaild_links: {len(vaild_links)}")
 # ---
-json_file = {0: f"{dir2}/public_html/Translation_Dashboard/Tables/jsons/assessments.json"}
+json_file = {0: f"{Dashboard_path}/Tables/jsons/assessments.json"}
 lala = ""
 # ---
 with open(json_file[0], "r", encoding="utf-8-sig") as listt:
