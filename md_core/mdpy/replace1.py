@@ -6,10 +6,15 @@ import sys
 from newapi.mdwiki_page import MainPage, NEW_API
 from pathlib import Path
 
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+import os
+
 # ---
-work_dir = f"{dir2}/public_html/replace/find"
+if os.getenv("HOME"):
+    dir2 = os.getenv("HOME") + "/public_html"
+else:
+    dir2 = "I:/mdwiki/mdwiki/public_html"
+# ---
+work_dir = f"{dir2}/replace/find"
 # ---
 api_new = NEW_API("www", family="mdwiki")
 file_name = {}

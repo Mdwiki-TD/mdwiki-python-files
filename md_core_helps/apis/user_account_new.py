@@ -13,7 +13,6 @@ import os
 import configparser
 
 home_dir = os.getenv("HOME")
-
 dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
 # ---
 config = configparser.ConfigParser()

@@ -23,25 +23,25 @@ from mdpy.bots import en_to_md
 import json
 from mdapi_sql import sql_for_mdwiki
 
-# ---
-from pathlib import Path
+import os
 
-Dir = str(Path(__file__).parents[0])
 # ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+if os.getenv("HOME"):
+    public_html_dir = os.getenv("HOME") + "/public_html"
+else:
+    public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
 enwiki_to_mdwiki = {}
 mdwiki_to_enwiki = {}
 # ---
 mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
 # ---
-lala = ''
+lala = ""
 
 
 def make_mdwiki_list():
     # ---
-    ffile = f'{dir2}/public_html/Translation_Dashboard/Tables/jsons/medwiki_to_enwiki.json'
+    ffile = f"{public_html_dir}/Translation_Dashboard/Tables/jsons/medwiki_to_enwiki.json"
     # ---
     From_json = {}
     # ---

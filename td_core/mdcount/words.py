@@ -27,14 +27,10 @@ from newapi import printe
 from mdcount.links import get_valid_Links
 from mdcount import lead
 
-# ---
-from pathlib import Path
-
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+if os.getenv("HOME"):
+    public_html_dir = os.getenv("HOME") + "/public_html"
+else:
+    public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
 json_file = {}
 # ---
@@ -47,14 +43,14 @@ def get_word_files():
     # ---
     global json_file, words_n, all_words_n
     # ---
-    json_file[1] = f'{dir2}/public_html/Translation_Dashboard/Tables/jsons/allwords.json'
+    json_file[1] = f'{public_html_dir}/Translation_Dashboard/Tables/jsons/allwords.json'
     # ---
     all_words_n = {}
     # ---
     with open(json_file[1], "r", encoding="utf-8") as f:
         all_words_n = json.load(f)
     # ---
-    json_file[0] = f'{dir2}/public_html/Translation_Dashboard/Tables/jsons/words.json'
+    json_file[0] = f'{public_html_dir}/Translation_Dashboard/Tables/jsons/words.json'
     # ---
     words_n = {}
     # ---

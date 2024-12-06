@@ -6,22 +6,21 @@ from mdpages import qids_help
 # qids_help.check(work_list, all_pages)
 
 """
+import os
 import json
 import sys
-from pathlib import Path
-
-# ---
 from newapi import printe
 from apis import cat_cach
 from apis import wiki_api
 from apis import mdwiki_api
 from mdpy.bots.check_title import valid_title
 
-Dir = str(Path(__file__).parents[0])
+if os.getenv("HOME"):
+    Dashboard_path = os.getenv("HOME") + "/public_html/Translation_Dashboard"
+else:
+    Dashboard_path = "I:/mdwiki/Translation_Dashboard"
 # ---
-dir2 = Dir.replace("\\", "/")
-dir2 = dir2.split("/pybot/")[0] + "/public_html/Translation_Dashboard/Tables/jsons"
-
+dir2 = Dashboard_path + "/Tables/jsons"
 
 print("Get_All_pages:")
 # ---

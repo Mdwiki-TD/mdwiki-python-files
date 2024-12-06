@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py fix_use/bot path:I:/mdwiki/public_html/Translation_Dashboard
+python3 core8/pwb.py fix_use/bot path:I:/mdwiki/mdwiki/public_html/Translation_Dashboard
 
 """
 import json

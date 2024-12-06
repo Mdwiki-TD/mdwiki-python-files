@@ -21,17 +21,16 @@ from apis import wikidataapi
 from mdpy.bots.check_title import valid_title
 
 from newapi.mdwiki_page import CatDepth
+
 # result_table = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
+
 # ---
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+if os.getenv("HOME"):
+    Dashboard_path = os.getenv("HOME") + "/public_html/Translation_Dashboard"
+else:
+    Dashboard_path = "I:/mdwiki/Translation_Dashboard"
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
-# ---
-Dashboard_path = f"{dir2}/public_html/Translation_Dashboard"
 # ---
 redirects_qids = {}
 mis_qids = []

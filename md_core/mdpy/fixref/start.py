@@ -14,11 +14,12 @@ from newapi.mdwiki_page import CatDepth
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
 from pathlib import Path
 
-Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
+import os
 # ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+if os.getenv("HOME"):
+    public_html_dir = os.getenv("HOME") + "/public_html"
+else:
+    public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
 thenumbers = {1: 20000, 'done': 0}
 
@@ -51,7 +52,7 @@ def main():
             thenumbers[1] = int(value)
         # ---
         if arg == '-file':
-            text = open(f'{dir2}/public_html/find/{value.strip()}', "r", 'utf8').read()
+            text = open(f'{public_html_dir}/find/{value.strip()}', "r", 'utf8').read()
             List = [x.strip() for x in text.split('\n') if x.strip() != '']
         # ---
         if arg == 'allpages':

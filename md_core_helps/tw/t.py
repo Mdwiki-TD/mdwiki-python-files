@@ -30,11 +30,11 @@ Dir = str(Path(__file__).parents[0])
 import twet_configs
 # ---
 # Create variables for each key, secret, token
-consumer_key = twet_config.consumer_key
-consumer_secret = twet_config.consumer_secret
-access_token = twet_config.access_token
-access_token_secret = twet_config.access_token_secret
-bearer_token = twet_config.bearer_token
+consumer_key = twet_configs.consumer_key
+consumer_secret = twet_configs.consumer_secret
+access_token = twet_configs.access_token
+access_token_secret = twet_configs.access_token_secret
+bearer_token = twet_configs.bearer_token
 # ---
 title = 'WikiProjectMed:List'
 # ---
@@ -79,7 +79,7 @@ def do_api(params):
     params["format"] = "json"
     params["utf8"] = 1
     # ---
-    url = f"https://mdwiki.org/w/api.php"
+    url = "https://mdwiki.org/w/api.php"
     # ---
     json1 = {}
     try:
