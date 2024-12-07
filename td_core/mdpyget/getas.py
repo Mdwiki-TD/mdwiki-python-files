@@ -20,9 +20,9 @@ api_new = NEW_API("en", family="wikipedia")
 
 # ---
 if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/Translation_Dashboard"
+    Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
-    Dashboard_path = "I:/mdwiki/Translation_Dashboard"
+    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 # ---
 printe.output("Get vaild_links from cat : RTT")
 
