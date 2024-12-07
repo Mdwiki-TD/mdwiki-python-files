@@ -26,9 +26,9 @@ from newapi.mdwiki_page import CatDepth
 
 # ---
 if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/Translation_Dashboard"
+    Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
-    Dashboard_path = "I:/mdwiki/Translation_Dashboard"
+    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 # ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---

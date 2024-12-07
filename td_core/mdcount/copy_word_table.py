@@ -40,7 +40,7 @@ for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     in_sql_lead[w_title] = w_lead_words
     in_sql_all[w_title] = w_all_words
 # ---
-project_tables = Path(dir2) / 'public_html' / 'Translation_Dashboard' / 'Tables'
+project_tables = Path(dir2) / 'public_html' / 'td' / 'Tables'
 # ---
 with open(f'{project_tables}/words.json', "r", encoding="utf-8") as f:
     lead_words = json.load(f)

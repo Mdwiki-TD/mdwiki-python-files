@@ -30,8 +30,8 @@ all_ref = {}
 lead_ref = {}
 vaild_links = {1: []}
 # ---
-file_all = f"{dir2}/public_html/Translation_Dashboard/Tables/jsons/all_refcount.json"
-file_lead = f"{dir2}/public_html/Translation_Dashboard/Tables/jsons/lead_refcount.json"
+file_all = f"{dir2}/public_html/td/Tables/jsons/all_refcount.json"
+file_lead = f"{dir2}/public_html/td/Tables/jsons/lead_refcount.json"
 # ---
 a = {}
 # ---

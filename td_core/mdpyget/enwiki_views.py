@@ -21,9 +21,9 @@ from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from apis import cat_cach
 
 if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/Translation_Dashboard"
+    Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
-    Dashboard_path = "I:/mdwiki/Translation_Dashboard"
+    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 
 
 def main():
