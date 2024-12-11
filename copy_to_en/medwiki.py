@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_to_en/medwiki ask
+python3 core8/pwb.py copy_to_en/medwiki ask nodone
 
 tfj run copymulti --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki multi"
 tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki"
@@ -12,7 +12,7 @@ import random
 import json
 import sys
 import re
-import requests
+import wikitextparser as wtp
 from pathlib import Path
 from multiprocessing import Pool
 from apis import cat_cach
@@ -24,6 +24,7 @@ from copy_to_en.bots import medwiki_account
 from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext_changes(text)
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
+from mdapi_sql import sql_for_mdwiki
 
 # ---
 User_tables = {
@@ -43,6 +44,30 @@ text_cache = {}
 revid_cache = {}
 un_wb_tag_cache = {}
 
+mdwiki_cats = sql_for_mdwiki.get_db_categories()
+# {'RTT': 1, 'RTTCovid': 0, 'RTTHearing': 0, 'RTTOSH': 0, 'World Health Organization essential medicines': 0, 'WHRTT': 0, 'RTTILAE': 0, 'RTTDZ': 0}
+# print(mdwiki_cats)
+
+
+def get_cats(alltext):
+    # ---
+    cats = []
+    # ---
+    for category in mdwiki_cats:
+        # ---
+        mat = re.search(rf"\[\[Category:{category}(\]\]|\|)", alltext, re.IGNORECASE)
+        # ---
+        if mat:
+            cats.append(category)
+    # ---
+    cats = list(set(cats))
+    # ---
+    # if len(cats) > 1 and "RTT" in cats: cats.remove("RTT")
+    # ---
+    cats_text = "\n".join([f"[[Category:{x}]]" for x in cats])
+    # ---
+    return cats_text
+
 
 def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
     # ---
@@ -52,28 +77,6 @@ def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
     cat_members = CatDepth(cat, sitecode="medwiki", family="toolforge", depth=0, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
     cat_members = [x.replace("Md:", "") for x in cat_members]
     return cat_members
-
-
-def Create(title, text, summary):
-    # ---
-    end_api = "https://medwiki.toolforge.org/w/api.php"
-    # ---
-    params = {
-        "action": "edit",
-        "title": title,
-        "text": text,
-        "summary": summary,
-        "format": "json",
-        "token": "\\\\+",
-    }
-    # ---
-    response = requests.post(end_api, data=params)
-    # ---
-    try:
-        print(response.json())
-    except Exception as e:
-        print(f"Exception: {e}")
-        print(response.text)
 
 
 def get_text_revid(x):
@@ -126,6 +129,8 @@ def get_text(x):
         print("no text: " + x)
         return "", ""
     # ---
+    page_cats = get_cats(alltext)
+    # ---
     unlinkedwikibase = get_un_wb_tag(alltext, x)
     # ---
     first = alltext.split("==")[0].strip()
@@ -141,7 +146,7 @@ def get_text(x):
     # ---
     revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
     # ---
-    newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}"
+    newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}\n{page_cats}"
     # ---
     return newtext, revid
 
@@ -259,7 +264,7 @@ def main():
     if "nodone" not in sys.argv:
         done = medwiki_cat_members()
         # ---
-        print(f" done: {len(done)}")
+        print(f" done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
         # ---
         all_pages = [x for x in all_pages if x not in done]
     # ---

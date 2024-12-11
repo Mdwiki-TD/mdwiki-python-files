@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 """
 
+
 python3 core8/pwb.py apis/cat_cach
 
 from apis import cat_cach
+from apis/cat_cach import Cat_Depth
 all_pages = cat_cach.make_cash_to_cats(return_all_pages=True)
 
 """
 import time
 from datetime import datetime
-from pathlib import Path
+# from pathlib import Path
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from newapi import printe
