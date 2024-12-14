@@ -18,6 +18,9 @@ def fix_ref_names(text):
     #  <ref name=Stat2022> to: <ref name="Stat2022">
 
     for tag in ref_tags:
+        if not tag.contents:
+            continue
+        # ---
         for x in tag.attrs:
             u = tag.get_attr(x)
             tag.set_attr(x, u)
@@ -34,6 +37,7 @@ if __name__ == "__main__":
     <ref name='sdsd'>{{Cite journal|last2=Bhandari |first2=P |title=Chronic Fatigue Syndrome |date=January 2022 |pmid=32491608|journal=StatPearls|last=Sapra|first=A}}</ref>
 
     <ref name="Stat20223"/>
+    <ref name=RH2019/>
     """
 
     new_text = fix_ref_names(text)
