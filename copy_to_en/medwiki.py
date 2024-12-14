@@ -25,8 +25,6 @@ from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdapi_sql import sql_for_mdwiki
-from copy_to_en.bots.fix_refs_names import fix_ref_names
-
 # ---
 User_tables = {
     "username": medwiki_account.username,
@@ -145,8 +143,6 @@ def get_text(x):
     revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
     # ---
     newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}\n{page_cats}"
-    # ---
-    newtext = fix_ref_names(newtext)
     # ---
     return newtext, revid
 
