@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_to_en/medwiki ask nodone
+python3 core8/pwb.py copy_to_en/medwiki nodone ask
+python3 core8/pwb.py copy_to_en/medwiki nodone slash ask
 
 tfj run copymulti --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki multi"
 tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/medwiki"
@@ -9,22 +10,22 @@ tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 import random
+import requests
 import json
 import sys
 import re
-import wikitextparser as wtp
 from pathlib import Path
 from multiprocessing import Pool
 from apis import cat_cach
 from apis import mdwiki_api
 from newapi.super import super_page
 from newapi.super import catdepth_new
-
 from copy_to_en.bots import medwiki_account
 from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext_changes(text)
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdapi_sql import sql_for_mdwiki
+
 # ---
 User_tables = {
     "username": medwiki_account.username,
@@ -46,6 +47,53 @@ un_wb_tag_cache = {}
 mdwiki_cats = sql_for_mdwiki.get_db_categories()
 # {'RTT': 1, 'RTTCovid': 0, 'RTTHearing': 0, 'RTTOSH': 0, 'World Health Organization essential medicines': 0, 'WHRTT': 0, 'RTTILAE': 0, 'RTTDZ': 0}
 # print(mdwiki_cats)
+
+
+def make_new_r3_token():
+    # ---
+    end_api = "https://medwiki.toolforge.org/w/api.php"
+    # ---
+    r3_params = {
+        "format": "json",
+        "action": "query",
+        "meta": "tokens",
+    }
+    # ---
+    req = requests.get(end_api, r3_params)
+    # ---
+    if not req:
+        return False
+    # ---
+    try:
+        data = req.json()
+        csrftoken = data.get("query", {}).get("tokens", {}).get("csrftoken", "")
+        return csrftoken
+    except Exception as e:
+        print(f"Exception: {e}")
+    # ---
+    return ""
+
+
+def just_save(title, text, summary, csrftoken):
+    # ---
+    end_api = "https://medwiki.toolforge.org/w/api.php"
+    # ---
+    params = {
+        "action": "edit",
+        "title": title,
+        "text": text,
+        "summary": summary,
+        "format": "json",
+        "token": csrftoken,
+    }
+    # ---
+    response = requests.post(end_api, data=params)
+    # ---
+    try:
+        print(response.json())
+    except Exception as e:
+        print(f"Exception: {e}")
+        print(response.text)
 
 
 def get_cats(alltext):
@@ -174,8 +222,18 @@ def one_page(x):
     summary = f"from [[:mdwiki:{x2}|{x}]]"
     summary = f"from [[:mdwiki:Special:Redirect/revision/{revid}|{x}]]"
     # ---
+    crftoken = make_new_r3_token()
+    # ---
     for title, text2 in titles.items():
         # Create(new_title, newtext, summary)
+        # # ---
+        if text2 == "":
+            print("no text: " + title)
+            continue
+        # # ---
+        if "just_save" in sys.argv:
+            just_save(title, text2, summary, crftoken)
+            continue
         # # ---
         # return
         page = MainPage(title, "medwiki", family="toolforge")
