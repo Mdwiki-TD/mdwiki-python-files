@@ -8,6 +8,8 @@ from copy_to_en import text_changes# text = text_changes.work(text)
 import re
 from newapi import printe
 import wikitextparser as wtp
+from copy_to_en.bots.fix_refs_names import fix_ref_names
+
 
 temps_to_delete = [
     "short description",
@@ -155,6 +157,8 @@ def do_text_fixes(newtext):
         newtext = newtext[newtext.lower().find("{{infobox") :]
     elif newtext.lower().find("{{drugbox") != -1:
         newtext = newtext[newtext.lower().find("{{drugbox") :]
+    # ---
+    newtext = fix_ref_names(newtext)
     # ---
     return newtext
 
