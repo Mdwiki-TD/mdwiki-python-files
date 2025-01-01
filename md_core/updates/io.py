@@ -65,6 +65,9 @@ laly.sort(reverse=True)
 # ---
 print(f"has {len(laly)} pages. ")
 # ---
+if not laly:
+    exit()
+# ---
 new = [[z, g] for z, g in laly if z > 20200701]
 new.sort(reverse=True)
 # ---

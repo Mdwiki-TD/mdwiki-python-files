@@ -1,8 +1,9 @@
-'''
+"""
+python3 core8/pwb.py stats/qids ask
 
 from stats.qids import qids_list
 
-'''
+"""
 import json
 import os
 import sys
@@ -11,7 +12,7 @@ from mdapi_sql import wiki_sql
 
 Dir = Path(__file__).parent
 
-qids_file = Dir / 'qids.json'
+qids_file = Dir / "qids.json"
 
 if not os.path.exists(qids_file):
     with open(qids_file, "w", encoding="utf-8") as f:
@@ -29,7 +30,8 @@ def get_en_articles():
     SELECT p.page_title, pp_value
         FROM page p, categorylinks, page_props, page p2
         WHERE p.page_id = cl_from
-        AND cl_to = 'All_WikiProject_Medicine_articles'
+        AND cl_to = 'All_WikiProject_Medicine_pages'
+        # AND cl_to = 'All_WikiProject_Medicine_articles'
         AND p.page_namespace = 1
         AND p2.page_namespace = 0
         AND pp_propname = 'wikibase_item'
@@ -37,13 +39,15 @@ def get_en_articles():
         and pp_page = p2.page_id
     """
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki')
-    return {x['page_title']: x['pp_value'] for x in result}
+    result = wiki_sql.sql_new(query, "enwiki")
+    return {x["page_title"]: x["pp_value"] for x in result}
 
 
 def start():
     # ---
     articles = get_en_articles()
+    # ---
+    print(f"len articles: {len(articles)}")
     # ---
     qids_list = list(articles.values())
     # ---

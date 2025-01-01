@@ -23,31 +23,31 @@ db_username = config.db_username
 db_password = config.db_password
 # ---
 if config.db_connect_file is None:
-    credentials = {'user': db_username, 'password': db_password}
+    credentials = {"user": db_username, "password": db_password}
 else:
-    credentials = {'read_default_file': config.db_connect_file}
+    credentials = {"read_default_file": config.db_connect_file}
 # ---
 can_use_sql_db = {1: True}
 # ---
-dir1 = '/mnt/nfs/labstore-secondary-tools-project/'
-dir2 = '/data/project/'
+dir1 = "/mnt/nfs/labstore-secondary-tools-project/"
+dir2 = "/data/project/"
 # ---
 if not os.path.isdir(dir1) and not os.path.isdir(dir2):
     can_use_sql_db[1] = False
 
 
-def sql_connect_pymysql(query, db='', host='', update=False, Return=[], return_dict=False, values=None):
+def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_dict=False, values=None):
     # ---
-    printe.output('start sql_connect_pymysql:')
+    # printe.output("start sql_connect_pymysql:")
     Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
     args2 = {
-        'host': host,
-        'db': db,
-        'charset': 'utf8mb4',
-        'cursorclass': Typee,
-        'use_unicode': True,
-        'autocommit': True,
+        "host": host,
+        "db": db,
+        "charset": "utf8mb4",
+        "cursorclass": Typee,
+        "use_unicode": True,
+        "autocommit": True,
     }
     # ---
     params = values if values else None
@@ -90,7 +90,7 @@ def decode_value(value):
         try:
             value = str(value)
         except BaseException:
-            return ''
+            return ""
     return value
 
 
@@ -108,13 +108,14 @@ def resolve_bytes(rows):
     return decoded_rows
 
 
-def make_sql_connect(query, db='', host='', update=False, Return=[], return_dict=False, values=None):
+def make_sql_connect(query, db="", host="", update=False, Return=[], return_dict=False, values=None, u_print=True):
     # ---
     if not query:
         printe.output("query == ''")
         return Return
     # ---
-    printe.output('<<yellow>> newsql::')
+    if u_print:
+        printe.output("<<yellow>> newsql::")
     # ---
     rows = sql_connect_pymysql(query, db=db, host=host, update=update, Return=Return, return_dict=return_dict, values=values)
     # ---

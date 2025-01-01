@@ -1,5 +1,7 @@
 """
 
+tfj run stats --image python3.9 --command "$HOME/jobs/stats.sh"
+
 python3 core8/pwb.py stats/all2 ask
 
 """
@@ -9,7 +11,7 @@ from pathlib import Path
 
 from datetime import datetime
 
-year = datetime.now().year
+last_year = datetime.now().year - 1
 # ---
 from newapi import printe
 from newapi.mdwiki_page import MainPage as md_MainPage
@@ -47,20 +49,18 @@ def filter_editors(editors, site):
 
 def work_all(editors):
     # ---
-    site = "all"
-    # ---
     editors = filter_editors(editors, "all")
     # ---
     if not editors:
         printe.output("<<red>> no editors")
         return
     # ---
-    title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_2023/{site}"
+    title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{last_year}_(all)"
     # ---
     text = "{{:WPM:WikiProject Medicine/Total medical articles}}\n"
-    text += f"{{{{Top medical editors {year} by lang}}}}\n"
+    text += f"{{{{Top medical editors by lang|{last_year}}}}}\n"
     # ---
-    text += "Numbers of {year}.\n"
+    text += f"Numbers of {last_year}.\n"
     # ---
     txt_table = """{| class="sortable wikitable"\n!#\n!User\n!Count\n"""
     txt_table += """!Wiki\n"""
@@ -78,7 +78,7 @@ def work_all(editors):
         # #{{#target:User:{User}|{wiki}.wikipedia.org}}
         targets += f"#{{{{#target:User:{user}|{wiki}.wikipedia.org}}}}\n"
         # ---
-        txt_table += f"|-\n" f"!{i}\n" f"|[[:w:{site}:user:{user}|{user}]]\n" f"|{count:,}\n" f"|{wiki}\n"
+        txt_table += f"|-\n" f"!{i}\n" f"|[[:w:{wiki}:user:{user}|{user}]]\n" f"|{count:,}\n" f"|{wiki}\n"
         # ---
         if i == 1000:
             break
@@ -113,7 +113,12 @@ def start():
         # ---
         printe.output(f"<<green>> n: {numb} file: {file}:")
         # ---
+        if not file.endswith(".json"):
+            continue
+        # ---
         site = file[:-5]
+        # ---
+        print(f"{file=}, {site=}")
         # ---
         if f"{site}wiki" in skip_sites:
             continue
