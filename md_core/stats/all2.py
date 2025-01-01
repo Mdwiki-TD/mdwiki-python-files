@@ -11,7 +11,7 @@ from pathlib import Path
 
 from datetime import datetime
 
-year = datetime.now().year - 1
+last_year = datetime.now().year - 1
 # ---
 from newapi import printe
 from newapi.mdwiki_page import MainPage as md_MainPage
@@ -55,12 +55,12 @@ def work_all(editors):
         printe.output("<<red>> no editors")
         return
     # ---
-    title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{year}_(all)"
+    title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{last_year}_(all)"
     # ---
     text = "{{:WPM:WikiProject Medicine/Total medical articles}}\n"
-    text += f"{{{{Top medical editors {year} by lang}}}}\n"
+    text += f"{{{{Top medical editors by lang|{last_year}}}}}\n"
     # ---
-    text += f"Numbers of {year}.\n"
+    text += f"Numbers of {last_year}.\n"
     # ---
     txt_table = """{| class="sortable wikitable"\n!#\n!User\n!Count\n"""
     txt_table += """!Wiki\n"""

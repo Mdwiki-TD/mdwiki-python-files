@@ -12,7 +12,7 @@ from pymysql.converters import escape_string
 
 from datetime import datetime
 
-year = datetime.now().year
+last_year = datetime.now().year - 1
 # ---
 import tqdm
 
@@ -43,13 +43,13 @@ def validate_ip(ip_address):
     return False
 
 
-def get_editors_sql(links, site):
+def get_editors_sql(links, site, split_by=100):
     # ---
     qua = f"""
         SELECT actor_name, count(*) as count from revision
             join actor on rev_actor = actor_id
             join page on rev_page = page_id
-            WHERE lower(cast(actor_name as CHAR)) NOT LIKE '%bot%' AND page_namespace = 0 AND rev_timestamp like '{year}%'
+            WHERE lower(cast(actor_name as CHAR)) NOT LIKE '%bot%' AND page_namespace = 0 AND rev_timestamp like '{last_year}%'
             and page_id in (
             select page_id
             from page
@@ -63,9 +63,9 @@ def get_editors_sql(links, site):
     # ---
     editors = {}
     # ---
-    for i in tqdm.tqdm(range(0, len(links), 100), desc=f"get_editors_sql site:{site}", all=len(links) // 100):
+    for i in tqdm.tqdm(range(0, len(links), split_by), desc=f"get_editors_sql site:{site}", total=len(links) // split_by):
         # ---
-        pages = links[i : i + 100]
+        pages = links[i : i + split_by]
         # ---
         # lim = ' , '.join(['?' for x in pages])
         lim = ",".join([f'"{escape_string(x)}"' for x in pages])
@@ -74,7 +74,7 @@ def get_editors_sql(links, site):
         # ---
         # print(qua2)
         # ---
-        edits = wiki_sql.sql_new(qua2, site)
+        edits = wiki_sql.sql_new(qua2, site, u_print=False)
         # ---
         for x in edits:
             # ---
@@ -109,7 +109,7 @@ def get_editors(links, site, do_dump=True):
     if site == "ar":
         editors = get_ar_results()
     else:
-        editors = get_editors_sql(links, site)
+        editors = get_editors_sql(links, site, split_by=150)
     # ---
     if ("dump" in sys.argv or do_dump) and editors:
         dumpit(editors, site)

@@ -15,7 +15,7 @@ from newapi import printe
 from newapi.mdwiki_page import MainPage as md_MainPage
 from stats.editors import get_editors, validate_ip
 
-year = datetime.now().year
+last_year = datetime.now().year - 1
 # ---
 Dir = Path(__file__).parent
 sites_dir = Dir / "sites"
@@ -69,13 +69,13 @@ def work_in_one_site(site, links):
         print("json.dumps(editors, indent=2)")
         return
     # ---
-    title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{year}/{site}"
+    title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{last_year}/{site}"
     # ---
     text = "{{:WPM:WikiProject Medicine/Total medical articles}}\n"
-    text += f"{{{{Top medical editors {year} by lang}}}}\n"
+    text += f"{{{{Top medical editors by lang|{last_year}}}}}\n"
     # ---
     if site != "ar":
-        text += f"Numbers of {year}. There are {len(links):,} articles in {site}\n"
+        text += f"Numbers of {last_year}. There are {len(links):,} articles in {site}\n"
     # ---
     text += """{| class="sortable wikitable"\n!#\n!User\n!Count\n|-"""
     # ---
