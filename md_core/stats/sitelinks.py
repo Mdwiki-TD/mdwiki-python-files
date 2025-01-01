@@ -1,4 +1,7 @@
 '''
+python3 core8/pwb.py stats/sitelinks ask
+
+tfj run stats1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py stats/sitelinks"
 
 '''
 # ---
