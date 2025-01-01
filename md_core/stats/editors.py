@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 from pymysql.converters import escape_string
 
+from datetime import datetime
+year = datetime.now().year
 # ---
 from stats.ar import get_ar_results
 from mdapi_sql import wiki_sql
@@ -39,11 +41,11 @@ def validate_ip(ip_address):
 
 def get_editors_sql(links, site):
     # ---
-    qua = '''
+    qua = f'''
         SELECT actor_name, count(*) as count from revision
             join actor on rev_actor = actor_id
             join page on rev_page = page_id
-            WHERE lower(cast(actor_name as CHAR)) NOT LIKE '%bot%' AND page_namespace = 0 AND rev_timestamp like '2023%'
+            WHERE lower(cast(actor_name as CHAR)) NOT LIKE '%bot%' AND page_namespace = 0 AND rev_timestamp like '{year}%'
             and page_id in (
             select page_id
             from page

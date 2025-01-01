@@ -16,9 +16,10 @@ from multiprocessing import Pool
 from newapi import printe
 from apis import cat_cach
 from copy_text.text_bot import get_text
+from copy_text.html_bot import fix_html
 
 dir1 = Path(__file__).parent
-Dir = "/data/project/mdwiki/public_html/mdtexts"
+Dir = "/data/project/medwiki/public_html/mdtexts"
 
 if str(dir1).find("I:") != -1:
     Dir = "I:/mdwiki/mdwiki/public_html/mdtexts"
@@ -61,7 +62,9 @@ class WikiProcessor:
             return None
 
     def convert_wikitext_to_html(self, text):
-        end_point = "https://en.wikipedia.org/api/rest_v1/transform/wikitext/to/html/Sandbox"
+        # end_point = "https://en.wikipedia.org/api/rest_v1/transform/wikitext/to/html/Sandbox"
+        end_point = "https://en.wikipedia.org/w/rest.php/v1/transform/wikitext/to/html/Sandbox"
+        # end_point = "https://medwiki.toolforge.org/w/rest.php/v1/transform/wikitext/to/html/Sandbox"
         params = {"wikitext": text}
         headers = {"Content-Type": "application/json"}
         try:
@@ -102,7 +105,7 @@ class WikiProcessor:
 
         if not html:
             return None
-
+        html = fix_html(html)
         file_path = self.base_dir / f"html/{self.sanitized_name}.html"
         self.save_text(html, file_path)
 

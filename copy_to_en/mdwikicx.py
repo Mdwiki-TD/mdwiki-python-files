@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_to_en/mdwikicx ask
+python3 core8/pwb.py copy_to_en/mdwikicx ask nodone
 
 tfj run copymulti --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/mdwikicx multi"
 tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/mdwikicx"
@@ -20,9 +20,10 @@ from apis import mdwiki_api
 from newapi.super import super_page
 from newapi.super import catdepth_new
 from copy_to_en.bots import medwiki_account
-
+from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext_changes(text)
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
+from mdapi_sql import sql_for_mdwiki
 
 # ---
 User_tables = {
@@ -38,6 +39,34 @@ MainPage = super_page.MainPage
 
 Dir = Path(__file__).parent
 
+text_cache = {}
+revid_cache = {}
+un_wb_tag_cache = {}
+
+mdwiki_cats = sql_for_mdwiki.get_db_categories()
+# {'RTT': 1, 'RTTCovid': 0, 'RTTHearing': 0, 'RTTOSH': 0, 'World Health Organization essential medicines': 0, 'WHRTT': 0, 'RTTILAE': 0, 'RTTDZ': 0}
+# print(mdwiki_cats)
+
+
+def get_cats(alltext):
+    # ---
+    cats = []
+    # ---
+    for category in mdwiki_cats:
+        # ---
+        mat = re.search(rf"\[\[Category:{category}(\]\]|\|)", alltext, re.IGNORECASE)
+        # ---
+        if mat:
+            cats.append(category)
+    # ---
+    cats = list(set(cats))
+    # ---
+    # if len(cats) > 1 and "RTT" in cats: cats.remove("RTT")
+    # ---
+    cats_text = "\n".join([f"[[Category:{x}]]" for x in cats])
+    # ---
+    return cats_text
+
 
 def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
     # ---
@@ -49,26 +78,31 @@ def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
     return cat_members
 
 
-def Create(title, text, summary):
+def get_text_revid(x):
+    alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
     # ---
-    end_api = "https://mdwikicx.toolforge.org/w/api.php"
+    text_cache[x] = alltext
+    revid_cache[x] = revid
     # ---
-    params = {
-        "action": "edit",
-        "title": title,
-        "text": text,
-        "summary": summary,
-        "format": "json",
-        "token": "\\\\+",
-    }
+    return alltext, revid
+
+
+def get_un_wb_tag(alltext, x):
+    # search for text like {{#unlinkedwikibase:id=Q423364}}
+    pattern = r"\{\{#unlinkedwikibase:id=Q[0-9]+\}\}"
     # ---
-    response = requests.post(end_api, data=params)
+    match = re.search(pattern, alltext)
     # ---
-    try:
-        print(response.json())
-    except Exception as e:
-        print(f"Exception: {e}")
-        print(response.text)
+    unlinkedwikibase = match.group(0) if match else ""
+    # ---
+    # matches = re.findall(pattern, alltext)
+    # for m in matches:
+    #     unlinkedwikibase = m
+    #     break
+    # ---
+    un_wb_tag_cache[x] = unlinkedwikibase
+    # ---
+    return unlinkedwikibase
 
 
 def get_text(x):
@@ -85,19 +119,15 @@ def get_text(x):
         tuple: A tuple containing the processed text and the revision ID
         of the page.
     """
-    alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
+    alltext, revid = get_text_revid(x)
     # ---
     if not alltext:
         print("no text: " + x)
-        return ""
+        return "", ""
     # ---
-    unlinkedwikibase = ""
-    # search for text like {{#unlinkedwikibase:id=Q423364}}
-    pattern = r"\{\{#unlinkedwikibase:id=Q[0-9]+\}\}"
-    matches = re.findall(pattern, alltext)
-    for m in matches:
-        unlinkedwikibase = m
-        break
+    page_cats = get_cats(alltext)
+    # ---
+    unlinkedwikibase = get_un_wb_tag(alltext, x)
     # ---
     first = alltext.split("==")[0].strip()
     # ---
@@ -106,19 +136,13 @@ def get_text(x):
     # ---
     newtext = fix_ref(first, alltext)
     # ---
-    newtext = text_changes.work(newtext)
-    newtext = newtext.replace("{{Drugbox", "{{Infobox drug")
-    newtext = newtext.replace("{{drugbox", "{{Infobox drug")
+    newtext = text_changes.do_text_fixes(newtext)
     # ---
-    # remove any text before {{Infobox or {{Drugbox
-    if newtext.lower().find("{{infobox") != -1:
-        newtext = newtext[newtext.lower().find("{{infobox") :]
-    elif newtext.lower().find("{{drugbox") != -1:
-        newtext = newtext[newtext.lower().find("{{drugbox") :]
+    newtext += "\n[[Category:Mdwiki Translation Dashboard articles]]"
     # ---
     revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
     # ---
-    newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}"
+    newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}\n{page_cats}"
     # ---
     return newtext, revid
 
@@ -128,29 +152,55 @@ def one_page(x):
     # ---
     new_title = "Md:" + x
     # ---
+    titles = {
+        new_title: newtext,
+    }
+    # ---
+    if new_title.find("/") != -1:
+        new_title_all = f"Md:{x}/fulltext"
+        # ---
+        alltext = text_cache.get(x)
+        # ---
+        if alltext:
+            unlinked_tag = un_wb_tag_cache.get(x, "")
+            # ---
+            alltext = alltext_changes.do_all_text(alltext, revid, unlinked_tag)
+            titles[new_title_all] = alltext
+        else:
+            print(f"no text:{new_title_all}")
+    # ---
     x2 = x.replace(" ", "_")
     # ---
     summary = f"from [[:mdwiki:{x2}|{x}]]"
     summary = f"from [[:mdwiki:Special:Redirect/revision/{revid}|{x}]]"
     # ---
-    # Create(new_title, newtext, summary)
-    # # ---
-    # return
-    page = MainPage(new_title, "mdwikicx", family="toolforge")
-    # ---
-    if page.exists():
-        _p_t = page.get_text()
+    for title, text2 in titles.items():
+        # Create(new_title, newtext, summary)
+        # # ---
+        if text2 == "":
+            print("no text: " + title)
+            continue
+        # # ---
+        # return
+        page = MainPage(title, "mdwikicx", family="toolforge")
         # ---
-        page.save(newtext, summary=summary, nocreate=0)
-    else:
-        print("page not found: " + new_title)
-        page.Create(text=newtext, summary=summary)
+        if page.exists():
+            _p_t = page.get_text()
+            # ---
+            if _p_t == text2:
+                print("page exists: " + title)
+                continue
+            # ---
+            page.save(text2, summary=summary, nocreate=0)
+        else:
+            print("page not found: " + title)
+            page.Create(text=text2, summary=summary)
 
 
 def get_all():
     file = Dir / "all_pages.json"
     # ----
-    if file.exists():
+    if file.exists() and "nodone" not in sys.argv:
         return json.loads(file.read_text())
     # ----
     all_pages = cat_cach.make_cash_to_cats(return_all_pages=True, print_s=False)
@@ -162,6 +212,9 @@ def get_all():
 
 
 def start(all_pages):
+    # ---
+    if "slash" in sys.argv:
+        all_pages = [x for x in all_pages if x.find("/") != -1]
     # ---
     # sort all_pages randmly
     random.shuffle(all_pages)
@@ -189,13 +242,15 @@ def main():
     of the remaining pages and saves the revisions to a JSON file.
     """
     # ---
-    done = medwiki_cat_members()
-    # ---
     all_pages = get_all()
     # ---
-    print(f"all_pages: {len(all_pages)}, done: {len(done)}")
+    print(f"all_pages: {len(all_pages)}")
     # ---
     if "nodone" not in sys.argv:
+        done = medwiki_cat_members()
+        # ---
+        print(f" done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
+        # ---
         all_pages = [x for x in all_pages if x not in done]
     # ---
     start(all_pages)
