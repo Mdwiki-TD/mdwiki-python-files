@@ -179,6 +179,9 @@ class one_page(AddArchiveDate):
         #     self.run_archive()
 
     def run(self):
+        if not hasattr(self, 'text'):
+            printe.output(f" page:{self.title} text not initialized.")
+            return
         # ---
         newtext = self.fix_text_2(self.text) # AttributeError: 'one_page' object has no attribute 'text'
         # ---
