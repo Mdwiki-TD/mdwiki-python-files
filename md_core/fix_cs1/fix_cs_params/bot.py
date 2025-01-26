@@ -180,7 +180,7 @@ class one_page(AddArchiveDate):
 
     def run(self):
         # ---
-        newtext = self.fix_text_2(self.text)
+        newtext = self.fix_text_2(self.text) # AttributeError: 'one_page' object has no attribute 'text'
         # ---
         if self.text == newtext:
             return
