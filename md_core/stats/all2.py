@@ -80,7 +80,9 @@ def work_all(editors):
         # ---
         txt_table += f"|-\n" f"!{i}\n" f"|[[:w:{wiki}:user:{user}|{user}]]\n" f"|{count:,}\n" f"|{wiki}\n"
         # ---
-        if i == 1000:
+        # if i == 1000: break
+        # ---
+        if count < 10:
             break
         # ---
     # ---
