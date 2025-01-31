@@ -54,7 +54,7 @@ def dump_to_cache(cat, data):
     try:
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
-            printe.output(f"<<green>> all_pages.json is updated ({len(data)})")
+            printe.output(f"<<green>> {cat}.json is updated ({len(data)})")
         return True
     except Exception as e:
         printe.output(f"<<red>> Error: {e}")
