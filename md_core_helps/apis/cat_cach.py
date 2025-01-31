@@ -1,17 +1,20 @@
 #!/usr/bin/python3
 """
 
-
 python3 core8/pwb.py apis/cat_cach
 
 from apis import cat_cach
 from apis/cat_cach import Cat_Depth
-all_pages = cat_cach.make_cash_to_cats(return_all_pages=True)
+all_pages = cat_cach.make_cash_to_cats()
 
 """
 import time
+import os
+import json
+import stat
 from datetime import datetime
-# from pathlib import Path
+
+from pathlib import Path
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from newapi import printe
@@ -20,6 +23,40 @@ from newapi.mdwiki_page import CatDepth
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 
 Day_History = datetime.now().strftime("%Y-%m-%d")
+
+if os.getenv("HOME"):
+    dump_path = os.getenv("HOME") + "/public_html/td/cats_cash"
+else:
+    dump_path = "I:/mdwiki/mdwiki/public_html/td/cats_cash"
+
+today = datetime.today().strftime("%Y-%m-%d")
+
+
+def dump_to_cache(cat, data):
+    # ---
+    if cat.lower().startswith("category:"):
+        cat = cat[9:]
+    # ---
+    filename = dump_path / f"{cat}.json"
+    # ---
+    if not filename.exists():
+        filename.touch(mode=stat.S_IRWXU | stat.S_IRWXG)
+        filename.write_text("[]")
+    else:
+        # Get the time of last modification of the file
+        last_modified = datetime.fromtimestamp(os.path.getmtime(filename)).strftime("%Y-%m-%d")
+        # ---
+        # if last_modified != today:
+        printe.output(f"<<purple>> last modified: {last_modified}, today: {today}. ")
+    # ---
+    try:
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+            printe.output(f"<<green>> all_pages.json is updated ({len(data)})")
+        return True
+    except Exception as e:
+        printe.output(f"<<red>> Error: {e}")
+        return False
 
 
 def Cat_Depth(title, depth=0, ns="all", print_s=True):
@@ -45,27 +82,38 @@ def Cat_Depth(title, depth=0, ns="all", print_s=True):
     return list(result_table.keys())
 
 
-def make_cash_to_cats(return_all_pages=False, print_s=True):
+def make_cash_to_cats(dump_data=False):
     # ---
     all_pages = []
     # ---
     cats = sql_for_mdwiki.get_db_categories()
     # ---
-    lens = {}
+    all_cats = {}
     # ---
     for cat, depth in cats.items():
         # ---
         ca = Cat_Depth(cat, depth=depth, ns="all", print_s=False)
         # ---
-        lens[cat] = len(ca)
+        all_cats[cat] = ca
         # ---
         all_pages.extend([x for x in ca if x not in all_pages])
     # ---
-    # for cat, length in lens.items(): print(f"len of pages in {cat}: {length}")
+    if dump_data:
+        for cat, members in all_cats.items():
+            dump_to_cache(cat, members)
+            # print(f"len of pages in {cat}: {len(members)}")
+        # ---
+        filename = Path(__file__).parent / "all_pages.json"
+        # ---
+        try:
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump(all_pages, f)
+                printe.output(f"<<green>> all_pages.json is updated ({len(all_pages)})")
+        except Exception as e:
+            printe.output(e)
     # ---
-    if return_all_pages:
-        return all_pages
+    return all_pages
 
 
 if __name__ == "__main__":
-    make_cash_to_cats()
+    make_cash_to_cats(dump_data=True)

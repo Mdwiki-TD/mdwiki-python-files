@@ -14,7 +14,7 @@ from apis import cat_cach
 from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_tab
 from p11143_bot.filter_helps import remove_in_db_elements
 
-TD_list = cat_cach.make_cash_to_cats(return_all_pages=True, print_s=False)
+TD_list = cat_cach.make_cash_to_cats()
 
 ALL_QIDS = {}
 
