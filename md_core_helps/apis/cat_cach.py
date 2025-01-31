@@ -29,6 +29,8 @@ if os.getenv("HOME"):
 else:
     dump_path = "I:/mdwiki/mdwiki/public_html/td/cats_cash"
 
+dump_path = Path(dump_path)
+
 today = datetime.today().strftime("%Y-%m-%d")
 
 
