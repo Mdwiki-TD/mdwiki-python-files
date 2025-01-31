@@ -15,7 +15,7 @@ from mdapi_sql import sql_for_mdwiki
 from mdapi_sql import sql_qids_others
 from unlinked_wb.bot import work_un
 
-all_pages = cat_cach.make_cash_to_cats(return_all_pages=True, print_s=False)
+all_pages = cat_cach.make_cash_to_cats()
 all_pages = [x for x in all_pages[:] if valid_title(x)]
 
 

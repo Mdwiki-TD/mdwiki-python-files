@@ -29,7 +29,7 @@ all_pages = [x for x in all_pages if valid_title(x)]
 # ---
 print("make_cash_to_cats:")
 # ---
-td_list = cat_cach.make_cash_to_cats(return_all_pages=True, print_s=False)
+td_list = cat_cach.make_cash_to_cats()
 td_list = [x for x in td_list if valid_title(x)]
 # ---
 

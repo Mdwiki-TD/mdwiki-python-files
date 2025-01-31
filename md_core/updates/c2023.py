@@ -27,11 +27,12 @@ limit = 200 if "test" in sys.argv else 100000
 def get_users(pages):
     usersbyyear = {"all": {}, "2024": {}, "2023": {}, "2022": {}, "2021": {}}
     # ---
+
     for num, title in enumerate(pages, start=1):
         # ---
         print(f"num:{num}/{len(pages)}, title:{title}")
         # ---
-        revisions = api_new.get_revisions(title, rvprop="user|timestamp|comment", options={"rvstart": "2021-01-01T00:00:00.000Z", "rvend": "2024-01-01T00:00:00.000Z"})
+        revisions = api_new.get_revisions(title, rvprop="user|timestamp|comment", options={"rvstart": "2021-01-01T00:00:00.000Z", "rvend": "2025-01-01T00:00:00.000Z"})
         # ---
         for ref in revisions:
             refs = ref.get("revisions", [])
