@@ -53,7 +53,7 @@ def dump_to_cache(cat, data):
     # ---
     try:
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
+            json.dump(data, f, ensure_ascii=False)
             printe.output(f"<<green>> {cat}.json is updated ({len(data)})")
         return True
     except Exception as e:
@@ -109,7 +109,7 @@ def make_cash_to_cats(dump_data=False):
         # ---
         try:
             with open(filename, "w", encoding="utf-8") as f:
-                json.dump(all_pages, f)
+                json.dump(all_pages, f, ensure_ascii=False)
                 printe.output(f"<<green>> all_pages.json is updated ({len(all_pages)})")
         except Exception as e:
             printe.output(e)
