@@ -224,11 +224,9 @@ def fix_es(text, title):
     # ---
     newtext = add_section(newtext, title)
     # ---
+    newtext = newtext.replace("<references />", "{{listaref}}")
+    newtext = newtext.replace("<references/>", "{{listaref}}")
+    # ---
     newtext = mv_es_refs(newtext)
     # ---
-    newtext = newtext.replace("<references />", "{{listaref}}")
-    # ---
     return newtext
-
-
-# ---

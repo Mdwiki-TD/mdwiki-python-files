@@ -121,5 +121,3 @@ def fix_page(newtext, title, move_dots=False, infobox=False, section_0="", lang=
     # ---
     return newtext
 
-
-# ---

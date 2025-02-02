@@ -53,8 +53,9 @@ def dump_to_cache(cat, data):
     # ---
     try:
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
-            printe.output(f"<<green>> {cat}.json is updated ({len(data)})")
+            json.dump(data, f)
+            len_data = len(data.get("list") or data)
+            printe.output(f"<<green>> {cat}.json is updated ({len_data})")
         return True
     except Exception as e:
         printe.output(f"<<red>> Error: {e}")
@@ -102,7 +103,8 @@ def make_cash_to_cats(dump_data=False):
     # ---
     if dump_data:
         for cat, members in all_cats.items():
-            dump_to_cache(cat, members)
+            tab = {"list": members}
+            dump_to_cache(cat, tab)
             # print(f"len of pages in {cat}: {len(members)}")
         # ---
         filename = Path(__file__).parent / "all_pages.json"
