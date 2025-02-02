@@ -111,6 +111,9 @@ def mv_es_refs(text):
     # ---
     new_text = add_line_to_temp(line, new_text)
     # ---
+    if new_text.find(line.strip()) == -1:
+        return text
+    # ---
     return new_text
 
 

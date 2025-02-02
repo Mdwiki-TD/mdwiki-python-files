@@ -5,7 +5,6 @@ import re
 import wikitextparser as wtp
 
 # ---
-# ---
 es_months_tab = {
     'January': 'enero',
     'February': 'febrero',
