@@ -13,10 +13,10 @@ from mdapi_sql import sql_for_mdwiki
 from apis.cat_cach import Cat_Depth
 
 dir1 = Path(__file__).parent
-Dir = "/data/project/mdwiki/public_html/mdtexts"
+Dir = "/data/project/medwiki/public_html/mdtexts"
 
 if str(dir1).find("I:") != -1:
-    Dir = "I:/mdwiki/mdwiki/public_html/mdtexts"
+    Dir = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html/mdtexts"
 
 Dir = Path(Dir)
 

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_text/to_file2
+python3 core8/pwb.py copy_text/bot
 
-tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/to_file2"
+tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/bot"
 
 """
 import sys
@@ -22,7 +22,8 @@ dir1 = Path(__file__).parent
 Dir = "/data/project/medwiki/public_html/mdtexts"
 
 if str(dir1).find("I:") != -1:
-    Dir = "I:/mdwiki/mdwiki/public_html/mdtexts"
+    Dir = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html/mdtexts"
+
 
 Dir = Path(Dir)
 
