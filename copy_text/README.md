@@ -15,6 +15,5 @@ python3 core8/pwb.py copy_text/bot
 python3 core8/pwb.py copy_text/scan_files del
 ```
 
-# Later
-- this wikitext / html / segments files will be used by [MdTexts Script](https://medwiki.toolforge.org/mdtexts/).
-
+# Then
+- this `Wikitext` and `Html` and `Segments` files will be used by [MdTexts Script](https://github.com/mdwikicx/medwiki.toolforge.org/tree/update/public_html/mdtexts).
