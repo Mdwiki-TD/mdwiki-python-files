@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_text/to_file2
+python3 core8/pwb.py copy_text/bot
 
-tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/to_file2"
+tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/bot"
 
 """
 import sys
@@ -22,7 +22,8 @@ dir1 = Path(__file__).parent
 Dir = "/data/project/medwiki/public_html/mdtexts"
 
 if str(dir1).find("I:") != -1:
-    Dir = "I:/mdwiki/mdwiki/public_html/mdtexts"
+    Dir = "I:/medwiki/new/medwiki.toolforge.org_repo/public_html/mdtexts"
+
 
 Dir = Path(Dir)
 
@@ -109,7 +110,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"html/{self.sanitized_name}.html"
         self.save_text(html, file_path)
 
-        printe.output("<<yellow>> to_html True.")
+        printe.output(f"<<yellow>> to_html True. {file_path}")
         return html
 
     def to_segments(self, html_text):
@@ -121,7 +122,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"segments/{self.sanitized_name}.html"
         self.save_text(segments, file_path)
 
-        printe.output("<<yellow>> to_segments True.")
+        printe.output(f"<<yellow>> to_segments True. {file_path}")
 
         return segments
 
@@ -175,7 +176,7 @@ def start(all_pages):
         return
     # ---
     for n, x in enumerate(all_pages):
-        print(f"{n}/{len(all_pages)} : {x}")
+        printe.output(f"{n}/{len(all_pages)} : {x}")
         # ---
         one_page_new(x)
 
@@ -205,20 +206,27 @@ def main():
     # ---
     all_pages = get_all()
     # ---
-    print(f"all_pages: {len(all_pages)}")
+    len_old = len(all_pages)
+    # ---
+    printe.output(f"all_pages: {len(all_pages)}")
     # ---
     if "nodone" not in sys.argv:
         done = get_done(all_pages)
         # ---
-        print(f" done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
+        printe.output(f"<<yellow>> done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
         # ---
-        all_pages = [x for x in all_pages if x not in done]
+        all_pages = [x for x in all_pages if fix_title(x) not in done]
+    # ---
+    printe.output(f"<<green>> all_pages: {len(all_pages)}, len_old: {len_old}")
     # ---
     start(all_pages)
 
 
 if __name__ == "__main__":
     if "test" in sys.argv:
-        one_page_new("Menopause")
+        one_page_new("Gout")
+        one_page_new("Sofosbuvir/daclatasvir")
+        one_page_new("Lamivudine/tenofovir")
+        one_page_new("WHO AWaRe")
     else:
         main()

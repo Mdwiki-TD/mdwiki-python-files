@@ -30,6 +30,10 @@ un_wb_tag_cache = {}
 
 mdwiki_cats = sql_for_mdwiki.get_db_categories()
 
+full_translate = sql_for_mdwiki.select_md_sql("select DISTINCT tt_title from translate_type where tt_full = 1;", return_dict=True)
+
+full_translate = [ta["tt_title"] for ta in full_translate]
+
 
 def get_cats(alltext):
     # ---
@@ -94,9 +98,16 @@ def get_text(x):
     """
     alltext, revid = get_text_revid(x)
     # ---
+    revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
+    # ---
     if not alltext:
         print("no text: " + x)
         return "", ""
+    # ---
+    if x.strip().lower().startswith("video:") or x.strip() in full_translate:
+        newtext = text_changes.do_text_fixes(alltext)
+        newtext = f"{revid_temp}\n{newtext}"
+        return newtext, revid
     # ---
     page_cats = get_cats(alltext)
     # ---
@@ -111,9 +122,7 @@ def get_text(x):
     # ---
     newtext = text_changes.do_text_fixes(newtext)
     # ---
-    newtext += "\n[[Category:Mdwiki Translation Dashboard articles]]"
-    # ---
-    revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
+    # newtext += "\n[[Category:Mdwiki Translation Dashboard articles]]"
     # ---
     newtext = f"{unlinkedwikibase}\n{revid_temp}\n{newtext}\n{page_cats}"
     # ---
