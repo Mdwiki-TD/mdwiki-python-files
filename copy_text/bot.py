@@ -110,7 +110,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"html/{self.sanitized_name}.html"
         self.save_text(html, file_path)
 
-        printe.output("<<yellow>> to_html True.")
+        printe.output(f"<<yellow>> to_html True. {file_path}")
         return html
 
     def to_segments(self, html_text):
@@ -122,7 +122,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"segments/{self.sanitized_name}.html"
         self.save_text(segments, file_path)
 
-        printe.output("<<yellow>> to_segments True.")
+        printe.output(f"<<yellow>> to_segments True. {file_path}")
 
         return segments
 
