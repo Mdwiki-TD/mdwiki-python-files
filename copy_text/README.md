@@ -3,6 +3,7 @@ This repository contains a set of Python scripts designed to process and manage 
 
 - files_list.py This script manages the list of categories and pages.
 
+# Usage
 ```sh
 python3 core8/pwb.py copy_text/files_list
 python3 core8/pwb.py copy_text/bot
@@ -14,6 +15,6 @@ python3 core8/pwb.py copy_text/bot
 python3 core8/pwb.py copy_text/scan_files del
 ```
 
-# later
+# Later
 - this wikitext / html / segments files will be used by [MdTexts Script](https://medwiki.toolforge.org/mdtexts/).
 
