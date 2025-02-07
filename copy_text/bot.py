@@ -176,7 +176,7 @@ def start(all_pages):
         return
     # ---
     for n, x in enumerate(all_pages):
-        print(f"{n}/{len(all_pages)} : {x}")
+        printe.output(f"{n}/{len(all_pages)} : {x}")
         # ---
         one_page_new(x)
 
@@ -206,14 +206,18 @@ def main():
     # ---
     all_pages = get_all()
     # ---
-    print(f"all_pages: {len(all_pages)}")
+    len_old = len(all_pages)
+    # ---
+    printe.output(f"all_pages: {len(all_pages)}")
     # ---
     if "nodone" not in sys.argv:
         done = get_done(all_pages)
         # ---
-        print(f" done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
+        printe.output(f"<<yellow>> done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
         # ---
-        all_pages = [x for x in all_pages if x not in done]
+        all_pages = [x for x in all_pages if fix_title(x) not in done]
+    # ---
+    printe.output(f"<<green>> all_pages: {len(all_pages)}, len_old: {len_old}")
     # ---
     start(all_pages)
 
