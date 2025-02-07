@@ -1,7 +1,7 @@
 # Overview
 This repository contains a set of Python scripts designed to process and manage text and HTML content for the MedWiki project. The scripts perform various tasks such as fetching and processing wiki text, converting it to HTML, segmenting the HTML, and managing categories and pages.
 
-- files_list.py This script manages the list of categories and pages.
+- `files_list.py` This script manages the list of categories and pages.
 
 # Usage
 ```sh
