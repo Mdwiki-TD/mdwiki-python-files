@@ -224,6 +224,9 @@ def main():
 
 if __name__ == "__main__":
     if "test" in sys.argv:
-        one_page_new("Menopause")
+        one_page_new("Gout")
+        one_page_new("Sofosbuvir/daclatasvir")
+        one_page_new("Lamivudine/tenofovir")
+        one_page_new("WHO AWaRe")
     else:
         main()
