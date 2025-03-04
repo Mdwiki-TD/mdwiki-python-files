@@ -5,10 +5,7 @@
 python3 core8/pwb.py after_translate/bots/fixcat
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 import tqdm
 import sys
 from pymysql.converters import escape_string

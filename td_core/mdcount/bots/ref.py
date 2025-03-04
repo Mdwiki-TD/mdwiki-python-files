@@ -5,10 +5,7 @@
 python pwb.py mdwiki/public_html/Translation_Dashboard/ref test
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 import re
 import sys
 

@@ -23,7 +23,7 @@ qids = sql_for_mdwiki.get_all_qids()
 # ---
 qids_already = {q: title for title, q in qids.items() if q != ""}
 # ---
-noqids = [title for title, q in qids.items() if q == "" and valid_title(title) and not title.lower().startswith("video:")]
+noqids = [title for title, q in qids.items() if q == "" and valid_title(title)]  # and not title.lower().startswith("video:")
 
 
 def get_qids(noqids_list):

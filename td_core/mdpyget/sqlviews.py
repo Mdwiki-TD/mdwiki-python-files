@@ -5,10 +5,7 @@ page views bot
 python3 core8/pwb.py mdpyget/sqlviews testtest -lang:ar
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 import re
 import sys
 

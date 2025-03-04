@@ -6,6 +6,7 @@ from mdpages import qids_help
 # qids_help.check(work_list, all_pages)
 
 """
+import re
 import os
 import json
 import sys
@@ -101,6 +102,7 @@ def check(work_list, all_pages, ty):
     for i in range(0, len(work_list), 50):
         # ---
         group = work_list[i : i + 50]
+        group = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in group]
         # ---
         params["titles"] = "|".join(group)
         # ---
@@ -134,6 +136,8 @@ def check(work_list, all_pages, ty):
                 qid = tab.get("pageprops", {}).get("wikibase_item", "")
                 # ---
                 title = redirects_x.get(title, title)
+                # ---
+                title = title.replace("Wikipedia:VideoWiki/", "Video:")
                 # ---
                 if "missing" in tab:
                     missing_in_enwiki.append(title)

@@ -5,7 +5,8 @@ import re
 from apis import mdwiki_api
 from mdapi_sql import sql_for_mdwiki
 from newapi import printe
-from apis import cat_cach
+from newapi.mdwiki_page import CatDepth
+from mdpy.bots.check_title import valid_title
 
 link_regex = re.compile(r"\[\[(.*?)\]\]")
 refreg = re.compile(r"(<ref[^>]*>[^<>]+</ref>|<ref[^>]*\/\s*>)")
@@ -14,9 +15,30 @@ reg_full_links = re.compile(r"(\[\[(?:[^][|]+)\|*(?:[^][]*(?:\[\[[^][]+\]\][^][]
 reg_templates = re.compile(r"{{(?:msg:)?(?P<name>[^{\|]+?)" r"(?:\|(?P<params>[^{]+?(?:{[^{]+?}[^{]*?)?)?)?}}")
 
 
+def get_links_from_cats(getcat=""):
+    # ---
+    titles = []
+    # ---
+    cac = sql_for_mdwiki.get_db_categories()
+    # ---
+    for cat, dep in cac.items():
+        # ---
+        if getcat != "" and cat != getcat:
+            continue
+        # ---
+        onlyns = 3000 if cat == "Videowiki scripts" else ""
+        ns = 3000 if cat == "Videowiki scripts" else 0
+        # ---
+        mdwiki_pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=dep, ns=ns, onlyns=onlyns)
+        # ---
+        titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
+    # ---
+    return titles
+
+
 def get_valid_Links(words_tab):
     # ---
-    vav = cat_cach.Cat_Depth("Category:RTT", depth=2, ns="all")
+    vav = get_links_from_cats()
     # ---
     if "newpages" in sys.argv:
         vav2 = vav

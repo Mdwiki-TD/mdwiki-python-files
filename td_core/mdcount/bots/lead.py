@@ -41,6 +41,7 @@ def count_text(text):
     # print(f'count_text: {length}')
     return tem_text, length
 
+
 def count_all(title='', text=''):
     # ---
     if text == '' and title != '':
@@ -57,7 +58,6 @@ def count_all(title='', text=''):
     return leadword, pageword
 
 
-# ---
 if __name__ == '__main__':
     # ---
     x = 'Spondyloperipheral dysplasia'
