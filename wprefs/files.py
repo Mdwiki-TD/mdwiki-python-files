@@ -12,12 +12,9 @@ Dir = Path(__file__).parents[0]
 dir2 = os.getenv("HOME")
 # ---
 if not dir2:
-    dir2 = "I:/mdwiki"
+    dir2 = "I:/mdwiki/mdwiki"
 # ---
 public_html_dir = dir2 + "/public_html"
-# ---
-if dir2 == "I:/mdwiki":
-    public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
 fixwikirefs = dir2 + "/confs/fixwikirefs.json"
 reffixed_file = Dir / "reffixed.csv"
