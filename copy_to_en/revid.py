@@ -17,11 +17,12 @@ Dir = Path(__file__).parent
 dir2 = os.getenv("HOME")
 # ---
 if not dir2:
-    dir2 = "I:/mdwiki"
+    dir2 = "I:/mdwiki/mdwiki"
 # ---
 file = Dir / "all_pages_revids.json"
 # ---
 file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
+file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
 
 
 def dump(revids):
@@ -54,6 +55,13 @@ def dump(revids):
             printe.output(f"<<blue>> dump to {file2}")
     except Exception as e:
         printe.output(f"<<red>> dump to {file2} error: {e}")
+    # ---
+    try:
+        with open(file3, "w", encoding="utf-8") as f:
+            json.dump(revids, f, ensure_ascii=False)
+            printe.output(f"<<blue>> dump to {file3}")
+    except Exception as e:
+        printe.output(f"<<red>> dump to {file3} error: {e}")
 
 
 def Cat_Depth(title, depth=0):

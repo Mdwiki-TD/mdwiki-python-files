@@ -12,10 +12,7 @@ python3 core8/pwb.py mdcount/words less100
 python3 core8/pwb.py mdcount/words sql
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 import os
 import json
 
@@ -24,8 +21,8 @@ import sys
 # ---
 from apis import mdwiki_api
 from newapi import printe
-from mdcount.links import get_valid_Links
-from mdcount import lead
+from mdcount.bots.links import get_valid_Links
+from mdcount.bots import lead
 
 if os.getenv("HOME"):
     public_html_dir = os.getenv("HOME") + "/public_html"
@@ -122,7 +119,6 @@ def mmain():
     log(json_file[1], all_words_n)
 
 
-# ---
 if __name__ == '__main__':
     mmain()
     # ---
@@ -130,4 +126,3 @@ if __name__ == '__main__':
         sys.argv.append('sql')
         # ---
         mmain()
-# ---

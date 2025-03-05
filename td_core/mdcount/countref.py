@@ -19,8 +19,8 @@ from pathlib import Path
 from mdapi_sql import sql_for_mdwiki
 from apis import mdwiki_api
 from newapi import printe
-from newapi.mdwiki_page import CatDepth
-from mdcount.regex_scanner import RegexScanner
+from mdcount.bots.regex_scanner import RegexScanner
+from mdcount.bots.links import get_links_from_cats
 
 # ---
 Dir = str(Path(__file__).parents[0])
@@ -35,14 +35,10 @@ file_lead = f"{dir2}/public_html/td/Tables/jsons/lead_refcount.json"
 # ---
 a = {}
 # ---
-a = {}
-# ---
 with open(file_all, "r", encoding="utf-8") as f:
     a = json.load(f)
 # ---
 all_ref = {x: ref for x, ref in a.items() if ref > 0}
-# ---
-la = {}
 # ---
 la = {}
 # ---
@@ -151,13 +147,17 @@ def from_sql():
 
 def get_links():
     # ---
-    tabe = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=1, ns="0")
-    lale = from_sql() if "sql" in sys.argv else tabe
+    titles = []
+    # ---
+    if "sql" in sys.argv:
+        titles = from_sql()
+    else:
+        titles = get_links_from_cats()
     # ---
     if "newpages" in sys.argv:
-        lale = [x for x in lale if (x not in list_ma[1])]
+        titles = [x for x in titles if (x not in list_ma[1])]
     # ---
-    return lale
+    return titles
 
 
 def mai():

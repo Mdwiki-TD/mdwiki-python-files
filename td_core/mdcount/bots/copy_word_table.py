@@ -5,10 +5,7 @@ python3 core8/pwb.py mdcount/copy_word_table
 
 """
 
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 # ---
 import json
 import sys

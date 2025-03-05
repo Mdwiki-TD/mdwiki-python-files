@@ -8,11 +8,6 @@ python3 core8/pwb.py db_work/check_titles -lang:ur
 python3 core8/pwb.py db_work/check_titles test
 
 """
-#
-# (C) Ibrahem Qasim, 2024
-#
-#
-
 import sys
 import tqdm
 import time
