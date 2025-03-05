@@ -42,9 +42,9 @@ def dump(revids):
     try:
         with open(file3, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
-            printe.output(f"<<blue>> dump to {file2}")
+            printe.output(f"<<blue>> dump to {file3}")
     except Exception as e:
-        printe.output(f"<<red>> dump to {file2} error: {e}")
+        printe.output(f"<<red>> dump to {file3} error: {e}")
 
 
 def Cat_Depth(title, depth=0):
