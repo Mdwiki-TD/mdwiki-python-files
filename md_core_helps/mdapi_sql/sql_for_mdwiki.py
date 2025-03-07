@@ -5,7 +5,7 @@ python3 core8/pwb.py mdpy/sql_for_mdwiki
 # ---
 from mdapi_sql import sql_for_mdwiki
 # sql_for_mdwiki. select_md_sql(query, return_dict=False, values=None)
-# sql_for_mdwiki. mdwiki_sql(query, return_dict=False, values=None)
+# sql_for_mdwiki. mdwiki_sql(query, return_dict=False, values=None, many=False)
 # sql_for_mdwiki. get_all_qids()
 # sql_for_mdwiki. set_title_where_qid(new_title, qid)
 # sql_for_mdwiki. add_titles_to_qids(tab, add_empty_qid=False)
@@ -23,14 +23,14 @@ from mdapi_sql import sql_td_bot
 # result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
-def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
+def mdwiki_sql(query, return_dict=False, values=None, many=False, **kwargs):
     # ---
     if not query:
         print("query == ''")
         return {}
     # ---
     # print('<<yellow>> newsql::')
-    return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
+    return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, many=many)
 
 
 def select_md_sql(query, *args, **kwargs):

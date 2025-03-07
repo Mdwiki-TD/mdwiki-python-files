@@ -15,6 +15,10 @@ dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
 config = configparser.ConfigParser()
 config.read(f"{dir2}/confs/user.ini")
 
+botusername = config["DEFAULT"].get("botusername", "")
+botpassword = config["DEFAULT"].get("botpassword", "")
+
+
 my_username = config["DEFAULT"].get("my_username", "")
 lgpass_enwiki = config["DEFAULT"].get("lgpass_enwiki", "")
 user_agent = config["DEFAULT"].get("user_agent", "")

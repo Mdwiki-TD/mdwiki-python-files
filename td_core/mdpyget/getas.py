@@ -13,8 +13,8 @@ import sys
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from newapi import printe
 from newapi.wiki_page import NEW_API
-
 from mdpyget.pages_list import get_links_from_cats
+from mdpyget.bots.to_sql import to_sql
 
 api_new = NEW_API("en", family="wikipedia")
 
@@ -128,7 +128,29 @@ def mmain():
         work_for_list(group)
     # ---
     log(len_old)
+    # ---
+    start_to_sql(assessments_tab[1])
+
+
+def start_to_sql(tab):
+    tab = [{"title": x, "importance": v} for x, v in tab.items()]
+    # ---
+    to_sql(tab, "assessments", columns=["title", "importance"], title_column="title")
+
+
+def test():
+    # python3 core8/pwb.py mdpyget/getas test
+    # ---
+    assessments_tab[1]["Yemen1"] = "Top"
+    # ---
+    assessments_tab[1]["Sana'a"] = "Mid"
+    assessments_tab[1]["Sanax"] = "Mid"
+    # ---
+    start_to_sql(assessments_tab[1])
 
 
 if __name__ == "__main__":
-    mmain()
+    if "test" in sys.argv:
+        test()
+    else:
+        mmain()
