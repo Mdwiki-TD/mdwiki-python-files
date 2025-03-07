@@ -46,8 +46,8 @@ if "localhost" in sys.argv or dir2 == "I:/mdwiki":
     credentials = {"user": "root", "password": "root11"}
 
 
-def sql_connect_pymysql(query, return_dict=False, values=None):
+def sql_connect_pymysql(query, return_dict=False, values=None, many=False):
     # ---
-    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args, credentials=credentials, conversions=conversions)
+    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args, credentials=credentials, conversions=conversions, many=many)
     # ---
     return results

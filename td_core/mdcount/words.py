@@ -23,38 +23,39 @@ from apis import mdwiki_api
 from newapi import printe
 from mdcount.bots.links import get_valid_Links
 from mdcount.bots import lead
+from mdpyget.bots.to_sql import to_sql
 
 if os.getenv("HOME"):
-    public_html_dir = os.getenv("HOME") + "/public_html"
+    Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
-    public_html_dir = "I:/mdwiki/mdwiki/public_html"
+    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 # ---
 json_file = {}
 # ---
-words_n = {}
+lead_words = {}
 # ---
 all_words_n = {}
 
 
 def get_word_files():
     # ---
-    global json_file, words_n, all_words_n
+    global json_file, lead_words, all_words_n
     # ---
-    json_file[1] = f'{public_html_dir}/td/Tables/jsons/allwords.json'
+    json_file[1] = f'{Dashboard_path}/Tables/jsons/allwords.json'
     # ---
     all_words_n = {}
     # ---
     with open(json_file[1], "r", encoding="utf-8") as f:
         all_words_n = json.load(f)
     # ---
-    json_file[0] = f'{public_html_dir}/td/Tables/jsons/words.json'
+    json_file[0] = f'{Dashboard_path}/Tables/jsons/words.json'
     # ---
-    words_n = {}
+    lead_words = {}
     # ---
     with open(json_file[0], "r", encoding="utf-8") as f:
-        words_n = json.load(f)
+        lead_words = json.load(f)
     # ---
-    printe.output(f'len of words_n:{len(words_n.keys())}')
+    printe.output(f'len of lead_words:{len(lead_words.keys())}')
 
     # ---
 
@@ -82,7 +83,7 @@ def mmain():
     n = 0
     limit = 100 if 'limit100' in sys.argv else 10000
     # ---
-    vaild_links = get_valid_Links(words_n)
+    vaild_links = get_valid_Links(lead_words)
     # ---
     kkk = {1: vaild_links}
     # ---
@@ -108,18 +109,42 @@ def mmain():
         printe.output(f'\t\t leadword:{leadword}')
         # ---
         all_words_n[x] = pageword
-        words_n[x] = leadword
+        lead_words[x] = leadword
         # ---
         if n == 10 or str(n).endswith('00'):
-            log(json_file[0], words_n)
+            log(json_file[0], lead_words)
             log(json_file[1], all_words_n)
-        # ---
     # ---
-    log(json_file[0], words_n)
+    log(json_file[0], lead_words)
     log(json_file[1], all_words_n)
+    # ---
+    start_to_sql()
 
 
-if __name__ == '__main__':
+def start_to_sql():
+    data2 = [{"w_title": x, "w_lead_words": v, "w_all_words": all_words_n.get(x, 0)} for x, v in lead_words.items()]
+    # ---
+    to_sql(data2, "words", ["w_title", "w_lead_words", "w_all_words"], title_column="w_title")
+
+
+def test():
+    # python3 core8/pwb.py mdcount/words test
+    # ---
+    lead_words["Yemenz"] = 50
+    all_words_n["Yemen1"] = 50
+    # ---
+    lead_words["Sana'xa"] = 500
+    all_words_n["Sana'x1a"] = 100
+    # ---
+    start_to_sql()
+
+
+if __name__ == "__main__":
+    # ---
+    if "test" in sys.argv:
+        test()
+        exit()
+    # ---
     mmain()
     # ---
     if "sql" not in sys.argv:

@@ -11,6 +11,7 @@ python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
 
 """
 
+import os
 import json
 import sys
 from pathlib import Path
@@ -21,17 +22,19 @@ from apis import mdwiki_api
 from newapi import printe
 from mdcount.bots.regex_scanner import RegexScanner
 from mdcount.bots.links import get_links_from_cats
+from mdpyget.bots.to_sql import to_sql
 
-# ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+if os.getenv("HOME"):
+    Dashboard_path = os.getenv("HOME") + "/public_html/td"
+else:
+    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 # ---
 all_ref = {}
 lead_ref = {}
 vaild_links = {1: []}
 # ---
-file_all = f"{dir2}/public_html/td/Tables/jsons/all_refcount.json"
-file_lead = f"{dir2}/public_html/td/Tables/jsons/lead_refcount.json"
+file_all = f"{Dashboard_path}/Tables/jsons/all_refcount.json"
+file_lead = f"{Dashboard_path}/Tables/jsons/lead_refcount.json"
 # ---
 a = {}
 # ---
@@ -195,7 +198,30 @@ def mai():
     # ---
     logaa(file_lead, lead_ref)
     logaa(file_all, all_ref)
+    # ---
+    start_to_sql()
+
+
+def start_to_sql():
+    data2 = [{"r_title": x, "r_lead_refs": v, "r_all_refs": all_ref.get(x, 0)} for x, v in lead_ref.items()]
+    # ---
+    to_sql(data2, "refs_counts", ["r_title", "r_lead_refs", "r_all_refs"], title_column="r_title")
+
+
+def test():
+    # python3 core8/pwb.py mdcount/countref test
+    # ---
+    lead_ref["Yemen1"] = 50
+    all_ref["Yemen1"] = 50
+    # ---
+    lead_ref["Sana'a"] = 500
+    all_ref["Sana'a"] = 100
+    # ---
+    start_to_sql()
 
 
 if __name__ == "__main__":
-    mai()
+    if "test" in sys.argv:
+        test()
+    else:
+        mai()

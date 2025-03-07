@@ -23,8 +23,12 @@ sys.path.append(Dir)
 from wprefs.helps import print_s
 from wprefs import user_account_enwiki
 
-my_username = user_account_enwiki.my_username
-lgpass_enwiki = user_account_enwiki.lgpass_enwiki
+# my_username = user_account_enwiki.my_username
+# lgpass_enwiki = user_account_enwiki.lgpass_enwiki
+# ---
+botusername = user_account_enwiki.botusername
+botpassword = user_account_enwiki.botpassword
+# ---
 user_agent = user_account_enwiki.user_agent
 # ---
 Dir = str(Path(__file__).parents[0])
@@ -96,8 +100,8 @@ def log(lang):
             data={
                 "format": "json",
                 "action": "login",
-                "lgname": my_username,
-                "lgpassword": lgpass_enwiki,
+                "lgname": botusername,
+                "lgpassword": botpassword,
                 "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
             },
             timeout=10,
