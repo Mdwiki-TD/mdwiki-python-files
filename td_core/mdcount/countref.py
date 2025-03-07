@@ -86,7 +86,7 @@ def get_short_refs(text):
     # ---
     ref_list = scanner.attr_scan("name")
     # ---
-    printe.output(f"len of get_short_refs : {len(ref_list)}")
+    # printe.output(f"len of get_short_refs : {len(ref_list)}")
     # ---
     return ref_list
 

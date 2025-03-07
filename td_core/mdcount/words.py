@@ -2,7 +2,7 @@
 """
 
 إنشاء قائمة بعدد الكلمات
-
+python3 core8/pwb.py mdcount/words newpages
 python3 core8/pwb.py mdcount/words
 python3 core8/pwb.py mdcount/words listnew
 
