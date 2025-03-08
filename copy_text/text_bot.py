@@ -12,15 +12,14 @@ from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdapi_sql import sql_for_mdwiki
 
-# ---
 User_tables = {
     "username": medwiki_account.username,
     "password": medwiki_account.password,
 }
-# ---
+
 catdepth_new.User_tables["toolforge"] = User_tables
 super_page.User_tables["toolforge"] = User_tables
-# ---
+
 CatDepth = catdepth_new.subcatquery
 MainPage = super_page.MainPage
 
