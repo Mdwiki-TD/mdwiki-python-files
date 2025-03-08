@@ -4,6 +4,7 @@
 إنشاء قائمة بالاهمية من الانجليزية
 
 python3 core8/pwb.py mdpyget/getas newpages
+python3 core8/pwb.py mdpyget/getas video
 
 """
 import re
@@ -74,7 +75,7 @@ def work_for_list(listn):
         # من الإنجليزية إلى ميد
         title = enwiki_to_mdwiki.get(title, title)
         # ---
-        lenn += 1
+        lenn += 1 if importance else 0
         # ---
         assessments_tab[1][title] = importance
     # ---
