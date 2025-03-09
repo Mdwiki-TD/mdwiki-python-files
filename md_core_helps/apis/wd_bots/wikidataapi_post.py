@@ -16,6 +16,10 @@ user_agent = user_account_new.user_agent
 username = user_account_new.bot_username  # user_account_new.my_username
 password = user_account_new.bot_password  # user_account_new.mdwiki_pass
 
+if "workhimo" in sys.argv:
+    username = user_account_new.my_username
+    password = user_account_new.lgpass_enwiki
+
 SS = {"ss": requests.Session(), "r3_token": ""}
 
 login_not_done = {1: True}
