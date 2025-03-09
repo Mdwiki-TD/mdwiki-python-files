@@ -23,8 +23,6 @@ sys.path.append(Dir)
 from wprefs.helps import print_s
 from wprefs import user_account_enwiki
 
-# my_username = user_account_enwiki.my_username
-# lgpass_enwiki = user_account_enwiki.lgpass_enwiki
 # ---
 botusername = user_account_enwiki.botusername
 botpassword = user_account_enwiki.botpassword
