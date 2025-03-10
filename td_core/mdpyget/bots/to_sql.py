@@ -7,12 +7,13 @@ from mdpyget.bots.to_sql import to_sql
 
 """
 # ---
-from pymysql.converters import escape_string
+import tqdm
+# from pymysql.converters import escape_string
 # ---
 from mdapi_sql import sql_for_mdwiki
 
 
-def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title"):
+def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
     # ---
     done = 0
     # ---
@@ -20,7 +21,8 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
     co_line = ", ".join(columns)
     values_line = ", ".join(["%s"] * len(columns))
     # ---
-    for i in range(0, len(list_of_lines), lento):
+    # ---
+    for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
         tab = list_of_lines[i: i + lento]
         # ---
@@ -47,6 +49,12 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
             values ({values_line})
             """
         # ---
+        if IGNORE:
+            qua = f"""
+                INSERT IGNORE INTO {table_name} ({co_line})
+                values ({values_line})
+                """
+        # ---
         # print(qua)
         # print(values)
         # ---
@@ -64,7 +72,7 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
     if title_column in columns:
         columns.remove(title_column)
     # ---
-    for i in range(0, len(list_of_lines), lento):
+    for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
         tab = list_of_lines[i: i + lento]
         # ---

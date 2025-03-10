@@ -7,6 +7,7 @@ from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 import sys
 import pywikibot
 import requests
+from urllib.parse import urlencode
 
 from newapi.except_err import exception_err
 from newapi import printe
@@ -38,6 +39,11 @@ def do_request(params=None, method="POST"):
         args["data"] = params
     else:
         args["params"] = params
+    # ---
+    unurl = f"{url}?{urlencode(params)}"
+    # ---
+    if "printurl" in sys.argv:
+        printe.output(f"do_request:\t\t{unurl}")
     # ---
     try:
         r4 = SS["ss"].request(method, url, **args)
