@@ -113,7 +113,7 @@ def wbgetentities(qs_list):
     return all_entities
 
 
-def get_qids_sitelinks(qs_list):
+def get_qids_sitelinks(qs_list, qids_to_mdtitle={}):
     # ---
     all_entities = wbgetentities(qs_list)
     # ---
@@ -134,7 +134,7 @@ def get_qids_sitelinks(qs_list):
         qid = tab.get("id", "")
         # ---
         if qid != "" and qid not in table_d["qids"]:
-            table_d["qids"][qid] = {"mdtitle": "", "sitelinks": {}}
+            table_d["qids"][qid] = {"mdtitle": qids_to_mdtitle.get(qid, ""), "sitelinks": {}}
         # ---
         sitelinks = {}
         # ---
@@ -165,13 +165,15 @@ def main():
     # ---
     printe.output("<<green>> main")
     # ---
-    qids = sql_for_mdwiki.get_all_qids()
+    qids_tab = sql_for_mdwiki.get_all_qids()
     # ---
-    qids = list(qids.values())
+    qids = list(qids_tab.values())
     # ---
     printe.output(f"<<green>> len of qids: {len(qids)}.")
     # ---
-    lists = get_qids_sitelinks(qids)
+    qids_to_mdtitle = {qid: title for title, qid in qids_tab.items()}
+    # ---
+    lists = get_qids_sitelinks(qids, qids_to_mdtitle)
     # ---
     if lists:
         dump_sitelinks(lists)
