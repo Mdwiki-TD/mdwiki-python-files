@@ -13,7 +13,7 @@ from pymysql.converters import escape_string
 from mdapi_sql import sql_for_mdwiki
 
 
-def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title"):
+def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
     # ---
     done = 0
     # ---
@@ -49,6 +49,12 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
             INSERT INTO {table_name} ({co_line})
             values ({values_line})
             """
+        # ---
+        if IGNORE:
+            qua = f"""
+                INSERT IGNORE INTO {table_name} ({co_line})
+                values ({values_line})
+                """
         # ---
         # print(qua)
         # print(values)

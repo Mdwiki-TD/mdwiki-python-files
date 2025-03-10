@@ -49,6 +49,8 @@ def wbgetentities(qs_list):
     # ---
     range_list = range(0, len(qs_list), 100)
     # ---
+    printe.output(f"<<green>> get sitelinks for:{len(all_entities)}:")
+    # ---
     for i in tqdm.tqdm(range_list):
         # ---
         qids = qs_list[i : i + 100]
@@ -141,7 +143,7 @@ def start_to_sql(data):
         # ---
         new_data = [{"qid": qid, "code": code} for code in codes]
         # ---
-        insert_dict(new_data, "all_qidsexists", ["qid", "code"], lento=1000, title_column="qid")
+        insert_dict(new_data, "all_qidsexists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
 
 
 def main():
