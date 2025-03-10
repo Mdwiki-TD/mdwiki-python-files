@@ -8,7 +8,7 @@ from mdpyget.bots.to_sql import to_sql
 """
 # ---
 import tqdm
-from pymysql.converters import escape_string
+# from pymysql.converters import escape_string
 # ---
 from mdapi_sql import sql_for_mdwiki
 
@@ -21,9 +21,8 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
     co_line = ", ".join(columns)
     values_line = ", ".join(["%s"] * len(columns))
     # ---
-    ranges = range(0, len(list_of_lines), lento)
     # ---
-    for i in tqdm.tqdm(ranges):
+    for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
         tab = list_of_lines[i: i + lento]
         # ---
@@ -73,9 +72,7 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
     if title_column in columns:
         columns.remove(title_column)
     # ---
-    ranges = range(0, len(list_of_lines), lento)
-    # ---
-    for i in tqdm.tqdm(ranges):
+    for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
         tab = list_of_lines[i: i + lento]
         # ---
