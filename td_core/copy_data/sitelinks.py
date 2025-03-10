@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #   himo
 """
+
 python3 core8/pwb.py copy_data/sitelinks
 
 """
@@ -25,6 +26,41 @@ qua_1 = """
 INSERT IGNORE INTO all_qids (qid)
 SELECT qid FROM qids where qid != "" and qid is not null
 """
+
+que = '''select DISTINCT qid, code from all_qidsexists;'''
+# ---
+in_sql = {}
+# ---
+for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+    qid = q["qid"]
+    if qid in in_sql:
+        in_sql[qid].append(q["code"])
+    else:
+        in_sql[qid] = [q["code"]]
+
+
+def start_to_sql(data):
+    # ---
+    data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
+    # ---
+    print(data)
+    # ---
+    qids_list = list(data.keys())
+    # ---
+    if qids_list:
+        qua = """
+            INSERT IGNORE INTO all_qids (qid)
+            values (%s)"""
+        # ---
+        sql_for_mdwiki.mdwiki_sql(qua, values=qids_list, many=True)
+    # ---
+    for qid, codes in data.items():
+        # ---
+        new_data = [{"qid": qid, "code": code} for code in codes if code not in in_sql.get(qid, [])]
+        # ---
+        printe.output(f"<<yellow>> all codes: {len(codes)}, new_data: {len(new_data)}.")
+        # ---
+        insert_dict(new_data, "all_qidsexists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
 
 
 def dump_sitelinks(lists):
@@ -122,28 +158,6 @@ def get_qids_sitelinks(qs_list):
     table_d["heads"] = list(set(heads))
     # ---
     return table_d
-
-
-def start_to_sql(data):
-    # ---
-    data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
-    # ---
-    print(data)
-    # ---
-    qids_list = list(data.keys())
-    # ---
-    if qids_list:
-        qua = """
-            INSERT IGNORE INTO all_qids (qid)
-            values (%s)"""
-        # ---
-        sql_for_mdwiki.mdwiki_sql(qua, values=qids_list, many=True)
-    # ---
-    for qid, codes in data.items():
-        # ---
-        new_data = [{"qid": qid, "code": code} for code in codes]
-        # ---
-        insert_dict(new_data, "all_qidsexists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
 
 
 def main():
