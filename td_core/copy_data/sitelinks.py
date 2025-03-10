@@ -60,7 +60,8 @@ def start_to_sql(data):
         # ---
         printe.output(f"<<yellow>> all codes: {len(codes)}, new_data: {len(new_data)}.")
         # ---
-        insert_dict(new_data, "all_qidsexists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
+        if new_data:
+            insert_dict(new_data, "all_qidsexists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
 
 
 def dump_sitelinks(lists):
