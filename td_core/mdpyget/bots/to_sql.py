@@ -15,6 +15,8 @@ from mdapi_sql import sql_for_mdwiki
 
 def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
     # ---
+    print(f"insert_dict(): list_of_lines: {len(list_of_lines)}")
+    # ---
     done = 0
     # ---
     # co_line = "title, importance"
@@ -67,6 +69,8 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
 
 def update_table(list_of_lines, table_name, columns, lento=10, title_column="title"):
     # ---
+    print(f"update_table(): list_of_lines: {len(list_of_lines)}")
+    # ---
     done = 0
     # ---
     if title_column in columns:
@@ -85,6 +89,33 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
             qua = f""" update {table_name} set {set_line} where {title_column} = %s """
             # ---
             values.append(vav[title_column])
+            # ---
+            sql_for_mdwiki.mdwiki_sql(qua, values=values)
+        # ---
+        done += len(tab)
+        # ---
+        print(f"to_sql.py update_table() {done} done, from {len(list_of_lines)}.")
+
+
+def update_table_2(list_of_lines, table_name, columns_to_set=[], lento=10, columns_where=[]):
+    # ---
+    print(f"update_table_2(): list_of_lines: {len(list_of_lines)}")
+    # ---
+    done = 0
+    # ---
+    for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
+        # ---
+        tab = list_of_lines[i: i + lento]
+        # ---
+        for vav in tab:
+            # ---
+            values = [vav.get(x, "") for x in columns_to_set]
+            # ---
+            set_line = ", ".join([f"{x} = %s" for x in columns_to_set])
+            # ---
+            qua = f""" update {table_name} set {set_line} where """ + " and ".join([f"{x} = %s" for x in columns_where])
+            # ---
+            values.extend([vav[x] for x in columns_where])
             # ---
             sql_for_mdwiki.mdwiki_sql(qua, values=values)
         # ---
