@@ -7,12 +7,15 @@ from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
 dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
-
+# --
 dir3 = dir2 + "/pybot"
 sys.path.append(dir3)
+sys.path.append(dir2 + "/openssl/bin")
 # --
-if "dir3" in sys.argv:
-    print("dir3: ", dir3)
+public_html_dir = dir2 + "/public_html"
+# --
+if public_html_dir.find("I:/") != -1:
+    public_html_dir = dir2 + "/mdwiki/public_html"
 # --
 from newupdater.helps import ec_de_code
 from newupdater.MedWorkNew import work_on_text
@@ -37,13 +40,13 @@ def save_cash(title, new_text):
     title2 = title
     title2 = title2.replace(":", "-").replace("/", "-").replace(" ", "_")
     # ---
-    filename = f"{dir2}/public_html/updatercash/{title2}_1.txt"
+    filename = f"{public_html_dir}/updatercash/{title2}_1.txt"
     # ---
     try:
         with open(filename, "w", encoding="utf-8") as f:
             f.write(new_text)
     except Exception:
-        filename = f"{dir2}/public_html/updatercash/title2.txt"
+        filename = f"{public_html_dir}/updatercash/title2.txt"
         # ---
         with open(filename, "w", encoding="utf-8") as f:
             f.write(new_text)
