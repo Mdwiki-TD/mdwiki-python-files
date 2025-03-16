@@ -30,10 +30,10 @@ def dodo_sql():
         if arg in ["lang", "-lang"]:
             lang_o = value
     # ---
-    que = ''' select title,user,lang,target from pages #where target = ""'''
+    que = ''' select title,user,lang,target from pages #where (target = "" OR target IS NULL)'''
     # ---
     if lang_o != "":
-        que += f'\nwhere lang = "{lang_o}"'
+        que += f'\n where lang = "{lang_o}"'
     # ---
     que += "\n;"
     # ---
