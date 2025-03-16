@@ -6,6 +6,7 @@ python3 core8/pwb.py mdpy/sql_for_mdwiki
 from mdapi_sql import sql_for_mdwiki
 # sql_for_mdwiki. select_md_sql(query, return_dict=False, values=None)
 # sql_for_mdwiki. mdwiki_sql(query, return_dict=False, values=None, many=False)
+# sql_for_mdwiki. mdwiki_sql_dict(query, values=None, many=False)
 # sql_for_mdwiki. get_all_qids()
 # sql_for_mdwiki. set_title_where_qid(new_title, qid)
 # sql_for_mdwiki. add_titles_to_qids(tab, add_empty_qid=False)
@@ -31,6 +32,16 @@ def mdwiki_sql(query, return_dict=False, values=None, many=False, **kwargs):
     # ---
     # print('<<yellow>> newsql::')
     return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, many=many)
+
+
+def mdwiki_sql_dict(query, values=None, many=False, **kwargs):
+    # ---
+    if not query:
+        print("query == ''")
+        return {}
+    # ---
+    # print('<<yellow>> newsql::')
+    return sql_td_bot.sql_connect_pymysql(query, return_dict=True, values=values, many=many)
 
 
 def select_md_sql(query, *args, **kwargs):
@@ -162,6 +173,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     printe.output(f"<<yellow>> qids_set_title_where_title_qid() {new_title=}, {qid=}, {old_title=}")
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
+
 
 def add_titles_to_qids(tab0, add_empty_qid=False):
     # ---

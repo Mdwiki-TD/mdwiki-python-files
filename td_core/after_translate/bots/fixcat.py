@@ -58,7 +58,7 @@ def get_pages_with_no_cat_old():
     # ---
     add_cat = {}
     # ---
-    ioi = sql_for_mdwiki.select_md_sql("select title from pages where cat = '';", return_dict=True)
+    ioi = sql_for_mdwiki.select_md_sql("select title from pages where (cat = '' OR cat IS NULL);", return_dict=True)
     # ---
     for tab in ioi:
         title = tab["title"]
@@ -120,7 +120,7 @@ def get_pages_with_no_cat():
             # ---
             printe.output(qu)
     # ---
-    qua2 = "update pages set cat = 'RTT' where cat = ''; "
+    qua2 = "update pages set cat = 'RTT' where (cat = '' OR cat IS NULL); "
     # ---
     sql_for_mdwiki.mdwiki_sql(qua2, update=True)
 
