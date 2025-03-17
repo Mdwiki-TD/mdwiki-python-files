@@ -230,6 +230,9 @@ def Claim_API_str(qid, property, string):
     # ---
     params = {"action": "wbcreateclaim", "entity": qid, "snaktype": "value", "property": property, "value": json.JSONEncoder().encode(string)}
     # ---
+    if property == "P11143":
+        params["summary"] = "([[:toollabs:editgroups/b/CB/p11143000|details]])"
+    # ---
     req = post_it(params=params, token=True)
     # ---
     if not req:
