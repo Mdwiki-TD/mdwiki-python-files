@@ -99,6 +99,8 @@ def get_qids_sitelinks(qidslist):
         # ---
         qids = qs_list[i : i + 100]
         # ---
+        qids = [x for x in qids if x]
+        # ---
         params_wd["ids"] = "|".join(qids)
         # ---
         printe.output(f"<<green>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.")

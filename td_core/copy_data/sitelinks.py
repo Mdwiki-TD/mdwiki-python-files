@@ -96,6 +96,8 @@ def wbgetentities(qs_list):
         # ---
         qids = qs_list[i : i + 100]
         # ---
+        qids = [ x for x in qids if x]
+        # ---
         params_wd["ids"] = "|".join(qids)
         # ---
         # printe.output(f"done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
