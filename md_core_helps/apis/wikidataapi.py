@@ -19,6 +19,7 @@ from apis.wd_bots import wd_rest_new
 # from apis.wd_bots.wikidataapi_post import post_it
 from apis.wd_bots.wd_post_new import post_it
 
+
 def post(params, token=True):
     return post_it(params=params, token=token)
 
@@ -130,14 +131,25 @@ def get_redirects(liste):
     # ---
     redirects = {}
     # ---
+    # print(liste)
+    # ---
     for i in range(0, len(liste), 50):
         # ---
-        # group = dict(list(liste.items())[i:i+50])
-        group = liste[i : i + 50]
+        group = []
+        # ---
+        if isinstance(liste, list):
+            group = liste[i : i + 50]
+        elif isinstance(liste, dict):
+            group = list(liste.keys())[i:i+50]
+        # ---
+        group = [x for x in group if x]
+        # ---
+        titles_line = "|".join(group)
+        # ---
         params = {
             "action": "query",
             "format": "json",
-            "titles": "|".join(group),
+            "titles": titles_line,
             "redirects": 1,
             "utf8": 1,
         }

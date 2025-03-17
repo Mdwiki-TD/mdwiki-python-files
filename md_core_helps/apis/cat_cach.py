@@ -52,7 +52,7 @@ def from_cache():
     with open(file, "w", encoding="utf-8") as f:
         f.write(json.dumps(all_pages))
     # ---
-    return {}
+    return all_pages
 
 
 def dump_to_cache(cat, data):
