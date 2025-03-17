@@ -21,7 +21,7 @@ from priorviews.lists import creators
 from priorviews.lists.creators_to_translators import creators_as_translators
 from priorviews.lists import translators
 from priorviews.lists import words
-from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import md_MainPage
 
 # ---
 Dir = Path(__file__).parent

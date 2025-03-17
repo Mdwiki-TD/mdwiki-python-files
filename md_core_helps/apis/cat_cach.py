@@ -6,7 +6,6 @@ python3 core8/pwb.py apis/cat_cach
 from apis import cat_cach
 from apis/cat_cach import Cat_Depth
 all_pages = cat_cach.from_cache()
-all_pages = cat_cach.from_cache()
 
 """
 import time

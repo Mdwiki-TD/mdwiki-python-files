@@ -15,7 +15,7 @@ import time
 # ---
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
-from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import md_MainPage
 from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage
 
 skip_by_lang = {

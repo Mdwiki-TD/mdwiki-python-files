@@ -16,7 +16,7 @@ import sys
 from apis import mdwiki_api
 from newapi import printe
 from mdpy.bots import py_tools
-from newapi.mdwiki_page import MainPage as md_MainPage, NEW_API
+from newapi.mdwiki_page import md_MainPage, NEW_API
 
 NewList = {}
 

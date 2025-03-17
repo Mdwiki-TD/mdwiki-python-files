@@ -10,7 +10,7 @@ tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 
 # import wikitextparser as wtp
 from newapi import printe
-from newapi.mdwiki_page import MainPage as md_MainPage, CatDepth, CatDepthLogin
+from newapi.mdwiki_page import md_MainPage, CatDepth, CatDepthLogin
 
 from fix_cs1.fix_p import fix_it
 
