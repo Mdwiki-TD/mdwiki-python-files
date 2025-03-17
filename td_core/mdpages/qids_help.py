@@ -30,7 +30,7 @@ all_pages = [x for x in all_pages if valid_title(x)]
 # ---
 print("make_cash_to_cats:")
 # ---
-td_list = cat_cach.make_cash_to_cats()
+td_list = cat_cach.from_cache()
 td_list = [x for x in td_list if valid_title(x)]
 # ---
 

@@ -95,7 +95,7 @@ def count_ref_from_text(text, get_short=False):
     # ---
     ref_list = []
     # ---
-    short_list = get_short_refs(text)
+    # short_list = get_short_refs(text)
     # ---
     if get_short:
         short_list = get_short_refs(text)

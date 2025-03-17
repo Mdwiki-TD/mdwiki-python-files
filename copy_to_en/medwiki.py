@@ -257,7 +257,7 @@ def get_all():
     if file.exists() and "nodone" not in sys.argv:
         return json.loads(file.read_text())
     # ----
-    all_pages = cat_cach.make_cash_to_cats()
+    all_pages = cat_cach.from_cache()
     # ---
     with open(file, "w", encoding="utf-8") as f:
         f.write(json.dumps(all_pages))

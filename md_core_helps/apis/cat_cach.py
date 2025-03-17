@@ -5,10 +5,12 @@ python3 core8/pwb.py apis/cat_cach
 
 from apis import cat_cach
 from apis/cat_cach import Cat_Depth
-all_pages = cat_cach.make_cash_to_cats()
+all_pages = cat_cach.from_cache()
+all_pages = cat_cach.from_cache()
 
 """
 import time
+import sys
 import os
 import json
 import stat
@@ -32,6 +34,25 @@ else:
 dump_path = Path(dump_path)
 
 today = datetime.today().strftime("%Y-%m-%d")
+
+
+def from_cache():
+    file = Path(__file__).parent / "all_pages.json"
+    # ----
+    if file.exists() and "nodone" not in sys.argv:
+        data = json.loads(file.read_text())
+        # ---
+        last_modified = datetime.fromtimestamp(os.path.getmtime(file)).strftime("%Y-%m-%d")
+        # ---
+        if last_modified == today:
+            return data
+    # ----
+    all_pages = make_cash_to_cats()
+    # ---
+    with open(file, "w", encoding="utf-8") as f:
+        f.write(json.dumps(all_pages))
+    # ---
+    return {}
 
 
 def dump_to_cache(cat, data):

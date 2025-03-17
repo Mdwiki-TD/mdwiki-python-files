@@ -125,6 +125,9 @@ def Labels_API(Qid, label, lang, remove=False):
 
 def get_redirects(liste):
     # ---
+    if not liste:
+        return {}
+    # ---
     redirects = {}
     # ---
     for i in range(0, len(liste), 50):

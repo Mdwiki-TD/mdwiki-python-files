@@ -16,7 +16,7 @@ from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 
 def main():
     # ---
-    all_pages = cat_cach.make_cash_to_cats()
+    all_pages = cat_cach.from_cache()
     # ---
     for n, x in enumerate(all_pages):
         print(f"{n}/{len(all_pages)} : {x}")
