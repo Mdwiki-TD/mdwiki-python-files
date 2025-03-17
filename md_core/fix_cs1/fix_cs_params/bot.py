@@ -12,7 +12,7 @@ import sys
 import wikitextparser as wtp
 from newapi import printe
 
-from newapi.mdwiki_page import MainPage as md_MainPage, CatDepth, NEW_API
+from newapi.mdwiki_page import md_MainPage, CatDepth, NEW_API
 from fix_cs1.archive_date_maker import make_archive_date, make_archive_date_and_url
 
 api_new = NEW_API("www", family="mdwiki")

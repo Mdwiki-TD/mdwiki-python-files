@@ -15,11 +15,8 @@ import time
 # ---
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
-from newapi.wiki_page import MainPage, NEW_API
-from newapi.mdwiki_page import MainPage as md_MainPage
-
-# api_new  = NEW_API('ar', family='wikipedia')
-# infos  = Find_pages_exists_or_not(titles)
+from newapi.mdwiki_page import md_MainPage
+from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage
 
 skip_by_lang = {
     "ar": ["الأنسولين"],
@@ -50,58 +47,6 @@ def get_langs_tabs():
         langs = {lang_to_get: langs[lang_to_get]}
     # ---
     return langs
-
-
-def get_new_target_log(lang, target):
-    # ---
-    deleted = False
-    # ---
-    done = []
-    # ---
-    to_check = target
-    # ---
-    api_new = NEW_API(lang, family="wikipedia")
-    # ---
-    printe.output(f"get_new_target_log() lang:{lang}, target:{target}")
-    # ---
-    n = 0
-    # ---
-    while to_check != "":
-        # ---
-        n += 1
-        # ---
-        printe.output(f"<<blue>> get_new_target_log({n}) lang:{lang}, target:{target}")
-        # ---
-        logs = api_new.get_logs(to_check)
-        # ---
-        new = ""
-        # ---
-        for log in logs:
-            action = log.get("action", "")
-            title = log.get("title", "")
-            # ---
-            if action == "delete" and title == target:
-                deleted = True
-            # ---
-            new = log.get("params", {}).get("target_title", "")
-            # ---
-            if new:
-                break
-        # ---
-        if new:
-            done.append(to_check)
-            printe.output(f"> title:{to_check} moved to:{new}")
-            to_check = new
-        else:
-            break
-        # ---
-        if to_check in done:
-            printe.output(f"to_check:{to_check} in done")
-            break
-    # ---
-    printe.output(f"get_new_target_log() lang:{lang}, target:{target}, new:{to_check}")
-    # ---
-    return deleted, to_check
 
 
 def add_text(tab):
@@ -144,8 +89,7 @@ def start():
         # ---
         titles = [x["target"] for x in tabs]
         # ---
-        api_new = NEW_API(lang, family="wikipedia")
-        pages = api_new.Find_pages_exists_or_not(titles, get_redirect=True)
+        pages = Find_pages_exists(lang, titles)
         # ---
         missing = [x for x, v in pages.items() if not v]
         redirects = [x for x, v in pages.items() if v == "redirect"]
@@ -175,11 +119,11 @@ def start():
                     deleted_pages.append(iid)
                 # ---
             elif target in redirects:
-                page = MainPage(target, lang, family="wikipedia")
+                page = WikiPage(target, lang, family="wikipedia")
                 new_target = page.get_redirect_target()
             # ---
             if new_target:
-                page2 = MainPage(new_target, lang, family="wikipedia")
+                page2 = WikiPage(new_target, lang, family="wikipedia")
                 # ---
                 if page2.exists():
                     if page2.isRedirect():

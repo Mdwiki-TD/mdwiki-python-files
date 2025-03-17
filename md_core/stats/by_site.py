@@ -13,7 +13,7 @@ from datetime import datetime
 
 # ---
 from newapi import printe
-from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import md_MainPage
 from stats.editors import get_editors, validate_ip
 
 last_year = datetime.now().year - 1

@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 # ---
-from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import md_MainPage
 
 # ---
 section_langs_views = {}

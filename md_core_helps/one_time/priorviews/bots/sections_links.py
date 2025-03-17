@@ -15,7 +15,7 @@ import wikitextparser
 from newapi import printe
 
 # ---
-from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import md_MainPage
 
 # ---
 Dir = Path(__file__).parent

@@ -5,7 +5,7 @@ python3 core8/pwb.py priorviews/langs -lang:ar ask
 
 """
 from priorviews.bots import helps
-from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import md_MainPage
 from pathlib import Path
 
 # ---

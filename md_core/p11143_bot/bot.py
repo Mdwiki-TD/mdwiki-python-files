@@ -14,7 +14,7 @@ from apis import cat_cach
 from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_tab
 from p11143_bot.filter_helps import remove_in_db_elements
 
-TD_list = cat_cach.make_cash_to_cats()
+TD_list = cat_cach.from_cache()
 
 ALL_QIDS = {}
 
@@ -90,6 +90,9 @@ def work_qids(ty):
     in_wd = make_in_wd_tab()
     # ---
     printe.output(f"len of in_wd: {len(in_wd)}")
+    # ---
+    if not in_wd:
+        return
     # ---
     qids = {q: title for title, q in qids_list.items() if q != ""}
     # ---

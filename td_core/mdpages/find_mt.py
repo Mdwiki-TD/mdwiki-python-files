@@ -18,7 +18,7 @@ from apis import cat_cach
 
 def remove_from_others(qids_othrs, qids_td):
     # ---
-    TD_list = cat_cach.make_cash_to_cats()
+    TD_list = cat_cach.from_cache()
     # ---
     in_both = [x for x in qids_othrs if x in qids_td]
     # ---

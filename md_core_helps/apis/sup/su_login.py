@@ -59,7 +59,7 @@ def Get_MwClient_Site(lang, family, username, password):
             return False
 
     if not site.logged_in:
-        printe.output(f"<<yellow>>logging in to ({domain})")
+        printe.output(f"<<yellow>>logging in to ({domain}), username: {username}")
         try:
             site.login(username=username, password=password)
         except mwclient.errors.LoginError as e:

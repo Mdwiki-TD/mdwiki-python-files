@@ -15,7 +15,7 @@ import wikitextparser
 
 
 # ---
-from newapi.mdwiki_page import MainPage as md_MainPage
+from newapi.mdwiki_page import md_MainPage
 from newapi import printe
 from prior import text_bot
 
