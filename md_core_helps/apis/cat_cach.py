@@ -35,16 +35,30 @@ dump_path = Path(dump_path)
 today = datetime.today().strftime("%Y-%m-%d")
 
 
+def dump_it(file, data):
+    try:
+        with open(file, "w", encoding="utf-8") as f:
+            json.dump(data, f)
+        return True
+    except Exception as e:
+        printe.output(f"<<red>> Error: {e}")
+    # ---
+    return False
+
+
 def from_cache():
     file = Path(__file__).parent / "all_pages.json"
     # ----
     if file.exists() and "nodone" not in sys.argv:
-        data = json.loads(file.read_text())
         # ---
         last_modified = datetime.fromtimestamp(os.path.getmtime(file)).strftime("%Y-%m-%d")
         # ---
         if last_modified == today:
-            return data
+            try:
+                data = json.loads(file.read_text())
+                return data
+            except (json.JSONDecodeError, PermissionError) as e:
+                printe.output(f"<<red>> Error reading cache file: {e}")
     # ----
     all_pages = make_cash_to_cats()
     # ---
@@ -71,15 +85,9 @@ def dump_to_cache(cat, data):
         # if last_modified != today:
         printe.output(f"<<purple>> last modified: {last_modified}, today: {today}. ")
     # ---
-    try:
-        with open(filename, "w", encoding="utf-8") as f:
-            json.dump(data, f)
-            len_data = len(data.get("list") or data)
-            printe.output(f"<<green>> {cat}.json is updated ({len_data})")
-        return True
-    except Exception as e:
-        printe.output(f"<<red>> Error: {e}")
-        return False
+    if dump_it(filename, data):
+        len_data = len(data.get("list") or data)
+        printe.output(f"<<green>> {cat}.json is updated ({len_data})")
 
 
 def Cat_Depth(title, depth=0, ns="all", print_s=True):
@@ -129,12 +137,8 @@ def make_cash_to_cats(dump_data=False):
         # ---
         filename = Path(__file__).parent / "all_pages.json"
         # ---
-        try:
-            with open(filename, "w", encoding="utf-8") as f:
-                json.dump(all_pages, f)
-                printe.output(f"<<green>> all_pages.json is updated ({len(all_pages)})")
-        except Exception as e:
-            printe.output(e)
+        if dump_it(filename, all_pages):
+            printe.output(f"<<green>> all_pages.json is updated ({len(all_pages)})")
     # ---
     return all_pages
 
