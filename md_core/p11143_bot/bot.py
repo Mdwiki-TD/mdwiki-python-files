@@ -91,6 +91,9 @@ def work_qids(ty):
     # ---
     printe.output(f"len of in_wd: {len(in_wd)}")
     # ---
+    if not in_wd:
+        return
+    # ---
     qids = {q: title for title, q in qids_list.items() if q != ""}
     # ---
     new_qids = {q: p for q, p in in_wd.items() if q not in qids.keys() and p not in qids.values()}
