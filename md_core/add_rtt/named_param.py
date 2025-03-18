@@ -9,6 +9,7 @@ import wikitextparser as wtp
 
 from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage
+from newupdater.bots.expend import expend_infoboxs_and_fix
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
@@ -71,10 +72,11 @@ def work_page(title):
                 # ---
                 temp.del_arg("eponym")
             # ---
-            temp.set_arg(param, t_value)
+            temp.set_arg(f" {param} ", f" {t_value}\n")
     # ---
     newtext = parsed.string
-
+    newtext = expend_infoboxs_and_fix(newtext)
+    # ---
     save = page.save(newtext=newtext, summary="Added |named after=", nocreate=1, minor="")
 
     return save
