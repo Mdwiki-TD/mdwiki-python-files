@@ -75,6 +75,7 @@ def work_page(title):
 
     if newtext2 != newtext:
         summary += ", (|named after=) to Infobox medical condition"
+        newtext = newtext2
 
     save = page.save(newtext=newtext, summary=summary, nocreate=1, minor="")
 
