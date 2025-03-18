@@ -3,6 +3,9 @@
 
 python3 core8/pwb.py add_rtt/named_param
 
+from add_rtt.named_param import add_param_named
+# add_param_named(text, title)
+
 """
 # ---
 import wikitextparser as wtp
@@ -14,7 +17,8 @@ from newupdater.bots.expend import expend_infoboxs_and_fix
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
 
-target_templates = [
+
+target_infoboxs = [
     "infobox medical condition",
     "infobox medical condition (new)",
 ]
@@ -28,14 +32,7 @@ def gt_arg(temp, name):
     return False
 
 
-def work_page(title):
-
-    page = md_MainPage(title, "www", family="mdwiki")
-
-    if not page.exists():
-        return False
-
-    text = page.get_text()
+def add_param_named(text, title):
 
     parsed = wtp.parse(text)
 
@@ -51,18 +48,18 @@ def work_page(title):
     for temp in parsed.templates:
 
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
-        if name in target_templates:
+        if name in target_infoboxs:
             # ---
             if temp.has_arg(param):
                 value = temp.get_arg(param).value
                 printe.output(f"page {title} already had temp {name} with (|{param}={value}). ")
-                return False
+                return text
             # ---
             for x in false_params:
                 value = gt_arg(temp, x)
                 if value:
                     printe.output(f"page {title} already had temp {name} with (|{x}={value}). ")
-                    return False
+                    return text
             # ---
             t_value = ""
             # ---
@@ -73,18 +70,32 @@ def work_page(title):
                 temp.del_arg("eponym")
             # ---
             temp.set_arg(f" {param} ", f" {t_value}\n")
-    # ---
+
     newtext = parsed.string
     newtext = expend_infoboxs_and_fix(newtext)
-    # ---
-    save = page.save(newtext=newtext, summary="Added |named after=", nocreate=1, minor="")
+
+    return newtext
+
+
+def work_page(title):
+
+    page = md_MainPage(title, "www", family="mdwiki")
+
+    if not page.exists():
+        return False
+
+    text = page.get_text()
+
+    newtext = add_param_named(text, title)
+
+    save = page.save(newtext=newtext, summary="Add (|named after=) to Infobox medical condition", nocreate=1, minor="")
 
     return save
 
 
 def main():
 
-    temps = "|".join(f"Template:{x}" for x in target_templates)
+    temps = "|".join(f"Template:{x}" for x in target_infoboxs)
 
     temp_pages = api_new.Get_template_pages(temps, namespace=0)
 

@@ -2,6 +2,9 @@
 """
 
 python3 core8/pwb.py add_rtt/bot
+from add_rtt.bot import add_rtt_to_text
+# add_rtt_to_text(text, title)
+
 
 """
 # ---
@@ -10,22 +13,18 @@ import wikitextparser as wtp
 from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage, CatDepth
 
+from add_rtt.named_param import add_param_named
+# add_param_named(text, title)
+
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
-target_templates = [
-    "RTT"
-]
 
 
-def work_page(title):
-
-    page = md_MainPage(title, "www", family="mdwiki")
-
-    if not page.exists():
-        return False
-
-    text = page.get_text()
+def add_rtt_to_text(text, title):
+    target_templates = [
+        "RTT"
+    ]
 
     parsed = wtp.parse(text)
 
@@ -34,7 +33,7 @@ def work_page(title):
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
         if name in target_templates:
             printe.output(f"page already tagged.{title=}")
-            return False
+            return text
 
     new_line = "{{RTT}}"
 
@@ -54,7 +53,30 @@ def work_page(title):
     else:
         newtext = f"{newtext}\n{new_line}"
 
-    save = page.save(newtext=newtext, summary="Added {{RTT}}", nocreate=1, minor="")
+    return newtext
+
+
+def work_page(title):
+
+    page = md_MainPage(title, "www", family="mdwiki")
+
+    if not page.exists():
+        return False
+
+    text = page.get_text()
+    summary = ""
+
+    newtext = add_rtt_to_text(text, title)
+
+    if newtext != text:
+        summary = "Added {{RTT}}"
+
+    newtext2 = add_param_named(newtext, title)
+
+    if newtext2 != newtext:
+        summary += ", (|named after=) to Infobox medical condition"
+
+    save = page.save(newtext=newtext, summary=summary, nocreate=1, minor="")
 
     return save
 
