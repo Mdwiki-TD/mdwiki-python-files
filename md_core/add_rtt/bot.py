@@ -6,6 +6,8 @@ from add_rtt.bot import add_rtt_to_text
 # add_rtt_to_text(text, title)
 
 
+tfj run addrtt0 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/bot && $HOME/local/bin/python3 core8/pwb.py add_rtt/named_params"
+
 """
 # ---
 import wikitextparser as wtp
