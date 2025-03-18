@@ -16,7 +16,7 @@ from apis import mdwiki_api
 # ---
 Dir = Path(__file__).parent
 # ---
-from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage
+from newapi.mdwiki_page import NEW_API, md_MainPage
 
 api_new = NEW_API("www", family="mdwiki")
 # login    = api_new.Login_to_wiki()

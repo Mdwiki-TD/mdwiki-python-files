@@ -16,7 +16,7 @@ from mdpy.bots.check_title import valid_title
 from unlinked_wb.hlps import get_pages_in_use, get_qids
 
 from newapi import printe
-from newapi.mdwiki_page import NEW_API, MainPage as md_MainPage
+from newapi.mdwiki_page import NEW_API, md_MainPage
 
 
 api_new = NEW_API("www", family="mdwiki")
