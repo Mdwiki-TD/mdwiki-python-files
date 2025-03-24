@@ -85,6 +85,12 @@ def dump_to_cache(cat, data):
         # if last_modified != today:
         printe.output(f"<<purple>> last modified: {last_modified}, today: {today}. ")
     # ---
+    datalist = data.get("list", [])
+    # ---
+    if not datalist:
+        printe.output(f"<<red>> No data for {cat}")
+        return
+    # ---
     if dump_it(filename, data):
         len_data = len(data.get("list") or data)
         printe.output(f"<<green>> {cat}.json is updated ({len_data})")
