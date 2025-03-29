@@ -6,6 +6,9 @@ python3 core8/pwb.py add_rtt/named_param
 from add_rtt.named_param import add_param_named
 # add_param_named(text, title)
 
+
+tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/named_param"
+
 """
 # ---
 import wikitextparser as wtp
@@ -88,9 +91,8 @@ def work_page(title):
 
     newtext = add_param_named(text, title)
 
-    save = page.save(newtext=newtext, summary="Add (|named after=) to Infobox medical condition", nocreate=1, minor="")
-
-    return save
+    if newtext != text:
+        page.save(newtext=newtext, summary="Add (|named after=) to Infobox medical condition", nocreate=1, minor="")
 
 
 def main():

@@ -6,10 +6,12 @@ from add_rtt.bot import add_rtt_to_text
 # add_rtt_to_text(text, title)
 
 
-tfj run addrtt0 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/bot && $HOME/local/bin/python3 core8/pwb.py add_rtt/named_params"
+tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/bot list"
 
 """
 # ---
+import re
+import sys
 import wikitextparser as wtp
 
 from newapi import printe
@@ -17,7 +19,6 @@ from newapi.mdwiki_page import NEW_API, md_MainPage, CatDepth
 
 from add_rtt.named_param import add_param_named
 # add_param_named(text, title)
-
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
@@ -64,6 +65,10 @@ def work_page(title):
 
     if not page.exists():
         return False
+    ns = page.namespace()
+
+    if ns != 0:
+        return False
 
     text = page.get_text()
     summary = ""
@@ -84,9 +89,53 @@ def work_page(title):
     return save
 
 
+def get_list():
+    mdwiki_pages = []
+    # ---
+    title = "WikiProjectMed:WikiProject Medicine/Popular pages"
+    page = md_MainPage(title, "www", family="mdwiki")
+    # ---
+    if not page.exists():
+        return []
+    # ---
+    text = page.get_text()
+    # ---
+    to_f = "== List =="
+    # ---
+    if text.find(to_f) != -1:
+        text = text.split(to_f)[1]
+        # match all links like [[.*?]]
+        patern = r"\[\[(.*?)\]\]"
+        links = re.findall(patern, text)
+        mdwiki_pages = links
+    # ---
+    mdwiki_pages = list(set(mdwiki_pages))
+    # ---
+    mdwiki_pages = [x.strip() for x in mdwiki_pages if x.find("|") == -1]
+    # ---
+    mdwiki_pages.sort()
+    # ---
+    printe.output(f"len of mdwiki_pages: {len(mdwiki_pages)}")
+    # ---
+    return mdwiki_pages
+
+
+def get_titles():
+    # ---
+    mdwiki_pages = []
+    # ---
+    if "list" in sys.argv:
+        mdwiki_pages = get_list()
+        # ---
+    else:
+        mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
+    # ---
+    return mdwiki_pages
+
+
 def main():
 
-    mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
+    mdwiki_pages = get_titles()
 
     temp_pages = api_new.Get_template_pages("Template:RTT", namespace=0)
 
@@ -102,4 +151,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "get_list" in sys.argv:
+        get_list()
+    else:
+        main()
