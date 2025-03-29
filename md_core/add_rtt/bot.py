@@ -25,6 +25,13 @@ api_new = NEW_API("www", family="mdwiki")
 
 
 def add_rtt_to_text(text, title):
+
+    new_line = "{{RTT}}"
+
+    if text.find(new_line) != -1:
+        printe.output(f"page already tagged.{new_line}")
+        return text
+
     target_templates = [
         "RTT"
     ]
@@ -37,8 +44,6 @@ def add_rtt_to_text(text, title):
         if name in target_templates:
             printe.output(f"page already tagged.{title=}")
             return text
-
-    new_line = "{{RTT}}"
 
     newtext = text
 
