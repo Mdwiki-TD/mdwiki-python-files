@@ -43,7 +43,7 @@ def main():
     printe.output(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
     pages_to_remoe = [x for x in temp_pages if x not in mdwiki_pages]
 
-    printe.output(f"len of pages_to_add: {len(pages_to_remoe)}")
+    printe.output(f"len of pages_to_remoe: {len(pages_to_remoe)}")
 
     for x in pages_to_remoe:
         work_page(x)
