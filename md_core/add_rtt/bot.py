@@ -156,7 +156,4 @@ def main():
 
 
 if __name__ == "__main__":
-    if "get_list" in sys.argv:
-        get_list()
-    else:
-        main()
+    main()
