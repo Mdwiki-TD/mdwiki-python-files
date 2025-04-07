@@ -110,8 +110,8 @@ def get_list():
     if text.find(to_f) != -1:
         text = text.split(to_f)[1]
         # match all links like [[.*?]]
-        patern = r"\[\[(.*?)\]\]"
-        links = re.findall(patern, text)
+        pattern = r"\[\[(.*?)\]\]"
+        links = re.findall(pattern, text)
         mdwiki_pages = links
     # ---
     mdwiki_pages = list(set(mdwiki_pages))

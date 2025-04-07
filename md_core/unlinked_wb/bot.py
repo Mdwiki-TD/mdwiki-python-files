@@ -38,13 +38,13 @@ def add_un_linked_wb(title, qid):
     # templates = page.get_templates()
     # ---
     # get qid
-    patern = r"\{\{#unlinkedwikibase:id=(Q\d+)\}\}"
+    pattern = r"\{\{#unlinkedwikibase:id=(Q\d+)\}\}"
     # ---
     if text.find("{{#unlinkedwikibase:id=") != -1:
         # ---
         qid_in = ""
         # ---
-        m = re.search(patern, text)
+        m = re.search(pattern, text)
         if m:
             qid_in = m.group(1)
         # ---
