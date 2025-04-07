@@ -73,6 +73,11 @@ def add_rtt_to_tables(text, pages):
     # ---
     redirects = find_redirects(pages, text)
     # ---
+
+    def mark_as_reviewed(cell):
+        cell.value = "R"
+        cell.set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
+    # ---
     for table in parsed.tables:
         # ---
         for x in tqdm.tqdm(table.cells()):
@@ -88,19 +93,20 @@ def add_rtt_to_tables(text, pages):
             title2 = redirects.get(title, title)
             # ---
             if r_s == "R":
-                x[1].set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
+                mark_as_reviewed(x[1])
+                # ---
                 already_in.append(title)
                 continue
             # ---
             # print(f"title: ({title}), r_s: ({r_s})")
             # ---
             if title in pages:
-                x[1].value = "R"
-                x[1].set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
+                mark_as_reviewed(x[1])
+                # ---
                 add_done.append(title)
             elif title2 in pages:
-                x[1].value = "R"
-                x[1].set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
+                mark_as_reviewed(x[1])
+                # ---
                 add_from_redirect.append(title)
             else:
                 no_add.append(title)
