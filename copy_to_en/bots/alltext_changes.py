@@ -26,8 +26,8 @@ def change_last_Section(section):
 
     for line in text.split("\n"):
         line2 = line.strip()
-        patern = r"\[\[[a-z-]+:[^\]\n]+\]\]"
-        matches = re.findall(patern, line2)
+        pattern = r"\[\[[a-z-]+:[^\]\n]+\]\]"
+        matches = re.findall(pattern, line2)
         for m in matches:
             text = text.replace(m, "")
 
