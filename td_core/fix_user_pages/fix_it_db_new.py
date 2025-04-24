@@ -18,9 +18,6 @@ def work_in_new_tabs_to_db_new(new_tabs_to_db):
         old = tab["old"]
         new = tab["new"]
         # ---
-        if new.get("id"):
-            del new['id']
-        # ---
         printe.output("work_in_new_tabs_to_db")
         printe.output(f"\t old: user: {old['user']}, target: {old['target']}")
         printe.output(f"\t new: user: {new['user']}, target: {new['target']}")
