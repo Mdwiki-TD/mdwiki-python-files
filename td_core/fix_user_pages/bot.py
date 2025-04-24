@@ -164,7 +164,7 @@ def get_new_user(new_target, lang, user):
             # ---
             if x_user != user:
                 printe.output(f"<<red>> user:{user} new page not new!, created by :{x_user}")
-                return x_user
+                return False
             else:
                 printe.output(f"<<green>> new page created by :{x_user}")
             # ---
