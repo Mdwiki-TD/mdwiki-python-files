@@ -111,35 +111,39 @@ def work_one_tab(tab, missing, redirects):
     return {}
 
 
-def work_in_titles(titles_by_lang):
+def work_in_titles(lang, tabs):
     # ---
-    printe.output(f"<<green>> len of titles_by_lang {len(titles_by_lang)}")
+    printe.output(f"<<green>> lang:{lang}, has {len(tabs)} pages")
     # ---
-    for lang, tabs in titles_by_lang.items():
-        # ---
-        printe.output(f"<<green>> lang:{lang}, has {len(tabs)} pages")
-        # ---
-        titles = [x["target"] for x in tabs]
-        # ---
-        pages = Find_pages_exists(lang, titles)
-        # ---
-        missing = [x for x, v in pages.items() if not v]
-        redirects = [x for x, v in pages.items() if v == "redirect"]
-        # ---
-        printe.output(f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
-        # ---
-        new_tabs = [tab for tab in tabs if tab["target"] in missing or tab["target"] in redirects]
-        # ---
-        if len(titles) != len(new_tabs):
-            printe.output(f"lang:{lang}, has {len(new_tabs)} new tabs")
-        # ---
-        to_set_new = {}
-        # ---
-        for tab in tqdm.tqdm(new_tabs):
-            tat = work_one_tab(tab, missing, redirects)
-            to_set_new.update(tat)
-        # ---
-        return to_set_new
+    titles = [x["target"] for x in tabs]
+    # ---
+    pages = Find_pages_exists(lang, titles)
+    # ---
+    missing = [x for x, v in pages.items() if not v]
+    redirects = [x for x, v in pages.items() if v == "redirect"]
+    # ---
+    printe.output(f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
+    # ---
+    new_tabs = [tab for tab in tabs if tab["target"] in missing or tab["target"] in redirects]
+    # ---
+    if len(titles) != len(new_tabs):
+        printe.output(f"lang:{lang}, has {len(new_tabs)} new tabs")
+    # ---
+    to_set_new = {}
+    # ---
+    for tab in tqdm.tqdm(new_tabs):
+        tat = work_one_tab(tab, missing, redirects)
+        to_set_new.update(tat)
+    # ---
+    toto = []
+    # ---
+    for new_target, tab in to_set_new.items():
+        xx = work_in_to_set(new_target, tab)
+        toto.append(xx)
+    # ---
+    # work_in_new_tabs_to_db(new_tabs_to_db)
+    # ---
+    work_in_new_tabs_to_db_new(toto)
 
 
 def count_users(revisions):
@@ -259,6 +263,8 @@ def work_in_to_set(new_target, tab):
     # ---
     if "test" not in sys.argv:
         sql_for_mdwiki.set_target_where_id(new_target, tab_id)
+    # ---
+    return {"old": tab, "new": new_tab}
 
 
 def start():
@@ -272,8 +278,13 @@ def start():
     # ---
     titles_by_lang = get_titles(lang=lang)
     # ---
-    work_in_titles(titles_by_lang)
+    printe.output(f"<<green>> len of titles_by_lang {len(titles_by_lang)}")
     # ---
+    for lang, tabs in titles_by_lang.items():
+        # ---
+        work_in_titles(lang, tabs)
+    # ---
+    '''
     printe.output(f"len of to_set {len(to_set)}")
     # ---
     for new_target, tab in to_set.items():
@@ -281,7 +292,7 @@ def start():
     # ---
     # work_in_new_tabs_to_db(new_tabs_to_db)
     # ---
-    work_in_new_tabs_to_db_new(new_tabs_to_db)
+    work_in_new_tabs_to_db_new(new_tabs_to_db)'''
 
 
 if __name__ == "__main__":
