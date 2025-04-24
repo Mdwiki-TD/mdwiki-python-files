@@ -69,7 +69,7 @@ def work_one_tab(tab, missing, redirects):
     # ---
     if target in skip_it:
         printe.output(f"<<yellow>> skip {target}")
-        return
+        return {}
     # ---
     new_target = ""
     # ---
@@ -102,9 +102,13 @@ def work_one_tab(tab, missing, redirects):
                 # sql_for_mdwiki.set_target_where_id(new_target, iid)
                 # ---
                 text.append([lang, target, new_target])
+                # ---
+                return {new_target : tab}
         # else:
         #     printe.output(f'<<red>> page "{new_target}" deleted from {lang}')
         #     deleted.append(iid)
+    # ---
+    return {}
 
 
 def work_in_titles(titles_by_lang):
@@ -129,8 +133,13 @@ def work_in_titles(titles_by_lang):
         if len(titles) != len(new_tabs):
             printe.output(f"lang:{lang}, has {len(new_tabs)} new tabs")
         # ---
+        to_set_new = {}
+        # ---
         for tab in tqdm.tqdm(new_tabs):
-            work_one_tab(tab, missing, redirects)
+            tat = work_one_tab(tab, missing, redirects)
+            to_set_new.update(tat)
+        # ---
+        return to_set_new
 
 
 def count_users(revisions):

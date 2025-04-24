@@ -248,7 +248,7 @@ def insert_to_pages_users_to_main(id, target, user, qid):
     # ---
     mdwiki_sql(query, values=params)
     # ---
-    qua = "select DISTINCT * from pages_users_to_main where id = %s and new_target = %s and new_user = %s"
+    qua = "select DISTINCT * from pages_users_to_main where id = %s and new_target = %s and new_user = %s and new_qid = %s"
     # ---
     find_it = mdwiki_sql_dict(qua, values=params)
     # ---
