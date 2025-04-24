@@ -139,7 +139,8 @@ def work_in_titles(lang, tabs):
     # ---
     for new_target, tab in to_set_new.items():
         xx = work_in_to_set(new_target, tab)
-        toto.append(xx)
+        if xx:
+            toto.append(xx)
     # ---
     # work_in_new_tabs_to_db(new_tabs_to_db)
     # ---
@@ -252,7 +253,7 @@ def work_in_to_set(new_target, tab):
     newuser = get_new_user(new_target, new_tab["lang"], user)
     # ---
     if not newuser:
-        return
+        return {}
     # ---
     new_tab["user"] = newuser
     new_tab["qid"] = qids_all.get(new_target)
