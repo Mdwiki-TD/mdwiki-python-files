@@ -12,12 +12,17 @@ from mdapi_sql import sql_for_mdwiki
 # sql_for_mdwiki. add_titles_to_qids(tab, add_empty_qid=False)
 # sql_for_mdwiki. set_target_where_id(new_target, iid)
 # sql_for_mdwiki. set_deleted_where_id(iid)
+# sql_for_mdwiki. insert_to_pages_users_to_main(id, target, user)
+# sql_for_mdwiki. add_new_to_pages(tab)
 
 # pages = sql_for_mdwiki.get_all_pages()
 # cats = sql_for_mdwiki.get_db_categories() # title:depth
+# users = sql_for_mdwiki.get_db_users() # list
 # sql_for_mdwiki.get_all_pages_all_keys(lang=False)
+# get_all_from_table(table_name="titles_infos")
 # ---
 """
+import time
 from newapi import printe
 from mdapi_sql import sql_td_bot
 
@@ -57,6 +62,10 @@ def get_all_pages():
     return [ta["title"] for ta in select_md_sql("select DISTINCT title from pages;", return_dict=True)]
 
 
+def get_all_from_table(table_name=""):
+    return select_md_sql(f"select DISTINCT * from {table_name};", return_dict=True)
+
+
 def get_all_pages_all_keys(lang=False, table="pages"):
     lang_line = ""
     # ---
@@ -72,6 +81,10 @@ def get_all_pages_all_keys(lang=False, table="pages"):
 
 def get_db_categories():
     return {c["category"]: c["depth"] for c in select_md_sql("select category, depth from categories;", return_dict=True)}
+
+
+def get_db_users():
+    return [c["username"] for c in select_md_sql("select username from users;", return_dict=True)]
 
 
 def get_all_qids():
@@ -224,6 +237,58 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)
         printe.output(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
+
+def insert_to_pages_users_to_main(id, target, user):
+    # ---
+    printe.output(f"<<yellow>> insert_to_pages_users_to_main: {id}, {target=}, {user=}")
+    # ---
+    query = "insert into pages_users_to_main (id, new_target, new_user) select %s, %s, %s"
+    # ---
+    params = [id, target, user]
+    # ---
+    mdwiki_sql(query, values=params)
+    # ---
+    qua = "select DISTINCT * from pages_users_to_main where id = %s and new_target = %s and new_user = %s"
+    # ---
+    find_it = mdwiki_sql_dict(qua, values=params)
+    # ---
+    if find_it:
+        printe.output("<<green>> insert_to_pages_users_to_main TRUE.. ")
+        return True
+    else:
+        printe.output("<<red>> insert_to_pages_users_to_main FALSE.. ")
+        return False
+
+
+def add_new_to_pages(tab):
+    # ---
+    date = time.strftime("%Y-%m-%d")
+    # ---
+    printe.output("______ \\/\\/\\/ _______")
+    # ---
+    insert_qua = """
+        INSERT INTO pages (title, word, translate_type, cat, lang, user, target, date, pupdate, add_date)
+        SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+        WHERE NOT EXISTS ( SELECT 1 FROM pages WHERE title=%s AND lang=%s AND user=%s );
+        """
+    # ---
+    values = [
+        tab.get("title", ""),
+        tab.get("word"),
+        tab.get("translate_type", "lead"),
+        tab.get("cat", "RTT"),
+        tab.get("lang"),
+        tab.get("user"),
+        tab.get("target"),
+        tab.get("date", date),
+        tab.get("pupdate", date),
+        tab.get("add_date", date),
+        tab.get("title"),
+        tab.get("lang"),
+        tab.get("user"),
+    ]
+    # ---
+    mdwiki_sql(insert_qua, values=values)
 
 
 if __name__ == "__main__":
