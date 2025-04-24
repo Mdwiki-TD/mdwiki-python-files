@@ -8,6 +8,7 @@ from db_work.check_titles_helps import WikiPage
 
 db_users = sql_for_mdwiki.get_db_users()
 
+
 def count_users(revisions):
     tab = {}
     # ---
@@ -33,6 +34,15 @@ def get_new_user(new_target, lang, user):
     revisions = page.get_revisions(rvprops=[])
     # ---
     second_revid = 0
+    # ---
+    for x in revisions[:]:
+        x_user = x.get("user")
+        if x_user.lower().endswith("bot"):
+            # ---
+            revisions.remove(x)
+    # ---
+    if not revisions:
+        return ""
     # ---
     for x in revisions:
         x_user = x.get("user")
