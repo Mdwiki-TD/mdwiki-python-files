@@ -28,6 +28,9 @@ new_tabs_to_db = []
 to_set = {}
 text = []
 
+already_in_db = sql_for_mdwiki.get_all_from_table(table_name="pages_users_to_main")
+already_in_db = [x["id"] for x in already_in_db]
+
 
 def get_titles(lang=""):
     # ---
@@ -42,6 +45,10 @@ def get_titles(lang=""):
     pages_users_tab = {}
     # ---
     for tab in pages_users:
+        # ---
+        if tab["id"] in already_in_db:
+            continue
+        # ---
         lang = tab["lang"]
         # ---
         pages_users_tab.setdefault(lang, [])
