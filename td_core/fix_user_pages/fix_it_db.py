@@ -41,7 +41,7 @@ def work_in_new_tabs_to_db(new_tabs_to_db):
             if data:
                 new["word"] = data.get("w_lead_words") if new.get("translate_type") == "lead" else data.get("w_all_words")
         # ---
-        sql_for_mdwiki.add_new_to_pages(tab)
+        sql_for_mdwiki.add_new_to_pages(new)
         # ---
         qua = "select DISTINCT * from pages where target = %s and user = %s and lang = %s"
         params = [new["target"], new["user"], new["lang"]]
