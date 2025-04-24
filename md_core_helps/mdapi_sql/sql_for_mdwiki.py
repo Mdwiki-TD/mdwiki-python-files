@@ -12,7 +12,7 @@ from mdapi_sql import sql_for_mdwiki
 # sql_for_mdwiki. add_titles_to_qids(tab, add_empty_qid=False)
 # sql_for_mdwiki. set_target_where_id(new_target, iid)
 # sql_for_mdwiki. set_deleted_where_id(iid)
-# sql_for_mdwiki. insert_to_pages_users_to_main(id, target, user)
+# sql_for_mdwiki. insert_to_pages_users_to_main(id, target, user, qid)
 # sql_for_mdwiki. add_new_to_pages(tab)
 
 # pages = sql_for_mdwiki.get_all_pages()
@@ -238,13 +238,13 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
         qid_in = ids_in_db.get(t)
         printe.output(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
 
-def insert_to_pages_users_to_main(id, target, user):
+def insert_to_pages_users_to_main(id, target, user, qid):
     # ---
-    printe.output(f"<<yellow>> insert_to_pages_users_to_main: {id}, {target=}, {user=}")
+    printe.output(f"<<yellow>> insert_to_pages_users_to_main: {id}, {target=}, {user=}, {qid=}")
     # ---
-    query = "insert into pages_users_to_main (id, new_target, new_user) select %s, %s, %s"
+    query = "insert into pages_users_to_main (id, new_target, new_user, new_qid) select %s, %s, %s, %s"
     # ---
-    params = [id, target, user]
+    params = [id, target, user, qid]
     # ---
     mdwiki_sql(query, values=params)
     # ---
