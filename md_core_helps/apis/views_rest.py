@@ -103,7 +103,7 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
             # ---
     # ---
     if status_error > 0:
-        printe.output(f"get_views_with_rest_v1: status_error in {status_error} pages.")
+        printe.output(f"get_views_with_rest_v1: status_error in {status_error}/{len(titles)} pages.")
     # ---
     return numbers
 
@@ -157,7 +157,7 @@ def get_views_last_30_days(langcode, titles):
         numbers[page] = sum(x["views"] for x in data.get("items", []))
     # ---
     if status_error > 0:
-        printe.output(f"get_views_last_30_days: status_error in {status_error} pages.")
+        printe.output(f"get_views_last_30_days: status_error in {status_error}/{len(titles)} pages.")
     # ---
     return numbers
 
