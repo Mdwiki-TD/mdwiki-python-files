@@ -36,7 +36,7 @@ def filter_revisions(lang, revisions):
         # ---
         user_data = infos.get(x_user, {})
         # ---
-        if user_data.get("invalid") or user_data.get("missing"):
+        if user_data.get("invalid") or user_data.get("missing") or user_data.get("anon"):
             revisions.remove(x)
             continue
         # ---
