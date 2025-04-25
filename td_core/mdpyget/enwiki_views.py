@@ -87,11 +87,12 @@ def main():
     # ---
     n_views = make_n_views(old_views, RTT, n_views)
     # ---
-    if "nodump" not in sys.argv:
+    if "nodump" in sys.argv:
+        # ---
         with open(enwiki_pageviews, "w", encoding="utf-8") as outfile:
             json.dump(n_views, outfile, sort_keys=True, indent=2)
-        # ---
-        start_to_sql(n_views)
+    # ---
+    start_to_sql(n_views)
 
 
 if __name__ == "__main__":
