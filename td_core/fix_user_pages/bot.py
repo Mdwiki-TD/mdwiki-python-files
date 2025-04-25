@@ -38,9 +38,7 @@ def get_titles(lang=""):
     # ---
     if "test" in sys.argv and not lang:
         return {"ar": [
-            {"id": "3415", "title": "Vulvar pain", "lang": "ar", "user": "Annacecilia2", "pupdate": "2025-04-06", "target": "User:Annacecilia2/ألم الفرج", "add_date": "2025-04-06 15:02:11"},
-            {"id": "3381", "title": "Sympathetic crashing acute pulmonary edema", "lang": "ar", "user": "Annacecilia2", "pupdate": "2025-03-26", "target": "User:Annacecilia2/Sympathetic crashing acute pulmonary edema", "add_date": "2025-03-26 23:43:12"},
-            {"id": "119", "title": "Esophageal balloon tamponade", "lang": "ar", "user": "Annacecilia2", "pupdate": "2025-03-10", "target": "User:Annacecilia2/دك البالون", "add_date": "2025-03-10 00:00:00"}
+            { "id": 5, "title": "Beta blocker toxicity", "word": 0, "translate_type": 0, "cat": 0, "lang": "ar", "user": "Mina karaca", "target": "user:Mina karaca/التسمم بحاصرات بيتا", "date": 0, "pupdate": "2024-02-11", "add_date": "2024-02-15 03:00:00", "deleted": 0 }
         ]}
     # ---
     pages_users = sql_for_mdwiki.get_all_pages_all_keys(lang=lang, table="pages_users")
@@ -96,7 +94,7 @@ def work_one_tab(tab, missing, redirects):
             qids_all.setdefault(lang, {})
             qids_all[lang][new_target] = page2.get_qid()
             # ---
-            tab["new_qid"] = page2.get_qid()
+            tab["qid"] = page2.get_qid()
             # ---
             printe.output(f"<<yellow>> new_target exists, ns: {ns}")
             # ---
@@ -180,8 +178,7 @@ def work_in_to_set(new_target, tab):
     # ---
     new_tabs_to_db.append({"old": tab, "new": new_tab})
     # ---
-    if "test" not in sys.argv:
-        sql_for_mdwiki.set_target_where_id(new_target, tab_id)
+    # if "test" not in sys.argv: sql_for_mdwiki.set_target_where_id(new_target, tab_id)
     # ---
     return {"old": tab, "new": new_tab}
 
