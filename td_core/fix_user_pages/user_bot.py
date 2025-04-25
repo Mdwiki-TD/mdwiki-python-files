@@ -70,6 +70,8 @@ def get_new_user(new_target, lang, user):
     # ---
     second_revid = 0
     # ---
+    false_users = ["Annacecilia2", "Doc James"]
+    # ---
     for x in revisions:
         x_user = x.get("user")
         if "parentid" in x and x["parentid"] == 0:
@@ -77,14 +79,16 @@ def get_new_user(new_target, lang, user):
             second_revid = x["revid"]
             # ---
             if x_user != user:
-                printe.output(f"<<red>> user:{user} new page not new!, created by :{x_user}")
+                printe.output(f"<<red>> user:{user} new page not new!, created by:({x_user}) while user is :({user})")
                 return False
             else:
-                printe.output(f"<<green>> new page created by :{x_user}")
+                printe.output("<<green>> new page created same user:({x_user}).")
+                # ---
+                if user not in false_users:
+                    printe.output(f"<<green>> return x_user :{x_user}")
+                    return x_user
             # ---
             break
-    # ---
-    false_users = ["Annacecilia2", "Doc James"]
     # ---
     if user in false_users:
         # ---
