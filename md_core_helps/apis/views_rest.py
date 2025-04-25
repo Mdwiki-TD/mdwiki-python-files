@@ -25,6 +25,8 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
     numbers = {}
     # _Type = Type if Type in ["daily", "monthly"] else 'monthly'
     # ---
+    status_error = 0
+    # ---
     for numb, page in tqdm.tqdm(enumerate(titles, start=1)):
         # ---
         # print when numb % 100 == 0
@@ -58,8 +60,9 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
             exception_err(e, text=req.text)
         # ---
         if 500 <= st < 600 or st == 404 or not data:
-            printe.output(f"received {st} status from:")
-            printe.output(url)
+            status_error += 1
+            # printe.output(f"received {st} status from:")
+            # printe.output(url)
         # ---
         sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
         # ---
@@ -99,6 +102,9 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
                 printe.output(txt)
             # ---
     # ---
+    if status_error > 0:
+        printe.output(f"get_views_last_30_days: status_error in {status_error} pages.")
+    # ---
     return numbers
 
 
@@ -111,6 +117,8 @@ def get_views_last_30_days(langcode, titles):
     # ---
     endDate = endDate.strftime("%Y%m%d%H")
     startDate = startDate.strftime("%Y%m%d%H")
+    # ---
+    status_error = 0
     # ---
     for numb, page in tqdm.tqdm(enumerate(titles, start=1)):
         # ---
@@ -140,12 +148,16 @@ def get_views_last_30_days(langcode, titles):
             exception_err(e, text=req.text)
         # ---
         if 500 <= st < 600 or st == 404 or not data:
-            printe.output(f"received {st} status from:")
-            printe.output(url)
+            status_error += 1
+            # printe.output(f"received {st} status from:")
+            # printe.output(url)
         # ---
         _sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
         # ---
         numbers[page] = sum(x["views"] for x in data.get("items", []))
+    # ---
+    if status_error > 0:
+        printe.output(f"get_views_last_30_days: status_error in {status_error} pages.")
     # ---
     return numbers
 

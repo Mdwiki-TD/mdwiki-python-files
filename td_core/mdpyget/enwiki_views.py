@@ -46,7 +46,9 @@ def make_n_views(old_views, RTT, n_views):
     # ---
     enviews = views_rest.get_views_last_30_days("en", en_keys)
     # ---
-    printe.output(f"len of enviews: {len(enviews.keys())}")
+    enviews_0 = {k: v for k, v in enviews.items() if v == 0}
+    # ---
+    printe.output(f"<<purple>> len of enviews: {len(enviews.keys())}, len of enviews_0: {len(enviews_0.keys())}")
     # ---
     no_views = 0
     # ---
