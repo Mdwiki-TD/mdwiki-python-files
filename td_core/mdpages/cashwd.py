@@ -1,18 +1,14 @@
 #!/usr/bin/python3
-#   himo
 """
+
 python3 core8/pwb.py mdpages/cashwd
 
 """
 
 import json
 import os
-import traceback
 from datetime import datetime
 from newapi.except_err import exception_err
-import pywikibot
-from pathlib import Path
-
 # ---
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
@@ -258,10 +254,10 @@ def cash_wd():
         printe.output(f"<<blue>> redirects_qids:{old_q.ljust(15)} -> {new_q}.")
     # ---
     for qd in mis_qids:
-        printe.output(f"<<blue>> missing_qids:{qd}.")
+        printe.output(f"<<blue>> missing qids:{qd}.")
     # ---
     printe.output(f" len of redirects_qids:  {len(redirects_qids.keys())}")
-    printe.output(f" len of missing_qids:    {len(mis_qids)}")
+    printe.output(f" len of missing qids:    {len(mis_qids)}")
     # ---
     if missing["all"] > 0:
         with open(f"{Dashboard_path}/Tables/jsons/missing.json", "w", encoding="utf-8") as xx:

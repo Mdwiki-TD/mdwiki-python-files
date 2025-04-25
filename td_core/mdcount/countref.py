@@ -3,6 +3,10 @@
 
 إنشاء قائمة بعدد المراجع
 
+وحفظها في Dashboard_path
++
+قاعدة البيانات
+
 python3 $HOME/pybot/md_core/mdcount/countref.py newpages
 
 python3 core8/pwb.py mdcount/countref newpages

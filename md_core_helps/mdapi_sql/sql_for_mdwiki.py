@@ -35,8 +35,7 @@ def mdwiki_sql(query, return_dict=False, values=None, many=False, **kwargs):
         print("query == ''")
         return {}
     # ---
-    # print('<<yellow>> newsql::')
-    return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, many=many)
+    return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, many=many, **kwargs)
 
 
 def mdwiki_sql_dict(query, values=None, many=False, **kwargs):
@@ -45,8 +44,7 @@ def mdwiki_sql_dict(query, values=None, many=False, **kwargs):
         print("query == ''")
         return {}
     # ---
-    # print('<<yellow>> newsql::')
-    return sql_td_bot.sql_connect_pymysql(query, return_dict=True, values=values, many=many)
+    return sql_td_bot.sql_connect_pymysql(query, return_dict=True, values=values, many=many, **kwargs)
 
 
 def select_md_sql(query, *args, **kwargs):
@@ -62,7 +60,7 @@ def get_all_pages():
     return [ta["title"] for ta in select_md_sql("select DISTINCT title from pages;", return_dict=True)]
 
 
-def get_all_from_table(table_name=""):
+def get_all_from_table(table_name="enwiki_pageviews"):
     return select_md_sql(f"select DISTINCT * from {table_name};", return_dict=True)
 
 
@@ -237,6 +235,7 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)
         printe.output(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
+
 
 def insert_to_pages_users_to_main(id, target, user, qid):
     # ---

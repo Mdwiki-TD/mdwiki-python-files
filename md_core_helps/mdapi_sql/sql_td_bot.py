@@ -3,9 +3,11 @@
 # ---
 from mdapi_sql import sql_td_bot
 # result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
+# result = sql_td_bot.sql_connect_mdwiki_new(query, return_dict=return_dict, values=values)
 # ---
 
 """
+import os
 import sys
 import pymysql
 
@@ -32,7 +34,6 @@ else:
 # ---
 main_args = {
     "host": "tools.db.svc.wikimedia.cloud",
-    # "db": "s54732__mdwiki",
     "db": f"{db_username}__mdwiki",
     "charset": "utf8mb4",
     # 'collation':  'utf8_general_ci',
@@ -40,14 +41,26 @@ main_args = {
     "autocommit": True,
 }
 # ---
-if "localhost" in sys.argv or dir2 == "I:/mdwiki":
+main_args_new = main_args.copy()
+main_args_new["db"] = f"{db_username}__mdwiki_new"
+# ---
+# if "localhost" in sys.argv or dir2 == "I:/mdwiki":
+if "localhost" in sys.argv or not os.getenv("HOME"):
+    credentials = {"user": "root", "password": "root11"}
     main_args["host"] = "127.0.0.1"
     main_args["db"] = "mdwiki"
-    credentials = {"user": "root", "password": "root11"}
+    main_args_new["db"] = "mdwiki_new"
 
 
-def sql_connect_pymysql(query, return_dict=False, values=None, many=False):
+def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):
     # ---
-    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args, credentials=credentials, conversions=conversions, many=many)
+    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args, credentials=credentials, conversions=conversions, many=many, **kwargs)
+    # ---
+    return results
+
+
+def sql_connect_mdwiki_new(query, return_dict=False, values=None, many=False, **kwargs):
+    # ---
+    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args_new, credentials=credentials, conversions=conversions, many=many, **kwargs)
     # ---
     return results

@@ -3,6 +3,10 @@
 
 إنشاء قائمة بالاهمية من الانجليزية
 
+وحفظها في Dashboard_path
++
+قاعدة البيانات
+
 python3 core8/pwb.py mdpyget/getas newpages
 python3 core8/pwb.py mdpyget/getas video
 

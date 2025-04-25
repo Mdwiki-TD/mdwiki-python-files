@@ -4,6 +4,8 @@
 
 python3 core8/pwb.py copy_data/sitelinks
 
+(all_qids_titles|all_qids_exists|all_qids)
+(all_exists|all_articles_titles|all_articles|all_qids_titles|all_qids_exists|all_qids)
 """
 
 import sys
@@ -13,16 +15,17 @@ import os
 from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki_new
 from mdpyget.bots.to_sql import insert_dict
-
+# ---
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
     Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
-
+# ---
 # json_file = f"{Dashboard_path}/Tables/jsons/sitelinks1.json"
 json_file = f"{Dashboard_path}/Tables/jsons/sitelinks.json"
-
+# ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---
 qua_1 = """
@@ -33,9 +36,9 @@ SELECT qid FROM qids where qid != "" and qid is not null
 mis_qids = []
 in_sql = {}
 # ---
-que = '''select DISTINCT qid, code from all_qidsexists;'''
+que = '''select DISTINCT qid, code from all_qids_exists;'''
 # ---
-for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+for q in sql_for_mdwiki_new.select_md_sql(que, return_dict=True):
     qid = q["qid"]
     if qid in in_sql:
         in_sql[qid].append(q["code"])
@@ -58,7 +61,7 @@ def start_to_sql(data):
             INSERT IGNORE INTO all_qids (qid)
             values (%s)"""
         # ---
-        sql_for_mdwiki.mdwiki_sql(qua, values=qids_list, many=True)
+        sql_for_mdwiki_new.mdwiki_sql(qua, values=qids_list, many=True)
     # ---
     for qid, codes in data.items():
         # ---
@@ -67,7 +70,7 @@ def start_to_sql(data):
         if new_data:
             printe.output(f"<<yellow>> all codes: {len(codes)}, new_data: {len(new_data)}.")
             # ---
-            insert_dict(new_data, "all_qidsexists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
+            insert_dict(new_data, "all_qids_exists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
 
 
 def dump_sitelinks(lists):
@@ -96,7 +99,7 @@ def wbgetentities(qs_list):
         # ---
         qids = qs_list[i : i + 100]
         # ---
-        qids = [ x for x in qids if x]
+        qids = [x for x in qids if x]
         # ---
         params_wd["ids"] = "|".join(qids)
         # ---

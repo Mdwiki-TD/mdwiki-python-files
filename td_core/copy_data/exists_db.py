@@ -3,15 +3,16 @@
 
 python3 core8/pwb.py copy_data/exists_db
 
+(all_exists|all_articles_titles|all_articles)
+
 """
 
 import os
 import json
 import tqdm
 import sys
-from pymysql.converters import escape_string
 # ---
-from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki_new
 from mdpyget.bots.to_sql import insert_dict
 from newapi import printe
 
@@ -27,7 +28,7 @@ que = '''select DISTINCT article_id, code from all_exists;'''
 # ---
 in_sql = {}
 # ---
-for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+for q in sql_for_mdwiki_new.select_md_sql(que, return_dict=True):
     title = q["article_id"]
     code = q["code"]
     # ---

@@ -2,6 +2,11 @@
 """
 
 إنشاء قائمة بعدد الكلمات
+
+وحفظها في Dashboard_path
++
+قاعدة البيانات
+
 python3 core8/pwb.py mdcount/words newpages
 python3 core8/pwb.py mdcount/words
 python3 core8/pwb.py mdcount/words listnew
