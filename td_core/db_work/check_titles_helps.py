@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage
+from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage, users_infos
 """
 from newapi import printe
 from newapi.wiki_page import MainPage, NEW_API
@@ -63,6 +63,13 @@ def Find_pages_exists(lang, titles):
     pages = api_newx.Find_pages_exists_or_not(titles, get_redirect=True)
     # ---
     return pages
+
+
+def users_infos(lang, users):
+    api_newx = NEW_API(lang, family="wikipedia")
+    result = api_newx.users_infos(ususers=users)
+    # ---
+    return result
 
 
 def WikiPage(title, lang, family="wikipedia"):
