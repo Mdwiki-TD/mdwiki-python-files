@@ -7,7 +7,7 @@
 2. تحديث بيانات الترجمة في قاعدة البيانات
 
 python3 core8/pwb.py fix_user_pages/bot test -lang:ar
-python3 core8/pwb.py fix_user_pages/bot test
+python3 core8/pwb.py fix_user_pages/bot addall
 
 """
 import sys
