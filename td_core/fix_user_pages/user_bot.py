@@ -4,7 +4,7 @@ from fix_user_pages.user_bot import get_new_user
 """
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
-from db_work.check_titles_helps import WikiPage
+from db_work.check_titles_helps import WikiPage, users_infos
 
 db_users = sql_for_mdwiki.get_db_users()
 
@@ -25,6 +25,36 @@ def count_users(revisions):
     return tab
 
 
+def filter_revisions(lang, revisions):
+    # ---
+    infos = users_infos(lang, [x.get("user") for x in revisions if x.get("user")])
+    # ---
+    infos = {x["name"]: x for x in infos}
+    # ---
+    for x in revisions[:]:
+        x_user = x.get("user", "")
+        # ---
+        user_data = infos.get(x_user, {})
+        # ---
+        if user_data.get("invalid") or user_data.get("missing"):
+            revisions.remove(x)
+            continue
+        # ---
+        groups = user_data.get("groups", [])
+        # ---
+        if "bot" in groups or "temp" in groups:
+            revisions.remove(x)
+            continue
+        # ---
+        if x_user.lower().endswith("bot"):
+            # ---
+            revisions.remove(x)
+            continue
+        # ---
+    # ---
+    return revisions
+
+
 def get_new_user(new_target, lang, user):
     # ---
     page = WikiPage(new_target, lang, family="wikipedia")
@@ -33,16 +63,12 @@ def get_new_user(new_target, lang, user):
     # userinfo    = page.get_userinfo() # "id", "name", "groups"
     revisions = page.get_revisions(rvprops=[])
     # ---
-    second_revid = 0
-    # ---
-    for x in revisions[:]:
-        x_user = x.get("user")
-        if x_user.lower().endswith("bot"):
-            # ---
-            revisions.remove(x)
+    revisions = filter_revisions(lang, revisions)
     # ---
     if not revisions:
         return ""
+    # ---
+    second_revid = 0
     # ---
     for x in revisions:
         x_user = x.get("user")
