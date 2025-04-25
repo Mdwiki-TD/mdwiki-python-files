@@ -93,7 +93,10 @@ def work_one_tab(tab, missing, redirects):
         if page2.exists():
             ns = page2.namespace() or page2.ns
             # ---
-            qids_all[new_target] = page2.get_qid()
+            qids_all.setdefault(lang, {})
+            qids_all[lang][new_target] = page2.get_qid()
+            # ---
+            tab["new_qid"] = page2.get_qid()
             # ---
             printe.output(f"<<yellow>> new_target exists, ns: {ns}")
             # ---
@@ -113,6 +116,8 @@ def work_one_tab(tab, missing, redirects):
 
 
 def work_in_titles(lang, tabs):
+    # ---
+    qids_all.setdefault(lang, {})
     # ---
     printe.output(f"<<green>> lang:{lang}, has {len(tabs)} pages")
     # ---
@@ -169,7 +174,7 @@ def work_in_to_set(new_target, tab):
         return {}
     # ---
     new_tab["user"] = newuser
-    new_tab["qid"] = qids_all.get(new_target)
+    # new_tab["qid"] = qids_all.get(new_tab["lang"], {}).get(new_target)
     # ---
     printe.output(f"<<purple>> {user=}, {newuser=}")
     # ---
