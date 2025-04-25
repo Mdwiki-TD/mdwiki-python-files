@@ -8,7 +8,7 @@ from apis import views_rest
 """
 import json
 from newapi.except_err import exception_err
-import pywikibot
+import tqdm
 import sys
 import urllib
 import urllib.parse
@@ -25,7 +25,7 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
     numbers = {}
     # _Type = Type if Type in ["daily", "monthly"] else 'monthly'
     # ---
-    for numb, page in enumerate(titles, start=1):
+    for numb, page in tqdm.tqdm(enumerate(titles, start=1)):
         # ---
         # print when numb % 100 == 0
         if numb % 100 == 0:
@@ -50,18 +50,16 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
         # ---
         st = req.status_code
         # ---
-        if 500 <= st < 600 or st == 404:
-            printe.output(f"received {st} status from:")
-            printe.output(url)
-        # ---
         data = {}
+        # ---
         try:
             data = json.loads(req.text)
         except Exception as e:
             exception_err(e, text=req.text)
         # ---
-        if not data:
-            pywikibot.output(url)
+        if 500 <= st < 600 or st == 404 or not data:
+            printe.output(f"received {st} status from:")
+            printe.output(url)
         # ---
         sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
         # ---
@@ -114,7 +112,7 @@ def get_views_last_30_days(langcode, titles):
     endDate = endDate.strftime("%Y%m%d%H")
     startDate = startDate.strftime("%Y%m%d%H")
     # ---
-    for numb, page in enumerate(titles, start=1):
+    for numb, page in tqdm.tqdm(enumerate(titles, start=1)):
         # ---
         # print when numb % 100 == 0
         if numb % 100 == 0:
@@ -134,18 +132,16 @@ def get_views_last_30_days(langcode, titles):
         # ---
         st = req.status_code
         # ---
-        if 500 <= st < 600 or st == 404:
-            printe.output(f"received {st} status from:")
-            printe.output(url)
-        # ---
         data = {}
+        # ---
         try:
             data = json.loads(req.text)
         except Exception as e:
             exception_err(e, text=req.text)
         # ---
-        if not data:
-            pywikibot.output(url)
+        if 500 <= st < 600 or st == 404 or not data:
+            printe.output(f"received {st} status from:")
+            printe.output(url)
         # ---
         _sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
         # ---
