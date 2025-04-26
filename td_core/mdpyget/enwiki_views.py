@@ -8,7 +8,7 @@
 قاعدة البيانات
 
 python3 core8/pwb.py mdpyget/enwiki_views newpages nodump
-python3 core8/pwb.py mdpyget/enwiki_views newpages
+python3 core8/pwb.py mdpyget/enwiki_views newpages nowork
 
 """
 import re
@@ -68,16 +68,17 @@ def start_to_sql(tab):
 
 def get_old_values(json_file):
     # ---
-    old_values = {}
-    # ---
-    with open(json_file, "r", encoding="utf-8-sig") as file:
-        old_values = json.load(file)
-    # ---
     que = "select DISTINCT title, en_views from enwiki_pageviews"
     # ---
     in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
-    old_values.update({x["title"]: x["en_views"] for x in in_sql if x["en_views"] > 0 and x["title"] not in old_values})
+    old_values = {x["title"]: x["en_views"] for x in in_sql}
+    # ---
+    old_values = {}
+    # ---
+    with open(json_file, "r", encoding="utf-8-sig") as file:
+        in_json = json.load(file)
+        old_values.update({x: y for x, y in in_json.items() if y and x not in old_values})
     # ---
     return old_values
 
