@@ -7,7 +7,7 @@
 2. تحديث بيانات الترجمة في قاعدة البيانات
 
 python3 core8/pwb.py fix_user_pages/bot test -lang:ar
-python3 core8/pwb.py fix_user_pages/bot test
+python3 core8/pwb.py fix_user_pages/bot addall
 
 """
 import sys
@@ -169,7 +169,10 @@ def work_in_to_set(new_target, tab):
     newuser = get_new_user(new_target, new_tab["lang"], user)
     # ---
     if not newuser:
-        return {}
+        if "addall" in sys.argv:
+            newuser = user
+        else:
+            return {}
     # ---
     new_tab["user"] = newuser
     # new_tab["qid"] = qids_all.get(new_tab["lang"], {}).get(new_target)

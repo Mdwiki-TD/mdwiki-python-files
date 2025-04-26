@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py mdcount/bots/copy_enwiki_pageviews
+python3 core8/pwb.py copy_data/copy_enwiki_pageviews
 
 """
 # ---
@@ -21,8 +21,6 @@ else:
 # ---
 project_tables = Path(public_html_dir) / 'td/Tables/jsons'
 # ---
-que = '''select DISTINCT title, en_views from enwiki_pageviews;'''
-# ---
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
@@ -37,6 +35,8 @@ for x, numb in data_in_json.items():
 print(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
 # ---
 in_sql = {}
+# ---
+que = '''select DISTINCT title, en_views from enwiki_pageviews;'''
 # ---
 for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     title = q['title']

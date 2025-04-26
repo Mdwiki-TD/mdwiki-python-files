@@ -7,6 +7,7 @@ from mdpyget.bots.to_sql import to_sql
 
 """
 # ---
+import sys
 import tqdm
 # from pymysql.converters import escape_string
 # ---
@@ -22,7 +23,6 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
     # co_line = "title, importance"
     co_line = ", ".join(columns)
     values_line = ", ".join(["%s"] * len(columns))
-    # ---
     # ---
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
@@ -64,7 +64,7 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
         # ---
         done += len(tab)
         # ---
-        print(f"to_sql.py insert_dict() {done} done, from {len(list_of_lines)}.")
+        print(f"to_sql.py insert_dict() {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
 def update_table(list_of_lines, table_name, columns, lento=10, title_column="title"):
@@ -94,7 +94,7 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
         # ---
         done += len(tab)
         # ---
-        print(f"to_sql.py update_table() {done} done, from {len(list_of_lines)}.")
+        print(f"to_sql.py update_table() {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
 def update_table_2(list_of_lines, table_name, columns_to_set=[], lento=10, columns_where=[]):
@@ -121,7 +121,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=[], lento=10, colum
         # ---
         done += len(tab)
         # ---
-        print(f"to_sql.py update_table() {done} done, from {len(list_of_lines)}.")
+        print(f"to_sql.py update_table() {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
 def to_sql(data, table_name, columns, title_column="title"):
@@ -160,6 +160,8 @@ def to_sql(data, table_name, columns, title_column="title"):
     # ---
     print(f"{same=}, {len(new_data_insert)=}, {len(new_data_update)=}")
     # ---
-    insert_dict(new_data_insert, table_name, columns, title_column=title_column)
-    # ---
-    update_table(new_data_update, table_name, columns, title_column=title_column)
+    if "nodump" in sys.argv:
+        print('"nodump" in sys.argv - no dump')
+    else:
+        insert_dict(new_data_insert, table_name, columns, title_column=title_column)
+        update_table(new_data_update, table_name, columns, title_column=title_column)
