@@ -19,72 +19,41 @@ python3 core8/pwb.py mdcount/words sql
 """
 
 import os
-import json
 import sys
 
 from apis import mdwiki_api
 from newapi import printe
 from mdcount.bots.links import get_links_from_cats
-from mdcount.bots import lead
-from mdpyget.bots.to_sql import to_sql
 from mdapi_sql import sql_for_mdwiki
+from mdcount.ref_words_bot import get_jsons, logaa, make_old_values, do_to_sql
+from mdcount.bots import lead
 # ---
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
     Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 # ---
-json_file = {}
+all_tab_data = {1: {}}
+lead_tab_data = {1: {}}
 # ---
-lead_words = {}
-# ---
-all_words_n = {}
-
-Nore = {1: False}
-for arg in sys.argv:
-    if arg in ['new', 'listnew', 'less100', 'more400']:
-        Nore[1] = True
+file_all = f"{Dashboard_path}/Tables/jsons/allwords.json"
+file_lead = f"{Dashboard_path}/Tables/jsons/words.json"
 
 
 def start_to_sql():
-    data2 = [{"w_title": x, "w_lead_words": v, "w_all_words": all_words_n.get(x, 0)} for x, v in lead_words.items()]
-    # ---
-    to_sql(data2, "words", ["w_title", "w_lead_words", "w_all_words"], title_column="w_title")
+    return do_to_sql(all_tab_data[1], lead_tab_data[1], ty="word")
 
 
-def get_word_files():
+def count_words(title):
     # ---
-    global json_file, lead_words, all_words_n
+    text = mdwiki_api.GetPageText(title)
     # ---
-    json_file[1] = f'{Dashboard_path}/Tables/jsons/allwords.json'
+    lead_c, all_c = lead.count_all(title='', text=text)
     # ---
-    all_words_n = {}
+    all_tab_data[1][title] = all_c
+    lead_tab_data[1][title] = lead_c
     # ---
-    with open(json_file[1], "r", encoding="utf-8") as f:
-        all_words_n = json.load(f)
-    # ---
-    json_file[0] = f'{Dashboard_path}/Tables/jsons/words.json'
-    # ---
-    lead_words = {}
-    # ---
-    with open(json_file[0], "r", encoding="utf-8") as f:
-        lead_words = json.load(f)
-    # ---
-    que = "select DISTINCT w_title, w_lead_words, w_all_words from words"
-    # ---
-    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
-    # ---
-    all_words_n.update({x["w_title"]: x["w_all_words"] for x in in_sql if x["w_all_words"] > 0 and x["w_title"] not in all_words_n})
-    lead_words.update({x["w_title"]: x["w_lead_words"] for x in in_sql if x["w_lead_words"] > 0 and x["w_title"] not in lead_words})
-    # ---
-    printe.output(f'len of lead_words:{len(lead_words.keys())}, all :{len(all_words_n.keys())}')
-
-
-def log(file, table):
-    with open(file, "w", encoding="utf-8") as aa:
-        json.dump(table, aa, sort_keys=True)
-    # ---
-    printe.output(f'<<green>> {len(table)} lines to {file}')
+    printe.output(f"<<green>> all:{all_c} \t lead:{lead_c}")
 
 
 def from_sql(old_values):
@@ -102,20 +71,11 @@ def from_sql(old_values):
     return titles
 
 
-def make_old_values():
-    # ---
-    old_values = list(set(all_words_n.keys()) & set(lead_words.keys()))
-    # ---
-    old_values.extend([x for x in all_words_n.keys() if (x not in old_values and x.lower().startswith("video:"))])
-    # ---
-    return old_values
-
-
 def get_links():
     # ---
     titles=[]
     # ---
-    old_values = make_old_values()
+    old_values = make_old_values(all_tab_data[1], lead_tab_data[1])
     # ---
     if "sql" in sys.argv:
         titles=from_sql(old_values)
@@ -128,41 +88,43 @@ def get_links():
     return titles
 
 
-def mmain():
+def main():
     # ---
-    get_word_files()
+    all_tab_data[1], lead_tab_data[1] = get_jsons(file_all, file_lead, "word")
     # ---
-    n = 0
-    limit = 100 if 'limit100' in sys.argv else 10000
+    limit = 100 if "limit100" in sys.argv else 10000
     # ---
-    vaild_links = get_links()
+    # python3 core8/pwb.py mdcount/countref -title:Testosterone_\(medication\)
     # ---
-    for n, x in enumerate(vaild_links):
+    vaild_links = []
+    # ---
+    for arg in sys.argv:
+        arg, _, value=arg.partition(":")
+        # ---
+        if arg == "-title":
+            vaild_links=[value.replace("_", " ")]
+    # ---
+    if not vaild_links:
+        vaild_links = get_links()
+    # ---
+    for numb, x in enumerate(vaild_links):
         # ---
         x = x.replace("\\'", "'")
         # ---
         printe.output('------------------')
-        printe.output(f'page {n} from {len(vaild_links)}, x:{x}')
+        printe.output(f'page {numb} from {len(vaild_links)}, x:{x}')
         # ---
-        if n >= limit:
+        if numb >= limit:
             break
         # ---
-        text = mdwiki_api.GetPageText(x)
+        count_words(x)
         # ---
-        leadword, pageword = lead.count_all(title='', text=text)
-        # ---
-        printe.output(f'\t\t pageword:{pageword}')
-        printe.output(f'\t\t leadword:{leadword}')
-        # ---
-        all_words_n[x] = pageword
-        lead_words[x] = leadword
-        # ---
-        if n == 10 or str(n).endswith('00'):
-            log(json_file[0], lead_words)
-            log(json_file[1], all_words_n)
+        if numb == 10 or str(numb).endswith("00"):
+            logaa(file_lead, lead_tab_data[1])
+            logaa(file_all, all_tab_data[1])
     # ---
-    log(json_file[0], lead_words)
-    log(json_file[1], all_words_n)
+    logaa(file_lead, lead_tab_data[1])
+    logaa(file_all, all_tab_data[1])
     # ---
     start_to_sql()
 
@@ -170,24 +132,23 @@ def mmain():
 def test():
     # python3 core8/pwb.py mdcount/words test
     # ---
-    lead_words["Yemenz"] = 50
-    all_words_n["Yemen1"] = 50
+    lead_tab_data[1]["Yemen1"]=50
+    all_tab_data[1]["Yemen1"]=50
     # ---
-    lead_words["Sana'xa"] = 500
-    all_words_n["Sana'x1a"] = 100
+    lead_tab_data[1]["Sana'a"]=500
+    all_tab_data[1]["Sana'a"]=100
     # ---
     start_to_sql()
 
 
 if __name__ == "__main__":
-    # ---
     if "test" in sys.argv:
         test()
         exit()
     # ---
-    mmain()
+    main()
     # ---
     if "sql" not in sys.argv:
         sys.argv.append('sql')
         # ---
-        mmain()
+        main()
