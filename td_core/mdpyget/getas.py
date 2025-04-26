@@ -124,9 +124,14 @@ def main():
     # ---
     if "newpages" in sys.argv:
         en_keys_2 = list(vaild_links)
-        vaild_links = [xp for xp in en_keys_2 if (xp not in old_values or old_values.get(xp, "").lower() in fals_ase)]
         # ---
-        printe.output(f"vaild_links:{len(en_keys_2)}, new vaild_links:{len(vaild_links)}")
+        pages_new = [x for x in en_keys_2 if x not in old_values]
+        # ---
+        pages_fals_ase = [x for x in en_keys_2 if old_values.get(x, "").lower() in fals_ase]
+        # ---
+        vaild_links = pages_fals_ase + pages_new
+        # ---
+        printe.output(f"pages_new:{len(pages_new)}, pages_fals_ase:{len(pages_fals_ase)}, new vaild_links: {len(vaild_links)}")
     # ---
     if "video" in sys.argv:
         vaild_links = [x for x in vaild_links if x.startswith("Video:")]
