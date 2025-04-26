@@ -102,14 +102,18 @@ def main():
     # ---
     vaild_links = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
     # ---
+    en_keys_2 = list(vaild_links)
+    # ---
     if "newpages" in sys.argv:
-        en_keys_2 = list(vaild_links)
         vaild_links = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
-        # ---
-        printe.output(f"vaild_links:{len(en_keys_2)}, new vaild_links:{len(vaild_links)}")
     # ---
     if "video" in sys.argv:
         vaild_links = [x for x in vaild_links if x.startswith("Video:")]
+    # ---
+    printe.output(f"old vaild_links: {len(en_keys_2)}, new vaild_links: {len(vaild_links)}")
+    # ---
+    if "nowork" in sys.argv:
+        return
     # ---
     data_tab[1] = make_n_views(vaild_links, data_tab[1])
     # ---

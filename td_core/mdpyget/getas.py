@@ -122,8 +122,9 @@ def main():
     # ---
     # vaild_links = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
     # ---
+    en_keys_2 = list(vaild_links)
+    # ---
     if "newpages" in sys.argv:
-        en_keys_2 = list(vaild_links)
         # ---
         pages_new = [x for x in en_keys_2 if x not in old_values]
         # ---
@@ -131,10 +132,15 @@ def main():
         # ---
         vaild_links = pages_fals_ase + pages_new
         # ---
-        printe.output(f"pages_new:{len(pages_new)}, pages_fals_ase:{len(pages_fals_ase)}, new vaild_links: {len(vaild_links)}")
+        printe.output(f"pages_new:{len(pages_new)}, pages_fals_ase:{len(pages_fals_ase)}")
     # ---
     if "video" in sys.argv:
         vaild_links = [x for x in vaild_links if x.startswith("Video:")]
+    # ---
+    printe.output(f"old vaild_links: {len(en_keys_2)}, new vaild_links: {len(vaild_links)}")
+    # ---
+    if "nowork" in sys.argv:
+        return
     # ---
     data_tab[1] = work_for_list(vaild_links, old_values)
     # ---
