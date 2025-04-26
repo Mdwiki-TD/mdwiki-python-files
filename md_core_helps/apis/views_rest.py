@@ -20,25 +20,23 @@ from datetime import timedelta
 from newapi import printe
 
 
-def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20300101", printurl=False, printstr=False, Type="daily"):
-    # ---
-    numbers = {}
-    # _Type = Type if Type in ["daily", "monthly"] else 'monthly'
+def get_all_data(langcode, titles, date_start, date_end, printurl=False, printstr=False):
     # ---
     status_error = 0
+    # ---
+    all_data = {}
     # ---
     for numb, page in tqdm.tqdm(enumerate(titles, start=1)):
         # ---
         # print when numb % 100 == 0
-        if numb % 100 == 0:
-            print(f"get_views_with_rest_v1: {numb}/{len(titles)}")
+        # if numb % 100 == 0: print(f"get_views_with_rest_v1: {numb}/{len(titles)}")
         # ---
         if "limit5" in sys.argv and numb > 5:
             break
         # ---
         pa = urllib.parse.quote(page)
         # ---
-        url = f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{langcode}.wikipedia/all-access/all-agents/{pa.replace('/', '%2F')}/daily/{date_start}00/{date_end}00"
+        url = f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{langcode}.wikipedia/all-access/all-agents/{pa.replace('/', '%2F')}/daily/{date_start}/{date_end}"
         # ---
         if "printurl" in sys.argv or printurl:
             printe.output(f"printboturl:\t\t{url}")
@@ -64,13 +62,31 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
             # printe.output(f"received {st} status from:")
             # printe.output(url)
         # ---
-        sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
+        _sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
         # ---
+        all_data[page] = data.get("items", [])
+    # ---
+    if status_error > 0:
+        printe.output(f"get_views_with_rest_v1: status_error in {status_error}/{len(titles)} pages.")
+    # ---
+    return all_data
+
+
+def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20300101", printurl=False, printstr=False, Type="daily"):
+    # ---
+    date_start = f"{date_start}00"
+    date_end = f"{date_end}00"
+    # ---
+    all_data = get_all_data(langcode, titles, date_start, date_end, printurl=printurl, printstr=printstr)
+    # ---
+    numbers = {}
+    # ---
+    for page, views_items in all_data.items():
         number_all = 0
         # ---
         tabl = {}
         # ---
-        for x in data.get("items", []):
+        for x in views_items:
             # ---
             number_all += x["views"]
             # ---
@@ -102,62 +118,23 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
                 printe.output(txt)
             # ---
     # ---
-    if status_error > 0:
-        printe.output(f"get_views_with_rest_v1: status_error in {status_error}/{len(titles)} pages.")
-    # ---
     return numbers
 
 
-def get_views_last_30_days(langcode, titles):
+def get_views_last_30_days(langcode, titles, printurl=False, printstr=False):
+    # ---
+    date_end = datetime.datetime.utcnow() - timedelta(days=1)
+    date_start = date_end - timedelta(weeks=4)
+    # ---
+    date_end = date_end.strftime("%Y%m%d%H")
+    date_start = date_start.strftime("%Y%m%d%H")
+    # ---
+    all_data = get_all_data(langcode, titles, date_start, date_end, printurl=printurl, printstr=printstr)
     # ---
     numbers = {}
     # ---
-    endDate = datetime.datetime.utcnow() - timedelta(days=1)
-    startDate = endDate - timedelta(weeks=4)
-    # ---
-    endDate = endDate.strftime("%Y%m%d%H")
-    startDate = startDate.strftime("%Y%m%d%H")
-    # ---
-    status_error = 0
-    # ---
-    for numb, page in tqdm.tqdm(enumerate(titles, start=1)):
-        # ---
-        # print when numb % 100 == 0
-        if numb % 100 == 0:
-            print(f"get_views_with_rest_v1: {numb}/{len(titles)}")
-        # ---
-        if "limit5" in sys.argv and numb > 5:
-            break
-        # ---
-        pa = urllib.parse.quote(page)
-        # ---
-        url = f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{langcode}.wikipedia/all-access/all-agents/{pa.replace('/', '%2F')}/daily/{startDate}/{endDate}"
-        # ---
-        if "printurl" in sys.argv:
-            printe.output(f"printboturl:\t\t{url}")
-        # ---
-        req = http.fetch(url)
-        # ---
-        st = req.status_code
-        # ---
-        data = {}
-        # ---
-        try:
-            data = json.loads(req.text)
-        except Exception as e:
-            exception_err(e, text=req.text)
-        # ---
-        if 500 <= st < 600 or st == 404 or not data:
-            status_error += 1
-            # printe.output(f"received {st} status from:")
-            # printe.output(url)
-        # ---
-        _sadasd = [{"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021070100", "access": "all-access", "agent": "all-agents", "views": 77}, {"project": "ar.wikipedia", "article": "نيلوتينيب", "granularity": "monthly", "timestamp": "2021080100", "access": "all-access", "agent": "all-agents", "views": 95}]
-        # ---
-        numbers[page] = sum(x["views"] for x in data.get("items", []))
-    # ---
-    if status_error > 0:
-        printe.output(f"get_views_last_30_days: status_error in {status_error}/{len(titles)} pages.")
+    for page, views_items in all_data.items():
+        numbers[page] = sum(x["views"] for x in views_items)
     # ---
     return numbers
 
