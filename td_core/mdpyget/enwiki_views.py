@@ -45,7 +45,8 @@ def make_n_views(en_keys, old_values):
     no_views = 0
     # ---
     for k, view in enviews.items():
-        if view == 0:
+        # ---
+        if view == 0 or view == "0" or not view:
             no_views += 1
             continue
         # ---
