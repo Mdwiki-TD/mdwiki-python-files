@@ -31,15 +31,14 @@ if os.getenv("HOME"):
 else:
     Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 # ---
-all_tab_data = {1: {}}
-lead_tab_data = {1: {}}
+tab_data = {"all": {}, "lead": {}}
 # ---
 file_all = f"{Dashboard_path}/Tables/jsons/all_refcount.json"
 file_lead = f"{Dashboard_path}/Tables/jsons/lead_refcount.json"
 
 
 def start_to_sql():
-    return do_to_sql(all_tab_data[1], lead_tab_data[1], ty="ref")
+    return do_to_sql(tab_data["all"], tab_data["lead"], ty="ref")
 
 
 def count_refs(title):
@@ -55,8 +54,8 @@ def count_refs(title):
     leadtext = text2.split("==")[0]
     lead_c = count_ref_from_text(leadtext, get_short=True)
     # ---
-    all_tab_data[1][title] = all_c
-    lead_tab_data[1][title] = lead_c
+    tab_data["all"][title] = all_c
+    tab_data["lead"][title] = lead_c
     # ---
     printe.output(f"<<green>> all:{all_c} \t lead:{lead_c}")
 
@@ -76,36 +75,36 @@ def from_sql(old_values):
     return titles
 
 
-def get_links():
+def get_links(ty="ref"):
     # ---
     titles=[]
     # ---
-    old_values = make_old_values(all_tab_data[1], lead_tab_data[1])
+    old_values = make_old_values(tab_data["all"], tab_data["lead"])
     # ---
     if "sql" in sys.argv:
-        titles=from_sql(old_values)
+        titles = from_sql(old_values)
     else:
-        titles=get_links_from_cats()
+        titles = get_links_from_cats()
     # ---
     if "newpages" in sys.argv:
-        titles=[x for x in titles if (x not in old_values)]
+        titles = [x for x in titles if (x not in old_values)]
     # ---
     return titles
 
 
 def main():
     # ---
-    all_tab_data[1], lead_tab_data[1] = get_jsons_new(file_all, file_lead, "ref")
+    tab_data["all"], tab_data["lead"] = get_jsons_new(file_all, file_lead, "ref")
     # ---
     if "merge" in sys.argv:
         # ---
         with open(file_all, "w", encoding="utf-8") as outfile:
-            printe.output(f"<<green>> {len(all_tab_data[1])} lines to {file_all}")
-            json.dump(all_tab_data[1], outfile, sort_keys=True, indent=2)
+            printe.output(f"<<green>> {len(tab_data['all'])} lines to {file_all}")
+            json.dump(tab_data["all"], outfile, sort_keys=True, indent=2)
         # ---
         with open(file_lead, "w", encoding="utf-8") as outfile:
-            printe.output(f"<<green>> {len(lead_tab_data[1])} lines to {file_lead}")
-            json.dump(lead_tab_data[1], outfile, sort_keys=True, indent=2)
+            printe.output(f"<<green>> {len(tab_data['lead'])} lines to {file_lead}")
+            json.dump(tab_data["lead"], outfile, sort_keys=True, indent=2)
         # ---
         start_to_sql()
         # ---
@@ -139,11 +138,11 @@ def main():
         count_refs(x)
         # ---
         # if numb == 10 or str(numb).endswith("00"):
-        #     logaa(file_lead, lead_tab_data[1])
-        #     logaa(file_all, all_tab_data[1])
+        #     logaa(file_lead, tab_data["lead"])
+        #     logaa(file_all, tab_data["all"])
     # ---
-    logaa(file_lead, lead_tab_data[1])
-    logaa(file_all, all_tab_data[1])
+    logaa(file_lead, tab_data["lead"])
+    logaa(file_all, tab_data["all"])
     # ---
     start_to_sql()
 
@@ -151,11 +150,11 @@ def main():
 def test():
     # python3 core8/pwb.py mdcount/countref test
     # ---
-    lead_tab_data[1]["Yemen1"]=50
-    all_tab_data[1]["Yemen1"]=50
+    tab_data["lead"]["Yemen1"]=50
+    tab_data["all"]["Yemen1"]=50
     # ---
-    lead_tab_data[1]["Sana'a"]=500
-    all_tab_data[1]["Sana'a"]=100
+    tab_data["lead"]["Sana'a"]=500
+    tab_data["all"]["Sana'a"]=100
     # ---
     start_to_sql()
 
