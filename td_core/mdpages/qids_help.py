@@ -70,7 +70,7 @@ def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
         json.dump(sames, cc)
 
 
-def check(work_list, all_pages, ty):
+def check(work_list, all_xpages, ty):
     """
     function retrieves QIDs for a list of items. It uses the MediaWiki API to query for page properties and extracts the Wikidata item property. The function handles redirects and normalizes the titles. It also groups the items into batches of 50 to avoid exceeding the API's limit for the number of titles in a single request. This is a good practice for working with APIs.
     """
@@ -119,7 +119,7 @@ def check(work_list, all_pages, ty):
             # "redirects": [{"from": "Acetylsalicylic acid","to": "Aspirin"}]
             Redirects = query.get("redirects", [])
             for red in Redirects:
-                if red["to"] not in all_pages:
+                if red["to"] not in all_xpages:
                     medwiki_to_enwiki[red["from"]] = red["to"]
                 else:
                     medwiki_to_enwiki_conflic[red["from"]] = red["to"]
