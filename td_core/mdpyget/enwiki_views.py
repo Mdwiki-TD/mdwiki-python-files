@@ -7,6 +7,7 @@
 +
 قاعدة البيانات
 
+python3 core8/pwb.py mdpyget/enwiki_views from_cats newpages nodump
 python3 core8/pwb.py mdpyget/enwiki_views newpages nodump
 python3 core8/pwb.py mdpyget/enwiki_views newpages nowork
 
