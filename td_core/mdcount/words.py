@@ -119,9 +119,9 @@ def main():
         # ---
         count_words(x)
         # ---
-        if numb == 10 or str(numb).endswith("00"):
-            logaa(file_lead, lead_tab_data[1])
-            logaa(file_all, all_tab_data[1])
+        # if numb == 10 or str(numb).endswith("00"):
+        #     logaa(file_lead, lead_tab_data[1])
+        #     logaa(file_all, all_tab_data[1])
     # ---
     logaa(file_lead, lead_tab_data[1])
     logaa(file_all, all_tab_data[1])
