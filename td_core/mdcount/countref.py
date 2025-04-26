@@ -7,7 +7,6 @@
 +
 قاعدة البيانات
 
-python3 $HOME/pybot/td_core/mdcount/countref.py newpages
 
 python3 core8/pwb.py mdcount/countref newpages
 
@@ -163,7 +162,9 @@ def make_old_values():
     # remove duplicates from list
     list_fu = list(set(list_fu))
     # ---
-    list_ma = [x for x in list_fu if (x in all_tab_ref[1] and (x in lead_tab_ref[1] or x.lower().startswith("video:")))]
+    list_ma = [x for x in list_fu if (x in all_tab_ref[1] and (x in lead_tab_ref[1]))]
+    # ---
+    list_ma.extend([x for x in all_tab_ref[1].keys() if (x not in list_fu and x.lower().startswith("video:"))])
     # ---
     return list_ma
 
@@ -172,7 +173,7 @@ def get_links():
     # ---
     titles=[]
     # ---
-    old_values=make_old_values()
+    old_values = make_old_values()
     # ---
     if "sql" in sys.argv:
         titles=from_sql(old_values)
