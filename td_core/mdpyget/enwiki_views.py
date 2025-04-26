@@ -27,11 +27,13 @@ if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
     Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
+# ---
+data_tab = {1: {}}
 
 
-def make_n_views(old_views, RTT, n_views):
+def make_n_views(old_values, vaild_links, views_d):
     # ---
-    en_keys = [mdwiki_to_enwiki.get(cc, cc) for cc in RTT]
+    en_keys = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
     # ---
     en_keys.append("Cisatracurium")
     # ---
@@ -39,7 +41,7 @@ def make_n_views(old_views, RTT, n_views):
     # ---
     if "newpages" in sys.argv:
         en_keys_2 = list(en_keys)
-        en_keys = [xp for xp in en_keys_2 if old_views.get(xp, 0) < 10]
+        en_keys = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
         # ---
         printe.output(f"en_keys:{len(en_keys_2)}, new en_keys:{len(en_keys)}")
     # ---
@@ -63,11 +65,11 @@ def make_n_views(old_views, RTT, n_views):
         if enwiki_to_mdwiki.get(k):
             k = enwiki_to_mdwiki.get(k)
         # ---
-        n_views[k] = view
+        views_d[k] = view
     # ---
-    printe.output(f"no_views:{no_views},\t len of n_views: {len(n_views.keys())}")
+    printe.output(f"no_views:{no_views},\t len of views_d: {len(views_d.keys())}")
     # ---
-    return n_views
+    return views_d
 
 
 def start_to_sql(tab):
@@ -76,40 +78,66 @@ def start_to_sql(tab):
     to_sql(tab, "enwiki_pageviews", columns=["title", "en_views"], title_column="title")
 
 
-def get_old_views(enwiki_pageviews):
-    old_views = {}
+def get_old_values(json_file):
     # ---
-    with open(enwiki_pageviews, "r", encoding="utf-8-sig") as file:
-        old_views = json.load(file)
+    old_values = {}
+    # ---
+    with open(json_file, "r", encoding="utf-8-sig") as file:
+        old_values = json.load(file)
     # ---
     que = "select DISTINCT title, en_views from enwiki_pageviews"
     # ---
     in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
-    old_views.update({x["title"]: x["en_views"] for x in in_sql if x["en_views"] > 0 and x["title"] not in old_views})
+    old_values.update({x["title"]: x["en_views"] for x in in_sql if x["en_views"] > 0 and x["title"] not in old_values})
     # ---
-    return old_views
+    return old_values
 
 
 def main():
     # ---
-    enwiki_pageviews = Dashboard_path + "/Tables/jsons/enwiki_pageviews.json"
+    printe.output("Get vaild_links from cat : RTT")
     # ---
-    old_views = get_old_views(enwiki_pageviews)
+    cat_get = "Videowiki scripts" if "video" in sys.argv else ""
     # ---
-    n_views = dict(old_views.items())
+    vaild_links = get_links_from_cats(cat_get)
     # ---
-    RTT = get_links_from_cats()
+    printe.output(f"len of vaild_links: {len(vaild_links)}")
     # ---
-    n_views = make_n_views(old_views, RTT, n_views)
+    json_file = f"{Dashboard_path}/Tables/jsons/enwiki_pageviews.json"
+    # ---
+    old_values = get_old_values(json_file)
+    # ---
+    len_old = len(old_values)
+    # ---
+    data_tab[1] = dict(old_values.items())
+    # ---
+    data_tab[1] = make_n_views(old_values, vaild_links, data_tab[1])
     # ---
     if "nodump" in sys.argv:
         # ---
-        with open(enwiki_pageviews, "w", encoding="utf-8") as outfile:
-            json.dump(n_views, outfile, sort_keys=True, indent=2)
+        with open(json_file, "w", encoding="utf-8") as outfile:
+            json.dump(data_tab[1], outfile, sort_keys=True, indent=2)
     # ---
-    start_to_sql(n_views)
+    printe.output(f"<<green>> {len(data_tab[1])} lines to {json_file}")
+    printe.output(f"<<green>> len old assessments {len_old}")
+    # ---
+    start_to_sql(data_tab[1])
+
+
+def test():
+    # python3 core8/pwb.py mdpyget/getas test
+    # ---
+    data_tab[1]["Yemen1"] = "Top"
+    # ---
+    data_tab[1]["Sana'a"] = "Mid"
+    data_tab[1]["Sanax"] = "Mid"
+    # ---
+    start_to_sql(data_tab[1])
 
 
 if __name__ == "__main__":
-    main()
+    if "test" in sys.argv:
+        test()
+    else:
+        main()

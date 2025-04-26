@@ -32,22 +32,7 @@ if os.getenv("HOME"):
 else:
     Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
 # ---
-assessments_tab = {1: {}}
-# ---
-json_file = {1: f"{Dashboard_path}/Tables/jsons/assessments.json"}
-Nore = {1: False}
-# ---
-for arg in sys.argv:
-    if arg in ["new", "listnew", "less100", "more400"]:
-        Nore[1] = True
-
-
-def log(len_old):
-    with open(json_file[1], "w", encoding="utf-8") as outfile:
-        json.dump(assessments_tab[1], outfile, sort_keys=True)
-    # ---
-    printe.output(f"<<green>> {len(assessments_tab[1])} lines to {json_file[1]}")
-    printe.output(f"<<green>> len old assessments {len_old}")
+data_tab = {1: {}}
 
 
 def work_for_list(listn):
@@ -82,7 +67,7 @@ def work_for_list(listn):
         # ---
         lenn += 1 if importance else 0
         # ---
-        assessments_tab[1][title] = importance
+        data_tab[1][title] = importance
     # ---
     printe.output(f"len of new assessments:{lenn}")
 
@@ -93,27 +78,23 @@ def start_to_sql(tab):
     to_sql(tab, "assessments", columns=["title", "importance"], title_column="title")
 
 
-def get_old_values():
+def get_old_values(json_file):
     # ---
-    printe.output(f"file_name:{json_file[1]}")
+    old_values = {}
     # ---
-    lala = ""
-    # ---
-    with open(json_file[1], "r", encoding="utf-8-sig") as listt:
-        lala = listt.read()
-    # ---
-    old_assess = json.loads(str(lala)) if str(lala) != "" else {}
+    with open(json_file, "r", encoding="utf-8-sig") as file:
+        old_values = json.load(file)
     # ---
     que = "select DISTINCT title, importance from assessments"
     # ---
     in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
-    old_assess.update({x["title"]: x["importance"] for x in in_sql if x["importance"] and x["title"] not in old_assess})
+    old_values.update({x["title"]: x["importance"] for x in in_sql if x["importance"] and x["title"] not in old_values})
     # ---
-    return old_assess
+    return old_values
 
 
-def mmain():
+def main():
     # ---
     printe.output("Get vaild_links from cat : RTT")
     # ---
@@ -123,20 +104,22 @@ def mmain():
     # ---
     printe.output(f"len of vaild_links: {len(vaild_links)}")
     # ---
-    old_assess = get_old_values()
+    json_file = f"{Dashboard_path}/Tables/jsons/assessments.json"
     # ---
-    len_old = len(old_assess)
+    old_values = get_old_values(json_file)
+    # ---
+    len_old = len(old_values)
     # ---
     if "newpages" in sys.argv:  # vaild_links
         vaild_links2 = vaild_links
-        vaild_links = [xp for xp in vaild_links2 if (xp not in old_assess or old_assess.get(xp, "").lower() in fals_ase)]
+        vaild_links = [xp for xp in vaild_links2 if (xp not in old_values or old_values.get(xp, "").lower() in fals_ase)]
         # ---
         printe.output(f"Category-members:{len(vaild_links2)}, New-members:{len(vaild_links)}")
     # ---
     if "video" in sys.argv:
         vaild_links = [x for x in vaild_links if x.startswith("Video:")]
     # ---
-    assessments_tab[1] = dict(old_assess.items())
+    data_tab[1] = dict(old_values.items())
     # ---
     vaild_links.sort()
     # ---
@@ -152,24 +135,30 @@ def mmain():
         group = kkk[1][i : i + 50]
         work_for_list(group)
     # ---
-    log(len_old)
+    if "nodump" in sys.argv:
+        # ---
+        with open(json_file, "w", encoding="utf-8") as outfile:
+            json.dump(data_tab[1], outfile, sort_keys=True, indent=2)
     # ---
-    start_to_sql(assessments_tab[1])
+    printe.output(f"<<green>> {len(data_tab[1])} lines to {json_file}")
+    printe.output(f"<<green>> len old assessments {len_old}")
+    # ---
+    start_to_sql(data_tab[1])
 
 
 def test():
     # python3 core8/pwb.py mdpyget/getas test
     # ---
-    assessments_tab[1]["Yemen1"] = "Top"
+    data_tab[1]["Yemen1"] = "Top"
     # ---
-    assessments_tab[1]["Sana'a"] = "Mid"
-    assessments_tab[1]["Sanax"] = "Mid"
+    data_tab[1]["Sana'a"] = "Mid"
+    data_tab[1]["Sanax"] = "Mid"
     # ---
-    start_to_sql(assessments_tab[1])
+    start_to_sql(data_tab[1])
 
 
 if __name__ == "__main__":
     if "test" in sys.argv:
         test()
     else:
-        mmain()
+        main()
