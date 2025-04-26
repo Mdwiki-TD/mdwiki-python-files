@@ -102,7 +102,14 @@ def start_to_sql(tab):
 
 def check_it(x, y, old_values):
     # ---
-    return x not in old_values or old_values.get(x) in fals_ase
+    if not old_values.get(x):
+        return True
+    # ---
+    if old_values.get(x, "").lower() in fals_ase:
+        return True
+    # ---
+    # return x not in old_values or old_values.get(x) in fals_ase
+    return False
 
 
 def get_old_values(json_file):
@@ -117,7 +124,10 @@ def get_old_values(json_file):
         printe.output(f"<<green>> read file: {json_file}")
         in_json = json.load(file)
         # ---
-        old_values.update({x: y for x, y in in_json.items() if check_it(x, y, old_values)})
+        data2 = {x: y for x, y in in_json.items() if check_it(x, y, old_values)}
+        # ---
+        for x, y in data2.items():
+            old_values[x] = y
     # ---
     old_dict = {}
     # ---
