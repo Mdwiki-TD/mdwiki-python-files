@@ -96,6 +96,7 @@ def get_old_values(json_file):
     old_values = {x["title"]: x["importance"] for x in in_sql}
     # ---
     with open(json_file, "r", encoding="utf-8-sig") as file:
+        printe.output(f"<<green>> read file: {json_file}")
         in_json = json.load(file)
         old_values.update({x: y for x, y in in_json.items() if y and x not in old_values})
     # ---
@@ -139,9 +140,16 @@ def main():
     # ---
     # vaild_links = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
     # ---
-    en_keys_2 = list(vaild_links)
+    if "video" in sys.argv:
+        en_keys_2 = list(vaild_links)
+        # ---
+        vaild_links = [x for x in vaild_links if x.lower().startswith("video:")]
+        # ---
+        printe.output(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
     # ---
-    if "newpages" in sys.argv:
+    elif "newpages" in sys.argv:
+        # ---
+        en_keys_2 = list(vaild_links)
         # ---
         pages_new = [x for x in en_keys_2 if x not in old_values]
         # ---
@@ -150,11 +158,8 @@ def main():
         vaild_links = pages_fals_ase + pages_new
         # ---
         printe.output(f"pages_new:{len(pages_new)}, pages_fals_ase:{len(pages_fals_ase)}")
-    # ---
-    if "video" in sys.argv:
-        vaild_links = [x for x in vaild_links if x.startswith("Video:")]
-    # ---
-    printe.output(f"old vaild_links: {len(en_keys_2)}, new vaild_links: {len(vaild_links)}")
+        # ---
+        printe.output(f"old vaild_links: {len(en_keys_2)}, new newpages: {len(vaild_links)}")
     # ---
     if "nowork" in sys.argv:
         return

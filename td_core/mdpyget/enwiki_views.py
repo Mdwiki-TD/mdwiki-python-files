@@ -75,9 +75,8 @@ def get_old_values(json_file):
     # ---
     old_values = {x["title"]: x["en_views"] for x in in_sql}
     # ---
-    old_values = {}
-    # ---
     with open(json_file, "r", encoding="utf-8-sig") as file:
+        printe.output(f"<<green>> read file: {json_file}")
         in_json = json.load(file)
         old_values.update({x: y for x, y in in_json.items() if y and x not in old_values})
     # ---
@@ -85,8 +84,6 @@ def get_old_values(json_file):
 
 
 def main():
-    # ---
-    printe.output("Get vaild_links from cat : RTT")
     # ---
     cat_get = "Videowiki scripts" if "video" in sys.argv else ""
     # ---
@@ -106,15 +103,19 @@ def main():
     # ---
     vaild_links = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
     # ---
-    en_keys_2 = list(vaild_links)
-    # ---
-    if "newpages" in sys.argv:
-        vaild_links = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
-    # ---
     if "video" in sys.argv:
-        vaild_links = [x for x in vaild_links if x.startswith("Video:")]
+        en_keys_2 = list(vaild_links)
+        # ---
+        vaild_links = [x for x in vaild_links if x.lower().startswith("video:")]
+        # ---
+        printe.output(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
     # ---
-    printe.output(f"old vaild_links: {len(en_keys_2)}, new vaild_links: {len(vaild_links)}")
+    elif "newpages" in sys.argv:
+        en_keys_2 = list(vaild_links)
+        # ---
+        vaild_links = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
+        # ---
+        printe.output(f"old vaild_links: {len(en_keys_2)}, new newpages: {len(vaild_links)}")
     # ---
     if "nowork" in sys.argv:
         return
