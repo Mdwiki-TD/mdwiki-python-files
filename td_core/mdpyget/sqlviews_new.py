@@ -87,9 +87,6 @@ def get_targets(lang_o):
         target = tab["target"]
         pupdate = tab["pupdate"]
         # ---
-        if "2023" in sys.argv and not pupdate.startswith("2023"):
-            pupdate = "2023-01-01"
-        # ---
         if target != "":
             if lang not in Lang_to_targets:
                 Lang_to_targets[lang] = {}

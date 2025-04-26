@@ -6,6 +6,7 @@
 وحفظها في Dashboard_path
 +
 قاعدة البيانات
+python3 core8/pwb.py mdpyget/getas merge
 python3 core8/pwb.py mdpyget/getas newpages nodump
 python3 core8/pwb.py mdpyget/getas from_cats newpages nowork
 python3 core8/pwb.py mdpyget/getas newpages nowork
