@@ -80,7 +80,7 @@ def log(file, table):
     printe.output(f'<<green>> {len(table)} lines to {file}')
 
 
-def get_old_views():
+def get_old_values():
     # ---
     que = "select DISTINCT w_title, w_lead_words, w_all_words from words"
     # ---
@@ -101,7 +101,7 @@ def mmain():
     n = 0
     limit = 100 if 'limit100' in sys.argv else 10000
     # ---
-    vaild_links = get_old_views(lead_words)
+    vaild_links = get_old_values()
     # ---
     for n, x in enumerate(vaild_links):
         # ---
