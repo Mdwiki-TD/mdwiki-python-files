@@ -67,6 +67,11 @@ def start_to_sql(tab):
     to_sql(tab, "enwiki_pageviews", columns=["title", "en_views"], title_column="title")
 
 
+def check_it(x, y, old_values):
+    # ---
+    return x not in old_values or not old_values.get(x)
+
+
 def get_old_values(json_file):
     # ---
     que = "select DISTINCT title, en_views from enwiki_pageviews"
@@ -78,7 +83,19 @@ def get_old_values(json_file):
     with open(json_file, "r", encoding="utf-8-sig") as file:
         printe.output(f"<<green>> read file: {json_file}")
         in_json = json.load(file)
-        old_values.update({x: y for x, y in in_json.items() if y and x not in old_values})
+        # ---
+        old_values.update({x: y for x, y in in_json.items() if check_it(x, y, old_values)})
+    # ---
+    if "merge" in sys.argv:
+        # ---
+        with open(json_file, "w", encoding="utf-8") as outfile:
+            json.dump(old_values, outfile, sort_keys=True, indent=2)
+        # ---
+        printe.output(f"<<green>> {len(old_values)} lines to {json_file}")
+        # ---
+        start_to_sql(old_values)
+        # ---
+        exit()
     # ---
     return old_values
 

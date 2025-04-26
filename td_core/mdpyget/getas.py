@@ -6,7 +6,7 @@
 وحفظها في Dashboard_path
 +
 قاعدة البيانات
-
+python3 core8/pwb.py mdpyget/getas newpages nodump
 python3 core8/pwb.py mdpyget/getas from_cats newpages nowork
 python3 core8/pwb.py mdpyget/getas newpages nowork
 python3 core8/pwb.py mdpyget/getas video
@@ -87,6 +87,11 @@ def start_to_sql(tab):
     to_sql(tab, "assessments", columns=["title", "importance"], title_column="title")
 
 
+def check_it(x, y, old_values):
+    # ---
+    return x not in old_values or old_values.get(x) in fals_ase
+
+
 def get_old_values(json_file):
     # ---
     que = "select DISTINCT title, importance from assessments"
@@ -98,7 +103,8 @@ def get_old_values(json_file):
     with open(json_file, "r", encoding="utf-8-sig") as file:
         printe.output(f"<<green>> read file: {json_file}")
         in_json = json.load(file)
-        old_values.update({x: y for x, y in in_json.items() if y and x not in old_values})
+        # ---
+        old_values.update({x: y for x, y in in_json.items() if check_it(x, y, old_values)})
     # ---
     old_dict = {}
     # ---
@@ -115,12 +121,21 @@ def get_old_values(json_file):
         # ---
         printe.output(f"<<green>> importance:({k}) count:({v})")
     # ---
+    if "merge" in sys.argv:
+        # ---
+        with open(json_file, "w", encoding="utf-8") as outfile:
+            json.dump(old_values, outfile, sort_keys=True, indent=2)
+        # ---
+        printe.output(f"<<green>> {len(old_values)} lines to {json_file}")
+        # ---
+        start_to_sql(old_values)
+        # ---
+        exit()
+    # ---
     return old_values
 
 
 def main():
-    # ---
-    printe.output("Get vaild_links from cat : RTT")
     # ---
     cat_get = "Videowiki scripts" if "video" in sys.argv else ""
     # ---
