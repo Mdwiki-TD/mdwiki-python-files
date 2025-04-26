@@ -74,6 +74,19 @@ def work_for_list(en_keys, old_values):
             lenn += 1 if importance else 0
             # ---
             # data_tab[1][title] = importance
+            # ---
+            old_importance = old_values.get(title, "")
+            # ---
+            if not old_importance:
+                old_values[title] = importance
+                continue
+            # ---
+            if importance.lower() in fals_ase:
+                continue
+            # ---
+            if importance.lower() != old_importance.lower():
+                printe.output(f"<<yellow>> {title} old:({old_importance}) new:({importance})")
+            # ---
             old_values[title] = importance
     # ---
     printe.output(f"len of new assessments:{lenn}")
