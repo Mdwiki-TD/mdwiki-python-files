@@ -24,7 +24,7 @@ import sys
 
 from apis import mdwiki_api
 from newapi import printe
-from mdcount.bots.links import get_valid_Links
+from mdcount.bots.links import get_links_from_cats
 from mdcount.bots import lead
 from mdpyget.bots.to_sql import to_sql
 from mdapi_sql import sql_for_mdwiki
@@ -70,7 +70,14 @@ def get_word_files():
     with open(json_file[0], "r", encoding="utf-8") as f:
         lead_words = json.load(f)
     # ---
-    printe.output(f'len of lead_words:{len(lead_words.keys())}')
+    que = "select DISTINCT w_title, w_lead_words, w_all_words from words"
+    # ---
+    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
+    all_words_n.update({x["w_title"]: x["w_all_words"] for x in in_sql if x["w_all_words"] > 0 and x["w_title"] not in all_words_n})
+    lead_words.update({x["w_title"]: x["w_lead_words"] for x in in_sql if x["w_lead_words"] > 0 and x["w_title"] not in lead_words})
+    # ---
+    printe.output(f'len of lead_words:{len(lead_words.keys())}, all :{len(all_words_n.keys())}')
 
 
 def log(file, table):
@@ -80,18 +87,45 @@ def log(file, table):
     printe.output(f'<<green>> {len(table)} lines to {file}')
 
 
-def get_old_values():
+def from_sql(old_values):
     # ---
-    que = "select DISTINCT w_title, w_lead_words, w_all_words from words"
+    que = """select title from titles_infos;"""
     # ---
-    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
-    all_words_n.update({x["w_title"]: x["w_all_words"] for x in in_sql if x["w_all_words"] > 0 and x["w_title"] not in all_words_n})
-    lead_words.update({x["w_title"]: x["w_lead_words"] for x in in_sql if x["w_lead_words"] > 0 and x["w_title"] not in lead_words})
+    titles2 = [q["title"] for q in sq]
     # ---
-    vaild_links = get_valid_Links(lead_words)
+    titles = [x for x in titles2 if x not in old_values]
     # ---
-    return vaild_links
+    printe.output(f"<<yellow>> sql: find {len(titles2)} titles, {len(titles)} to work. ")
+    # ---
+    return titles
+
+
+def make_old_values():
+    # ---
+    old_values = list(set(all_words_n.keys()) & set(lead_words.keys()))
+    # ---
+    old_values.extend([x for x in all_words_n.keys() if (x not in old_values and x.lower().startswith("video:"))])
+    # ---
+    return old_values
+
+
+def get_links():
+    # ---
+    titles=[]
+    # ---
+    old_values = make_old_values()
+    # ---
+    if "sql" in sys.argv:
+        titles=from_sql(old_values)
+    else:
+        titles=get_links_from_cats()
+    # ---
+    if "newpages" in sys.argv:
+        titles=[x for x in titles if (x not in old_values)]
+    # ---
+    return titles
 
 
 def mmain():
@@ -101,7 +135,7 @@ def mmain():
     n = 0
     limit = 100 if 'limit100' in sys.argv else 10000
     # ---
-    vaild_links = get_old_values()
+    vaild_links = get_links()
     # ---
     for n, x in enumerate(vaild_links):
         # ---
