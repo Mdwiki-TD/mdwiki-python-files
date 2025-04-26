@@ -20,6 +20,7 @@ from newapi import printe
 from newapi.wiki_page import NEW_API
 from mdpyget.pages_list import get_links_from_cats
 from mdpyget.bots.to_sql import to_sql
+from mdapi_sql import sql_for_mdwiki
 
 api_new = NEW_API("en", family="wikipedia")
 
@@ -33,7 +34,7 @@ else:
 # ---
 assessments_tab = {1: {}}
 # ---
-json_file = {0: f"{Dashboard_path}/Tables/jsons/assessments.json"}
+json_file = {1: f"{Dashboard_path}/Tables/jsons/assessments.json"}
 Nore = {1: False}
 # ---
 for arg in sys.argv:
@@ -42,10 +43,10 @@ for arg in sys.argv:
 
 
 def log(len_old):
-    with open(json_file[0], "w", encoding="utf-8") as outfile:
+    with open(json_file[1], "w", encoding="utf-8") as outfile:
         json.dump(assessments_tab[1], outfile, sort_keys=True)
     # ---
-    printe.output(f"<<green>> {len(assessments_tab[1])} lines to {json_file[0]}")
+    printe.output(f"<<green>> {len(assessments_tab[1])} lines to {json_file[1]}")
     printe.output(f"<<green>> len old assessments {len_old}")
 
 
@@ -86,6 +87,32 @@ def work_for_list(listn):
     printe.output(f"len of new assessments:{lenn}")
 
 
+def start_to_sql(tab):
+    tab = [{"title": x, "importance": v} for x, v in tab.items()]
+    # ---
+    to_sql(tab, "assessments", columns=["title", "importance"], title_column="title")
+
+
+def get_old_values():
+    # ---
+    printe.output(f"file_name:{json_file[1]}")
+    # ---
+    lala = ""
+    # ---
+    with open(json_file[1], "r", encoding="utf-8-sig") as listt:
+        lala = listt.read()
+    # ---
+    old_assess = json.loads(str(lala)) if str(lala) != "" else {}
+    # ---
+    que = "select DISTINCT title, importance from assessments"
+    # ---
+    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
+    old_assess.update({x["title"]: x["importance"] for x in in_sql if x["importance"] and x["title"] not in old_assess})
+    # ---
+    return old_assess
+
+
 def mmain():
     # ---
     printe.output("Get vaild_links from cat : RTT")
@@ -96,18 +123,9 @@ def mmain():
     # ---
     printe.output(f"len of vaild_links: {len(vaild_links)}")
     # ---
-    lala = ""
-    # ---
-    with open(json_file[0], "r", encoding="utf-8-sig") as listt:
-        lala = listt.read()
-    # ---
-    printe.output(f"file_name:{json_file[0]}")
-    fa = str(lala)
-    old_assess = json.loads(fa) if fa != "" else {}
+    old_assess = get_old_values()
     # ---
     len_old = len(old_assess)
-    # ---
-    assessments_tab[1] = dict(old_assess.items())
     # ---
     if "newpages" in sys.argv:  # vaild_links
         vaild_links2 = vaild_links
@@ -117,6 +135,8 @@ def mmain():
     # ---
     if "video" in sys.argv:
         vaild_links = [x for x in vaild_links if x.startswith("Video:")]
+    # ---
+    assessments_tab[1] = dict(old_assess.items())
     # ---
     vaild_links.sort()
     # ---
@@ -135,12 +155,6 @@ def mmain():
     log(len_old)
     # ---
     start_to_sql(assessments_tab[1])
-
-
-def start_to_sql(tab):
-    tab = [{"title": x, "importance": v} for x, v in tab.items()]
-    # ---
-    to_sql(tab, "assessments", columns=["title", "importance"], title_column="title")
 
 
 def test():

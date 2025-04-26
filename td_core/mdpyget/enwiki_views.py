@@ -21,6 +21,7 @@ from newapi import printe
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from mdpyget.pages_list import get_links_from_cats
 from mdpyget.bots.to_sql import to_sql
+from mdapi_sql import sql_for_mdwiki
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
@@ -75,14 +76,26 @@ def start_to_sql(tab):
     to_sql(tab, "enwiki_pageviews", columns=["title", "en_views"], title_column="title")
 
 
-def main():
-    # ---
+def get_old_views(enwiki_pageviews):
     old_views = {}
-    # ---
-    enwiki_pageviews = Dashboard_path + "/Tables/jsons/enwiki_pageviews.json"
     # ---
     with open(enwiki_pageviews, "r", encoding="utf-8-sig") as file:
         old_views = json.load(file)
+    # ---
+    que = "select DISTINCT title, en_views from enwiki_pageviews"
+    # ---
+    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
+    old_views.update({x["title"]: x["en_views"] for x in in_sql if x["en_views"] > 0 and x["title"] not in old_views})
+    # ---
+    return old_views
+
+
+def main():
+    # ---
+    enwiki_pageviews = Dashboard_path + "/Tables/jsons/enwiki_pageviews.json"
+    # ---
+    old_views = get_old_views(enwiki_pageviews)
     # ---
     n_views = dict(old_views.items())
     # ---

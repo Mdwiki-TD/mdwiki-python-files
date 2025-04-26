@@ -20,16 +20,15 @@ python3 core8/pwb.py mdcount/words sql
 
 import os
 import json
-
 import sys
 
-# ---
 from apis import mdwiki_api
 from newapi import printe
 from mdcount.bots.links import get_valid_Links
 from mdcount.bots import lead
 from mdpyget.bots.to_sql import to_sql
-
+from mdapi_sql import sql_for_mdwiki
+# ---
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
@@ -40,6 +39,17 @@ json_file = {}
 lead_words = {}
 # ---
 all_words_n = {}
+
+Nore = {1: False}
+for arg in sys.argv:
+    if arg in ['new', 'listnew', 'less100', 'more400']:
+        Nore[1] = True
+
+
+def start_to_sql():
+    data2 = [{"w_title": x, "w_lead_words": v, "w_all_words": all_words_n.get(x, 0)} for x, v in lead_words.items()]
+    # ---
+    to_sql(data2, "words", ["w_title", "w_lead_words", "w_all_words"], title_column="w_title")
 
 
 def get_word_files():
@@ -62,12 +72,6 @@ def get_word_files():
     # ---
     printe.output(f'len of lead_words:{len(lead_words.keys())}')
 
-    # ---
-
-
-# ---
-get_word_files()
-
 
 def log(file, table):
     with open(file, "w", encoding="utf-8") as aa:
@@ -76,38 +80,41 @@ def log(file, table):
     printe.output(f'<<green>> {len(table)} lines to {file}')
 
 
-# ---
-Nore = {1: False}
-for arg in sys.argv:
-    if arg in ['new', 'listnew', 'less100', 'more400']:
-        Nore[1] = True
+def get_old_views():
+    # ---
+    que = "select DISTINCT w_title, w_lead_words, w_all_words from words"
+    # ---
+    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
+    all_words_n.update({x["w_title"]: x["w_all_words"] for x in in_sql if x["w_all_words"] > 0 and x["w_title"] not in all_words_n})
+    lead_words.update({x["w_title"]: x["w_lead_words"] for x in in_sql if x["w_lead_words"] > 0 and x["w_title"] not in lead_words})
+    # ---
+    vaild_links = get_valid_Links(lead_words)
+    # ---
+    return vaild_links
 
 
 def mmain():
     # ---
+    get_word_files()
+    # ---
     n = 0
     limit = 100 if 'limit100' in sys.argv else 10000
     # ---
-    vaild_links = get_valid_Links(lead_words)
+    vaild_links = get_old_views(lead_words)
     # ---
-    kkk = {1: vaild_links}
-    # ---
-    for x in kkk[1]:
+    for n, x in enumerate(vaild_links):
         # ---
         x = x.replace("\\'", "'")
         # ---
-        n += 1
-        # ---
         printe.output('------------------')
-        printe.output('page %d from %d, x:%s' % (n, len(kkk[1]), x))
+        printe.output(f'page {n} from {len(vaild_links)}, x:{x}')
         # ---
         if n >= limit:
             break
         # ---
         text = mdwiki_api.GetPageText(x)
         # ---
-        # pageword = mdwiki_api.wordcount(x)
-        # leadword = lead.count_lead(x)
         leadword, pageword = lead.count_all(title='', text=text)
         # ---
         printe.output(f'\t\t pageword:{pageword}')
@@ -124,12 +131,6 @@ def mmain():
     log(json_file[1], all_words_n)
     # ---
     start_to_sql()
-
-
-def start_to_sql():
-    data2 = [{"w_title": x, "w_lead_words": v, "w_all_words": all_words_n.get(x, 0)} for x, v in lead_words.items()]
-    # ---
-    to_sql(data2, "words", ["w_title", "w_lead_words", "w_all_words"], title_column="w_title")
 
 
 def test():

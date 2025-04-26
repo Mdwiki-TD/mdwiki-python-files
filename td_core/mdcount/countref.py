@@ -7,7 +7,7 @@
 +
 قاعدة البيانات
 
-python3 $HOME/pybot/md_core/mdcount/countref.py newpages
+python3 $HOME/pybot/td_core/mdcount/countref.py newpages
 
 python3 core8/pwb.py mdcount/countref newpages
 
@@ -19,12 +19,12 @@ import os
 import json
 import sys
 
-from mdapi_sql import sql_for_mdwiki
 from apis import mdwiki_api
 from newapi import printe
 from mdcount.bots.regex_scanner import RegexScanner
 from mdcount.bots.links import get_links_from_cats
 from mdpyget.bots.to_sql import to_sql
+from mdapi_sql import sql_for_mdwiki
 # ---
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
@@ -152,6 +152,7 @@ def from_sql(old_values):
     titles = [x for x in titles2 if x not in old_values]
     # ---
     printe.output(f"<<yellow>> sql: find {len(titles2)} titles, {len(titles)} to work. ")
+    # ---
     return titles
 
 
@@ -162,30 +163,30 @@ def make_old_values():
     # remove duplicates from list
     list_fu = list(set(list_fu))
     # ---
-    list_ma = {1: [x for x in list_fu if (x in all_tab_ref[1] and (x in lead_tab_ref[1] or x.lower().startswith("video:")))]}
+    list_ma = [x for x in list_fu if (x in all_tab_ref[1] and (x in lead_tab_ref[1] or x.lower().startswith("video:")))]
     # ---
     return list_ma
 
 
 def get_links():
     # ---
-    titles = []
+    titles=[]
     # ---
-    old_values = make_old_values()
+    old_values=make_old_values()
     # ---
     if "sql" in sys.argv:
-        titles = from_sql(old_values)
+        titles=from_sql(old_values)
     else:
-        titles = get_links_from_cats()
+        titles=get_links_from_cats()
     # ---
     if "newpages" in sys.argv:
-        titles = [x for x in titles if (x not in old_values)]
+        titles=[x for x in titles if (x not in old_values)]
     # ---
     return titles
 
 
 def start_to_sql():
-    data2 = [{"r_title": x, "r_lead_refs": v, "r_all_refs": all_tab_ref[1].get(x, 0)} for x, v in lead_tab_ref[1].items()]
+    data2=[{"r_title": x, "r_lead_refs": v, "r_all_refs": all_tab_ref[1].get(x, 0)} for x, v in lead_tab_ref[1].items()]
     # ---
     to_sql(data2, "refs_counts", ["r_title", "r_lead_refs", "r_all_refs"], title_column="r_title")
 
@@ -194,20 +195,20 @@ def mai():
     # ---
     get_jsons()
     # ---
-    numb = 0
+    numb=0
     # ---
-    limit = 100 if "limit100" in sys.argv else 10000
+    limit=100 if "limit100" in sys.argv else 10000
     # ---
     # python3 core8/pwb.py mdcount/countref -title:Testosterone_\(medication\)
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(":")
+        arg, _, value=arg.partition(":")
         # ---
         if arg == "-title":
-            vaild_links[1] = [value.replace("_", " ")]
+            vaild_links[1]=[value.replace("_", " ")]
     # ---
     if not vaild_links[1]:
-        vaild_links[1] = get_links()
+        vaild_links[1]=get_links()
     # ---
     for x in vaild_links[1]:
         # ---
@@ -234,11 +235,11 @@ def mai():
 def test():
     # python3 core8/pwb.py mdcount/countref test
     # ---
-    lead_tab_ref[1]["Yemen1"] = 50
-    all_tab_ref[1]["Yemen1"] = 50
+    lead_tab_ref[1]["Yemen1"]=50
+    all_tab_ref[1]["Yemen1"]=50
     # ---
-    lead_tab_ref[1]["Sana'a"] = 500
-    all_tab_ref[1]["Sana'a"] = 100
+    lead_tab_ref[1]["Sana'a"]=500
+    all_tab_ref[1]["Sana'a"]=100
     # ---
     start_to_sql()
 
