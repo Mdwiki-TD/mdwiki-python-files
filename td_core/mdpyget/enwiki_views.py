@@ -89,13 +89,15 @@ def main():
     # ---
     cat_get = "Videowiki scripts" if "video" in sys.argv else ""
     # ---
-    vaild_links = get_links_from_cats(cat_get)
-    # ---
-    printe.output(f"len of vaild_links: {len(vaild_links)}")
-    # ---
     json_file = f"{Dashboard_path}/Tables/jsons/enwiki_pageviews.json"
     # ---
     old_values = get_old_values(json_file)
+    vaild_links = list(old_values.keys())
+    # ---
+    if "from_cats" in sys.argv:
+        vaild_links = get_links_from_cats(cat_get)
+    # ---
+    printe.output(f"len of vaild_links: {len(vaild_links)}")
     # ---
     len_old = len(old_values)
     # ---

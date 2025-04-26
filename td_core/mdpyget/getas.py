@@ -7,6 +7,7 @@
 +
 قاعدة البيانات
 
+python3 core8/pwb.py mdpyget/getas from_cats newpages nowork
 python3 core8/pwb.py mdpyget/getas newpages nowork
 python3 core8/pwb.py mdpyget/getas video
 
@@ -98,6 +99,21 @@ def get_old_values(json_file):
         in_json = json.load(file)
         old_values.update({x: y for x, y in in_json.items() if y and x not in old_values})
     # ---
+    old_dict = {}
+    # ---
+    for x, y in old_values.items():
+        # ---
+        old_dict.setdefault(y, 0)
+        # ---
+        old_dict[y] += 1
+    # ---
+    # sort the dictionary by value
+    old_dict = dict(sorted(old_dict.items(), key=lambda item: item[1], reverse=True))
+    # ---
+    for k, v in old_dict.items():
+        # ---
+        printe.output(f"<<green>> importance:({k}) count:({v})")
+    # ---
     return old_values
 
 
@@ -107,13 +123,15 @@ def main():
     # ---
     cat_get = "Videowiki scripts" if "video" in sys.argv else ""
     # ---
-    vaild_links = get_links_from_cats(cat_get)
-    # ---
-    printe.output(f"len of vaild_links: {len(vaild_links)}")
-    # ---
     json_file = f"{Dashboard_path}/Tables/jsons/assessments.json"
     # ---
     old_values = get_old_values(json_file)
+    vaild_links = list(old_values.keys())
+    # ---
+    if "from_cats" in sys.argv:
+        vaild_links = get_links_from_cats(cat_get)
+    # ---
+    printe.output(f"len of vaild_links: {len(vaild_links)}")
     # ---
     len_old = len(old_values)
     # ---
