@@ -47,9 +47,7 @@ def start_to_sql():
     do_to_sql(refs_tab_data["all"], refs_tab_data["lead"], ty="ref")
 
 
-def count_words(title):
-    # ---
-    text = mdwiki_api.GetPageText(title)
+def count_words(title, text):
     # ---
     lead_c, all_c = lead.count_all(title='', text=text)
     # ---
@@ -59,9 +57,7 @@ def count_words(title):
     printe.output(f"<<green>> all:{all_c} \t lead:{lead_c}")
 
 
-def count_refs(title):
-    # ---
-    text = mdwiki_api.GetPageText(title)
+def count_refs(title, text):
     # ---
     # extend short refs
     text2 = text
@@ -166,8 +162,10 @@ def main():
         if numb >= limit:
             break
         # ---
-        count_words(x)
-        count_refs(x)
+        text = mdwiki_api.GetPageText(x)
+        # ---
+        count_words(x, text)
+        count_refs(x, text)
         # ---
         # if numb == 10 or str(numb).endswith("00"):
         #     logaa(file_lead_words, words_tab_data["lead"])

@@ -97,7 +97,10 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
         print(f"to_sql.py update_table({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def update_table_2(list_of_lines, table_name, columns_to_set=[], lento=10, columns_where=[]):
+def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, columns_where=None):
+    # ---
+    columns_to_set = columns_to_set or []
+    columns_where = columns_where or []
     # ---
     print(f"update_table_2({table_name}): list_of_lines: {len(list_of_lines)}")
     # ---

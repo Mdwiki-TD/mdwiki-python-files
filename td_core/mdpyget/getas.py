@@ -205,7 +205,7 @@ def main():
     # ---
     data_tab[1] = work_for_list(vaild_links, old_values)
     # ---
-    if "nodump" in sys.argv:
+    if "nodump" not in sys.argv:
         # ---
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(data_tab[1], outfile, sort_keys=True, indent=2)

@@ -151,7 +151,7 @@ def main():
     # ---
     data_tab[1] = make_n_views(vaild_links, data_tab[1])
     # ---
-    if "nodump" in sys.argv:
+    if "nodump" not in sys.argv:
         # ---
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(data_tab[1], outfile, sort_keys=True, indent=2)

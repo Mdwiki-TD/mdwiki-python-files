@@ -38,7 +38,7 @@ def make_old_values(all_data, lead_data):
     # ---
     list_ma = [x for x in old_values if (x in all_data and (x in lead_data))]
     # ---
-    list_ma.extend([x for x in all_data.keys() if (x not in old_values and x.lower().startswith("video:"))])
+    list_ma.extend([x for x in all_data.keys() if (x not in list_ma and x.lower().startswith("video:"))])
     # ---
     return list_ma
 
