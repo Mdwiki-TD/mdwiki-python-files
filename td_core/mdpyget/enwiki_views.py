@@ -31,19 +31,7 @@ else:
 data_tab = {1: {}}
 
 
-def make_n_views(old_values, vaild_links, views_d):
-    # ---
-    en_keys = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
-    # ---
-    en_keys.append("Cisatracurium")
-    # ---
-    print(f"start get_views_with rest_v1: length: {len(en_keys)}")
-    # ---
-    if "newpages" in sys.argv:
-        en_keys_2 = list(en_keys)
-        en_keys = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
-        # ---
-        printe.output(f"en_keys:{len(en_keys_2)}, new en_keys:{len(en_keys)}")
+def make_n_views(en_keys, old_values):
     # ---
     en_keys = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in en_keys]
     # ---
@@ -65,11 +53,11 @@ def make_n_views(old_values, vaild_links, views_d):
         if enwiki_to_mdwiki.get(k):
             k = enwiki_to_mdwiki.get(k)
         # ---
-        views_d[k] = view
+        old_values[k] = view
     # ---
-    printe.output(f"no_views:{no_views},\t len of views_d: {len(views_d.keys())}")
+    printe.output(f"no_views:{no_views},\t len of old_values: {len(old_values.keys())}")
     # ---
-    return views_d
+    return old_values
 
 
 def start_to_sql(tab):
@@ -112,7 +100,18 @@ def main():
     # ---
     data_tab[1] = dict(old_values.items())
     # ---
-    data_tab[1] = make_n_views(old_values, vaild_links, data_tab[1])
+    vaild_links = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
+    # ---
+    if "newpages" in sys.argv:
+        en_keys_2 = list(vaild_links)
+        vaild_links = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
+        # ---
+        printe.output(f"vaild_links:{len(en_keys_2)}, new vaild_links:{len(vaild_links)}")
+    # ---
+    if "video" in sys.argv:
+        vaild_links = [x for x in vaild_links if x.startswith("Video:")]
+    # ---
+    data_tab[1] = make_n_views(vaild_links, data_tab[1])
     # ---
     if "nodump" in sys.argv:
         # ---

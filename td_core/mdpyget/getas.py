@@ -35,41 +35,47 @@ else:
 data_tab = {1: {}}
 
 
-def work_for_list(listn):
+def work_for_list(en_keys, old_values):
     # ---
     # من ميد إلى الإنجليزية
-    # listo = [mdwiki_to_enwiki.get(cc, cc) for cc in listn]
+    # listo = [mdwiki_to_enwiki.get(cc, cc) for cc in en_keys]
     # ---
-    listn = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in listn]
-    # ---
-    result = api_new.get_pageassessments("|".join(listn))
-    # ---
-    ase = {x["title"]: x for x in result}
+    en_keys = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in en_keys]
     # ---
     lenn = 0
     # ---
-    for title, tabe in ase.items():
+    for i in range(0, len(en_keys), 50):
+        group = en_keys[i : i + 50]
         # ---
-        # {'pageid': 3186837, 'ns': 0, 'title': 'WAGR syndrome', 'pageassessments': {'Medicine': {'class': 'Start', 'importance': 'Low'}}}
+        result = api_new.get_pageassessments("|".join(group))
         # ---
-        importance = tabe.get("pageassessments", {}).get("Medicine", {}).get("importance", "")
+        ase = {x["title"]: x for x in result}
         # ---
-        if importance.lower() in fals_ase and title.startswith("Wikipedia:VideoWiki/"):
-            importance = tabe.get("pageassessments", {}).get("Videowiki", {}).get("importance", "")
-        # ---
-        if "video" in sys.argv:
-            printe.output(f"{title} : {importance}")
-        # ---
-        title = title.replace("Wikipedia:VideoWiki/", "Video:")
-        # ---
-        # من الإنجليزية إلى ميد
-        title = enwiki_to_mdwiki.get(title, title)
-        # ---
-        lenn += 1 if importance else 0
-        # ---
-        data_tab[1][title] = importance
+        for title, tabe in ase.items():
+            # ---
+            # {'pageid': 3186837, 'ns': 0, 'title': 'WAGR syndrome', 'pageassessments': {'Medicine': {'class': 'Start', 'importance': 'Low'}}}
+            # ---
+            importance = tabe.get("pageassessments", {}).get("Medicine", {}).get("importance", "")
+            # ---
+            if importance.lower() in fals_ase and title.startswith("Wikipedia:VideoWiki/"):
+                importance = tabe.get("pageassessments", {}).get("Videowiki", {}).get("importance", "")
+            # ---
+            if "video" in sys.argv:
+                printe.output(f"{title} : {importance}")
+            # ---
+            title = title.replace("Wikipedia:VideoWiki/", "Video:")
+            # ---
+            # من الإنجليزية إلى ميد
+            title = enwiki_to_mdwiki.get(title, title)
+            # ---
+            lenn += 1 if importance else 0
+            # ---
+            # data_tab[1][title] = importance
+            old_values[title] = importance
     # ---
     printe.output(f"len of new assessments:{lenn}")
+    # ---
+    return old_values
 
 
 def start_to_sql(tab):
@@ -110,30 +116,20 @@ def main():
     # ---
     len_old = len(old_values)
     # ---
-    if "newpages" in sys.argv:  # vaild_links
-        vaild_links2 = vaild_links
-        vaild_links = [xp for xp in vaild_links2 if (xp not in old_values or old_values.get(xp, "").lower() in fals_ase)]
+    data_tab[1] = dict(old_values.items())
+    # ---
+    # vaild_links = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
+    # ---
+    if "newpages" in sys.argv:
+        en_keys_2 = list(vaild_links)
+        vaild_links = [xp for xp in en_keys_2 if (xp not in old_values or old_values.get(xp, "").lower() in fals_ase)]
         # ---
-        printe.output(f"Category-members:{len(vaild_links2)}, New-members:{len(vaild_links)}")
+        printe.output(f"vaild_links:{len(en_keys_2)}, new vaild_links:{len(vaild_links)}")
     # ---
     if "video" in sys.argv:
         vaild_links = [x for x in vaild_links if x.startswith("Video:")]
     # ---
-    data_tab[1] = dict(old_values.items())
-    # ---
-    vaild_links.sort()
-    # ---
-    kkk = {1: vaild_links}
-    # ---
-    if "new" not in sys.argv:
-        kkk[1] = []
-        for x in vaild_links:
-            x2 = x[0].upper() + x[1:]
-            kkk[1].append(x2)
-    # ---
-    for i in range(0, len(kkk[1]), 50):
-        group = kkk[1][i : i + 50]
-        work_for_list(group)
+    data_tab[1] = work_for_list(vaild_links, old_values)
     # ---
     if "nodump" in sys.argv:
         # ---
