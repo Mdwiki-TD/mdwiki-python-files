@@ -7,8 +7,10 @@
 +
 قاعدة البيانات
 
+python3 core8/pwb.py mdpyget/enwiki_views merge
+python3 core8/pwb.py mdpyget/enwiki_views from_cats newpages nodump
 python3 core8/pwb.py mdpyget/enwiki_views newpages nodump
-python3 core8/pwb.py mdpyget/enwiki_views newpages
+python3 core8/pwb.py mdpyget/enwiki_views newpages nowork
 
 """
 import re
@@ -21,26 +23,17 @@ from newapi import printe
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from mdpyget.pages_list import get_links_from_cats
 from mdpyget.bots.to_sql import to_sql
+from mdapi_sql import sql_for_mdwiki
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
     Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
+# ---
+data_tab = {1: {}}
 
 
-def make_n_views(old_views, RTT, n_views):
-    # ---
-    en_keys = [mdwiki_to_enwiki.get(cc, cc) for cc in RTT]
-    # ---
-    en_keys.append("Cisatracurium")
-    # ---
-    print(f"start get_views_with rest_v1: length: {len(en_keys)}")
-    # ---
-    if "newpages" in sys.argv:
-        en_keys_2 = list(en_keys)
-        en_keys = [xp for xp in en_keys_2 if old_views.get(xp, 0) < 10]
-        # ---
-        printe.output(f"en_keys:{len(en_keys_2)}, new en_keys:{len(en_keys)}")
+def make_n_views(en_keys, old_values):
     # ---
     en_keys = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in en_keys]
     # ---
@@ -53,7 +46,8 @@ def make_n_views(old_views, RTT, n_views):
     no_views = 0
     # ---
     for k, view in enviews.items():
-        if view == 0:
+        # ---
+        if view == 0 or view == "0" or not view:
             no_views += 1
             continue
         # ---
@@ -62,11 +56,11 @@ def make_n_views(old_views, RTT, n_views):
         if enwiki_to_mdwiki.get(k):
             k = enwiki_to_mdwiki.get(k)
         # ---
-        n_views[k] = view
+        old_values[k] = view
     # ---
-    printe.output(f"no_views:{no_views},\t len of n_views: {len(n_views.keys())}")
+    printe.output(f"no_views:{no_views},\t len of old_values: {len(old_values.keys())}")
     # ---
-    return n_views
+    return old_values
 
 
 def start_to_sql(tab):
@@ -75,28 +69,112 @@ def start_to_sql(tab):
     to_sql(tab, "enwiki_pageviews", columns=["title", "en_views"], title_column="title")
 
 
+def check_it(x, y, old_values):
+    # ---
+    if not old_values.get(x):
+        return True
+    # ---
+    if old_values.get(x) == 0:
+        return True
+    # ---
+    # return x not in old_values or not old_values.get(x)
+    return False
+
+
+def get_old_values(json_file):
+    # ---
+    que = "select DISTINCT title, en_views from enwiki_pageviews"
+    # ---
+    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
+    old_values = {x["title"]: x["en_views"] for x in in_sql}
+    # ---
+    with open(json_file, "r", encoding="utf-8-sig") as file:
+        printe.output(f"<<green>> read file: {json_file}")
+        in_json = json.load(file)
+        # ---
+        data2 = {x: y for x, y in in_json.items() if check_it(x, y, old_values)}
+        # ---
+        for x, y in data2.items():
+            old_values[x] = y
+    # ---
+    if "merge" in sys.argv:
+        # ---
+        with open(json_file, "w", encoding="utf-8") as outfile:
+            json.dump(old_values, outfile, sort_keys=True, indent=2)
+        # ---
+        printe.output(f"<<green>> {len(old_values)} lines to {json_file}")
+        # ---
+        start_to_sql(old_values)
+        # ---
+        exit()
+    # ---
+    return old_values
+
+
 def main():
     # ---
-    old_views = {}
+    cat_get = "Videowiki scripts" if "video" in sys.argv else ""
     # ---
-    enwiki_pageviews = Dashboard_path + "/Tables/jsons/enwiki_pageviews.json"
+    json_file = f"{Dashboard_path}/Tables/jsons/enwiki_pageviews.json"
     # ---
-    with open(enwiki_pageviews, "r", encoding="utf-8-sig") as file:
-        old_views = json.load(file)
+    old_values = get_old_values(json_file)
+    vaild_links = list(old_values.keys())
     # ---
-    n_views = dict(old_views.items())
+    if "from_cats" in sys.argv:
+        vaild_links = get_links_from_cats(cat_get)
     # ---
-    RTT = get_links_from_cats()
+    printe.output(f"len of vaild_links: {len(vaild_links)}")
     # ---
-    n_views = make_n_views(old_views, RTT, n_views)
+    len_old = len(old_values)
     # ---
-    if "nodump" in sys.argv:
+    data_tab[1] = dict(old_values.items())
+    # ---
+    vaild_links = [mdwiki_to_enwiki.get(cc, cc) for cc in vaild_links]
+    # ---
+    if "video" in sys.argv:
+        en_keys_2 = list(vaild_links)
         # ---
-        with open(enwiki_pageviews, "w", encoding="utf-8") as outfile:
-            json.dump(n_views, outfile, sort_keys=True, indent=2)
+        vaild_links = [x for x in vaild_links if x.lower().startswith("video:")]
+        # ---
+        printe.output(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
     # ---
-    start_to_sql(n_views)
+    elif "newpages" in sys.argv:
+        en_keys_2 = list(vaild_links)
+        # ---
+        vaild_links = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
+        # ---
+        printe.output(f"old vaild_links: {len(en_keys_2)}, new newpages: {len(vaild_links)}")
+    # ---
+    if "nowork" in sys.argv:
+        return
+    # ---
+    data_tab[1] = make_n_views(vaild_links, data_tab[1])
+    # ---
+    if "nodump" not in sys.argv:
+        # ---
+        with open(json_file, "w", encoding="utf-8") as outfile:
+            json.dump(data_tab[1], outfile, sort_keys=True, indent=2)
+    # ---
+    printe.output(f"<<green>> {len(data_tab[1])} lines to {json_file}")
+    printe.output(f"<<green>> len old assessments {len_old}")
+    # ---
+    start_to_sql(data_tab[1])
+
+
+def test():
+    # python3 core8/pwb.py mdpyget/getas test
+    # ---
+    data_tab[1]["Yemen1"] = "Top"
+    # ---
+    data_tab[1]["Sana'a"] = "Mid"
+    data_tab[1]["Sanax"] = "Mid"
+    # ---
+    start_to_sql(data_tab[1])
 
 
 if __name__ == "__main__":
-    main()
+    if "test" in sys.argv:
+        test()
+    else:
+        main()
