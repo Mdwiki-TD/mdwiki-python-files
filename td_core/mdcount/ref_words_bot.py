@@ -50,20 +50,31 @@ def logaa(file, table):
     printe.output(f"<<green>> {len(table)} lines to {file}")
 
 
-def get_jsons(file_all, file_lead, ty):
+def check_it(x, y, old_values):
     # ---
-    all_data = {}
+    if not old_values.get(x):
+        return True
     # ---
-    with open(file_all, "r", encoding="utf-8") as f:
-        all_data = json.load(f)
+    if old_values.get(x) == 0:
+        return True
     # ---
-    lead_data = {}
+    # return x not in old_values or not old_values.get(x)
+    return False
+
+
+def get_data(file, ty_data):
     # ---
-    with open(file_lead, "r", encoding="utf-8") as f:
-        lead_data = json.load(f)
+    with open(file, "r", encoding="utf-8") as f:
+        js_data = json.load(f)
+        js_data = {x: ref for x, ref in js_data.items() if check_it(x, ref, ty_data)}
+        # ---
+        for x, y in js_data.items():
+            ty_data[x] = y
     # ---
-    all_data = {x: ref for x, ref in all_data.items() if ref > 0}
-    lead_data = {x: ref for x, ref in lead_data.items() if ref > 0}
+    return ty_data
+
+
+def get_jsons_new(file_all, file_lead, ty):
     # ---
     if ty == "ref":
         table = "refs_counts"
@@ -80,10 +91,62 @@ def get_jsons(file_all, file_lead, ty):
     # ---
     in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
-    all_data.update({x[title_c]: x[all_c] for x in in_sql if x[all_c] > 0 and x[title_c] not in all_data})
+    ty_all_data = {x[title_c]: x[all_c] for x in in_sql}  # if x[all_c] > 0 and x[title_c] not in ty_all_data}
     # ---
-    lead_data.update({x[title_c]: x[lead_c] for x in in_sql if x[lead_c] > 0 and x[title_c] not in lead_data})
+    all_data = get_data(file_all, ty_all_data)
+    # ---
+    ty_lead_data = {x[title_c]: x[lead_c] for x in in_sql}  # if x[lead_c] > 0 and x[title_c] not in ty_data}
+    # ---
+    lead_data = get_data(file_lead, ty_lead_data)
     # ---
     printe.output(f'len of lead_data:{len(lead_data.keys())}, all :{len(all_data.keys())}')
+    # ---
+    # sort lead_data by name
+    lead_data = {k: lead_data[k] for k in sorted(lead_data)}
+    all_data = {k: all_data[k] for k in sorted(all_data)}
+    # ---
+    return all_data, lead_data
+
+
+def get_jsons(file_all, file_lead, ty):
+    # ---
+    if ty == "ref":
+        table = "refs_counts"
+        title_c = "r_title"
+        all_c = "r_all_refs"
+        lead_c = "r_lead_refs"
+    elif ty == "word":
+        table = "words"
+        title_c = "w_title"
+        all_c = "w_all_words"
+        lead_c = "w_lead_words"
+    # ---
+    que = f"select DISTINCT {title_c}, {lead_c}, {all_c} from {table}"
+    # ---
+    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
+    all_data = {x[title_c]: x[all_c] for x in in_sql}  # if x[all_c] > 0 and x[title_c] not in all_data}
+    # ---
+    lead_data = {x[title_c]: x[lead_c] for x in in_sql}  # if x[lead_c] > 0 and x[title_c] not in lead_data}
+    # ---
+    with open(file_all, "r", encoding="utf-8") as f:
+        js_alldata = json.load(f)
+        js_alldata = {x: ref for x, ref in js_alldata.items() if check_it(x, ref, all_data)}
+        # ---
+        for x, y in js_alldata.items():
+            all_data[x] = y
+    # ---
+    with open(file_lead, "r", encoding="utf-8") as f:
+        js_leaddata = json.load(f)
+        js_leaddata = {x: ref for x, ref in js_leaddata.items() if check_it(x, ref, lead_data)}
+        # ---
+        for x, y in js_leaddata.items():
+            lead_data[x] = y
+    # ---
+    printe.output(f'len of lead_data:{len(lead_data.keys())}, all :{len(all_data.keys())}')
+    # ---
+    # sort lead_data by name
+    lead_data = {k: lead_data[k] for k in sorted(lead_data)}
+    all_data = {k: all_data[k] for k in sorted(all_data)}
     # ---
     return all_data, lead_data

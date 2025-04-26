@@ -8,6 +8,7 @@
 قاعدة البيانات
 
 
+python3 core8/pwb.py mdcount/countref merge
 python3 core8/pwb.py mdcount/countref newpages
 
 python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
@@ -15,13 +16,14 @@ python3 core8/pwb.py mdcount/countref -title:Esophageal_rupture
 """
 
 import os
+import json
 import sys
 
 from apis import mdwiki_api
 from newapi import printe
 from mdcount.bots.links import get_links_from_cats
 from mdapi_sql import sql_for_mdwiki
-from mdcount.ref_words_bot import get_jsons, logaa, make_old_values, do_to_sql
+from mdcount.ref_words_bot import logaa, make_old_values, do_to_sql, get_jsons_new
 from mdcount.bots.countref_bots import count_ref_from_text
 # ---
 if os.getenv("HOME"):
@@ -93,7 +95,21 @@ def get_links():
 
 def main():
     # ---
-    all_tab_data[1], lead_tab_data[1] = get_jsons(file_all, file_lead, "ref")
+    all_tab_data[1], lead_tab_data[1] = get_jsons_new(file_all, file_lead, "ref")
+    # ---
+    if "merge" in sys.argv:
+        # ---
+        with open(file_all, "w", encoding="utf-8") as outfile:
+            printe.output(f"<<green>> {len(all_tab_data[1])} lines to {file_all}")
+            json.dump(all_tab_data[1], outfile, sort_keys=True, indent=2)
+        # ---
+        with open(file_lead, "w", encoding="utf-8") as outfile:
+            printe.output(f"<<green>> {len(lead_tab_data[1])} lines to {file_lead}")
+            json.dump(lead_tab_data[1], outfile, sort_keys=True, indent=2)
+        # ---
+        start_to_sql()
+        # ---
+        exit()
     # ---
     limit = 100 if "limit100" in sys.argv else 10000
     # ---
