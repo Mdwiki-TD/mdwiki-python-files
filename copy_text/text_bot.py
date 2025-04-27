@@ -4,8 +4,7 @@
 """
 import re
 from apis import mdwiki_api
-# from newapi.super import super_page
-# from newapi.super import catdepth_new
+# from newapi.super import super_page, catdepth_new
 
 # from copy_to_en.bots import medwiki_account
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
