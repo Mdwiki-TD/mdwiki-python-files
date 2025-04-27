@@ -7,8 +7,9 @@ import sys
 import time
 
 from apis import wikidataapi
-from newapi import printe
-from newapi.wd_sparql import get_query_result
+from newapi import printe, wd_sparql
+
+get_query_result = wd_sparql.get_query_result
 
 sys.argv.append("workhimo")
 # wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
