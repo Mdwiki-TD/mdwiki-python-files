@@ -73,6 +73,7 @@ def gt_arg(temp, name):
 
 class AddArchiveDate:
     def __init__(self):
+        self.text = ""
         pass
 
     def run_archive(self):
