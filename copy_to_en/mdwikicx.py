@@ -23,18 +23,18 @@ from mdapi_sql import sql_for_mdwiki
 
 # ---
 from copy_to_en.bots import medwiki_account
-from newapi.toolforge_page import catdepth_new, super_page
+from newapi import toolforge_page
 # ---
 User_tables_cx = {
     "username": medwiki_account.username_cx,
     "password": medwiki_account.password_cx,
 }
 # ---
-super_page.add_Usertables(User_tables_cx, "toolforge")
-catdepth_new.add_Usertables(User_tables_cx, "toolforge")
+toolforge_page.super_page.add_Usertables(User_tables_cx, "toolforge")
+toolforge_page.catdepth_new.add_Usertables(User_tables_cx, "toolforge")
 # ---
-CatDepth = catdepth_new.subcatquery
-MainPage = super_page.MainPage
+CatDepth = toolforge_page.catdepth_new.subcatquery
+MainPage = toolforge_page.super_page.MainPage
 # ---
 Dir = Path(__file__).parent
 
