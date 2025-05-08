@@ -45,10 +45,10 @@ def dodo_sql():
     len_done_target = 0
     # ---
     for tab in sq:
-        title = tab["title"]
-        user = tab["user"]
-        target = tab["target"]
-        lang = tab["lang"].lower()
+        title = tab.get("title", "")
+        user = tab.get("user", "")
+        target = tab.get("target", "")
+        lang = tab.get("lang", "").lower()
         # ---
         if lang_o != "" and lang != lang_o.strip():
             continue

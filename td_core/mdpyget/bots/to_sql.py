@@ -12,6 +12,11 @@ import tqdm
 # from pymysql.converters import escape_string
 # ---
 from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki_new
+
+new_tables = [
+    "all_exists", "all_articles", "all_qids_exists", "all_articles_titles", "all_qids", "all_qids_titles"
+]
 
 
 def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
@@ -60,7 +65,10 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
         # print(qua)
         # print(values)
         # ---
-        sql_for_mdwiki.mdwiki_sql(qua, values=values, many=True)
+        if table_name in new_tables:
+            sql_for_mdwiki.mdwiki_sql(qua, values=values, many=True)
+        else:
+            sql_for_mdwiki_new.mdwiki_sql(qua, values=values, many=True)
         # ---
         done += len(tab)
         # ---
@@ -90,8 +98,11 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
             # ---
             values.append(vav[title_column])
             # ---
-            sql_for_mdwiki.mdwiki_sql(qua, values=values)
-        # ---
+            if table_name in new_tables:
+                sql_for_mdwiki.mdwiki_sql(qua, values=values)
+            else:
+                sql_for_mdwiki_new.mdwiki_sql(qua, values=values)
+            # ---
         done += len(tab)
         # ---
         print(f"to_sql.py update_table({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
@@ -120,7 +131,11 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
             # ---
             values.extend([vav[x] for x in columns_where])
             # ---
-            sql_for_mdwiki.mdwiki_sql(qua, values=values)
+            if table_name in new_tables:
+                sql_for_mdwiki.mdwiki_sql(qua, values=values)
+            else:
+                sql_for_mdwiki_new.mdwiki_sql(qua, values=values)
+            # ---
         # ---
         done += len(tab)
         # ---

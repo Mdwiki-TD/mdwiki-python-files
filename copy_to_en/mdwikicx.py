@@ -12,31 +12,30 @@ import random
 import json
 import sys
 import re
-import requests
 from pathlib import Path
 from multiprocessing import Pool
 from apis import cat_cach
 from apis import mdwiki_api
-from copy_to_en.bots import medwiki_account
 from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext_changes(text)
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdapi_sql import sql_for_mdwiki
 
 # ---
-from newapi.super import super_page, catdepth_new
+from copy_to_en.bots import medwiki_account
+from newapi import toolforge_page
 # ---
-User_tables = {
+User_tables_cx = {
     "username": medwiki_account.username_cx,
     "password": medwiki_account.password_cx,
 }
 # ---
-catdepth_new.User_tables["toolforge"] = User_tables
-super_page.User_tables["toolforge"] = User_tables
+toolforge_page.super_page.add_Usertables(User_tables_cx, "toolforge")
+toolforge_page.catdepth_new.add_Usertables(User_tables_cx, "toolforge")
 # ---
-CatDepth = catdepth_new.subcatquery
-MainPage = super_page.MainPage
-
+CatDepth = toolforge_page.catdepth_new.subcatquery
+MainPage = toolforge_page.super_page.MainPage
+# ---
 Dir = Path(__file__).parent
 
 text_cache = {}

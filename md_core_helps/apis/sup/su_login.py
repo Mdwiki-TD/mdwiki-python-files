@@ -9,7 +9,7 @@ from http.cookiejar import MozillaCookieJar
 from mwclient.client import Site
 
 from newapi import printe
-from newapi.super.login_bots.cookies_bot import get_file_name
+from apis.sup.cookies_bot import get_file_name
 
 
 def default_user_agent():
