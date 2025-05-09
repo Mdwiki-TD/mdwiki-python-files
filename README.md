@@ -1,3 +1,5 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Mdwiki-TD/mdwiki-python-files)
+
 # MDWiki Automation Tool
 
 ## Overview
