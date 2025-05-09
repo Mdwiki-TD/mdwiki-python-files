@@ -48,7 +48,13 @@ def dodo_sql():
         title = tab.get("title", "")
         user = tab.get("user", "")
         target = tab.get("target", "")
-        lang = tab.get("lang", "").lower()
+        # ---
+        lang = tab.get("lang", "")
+        # ---
+        if not lang:
+            continue
+        # ---
+        lang = lang.lower()
         # ---
         if lang_o != "" and lang != lang_o.strip():
             continue
