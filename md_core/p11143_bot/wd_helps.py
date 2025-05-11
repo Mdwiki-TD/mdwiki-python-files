@@ -57,7 +57,7 @@ def add_P11143_to_qids_in_wd(newlist):
             printe.output(f"<<yellow>> q {n} from {len(newlist)}")
             if q:
                 q = q.strip()
-                wikidataapi.Claim_API_str(q, "P11143", value)
+                # wikidataapi.Claim_API_str(q, "P11143", value)
                 if n % 30 == 0:
                     printe.output(f"<<yellow>> n: {n}")
                     time.sleep(5)
@@ -91,7 +91,8 @@ def fix_in_wd(merge_qids, qids):
         # ---
 
         # add the correct claim
-        ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
+        ase = False
+        # ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
         if ase:
             print(f"True.. Added P11143:{md_title}")
         else:
