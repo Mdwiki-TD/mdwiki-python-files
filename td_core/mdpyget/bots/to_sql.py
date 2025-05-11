@@ -66,9 +66,9 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
         # print(values)
         # ---
         if table_name in new_tables:
-            sql_for_mdwiki.mdwiki_sql(qua, values=values, many=True)
-        else:
             sql_for_mdwiki_new.mdwiki_sql(qua, values=values, many=True)
+        else:
+            sql_for_mdwiki.mdwiki_sql(qua, values=values, many=True)
         # ---
         done += len(tab)
         # ---
@@ -99,9 +99,9 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
             values.append(vav[title_column])
             # ---
             if table_name in new_tables:
-                sql_for_mdwiki.mdwiki_sql(qua, values=values)
-            else:
                 sql_for_mdwiki_new.mdwiki_sql(qua, values=values)
+            else:
+                sql_for_mdwiki.mdwiki_sql(qua, values=values)
             # ---
         done += len(tab)
         # ---
@@ -132,9 +132,9 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
             values.extend([vav[x] for x in columns_where])
             # ---
             if table_name in new_tables:
-                sql_for_mdwiki.mdwiki_sql(qua, values=values)
-            else:
                 sql_for_mdwiki_new.mdwiki_sql(qua, values=values)
+            else:
+                sql_for_mdwiki.mdwiki_sql(qua, values=values)
             # ---
         # ---
         done += len(tab)
