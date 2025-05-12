@@ -62,7 +62,7 @@ def find_redirects(pages, text):
 
 
 def add_rtt_to_tables(text, pages):
-
+    # ---
     parsed = wtp.parse(text)
     # ---
     already_in = []
@@ -73,7 +73,6 @@ def add_rtt_to_tables(text, pages):
     # ---
     redirects = find_redirects(pages, text)
     # ---
-
     def mark_as_reviewed(cell):
         cell.value = "R"
         cell.set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
