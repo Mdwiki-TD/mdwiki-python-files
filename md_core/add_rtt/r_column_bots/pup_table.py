@@ -48,8 +48,12 @@ def work_one_table(table_text, redirects, pages):
         if len(x) < 3:
             continue
         # ---
-        title = x[2].value.strip()
-        r_s = x[1].value.strip()
+        try:
+            title = x[2].value.strip()
+            r_s = x[1].value.strip()
+        except Exception as e:
+            print(e)
+            continue
         # ---
         title = fix_title(title)
         # ---
