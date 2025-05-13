@@ -89,7 +89,8 @@ def add_rtt_to_tables(text, redirects={}, pages=[], table=False):
             printe.output("<<red>> Can't add R column to table!")
             return text
     # ---
-    new_text = work_one_table(new_text, redirects, pages)
+    if redirects or pages:
+        new_text = work_one_table(new_text, redirects, pages)
     # ---
     return new_text
 

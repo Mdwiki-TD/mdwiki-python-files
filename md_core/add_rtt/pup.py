@@ -62,6 +62,12 @@ def work_page(pages):
 
     text = page.get_text()
 
+    new_text = add_to_tables(text)
+
+    if new_text != text:
+        page.save(newtext=new_text, summary="Add R column")
+        text = new_text
+
     redirects = find_redirects(pages, text)
 
     newtext = add_to_tables(text, redirects, pages)
