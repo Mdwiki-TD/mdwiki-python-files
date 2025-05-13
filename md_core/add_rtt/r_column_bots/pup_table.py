@@ -42,11 +42,14 @@ def work_one_table(table_text, redirects, pages):
     # ---
     for x in tqdm.tqdm(table.cells()):
         # ---
-        title = x[2].value.strip()
-        r_s = x[1].value.strip()
-        # ---
         if x[1].is_header:
             continue
+        # ---
+        if len(x) < 3:
+            continue
+        # ---
+        title = x[2].value.strip()
+        r_s = x[1].value.strip()
         # ---
         title = fix_title(title)
         # ---
