@@ -22,11 +22,6 @@ def fix_title(title):
     return title
 
 
-def mark_as_reviewed(cell):
-    cell.value = " R"
-    cell.set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
-
-
 def one_cell(cell_values):
     text = "".join([x for x in cell_values])
     # ---
@@ -35,7 +30,7 @@ def one_cell(cell_values):
     return text
 
 
-def work_one_table(table_text, redirects, pages):
+def work_one_table_O(table_text, redirects, pages):
     # ---
     parsed = wtp.parse(table_text)
     table = parsed.tables[0]
@@ -78,8 +73,6 @@ def work_one_table(table_text, redirects, pages):
         title2 = redirects.get(title, title)
         # ---
         if r_s == "R":
-            # mark_as_reviewed(x[1])
-            # ---
             cell_values[1] = R_NEW_ROW
             # ---
             already_in.append(title)
@@ -89,14 +82,10 @@ def work_one_table(table_text, redirects, pages):
         # print(f"title: ({title}), r_s: ({r_s})")
         # ---
         if title in pages:
-            # mark_as_reviewed(x[1])
-            # ---
             cell_values[1] = R_NEW_ROW
             # ---
             add_done.append(title)
         elif title2 in pages:
-            # mark_as_reviewed(x[1])
-            # ---
             cell_values[1] = R_NEW_ROW
             # ---
             add_from_redirect.append(title)
@@ -115,6 +104,71 @@ def work_one_table(table_text, redirects, pages):
     text_x += "\n|}"
     # ---
     return text_x
+
+
+def work_one_table(table_text, redirects, pages):
+    # ---
+    parsed = wtp.parse(table_text)
+    table = parsed.tables[0]
+    # ---
+    if not header_has_R(table_text, table):
+        printe.output("<<red>> no R in table header!")
+        return table_text
+    # ---
+    already_in = []
+    no_add = []
+    # ---
+    add_from_redirect = []
+    add_done = []
+    # ---
+    cell_errors = []
+    # ---
+    data = table.data()
+    # ---
+    for n, x in enumerate(tqdm.tqdm(table.cells())):
+        # ---
+        if x[1].is_header or len(x) < 3:
+            continue
+        # ---
+        try:
+            title = x[2].value.strip()
+            r_s = x[1].value.strip()
+        except Exception as e:
+            numb = data[n][2]
+            cell_errors.append(numb)
+            continue
+        # ---
+        title = fix_title(title)
+        # ---
+        title2 = redirects.get(title, title)
+        # ---
+        if r_s == "R":
+            x[1].string = R_NEW_ROW
+            # ---
+            already_in.append(title)
+            continue
+        # ---
+        # print(f"title: ({title}), r_s: ({r_s})")
+        # ---
+        if title in pages:
+            x[1].string = R_NEW_ROW
+            # ---
+            add_done.append(title)
+        elif title2 in pages:
+            x[1].string = R_NEW_ROW
+            # ---
+            add_from_redirect.append(title)
+        else:
+            no_add.append(title)
+    # ---
+    printe.output(f"<<yellow>> no_add: {len(no_add)}, already_in: {len(already_in)}")
+    # ---
+    printe.output(f"<<red>> cell_errors: {len(cell_errors)}:")
+    printe.output(cell_errors)
+    # ---
+    printe.output(f"<<yellow>> add_done: {len(add_done)}, add_from_redirect: {len(add_from_redirect)}")
+    # ---
+    return table.string
 
 
 def add_rtt_to_tables(text, redirects={}, pages=[], table=False):

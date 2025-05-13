@@ -18,7 +18,7 @@ import wikitextparser as wtp
 from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage  # , CatDepth
 from pathlib import Path
-from add_rtt.r_column_bots.pup_table import add_to_tables, fix_title
+from add_rtt.r_column_bots.pup_table import add_to_tables, fix_title, R_NEW_ROW
 
 Dir = Path(__file__).parent
 # add_param_named(text, title)
@@ -72,7 +72,7 @@ def work_page():
     if "only_column" in sys.argv:
         return
     # ---
-    old_counts = text.count('| style="text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05" | R')
+    old_counts = text.count(R_NEW_ROW.strip())
     # ---
     # pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
     pages = api_new.Get_template_pages("Template:RTT", namespace=0)
@@ -87,9 +87,9 @@ def work_page():
     if newtext == text:
         printe.output("no changes")
         return False
-    # count (| style="text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05" |R) in newtext
 
-    counts = newtext.count('| style="text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05" | R')
+    # count R_NEW_ROW in newtext
+    counts = newtext.count(R_NEW_ROW.strip())
 
     counts = counts - old_counts
 
