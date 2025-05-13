@@ -86,7 +86,7 @@ def work_page():
         printe.output("no changes")
         return False
 
-    summary = "Added {{RTT}}"
+    summary = "Added R column for titles."
 
     page.save(newtext=newtext, summary=summary, nocreate=1, minor="")
 
