@@ -12,6 +12,7 @@ https://github.com/wikimedia/popularpages
 
 """
 # ---
+import sys
 import re
 import wikitextparser as wtp
 from newapi import printe
@@ -53,7 +54,7 @@ def find_redirects(pages, text):
     return redirects
 
 
-def work_page(pages):
+def work_page():
     title = "WikiProjectMed:WikiProject Medicine/Popular pages"
     page = md_MainPage(title, "www", family="mdwiki")
 
@@ -67,6 +68,12 @@ def work_page(pages):
     if new_text != text:
         page.save(newtext=new_text, summary="Add R column")
         text = new_text
+    # ---
+    if "only_column" in sys.argv:
+        return
+    # ---
+    # pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
+    pages = api_new.Get_template_pages("Template:RTT", namespace=0)
 
     redirects = find_redirects(pages, text)
 
@@ -86,10 +93,7 @@ def work_page(pages):
 
 def main():
 
-    # mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
-    temp_pages = api_new.Get_template_pages("Template:RTT", namespace=0)
-
-    work_page(temp_pages)
+    work_page()
 
 
 if __name__ == "__main__":
