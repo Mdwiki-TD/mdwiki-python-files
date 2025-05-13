@@ -37,6 +37,11 @@ def add_header_R(text, table=False):
     # ---
     # for table in parsed.tables:
     # ---
+   # Check if R column already exists
+    if header_has_R(text, table):
+        printe.output("R column already exists in table header")
+        return table.string
+   # ---
     count = 0
     # ---
     # add R to header in 2nd column
