@@ -7,6 +7,7 @@ from add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
 """
 # ---
 import wikitextparser as wtp
+from wikitextparser._cell import Cell
 from newapi import printe
 
 
@@ -40,20 +41,13 @@ def add_header_R(text, table=False):
     # ---
     # add R to header in 2nd column
     for x in table.cells():
+        # ---
         if x[0].is_header:
             x[0].value = x[0].value + "\n! R"
-            # print(x[0].value)
-            # ---
-            count += 1
-            # ---
-            # print(x)
         else:
             x[0].value = x[0].value + "\n| "
-            # ---
-            # print(x)
-            # ---
-            count += 1
-            # ---
+        # ---
+        count += 1
     # ---
     printe.output(f"Added R column to table header in {count} cells")
     # ---
