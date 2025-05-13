@@ -16,6 +16,6 @@ text = file_path.read_text(encoding="utf-8")
 
 new_text = add_to_tables(text, pages=[""])
 
-printe.showDiff(text, new_text)
+printe.showDiff(str(len(text)), str(len(new_text)))
 
 file_path2.write_text(new_text, encoding="utf-8")

@@ -36,16 +36,25 @@ def add_header_R(text, table=False):
     # ---
     # for table in parsed.tables:
     # ---
+    count = 0
+    # ---
     # add R to header in 2nd column
     for x in table.cells():
         if x[0].is_header:
             x[0].value = x[0].value + "\n! R"
             # print(x[0].value)
             # ---
+            count += 1
+            # ---
             # print(x)
         else:
             x[0].value = x[0].value + "\n| "
             # ---
             # print(x)
+            # ---
+            count += 1
+            # ---
+    # ---
+    printe.output(f"Added R column to table header in {count} cells")
     # ---
     return table.string
