@@ -72,7 +72,7 @@ def work_page():
     if "only_column" in sys.argv:
         return
     # ---
-    old_counts = text.count("(| style=\"text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05\" |R)")
+    old_counts = text.count('| style="text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05" | R')
     # ---
     # pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
     pages = api_new.Get_template_pages("Template:RTT", namespace=0)
@@ -89,7 +89,7 @@ def work_page():
         return False
     # count (| style="text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05" |R) in newtext
 
-    counts = newtext.count("(| style=\"text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05\" |R)")
+    counts = newtext.count('| style="text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05" | R')
 
     counts = counts - old_counts
 
