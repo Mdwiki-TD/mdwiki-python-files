@@ -12,6 +12,7 @@ from newapi import printe
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from newapi.mdwiki_page import CategoryDepth
+from mdpyget.bots.to_sql import to_sql
 
 Dir = Path(__file__).parent
 dir2 = os.getenv("HOME")
@@ -25,8 +26,11 @@ file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
 file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
 
 
-def dump(revids):
+def dump_data(revids):
     printe.output(f"len(revids): {len(revids)}")
+    # ---
+    if not revids:
+        return
     # ---
     with open(file, "w", encoding="utf-8") as f:
         json.dump(revids, f, ensure_ascii=False)
@@ -78,7 +82,14 @@ def get_all_revids():
         # ---
         revids.update(ca)
     # ---
-    dump(revids)
+    dump_data(revids)
+    # ---
+    table_name = "mdwiki_revids"
+    columns = ["title", "revid"]
+    # ---
+    data2 = [{"title": x, "importance": v} for x, v in revids.items()]
+    # ---
+    to_sql(data2, table_name, columns, title_column="title")
 
 
 if __name__ == "__main__":
