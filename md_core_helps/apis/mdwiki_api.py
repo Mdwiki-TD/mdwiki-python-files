@@ -145,6 +145,22 @@ def GetPageText(title, redirects=False, get_revid=False):
 
 
 def GetRevid(title):
+    """Retrieve the revision ID for a given page title.
+
+    This function sends a request to a specified API to retrieve the
+    revision ID associated with the provided page title. It constructs a
+    parameters dictionary for the API call and processes the response to
+    extract the revision ID. If the response does not contain a valid
+    revision ID, it returns an empty string.
+
+    Args:
+        title (str): The title of the page for which to retrieve the revision ID.
+
+    Returns:
+        str: The revision ID of the specified page title, or an empty string if not
+            found.
+    """
+
     # ---
     params = {"action": "parse", "prop": "revid", "page": title}
     # ---
