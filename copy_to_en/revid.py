@@ -25,11 +25,11 @@ file = Dir / "all_pages_revids.json"
 file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
 file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
 
-
 def dump_data(revids):
     printe.output(f"len(revids): {len(revids)}")
     # ---
     if not revids:
+        printe.output("<<red>> revids is empty")
         return
     # ---
     with open(file, "w", encoding="utf-8") as f:
@@ -85,9 +85,10 @@ def get_all_revids():
     dump_data(revids)
     # ---
     table_name = "mdwiki_revids"
+    # ---
     columns = ["title", "revid"]
     # ---
-    data2 = [{"title": x, "importance": v} for x, v in revids.items()]
+    data2 = [{"title": x, "revid": v} for x, v in revids.items()]
     # ---
     to_sql(data2, table_name, columns, title_column="title")
 
