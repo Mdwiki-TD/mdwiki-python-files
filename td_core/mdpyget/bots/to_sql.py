@@ -19,6 +19,15 @@ new_tables = [
 ]
 
 
+def mdwiki_sql_one_table(table_name, query, **kwargs):
+    # ---
+    if table_name in new_tables:
+        in_sql_list = sql_for_mdwiki_new.mdwiki_sql(query, **kwargs)
+    else:
+        in_sql_list = sql_for_mdwiki.mdwiki_sql(query, **kwargs)
+    # ---
+    return in_sql_list
+
 def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
     # ---
     print(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
@@ -65,10 +74,7 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
         # print(qua)
         # print(values)
         # ---
-        if table_name in new_tables:
-            sql_for_mdwiki_new.mdwiki_sql(qua, values=values, many=True)
-        else:
-            sql_for_mdwiki.mdwiki_sql(qua, values=values, many=True)
+        mdwiki_sql_one_table(table_name, qua, values=values, many=True)
         # ---
         done += len(tab)
         # ---
@@ -98,10 +104,7 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
             # ---
             values.append(vav[title_column])
             # ---
-            if table_name in new_tables:
-                sql_for_mdwiki_new.mdwiki_sql(qua, values=values)
-            else:
-                sql_for_mdwiki.mdwiki_sql(qua, values=values)
+            mdwiki_sql_one_table(table_name, qua, values=values)
             # ---
         done += len(tab)
         # ---
@@ -131,11 +134,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
             # ---
             values.extend([vav[x] for x in columns_where])
             # ---
-            if table_name in new_tables:
-                sql_for_mdwiki_new.mdwiki_sql(qua, values=values)
-            else:
-                sql_for_mdwiki.mdwiki_sql(qua, values=values)
-            # ---
+            mdwiki_sql_one_table(table_name, qua, values=values)
         # ---
         done += len(tab)
         # ---
@@ -148,7 +147,9 @@ def to_sql(data, table_name, columns, title_column="title"):
     # ---
     in_sql = {}
     # ---
-    for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+    in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
+    # ---
+    for q in in_sql_list:
         title = q[title_column]
         in_sql[title] = q
     # ---

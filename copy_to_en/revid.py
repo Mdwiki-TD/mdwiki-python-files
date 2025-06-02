@@ -11,7 +11,7 @@ from newapi import printe
 
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from newapi.mdwiki_page import CategoryDepth
+from newapi.mdwiki_page import CatDepth
 from mdpyget.bots.to_sql import to_sql
 
 Dir = Path(__file__).parent
@@ -56,11 +56,7 @@ def Cat_Depth(title, depth=0):
     if not title.startswith("Category:"):
         title = "Category:" + title
     # ---
-    bot = CategoryDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all", gcmlimit="max")
-    # ---
-    result_table = bot.subcatquery_()
-    # ---
-    result_table = bot.revids
+    result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all", gcmlimit="max", get_revids=True)
     # ---
     # result_table = {key: result_table[key] for key in result_table if valid_title(key)}
     result_table = dict(filter(lambda item: valid_title(item[0]), result_table.items()))

@@ -5,9 +5,6 @@ python3 core8/pwb.py copy_data/all_articles
 python3 core8/pwb.py copy_data/exists_db
 
 """
-
-import os
-import json
 import sys
 from mdapi_sql import sql_for_mdwiki
 from newapi.mdwiki_page import CatDepth

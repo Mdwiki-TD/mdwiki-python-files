@@ -44,3 +44,4 @@ md_core_helps/one_time/prior/test1.py
 md_core_helps/tw/twet_configs.py
 copy_to_en/medwiki_account.py
 copy_to_en/bots/medwiki_account.py
+wprefs/todb.py
