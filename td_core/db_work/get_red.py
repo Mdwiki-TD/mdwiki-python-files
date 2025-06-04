@@ -12,7 +12,7 @@ from mdapi_sql import sql_for_mdwiki
 from mdapi_sql import sql_qids_others
 from apis import mdwiki_api
 
-mdwiki_api.api_new.Login_to_wiki()
+# mdwiki_api.api_new.Login_to_wiki()
 
 qids_title_to_qid = sql_for_mdwiki.get_all_qids()
 qids_others_title_to_qid = sql_qids_others.get_others_qids()
