@@ -55,7 +55,7 @@ def get_pages_to_work(ty="td|other"):
 def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
     # ---
     if "nodump" in sys.argv:
-        printe("Skipping dump of JSON files")
+        printe.output("Skipping dump of JSON files")
         return
     # ---
     json_ext = "_other.json" if "other" == ty else ".json"
