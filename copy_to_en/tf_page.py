@@ -16,7 +16,7 @@ def get_cx():
         "password": medwiki_account.password_cx,
     }
     # ---
-    toolforge_page_cx.add_Usertables(User_tables_cx, "toolforge", "mdwikicx")
+    toolforge_page_cx.add_User_table(User_tables_cx, "toolforge", "mdwikicx")
     # ---
     CatDepth = toolforge_page_cx.CatDepth
     MainPage = toolforge_page_cx.MainPage
@@ -32,7 +32,7 @@ def get_md():
         "password": medwiki_account.password,
     }
     # ---
-    toolforge_page_md.add_Usertables(User_tables_md, "toolforge", "medwiki")
+    toolforge_page_md.add_User_table(User_tables_md, "toolforge", "medwiki")
     # ---
     CatDepth = toolforge_page_md.CatDepth
     MainPage = toolforge_page_md.MainPage
