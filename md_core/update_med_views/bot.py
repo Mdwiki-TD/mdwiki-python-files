@@ -27,7 +27,7 @@ def get_one_lang_views(langcode, year, titles):
     total = 0
     # ---
     for _, tab in views_t.items():
-        total += tab["all"]
+        total += tab.get("all", 0)
     # ---
     return total
 
@@ -82,6 +82,7 @@ def make_views(languages, year, limit, maxv):
         titles = load_lang_titles(lang)
         # ---
         if maxv > 0 and len(titles) > maxv:
+            printe.output(f"<<yellow>> {lang}: {len(titles)} titles > max {maxv}, skipping")
             views[lang] = 0
             continue
         # ---

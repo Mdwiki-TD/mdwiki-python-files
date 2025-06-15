@@ -16,7 +16,7 @@ from newapi import printe
 
 def get_view_file(year, lang):
     # ---
-    dir_v = Path(__file__).parent / "views" / year
+    dir_v = Path(__file__).parent / "views" / str(year)
     # ---
     if not dir_v.exists():
         dir_v.mkdir(parents=True)
