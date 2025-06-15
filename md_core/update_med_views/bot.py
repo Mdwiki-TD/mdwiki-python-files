@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 
+python3 core8/pwb.py update_med_views/bot -max:50 ask
+
 python3 core8/pwb.py update_med_views/bot -limit:50
 python3 core8/pwb.py update_med_views/bot local ask
 
@@ -9,15 +11,14 @@ import tqdm
 import sys
 import datetime
 # ---
+from newapi import printe
 from newapi.mdwiki_page import md_MainPage
 from update_med_views.views import load_one_lang_views
 from update_med_views.helps import count_all_langs
 from update_med_views.titles import load_lang_titles
 
 
-def get_one_lang_views(langcode, year):
-    # ---
-    titles = load_lang_titles(langcode)
+def get_one_lang_views(langcode, year, titles):
     # ---
     views_t = load_one_lang_views(langcode, titles, year)
     # ---
@@ -27,16 +28,6 @@ def get_one_lang_views(langcode, year):
         total += tab["all"]
     # ---
     return total
-
-
-def get_all_views(languages, year):
-    # ---
-    views = {}
-    # ---
-    for lang, _ in languages.items():
-        views[lang] = get_one_lang_views(lang, year)
-    # ---
-    return views
 
 
 def make_text(languages, views):
@@ -76,32 +67,46 @@ def make_text(languages, views):
     return text
 
 
-def make_views(languages, year, limit):
+def make_views(languages, year, limit, maxv):
     # ---
     views = {}
     # ---
     for n, (lang, _) in enumerate(languages.items(), start=1):
         # ---
-        print(f"make_views(): lang:{n}/{len(languages)} \t {lang}")
+        printe.output(f"make_views(): lang:{n}/{len(languages)} \t {lang}")
         # ---
         if limit > 0 and n > limit:
-            print(f"limit {limit} reached, break")
+            printe.output(f"limit {limit} reached, break")
             break
         # ---
-        views[lang] = get_one_lang_views(lang, year)
+        titles = load_lang_titles(lang)
+        # ---
+        if maxv > 0 and len(titles) > maxv:
+            views[lang] = 0
+            continue
+        # ---
+        views[lang] = get_one_lang_views(lang, year, titles)
     # ---
     return views
 
 
-def start(year):
+def start():
     # ---
     limit = 0
+    year = 2024
+    maxv = 0
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(':')
         # ---
         if arg.lower() in ['limit', '-limit'] and value.isdigit():
             limit = int(value)
+        # ---
+        if arg.lower() in ['year', '-year'] and value.isdigit():
+            year = int(value)
+        # ---
+        if arg.lower() in ['max', '-max'] and value.isdigit():
+            maxv = int(value)
     # ---
     title = f"WikiProjectMed:WikiProject Medicine/Stats/Total pageviews by language {year}"
     # ---
@@ -110,7 +115,11 @@ def start(year):
     # sort languages ASC
     languages = {k: v for k, v in sorted(languages.items(), key=lambda item: item[1], reverse=False)}
     # ---
-    views = make_views(languages, year, limit)
+    views = make_views(languages, year, limit, maxv)
+    # ---
+    views_not_0 = len([x for x in views.values() if x > 0])
+    # ---
+    printe.output(f"<<yellow>> Total views not 0: {views_not_0:,}")
     # ---
     newtext = make_text(languages, views)
     # ---
@@ -119,8 +128,10 @@ def start(year):
     text = page.get_text()
     # ---
     if text == newtext:
-        print("No change")
+        printe.output("No change")
         return
+    # ---
+    printe.output(f"Total views not 0: {views_not_0:,}")
     # ---
     if page.exists():
         page.save(newtext=newtext, summary='update', nocreate=0, minor='')
@@ -129,5 +140,4 @@ def start(year):
 
 
 if __name__ == "__main__":
-    year = datetime.datetime.now().year
-    start("2024")
+    start()
