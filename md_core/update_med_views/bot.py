@@ -91,23 +91,7 @@ def make_views(languages, year, limit, maxv):
     return views
 
 
-def start():
-    # ---
-    limit = 0
-    year = 2024
-    maxv = 0
-    # ---
-    for arg in sys.argv:
-        arg, _, value = arg.partition(':')
-        # ---
-        if arg.lower() in ['limit', '-limit'] and value.isdigit():
-            limit = int(value)
-        # ---
-        if arg.lower() in ['year', '-year'] and value.isdigit():
-            year = int(value)
-        # ---
-        if arg.lower() in ['max', '-max'] and value.isdigit():
-            maxv = int(value)
+def start(year, limit, maxv):
     # ---
     title = f"WikiProjectMed:WikiProject Medicine/Stats/Total pageviews by language {year}"
     # ---
@@ -140,5 +124,21 @@ def start():
         page.Create(newtext, summary='update')
 
 
+def parse_args():
+    year = 2024
+    limit = 0
+    maxv = 0
+    for arg in sys.argv:
+        key, _, val = arg.partition(':')
+        if key in ['limit', '-limit'] and val.isdigit():
+            limit = int(val)
+        elif key in ['year', '-year'] and val.isdigit():
+            year = int(val)
+        elif key in ['max', '-max'] and val.isdigit():
+            maxv = int(val)
+    return year, limit, maxv
+
+
 if __name__ == "__main__":
-    start()
+    year, limit, maxv = parse_args()
+    start(year, limit, maxv)
