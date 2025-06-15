@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 
+python3 core8/pwb.py update_med_views/bot -limit:50
 python3 core8/pwb.py update_med_views/bot local ask
 
 """
@@ -10,20 +11,22 @@ import datetime
 # ---
 from newapi.mdwiki_page import md_MainPage
 from update_med_views.views import load_one_lang_views
-from update_med_views.helps import count_all_langs, one_lang_titles
-from update_med_views.titles import load_one_lang_titles
+from update_med_views.helps import count_all_langs
+from update_med_views.titles import load_lang_titles
 
 
 def get_one_lang_views(langcode, year):
     # ---
-    titles = load_one_lang_titles(langcode)
-    # ---
-    if not titles:
-        titles = one_lang_titles(langcode)
+    titles = load_lang_titles(langcode)
     # ---
     views_t = load_one_lang_views(langcode, titles, year)
     # ---
-    return views_t
+    total = 0
+    # ---
+    for _, tab in views_t.items():
+        total += tab["all"]
+    # ---
+    return total
 
 
 def get_all_views(languages, year):
@@ -37,13 +40,16 @@ def get_all_views(languages, year):
 
 
 def make_text(languages, views):
-
-    # count all languages values
+    # ---
     total_views = sum(views.values())
+    total_articles = sum(languages.values())
     # ---
     text = '{{WPM:WikiProject Medicine/Total medical views by language}}\n'
     # ---
-    text += f'Total views for medical content = {total_views:,}\n\n'
+    text += f'* Total views for medical content = {total_views:,}\n'
+    text += f'* Total articles= {total_articles:,}\n'
+    # ---
+    text += '\n'
     # ---
     text += '''{| class="wikitable sortable"\n!Rank\n!Lang\n!# of articles\n!Total views\n!Ave. views\n|----'''
     # ---
@@ -52,13 +58,18 @@ def make_text(languages, views):
     # ---
     for n, (lang, articles) in enumerate(languages.items(), start=1):
         # ---
-        lang_views = views[lang]
-        # ---
-        print(lang_views, articles)
+        lang_views = views.get(lang, 0)
         # ---
         Average_views = lang_views // articles if articles and lang_views else 0
         # ---
-        text += f'\n|{n}\n|{lang}\n|{articles:,} \n|{lang_views:,}\n|{Average_views:,}\n|-'
+        text += (
+            f'\n|{n}'
+            f'\n|[//{lang}.wikipedia.org {lang}]'
+            f'\n|{articles:,}'
+            f'\n|{lang_views:,}'
+            f'\n|{Average_views:,}'
+            '\n|-'
+        )
     # ---
     text += '\n|}'
     # ---
@@ -69,10 +80,9 @@ def make_views(languages, year, limit):
     # ---
     views = {}
     # ---
-    n = 0
-    # ---
-    for lang, _ in tqdm.tqdm(languages.items()):
-        n += 1
+    for n, (lang, _) in enumerate(languages.items(), start=1):
+        # ---
+        print(f"make_views(): lang:{n}/{len(languages)} \t {lang}")
         # ---
         if limit > 0 and n > limit:
             print(f"limit {limit} reached, break")
@@ -98,15 +108,24 @@ def start(year):
     languages = count_all_langs()
     # ---
     # sort languages ASC
-    languages = {k: v for k, v in sorted(languages.items(), key=lambda item: item[1], reverse=True)}
+    languages = {k: v for k, v in sorted(languages.items(), key=lambda item: item[1], reverse=False)}
     # ---
     views = make_views(languages, year, limit)
     # ---
-    text = make_text(languages, views)
+    newtext = make_text(languages, views)
     # ---
     page = md_MainPage(title, 'www', family='mdwiki')
     # ---
-    page.save(newtext=text, summary='update', nocreate=0, minor='')
+    text = page.get_text()
+    # ---
+    if text == newtext:
+        print("No change")
+        return
+    # ---
+    if page.exists():
+        page.save(newtext=newtext, summary='update', nocreate=0, minor='')
+    else:
+        page.Create(newtext, summary='update')
 
 
 if __name__ == "__main__":

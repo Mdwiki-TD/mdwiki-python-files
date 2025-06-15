@@ -2,14 +2,30 @@
 """
 
 from update_med_views.helps import count_all_langs, get_en_articles, one_lang_titles, langs_titles
+from update_med_views.helps import dump_one
 
 """
 import sys
 import datetime
 import tqdm
 import json
+from pathlib import Path
+
 from mdapi_sql import wiki_sql
-from update_med_views.titles import t_dump_dir
+
+t_dump_dir = Path(__file__).parent / "titles"
+
+if not t_dump_dir.exists():
+    t_dump_dir.mkdir()
+
+
+def dump_one(file, data):
+    # ---
+    if not data:
+        return
+    # ---
+    with open(file, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 
 def get_en_articles():
@@ -24,11 +40,34 @@ def get_en_articles():
             and page_namespace = 0
     """
     # ---
+    print("def get_en_articles():")
+    # ---
     result = wiki_sql.sql_new(query, 'enwiki')
     # ---
     articles = [x['page_title'] for x in result]
     # ---
     return articles
+
+
+def dump_all(data):
+    file = Path(__file__).parent / "languages_counts.json"
+    # ---
+    # sort data
+    data = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
+    # ---
+    if data and len(data) > 200:
+        dump_one(file, data)
+
+
+def load_all():
+    file = Path(__file__).parent / "languages_counts.json"
+    # ---
+    if file.exists():
+        # ---
+        with open(file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    # ---
+    return {}
 
 
 def count_all_langs_sql():
@@ -47,6 +86,8 @@ def count_all_langs_sql():
         #limit 10
     """
     # ---
+    print("def count_all_langs_sql():")
+    # ---
     result = wiki_sql.sql_new(query, 'enwiki')
     # ---
     languages = {x['ll_lang']: x['counts'] for x in result}
@@ -54,13 +95,20 @@ def count_all_langs_sql():
     if "en" not in languages:
         languages["en"] = len(get_en_articles())
     # ---
+    dump_all(languages)
+    # ---
     return languages
 
 
 def count_all_langs():
     # ---
-    if "local" not in sys.argv:
+    all_infos = load_all()
+    # ---
+    if not all_infos and ("local" not in sys.argv):
         return count_all_langs_sql()
+    # ---
+    if all_infos:
+        return all_infos
     # ---
     result = {}
     # ---
@@ -92,6 +140,8 @@ def one_lang_titles(langcode):
             and ll_lang = %s
     """
     # ---
+    print(f"def one_lang_titles({langcode}):")
+    # ---
     result = wiki_sql.sql_new(query, 'enwiki', values=(langcode,))
     # ---
     titles = [x['ll_title'] for x in result]
@@ -112,11 +162,17 @@ def langs_titles():
             and page_namespace = 0
     """
     # ---
+    print("def langs_titles():")
+    # ---
     result = wiki_sql.sql_new(query, 'enwiki')
     # ---
     titles = {}
     # ---
     for x in result:
         titles.setdefault(x['ll_lang'], []).append(x['ll_title'])
+    # ---
+    titles["en"] = get_en_articles()
+    # ---
+    dump_all({x: len(y) for x, y in titles.items()})
     # ---
     return titles
