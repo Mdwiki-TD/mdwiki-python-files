@@ -73,8 +73,6 @@ def make_views(languages, year, limit, maxv):
     # ---
     for n, (lang, _) in enumerate(languages.items(), start=1):
         # ---
-        printe.output(f"make_views(): lang:{n}/{len(languages)} \t {lang}")
-        # ---
         if limit > 0 and n > limit:
             printe.output(f"limit {limit} reached, break")
             break

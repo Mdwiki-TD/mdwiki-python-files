@@ -17,7 +17,9 @@ def dump_data(all_data):
         # ---
         print(f"dump_data(): lang:{n}/{len(all_data)} \t {lang} {len(titles)}")
         # ---
-        dump_one(lang, titles)
+        file = t_dump_dir / f"{lang}.json"
+        # ---
+        dump_one(file, titles)
     # ---
     print(f"dump_data: all langs: {len(all_data)}")
 
