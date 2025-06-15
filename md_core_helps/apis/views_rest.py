@@ -7,7 +7,6 @@ from apis import views_rest
 # ---
 """
 import json
-from newapi.except_err import exception_err
 import tqdm
 import sys
 import urllib
@@ -16,8 +15,8 @@ from pywikibot.comms import http
 import datetime
 from datetime import timedelta
 
-# ---
 from newapi import printe
+from newapi.except_err import exception_err
 
 
 def get_all_data(langcode, titles, date_start, date_end, printurl=False, printstr=False):
@@ -55,7 +54,8 @@ def get_all_data(langcode, titles, date_start, date_end, printurl=False, printst
         try:
             data = json.loads(req.text)
         except Exception as e:
-            exception_err(e, text=req.text)
+            if printstr:
+                exception_err(e, text=req.text)
         # ---
         if 500 <= st < 600 or st == 404 or not data:
             status_error += 1
