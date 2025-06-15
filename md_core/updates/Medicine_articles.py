@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """
 
-إيجاد الصفحات القديمة
-تحديث صفحة User:Mr. Ibrahem/pages
 python3 core8/pwb.py updates/Medicine_articles
 
 """
