@@ -10,9 +10,13 @@ import re
 import sys
 
 from mdapi_sql import sql_for_mdwiki
-from apis import views_rest
 from newapi import printe
 from mdpyget.bots.to_sql import insert_dict, update_table_2
+
+from apis.mw_views import PageviewsClient
+view_bot = PageviewsClient()
+# new_data = view_bot.article_views_new(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')
+# {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 already_in_sql = {}
 Lang_to_targets = {}
@@ -40,7 +44,8 @@ def update_in_sql(lang, table):
         if "all" in tab:
             del tab["all"]
         # ---
-        years = {str(y) : x["all"] for y, x in tab.items() if str(y).isdigit() and x["all"] > 0}
+        # years = {str(y) : x["all"] for y, x in tab.items() if str(y).isdigit() and x["all"] > 0}
+        years = {str(y) : x for y, x in tab.items() if str(y).isdigit() and x > 0}
         # ---
         years2 = years.copy()
         # ---
@@ -68,7 +73,8 @@ def insert_to_sql(lang, table):
         if "all" in tab:
             del tab["all"]
         # ---
-        years = {y : x["all"] for y, x in tab.items() if y.isdigit() and x["all"] > 0}
+        # years = {y : x["all"] for y, x in tab.items() if y.isdigit() and x["all"] > 0}
+        years = {y : x for y, x in tab.items() if y.isdigit() and x > 0}
         # ---
         data_list = [{"target": target, "lang": lang, "year": x, "views": views} for x, views in years.items()]
         # ---
@@ -169,12 +175,17 @@ def main():
             if lenlist < 5:
                 printe.output(", ".join(title_list))
             # ---
-            numbers = views_rest.get_views_with_rest_v1(lange, title_list, date_start=start, date_end="20300101", printurl=False, printstr=False, Type="daily")
+            new_data = view_bot.article_views_new(
+                f'{lange}.wikipedia',
+                title_list,
+                granularity='daily',
+                start=start,
+                end='20300101'
+            )
             # ---
-            if "numbers" in sys.argv and title_list[0] == "Tacalcitol":
-                printe.output(numbers)
+            # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
             # ---
-            numbs = {**numbs, **numbers}
+            numbs = {**numbs, **new_data}
         # ---
         if "testtest" in sys.argv:
             continue

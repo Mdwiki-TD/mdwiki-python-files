@@ -12,9 +12,7 @@ from mdpy.bots import py_tools
 #
 import sys
 import urllib
-import traceback
 from newapi.except_err import exception_err
-import pywikibot
 
 # ---
 PYTHON_VERSION = sys.version_info[:3]

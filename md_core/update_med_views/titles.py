@@ -8,7 +8,7 @@ from update_med_views.titles import load_lang_titles
 """
 import sys
 import json
-from update_med_views.helps import t_dump_dir, langs_titles, one_lang_titles, dump_one
+from update_med_views.helps import t_dump_dir, langs_titles, one_lang_titles, dump_one, load_lang_titles_from_dump
 
 
 def dump_data(all_data):
@@ -26,11 +26,10 @@ def dump_data(all_data):
 
 def load_lang_titles(lang):
     # ---
-    json_file = t_dump_dir / f"{lang}.json"
+    data = load_lang_titles_from_dump(lang)
     # ---
-    if json_file.exists():
-        with open(json_file, "r", encoding="utf-8") as f:
-            return json.load(f)
+    if data:
+        return data
     # ---
     if "local" in sys.argv:
         return {}

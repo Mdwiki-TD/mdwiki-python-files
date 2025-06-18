@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 
+python3 core8/pwb.py update_med_views/bot -year:2024 ask
+
 python3 core8/pwb.py update_med_views/bot -max:50 ask
 
 python3 core8/pwb.py update_med_views/bot -limit:50
@@ -20,14 +22,11 @@ from update_med_views.helps import count_all_langs
 from update_med_views.titles import load_lang_titles
 
 
-def get_one_lang_views(langcode, year, titles):
+def get_one_lang_views(langcode, titles, year):
     # ---
     views_t = load_one_lang_views(langcode, titles, year)
     # ---
-    total = 0
-    # ---
-    for _, tab in views_t.items():
-        total += tab.get("all", 0)
+    total = sum([tab.get("all", 0) for _, tab in views_t.items()])
     # ---
     return total
 
@@ -86,7 +85,7 @@ def make_views(languages, year, limit, maxv):
             views[lang] = 0
             continue
         # ---
-        views[lang] = get_one_lang_views(lang, year, titles)
+        views[lang] = get_one_lang_views(lang, titles, year)
     # ---
     return views
 

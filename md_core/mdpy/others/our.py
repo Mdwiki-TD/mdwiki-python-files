@@ -4,28 +4,26 @@
 python3 core8/pwb.py mdpy/our
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
-import json
-import pywikibot
 import os
+import json
 import sys
-from pywikibot.comms import http
+import requests
 
-# ---
 from apis import txtlib2
-from newapi import printe
 from apis import mdwiki_api
+from newapi import printe
 
-# ---
 from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
-# ---
+
 values = {}
+errors = {}
+
+tool = os.getenv("HOME")
+tool = tool.split("/")[-1] if tool else "himo"
+# ---
+default_user_agent = f"{tool} bot/1.0 (https://{tool}.toolforge.org/; tools.{tool}@toolforge.org)"
 
 
 def fix_p(title, text, param):
@@ -41,7 +39,7 @@ def fix_p(title, text, param):
 
 def work(title):
     # ---
-    global values
+    # global values
     # ---
     text = mdwiki_api.GetPageText(title)
     # ---
@@ -82,25 +80,31 @@ def work(title):
     printe.output(pas)
 
 
-# ---
-# ---
-errors = {}
-
-
 def check_urls(urls):
-    global errors
+    # global errors
+    # ---
     for u in urls:
         url = u
         url = url.split('{{')[0].strip()
+        # ---
         if url.find('http') == -1:
             url = f'https://owidm.wmcloud.org/grapher/{url}'
         # ---
         print(url)
         # ---
-        req = http.fetch(url)
+        try:
+            response = requests.get(url, headers={"User-Agent": default_user_agent}, timeout=10)
+
+        except requests.exceptions.RequestException as e:
+            print(f"Exception: {e}")
+            response = False
         # ---
-        if 500 <= req.status_code < 600:
-            printe.output(f'<<red>> received {req.uri} status from {req.status_code}')
+        if not response:
+            errors[u] = True
+            continue
+        # ---
+        if 500 <= response.status_code < 600:
+            printe.output(f'<<red>> received {response.url} status code {response.status_code}')
             errors[u] = True
 
 

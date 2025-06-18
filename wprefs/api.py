@@ -12,9 +12,9 @@ from pathlib import Path
 
 # ---
 try:
-    import pywikibot
+    from newapi import printe
 except ImportError:
-    pywikibot = None
+    printe = None
 # ---
 Dir = Path(__file__).parent.parent
 # ---
@@ -288,8 +288,8 @@ def page_put(oldtext, NewText, summary, title, lang):
     # ---
     if "ask" in sys.argv and not ask_a[1]:
         # ---
-        if pywikibot:
-            pywikibot.showDiff(oldtext, NewText)
+        if printe:
+            printe.showDiff(oldtext, NewText)
         # ---
         print_s(f" -Edit summary: {summary}:")
         sa = input(f"<<yellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})")

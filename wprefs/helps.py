@@ -6,9 +6,9 @@ import traceback
 import urllib.parse
 
 try:
-    import pywikibot
+    from newapi import printe
 except ImportError:
-    pywikibot = None
+    printe = None
 
 
 def print_s(s):
@@ -27,9 +27,9 @@ def ec_de_code(tt, type1):
 
 
 def exepts():
-    if not pywikibot:
+    if not printe or not hasattr(printe, "error"):
         return
     if 'returnfile' not in sys.argv:
-        pywikibot.output('Traceback (most recent call last):')
-        pywikibot.output(traceback.format_exc())
-        pywikibot.output('CRITICAL:')
+        printe.error('Traceback (most recent call last):')
+        printe.error(traceback.format_exc())
+        printe.error('CRITICAL:')

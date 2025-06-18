@@ -12,8 +12,7 @@ import sys
 # ---
 print_pywikibot = {1: False}
 try:
-    import pywikibot
-
+    from newapi import printe
     print_pywikibot[1] = True
 except BaseException:
     print_pywikibot[1] = False
@@ -21,7 +20,7 @@ except BaseException:
 
 def outputnew(s):
     if print_pywikibot[1] and 'test' in sys.argv:
-        pywikibot.output(s)
+        printe.output(s)
 
 
 # ---
@@ -71,5 +70,5 @@ if __name__ == '__main__':
     # ---
     if 'test' in sys.argv:
         new = fix_ref(ff, all)
-        pywikibot.showDiff(ff, new)
+        printe.showDiff(ff, new)
 # ---

@@ -3,7 +3,6 @@
 python3 core8/pwb.py priorviews/find/find_views test
 
 '''
-from priorviews.lists.links_by_section import sects_links_langlinks
 import sys
 import json
 import os
@@ -14,7 +13,8 @@ from datetime import timedelta
 
 # ---
 from newapi import printe
-from apis import views_rest
+from apis.mw_views import PageviewsClient
+from priorviews.lists.links_by_section import sects_links_langlinks
 from priorviews.bots import helps
 
 # ---
@@ -48,13 +48,12 @@ def api_views(title, lang):
     # d_start = d_start.strftime('%Y%m%d')
     d_start = "20110101"
     # ---
-    enviews = views_rest.get_views_with_rest_v1(lang, [title], date_start=d_start, date_end=d_end, printurl=TEST)
+    view_bot = PageviewsClient()
     # ---
-    if not enviews:
-        return 0
+    new_data = view_bot.article_views_new(f'{lang}.wikipedia', [title], granularity='daily', start=d_start, end=d_end)
+    # {'title1': {'2024': 501}, 'title2': {'2024': 480}, ... }
     # ---
-    vs = enviews.get(title, {}).get('all', 0)
-    # ---
+    vs = new_data.get(title, {}).get('all', 0)
     # ---
     return vs
 

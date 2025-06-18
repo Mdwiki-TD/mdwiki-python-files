@@ -18,12 +18,13 @@ import os
 import sys
 import json
 
-from apis import views_rest
 from newapi import printe
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from mdpyget.pages_list import get_links_from_cats
 from mdpyget.bots.to_sql import to_sql
 from mdapi_sql import sql_for_mdwiki
+from apis.mw_views import PageviewsClient
+view_bot = PageviewsClient()
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
@@ -37,9 +38,11 @@ def make_n_views(en_keys, old_values):
     # ---
     en_keys = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in en_keys]
     # ---
-    enviews = views_rest.get_views_last_30_days("en", en_keys)
+    enviews = view_bot.article_views_new('en.wikipedia', en_keys)
     # ---
-    enviews_0 = {k: v for k, v in enviews.items() if v == 0}
+    # {'Yemen': {'all': 187379, '2025': 187379}, 'COVID-19': {'all': 230007, '2025': 230007}}
+    # ---
+    enviews_0 = {k: v for k, v in enviews.items() if v.get("all", 0) == 0}
     # ---
     printe.output(f"<<purple>> len of enviews: {len(enviews.keys())}, len of enviews_0: {len(enviews_0.keys())}")
     # ---
@@ -47,7 +50,9 @@ def make_n_views(en_keys, old_values):
     # ---
     for k, view in enviews.items():
         # ---
-        if view == 0 or view == "0" or not view:
+        view_all = view.get("all", 0)
+        # ---
+        if view_all == 0 or view_all == "0" or not view_all:
             no_views += 1
             continue
         # ---
@@ -56,7 +61,7 @@ def make_n_views(en_keys, old_values):
         if enwiki_to_mdwiki.get(k):
             k = enwiki_to_mdwiki.get(k)
         # ---
-        old_values[k] = view
+        old_values[k] = view_all
     # ---
     printe.output(f"no_views:{no_views},\t len of old_values: {len(old_values.keys())}")
     # ---
