@@ -195,10 +195,12 @@ class PageviewsClient:
             # month = datetime.datetime(2024, 5, 1, 0, 0)
             year_n = month.strftime('%Y')
             for article, count in y.items():
-                new_data.setdefault(article, {"all": 0, year_n: 0})
+                # ensure nested dict & the specific year key both exist
+                article_dict = new_data.setdefault(article, {"all": 0, year_n: 0})
+                # ---
                 if count:
-                    new_data[article][year_n] += count
-                    new_data[article]["all"] += count
+                    article_dict[year_n] = article_dict.get(year_n, 0) + count
+                    article_dict["all"] = article_dict.get("all", 0) + count
         # ---
         delta = time.time() - time_start
         # ---

@@ -42,7 +42,7 @@ def make_n_views(en_keys, old_values):
     # ---
     # {'Yemen': {'all': 187379, '2025': 187379}, 'COVID-19': {'all': 230007, '2025': 230007}}
     # ---
-    enviews_0 = {k: v for k, v in enviews.items() if v["all"] == 0}
+    enviews_0 = {k: v for k, v in enviews.items() if v.get("all", 0) == 0}
     # ---
     printe.output(f"<<purple>> len of enviews: {len(enviews.keys())}, len of enviews_0: {len(enviews_0.keys())}")
     # ---

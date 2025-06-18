@@ -9,37 +9,13 @@ import json
 import time
 from pathlib import Path
 from newapi import printe
-from newapi.mdwiki_page import user_agent
 
 # from mwviews.api import PageviewsClient
 from apis.mw_views import PageviewsClient
 from update_med_views.helps import dump_one, load_lang_titles_from_dump
 
 # Sends a descriptive User-Agent header with every request
-view_bot = PageviewsClient(user_agent=user_agent)
-
-
-def article_views_old(site, articles, year=2024):
-    # ---
-    time_start = time.time()
-    # ---
-    dd = view_bot.article_views(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
-    # ---
-    new_data = {}
-    # ---
-    for month, y in dd.items():
-        # month = datetime.datetime(2024, 5, 1, 0, 0)
-        year_n = month.strftime('%Y')
-        for article, count in y.items():
-            new_data.setdefault(article, {year_n: 0})
-            if count:
-                new_data[article][year_n] += count
-    # ---
-    delta = time.time() - time_start
-    # ---
-    printe.output(f"<<green>> article_views, (articles:{len(articles):,}) time: {delta:.2f} sec")
-    # ---
-    return new_data
+view_bot = PageviewsClient()
 
 
 def article_views(site, articles, year=2024):
@@ -102,7 +78,7 @@ if __name__ == '__main__':
     # ---
     titles = ["Yemen", "COVID-19"]
     # ---
-    zz = view_bot.article_views_new('xsxen.wikipedia', titles)
+    zz = view_bot.article_views_new('en.wikipedia', titles)
     # ---
     print(zz)
     print(f"{len(zz)=:,}")

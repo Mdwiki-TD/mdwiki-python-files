@@ -175,7 +175,14 @@ def main():
             if lenlist < 5:
                 printe.output(", ".join(title_list))
             # ---
-            new_data = view_bot.article_views_new(f'{lange}.wikipedia', title_list, granularity='daily', start=start, end='20300101')
+            new_data = view_bot.article_views_new(
+                f'{lange}.wikipedia',
+                title_list,
+                granularity='daily',
+                start=start,
+                end='20300101'
+            )
+            # ---
             # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
             # ---
             numbs = {**numbs, **new_data}
