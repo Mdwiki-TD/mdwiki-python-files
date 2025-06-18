@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """
+copied from mwviews
 
 from update_med_views.mw_views import PageviewsClient
 
@@ -11,6 +12,7 @@ from requests.utils import quote
 from datetime import date, datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
 from collections import defaultdict
+from tqdm import tqdm
 
 endpoints = {
     'article': 'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article',
@@ -159,5 +161,9 @@ class PageviewsClient:
 
     def get_concurrent(self, urls):
         with ThreadPoolExecutor(self.parallelism) as executor:
-            def f(url): return requests.get(url, headers=self.headers).json()
-            return list(executor.map(f, urls))
+            def fetch(url):
+                response = requests.get(url, headers=self.headers, timeout=10)
+                return response.json()
+
+            results = executor.map(fetch, urls)
+            return list(results)
