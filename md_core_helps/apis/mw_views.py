@@ -3,13 +3,12 @@
 copied from mwviews
 
 from apis.mw_views import PageviewsClient
-
-# view_bot = PageviewsClient(user_agent=user_agent)
-# new_data = view_bot.article_views_by_year(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')
-# {'title1': {'2024': 501}, 'title2': {'2024': 480}, ... }
+# view_bot = PageviewsClient()
+# new_data = view_bot.article_views_new(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')
+# {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 """
-
+import os
 import requests
 import traceback
 import time
@@ -18,6 +17,12 @@ from datetime import date, datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
 from collections import defaultdict
 from tqdm import tqdm
+
+
+tool = os.getenv("HOME")
+tool = tool.split("/")[-1] if tool else "himo"
+# ---
+default_user_agent = f"{tool} bot/1.0 (https://{tool}.toolforge.org/; tools.{tool}@toolforge.org)"
 
 endpoints = {
     'article': 'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article',
@@ -47,7 +52,7 @@ def month_from_day(dt):
 
 
 class PageviewsClient:
-    def __init__(self, user_agent, parallelism=10):
+    def __init__(self, user_agent="", parallelism=10):
         """
         Create a PageviewsClient
 
@@ -61,7 +66,7 @@ class PageviewsClient:
                           multiple requests to the API at the same time
         """
 
-        self.headers = {"User-Agent": user_agent}
+        self.headers = {"User-Agent": user_agent if user_agent else default_user_agent}
         self.parallelism = parallelism
 
     def article_views(
@@ -174,7 +179,7 @@ class PageviewsClient:
             results = tqdm(executor.map(fetch, urls), total=len(urls), desc="Fetching URLs")
             return list(results)
 
-    def article_views_by_year(self, project, articles, **kwargs):
+    def article_views_new(self, project, articles, **kwargs):
         # ---
         time_start = time.time()
         # ---
@@ -186,9 +191,10 @@ class PageviewsClient:
             # month = datetime.datetime(2024, 5, 1, 0, 0)
             year_n = month.strftime('%Y')
             for article, count in y.items():
-                new_data.setdefault(article, {year_n: 0})
+                new_data.setdefault(article, {"all": 0, year_n: 0})
                 if count:
                     new_data[article][year_n] += count
+                    new_data[article]["all"] += count
         # ---
         delta = time.time() - time_start
         # ---

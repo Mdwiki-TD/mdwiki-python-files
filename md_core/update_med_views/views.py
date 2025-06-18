@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py update_med_views/get_views_new
+python3 core8/pwb.py update_med_views/views
 
 """
 import sys
@@ -44,7 +44,7 @@ def article_views_old(site, articles, year=2024):
 
 def article_views(site, articles, year=2024):
     # ---
-    new_data = view_bot.article_views_by_year(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
+    new_data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
     # ---
     return new_data
 
@@ -96,10 +96,15 @@ def load_one_lang_views(langcode, titles, year):
 
 if __name__ == '__main__':
     # ---
-    titles = load_lang_titles_from_dump("ba")
+    # titles = load_lang_titles_from_dump("ba")
     # ---
-    ux = article_views('ba', titles, 2024)
+    # ux = article_views('ba', titles, 2024)
     # ---
-    print(f"{len(ux)=:,}")
+    titles = ["Yemen", "COVID-19"]
+    # ---
+    zz = view_bot.article_views_new('en.wikipedia', titles)
+    # ---
+    print(zz)
+    print(f"{len(zz)=:,}")
     # ---
     # article_views: time: 14.52 sec

@@ -11,7 +11,8 @@ from pathlib import Path
 
 # ---
 from newapi import printe
-from apis import views_rest
+from apis.mw_views import PageviewsClient
+view_bot = PageviewsClient()
 
 # ---
 TEST = False
@@ -27,7 +28,7 @@ if not os.path.exists(file):
 with open(file, "r", encoding="utf-8") as f:
     ViewsData = json.load(f)
 # ---
-N_g = 0
+N_g = {1: 0}
 
 
 def dump_data(file, data):
@@ -49,7 +50,7 @@ def dump_data(file, data):
 
 def get_v(lang, links, lang_links_mdtitle_s):
     # ---
-    global ViewsData, N_g
+    global ViewsData
     # ---
     len_p = len(links)
     # -- -
@@ -58,25 +59,27 @@ def get_v(lang, links, lang_links_mdtitle_s):
         de = len_p - len(links)
         printe.output(f'de: {de}')
     # ---
-    # split links to groups by 10 titles
-    for i in range(0, len(links), 10):
-        group = dict(list(links.items())[i: i + 10])
+    # split links to groups by 50 titles
+    for i in range(0, len(links), 50):
         # ---
-        views_tab = views_rest.get_views_with_rest_v1(lang, group.keys())
+        group = dict(list(links.items())[i: i + 50])
         # ---
-        for title, views in views_tab.items():
-            # ---
-            # _views_ = {"all": 14351,"2021": {"all": 907,"202108": 186},"2022": {"all": 5750,"202201": 158}}
+        new_data = view_bot.article_views_new(f'{lang}.wikipedia', group.keys(), granularity='monthly', start='20150701', end='20300101')
+        # ---
+        # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
+        # ---
+        for title, tabe in new_data.items():
             # ---
             mdtitle = lang_links_mdtitle_s.get(lang, {}).get(title, None)
+            # ---
             if mdtitle is None:
                 continue
             # ---
-            views = views['all']
+            all_views = tabe['all']
             # ---
             viws_in = ViewsData[mdtitle].get(lang, {}).get('views', 0)
             # ---
-            printe.output(f't: {title} - {lang} - views: {views}')
+            printe.output(f't: {title} - {lang} - views: {all_views}')
             # ---
             # ViewsData.setdefault(mdtitle, {})[lang] = ViewsData[mdtitle].setdefault(lang, {})
             # ---
@@ -88,14 +91,14 @@ def get_v(lang, links, lang_links_mdtitle_s):
             if lang not in ViewsData[mdtitle].keys():
                 ViewsData[mdtitle][lang] = {}
             # ---
-            if viws_in > 0 and views == 0:
+            if viws_in > 0 and all_views == 0:
                 continue
             # ---
-            ViewsData[mdtitle][lang] = {"title": title, "views": views}
+            ViewsData[mdtitle][lang] = {"title": title, "views": all_views}
             # ---
-            N_g += 1
+            N_g[1] += 1
             # ---
-            if N_g % 100 == 0:
+            if N_g[1] % 100 == 0:
                 dump_data(file, ViewsData)
 
 
