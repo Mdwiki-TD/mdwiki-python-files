@@ -165,5 +165,6 @@ class PageviewsClient:
                 response = requests.get(url, headers=self.headers, timeout=10)
                 return response.json()
 
-            results = executor.map(fetch, urls)
+            # results = executor.map(fetch, urls)
+            results = tqdm(executor.map(fetch, urls), total=len(urls), desc="Fetching URLs")
             return list(results)

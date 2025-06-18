@@ -93,6 +93,6 @@ if __name__ == '__main__':
     # ---
     ux = article_views('ba', titles, 2024)
     # ---
-    print(ux)
+    print(f"{len(ux)=:,}")
     # ---
     # article_views: time: 14.52 sec
