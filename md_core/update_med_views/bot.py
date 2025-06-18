@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 
+python3 core8/pwb.py update_med_views/bot -year:2024 ask
+
 python3 core8/pwb.py update_med_views/bot -max:50 ask
 
 python3 core8/pwb.py update_med_views/bot -limit:50
@@ -27,7 +29,7 @@ def get_one_lang_views(langcode, titles, year):
     total = 0
     # ---
     for _, tab in views_t.items():
-        print(tab)
+        # print(tab)
         total += tab.get("all", 0)
     # ---
     return total
