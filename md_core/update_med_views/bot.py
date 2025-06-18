@@ -26,11 +26,7 @@ def get_one_lang_views(langcode, titles, year):
     # ---
     views_t = load_one_lang_views(langcode, titles, year)
     # ---
-    total = 0
-    # ---
-    for _, tab in views_t.items():
-        # print(tab)
-        total += tab.get("all", 0)
+    total = sum([tab.get("all", 0) for _, tab in views_t.items()])
     # ---
     return total
 
