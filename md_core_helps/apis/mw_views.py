@@ -8,6 +8,7 @@ from apis.mw_views import PageviewsClient
 # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 """
+import sys
 import os
 import requests
 import traceback
@@ -157,10 +158,12 @@ class PageviewsClient:
                     continue
                 for item in result['items']:
                     output[parse_date(item['timestamp'])][item['article']] = item['views']
+
             if not some_data_returned:
-                print(Exception(
-                    'The pageview API returned nothing useful at: {}'.format(urls)
-                ))
+                print(Exception(f'The pageview API returned nothing useful at: ({len(urls)})'))
+
+                if "printurl" in sys.argv:
+                    print(Exception(urls))
 
             return output
         except Exception as e:
