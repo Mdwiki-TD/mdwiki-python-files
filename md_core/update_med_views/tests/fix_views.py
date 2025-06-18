@@ -32,6 +32,8 @@ for year_dir in t_dump_dir.glob("*"):
         # ---
         for title, v in data.items():
             # ---
+            title = title.replace("_", " ")
+            # ---
             new_data[title] = {}
             # ---
             for key, value in v.items():

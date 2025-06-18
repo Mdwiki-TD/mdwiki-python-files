@@ -157,7 +157,8 @@ class PageviewsClient:
                 else:
                     continue
                 for item in result['items']:
-                    output[parse_date(item['timestamp'])][item['article']] = item['views']
+                    article = item['article'].replace("_", " ")
+                    output[parse_date(item['timestamp'])][article] = item['views']
 
             if not some_data_returned:
                 print(Exception(f'The pageview API returned nothing useful at: ({len(urls)})'))
@@ -199,7 +200,7 @@ class PageviewsClient:
             year_n = month.strftime('%Y')
             for article, count in y.items():
                 # ensure nested dict & the specific year key both exist
-                article_dict = new_data.setdefault(article, {"all": 0, year_n: 0})
+                article_dict = new_data.setdefault(article.replace("_", " "), {"all": 0, year_n: 0})
                 # ---
                 if count is not None:
                     article_dict[year_n] = article_dict.get(year_n, 0) + count
