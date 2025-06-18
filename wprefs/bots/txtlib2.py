@@ -11,7 +11,6 @@ except ImportError:
     try:
         import mwparserfromhell as wikitextparser
     except ImportError:
-        # print required because pywikibot is not imported completely
         raise ImportError(
             """
 Pywikibot is missing a MediaWiki markup parser which is necessary.

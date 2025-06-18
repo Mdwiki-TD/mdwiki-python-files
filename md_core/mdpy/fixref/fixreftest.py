@@ -1,7 +1,7 @@
 '''
 python3 core8/pwb.py mdpy/fixref/fixreftest
 '''
-import pywikibot
+import printe
 from mdpy.fixref.fixref_text_new import fix_ref_template
 
 # ---
@@ -72,7 +72,7 @@ text = '''
 
 def test():
     newtext = fix_ref_template(text)
-    pywikibot.showDiff(text, newtext)
+    printe.showDiff(text, newtext)
 
 
 # ---

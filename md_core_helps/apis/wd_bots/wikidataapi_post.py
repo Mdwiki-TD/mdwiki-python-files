@@ -5,7 +5,7 @@ from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 
 """
 import sys
-import pywikibot
+import printe
 import requests
 from urllib.parse import urlencode
 
@@ -50,7 +50,7 @@ def do_request(params=None, method="POST"):
         status = r4.status_code
         # ---
         if status != 200:
-            pywikibot.output(f"<<red>> wikidataapi.py: post error status: {str(status)}")
+            printe.output(f"<<red>> wikidataapi.py: post error status: {str(status)}")
             return {}
         # ---
         return r4.json()

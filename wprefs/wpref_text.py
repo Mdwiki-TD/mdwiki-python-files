@@ -58,13 +58,13 @@ def remove_False_code(text):
         pap = Match.group("pap")
         ref = Match.group("ref")
         if not ref.strip():
-            # pywikibot.output( "\tno ref" )
+            # printe.output( "\tno ref" )
             continue
         # ---
         # find html code like <cite></cite> and all span code after it
         # find and get html code like <cite></cite>
         if not re.search(r"(?is)<cite[^>]*>", ref):
-            # pywikibot.output( "\tno cite" )
+            # printe.output( "\tno cite" )
             continue
         # ---
         # find and get html code like <cite></cite>
