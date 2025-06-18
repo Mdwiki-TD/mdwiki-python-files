@@ -7,7 +7,6 @@ from mdpy.bots import make_title_bot
 """
 import re
 import requests
-import pywikibot
 import urllib.parse
 from newapi import printe
 from newapi.except_err import exception_err  # exception_err(e)
@@ -84,7 +83,7 @@ def make_title(url):
     Title_cash[url] = ""
     # ---
     if not url.strip():
-        pywikibot.output("<<red>> make_title url = '' return False")
+        printe.output("<<red>> make_title url = '' return False")
         return {}
     # ---
     url2 = urllib.parse.quote(url)
