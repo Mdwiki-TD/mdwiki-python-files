@@ -12,7 +12,7 @@ from newapi import printe
 from newapi.mdwiki_page import user_agent
 
 # from mwviews.api import PageviewsClient
-from update_med_views.mw_views import PageviewsClient
+from apis.mw_views import PageviewsClient
 from update_med_views.helps import dump_one, load_lang_titles_from_dump
 
 # Sends a descriptive User-Agent header with every request

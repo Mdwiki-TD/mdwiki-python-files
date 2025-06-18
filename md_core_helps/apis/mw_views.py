@@ -2,7 +2,11 @@
 """
 copied from mwviews
 
-from update_med_views.mw_views import PageviewsClient
+from apis.mw_views import PageviewsClient
+
+# view_bot = PageviewsClient(user_agent=user_agent)
+# new_data = view_bot.article_views_by_year(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')
+# {'title1': {'2024': 501}, 'title2': {'2024': 480}, ... }
 
 """
 
