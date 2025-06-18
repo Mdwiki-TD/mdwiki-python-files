@@ -207,6 +207,6 @@ class PageviewsClient:
         # ---
         delta = time.time() - time_start
         # ---
-        print(f"<<green>> article_views, (articles:{len(articles):,}) time: {delta:.2f} sec")
+        print(f"<<green>> article_views, (articles:{len(articles):,}) new_data:{len(new_data):,} time: {delta:.2f} sec")
         # ---
         return new_data

@@ -45,7 +45,7 @@ def get_one_lang_views_by_titles(langcode, titles, year):
         # ---
         data = article_views(langcode, group, year)
         # ---
-        all_data.update(data)
+        all_data.update({x: v for x, v in data.items() if x not in all_data})
     # ---
     return all_data
 
@@ -65,9 +65,9 @@ def get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file):
         # ---
         data = article_views(langcode, group, year)
         # ---
-        all_data.update(data)
+        all_data.update({x: v for x, v in data.items() if x not in all_data})
         # ---
-        in_file.update(data)
+        in_file.update({x: v for x, v in data.items() if x not in in_file})
         # ---
         dump_one(json_file, in_file)
     # ---
@@ -86,22 +86,22 @@ def load_one_lang_views(langcode, titles, year):
         with open(json_file, "r", encoding="utf-8") as f:
             u_data = json.load(f)
         # ---
-        printe.output(f"<<green>> load_one_lang_views(lang:{langcode}) \t from file: {json_file}, titles: {len(titles):,}")
+        # printe.output(f"<<green>> load_one_lang_views(lang:{langcode}) \t from file: {json_file.name}, titles: {len(titles):,}")
         # ---
         titles_not_in_file = [x for x in titles if x not in u_data]
         # ---
         if len(u_data) != len(titles) or len(titles_not_in_file) > 0:
-            printe.output(f"<<red>> titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
+            printe.output(f"<<red>>(lang:{langcode}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
             in_file = u_data
             # ---
             titles = titles_not_in_file
         else:
+            printe.output(f"<<green>> load_one_lang_views(lang:{langcode}) \t titles: {len(titles):,}")
+            # ---
             return u_data
     # ---
     if "local" in sys.argv:
         return {}
-    # ---
-    printe.output(f"<<green>> load_one_lang_views(lang:{langcode}) \t titles: {len(titles):,}")
     # ---
     if len(titles) > 1000:
         data = get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file)
@@ -110,9 +110,9 @@ def load_one_lang_views(langcode, titles, year):
     # ---
     if len(in_file) > 0:
         # ---
-        printe.output(f"<<yellow>> new data: {len(data)}, in_file: {len(in_file)}")
+        printe.output(f"<<yellow>>(lang:{langcode}) new data: {len(data)}, in_file: {len(in_file)}")
         # ---
-        data.update(in_file)
+        data.update({x: v for x, v in in_file.items() if x not in data})
     # ---
     dump_one(json_file, data)
     # ---

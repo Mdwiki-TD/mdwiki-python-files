@@ -11,6 +11,12 @@ from update_med_views.bot import get_one_lang_views
 titles = [
     "اليمن",
     "Atsʼiis naałdzid",
+    "Biłhaazhchin (łitsooígíí)",
+    "Chʼosh doo yitʼínii",
+    "Dichin",
+    "Dlóóʼ binaalniih",
+    "Dáʼákʼehtah naʼastsʼǫǫsí binághah dah jíjinígíí",
+    "Jéíʼádįįh",
     "asdasdasxxx!!##as",
 ]
 # ---
