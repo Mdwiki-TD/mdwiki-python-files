@@ -54,9 +54,24 @@ def load_one_lang_views(langcode, titles, year):
     # ---
     json_file = get_view_file(year, langcode)
     # ---
+    in_file = {}
+    # ---
     if json_file.exists():
+        # ---
         with open(json_file, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+        # ---
+        printe.output(f"<<green>> load_one_lang_views(lang:{langcode}) \t from file: {json_file}, titles: {len(titles):,}")
+        # ---
+        titles_not_in_file = [x for x in titles if x not in data]
+        # ---
+        if len(data) != len(titles) or len(titles_not_in_file) > 0:
+            printe.output(f"<<red>> titles: {len(titles):,}, titles in file: {len(data):,}, missing: {len(titles_not_in_file):,}")
+            in_file = data
+            # ---
+            titles = titles_not_in_file
+        else:
+            return data
     # ---
     if "local" in sys.argv:
         return {}
@@ -64,6 +79,12 @@ def load_one_lang_views(langcode, titles, year):
     printe.output(f"<<green>> load_one_lang_views(lang:{langcode}) \t titles: {len(titles):,}")
     # ---
     data = get_one_lang_views_by_titles(langcode, titles, year)
+    # ---
+    if len(in_file) > 0:
+        # ---
+        printe.output(f"<<yellow>> new data: {len(data)}, in_file: {len(in_file)}")
+        # ---
+        data.update(in_file)
     # ---
     dump_one(json_file, data)
     # ---
