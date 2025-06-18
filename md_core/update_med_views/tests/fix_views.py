@@ -11,6 +11,8 @@ from pathlib import Path
 
 t_dump_dir = Path(__file__).parent.parent / "views"
 
+to_fix = 1
+
 for year_dir in t_dump_dir.glob("*"):
     # ---
     files = [x for x in year_dir.glob("*.json")]
@@ -43,6 +45,10 @@ for year_dir in t_dump_dir.glob("*"):
         # ---
         print(f"file: {name} changed..")
         # ---
+        to_fix += 1
+        # ---
         if "fix" in sys.argv:
             with open(json_file, "w", encoding="utf-8") as f:
                 json.dump(new_data, f, ensure_ascii=False, indent=2)
+
+print(f"files to fix: {to_fix}")
