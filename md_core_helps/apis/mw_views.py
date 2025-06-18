@@ -172,8 +172,12 @@ class PageviewsClient:
     def get_concurrent(self, urls):
         with ThreadPoolExecutor(self.parallelism) as executor:
             def fetch(url):
-                response = requests.get(url, headers=self.headers, timeout=10)
-                return response.json()
+                try:
+                    resp = requests.get(url, headers=self.headers, timeout=10)
+                    resp.raise_for_status()
+                    return resp.json()
+                except Exception as exc:
+                    return {"error": f"{exc}", "url": url}
 
             # results = executor.map(fetch, urls)
             results = tqdm(executor.map(fetch, urls), total=len(urls), desc="Fetching URLs")

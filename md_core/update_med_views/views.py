@@ -102,7 +102,7 @@ if __name__ == '__main__':
     # ---
     titles = ["Yemen", "COVID-19"]
     # ---
-    zz = view_bot.article_views_new('en.wikipedia', titles)
+    zz = view_bot.article_views_new('xsxen.wikipedia', titles)
     # ---
     print(zz)
     print(f"{len(zz)=:,}")
