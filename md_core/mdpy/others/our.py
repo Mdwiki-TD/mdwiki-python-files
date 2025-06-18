@@ -94,7 +94,8 @@ def check_urls(urls):
         # ---
         try:
             response = requests.get(url, headers={"User-Agent": default_user_agent}, timeout=10)
-        except Exception as e:
+
+        except requests.exceptions.RequestException as e:
             print(f"Exception: {e}")
             response = False
         # ---
@@ -103,7 +104,7 @@ def check_urls(urls):
             continue
         # ---
         if 500 <= response.status_code < 600:
-            printe.output(f'<<red>> received {response.uri} status from {response.status_code}')
+            printe.output(f'<<red>> received {response.url} status code {response.status_code}')
             errors[u] = True
 
 

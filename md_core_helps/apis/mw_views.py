@@ -198,7 +198,7 @@ class PageviewsClient:
                 # ensure nested dict & the specific year key both exist
                 article_dict = new_data.setdefault(article, {"all": 0, year_n: 0})
                 # ---
-                if count:
+                if count is not None:
                     article_dict[year_n] = article_dict.get(year_n, 0) + count
                     article_dict["all"] = article_dict.get("all", 0) + count
         # ---

@@ -27,9 +27,9 @@ def ec_de_code(tt, type1):
 
 
 def exepts():
-    if not printe:
+    if not printe or not hasattr(printe, "error"):
         return
     if 'returnfile' not in sys.argv:
-        printe.output('Traceback (most recent call last):')
-        printe.output(traceback.format_exc())
-        printe.output('CRITICAL:')
+        printe.error('Traceback (most recent call last):')
+        printe.error(traceback.format_exc())
+        printe.error('CRITICAL:')
