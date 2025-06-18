@@ -19,7 +19,7 @@ from update_med_views.helps import dump_one, load_lang_titles_from_dump
 view_bot = PageviewsClient(user_agent=user_agent)
 
 
-def article_views(site, articles, year=2024):
+def article_views_old(site, articles, year=2024):
     # ---
     time_start = time.time()
     # ---
@@ -38,6 +38,13 @@ def article_views(site, articles, year=2024):
     delta = time.time() - time_start
     # ---
     printe.output(f"<<green>> article_views, (articles:{len(articles):,}) time: {delta:.2f} sec")
+    # ---
+    return new_data
+
+
+def article_views(site, articles, year=2024):
+    # ---
+    new_data = view_bot.article_views_by_year(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
     # ---
     return new_data
 

@@ -8,6 +8,7 @@ from update_med_views.mw_views import PageviewsClient
 
 import requests
 import traceback
+import time
 from requests.utils import quote
 from datetime import date, datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
@@ -168,3 +169,25 @@ class PageviewsClient:
             # results = executor.map(fetch, urls)
             results = tqdm(executor.map(fetch, urls), total=len(urls), desc="Fetching URLs")
             return list(results)
+
+    def article_views_by_year(self, project, articles, **kwargs):
+        # ---
+        time_start = time.time()
+        # ---
+        dd = self.article_views(project, articles, **kwargs)
+        # ---
+        new_data = {}
+        # ---
+        for month, y in dd.items():
+            # month = datetime.datetime(2024, 5, 1, 0, 0)
+            year_n = month.strftime('%Y')
+            for article, count in y.items():
+                new_data.setdefault(article, {year_n: 0})
+                if count:
+                    new_data[article][year_n] += count
+        # ---
+        delta = time.time() - time_start
+        # ---
+        print(f"<<green>> article_views, (articles:{len(articles):,}) time: {delta:.2f} sec")
+        # ---
+        return new_data
