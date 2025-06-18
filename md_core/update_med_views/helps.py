@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from update_med_views.helps import count_all_langs, get_en_articles, one_lang_titles, langs_titles
+from update_med_views.helps import count_all_langs, get_en_articles, one_lang_titles, langs_titles, load_lang_titles_from_dump
 from update_med_views.helps import dump_one
 
 """
@@ -17,6 +17,17 @@ t_dump_dir = Path(__file__).parent / "titles"
 
 if not t_dump_dir.exists():
     t_dump_dir.mkdir()
+
+
+def load_lang_titles_from_dump(lang):
+    # ---
+    json_file = t_dump_dir / f"{lang}.json"
+    # ---
+    if json_file.exists():
+        with open(json_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    # ---
+    return {}
 
 
 def dump_one(file, data):

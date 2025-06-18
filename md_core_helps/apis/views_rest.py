@@ -19,13 +19,18 @@ from newapi import printe
 from newapi.except_err import exception_err
 
 
-def get_all_data(langcode, titles, date_start, date_end, printurl=False, printstr=False):
+def get_all_data(langcode, titles, date_start, date_end, printurl=False, printstr=False, use_tqdm=True):
     # ---
     status_error = 0
     # ---
     all_data = {}
     # ---
-    for numb, page in tqdm.tqdm(enumerate(titles, start=1)):
+    ux = enumerate(titles, start=1)
+    # ---
+    if use_tqdm:
+        ux = tqdm.tqdm(ux)
+    # ---
+    for numb, page in ux:
         # ---
         # print when numb % 100 == 0
         # if numb % 100 == 0: print(f"get_views_with_rest_v1: {numb}/{len(titles)}")
@@ -72,12 +77,12 @@ def get_all_data(langcode, titles, date_start, date_end, printurl=False, printst
     return all_data
 
 
-def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20300101", printurl=False, printstr=False, Type="daily"):
+def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20300101", printurl=False, printstr=False, Type="daily", use_tqdm=True):
     # ---
     date_start = f"{date_start}00"
     date_end = f"{date_end}00"
     # ---
-    all_data = get_all_data(langcode, titles, date_start, date_end, printurl=printurl, printstr=printstr)
+    all_data = get_all_data(langcode, titles, date_start, date_end, printurl=printurl, printstr=printstr, use_tqdm=use_tqdm)
     # ---
     numbers = {}
     # ---
@@ -121,7 +126,7 @@ def get_views_with_rest_v1(langcode, titles, date_start="20150701", date_end="20
     return numbers
 
 
-def get_views_last_30_days(langcode, titles, printurl=False, printstr=False):
+def get_views_last_30_days(langcode, titles, printurl=False, printstr=False, use_tqdm=True):
     # ---
     date_end = datetime.datetime.utcnow() - timedelta(days=1)
     date_start = date_end - timedelta(weeks=4)
@@ -129,7 +134,7 @@ def get_views_last_30_days(langcode, titles, printurl=False, printstr=False):
     date_end = date_end.strftime("%Y%m%d%H")
     date_start = date_start.strftime("%Y%m%d%H")
     # ---
-    all_data = get_all_data(langcode, titles, date_start, date_end, printurl=printurl, printstr=printstr)
+    all_data = get_all_data(langcode, titles, date_start, date_end, printurl=printurl, printstr=printstr, use_tqdm=use_tqdm)
     # ---
     numbers = {}
     # ---
