@@ -35,6 +35,8 @@ def dump_one(file, data):
     if not data:
         return
     # ---
+    print(f"dump_one({file}), {len(data)=}")
+    # ---
     with open(file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 

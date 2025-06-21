@@ -68,7 +68,7 @@ class PageviewsClient:
         """
 
         self.headers = {"User-Agent": user_agent if user_agent else default_user_agent}
-        self.parallelism = parallelism
+        self.parallelism = parallelism or 10
 
     def article_views(
             self, project, articles,
@@ -148,43 +148,63 @@ class PageviewsClient:
             day: {a: None for a in articles} for day in outputDays
         })
 
-        try:
-            results = self.get_concurrent(urls)
-            some_data_returned = False
-            for result in results:
-                if 'items' in result:
-                    some_data_returned = True
-                else:
-                    continue
-                for item in result['items']:
-                    article = item['article'].replace("_", " ")
-                    output[parse_date(item['timestamp'])][article] = item['views']
+        # try:
+        results = self.get_concurrent(urls)
+        some_data_returned = False
+        details = {}
+        for result in results:
+            if 'items' in result:
+                some_data_returned = True
+            else:
 
-            if not some_data_returned:
-                print(Exception(f'The pageview API returned nothing useful at: ({len(urls)})'))
+                detail = result.get('detail')  # or result.get('error')
+                # detail = str(result)
+                if detail:
 
-                if "printurl" in sys.argv:
-                    print(Exception(urls))
+                    details.setdefault(detail, 0)
+                    details[detail] += 1
 
-            return output
-        except Exception as e:
-            print(f'ERROR {e} while fetching and parsing ' + str(urls))
-            traceback.print_exc()
+                if "printresult" in sys.argv:
+                    print("result:", result)
+                continue
+
+            for item in result['items']:
+                article = item['article'].replace("_", " ")
+                output[parse_date(item['timestamp'])][article] = item['views']
+
+        if not some_data_returned:
+            print(Exception(f'The pageview API returned nothing useful at: ({len(urls)})'))
+
+            for detail, count in details.items():
+                print(Exception(f">>>>>>>>>({count}): {detail=}"))
+
+            if "printurl" in sys.argv:
+                print(Exception(urls))
+
+        return output
+        # except Exception as e:
+        #     print(f'ERROR {e} while fetching and parsing ' + str(urls))
+        #     traceback.print_exc()
 
         return {}
 
     def get_concurrent(self, urls):
-        with ThreadPoolExecutor(self.parallelism) as executor:
-            def fetch(url):
-                try:
-                    resp = requests.get(url, headers=self.headers, timeout=10)
-                    resp.raise_for_status()
-                    return resp.json()
-                except Exception as exc:
-                    return {"error": f"{exc}", "url": url}
 
+        def fetch(url):
+            try:
+                resp = requests.get(url, headers=self.headers, timeout=10)
+                resp.raise_for_status()
+                return resp.json()
+            except Exception as exc:
+                return {"error": f"{exc}", "url": url}
+
+        if self.parallelism == 1:
+            return [fetch(url) for url in tqdm(urls, total=len(urls), desc=f"Fetching URLs, parallelism: {self.parallelism}")]
+
+        with ThreadPoolExecutor(self.parallelism) as executor:
             # results = executor.map(fetch, urls)
-            results = tqdm(executor.map(fetch, urls), total=len(urls), desc="Fetching URLs")
+            results = tqdm(executor.map(fetch, urls), total=len(urls), desc=f"Fetching URLs, parallelism: {self.parallelism}")
+
             return list(results)
 
     def article_views_new(self, project, articles, **kwargs):

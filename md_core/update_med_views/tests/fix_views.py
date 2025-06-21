@@ -8,10 +8,12 @@ import tqdm
 import sys
 import json
 from pathlib import Path
+from newapi import printe
 
 t_dump_dir = Path(__file__).parent.parent / "views"
 
-to_fix = 1
+plus_0 = 0
+to_fix = 0
 
 for year_dir in t_dump_dir.glob("*"):
     # ---
@@ -34,18 +36,27 @@ for year_dir in t_dump_dir.glob("*"):
             # ---
             title = title.replace("_", " ")
             # ---
-            new_data[title] = {}
+            if title in new_data:
+                if new_data[title] == 0 and v > 0:
+                    new_data[title] = v
+                    plus_0 += 1
+            else:
+                new_data[title] = v
             # ---
+            # new_data[title] = v.get("all", v) if isinstance(v, dict) else v
+            # ---
+            '''
             for key, value in v.items():
                 if isinstance(value, int):
                     new_data[title][key] = value
                 elif isinstance(value, dict):
                     new_data[title][key] = value.get("all", value)
+            '''
         # ---
         if data == new_data:
             continue
         # ---
-        print(f"file: {name} changed..")
+        printe.output(f"<<yellow>> file: {name} changed..")
         # ---
         to_fix += 1
         # ---
@@ -54,3 +65,4 @@ for year_dir in t_dump_dir.glob("*"):
                 json.dump(new_data, f, ensure_ascii=False, indent=2)
 
 print(f"files to fix: {to_fix}")
+print(f"plus_0: {plus_0}")
