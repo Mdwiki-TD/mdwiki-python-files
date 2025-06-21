@@ -28,6 +28,8 @@ def load_lang_titles(lang):
     # ---
     data = load_lang_titles_from_dump(lang)
     # ---
+    data = [x.replace("_", " ") for x in data]
+    # ---
     if data:
         return data
     # ---
@@ -35,6 +37,8 @@ def load_lang_titles(lang):
         return {}
     # ---
     data = one_lang_titles(lang)
+    # ---
+    data = [x.replace("_", " ") for x in data]
     # ---
     return data
 

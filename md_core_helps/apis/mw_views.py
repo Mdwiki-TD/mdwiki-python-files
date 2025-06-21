@@ -8,6 +8,7 @@ from apis.mw_views import PageviewsClient
 # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 """
+import sys
 import os
 import requests
 import traceback
@@ -67,7 +68,7 @@ class PageviewsClient:
         """
 
         self.headers = {"User-Agent": user_agent if user_agent else default_user_agent}
-        self.parallelism = parallelism
+        self.parallelism = parallelism or 10
 
     def article_views(
             self, project, articles,
@@ -147,40 +148,63 @@ class PageviewsClient:
             day: {a: None for a in articles} for day in outputDays
         })
 
-        try:
-            results = self.get_concurrent(urls)
-            some_data_returned = False
-            for result in results:
-                if 'items' in result:
-                    some_data_returned = True
-                else:
-                    continue
-                for item in result['items']:
-                    output[parse_date(item['timestamp'])][item['article']] = item['views']
-            if not some_data_returned:
-                print(Exception(
-                    'The pageview API returned nothing useful at: {}'.format(urls)
-                ))
+        # try:
+        results = self.get_concurrent(urls)
+        some_data_returned = False
+        details = {}
+        for result in results:
+            if 'items' in result:
+                some_data_returned = True
+            else:
 
-            return output
-        except Exception as e:
-            print(f'ERROR {e} while fetching and parsing ' + str(urls))
-            traceback.print_exc()
+                detail = result.get('detail')  # or result.get('error')
+                # detail = str(result)
+                if detail:
+
+                    details.setdefault(detail, 0)
+                    details[detail] += 1
+
+                if "printresult" in sys.argv:
+                    print("result:", result)
+                continue
+
+            for item in result['items']:
+                article = item['article'].replace("_", " ")
+                output[parse_date(item['timestamp'])][article] = item['views']
+
+        if not some_data_returned:
+            print(Exception(f'The pageview API returned nothing useful at: ({len(urls)})'))
+
+            for detail, count in details.items():
+                print(Exception(f">>>>>>>>>({count}): {detail=}"))
+
+            if "printurl" in sys.argv:
+                print(Exception(urls))
+
+        return output
+        # except Exception as e:
+        #     print(f'ERROR {e} while fetching and parsing ' + str(urls))
+        #     traceback.print_exc()
 
         return {}
 
     def get_concurrent(self, urls):
-        with ThreadPoolExecutor(self.parallelism) as executor:
-            def fetch(url):
-                try:
-                    resp = requests.get(url, headers=self.headers, timeout=10)
-                    resp.raise_for_status()
-                    return resp.json()
-                except Exception as exc:
-                    return {"error": f"{exc}", "url": url}
 
+        def fetch(url):
+            try:
+                resp = requests.get(url, headers=self.headers, timeout=10)
+                resp.raise_for_status()
+                return resp.json()
+            except Exception as exc:
+                return {"error": f"{exc}", "url": url}
+
+        if self.parallelism == 1:
+            return [fetch(url) for url in tqdm(urls, total=len(urls), desc=f"Fetching URLs, parallelism: {self.parallelism}")]
+
+        with ThreadPoolExecutor(self.parallelism) as executor:
             # results = executor.map(fetch, urls)
-            results = tqdm(executor.map(fetch, urls), total=len(urls), desc="Fetching URLs")
+            results = tqdm(executor.map(fetch, urls), total=len(urls), desc=f"Fetching URLs, parallelism: {self.parallelism}")
+
             return list(results)
 
     def article_views_new(self, project, articles, **kwargs):
@@ -196,7 +220,7 @@ class PageviewsClient:
             year_n = month.strftime('%Y')
             for article, count in y.items():
                 # ensure nested dict & the specific year key both exist
-                article_dict = new_data.setdefault(article, {"all": 0, year_n: 0})
+                article_dict = new_data.setdefault(article.replace("_", " "), {"all": 0, year_n: 0})
                 # ---
                 if count is not None:
                     article_dict[year_n] = article_dict.get(year_n, 0) + count
@@ -204,6 +228,6 @@ class PageviewsClient:
         # ---
         delta = time.time() - time_start
         # ---
-        print(f"<<green>> article_views, (articles:{len(articles):,}) time: {delta:.2f} sec")
+        print(f"<<green>> article_views, (articles:{len(articles):,}) new_data:{len(new_data):,} time: {delta:.2f} sec")
         # ---
         return new_data

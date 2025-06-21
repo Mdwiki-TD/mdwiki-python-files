@@ -22,11 +22,24 @@ from update_med_views.helps import count_all_langs
 from update_med_views.titles import load_lang_titles
 
 
-def get_one_lang_views(langcode, titles, year):
+def get_one_lang_views(langcode, titles, year, maxv=0):
     # ---
-    views_t = load_one_lang_views(langcode, titles, year)
+    views_t = load_one_lang_views(langcode, titles, year, maxv=maxv)
     # ---
-    total = sum([tab.get("all", 0) for _, tab in views_t.items()])
+    # print(views_t)
+    # ---
+    total = 0
+    # ---
+    for _, views in views_t.items():
+        if isinstance(views, dict):
+            views = views.get("all", 0)
+        # ---
+        total += views
+    # ---
+    if total == 0:
+        printe.output(f"<<yellow>> No views for {langcode}")
+        # printe.output("views_t" + str(views_t))
+        # printe.output("titles" + str(titles))
     # ---
     return total
 
@@ -80,12 +93,7 @@ def make_views(languages, year, limit, maxv):
         # ---
         titles = load_lang_titles(lang)
         # ---
-        if maxv > 0 and len(titles) > maxv:
-            printe.output(f"<<yellow>> {lang}: {len(titles)} titles > max {maxv}, skipping")
-            views[lang] = 0
-            continue
-        # ---
-        views[lang] = get_one_lang_views(lang, titles, year)
+        views[lang] = get_one_lang_views(lang, titles, year, maxv=maxv)
     # ---
     return views
 
