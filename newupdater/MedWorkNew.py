@@ -5,12 +5,12 @@ python3 pwb.py newupdater/med Retinol from_toolforge
 
 """
 import re
-import sys
 # ---
 from newupdater.bots import expend  # expend_infoboxs_and_fix(text)
 from newupdater.bots import expend_new  # expend_infoboxs(text)
 from newupdater.bots import old_params
 
+from newupdater.helps import echo_debug
 from newupdater import mv_section  # mv_section.move_External_links_section
 from newupdater import drugbox  # drugbox.TextProcessor
 from newupdater import resources_new
@@ -21,13 +21,11 @@ lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Leg
 lkj2 = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status)\s*-->)"
 
 
-def work_on_text_md(title, text):
+def drugbox_work(new_text, text):
     # ---
-    new_text = text
+    echo_debug("drugbox_work")
     # ---
-    new_text = old_params.rename_params(new_text)
-    # ---
-    new_text = resources_new.move_resources(new_text, title, lkj=lkj, lkj2=lkj2)
+    # new_text = re.sub(r'<!--\s*\|\s*type\s*=\s*mab\s*\/\s*vaccine\s*\/\s*combo\s*-->', '<!-- type = mab / vaccine / combo -->', new_text, flags=re.IGNORECASE)
     # ---
     bot = drugbox.TextProcessor(new_text)
     # ---
@@ -35,7 +33,12 @@ def work_on_text_md(title, text):
     drug_box_new = bot.get_new_temp()
     # ---
     if not drugbox_text:
-        return text
+        echo_debug("drugbox_work", "no drugbox_text")
+        return new_text
+    # ---
+    if not drug_box_new:
+        echo_debug("drugbox_work", "no drug_box_new")
+        return new_text
     # ---
     drug_box_new = re.sub(rf"\s*{lkj2}\s*", r"\n\n\g<1>\n", drug_box_new, flags=re.DOTALL)
     # ---
@@ -43,10 +46,29 @@ def work_on_text_md(title, text):
     # ---
     drug_box_new = re.sub(r"{{(Infobox drug|Drugbox|drug resources)\s*\n*", r"{{\g<1>\n", drug_box_new, flags=re.DOTALL | re.MULTILINE)
     # ---
+    if new_text.find(drugbox_text) == -1 and new_text.find(drugbox_text.strip()) == -1:
+        echo_debug("drugbox_work", "can't find old (drugbox_text) in new_text, return original text")
+        return new_text
+    # ---
     # replace the old drugbox by newdrugbox
     new_text = new_text.replace(drugbox_text, drug_box_new)
     # ---
     new_text = re.sub(r"\{\{(Infobox drug|Drugbox|drug resources)\s*\<\!", r"{{\g<1>\n<!", new_text, flags=re.IGNORECASE)
+    # ---
+    return new_text
+
+
+def work_on_text_md(title, text):
+    # ---
+    echo_debug("work_on_text_md")
+    # ---
+    new_text = text
+    # ---
+    new_text = old_params.rename_params(new_text)
+    # ---
+    new_text = resources_new.move_resources(new_text, title, lkj=lkj, lkj2=lkj2)
+    # ---
+    new_text = drugbox_work(new_text, text)
     # ---
     bot2 = mv_section.move_External_links_section(new_text)
     # ---
@@ -58,6 +80,9 @@ def work_on_text_md(title, text):
 
 
 def work_on_text(title, text):
+    # ---
+    echo_debug("work_on_text")
+    # ---
     newtext = text
     # ---
     Chem = re.search(r"{{(Chembox)", newtext, flags=re.IGNORECASE)
@@ -72,7 +97,7 @@ def work_on_text(title, text):
         newtext = expend_new.expend_infoboxs(newtext)
         newtext = expend.expend_infoboxs_and_fix(newtext)
         # ---
-        return newtext
+        # return newtext
     # ---
     newtext = work_on_text_md(title, newtext)
     # ---

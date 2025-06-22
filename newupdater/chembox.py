@@ -1,9 +1,11 @@
-import wikitextparser as wtp
-from pathlib import Path
+#
+"""
 
-Dir = Path(__file__).parent
+"""
+import wikitextparser as wtp
 
 from newupdater.lists.chem_params import rename_chem_params
+from newupdater.helps import echo_debug
 
 
 class fix_Chembox:
@@ -16,6 +18,9 @@ class fix_Chembox:
         self.newchembox = "{{drugbox"
 
     def run(self):
+        # ---
+        echo_debug("fix_Chembox: run")
+        # ---
         self.get_params()
         # ---
         if not self.all_params:
@@ -83,17 +88,3 @@ class fix_Chembox:
             # ---
         # ---
         self.newchembox += "\n}}"
-
-
-if __name__ == "__main__":
-    import pywikibot
-
-    text = {}
-
-    # ---
-
-    with open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8") as f:
-        text = f.read(f)
-    bot = fix_Chembox(text)
-    newtext = bot.run()
-    pywikibot.showDiff(text, newtext)

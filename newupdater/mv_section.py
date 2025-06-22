@@ -1,10 +1,8 @@
 import re
-import sys
-
-from pathlib import Path
 
 import wikitextparser
-from newupdater.helps import print_s
+from newupdater.helps import echo_debug
+
 
 class move_External_links_section:
     def __init__(self, text):
@@ -25,6 +23,8 @@ class move_External_links_section:
 
     def run(self):
         # ---
+        echo_debug("move_External_links_section: run")
+        # ---
         self.get_sects()
         # ---
         if not self.ext_sec:
@@ -36,6 +36,8 @@ class move_External_links_section:
         self.add_ext_section()
 
     def add_ext_section(self):
+        # ---
+        echo_debug("add_ext_section")
         # ---
         categoryPattern = r'\[\[\s*(Category)\s*:[^\n]*\]\]\s*'
         interwikiPattern = r'\[\[([a-zA-Z\-]+)\s?:([^\[\]\n]*)\]\]\s*'
@@ -60,6 +62,8 @@ class move_External_links_section:
         self.new_text = newtext
 
     def get_sects(self):
+        # ---
+        echo_debug("get_sects")
         # ---
         last = ''
         # ---
@@ -86,8 +90,8 @@ class move_External_links_section:
         if self.last_sec.title.lower().strip() == 'references':
             l_c = self.last_sec.contents
             # ---
-            print_s(f'title: {self.last_sec.title}')
-            print_s(f'contents: {l_c}')
+            echo_debug("get_sects", f'title: {self.last_sec.title}')
+            echo_debug("get_sects", f'contents: {l_c}')
             # ---
             mata = re.search(r'^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}', l_c, flags=re.IGNORECASE)
             # ---
@@ -98,13 +102,13 @@ class move_External_links_section:
                 # ---
                 l_c2 = l_c[index:]
                 # ---
-                # print_s(f'index : {index}')
-                # print_s(f'l_c2 : {l_c2}')
+                # echo_debug("get_sects", f'index : {index}')
+                # echo_debug("get_sects", f'l_c2 : {l_c2}')
                 # ---
                 g = mata.group()
                 g_to = f'== {self.last_sec.title.strip()} ==\n{g}\n'
                 # ---
-                print_s(f'g_to: {g_to}')
+                echo_debug("get_sects", f'g_to: {g_to}')
                 # ---
                 self.ext_sec = f'{g_to}\n{self.ext_sec}'
                 self.new_ext_sec = self.ext_sec
@@ -113,31 +117,8 @@ class move_External_links_section:
 
     def make_new_txt(self):
         # ---
+        echo_debug("make_new_txt")
+        # ---
         self.new_text = re.sub(r'\n\s*\[\[Category', '\n[[Category', self.new_text, flags=re.DOTALL | re.MULTILINE)
         # ---
         return self.new_text
-
-
-if __name__ == "__main__":
-    # python3 pwb.py newupdater/mv_section Alcohol_septal_ablation
-    import pywikibot
-
-    # ---
-    print_s = print
-    # ---
-    Dir = Path(__file__).parent
-    from newupdater.med import GetPageText
-
-    # ---
-    text = GetPageText(sys.argv[1])
-    # ---
-    # text = open(Dir+ "/texts/section.txt", "r", encoding="utf-8").read()
-    # ---
-    open(f"{Dir}/texts/section.txt", "w", encoding="utf-8").write(text)
-    # ---
-    bot = move_External_links_section(str(text))
-    # ---
-    new_text = bot.make_new_txt()
-    # ---
-    pywikibot.showDiff(text, new_text)
-    open(f"{Dir}/texts/secnew.txt", "w", encoding="utf-8").write(new_text)

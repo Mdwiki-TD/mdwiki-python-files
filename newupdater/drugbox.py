@@ -1,7 +1,7 @@
 import re
 
 import wikitextparser as wtp
-from newupdater.helps import print_s
+from newupdater.helps import echo_debug
 
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
@@ -13,6 +13,7 @@ from newupdater.lists.bot_params import all_params, params_to_add, params_placeh
 
 class TextProcessor:
     def __init__(self, text):
+        # ---
         self.text = text
         self.new_text = text
 
@@ -34,6 +35,8 @@ class TextProcessor:
 
     def get_txt_params(self, text):
         # ---
+        echo_debug("get_txt_params")
+        # ---
         txt = ''
         params = {}
         parsed = wtp.parse(text)
@@ -45,11 +48,13 @@ class TextProcessor:
             # ---
             name = str(template.normal_name()).strip()
             # ---
-            if name.lower() in {
+            medical_infoboxes = [
                 "infobox medical condition (new)",
                 "infobox medical condition",
-            }:
-                print_s(f"*find temp:[{name}].")
+            ]
+            # ---
+            if name.lower() in medical_infoboxes:
+                echo_debug("get_txt_params", f"*find temp:[{name}].")
                 continue
             # ---
             if name.lower() in ["drugbox", "infobox drug"]:
@@ -66,6 +71,8 @@ class TextProcessor:
 
     def run(self):
         # ---
+        echo_debug("run")
+        # ---
         self.olddrugbox, self.drugbox_params = self.get_txt_params(self.text)
         # ---
         if not self.olddrugbox:
@@ -81,47 +88,100 @@ class TextProcessor:
         # create self.newdrugbox
         self.new_temp()
 
+    def add_section_title_to_sec_text2(self, section_title, sec_text):
+        # ---
+        if self.newdrugbox.strip().endswith(section_title) or self.newdrugbox.find(section_title) != -1:
+            echo_debug("add_section_title_to_sec_text2", f"({section_title}) already in self.newdrugbox \n")
+        else:
+            sec_text = f'{section_title}\n{sec_text}'
+        # ---
+        return sec_text
+
+    def add_section_title_to_sec_text(self, section_title, sec_text):
+        # ---
+        if self.newdrugbox.strip().endswith(section_title):
+            # ---
+            echo_debug("add_section_title_to_sec_text", f"self.newdrugbox.endswith({section_title}) \n")
+            # ---
+            title_escape = re.escape(section_title)
+            # ---
+            self.newdrugbox = re.sub(title_escape, '', self.newdrugbox, flags=re.IGNORECASE)
+            # ---
+            self.newdrugbox = self.newdrugbox.strip()
+        # ---
+        if self.newdrugbox.find(section_title) != -1:
+            # ---
+            echo_debug("add_section_title_to_sec_text", f"self.newdrugbox.find({section_title}) != -1 \n")
+            # ---
+            title_escape = re.escape(section_title)
+            # ---
+            self.newdrugbox = re.sub(title_escape, '', self.newdrugbox, flags=re.IGNORECASE)
+        # ---
+        sec_text = f'{section_title}\n{sec_text}'
+        # ---
+        return sec_text
+
     def add_section(self, section):
-        if not section:
+        # ---
+        section_title, sec_text = section[0].strip(), section[1].strip()
+        # ---
+        if not sec_text:
             return
         # ---
-        text = '\n\n' + section
+        if section_title:
+            sec_text = self.add_section_title_to_sec_text(section_title, sec_text)
         # ---
-        self.newdrugbox += text
+        s_text = '\n\n' + sec_text
+        # ---
+        self.newdrugbox += s_text
 
     def get_combo(self):
         # ---
+        echo_debug("get_combo")
+        # ---
         combo_titles = {"mab": "Monoclonal antibody data", "vaccine": "Vaccine data", "combo": "Combo data"}
-        # ---
-        Type = self.drugbox_params.get("type", "").lower().strip()
-        empty = bool(re.match(r"<!--\s*empty\s*-->", Type))
-        # ---
-        # remove html coments
-        Type = re.sub(r"<!--.*?-->", "", Type)
-        # ---
-        sec_title = combo_titles.get(Type) or "| type = mab / vaccine / combo"
         # ---
         all_combo = all_params['combo']['all']
         # ---
-        if Type in combo_titles:
-            # ---
-            params = all_params['combo'][Type]
-            # ---
-            for p in all_combo:
-                if p not in params:
-                    params.append(p)
-            # ---
-            all_combo = params
-            # ---
+        Type = self.drugbox_params.get("type", "").lower().strip()
         # ---
-        if empty:
-            sec_title = ''
+        sec_title = "| type = mab / vaccine / combo"
+        # ---
+        if Type:
+            empty = bool(re.match(r"<!--\s*empty\s*-->", Type))
+            # ---
+            echo_debug("get_combo", f"{empty=}")
+            # ---
+            # remove html coments
+            Type = re.sub(r"<!--.*?-->", "", Type)
+            # ---
+            sec_title = combo_titles.get(Type) or sec_title
+            # ---
+            if Type in combo_titles:
+                # ---
+                params = all_params['combo'][Type]
+                # ---
+                for p in all_combo:
+                    if p not in params:
+                        params.append(p)
+                # ---
+                all_combo = params
+            else:
+                echo_debug("get_combo", f" {Type=} not in combo_titles")
+            # ---
+            if empty:
+                sec_title = ''
         # ---
         sec_params = all_combo
+        # ---
+        echo_debug("get_combo", f" {sec_title=}")
+        echo_debug("get_combo", f" all_combo keys: {len(all_combo)=}")
         # ---
         return sec_title, sec_params
 
     def get_chemical(self):
+        # ---
+        echo_debug("get_chemical")
         # ---
         sec_params = all_params.get('chemical', {})
         # ---
@@ -156,7 +216,19 @@ class TextProcessor:
 
     def create_section(self, sectionname):
         # ---
-        sections_titles = {"first": "", "combo": "", "names": "Names", "gene": "GENE THERAPY", "clinical": "Clinical data", "external": "External links", "legal": "Legal data", "physiological": "Physiological data", "pharmacokinetic": "Pharmacokinetic data", "chemical": "Chemical and physical data", "last": ""}
+        sections_titles = {
+            "first": "",
+            "combo": "",
+            "names": "Names",
+            "gene": "GENE THERAPY",
+            "clinical": "Clinical data",
+            "external": "External links",
+            "legal": "Legal data",
+            "physiological": "Physiological data",
+            "pharmacokinetic": "Pharmacokinetic data",
+            "chemical": "Chemical and physical data",
+            "last": ""
+        }
         # ---
         sec_title = sections_titles[sectionname]
         # ---
@@ -167,6 +239,7 @@ class TextProcessor:
             sec_title, sec_params = self.get_combo()
         # ---
         section_title = ''
+        # ---
         if sec_title != '':
             section_title = f'<!-- {sec_title} -->'
         # ---
@@ -197,12 +270,10 @@ class TextProcessor:
                 p_v = f'\n| {p2}= {p_value}'
                 # ---
                 sec_text += p_v
-                # ---
         # ---
-        if sec_text != '' and section_title != '':
-            sec_text = f'{section_title}\n{sec_text}'
+        # if sec_text != '' and section_title != '': sec_text = f'{section_title}\n{sec_text}'
         # ---
-        return sec_text
+        return [section_title, sec_text]
 
     def new_temp(self):
         # ---
@@ -242,6 +313,3 @@ class TextProcessor:
         self.add_section(last_section)
         # ---
         self.newdrugbox += '\n}}'
-
-
-# ---
