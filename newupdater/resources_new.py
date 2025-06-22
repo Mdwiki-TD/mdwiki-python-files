@@ -3,11 +3,10 @@
 """
 # ---
 import re
-import sys
 import wikitextparser as wtp
 from newupdater.bots.Remove import remove_cite_web, portal_remove
 from newupdater.lists.identifier_params import identifiers_params
-from newupdater.helps import print_s
+from newupdater.helps import echo_debug
 # ---
 page_identifier_params = {}
 # ---
@@ -18,8 +17,11 @@ _lkj2_ = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical da
 
 def add_resources(new_text, drug_resources):
     # ---
+    echo_debug("add_resources")
+    # ---
     if not page_identifier_params:
         return new_text, ''
+    # ---
     to_add = ''.join(f"| {pa} = {pap}\n" for pa, pap in page_identifier_params.items())
     # ---
     to_add = to_add.replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n")
@@ -69,6 +71,8 @@ def add_resources(new_text, drug_resources):
 
 def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     # ---
+    echo_debug("move_resources")
+    # ---
     new_text = text
     # ---
     drugbox_old = ""
@@ -107,10 +111,10 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
             fa = re.search(lkj2, value)
             # ---
             if fa:
-                print_s(f'fa = {fa}')
-                print_s(dir(fa))
+                echo_debug("move_resources", f'fa = {fa}')
+                echo_debug("move_resources", dir(fa))
                 tt = fa.group()
-                print_s(f'tt = {tt}')
+                echo_debug("move_resources", f'tt = {tt}')
                 value = value.replace(tt, '').strip()
             # ---
             page_identifier_params[param] = value
@@ -136,18 +140,18 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         # ---
         resources_old = resources_temp.string
         # ---
-        print_s(f'resources_temp = {resources_temp}')
+        echo_debug("move_resources", f'resources_temp = {resources_temp}')
         # ---
         resources_params = resources_temp.arguments
         # ---
-        print_s(f'resources_params = {resources_params}')
+        echo_debug("move_resources", f'resources_params = {resources_params}')
         # ---
         for param, value in page_identifier_params.items():
             value = value.strip()
             # ---
             if resources_temp.has_arg(param):
                 # ---
-                print_s(f'resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}')
+                echo_debug("move_resources", f'resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}')
                 # ---
                 old_value = resources_temp.get_arg(param).value
                 # ---
@@ -160,7 +164,7 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         resources_new = resources_temp.string
         # resources_new = resources_temp.pformat()
         # ---
-        print_s(f'resources_new = {resources_new}')
+        echo_debug("move_resources", f'resources_new = {resources_new}')
         # ---
         resources_new = re.sub(r'\n\n\n+<', '\n\n<', resources_new, flags=re.DOTALL | re.MULTILINE)
         # ---
@@ -169,6 +173,7 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     elif page_identifier_params != {}:
         # نقل المعرفات لأسفل
         new_text, line = add_resources(new_text, drug_resources)
+        # ---
     resources_get_NLM = False
     # ---
     if 'NLM' in resources_params:

@@ -3,9 +3,12 @@ from newupdater.bots.old_params import rename_params
 """
 # ---
 import wikitextparser as wtp
-from newupdater.helps import print_s
+from newupdater.helps import echo_debug
+
 
 def rename_params(temptext):
+    # ---
+    echo_debug("rename_params")
     # ---
     to_replace = {
         "side effects": "side_effects",
@@ -34,58 +37,28 @@ def rename_params(temptext):
         if str(name).lower() in temps_okay:
             _temps_.append(temp)
         else:
-            print_s(f"*+name ({[name]}) not in temps_okay .")
-            # ---
+            echo_debug("rename_params", f"*+name ({[name]}) not in temps_okay .")
     # ---
     if not _temps_:
-        print_s("*+_temps_ == 0 .")
+        echo_debug("rename_params", "*+_temps_ == 0 .")
         return new_temptext
     # ---
     for temp in _temps_:
         old_temp = temp.string
         # ---
         if new_temptext.find(old_temp) == -1:
-            print_s(f"*+new_temptext find ({[old_temp]}) == -1 .")
+            echo_debug("rename_params", f"*+new_temptext find ({[old_temp]}) == -1 .")
             continue
         # ---
         # Replace the old parameter with the new parameter
         for old, new in to_replace.items():
             if temp.has_arg(old):
                 value = temp.get_arg(old).value
-                print_s(f'value: {value}')
+                echo_debug("rename_params", f'value: {value}')
                 temp.set_arg(new, value, before=old)
                 temp.del_arg(old)
-        # ---
-        print_s('diff:')
         # ---
         new_temptext = new_temptext.replace(old_temp, temp.string)
     # ---
     return new_temptext
 
-
-# ---
-if __name__ == "__main__":
-    # ---
-    # python3 pwb.py medUpdater/bots/old_params
-    # ---
-    import pywikibot
-
-    print_s = print
-    o = '''
-{{drugbox
-|side effects=test
-<!-- asdadsxxx -->
-
-|temp = {{sub
-    |side effects=test1<!-- asdads -->
-}}
-}}
-{{infobox drug
-|side effects=22
-|side effects=211
-}}
-'''
-    n = rename_params(o)
-    # ---
-    pywikibot.showDiff(o, n)
-    # ---

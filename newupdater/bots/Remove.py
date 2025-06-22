@@ -1,5 +1,5 @@
 """
-
+from newupdater.bots.Remove import remove_cite_web, portal_remove
 """
 import re
 
@@ -43,7 +43,3 @@ def portal_remove(text):
     new_text = re.sub(r"\{\{\s*portal bar\s*\|\s*Medicine\s*\}\}", "", new_text, flags=re.IGNORECASE)
     # ---
     return new_text
-
-
-if __name__ == "__main__":
-    remove_cite_web("temptext", {}, "", "")
