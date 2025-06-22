@@ -3,6 +3,7 @@
 
 Category:CS1 errors: redundant parameter
 
+python3 core8/pwb.py mdpy/fix_duplicate ask
 
 """
 import sys
@@ -33,6 +34,10 @@ def fix_dup(From, To):
     oldtext = mdwiki_api.GetPageText(From)
     # ---
     sus = f"fix duplicate redirect to [[{To}]]"
+    # ---
+    if oldtext == newtext:
+        printe.output("no changes.")
+        return
     # ---
     mdwiki_api.page_put(oldtext=oldtext, newtext=newtext, summary=sus, title=From, returntrue=False, diff=True)
 
