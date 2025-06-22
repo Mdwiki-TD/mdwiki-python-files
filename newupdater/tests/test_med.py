@@ -1,5 +1,13 @@
-import os
+"""
+
+"""
 import sys
+import os
+os.environ["DEBUGNEW"] = "true"
+
+from pathlib import Path
+Dir = Path(__file__).parent.parent
+sys.path.append(str(Dir))
 
 # ---
 '''
