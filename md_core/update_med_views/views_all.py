@@ -27,6 +27,26 @@ for arg in sys.argv:
 view_bot = PageviewsClient(parallelism=parallelism)
 
 
+def is_empty_data(data):
+    # ---
+    # print(data)
+    # ---
+    if not data:
+        return True
+    # ---
+    if data.get("all", 0) == 0:
+        return True
+    # ---
+    if len(data) == 1:
+        return True
+    # ---
+    # if any of values is 0
+    if any([x == 0 for x in data.values()]):
+        return True
+    # ---
+    return False
+
+
 def dump_it(json_file, data):
     # ---
     new_data = {}
@@ -64,17 +84,6 @@ def get_views_all_file(lang, year, open_it=False):
             return {}
     # ---
     return file
-
-
-def is_empty_data(data):
-    # ---
-    if not data:
-        return True
-    # ---
-    if data.get("all", 0) == 0:
-        return True
-    # ---
-    return False
 
 
 def update_data_new(all_data, data):
@@ -142,7 +151,6 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
         # ---
         u_data = {x.replace("_", " "): v for x, v in u_data.items()}
         # ---
-        # titles_not_in_file = [x for x in titles if (x not in u_data or u_data[x] == 0)]
         titles_not_in_file = [x for x in titles if is_empty_data(u_data.get(x, {}))]
         # ---
         if len(u_data) != len(titles) or len(titles_not_in_file) > 0:
