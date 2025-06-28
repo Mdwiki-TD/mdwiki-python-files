@@ -47,8 +47,7 @@ def is_empty_data(data):
         return True
     # ---
     # if any of values is 0
-    if any([x == 0 for x in data.values()]):
-        return True
+    # if any([x == 0 for x in data.values()]): return True
     # ---
     return False
 
@@ -263,8 +262,8 @@ def test2():
 
 def test():
     # python3 core8/pwb.py update_med_views/views_all test
-    titles = load_lang_titles_from_dump("ar")
-    data = load_one_lang_views_all("ar", titles, "all")
+    titles = load_lang_titles_from_dump("pa")
+    data = load_one_lang_views_all("pa", titles, "all")
 
 
 if __name__ == '__main__':
