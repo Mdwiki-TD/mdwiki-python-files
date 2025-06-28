@@ -165,11 +165,10 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     # ---
     if "zero" in sys.argv:
         data = {x: {"all": 0} for x in titles}
-        # elif len(titles) > max_items:
-    else:
+    elif len(titles) > max_items:
         data = get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, max_items=max_items)
-    # else:
-    #     data = get_one_lang_views_all_by_titles(langcode, titles, year)
+    else:
+        data = get_one_lang_views_all_by_titles(langcode, titles, year)
     # ---
     data = {x.replace("_", " "): v for x, v in data.items()}
     # ---
