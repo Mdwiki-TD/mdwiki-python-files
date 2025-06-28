@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py update_med_views/views
+python3 core8/pwb.py update_med_views/views_all
 
 """
 import sys
@@ -28,22 +28,14 @@ view_bot = PageviewsClient(parallelism=parallelism)
 
 def article_views(site, articles, year=2024):
     # ---
-    data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
+    data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20241231')
     # ---
-    new_data = {}
-    # ---
-    for title, views in data.items():
-        # ---
-        title = title.replace(" ", "_")
-        # ---
-        new_data[title] = views.get(year) or views.get(str(year)) or views.get('all', 0)
-    # ---
-    return new_data
+    return data
 
 
 def get_view_file(lang, year, open_it=False):
     # ---
-    dir_v = Path(__file__).parent / "views" / str(year)
+    dir_v = Path(__file__).parent / "views_new" / "all"
     # ---
     if not dir_v.exists():
         dir_v.mkdir(parents=True)
@@ -162,17 +154,24 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
     return data
 
 
+def start():
+    langs = []
+    # ---
+    for lang in langs:
+        titles = load_lang_titles_from_dump(lang)
+        # ---
+        data = load_one_lang_views(lang, titles, year)
+
+    # ---
 if __name__ == '__main__':
     # ---
     # titles = load_lang_titles_from_dump("ba")
     # ---
-    # ux = article_views('ba', titles, 2024)
+    titles = ["Yemen", "COVID-19", "Iran–Israel war", "wj2340-0"]
     # ---
-    titles = ["Yemen", "COVID-19"]
+    ux = article_views('en', titles, 2024)
     # ---
-    zz = view_bot.article_views_new('en.wikipedia', titles)
+    for t, tt in ux.items():
+        print(t, tt)
     # ---
-    print(zz)
-    print(f"{len(zz)=:,}")
-    # ---
-    # article_views: time: 14.52 sec
+    print(f"{len(ux)=:,}")

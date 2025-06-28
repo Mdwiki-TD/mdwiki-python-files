@@ -219,12 +219,18 @@ class PageviewsClient:
             # month = datetime.datetime(2024, 5, 1, 0, 0)
             year_n = month.strftime('%Y')
             for article, count in y.items():
+                article = article.replace("_", " ")
                 # ensure nested dict & the specific year key both exist
-                article_dict = new_data.setdefault(article.replace("_", " "), {"all": 0, year_n: 0})
+                article_dict = new_data.setdefault(article, {"all": 0, year_n: 0})
                 # ---
                 if count is not None:
                     article_dict[year_n] = article_dict.get(year_n, 0) + count
                     article_dict["all"] = article_dict.get("all", 0) + count
+                # ---
+                # sort article_dict keys
+                article_dict = {k: v for k, v in sorted(article_dict.items(), key=lambda item: item[0])}
+                # ---
+                new_data[article] = article_dict
         # ---
         delta = time.time() - time_start
         # ---
