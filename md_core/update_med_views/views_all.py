@@ -6,13 +6,14 @@ python3 core8/pwb.py update_med_views/views_all
 """
 import sys
 import json
-import time
 from pathlib import Path
 from newapi import printe
+
 
 # from mwviews.api import PageviewsClient
 from apis.mw_views import PageviewsClient
 from update_med_views.helps import dump_one, load_lang_titles_from_dump
+from update_med_views.helps import load_languages_counts
 
 # Sends a descriptive User-Agent header with every request
 
@@ -26,14 +27,27 @@ for arg in sys.argv:
 view_bot = PageviewsClient(parallelism=parallelism)
 
 
-def article_views(site, articles, year=2024):
+def dump_it(json_file, data):
+    # ---
+    new_data = {}
+    # ---
+    # sort all sub data inside data
+    for k, v in data.items():
+        new_data[k] = {k2: v2 for k2, v2 in sorted(v.items(), key=lambda item: item[0], reverse=False)}
+    # ---
+    return dump_one(json_file, new_data)
+
+
+def article_all_views(site, articles, year=2024):
     # ---
     data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20241231')
+    # ---
+    print(data)
     # ---
     return data
 
 
-def get_view_file(lang, year, open_it=False):
+def get_views_all_file(lang, year, open_it=False):
     # ---
     dir_v = Path(__file__).parent / "views_new" / "all"
     # ---
@@ -52,7 +66,28 @@ def get_view_file(lang, year, open_it=False):
     return file
 
 
-def get_one_lang_views_by_titles(langcode, titles, year):
+def is_empty_data(data):
+    # ---
+    if not data:
+        return True
+    # ---
+    if data.get("all", 0) == 0:
+        return True
+    # ---
+    return False
+
+
+def update_data_new(all_data, data):
+    # ---
+    for title, counts in data.items():
+        all_data.setdefault(title, {})
+        # ---
+        all_data[title].update({x: v for x, v in counts.items() if (x not in all_data[title] or all_data[title][x] == 0)})
+    # ---
+    return all_data
+
+
+def get_one_lang_views_all_by_titles(langcode, titles, year):
     # ---
     all_data = {}
     # ---
@@ -60,14 +95,14 @@ def get_one_lang_views_by_titles(langcode, titles, year):
         # ---
         group = titles[i:i + 20]
         # ---
-        data = article_views(langcode, group, year)
+        data = article_all_views(langcode, group, year)
         # ---
-        all_data.update({x: v for x, v in data.items() if (x not in all_data or all_data[x] == 0)})
+        all_data = update_data_new(all_data, data)
     # ---
     return all_data
 
 
-def get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file, max_items=1000):
+def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, max_items=1000):
     # ---
     in_file = {}
     all_data = {}
@@ -80,20 +115,20 @@ def get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file, max_
         # ---
         group = titles[i:i + 200]
         # ---
-        data = article_views(langcode, group, year)
+        data = article_all_views(langcode, group, year)
         # ---
-        all_data.update({x: v for x, v in data.items() if (x not in all_data or all_data[x] == 0)})
+        all_data = update_data_new(all_data, data)
         # ---
-        in_file.update({x: v for x, v in data.items() if (x not in in_file or in_file[x] == 0)})
+        in_file = update_data_new(in_file, data)
         # ---
-        dump_one(json_file, in_file)
+        dump_it(json_file, in_file)
     # ---
     return all_data
 
 
-def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
+def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     # ---
-    json_file = get_view_file(langcode, year)
+    json_file = get_views_all_file(langcode, year)
     # ---
     u_data = {}
     in_file = {}
@@ -107,7 +142,8 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
         # ---
         u_data = {x.replace("_", " "): v for x, v in u_data.items()}
         # ---
-        titles_not_in_file = [x for x in titles if (x not in u_data or u_data[x] == 0)]
+        # titles_not_in_file = [x for x in titles if (x not in u_data or u_data[x] == 0)]
+        titles_not_in_file = [x for x in titles if is_empty_data(u_data.get(x, {}))]
         # ---
         if len(u_data) != len(titles) or len(titles_not_in_file) > 0:
             printe.output(f"<<red>>(lang:{json_file.name}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
@@ -116,7 +152,7 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
             # ---
             titles = titles_not_in_file
         else:
-            printe.output(f"<<green>> load_one_lang_views(lang:{json_file}) \t titles: {len(titles):,}")
+            printe.output(f"<<green>> load_one_lang_views_all(lang:{json_file}) \t titles: {len(titles):,}")
             # ---
             return u_data
     # ---
@@ -128,11 +164,12 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
         return u_data
     # ---
     if "zero" in sys.argv:
-        data = {x: 0 for x in titles}
-    elif len(titles) > max_items:
-        data = get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file, max_items=max_items)
+        data = {x: {"all": 0} for x in titles}
+        # elif len(titles) > max_items:
     else:
-        data = get_one_lang_views_by_titles(langcode, titles, year)
+        data = get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, max_items=max_items)
+    # else:
+    #     data = get_one_lang_views_all_by_titles(langcode, titles, year)
     # ---
     data = {x.replace("_", " "): v for x, v in data.items()}
     # ---
@@ -140,38 +177,61 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
         # ---
         printe.output(f"<<yellow>>(lang:{langcode}) new data: {len(data)}, in_file: {len(in_file)}")
         # ---
-        in_file.update({x: v for x, v in data.items() if (x not in in_file or in_file[x] == 0)})
+        in_file = update_data_new(in_file, data)
         # ---
-        dump_one(json_file, in_file)
+        dump_it(json_file, in_file)
         # ---
         data = in_file
     else:
         # ---
         printe.output(f"<<green>>(lang:{langcode}) new data: {len(data)}")
         # ---
-        dump_one(json_file, data)
+        dump_it(json_file, data)
     # ---
     return data
 
 
 def start():
-    langs = []
+    # python3 core8/pwb.py update_med_views/views_all start
+    langs = load_languages_counts()
     # ---
     for lang in langs:
         titles = load_lang_titles_from_dump(lang)
         # ---
-        data = load_one_lang_views(lang, titles, year)
+        if len(titles) == 0:
+            continue
+        # ---
+        printe.output(f"<<yellow>>lang:{lang}\ttitles: {len(titles):,}")
+        # ---
+        data = load_one_lang_views_all(lang, titles, "all")
 
-    # ---
-if __name__ == '__main__':
-    # ---
-    # titles = load_lang_titles_from_dump("ba")
-    # ---
+
+def test2():
+    # python3 core8/pwb.py update_med_views/views_all test2
     titles = ["Yemen", "COVID-19", "Iran–Israel war", "wj2340-0"]
     # ---
-    ux = article_views('en', titles, 2024)
+    ux = article_all_views('en', titles, 2024)
     # ---
     for t, tt in ux.items():
         print(t, tt)
     # ---
     print(f"{len(ux)=:,}")
+
+
+def test():
+    # python3 core8/pwb.py update_med_views/views_all test
+    titles = load_lang_titles_from_dump("ar")
+    data = load_one_lang_views_all("ar", titles, "all")
+
+
+if __name__ == '__main__':
+    # ---
+    defs = {
+        "start": start,
+        "test2": test2,
+        "test": test,
+    }
+    # ---
+    for arg in sys.argv:
+        if arg in defs:
+            defs[key]()

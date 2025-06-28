@@ -3,6 +3,7 @@
 
 from update_med_views.helps import count_all_langs, get_en_articles, one_lang_titles, langs_titles, load_lang_titles_from_dump
 from update_med_views.helps import dump_one
+from update_med_views.helps import load_languages_counts
 
 """
 import sys
@@ -72,7 +73,7 @@ def dump_all(data):
         dump_one(file, data)
 
 
-def load_all():
+def load_languages_counts():
     file = Path(__file__).parent / "languages_counts.json"
     # ---
     if file.exists():
@@ -115,7 +116,7 @@ def count_all_langs_sql():
 
 def count_all_langs():
     # ---
-    all_infos = load_all()
+    all_infos = load_languages_counts()
     # ---
     if not all_infos and ("local" not in sys.argv):
         return count_all_langs_sql()
