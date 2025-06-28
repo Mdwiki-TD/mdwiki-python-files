@@ -202,6 +202,13 @@ def start():
     # python3 core8/pwb.py update_med_views/views_all start
     langs = load_languages_counts()
     # ---
+    maxv = 1000000
+    # ---
+    for arg in sys.argv:
+        key, _, val = arg.partition(':')
+        if key in '-max' and val.isdigit():
+            maxv = int(val)
+    # ---
     # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
     langs = dict(sorted(langs.items(), key=lambda item: item[1], reverse=False))
     # ---
@@ -213,8 +220,12 @@ def start():
         # ---
         printe.output(f"<<yellow>>lang:{lang}, {length:,}\ttitles: {len(titles)}")
         # ---
+        if len(titles) > maxv:
+            printe.output(f"<<yellow>> >> len titles > max {maxv}, skipping")
+            continue
+        # ---
         if "no" not in sys.argv:
-            data = load_one_lang_views_all(lang, titles, "all")
+            load_one_lang_views_all(lang, titles, "all")
 
 
 def test2():
