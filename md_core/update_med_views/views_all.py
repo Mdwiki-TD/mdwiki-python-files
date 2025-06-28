@@ -195,15 +195,19 @@ def start():
     # python3 core8/pwb.py update_med_views/views_all start
     langs = load_languages_counts()
     # ---
-    for lang in langs:
+    # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
+    langs = dict(sorted(langs.items(), key=lambda item: item[1], reverse=False))
+    # ---
+    for lang, length in langs.items():
         titles = load_lang_titles_from_dump(lang)
         # ---
         if len(titles) == 0:
             continue
         # ---
-        printe.output(f"<<yellow>>lang:{lang}\ttitles: {len(titles):,}")
+        printe.output(f"<<yellow>>lang:{lang}, {length:,}\ttitles: {len(titles)}")
         # ---
-        data = load_one_lang_views_all(lang, titles, "all")
+        if "no" not in sys.argv:
+            data = load_one_lang_views_all(lang, titles, "all")
 
 
 def test2():
@@ -234,4 +238,4 @@ if __name__ == '__main__':
     # ---
     for arg in sys.argv:
         if arg in defs:
-            defs[key]()
+            defs[arg]()
