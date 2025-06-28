@@ -217,7 +217,9 @@ def start():
     # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
     langs = dict(sorted(langs.items(), key=lambda item: item[1], reverse=False))
     # ---
-    for lang, length in langs.items():
+    to_work = {}
+    # ---
+    for lang, _ in langs.items():
         titles = load_lang_titles_from_dump(lang)
         # ---
         if len(titles) == 0:
@@ -231,7 +233,13 @@ def start():
             printe.output(f"<<yellow>> {lang}>> len titles > max {maxv}, skipping")
             continue
         # ---
-        printe.output(f"<<yellow>>lang:{lang}, {length:,}\ttitles: {len(titles)}")
+        to_work[lang] = titles
+    # ---
+    printe.output(f"<<green>> to_work: {len(to_work)}")
+    # ---
+    for lang, titles in to_work.items():
+        # ---
+        printe.output(f"<<yellow>>lang:{lang},\ttitles: {len(titles)}")
         # ---
         if "no" not in sys.argv:
             load_one_lang_views_all(lang, titles, "all")
