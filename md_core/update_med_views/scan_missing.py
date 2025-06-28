@@ -32,8 +32,8 @@ for json_file in files:
     # ---
     tab = {"titles": len_titles}
     # ---
-    views_2023 = get_view_file(2023, lang, open_it=True)
-    views_2024 = get_view_file(2024, lang, open_it=True)
+    views_2023 = get_view_file(lang, 2023, open_it=True)
+    views_2024 = get_view_file(lang, 2024, open_it=True)
     # ---
     tab["2023 missing"] = [x for x in data if x not in views_2023 or (views_2023[x] == 0 and is_zero)]
     tab["2024 missing"] = [x for x in data if x not in views_2024 or (views_2024[x] == 0 and is_zero)]

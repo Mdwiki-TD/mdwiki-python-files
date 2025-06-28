@@ -6,7 +6,6 @@ python3 core8/pwb.py update_med_views/views
 """
 import sys
 import json
-import time
 from pathlib import Path
 from newapi import printe
 
@@ -41,7 +40,7 @@ def article_views(site, articles, year=2024):
     return new_data
 
 
-def get_view_file(year, lang, open_it=False):
+def get_view_file(lang, year, open_it=False):
     # ---
     dir_v = Path(__file__).parent / "views" / str(year)
     # ---
@@ -60,6 +59,13 @@ def get_view_file(year, lang, open_it=False):
     return file
 
 
+def update_data(all_data, data):
+    # ---
+    all_data.update({x: v for x, v in data.items() if (x not in all_data or all_data[x] == 0)})
+    # ---
+    return all_data
+
+
 def get_one_lang_views_by_titles(langcode, titles, year):
     # ---
     all_data = {}
@@ -70,7 +76,7 @@ def get_one_lang_views_by_titles(langcode, titles, year):
         # ---
         data = article_views(langcode, group, year)
         # ---
-        all_data.update({x: v for x, v in data.items() if (x not in all_data or all_data[x] == 0)})
+        all_data = update_data(all_data, data)
     # ---
     return all_data
 
@@ -90,9 +96,9 @@ def get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file, max_
         # ---
         data = article_views(langcode, group, year)
         # ---
-        all_data.update({x: v for x, v in data.items() if (x not in all_data or all_data[x] == 0)})
+        all_data = update_data(all_data, data)
         # ---
-        in_file.update({x: v for x, v in data.items() if (x not in in_file or in_file[x] == 0)})
+        in_file = update_data(in_file, data)
         # ---
         dump_one(json_file, in_file)
     # ---
@@ -101,7 +107,7 @@ def get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file, max_
 
 def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
     # ---
-    json_file = get_view_file(year, langcode)
+    json_file = get_view_file(langcode, year)
     # ---
     u_data = {}
     in_file = {}
@@ -148,7 +154,7 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
         # ---
         printe.output(f"<<yellow>>(lang:{langcode}) new data: {len(data)}, in_file: {len(in_file)}")
         # ---
-        in_file.update({x: v for x, v in data.items() if (x not in in_file or in_file[x] == 0)})
+        in_file = update_data(in_file, data)
         # ---
         dump_one(json_file, in_file)
         # ---
