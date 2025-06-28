@@ -3,7 +3,11 @@
 
 python3 core8/pwb.py update_med_views/views_all
 
-tfj run views --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:100 -max:120"
+tfj run views --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -max:1000"
+tfj run views1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:1000 -max:5000"
+tfj run views2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:5000 -max:10000"
+tfj run views3 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:10000 -max:19000"
+tfj run views4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:19000"
 
 """
 import sys
