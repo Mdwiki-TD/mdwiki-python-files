@@ -42,7 +42,7 @@ def article_all_views(site, articles, year=2024):
     # ---
     data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20241231')
     # ---
-    print(data)
+    # print(data)
     # ---
     return data
 
