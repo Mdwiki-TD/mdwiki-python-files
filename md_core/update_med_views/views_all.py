@@ -3,6 +3,8 @@
 
 python3 core8/pwb.py update_med_views/views_all
 
+tfj run views --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:100 -max:120"
+
 """
 import sys
 import json
@@ -203,11 +205,14 @@ def start():
     langs = load_languages_counts()
     # ---
     maxv = 1000000
+    minx = 0
     # ---
     for arg in sys.argv:
         key, _, val = arg.partition(':')
         if key in '-max' and val.isdigit():
             maxv = int(val)
+        elif key in '-min' and val.isdigit():
+            minx = int(val)
     # ---
     # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
     langs = dict(sorted(langs.items(), key=lambda item: item[1], reverse=False))
@@ -218,11 +223,15 @@ def start():
         if len(titles) == 0:
             continue
         # ---
-        printe.output(f"<<yellow>>lang:{lang}, {length:,}\ttitles: {len(titles)}")
+        if minx > 0 and len(titles) < minx:
+            printe.output(f"<<yellow>> {lang}>> len titles < min {minx}, skipping")
+            continue
         # ---
         if len(titles) > maxv:
-            printe.output(f"<<yellow>> >> len titles > max {maxv}, skipping")
+            printe.output(f"<<yellow>> {lang}>> len titles > max {maxv}, skipping")
             continue
+        # ---
+        printe.output(f"<<yellow>>lang:{lang}, {length:,}\ttitles: {len(titles)}")
         # ---
         if "no" not in sys.argv:
             load_one_lang_views_all(lang, titles, "all")
