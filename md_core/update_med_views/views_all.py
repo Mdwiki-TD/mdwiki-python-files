@@ -226,11 +226,11 @@ def start():
             continue
         # ---
         if minx > 0 and len(titles) < minx:
-            printe.output(f"<<yellow>> {lang}>> len titles < min {minx}, skipping")
+            printe.output(f"<<yellow>> {lang}>> len titles ({len(titles)}) < min {minx}, skipping")
             continue
         # ---
         if len(titles) > maxv:
-            printe.output(f"<<yellow>> {lang}>> len titles > max {maxv}, skipping")
+            printe.output(f"<<yellow>> {lang}>> len titles ({len(titles)}) > max {maxv}, skipping")
             continue
         # ---
         to_work[lang] = titles
