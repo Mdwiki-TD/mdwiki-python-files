@@ -12,14 +12,19 @@ tfj run views4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 import sys
+import json
 import tqdm
+from pathlib import Path
 from newapi import printe
 from update_med_views.helps import load_lang_titles_from_dump
 from update_med_views.helps import load_languages_counts
-from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work
+from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work, dump_stats
+
+from update_med_views.views_all_bots.helps import json_load, get_views_all_file
+from update_med_views.views_all_bots.stats_bot import update_all_stats
 
 
-def start(filter_by="titles"):
+def start(lang="", filter_by="titles"):
     # python3 core8/pwb.py update_med_views/views_all_run start2
     langs = load_languages_counts()
     # ---
@@ -85,12 +90,12 @@ def start(filter_by="titles"):
             load_one_lang_views_all(lang, titles, "all")
 
 
-def start2():
+def start2(lang=""):
     # python3 core8/pwb.py update_med_views/views_all_run start
     return start(filter_by="to_work")
 
 
-def test2():
+def test2(lang=""):
     # python3 core8/pwb.py update_med_views/views_all_run test2
     titles = ["Yemen", "COVID-19", "Iran–Israel war", "wj2340-0"]
     # ---
@@ -102,12 +107,48 @@ def test2():
     print(f"{len(ux)=:,}")
 
 
-def test(lang="pa"):
+def hash_it(lang=""):
+    # python3 core8/pwb.py update_med_views/views_all_run hash_it -lang:nup
+    # ---
+    langs = load_languages_counts()
+    # ---
+    if lang:
+        if lang in langs:
+            langs = {lang: langs[lang]}
+        else:
+            printe.output(f"hash_it: lang {lang} not found")
+            return
+    # ---
+    stats_file = Path(__file__).parent / "views_new/stats.json"
+    # ---
+    with open(stats_file, "r", encoding="utf-8") as f:
+        stats_data = {}
+    # ---
+    for langcode, _ in langs.items():
+        json_file = get_views_all_file(langcode)
+        json_file_stats = get_views_all_file(langcode, "stats")
+        # ---
+        if not json_file.exists():
+            continue
+        # ---
+        new_data = json_load(json_file)
+        # ---
+        if new_data:
+            stats_data[langcode] = dump_stats(json_file_stats, new_data)
+    # ---
+    update_all_stats(stats_data)
+
+
+def test(lang=""):
+    # ---
+    lang = lang or "pa"
+    # ---
     # python3 core8/pwb.py update_med_views/views_all_run test
     titles = load_lang_titles_from_dump(lang)
     # ---
     print("load_one_lang_views_all:")
     load_one_lang_views_all(lang, titles, "all")
+
 
 if __name__ == '__main__':
     # ---
@@ -116,19 +157,23 @@ if __name__ == '__main__':
         "start2": start2,
         "test2": test2,
         "test": test,
+        "hash_it": hash_it,
     }
     # ---
     lang = ""
     # ---
     for arg in sys.argv:
         key, _, val = arg.partition(':')
+        # ---
         if key == '-lang':
             lang = val
+    # ---
+    for arg in sys.argv:
+        key, _, val = arg.partition(':')
         # ---
         if arg in defs:
-            defs[arg]()
+            defs[arg](lang=lang)
     # ---
-    # python3 core8/pwb.py update_med_views/views_all_run -lang:ha
-    # python3 core8/pwb.py update_med_views/views_all_run -lang:kn
-    if len(lang) > 0:
-        test(lang)
+    # python3 core8/pwb.py update_med_views/views_all_run test -lang:ha
+    # python3 core8/pwb.py update_med_views/views_all_run test -lang:kn
+    # python3 core8/pwb.py update_med_views/views_all_run test -lang:be-x-old

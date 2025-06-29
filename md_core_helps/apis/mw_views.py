@@ -133,6 +133,8 @@ class PageviewsClient:
         articles = [a.replace(' ', '_') for a in articles]
         articlesSafe = [quote(a, safe='') for a in articles]
 
+        project = 'be-tarask.wikipedia' if project == 'be-x-old.wikipedia' else project
+
         urls = [
             '/'.join([
                 endpoints['article'], project, access, agent, a, granularity,
@@ -207,6 +209,22 @@ class PageviewsClient:
 
             return list(results)
 
+    def filter_data(self, data):
+        # remove any key < 2015 and not = "all"
+        # ---
+        new_data = {}
+        """
+        new_data = {
+            title: {k: v for k, v in views.items() if (k.isnumeric() and int(k) >= 2015) or k == "all" or v > 0}
+            for title, views in data.items()
+        }
+        """
+        # ---
+        for title, views in data.items():
+            new_data[title] = {k: v for k, v in views.items() if (k.isnumeric() and int(k) >= 2015) or k == "all" or v > 0}
+        # ---
+        return new_data
+
     def article_views_new(self, project, articles, **kwargs):
         # ---
         time_start = time.time()
@@ -232,8 +250,20 @@ class PageviewsClient:
                 # ---
                 new_data[article] = article_dict
         # ---
+        new_data = self.filter_data(new_data)
+        # ---
         delta = time.time() - time_start
         # ---
         print(f"<<green>> article_views, (articles:{len(articles):,}) new_data:{len(new_data):,} time: {delta:.2f} sec")
         # ---
         return new_data
+
+
+if __name__ == "__main__":
+    # python3 core8/pwb.py apis/mw_views
+    view_bot = PageviewsClient()
+    data = view_bot.article_views_new('ar.wikipedia', ["الصفحة الرئيسة"], granularity='monthly', start='20100101', end='20250627')
+    # ---
+    for title, views in data.items():
+        print(title)
+        print(views)
