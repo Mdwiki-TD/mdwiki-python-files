@@ -1,0 +1,134 @@
+#!/usr/bin/python3
+"""
+
+python3 core8/pwb.py update_med_views/views_all_run
+
+tfj run views0 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all_run start"
+tfj run views --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all_run start -max:1000"
+tfj run views1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all_run start -min:1000 -max:5000"
+tfj run views2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all_run start -min:5000 -max:10000"
+tfj run views3 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all_run start -min:10000 -max:19000"
+tfj run views4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all_run start -min:19000"
+
+"""
+import sys
+import tqdm
+from newapi import printe
+from update_med_views.helps import load_lang_titles_from_dump
+from update_med_views.helps import load_languages_counts
+from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work
+
+
+def start(filter_by="titles"):
+    # python3 core8/pwb.py update_med_views/views_all_run start2
+    langs = load_languages_counts()
+    # ---
+    filter_by = filter_by if filter_by in ["titles", "to_work"] else "titles"
+    # ---
+    maxv = 1000000
+    minx = 0
+    # ---
+    for arg in sys.argv:
+        key, _, val = arg.partition(':')
+        if key == '-max' and val.isdigit():
+            maxv = int(val)
+        elif key == '-min' and val.isdigit():
+            minx = int(val)
+    # ---
+    # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
+    langs = dict(sorted(langs.items(), key=lambda item: item[1], reverse=False))
+    # ---
+    work_data = {}
+    # ---
+    for lang, _ in tqdm.tqdm(langs.items()):
+        # ---
+        titles = load_lang_titles_from_dump(lang)
+        # ---
+        to_work = []
+        # ---
+        to_filter = titles
+        # ---
+        # to speed loading
+        if filter_by != "titles":
+            to_work = get_titles_to_work(lang, titles, "all")
+        # ---
+        if len(to_filter) == 0:
+            continue
+        # ---
+        if minx > 0 and len(to_filter) < minx:
+            printe.output(f"<<yellow>> {lang}>> len {filter_by} ({len(to_filter)}) < min {minx}, skipping")
+            continue
+        # ---
+        if len(to_filter) > maxv:
+            printe.output(f"<<yellow>> {lang}>> len {filter_by} ({len(to_filter)}) > max {maxv}, skipping")
+            continue
+        # ---
+        # to speed loading
+        if not to_work:
+            to_work = get_titles_to_work(lang, titles, "all")
+        # ---
+        work_data[lang] = {"titles": titles, "to_work": to_work}
+    # ---
+    # sort work_data by len of to_work
+    work_data = dict(sorted(work_data.items(), key=lambda item: len(item[1][filter_by]), reverse=False))
+    # ---
+    printe.output(f"<<green>> work_data: {len(work_data)}")
+    # ---
+    for n, (lang, data) in enumerate(work_data.items(), start=1):
+        # ---
+        titles = data["titles"]
+        to_work = data["to_work"]
+        # ---
+        printe.output(f"<<yellow>> {n}/{len(work_data)} lang:{lang},\ttitles: {len(titles)}, to_work: {len(to_work)}")
+        # ---
+        if "no" not in sys.argv:
+            load_one_lang_views_all(lang, titles, "all")
+
+
+def start2():
+    # python3 core8/pwb.py update_med_views/views_all_run start
+    return start(filter_by="to_work")
+
+
+def test2():
+    # python3 core8/pwb.py update_med_views/views_all_run test2
+    titles = ["Yemen", "COVID-19", "Iran–Israel war", "wj2340-0"]
+    # ---
+    ux = article_all_views('en', titles, 2024)
+    # ---
+    for t, tt in ux.items():
+        print(t, tt)
+    # ---
+    print(f"{len(ux)=:,}")
+
+
+def test(lang="pa"):
+    # python3 core8/pwb.py update_med_views/views_all_run test
+    titles = load_lang_titles_from_dump(lang)
+    # ---
+    print("load_one_lang_views_all:")
+    load_one_lang_views_all(lang, titles, "all")
+
+if __name__ == '__main__':
+    # ---
+    defs = {
+        "start": start,
+        "start2": start2,
+        "test2": test2,
+        "test": test,
+    }
+    # ---
+    lang = ""
+    # ---
+    for arg in sys.argv:
+        key, _, val = arg.partition(':')
+        if key == '-lang':
+            lang = val
+        # ---
+        if arg in defs:
+            defs[arg]()
+    # ---
+    # python3 core8/pwb.py update_med_views/views_all_run -lang:ha
+    # python3 core8/pwb.py update_med_views/views_all_run -lang:kn
+    if len(lang) > 0:
+        test(lang)

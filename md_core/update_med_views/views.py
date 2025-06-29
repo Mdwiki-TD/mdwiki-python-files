@@ -25,6 +25,24 @@ for arg in sys.argv:
 view_bot = PageviewsClient(parallelism=parallelism)
 
 
+def json_load(json_file):
+    # ---
+    u_data = False
+    # ---
+    try:
+        with open(json_file, "r", encoding="utf-8") as f:
+            u_data = json.load(f)
+    except Exception as e:
+        printe.output(f"<<red>> json_load({json_file}) {e}")
+    # ---
+    if isinstance(u_data, dict):
+        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
+    elif isinstance(u_data, list):
+        u_data = [x.replace("_", " ") for x in u_data]
+    # ---
+    return u_data
+
+
 def article_views(site, articles, year=2024):
     # ---
     data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
@@ -50,11 +68,10 @@ def get_view_file(lang, year, open_it=False):
     file = dir_v / f"{lang}.json"
     # ---
     if open_it:
-        if file.exists():
-            with open(file, "r", encoding="utf-8") as f:
-                return json.load(f)
-        else:
-            return {}
+        data = json_load(file)
+        # ---
+        if data is False:
+            return False
     # ---
     return file
 
@@ -87,8 +104,10 @@ def get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file, max_
     all_data = {}
     # ---
     if json_file.exists():
-        with open(json_file, "r", encoding="utf-8") as f:
-            in_file = json.load(f)
+        in_file = json_load(json_file)
+    # ---
+    if in_file is False:
+        return False
     # ---
     for i in range(0, len(titles), 200):
         # ---
@@ -112,12 +131,12 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
     u_data = {}
     in_file = {}
     # ---
-    titles = [x.replace("_", " ") for x in titles]
-    # ---
     if json_file.exists():
         # ---
-        with open(json_file, "r", encoding="utf-8") as f:
-            u_data = json.load(f)
+        u_data = json_load(json_file)
+        # ---
+        if u_data is False:
+            return False
         # ---
         u_data = {x.replace("_", " "): v for x, v in u_data.items()}
         # ---

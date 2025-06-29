@@ -3,25 +3,14 @@
 
 python3 core8/pwb.py update_med_views/views_all
 
-tfj run views --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -max:1000"
-tfj run views1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:1000 -max:5000"
-tfj run views2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:5000 -max:10000"
-tfj run views3 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:10000 -max:19000"
-tfj run views4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:19000"
-
 """
 import sys
 import json
 from pathlib import Path
 from newapi import printe
 
-
-# from mwviews.api import PageviewsClient
 from apis.mw_views import PageviewsClient
-from update_med_views.helps import dump_one, load_lang_titles_from_dump
-from update_med_views.helps import load_languages_counts
-
-# Sends a descriptive User-Agent header with every request
+from update_med_views.helps import dump_one
 
 parallelism = 2
 
@@ -31,6 +20,24 @@ for arg in sys.argv:
         parallelism = int(val) or parallelism
 
 view_bot = PageviewsClient(parallelism=parallelism)
+
+
+def json_load(json_file):
+    # ---
+    u_data = False
+    # ---
+    try:
+        with open(json_file, "r", encoding="utf-8") as f:
+            u_data = json.load(f)
+    except Exception as e:
+        printe.output(f"<<red>> json_load({json_file}) {e}")
+    # ---
+    if isinstance(u_data, dict):
+        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
+    elif isinstance(u_data, list):
+        u_data = [x.replace("_", " ") for x in u_data]
+    # ---
+    return u_data
 
 
 def is_empty_data(data):
@@ -47,8 +54,7 @@ def is_empty_data(data):
         return True
     # ---
     # if any of values is 0
-    if any([x == 0 for x in data.values()]):
-        return True
+    # if any([x == 0 for x in data.values()]): return True
     # ---
     return False
 
@@ -66,7 +72,7 @@ def dump_it(json_file, data):
 
 def article_all_views(site, articles, year=2024):
     # ---
-    data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20241231')
+    data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20250627')
     # ---
     # print(data)
     # ---
@@ -83,11 +89,10 @@ def get_views_all_file(lang, year, open_it=False):
     file = dir_v / f"{lang}.json"
     # ---
     if open_it:
-        if file.exists():
-            with open(file, "r", encoding="utf-8") as f:
-                return json.load(f)
-        else:
-            return {}
+        data = json_load(file)
+        # ---
+        if data is False:
+            return False
     # ---
     return file
 
@@ -123,8 +128,10 @@ def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, 
     all_data = {}
     # ---
     if json_file.exists():
-        with open(json_file, "r", encoding="utf-8") as f:
-            in_file = json.load(f)
+        in_file = json_load(json_file)
+    # ---
+    if in_file is False:
+        return False
     # ---
     for i in range(0, len(titles), 200):
         # ---
@@ -141,41 +148,8 @@ def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, 
     return all_data
 
 
-def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
-    # ---
-    json_file = get_views_all_file(langcode, year)
-    # ---
-    u_data = {}
-    in_file = {}
-    # ---
-    titles = [x.replace("_", " ") for x in titles]
-    # ---
-    if json_file.exists():
-        # ---
-        with open(json_file, "r", encoding="utf-8") as f:
-            u_data = json.load(f)
-        # ---
-        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
-        # ---
-        titles_not_in_file = [x for x in titles if is_empty_data(u_data.get(x, {}))]
-        # ---
-        if len(u_data) != len(titles) or len(titles_not_in_file) > 0:
-            printe.output(f"<<red>>(lang:{json_file.name}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
-            # ---
-            in_file = u_data
-            # ---
-            titles = titles_not_in_file
-        else:
-            printe.output(f"<<green>> load_one_lang_views_all(lang:{json_file}) \t titles: {len(titles):,}")
-            # ---
-            return u_data
-    # ---
-    if maxv > 0 and len(titles) > maxv:
-        printe.output(f"<<yellow>> {langcode}: {len(titles)} titles > max {maxv}, skipping")
-        return u_data
-    # ---
-    if "local" in sys.argv:
-        return u_data
+def render_data(titles, langcode, year, json_file, max_items=1000):
+    data = {}
     # ---
     if "zero" in sys.argv:
         data = {x: {"all": 0} for x in titles}
@@ -186,95 +160,73 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     # ---
     data = {x.replace("_", " "): v for x, v in data.items()}
     # ---
+    return data
+
+
+def get_titles_and_in_file(json_file, titles):
+    # ---
+    if not json_file.exists():
+        print("json_file does not exist")
+        return titles, {}
+    # ---
+    u_data = json_load(json_file)
+    # ---
+    if u_data is False:
+        # TODO: error when loading the json data
+        return [], {}
+    # ---
+    titles_not_in_file = [x for x in titles if is_empty_data(u_data.get(x, {})) and x.find("#") == -1]
+    # ---
+    if not (len(u_data) != len(titles) or len(titles_not_in_file) > 0):
+        printe.output(f"<<green>> load_one_lang_views_all(lang:{json_file}) \t titles: {len(titles):,}")
+        print("nothing to do")
+        return [], {}
+    # ---
+    printe.output(f"<<red>>(lang:{json_file.name}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
+    # ---
+    in_file = u_data
+    # ---
+    titles = titles_not_in_file
+    # ---
+    return titles, in_file
+
+
+def get_titles_to_work(langcode, titles, year):
+    # ---
+    json_file = get_views_all_file(langcode, year)
+    # ---
+    titles_to_work, _ = get_titles_and_in_file(json_file, titles)
+    # ---
+    if titles_to_work == titles:
+        return []
+    # ---
+    return titles_to_work
+
+
+def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
+    # ---
+    json_file = get_views_all_file(langcode, year)
+    # ---
+    titles, in_file = get_titles_and_in_file(json_file, titles)
+    # # ---
+    if len(titles) == 0:
+        return
+    # ---
+    if maxv > 0 and len(titles) > maxv:
+        printe.output(f"<<yellow>> {langcode}: {len(titles)} titles > max {maxv}, skipping")
+        return
+    # ---
+    if "local" in sys.argv:
+        return
+    # ---
+    data = render_data(titles, langcode, year, json_file, max_items=1000)
+    # ---
     if len(in_file) > 0:
         # ---
         printe.output(f"<<yellow>>(lang:{langcode}) new data: {len(data)}, in_file: {len(in_file)}")
         # ---
-        in_file = update_data_new(in_file, data)
-        # ---
-        dump_it(json_file, in_file)
-        # ---
-        data = in_file
+        data = update_data_new(in_file, data)
     else:
-        # ---
         printe.output(f"<<green>>(lang:{langcode}) new data: {len(data)}")
-        # ---
-        dump_it(json_file, data)
     # ---
-    return data
-
-
-def start():
-    # python3 core8/pwb.py update_med_views/views_all start
-    langs = load_languages_counts()
-    # ---
-    maxv = 1000000
-    minx = 0
-    # ---
-    for arg in sys.argv:
-        key, _, val = arg.partition(':')
-        if key in '-max' and val.isdigit():
-            maxv = int(val)
-        elif key in '-min' and val.isdigit():
-            minx = int(val)
-    # ---
-    # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
-    langs = dict(sorted(langs.items(), key=lambda item: item[1], reverse=False))
-    # ---
-    to_work = {}
-    # ---
-    for lang, _ in langs.items():
-        titles = load_lang_titles_from_dump(lang)
-        # ---
-        if len(titles) == 0:
-            continue
-        # ---
-        if minx > 0 and len(titles) < minx:
-            printe.output(f"<<yellow>> {lang}>> len titles ({len(titles)}) < min {minx}, skipping")
-            continue
-        # ---
-        if len(titles) > maxv:
-            printe.output(f"<<yellow>> {lang}>> len titles ({len(titles)}) > max {maxv}, skipping")
-            continue
-        # ---
-        to_work[lang] = titles
-    # ---
-    printe.output(f"<<green>> to_work: {len(to_work)}")
-    # ---
-    for lang, titles in to_work.items():
-        # ---
-        printe.output(f"<<yellow>>lang:{lang},\ttitles: {len(titles)}")
-        # ---
-        if "no" not in sys.argv:
-            load_one_lang_views_all(lang, titles, "all")
-
-
-def test2():
-    # python3 core8/pwb.py update_med_views/views_all test2
-    titles = ["Yemen", "COVID-19", "Iran–Israel war", "wj2340-0"]
-    # ---
-    ux = article_all_views('en', titles, 2024)
-    # ---
-    for t, tt in ux.items():
-        print(t, tt)
-    # ---
-    print(f"{len(ux)=:,}")
-
-
-def test():
-    # python3 core8/pwb.py update_med_views/views_all test
-    titles = load_lang_titles_from_dump("ar")
-    data = load_one_lang_views_all("ar", titles, "all")
-
-
-if __name__ == '__main__':
-    # ---
-    defs = {
-        "start": start,
-        "test2": test2,
-        "test": test,
-    }
-    # ---
-    for arg in sys.argv:
-        if arg in defs:
-            defs[arg]()
+    dump_it(json_file, data)
