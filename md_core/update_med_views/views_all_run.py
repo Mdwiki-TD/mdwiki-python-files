@@ -18,10 +18,12 @@ from pathlib import Path
 from newapi import printe
 from update_med_views.helps import load_lang_titles_from_dump
 from update_med_views.helps import load_languages_counts
-from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work, get_views_all_file, json_load, dump_hash
+from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work, dump_stats
+
+from update_med_views.views_all_bots.helps import json_load, get_views_all_file
 
 
-def start(filter_by="titles"):
+def start(lang="", filter_by="titles"):
     # python3 core8/pwb.py update_med_views/views_all_run start2
     langs = load_languages_counts()
     # ---
@@ -87,12 +89,12 @@ def start(filter_by="titles"):
             load_one_lang_views_all(lang, titles, "all")
 
 
-def start2():
+def start2(lang=""):
     # python3 core8/pwb.py update_med_views/views_all_run start
     return start(filter_by="to_work")
 
 
-def test2():
+def test2(lang=""):
     # python3 core8/pwb.py update_med_views/views_all_run test2
     titles = ["Yemen", "COVID-19", "Iran–Israel war", "wj2340-0"]
     # ---
@@ -104,10 +106,13 @@ def test2():
     print(f"{len(ux)=:,}")
 
 
-def hash_it():
-    # python3 core8/pwb.py update_med_views/views_all_run hash_it
+def hash_it(lang=""):
+    # python3 core8/pwb.py update_med_views/views_all_run hash_it -lang:nup
     # ---
     langs = load_languages_counts()
+    # ---
+    if lang and lang in langs:
+        langs = {lang: langs[lang]}
     # ---
     data = {}
     # ---
@@ -121,7 +126,7 @@ def hash_it():
         new_data = json_load(json_file)
         # ---
         if new_data:
-            data[langcode] = dump_hash(json_file_stats, new_data)
+            data[langcode] = dump_stats(json_file_stats, new_data)
     # ---
     stats_file = Path(__file__).parent / "views_new/stats.json"
     # ---
@@ -131,7 +136,10 @@ def hash_it():
     print(f"{len(data)=:,}")
 
 
-def test(lang="pa"):
+def test(lang=""):
+    # ---
+    lang = lang or "pa"
+    # ---
     # python3 core8/pwb.py update_med_views/views_all_run test
     titles = load_lang_titles_from_dump(lang)
     # ---
@@ -153,11 +161,15 @@ if __name__ == '__main__':
     # ---
     for arg in sys.argv:
         key, _, val = arg.partition(':')
+        # ---
         if key == '-lang':
             lang = val
+    # ---
+    for arg in sys.argv:
+        key, _, val = arg.partition(':')
         # ---
         if arg in defs:
-            defs[arg]()
+            defs[arg](lang=lang)
     # ---
     # python3 core8/pwb.py update_med_views/views_all_run -lang:ha
     # python3 core8/pwb.py update_med_views/views_all_run -lang:kn

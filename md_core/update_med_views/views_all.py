@@ -5,12 +5,11 @@ python3 core8/pwb.py update_med_views/views_all
 
 """
 import sys
-import json
-from pathlib import Path
 from newapi import printe
 
 from apis.mw_views import PageviewsClient
 from update_med_views.helps import dump_one
+from update_med_views.views_all_bots.helps import json_load, get_views_all_file, update_data_new, is_empty_data
 
 parallelism = 2
 
@@ -21,45 +20,33 @@ for arg in sys.argv:
 
 view_bot = PageviewsClient(parallelism=parallelism)
 
-
-def json_load(json_file):
+def sum_all_views(new_data):
+    # all_keys = []
+    # for x in new_data.values(): all_keys.extend(x.keys())
+    # all_keys = list(set(all_keys))
     # ---
-    u_data = False
+    all_keys = list(set().union(*map(dict.keys, new_data.values())))
+    all_keys.sort()
     # ---
-    try:
-        with open(json_file, "r", encoding="utf-8") as f:
-            u_data = json.load(f)
-    except Exception as e:
-        printe.output(f"<<red>> json_load({json_file}) {e}")
+    views = {}
     # ---
-    if isinstance(u_data, dict):
-        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
-    elif isinstance(u_data, list):
-        u_data = [x.replace("_", " ") for x in u_data]
+    for year in all_keys:
+        views[year] = sum(x.get(year, 0) for x in new_data.values())
     # ---
-    return u_data
+    return views
 
 
-def is_empty_data(data):
-    # ---
-    # print(data)
-    # ---
-    if not data:
-        return True
-    # ---
-    if data.get("all", 0) == 0:
-        return True
-    # ---
-    if len(data) == 1:
-        return True
-    # ---
-    # if any of values is 0
-    # if any([x == 0 for x in data.values()]): return True
-    # ---
-    return False
+def sum_all_views_new(new_data):
+    views = {}
+    for x in new_data.values():
+        for k, v in x.items():
+            views[k] = views.get(k, 0) + v
+
+    views = dict(sorted(views.items()))
+    return views
 
 
-def dump_hash(json_file_stats, new_data):
+def dump_stats(json_file_stats, new_data):
     # ---
     data_hash = [x for x in new_data if x.find("#") != -1]
     # ---
@@ -67,10 +54,7 @@ def dump_hash(json_file_stats, new_data):
     # ---
     empty = [x for x in data2.values() if is_empty_data(x)]
     # ---
-    views = {
-        "all": sum(x.get("all", 0) for x in new_data.values()),
-        "2024": sum(x.get("2024", 0) for x in new_data.values())
-    }
+    views = sum_all_views(new_data)
     # ---
     stats = {
         "all": len(data2),
@@ -97,7 +81,7 @@ def dump_it(json_file, data, json_file_stats):
     # ---
     dump_one(json_file, new_data)
     # ---
-    dump_hash(json_file_stats, new_data)
+    dump_stats(json_file_stats, new_data)
 
 
 def article_all_views(site, articles, year=2024):
@@ -109,28 +93,6 @@ def article_all_views(site, articles, year=2024):
     # print(data)
     # ---
     return data
-
-
-def get_views_all_file(lang, subdir="all"):
-    # ---
-    dir_v = Path(__file__).parent / "views_new" / subdir
-    # ---
-    if not dir_v.exists():
-        dir_v.mkdir(parents=True)
-    # ---
-    file = dir_v / f"{lang}.json"
-    # ---
-    return file
-
-
-def update_data_new(all_data, data):
-    # ---
-    for title, counts in data.items():
-        all_data.setdefault(title, {})
-        # ---
-        all_data[title].update({x: v for x, v in counts.items() if (x not in all_data[title] or all_data[title][x] == 0)})
-    # ---
-    return all_data
 
 
 def get_one_lang_views_all_by_titles(langcode, titles, year):
@@ -192,7 +154,8 @@ def render_data(titles, langcode, year, json_file, json_file_stats, max_items=10
 def get_titles_and_in_file(json_file, titles):
     # ---
     if not json_file.exists():
-        print("json_file does not exist")
+        name = json_file.name
+        print(f"json_file does not exist: {name}")
         return titles, {}
     # ---
     u_data = json_load(json_file)

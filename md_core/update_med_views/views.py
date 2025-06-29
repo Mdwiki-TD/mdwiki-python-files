@@ -12,6 +12,7 @@ from newapi import printe
 # from mwviews.api import PageviewsClient
 from apis.mw_views import PageviewsClient
 from update_med_views.helps import dump_one, load_lang_titles_from_dump
+from update_med_views.views_all_bots.helps import json_load
 
 # Sends a descriptive User-Agent header with every request
 
@@ -23,24 +24,6 @@ for arg in sys.argv:
         parallelism = int(val) or parallelism
 
 view_bot = PageviewsClient(parallelism=parallelism)
-
-
-def json_load(json_file):
-    # ---
-    u_data = False
-    # ---
-    try:
-        with open(json_file, "r", encoding="utf-8") as f:
-            u_data = json.load(f)
-    except Exception as e:
-        printe.output(f"<<red>> json_load({json_file}) {e}")
-    # ---
-    if isinstance(u_data, dict):
-        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
-    elif isinstance(u_data, list):
-        u_data = [x.replace("_", " ") for x in u_data]
-    # ---
-    return u_data
 
 
 def article_views(site, articles, year=2024):
