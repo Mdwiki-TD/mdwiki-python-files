@@ -45,6 +45,8 @@ def json_load(json_file):
 
 def article_views(site, articles, year=2024):
     # ---
+    site = 'be-tarask' if site == 'be-x-old' else site
+    # ---
     data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
     # ---
     new_data = {}

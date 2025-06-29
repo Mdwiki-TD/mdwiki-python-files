@@ -161,5 +161,6 @@ if __name__ == '__main__':
     # ---
     # python3 core8/pwb.py update_med_views/views_all_run -lang:ha
     # python3 core8/pwb.py update_med_views/views_all_run -lang:kn
+    # python3 core8/pwb.py update_med_views/views_all_run -lang:be-x-old
     if len(lang) > 0:
         test(lang)

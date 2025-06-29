@@ -102,6 +102,8 @@ def dump_it(json_file, data, json_file_stats):
 
 def article_all_views(site, articles, year=2024):
     # ---
+    site = 'be-tarask' if site == 'be-x-old' else site
+    # ---
     data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20250627')
     # ---
     # print(data)

@@ -133,6 +133,8 @@ class PageviewsClient:
         articles = [a.replace(' ', '_') for a in articles]
         articlesSafe = [quote(a, safe='') for a in articles]
 
+        project = 'be-tarask.wikipedia' if project == 'be-x-old.wikipedia' else project
+
         urls = [
             '/'.join([
                 endpoints['article'], project, access, agent, a, granularity,
