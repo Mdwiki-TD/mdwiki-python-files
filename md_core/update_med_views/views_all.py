@@ -34,6 +34,18 @@ for arg in sys.argv:
 view_bot = PageviewsClient(parallelism=parallelism)
 
 
+def json_load(json_file):
+    # ---
+    try:
+        with open(json_file, "r", encoding="utf-8") as f:
+            u_data = json.load(f)
+            return u_data
+    except Exception as e:
+        printe.output(f"<<red>> json_load({json_file}) {e}")
+    # ---
+    return False
+
+
 def is_empty_data(data):
     # ---
     # print(data)
@@ -83,11 +95,10 @@ def get_views_all_file(lang, year, open_it=False):
     file = dir_v / f"{lang}.json"
     # ---
     if open_it:
-        if file.exists():
-            with open(file, "r", encoding="utf-8") as f:
-                return json.load(f)
-        else:
-            return {}
+        data = json_load(file)
+        # ---
+        if data is False:
+            return False
     # ---
     return file
 
@@ -123,8 +134,10 @@ def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, 
     all_data = {}
     # ---
     if json_file.exists():
-        with open(json_file, "r", encoding="utf-8") as f:
-            in_file = json.load(f)
+        in_file = json_load(json_file)
+    # ---
+    if in_file is False:
+        return False
     # ---
     for i in range(0, len(titles), 200):
         # ---
@@ -152,8 +165,10 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     # ---
     if json_file.exists():
         # ---
-        with open(json_file, "r", encoding="utf-8") as f:
-            u_data = json.load(f)
+        u_data = json_load(json_file)
+        # ---
+        if u_data is False:
+            return False
         # ---
         u_data = {x.replace("_", " "): v for x, v in u_data.items()}
         # ---
@@ -264,7 +279,7 @@ def test2():
 def test():
     # python3 core8/pwb.py update_med_views/views_all test
     titles = load_lang_titles_from_dump("pa")
-    data = load_one_lang_views_all("pa", titles, "all")
+    load_one_lang_views_all("pa", titles, "all")
 
 
 if __name__ == '__main__':
