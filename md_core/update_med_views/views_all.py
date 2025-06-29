@@ -59,7 +59,35 @@ def is_empty_data(data):
     return False
 
 
-def dump_it(json_file, data):
+def dump_hash(json_file_stats, new_data):
+    # ---
+    data_hash = [x for x in new_data if x.find("#") != -1]
+    # ---
+    data2 = {x: new_data[x] for x in new_data if x not in data_hash}
+    # ---
+    empty = [x for x in data2.values() if is_empty_data(x)]
+    # ---
+    views = {
+        "all": sum(x.get("all", 0) for x in new_data.values()),
+        "2024": sum(x.get("2024", 0) for x in new_data.values())
+    }
+    # ---
+    stats = {
+        "all": len(data2),
+        "empty": len(empty),
+        "not_empty": len(data2) - len(empty),
+        "hash": len(data_hash),
+        "views": views
+    }
+    # ---
+    print(stats)
+    # ---
+    dump_one(json_file_stats, stats)
+    # ---
+    return stats
+
+
+def dump_it(json_file, data, json_file_stats):
     # ---
     new_data = {}
     # ---
@@ -67,7 +95,9 @@ def dump_it(json_file, data):
     for k, v in data.items():
         new_data[k] = {k2: v2 for k2, v2 in sorted(v.items(), key=lambda item: item[0], reverse=False)}
     # ---
-    return dump_one(json_file, new_data)
+    dump_one(json_file, new_data)
+    # ---
+    dump_hash(json_file_stats, new_data)
 
 
 def article_all_views(site, articles, year=2024):
@@ -79,20 +109,14 @@ def article_all_views(site, articles, year=2024):
     return data
 
 
-def get_views_all_file(lang, year, open_it=False):
+def get_views_all_file(lang, subdir="all"):
     # ---
-    dir_v = Path(__file__).parent / "views_new" / "all"
+    dir_v = Path(__file__).parent / "views_new" / subdir
     # ---
     if not dir_v.exists():
         dir_v.mkdir(parents=True)
     # ---
     file = dir_v / f"{lang}.json"
-    # ---
-    if open_it:
-        data = json_load(file)
-        # ---
-        if data is False:
-            return False
     # ---
     return file
 
@@ -122,7 +146,7 @@ def get_one_lang_views_all_by_titles(langcode, titles, year):
     return all_data
 
 
-def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, max_items=1000):
+def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, json_file_stats, max_items=1000):
     # ---
     in_file = {}
     all_data = {}
@@ -143,18 +167,18 @@ def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, 
         # ---
         in_file = update_data_new(in_file, data)
         # ---
-        dump_it(json_file, in_file)
+        dump_it(json_file, in_file, json_file_stats)
     # ---
     return all_data
 
 
-def render_data(titles, langcode, year, json_file, max_items=1000):
+def render_data(titles, langcode, year, json_file, json_file_stats, max_items=1000):
     data = {}
     # ---
     if "zero" in sys.argv:
         data = {x: {"all": 0} for x in titles}
     elif len(titles) > max_items:
-        data = get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, max_items=max_items)
+        data = get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, json_file_stats, max_items=max_items)
     else:
         data = get_one_lang_views_all_by_titles(langcode, titles, year)
     # ---
@@ -193,7 +217,7 @@ def get_titles_and_in_file(json_file, titles):
 
 def get_titles_to_work(langcode, titles, year):
     # ---
-    json_file = get_views_all_file(langcode, year)
+    json_file = get_views_all_file(langcode)
     # ---
     titles_to_work, _ = get_titles_and_in_file(json_file, titles)
     # ---
@@ -205,7 +229,8 @@ def get_titles_to_work(langcode, titles, year):
 
 def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     # ---
-    json_file = get_views_all_file(langcode, year)
+    json_file = get_views_all_file(langcode)
+    json_file_stats = get_views_all_file(langcode, "stats")
     # ---
     titles, in_file = get_titles_and_in_file(json_file, titles)
     # # ---
@@ -219,7 +244,7 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     if "local" in sys.argv:
         return
     # ---
-    data = render_data(titles, langcode, year, json_file, max_items=1000)
+    data = render_data(titles, langcode, year, json_file, json_file_stats, max_items=1000)
     # ---
     if len(in_file) > 0:
         # ---
@@ -229,4 +254,4 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     else:
         printe.output(f"<<green>>(lang:{langcode}) new data: {len(data)}")
     # ---
-    dump_it(json_file, data)
+    dump_it(json_file, data, json_file_stats)

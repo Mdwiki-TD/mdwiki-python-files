@@ -12,11 +12,13 @@ tfj run views4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 import sys
+import json
 import tqdm
+from pathlib import Path
 from newapi import printe
 from update_med_views.helps import load_lang_titles_from_dump
 from update_med_views.helps import load_languages_counts
-from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work
+from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work, get_views_all_file, json_load, dump_hash
 
 
 def start(filter_by="titles"):
@@ -102,12 +104,40 @@ def test2():
     print(f"{len(ux)=:,}")
 
 
+def hash_it():
+    # python3 core8/pwb.py update_med_views/views_all_run hash_it
+    # ---
+    langs = load_languages_counts()
+    # ---
+    data = {}
+    # ---
+    for langcode, _ in langs.items():
+        json_file = get_views_all_file(langcode)
+        json_file_stats = get_views_all_file(langcode, "stats")
+        # ---
+        if not json_file.exists():
+            continue
+        # ---
+        new_data = json_load(json_file)
+        # ---
+        if new_data:
+            data[langcode] = dump_hash(json_file_stats, new_data)
+    # ---
+    stats_file = Path(__file__).parent / "views_new/stats.json"
+    # ---
+    with open(stats_file, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)
+    # ---
+    print(f"{len(data)=:,}")
+
+
 def test(lang="pa"):
     # python3 core8/pwb.py update_med_views/views_all_run test
     titles = load_lang_titles_from_dump(lang)
     # ---
     print("load_one_lang_views_all:")
     load_one_lang_views_all(lang, titles, "all")
+
 
 if __name__ == '__main__':
     # ---
@@ -116,6 +146,7 @@ if __name__ == '__main__':
         "start2": start2,
         "test2": test2,
         "test": test,
+        "hash_it": hash_it,
     }
     # ---
     lang = ""
