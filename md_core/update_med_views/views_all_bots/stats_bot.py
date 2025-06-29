@@ -41,7 +41,7 @@ def dump_stats(json_file_stats, new_data):
         "views": views
     }
     # ---
-    print(stats)
+    # print(stats)
     # ---
     dump_one(json_file_stats, stats)
     # ---
