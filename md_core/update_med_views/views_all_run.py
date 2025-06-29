@@ -30,9 +30,9 @@ def start(filter_by="titles"):
     # ---
     for arg in sys.argv:
         key, _, val = arg.partition(':')
-        if key in '-max' and val.isdigit():
+        if key == '-max' and val.isdigit():
             maxv = int(val)
-        elif key in '-min' and val.isdigit():
+        elif key == '-min' and val.isdigit():
             minx = int(val)
     # ---
     # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
@@ -44,20 +44,28 @@ def start(filter_by="titles"):
         # ---
         titles = load_lang_titles_from_dump(lang)
         # ---
-        to_work = get_titles_to_work(lang, titles, "all")
+        to_work = []
         # ---
-        to_filter = titles if filter_by == "titles" else to_work
+        to_filter = titles
+        # ---
+        # to speed loading
+        if filter_by != "titles":
+            to_work = get_titles_to_work(lang, titles, "all")
         # ---
         if len(to_filter) == 0:
             continue
         # ---
         if minx > 0 and len(to_filter) < minx:
-            printe.output(f"<<yellow>> {lang}>> len {to_filter} ({len(to_filter)}) < min {minx}, skipping")
+            printe.output(f"<<yellow>> {lang}>> len {filter_by} ({len(to_filter)}) < min {minx}, skipping")
             continue
         # ---
         if len(to_filter) > maxv:
-            printe.output(f"<<yellow>> {lang}>> len {to_filter} ({len(to_filter)}) > max {maxv}, skipping")
+            printe.output(f"<<yellow>> {lang}>> len {filter_by} ({len(to_filter)}) > max {maxv}, skipping")
             continue
+        # ---
+        # to speed loading
+        if not to_work:
+            to_work = get_titles_to_work(lang, titles, "all")
         # ---
         work_data[lang] = {"titles": titles, "to_work": to_work}
     # ---
