@@ -20,6 +20,10 @@ def sum_all_views_new(new_data):
             views[k] = views.get(k, 0) + v
 
     views = dict(sorted(views.items(), key=lambda item: item[0], reverse=False))
+
+    # remove any key < 2015 and not = "all"
+    views = {k: v for k, v in views.items() if (k.isnumeric() and int(k) >= 2015) or k == "all" or v > 0}
+
     return views
 
 
