@@ -21,6 +21,7 @@ from update_med_views.helps import load_languages_counts
 from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work, dump_stats
 
 from update_med_views.views_all_bots.helps import json_load, get_views_all_file
+from update_med_views.views_all_bots.stats_bot import update_all_stats
 
 
 def start(lang="", filter_by="titles"):
@@ -111,10 +112,17 @@ def hash_it(lang=""):
     # ---
     langs = load_languages_counts()
     # ---
-    if lang and lang in langs:
-        langs = {lang: langs[lang]}
+    if lang:
+        if lang in langs:
+            langs = {lang: langs[lang]}
+        else:
+            printe.output(f"hash_it: lang {lang} not found")
+            return
     # ---
-    data = {}
+    stats_file = Path(__file__).parent / "views_new/stats.json"
+    # ---
+    with open(stats_file, "r", encoding="utf-8") as f:
+        stats_data = {}
     # ---
     for langcode, _ in langs.items():
         json_file = get_views_all_file(langcode)
@@ -126,14 +134,9 @@ def hash_it(lang=""):
         new_data = json_load(json_file)
         # ---
         if new_data:
-            data[langcode] = dump_stats(json_file_stats, new_data)
+            stats_data[langcode] = dump_stats(json_file_stats, new_data)
     # ---
-    stats_file = Path(__file__).parent / "views_new/stats.json"
-    # ---
-    with open(stats_file, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False)
-    # ---
-    print(f"{len(data)=:,}")
+    update_all_stats(stats_data)
 
 
 def test(lang=""):
@@ -171,8 +174,6 @@ if __name__ == '__main__':
         if arg in defs:
             defs[arg](lang=lang)
     # ---
-    # python3 core8/pwb.py update_med_views/views_all_run -lang:ha
-    # python3 core8/pwb.py update_med_views/views_all_run -lang:kn
-    # python3 core8/pwb.py update_med_views/views_all_run -lang:be-x-old
-    if len(lang) > 0:
-        test(lang)
+    # python3 core8/pwb.py update_med_views/views_all_run test -lang:ha
+    # python3 core8/pwb.py update_med_views/views_all_run test -lang:kn
+    # python3 core8/pwb.py update_med_views/views_all_run test -lang:be-x-old

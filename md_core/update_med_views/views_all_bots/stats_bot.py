@@ -1,27 +1,16 @@
 #!/usr/bin/python3
 """
 
-from update_med_views.views_all_bots.helps import json_load, get_views_all_file, update_data_new
+from update_med_views.views_all_bots.stats_bot import dump_stats, update_all_stats
 
 """
+import sys
+import json
+import time
+from pathlib import Path
+
 from update_med_views.views_all_bots.helps import is_empty_data
 from update_med_views.helps import dump_one
-
-
-def sum_all_views(new_data):
-    # all_keys = []
-    # for x in new_data.values(): all_keys.extend(x.keys())
-    # all_keys = list(set(all_keys))
-    # ---
-    all_keys = list(set().union(*map(dict.keys, new_data.values())))
-    all_keys.sort()
-    # ---
-    views = {}
-    # ---
-    for year in all_keys:
-        views[year] = sum(x.get(year, 0) for x in new_data.values())
-    # ---
-    return views
 
 
 def sum_all_views_new(new_data):
@@ -30,7 +19,7 @@ def sum_all_views_new(new_data):
         for k, v in x.items():
             views[k] = views.get(k, 0) + v
 
-    views = dict(sorted(views.items()))
+    views = dict(sorted(views.items(), key=lambda item: item[0], reverse=False))
     return views
 
 
@@ -42,7 +31,7 @@ def dump_stats(json_file_stats, new_data):
     # ---
     empty = [x for x in data2.values() if is_empty_data(x)]
     # ---
-    views = sum_all_views(new_data)
+    views = sum_all_views_new(new_data)
     # ---
     stats = {
         "all": len(data2),
@@ -57,3 +46,17 @@ def dump_stats(json_file_stats, new_data):
     dump_one(json_file_stats, stats)
     # ---
     return stats
+
+
+def update_all_stats(stats_data):
+    # ---
+    stats_file = Path(__file__).parent.parent / "views_new/stats.json"
+    # ---
+    if "update_stats" not in sys.argv:
+        print("add 'update_stats' to sys.argv to update stats.json")
+        return
+    # ---
+    with open(stats_file, "w", encoding="utf-8") as f:
+        json.dump(stats_data, f, ensure_ascii=False)
+    # ---
+    print(f"update_all_stats: {len(stats_data)=:,}")
