@@ -3,6 +3,7 @@
 
 python3 core8/pwb.py update_med_views/views_all
 
+tfj run views0 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start"
 tfj run views --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -max:1000"
 tfj run views1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:1000 -max:5000"
 tfj run views2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py update_med_views/views_all start -min:5000 -max:10000"
@@ -65,7 +66,7 @@ def dump_it(json_file, data):
 
 def article_all_views(site, articles, year=2024):
     # ---
-    data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20241231')
+    data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start='20100101', end='20250627')
     # ---
     # print(data)
     # ---
