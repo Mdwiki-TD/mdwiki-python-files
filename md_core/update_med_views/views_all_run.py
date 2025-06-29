@@ -105,8 +105,9 @@ def test2():
 def test(lang="pa"):
     # python3 core8/pwb.py update_med_views/views_all_run test
     titles = load_lang_titles_from_dump(lang)
+    # ---
+    print("load_one_lang_views_all:")
     load_one_lang_views_all(lang, titles, "all")
-
 
 if __name__ == '__main__':
     # ---

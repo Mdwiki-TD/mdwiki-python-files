@@ -148,61 +148,8 @@ def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, 
     return all_data
 
 
-def get_titles_to_work(langcode, titles, year):
-    # ---
-    json_file = get_views_all_file(langcode, year)
-    # ---
-    titles_to_work = []
-    # ---
-    u_data = {}
-    # ---
-    if json_file.exists():
-        # ---
-        u_data = json_load(json_file)
-        # ---
-        if u_data is False:
-            return False
-        # ---
-        titles_to_work = [x for x in titles if is_empty_data(u_data.get(x, {}))]
-    # ---
-    return titles_to_work
-
-
-def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
-    # ---
-    json_file = get_views_all_file(langcode, year)
-    # ---
-    u_data = {}
-    in_file = {}
-    # ---
-    if json_file.exists():
-        # ---
-        u_data = json_load(json_file)
-        # ---
-        if u_data is False:
-            return False
-        # ---
-        titles_not_in_file = [x for x in titles if is_empty_data(u_data.get(x, {}))]
-        # ---
-        if len(u_data) != len(titles) or len(titles_not_in_file) > 0:
-            printe.output(f"<<red>>(lang:{json_file.name}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
-            # ---
-            in_file = u_data
-            # ---
-            titles = titles_not_in_file
-        else:
-            printe.output(f"<<green>> load_one_lang_views_all(lang:{json_file}) \t titles: {len(titles):,}")
-            # ---
-            return u_data
-    # ---
-    if maxv > 0 and len(titles) > maxv:
-        printe.output(f"<<yellow>> {langcode}: {len(titles)} titles > max {maxv}, skipping")
-        return u_data
-    # ---
-    if "local" in sys.argv:
-        return u_data
-    # ---
-    # data = render_data(u_data, titles)
+def render_data(titles, langcode, year, json_file, max_items=1000):
+    data = {}
     # ---
     if "zero" in sys.argv:
         data = {x: {"all": 0} for x in titles}
@@ -213,19 +160,73 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     # ---
     data = {x.replace("_", " "): v for x, v in data.items()}
     # ---
+    return data
+
+
+def get_titles_and_in_file(json_file, titles):
+    # ---
+    if not json_file.exists():
+        print("json_file does not exist")
+        return titles, {}
+    # ---
+    u_data = json_load(json_file)
+    # ---
+    if u_data is False:
+        # TODO: error when loading the json data
+        return [], {}
+    # ---
+    titles_not_in_file = [x for x in titles if is_empty_data(u_data.get(x, {})) and x.find("#") == -1]
+    # ---
+    if not (len(u_data) != len(titles) or len(titles_not_in_file) > 0):
+        printe.output(f"<<green>> load_one_lang_views_all(lang:{json_file}) \t titles: {len(titles):,}")
+        print("nothing to do")
+        return [], {}
+    # ---
+    printe.output(f"<<red>>(lang:{json_file.name}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
+    # ---
+    in_file = u_data
+    # ---
+    titles = titles_not_in_file
+    # ---
+    return titles, in_file
+
+
+def get_titles_to_work(langcode, titles, year):
+    # ---
+    json_file = get_views_all_file(langcode, year)
+    # ---
+    titles_to_work, _ = get_titles_and_in_file(json_file, titles)
+    # ---
+    if titles_to_work == titles:
+        return []
+    # ---
+    return titles_to_work
+
+
+def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
+    # ---
+    json_file = get_views_all_file(langcode, year)
+    # ---
+    titles, in_file = get_titles_and_in_file(json_file, titles)
+    # # ---
+    if len(titles) == 0:
+        return
+    # ---
+    if maxv > 0 and len(titles) > maxv:
+        printe.output(f"<<yellow>> {langcode}: {len(titles)} titles > max {maxv}, skipping")
+        return
+    # ---
+    if "local" in sys.argv:
+        return
+    # ---
+    data = render_data(titles, langcode, year, json_file, max_items=1000)
+    # ---
     if len(in_file) > 0:
         # ---
         printe.output(f"<<yellow>>(lang:{langcode}) new data: {len(data)}, in_file: {len(in_file)}")
         # ---
-        in_file = update_data_new(in_file, data)
-        # ---
-        dump_it(json_file, in_file)
-        # ---
-        data = in_file
+        data = update_data_new(in_file, data)
     else:
-        # ---
         printe.output(f"<<green>>(lang:{langcode}) new data: {len(data)}")
-        # ---
-        dump_it(json_file, data)
     # ---
-    return data
+    dump_it(json_file, data)
