@@ -202,6 +202,8 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
     if "local" in sys.argv:
         return u_data
     # ---
+    # data = render_data(u_data, titles)
+    # ---
     if "zero" in sys.argv:
         data = {x: {"all": 0} for x in titles}
     elif len(titles) > max_items:
