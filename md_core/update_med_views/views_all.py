@@ -24,14 +24,20 @@ view_bot = PageviewsClient(parallelism=parallelism)
 
 def json_load(json_file):
     # ---
+    u_data = False
+    # ---
     try:
         with open(json_file, "r", encoding="utf-8") as f:
             u_data = json.load(f)
-            return u_data
     except Exception as e:
         printe.output(f"<<red>> json_load({json_file}) {e}")
     # ---
-    return False
+    if isinstance(u_data, dict):
+        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
+    elif isinstance(u_data, list):
+        u_data = [x.replace("_", " ") for x in u_data]
+    # ---
+    return u_data
 
 
 def is_empty_data(data):
@@ -142,14 +148,13 @@ def get_one_lang_views_all_by_titles_plus_1k(langcode, titles, year, json_file, 
     return all_data
 
 
-def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
+def get_titles_to_work(langcode, titles, year):
     # ---
     json_file = get_views_all_file(langcode, year)
     # ---
-    u_data = {}
-    in_file = {}
+    titles_to_work = []
     # ---
-    titles = [x.replace("_", " ") for x in titles]
+    u_data = {}
     # ---
     if json_file.exists():
         # ---
@@ -158,7 +163,24 @@ def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
         if u_data is False:
             return False
         # ---
-        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
+        titles_to_work = [x for x in titles if is_empty_data(u_data.get(x, {}))]
+    # ---
+    return titles_to_work
+
+
+def load_one_lang_views_all(langcode, titles, year, max_items=1000, maxv=0):
+    # ---
+    json_file = get_views_all_file(langcode, year)
+    # ---
+    u_data = {}
+    in_file = {}
+    # ---
+    if json_file.exists():
+        # ---
+        u_data = json_load(json_file)
+        # ---
+        if u_data is False:
+            return False
         # ---
         titles_not_in_file = [x for x in titles if is_empty_data(u_data.get(x, {}))]
         # ---

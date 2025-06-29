@@ -27,14 +27,20 @@ view_bot = PageviewsClient(parallelism=parallelism)
 
 def json_load(json_file):
     # ---
+    u_data = False
+    # ---
     try:
         with open(json_file, "r", encoding="utf-8") as f:
             u_data = json.load(f)
-            return u_data
     except Exception as e:
         printe.output(f"<<red>> json_load({json_file}) {e}")
     # ---
-    return False
+    if isinstance(u_data, dict):
+        u_data = {x.replace("_", " "): v for x, v in u_data.items()}
+    elif isinstance(u_data, list):
+        u_data = [x.replace("_", " ") for x in u_data]
+    # ---
+    return u_data
 
 
 def article_views(site, articles, year=2024):
@@ -124,8 +130,6 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
     # ---
     u_data = {}
     in_file = {}
-    # ---
-    titles = [x.replace("_", " ") for x in titles]
     # ---
     if json_file.exists():
         # ---

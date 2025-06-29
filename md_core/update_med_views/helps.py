@@ -25,10 +25,14 @@ def load_lang_titles_from_dump(lang):
     json_file = t_dump_dir / f"{lang}.json"
     # ---
     if json_file.exists():
+        # ---
         with open(json_file, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+        # ---
+        data = [x.replace("_", " ") for x in data]
+        return data
     # ---
-    return {}
+    return []
 
 
 def dump_one(file, data):

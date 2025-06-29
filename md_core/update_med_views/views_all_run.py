@@ -12,15 +12,18 @@ tfj run views4 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 import sys
+import tqdm
 from newapi import printe
 from update_med_views.helps import load_lang_titles_from_dump
 from update_med_views.helps import load_languages_counts
-from update_med_views.views_all import load_one_lang_views_all, article_all_views
+from update_med_views.views_all import load_one_lang_views_all, article_all_views, get_titles_to_work
 
 
-def start():
-    # python3 core8/pwb.py update_med_views/views_all_run start
+def start(filter_by="titles"):
+    # python3 core8/pwb.py update_med_views/views_all_run start2
     langs = load_languages_counts()
+    # ---
+    filter_by = filter_by if filter_by in ["titles", "to_work"] else "titles"
     # ---
     maxv = 1000000
     minx = 0
@@ -35,32 +38,48 @@ def start():
     # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
     langs = dict(sorted(langs.items(), key=lambda item: item[1], reverse=False))
     # ---
-    to_work = {}
+    work_data = {}
     # ---
-    for lang, _ in langs.items():
+    for lang, _ in tqdm.tqdm(langs.items()):
+        # ---
         titles = load_lang_titles_from_dump(lang)
         # ---
-        if len(titles) == 0:
+        to_work = get_titles_to_work(lang, titles, "all")
+        # ---
+        to_filter = titles if filter_by == "titles" else to_work
+        # ---
+        if len(to_filter) == 0:
             continue
         # ---
-        if minx > 0 and len(titles) < minx:
-            printe.output(f"<<yellow>> {lang}>> len titles ({len(titles)}) < min {minx}, skipping")
+        if minx > 0 and len(to_filter) < minx:
+            printe.output(f"<<yellow>> {lang}>> len {to_filter} ({len(to_filter)}) < min {minx}, skipping")
             continue
         # ---
-        if len(titles) > maxv:
-            printe.output(f"<<yellow>> {lang}>> len titles ({len(titles)}) > max {maxv}, skipping")
+        if len(to_filter) > maxv:
+            printe.output(f"<<yellow>> {lang}>> len {to_filter} ({len(to_filter)}) > max {maxv}, skipping")
             continue
         # ---
-        to_work[lang] = titles
+        work_data[lang] = {"titles": titles, "to_work": to_work}
     # ---
-    printe.output(f"<<green>> to_work: {len(to_work)}")
+    # sort work_data by len of to_work
+    work_data = dict(sorted(work_data.items(), key=lambda item: len(item[1][filter_by]), reverse=False))
     # ---
-    for lang, titles in to_work.items():
+    printe.output(f"<<green>> work_data: {len(work_data)}")
+    # ---
+    for n, (lang, data) in enumerate(work_data.items(), start=1):
         # ---
-        printe.output(f"<<yellow>>lang:{lang},\ttitles: {len(titles)}")
+        titles = data["titles"]
+        to_work = data["to_work"]
+        # ---
+        printe.output(f"<<yellow>> {n}/{len(work_data)} lang:{lang},\ttitles: {len(titles)}, to_work: {len(to_work)}")
         # ---
         if "no" not in sys.argv:
             load_one_lang_views_all(lang, titles, "all")
+
+
+def start2():
+    # python3 core8/pwb.py update_med_views/views_all_run start
+    return start(filter_by="to_work")
 
 
 def test2():
@@ -85,6 +104,7 @@ if __name__ == '__main__':
     # ---
     defs = {
         "start": start,
+        "start2": start2,
         "test2": test2,
         "test": test,
     }
