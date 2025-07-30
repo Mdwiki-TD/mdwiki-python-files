@@ -23,6 +23,8 @@ to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
 
 qids_data=json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
 
+qids_data = {z : list(set(v)) for z, v in qids_data.items()}
+
 qids_clean = {x: v[0] for x, v in qids_data.items() if len(v) == 1}
 
 print(f"to_add: {len(to_add)}")

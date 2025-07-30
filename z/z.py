@@ -35,20 +35,22 @@ to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
 
 
 def dump_data():
-
+    results_x = {z : list(set(v)) for z, v in results.items()}
+    # ---
     with open(qids_file, 'w', encoding='utf-8') as file:
-        json.dump(results, file, ensure_ascii=False, indent=4)
+        json.dump(results_x, file, ensure_ascii=False, indent=4)
 
 
 def get_qids(english_terms_new):
 
     for term in tqdm(english_terms_new, desc="Processing terms"):
+        results.setdefault(term, [])
         page = MainPage(term, 'en', family='wikipedia')
         if page.exists():
             qid = page.get_qid()  # يحصل على معرف Wikidata
             if qid:
                 print(f"{term}: {qid}")
-                results[term] = qid
+                results[term].append(qid)
 
     dump_data()
 
