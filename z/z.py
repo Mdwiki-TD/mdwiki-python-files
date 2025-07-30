@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py z
+python3 core8/pwb.py z/z
 
 
 English Term;Dzongkha Term;Dzongkha Explanation
