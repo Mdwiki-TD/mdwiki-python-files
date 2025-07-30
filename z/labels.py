@@ -9,8 +9,8 @@ import json
 from tqdm import tqdm
 from pathlib import Path
 
-
 import api_wd_z
+from apis.wd_bots import wd_rest_new
 
 Dir = Path(__file__).parent
 
@@ -42,7 +42,19 @@ for qid, tab in tqdm(data_to_work.items()):
     label = tab["label"]
     desc = tab["desc"]
     # ---
-    label_info = api_wd_z.Labels_API(qid, label, "dz")
-    desc_info = api_wd_z.Des_API(qid, desc, "dz")
+    item_data = wd_rest_new.Get_one_qid_info(qid)
     # ---
-    # break
+    labels = item_data.get("labels", {})
+    descriptions = item_data.get("descriptions", {})
+    # ---
+    labels_dz = labels.get("dz", {})
+    descriptions_dz = descriptions.get("dz", {})
+    # ---
+    print(item_data)
+    print(f"labels_dz: {labels_dz}")
+    print(f"descriptions_dz: {descriptions_dz}")
+    # ---
+    # label_info = api_wd_z.Labels_API(qid, label, "dz")
+    # desc_info = api_wd_z.Des_API(qid, desc, "dz")
+    # ---
+    break
