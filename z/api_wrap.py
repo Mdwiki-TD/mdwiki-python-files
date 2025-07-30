@@ -24,5 +24,5 @@ def log_in_wikidata(Mr_or_bot="bot"):
 bot = log_in_wikidata(Mr_or_bot="notbot")
 
 
-def session_post(params):
-    return bot.post_params(params, Type="get", addtoken=False, GET_CSRF=True, files=None, do_error=False, max_retry=0)
+def session_post(params, Type="get", addtoken=False, GET_CSRF=False, files=None, do_error=False, max_retry=0):
+    return bot.post_params(params, Type=Type, addtoken=addtoken, GET_CSRF=GET_CSRF, files=files, do_error=do_error, max_retry=max_retry)

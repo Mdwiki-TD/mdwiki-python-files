@@ -101,7 +101,7 @@ def WD_Merge(q1, q2):
         return False
 
 
-def Labels_API(Qid, label, lang, remove=False):
+def Labels_API(Qid, label, lang, remove=False, summary=""):
     # ---
     if not Qid:
         printe.output("Labels_API Qid == '' ")
@@ -134,6 +134,7 @@ def Labels_API(Qid, label, lang, remove=False):
         "id": Qid,
         "language": lang,
         "value": label,
+        "summary": summary,
     }
     # ---
     req = post_it(params=params, token=True)
@@ -155,7 +156,7 @@ def Labels_API(Qid, label, lang, remove=False):
     return False
 
 
-def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False):
+def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
     # ---
     if not desc.strip():
         printe.output("<<red>> Des_API desc is empty.")
@@ -183,6 +184,7 @@ def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False):
         "id": Qid,
         "language": lang,
         "value": desc,
+        "summary": summary,
     }
     # ---
     req = post_it(params=params, token=True)
