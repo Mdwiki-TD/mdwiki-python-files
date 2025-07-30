@@ -60,23 +60,20 @@ for qid, tab in tqdm(data_to_work.items()):
     labels_dz = labels.get("dz", "")
     descriptions_dz = descriptions.get("dz", "")
     # ---
+    same_label += labels_dz == label
+    same_desc += descriptions_dz == desc
+    # ---
+    diff_label += (labels_dz != label) if not labels_dz else 0
+    diff_desc += (descriptions_dz != desc) if not descriptions_dz else 0
+    # ---
     if not labels_dz:
         label_info = api_wd_z.Labels_API(qid, label, "dz")
-    elif labels_dz == label:
-        same_label += 1
-    else:
-        diff_label += 1
-        print(f"labels_dz: {labels_dz}")
     # ---
     if not descriptions_dz:
         desc_info = api_wd_z.Des_API(qid, desc, "dz")
-    elif descriptions_dz == desc:
-        same_desc += 1
-    else:
-        diff_desc += 1
-        print(f"descriptions_dz: {descriptions_dz}")
     # ---
-    if "break" in sys.argv:
+    if "break" in sys.argv and (not descriptions_dz or not labels_dz):
+        print("break")
         break
 
 print(f"same_label: {same_label}")
