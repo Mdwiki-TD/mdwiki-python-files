@@ -21,8 +21,7 @@ from apis.wd_bots import wd_rest_new
 from apis.wd_bots.wd_post_new import post_it
 
 Main_User = {1: ""}
-label_ask = {1: True}
-Save_2020_wd = {1: False}
+Save_2020_wd = {}
 
 
 def ask_put(s):
@@ -30,7 +29,7 @@ def ask_put(s):
 
     sa = input(s)
     if sa not in yes_answer:
-        print(" himoAPI: wrong answer")
+        print(" wikidataapi: wrong answer")
         return False
     if sa == "a" or sa == "A":
         return "a"
@@ -115,6 +114,21 @@ def Labels_API(Qid, label, lang, remove=False):
     # save the edit
     _out = f'{Qid} label:"{lang}"@{label}.'
     # ---
+    Save_2020_wd.setdefault("labels", False)
+    # ---
+    if not Save_2020_wd["labels"] and "ask" in sys.argv:
+        # ---
+        sa = ask_put(f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
+        # ---
+        if not sa:
+            return False
+        # ---
+        if sa == "a":
+            printe.output("<<lightgreen>> ----------------------------------------------")
+            printe.output("<<lightgreen>> wikidataapi.py Labels_API save without asking.")
+            printe.output("<<lightgreen>> ----------------------------------------------")
+            Save_2020_wd["labels"] = True
+    # ---
     params = {
         "action": "wbsetlabel",
         "id": Qid,
@@ -150,17 +164,19 @@ def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False):
     # save the edit
     _out = f'def Des_API: {Qid} description:"{lang}"@{desc}'
     # ---
-    if not Save_2020_wd[1] and (ask is True or "ask" in sys.argv):
+    Save_2020_wd.setdefault("descriptions", False)
+    # ---
+    if not Save_2020_wd["descriptions"] and (ask is True or "ask" in sys.argv):
         # ---
-        sa = ask_put(f'<<lightyellow>> himoAPI.py Add desc:<<lightyellow>>"{lang}:{desc}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
+        sa = ask_put(f'<<lightyellow>> wikidataapi.py Add desc:<<lightyellow>>"{lang}:{desc}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
         if not sa:
             return False
         # ---
         if sa == "a":
             printe.output("<<lightgreen>> ---------------------------------")
-            printe.output("<<lightgreen>> himoAPI.py save all without asking.")
+            printe.output("<<lightgreen>> wikidataapi.py save all without asking.")
             printe.output("<<lightgreen>> ---------------------------------")
-            Save_2020_wd[1] = True
+            Save_2020_wd["descriptions"] = True
     # ---
     params = {
         "action": "wbsetdescription",
