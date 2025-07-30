@@ -9,7 +9,7 @@ import json
 from tqdm import tqdm
 from pathlib import Path
 
-from himo_api import himoAPI
+from himo_api import himoAPI_test as himoAPI
 
 Dir = Path(__file__).parent
 

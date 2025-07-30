@@ -20,7 +20,7 @@ from newapi.page import MainPage
 from pathlib import Path
 
 from newapi.api_utils import wd_sparql
-from himo_api.himoAPI import wdapi_new
+from himo_api import himoAPI
 
 Dir = Path(__file__).parent
 
@@ -83,9 +83,9 @@ def search_wd(english_terms_new):
     # results = wd_sparql.get_query_result(query)
     for term in tqdm(english_terms_new, desc="Processing terms"):
         # ---
-        results.setdefault(term, {})
+        results.setdefault(term, [])
         # ---
-        json1 = wdapi_new.wbsearchentities(term, "en") or {}
+        json1 = himoAPI.wbsearchentities(term, "en") or {}
         # ---
         # print(json1)
         # ---
