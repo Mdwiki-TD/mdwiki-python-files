@@ -10,6 +10,7 @@ python3 core8/pwb.py apis/wikidataapi
 
 """
 import re
+import sys
 import json
 
 # ---
@@ -18,6 +19,22 @@ from apis.wd_bots import wd_rest_new
 
 # from apis.wd_bots.wikidataapi_post import post_it
 from apis.wd_bots.wd_post_new import post_it
+
+Main_User = {1: ""}
+label_ask = {1: True}
+Save_2020_wd = {1: False}
+
+
+def ask_put(s):
+    yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
+
+    sa = input(s)
+    if sa not in yes_answer:
+        print(" himoAPI: wrong answer")
+        return False
+    if sa == "a" or sa == "A":
+        return "a"
+    return True
 
 
 def post(params, token=True):
@@ -28,8 +45,8 @@ def Get_sitelinks_From_Qid(q):
     return wd_rest_new.Get_sitelinks_From_Qid(q)
 
 
-def Get_claim(q, property, get_claim_id=False):
-    return wd_rest_new.Get_Claims_API(q=q, p=property)
+def Get_claim(q, pid, get_claim_id=False):
+    return wd_rest_new.Get_Claims_API(q=q, p=pid)
 
 
 def WD_Merge(q1, q2):
@@ -96,7 +113,7 @@ def Labels_API(Qid, label, lang, remove=False):
         return False
     # ---
     # save the edit
-    out = f'{Qid} label:"{lang}"@{label}.'
+    _out = f'{Qid} label:"{lang}"@{label}.'
     # ---
     params = {
         "action": "wbsetlabel",
@@ -122,6 +139,47 @@ def Labels_API(Qid, label, lang, remove=False):
             printe.output(f"<<red>> r5{str(req)}")
     # ---
     return False
+
+
+def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False):
+    # ---
+    if not desc.strip():
+        printe.output("<<red>> Des_API desc is empty.")
+        return
+    # ---
+    # save the edit
+    _out = f'def Des_API: {Qid} description:"{lang}"@{desc}'
+    # ---
+    if not Save_2020_wd[1] and (ask is True or "ask" in sys.argv):
+        # ---
+        sa = ask_put(f'<<lightyellow>> himoAPI.py Add desc:<<lightyellow>>"{lang}:{desc}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
+        if not sa:
+            return False
+        # ---
+        if sa == "a":
+            printe.output("<<lightgreen>> ---------------------------------")
+            printe.output("<<lightgreen>> himoAPI.py save all without asking.")
+            printe.output("<<lightgreen>> ---------------------------------")
+            Save_2020_wd[1] = True
+    # ---
+    params = {
+        "action": "wbsetdescription",
+        "id": Qid,
+        "language": lang,
+        "value": desc,
+    }
+    # ---
+    req = post_it(params=params, token=True)
+    # ---
+    if not req:
+        return False
+    # ---
+    if "success" in req:
+        printe.output("<<green>> **Labels_API true.")
+        return True
+    else:
+        printe.output(f"<<red>> r5{str(req)}")
+    # ---
 
 
 def get_redirects(liste):

@@ -10,6 +10,7 @@ from tqdm import tqdm
 from pathlib import Path
 
 from himo_api import himoAPI_test as himoAPI
+import api_wd_z
 
 Dir = Path(__file__).parent
 
@@ -41,7 +42,7 @@ for qid, tab in tqdm(data_to_work.items()):
     label = tab["label"]
     desc = tab["desc"]
     # ---
-    label_info = himoAPI.Add_Labels_if_not_there(qid, label, "dz", Or_Alii=True)
-    desc_info = himoAPI.Des_API(qid, desc, "dz", rea=False)
+    label_info = api_wd_z.Labels_API(qid, label, "dz")
+    desc_info = api_wd_z.Des_API(qid, desc, "dz")
     # ---
     break
