@@ -1105,5 +1105,392 @@
     ],
     "infant": [
         "Q998"
+    ],
+    "abalienation": [
+        "Q305266"
+    ],
+    "abarticulation": [],
+    "abnormal": [],
+    "Abnormal": [],
+    "abo system": [],
+    "ABO System": [],
+    "Abortionist": [],
+    "Acapnia": [],
+    "acronyx": [],
+    "addict": [],
+    "alcoholic": [],
+    "anadipsia": [],
+    "anephric": [],
+    "angiostenosis": [],
+    "angiotrophic": [],
+    "anisakiasis": [
+        "Q69185550",
+        "Q34506475"
+    ],
+    "ankel": [],
+    "antimalarial": [],
+    "aortogram": [],
+    "aortopathy": [],
+    "arteries": [],
+    "back": [],
+    "backache": [
+        "Q83204505",
+        "Q72832558"
+    ],
+    "bed sore": [],
+    "behaviour": [
+        "Q15763174"
+    ],
+    "benigh": [],
+    "biharzia": [],
+    "birth place": [],
+    "bowel": [],
+    "breast feed": [],
+    "breating rate": [],
+    "bronchi": [],
+    "bulimia": [
+        "Q114491581"
+    ],
+    "burning": [],
+    "calvicle": [],
+    "cardiograph": [
+        "Q10478823"
+    ],
+    "carotid": [],
+    "carpus": [
+        "Q1044816"
+    ],
+    "centigrade": [
+        "Q12714024",
+        "Q12106176",
+        "Q98752480"
+    ],
+    "centimeter": [
+        "Q4407906"
+    ],
+    "chemical": [],
+    "cholecystis": [],
+    "cillary muscle": [],
+    "clunis": [],
+    "cold sores": [],
+    "collar-bone": [],
+    "colpatitis": [],
+    "comminute": [],
+    "community unit": [],
+    "conceive": [
+        "Q5158293"
+    ],
+    "contraception": [
+        "Q2995704"
+    ],
+    "cor pulmonale": [
+        "Q22299234"
+    ],
+    "corn": [],
+    "corpse": [],
+    "corpulence": [],
+    "costae": [],
+    "costalgia": [],
+    "cot death": [],
+    "counter measure": [],
+    "cranium": [
+        "Q733244",
+        "Q1138894"
+    ],
+    "cyesis": [],
+    "daltonism": [
+        "Q71886970"
+    ],
+    "dark room": [
+        "Q665819",
+        "Q5223382",
+        "Q12307760",
+        "Q101087593"
+    ],
+    "dead": [],
+    "deaf": [
+        "Q1539971"
+    ],
+    "deafen": [],
+    "death bed": [
+        "Q91943648"
+    ],
+    "defloration": [],
+    "defluvium": [],
+    "degeneration": [
+        "Q23045549",
+        "Q4129177",
+        "Q19918679"
+    ],
+    "dejecta": [],
+    "demented": [
+        "Q120979458",
+        "Q28170398",
+        "Q105546566"
+    ],
+    "dentalgia": [],
+    "deodrant": [],
+    "depilatory": [],
+    "desmalgia": [],
+    "dick test": [],
+    "didymalgia": [],
+    "digestible": [],
+    "disk": [
+        "Q12346540"
+    ],
+    "dissect": [],
+    "domatophobia": [],
+    "doraphobia": [],
+    "ear wax": [
+        "Q85666995",
+        "Q33446758"
+    ],
+    "eat": [],
+    "edentate": [],
+    "emesis": [
+        "Q11857745"
+    ],
+    "entrails": [
+        "Q10484989"
+    ],
+    "epiglottic": [],
+    "eradicate": [
+        "Q107382123"
+    ],
+    "erogenous": [],
+    "excrement": [
+        "Q117860178"
+    ],
+    "eye ointment": [],
+    "eye sore": [],
+    "eyesight": [
+        "Q11198555",
+        "Q5422866"
+    ],
+    "facioplegia": [],
+    "fecal": [],
+    "feeding bottle": [],
+    "fertile": [
+        "Q5445570"
+    ],
+    "fertilization": [
+        "Q45317935"
+    ],
+    "feticide": [],
+    "fetid": [],
+    "finger nail": [],
+    "flatus": [
+        "Q66562887",
+        "Q25461314"
+    ],
+    "fleas": [
+        "Q5458328",
+        "Q78994835"
+    ],
+    "flesh wound": [],
+    "flogging": [
+        "Q13424485"
+    ],
+    "fluoridation": [],
+    "fontanel": [
+        "Q42951722"
+    ],
+    "food stuff": [],
+    "forefinger": [
+        "Q123002199"
+    ],
+    "fresh cut": [],
+    "frigidity": [],
+    "frons": [
+        "Q1434710"
+    ],
+    "fungal": [],
+    "galactischis": [],
+    "galactorrhes": [],
+    "gastralgia": [
+        "Q94180481",
+        "Q3758794",
+        "Q58787600"
+    ],
+    "gastrobrosis": [],
+    "gastrocnemius": [],
+    "gastrorrhagia": [],
+    "gastrosis": [],
+    "genital": [],
+    "germs": [
+        "Q27724874",
+        "Q11200986",
+        "Q1850698",
+        "Q50809731"
+    ],
+    "gibbous": [],
+    "giddiness": [
+        "Q69402781",
+        "Q69110958",
+        "Q66839690",
+        "Q93526288",
+        "Q93526371",
+        "Q60107359"
+    ],
+    "gingiva": [],
+    "glass/glasses": [],
+    "gleets": [],
+    "glossalgia": [
+        "Q1532173"
+    ],
+    "glucohemia": [],
+    "gooseflesh": [
+        "Q69824709"
+    ],
+    "griping": [],
+    "gullet": [],
+    "hacking cough": [],
+    "haematology": [],
+    "harelip": [
+        "Q74065450"
+    ],
+    "hay fever": [
+        "Q12485466",
+        "Q16744555"
+    ],
+    "healthily": [],
+    "heart ach": [],
+    "heart beat": [
+        "Q11222395",
+        "Q5691897",
+        "Q5691893",
+        "Q22127173",
+        "Q3129017"
+    ],
+    "hemopathy": [],
+    "hepatic": [],
+    "hepatopathy": [],
+    "hot water bag": [],
+    "hourly": [],
+    "hyperpersis": [],
+    "hypochondria": [
+        "Q109472857"
+    ],
+    "icthyophobia": [],
+    "impression room": [],
+    "impurity": [
+        "Q6008045",
+        "Q2811598"
+    ],
+    "incisors": [],
+    "incrustation": [
+        "Q65807465"
+    ],
+    "infuse": [],
+    "ingravescent": [],
+    "inhale": [
+        "Q15978616",
+        "Q832451",
+        "Q15978617"
+    ],
+    "in-patient": [],
+    "instep": [],
+    "intoxicate": [],
+    "inunctions": [],
+    "inveterate": [],
+    "ja lap": [],
+    "labour pain": [
+        "Q41889744"
+    ],
+    "lacerate": [],
+    "lanky": [],
+    "leper": [],
+    "life span": [],
+    "linctus": [],
+    "litter bin": [],
+    "lock jaw": [],
+    "long sighted": [
+        "Q82865248"
+    ],
+    "mad man": [
+        "Q130480553"
+    ],
+    "mad woman": [
+        "Q97653230",
+        "Q23949076"
+    ],
+    "malignomy": [],
+    "medico": [],
+    "microbe": [
+        "Q3312055"
+    ],
+    "microscopic": [],
+    "nail cutter": [],
+    "naked": [],
+    "nappy": [],
+    "natural": [],
+    "natural born": [
+        "Q3873338",
+        "Q114548641"
+    ],
+    "natural death": [
+        "Q33836005"
+    ],
+    "navel string": [],
+    "neurological": [],
+    "new born": [
+        "Q929307"
+    ],
+    "nourishment": [
+        "Q48304877",
+        "Q20863287"
+    ],
+    "numbness": [
+        "Q130344594"
+    ],
+    "nutritional": [],
+    "ocular": [],
+    "ointment": [],
+    "operating table གཤག་བཅོས་མལ་ཁྲི། ནདཔ་ཚུ་": [],
+    "optic": [],
+    "ordure": [
+        "Q41496999"
+    ],
+    "out reach": [],
+    "palpitate": [],
+    "pap smear": [
+        "Q83490713"
+    ],
+    "paralegic": [],
+    "paralytic": [
+        "Q35333440"
+    ],
+    "paraplegie": [],
+    "parentage": [],
+    "parental": [],
+    "paroxysm": [],
+    "pathological": [],
+    "peptic ulcer": [],
+    "phalanges": [],
+    "pharyngities": [],
+    "poisonous": [
+        "Q114498352"
+    ],
+    "pregnant": [
+        "Q106905957",
+        "Q114530318",
+        "Q106765128",
+        "Q20741850"
+    ],
+    "pyorrhoea": [
+        "Q79505060",
+        "Q7248961",
+        "Q7248549"
+    ],
+    "tallus": [
+        "Q50353160"
+    ],
+    "thymion": [],
+    "thyrocele": [],
+    "tinea": [],
+    "tobacosis": [],
+    "uvular": [],
+    "zoonoses": [
+        "Q124128450"
     ]
 }

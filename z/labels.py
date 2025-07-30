@@ -45,4 +45,4 @@ for qid, tab in tqdm(data_to_work.items()):
     label_info = api_wd_z.Labels_API(qid, label, "dz")
     desc_info = api_wd_z.Des_API(qid, desc, "dz")
     # ---
-    break
+    # break
