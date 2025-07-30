@@ -18,7 +18,6 @@ from tqdm import tqdm
 from newapi.page import MainPage
 # from newapi.wd_sparql import get_query_result
 from pathlib import Path
-import csv
 
 from newapi.api_utils import wd_sparql
 from himo_api.himoAPI import wdapi_new
@@ -29,10 +28,10 @@ Dir = Path(__file__).parent
 # api.Login_to_wiki()
 
 qids_file = Dir / "qids.json"
+data_file = Dir / "data.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
-
-csv_file = Dir / "dictionary(ocr_resolved).csv"
+to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
 
 
 def dump_data():
@@ -55,19 +54,8 @@ def get_qids(english_terms_new):
 
 
 def get_english_terms():
-    english_terms = []
 
-    with open(csv_file, 'r', encoding='utf-8') as file:
-        reader = csv.DictReader(file, delimiter=';')
-        for row in reader:
-            en = row.get("\ufeffEnglish Term") or row.get("English Term")
-            english_terms.append(en)
-            # ---
-            entry = {
-                "English Term": en,
-                "Dzongkha Term": row["Dzongkha Term"],
-                "Dzongkha Explanation": row["Dzongkha Explanation"]
-            }
+    english_terms = to_add.keys()
 
     print(f"len of english_terms: {len(english_terms)}")
 

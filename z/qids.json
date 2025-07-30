@@ -1103,5 +1103,7 @@
     "blood vessel": [
         "Q988343"
     ],
-    "infant": "Q998"
+    "infant": [
+        "Q998"
+    ]
 }
