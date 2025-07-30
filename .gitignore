@@ -1,3 +1,4 @@
+
 **/old/**
 *.7z
 *.csv
@@ -46,3 +47,5 @@ copy_to_en/medwiki_account.py
 copy_to_en/bots/medwiki_account.py
 wprefs/todb.py
 md_core/update_med_views/xx.py
+!/z/*.csv
+!/z/*.json
