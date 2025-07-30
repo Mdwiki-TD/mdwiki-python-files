@@ -27,6 +27,8 @@ Dir = Path(__file__).parent
 # api = NEW_API('en', family='wikipedia')
 # api.Login_to_wiki()
 
+qids_file_multi = Dir / "qids_multi.json"
+qids_file_mt = Dir / "qids_empty.json"
 qids_file = Dir / "qids.json"
 data_file = Dir / "data.json"
 
@@ -39,6 +41,22 @@ def dump_data():
     # ---
     with open(qids_file, 'w', encoding='utf-8') as file:
         json.dump(results_x, file, ensure_ascii=False, indent=4)
+    # ---
+    print(f"Dump results_x: {len(results_x)} to: {qids_file}")
+    # ---
+    results_x_multi = {z : v for z, v in results_x.items() if len(v) > 1}
+    # ---
+    print(f"Dump results_x_multi: {len(results_x_multi)} to: {qids_file_multi}")
+    # ---
+    with open(qids_file_multi, 'w', encoding='utf-8') as file:
+        json.dump(results_x_multi, file, ensure_ascii=False, indent=4)
+    # ---
+    results_x_empty = {z : v for z, v in results_x.items() if len(v) == 0 or not v}
+    # ---
+    print(f"Dump results_x_empty: {len(results_x_empty)} to: {qids_file_mt}")
+    # ---
+    with open(qids_file_mt, 'w', encoding='utf-8') as file:
+        json.dump(results_x_empty, file, ensure_ascii=False, indent=4)
 
 
 def get_qids(english_terms_new):
@@ -61,7 +79,8 @@ def get_english_terms():
 
     print(f"len of english_terms: {len(english_terms)}")
 
-    english_terms_new = [x for x in english_terms if x.strip() not in results]
+    english_terms_new = [x for x in english_terms if not results.get(x.strip(), [])]
+    # ---
     print(f"len of english_terms_new: {len(english_terms_new)}")
     # ---
     return english_terms_new
