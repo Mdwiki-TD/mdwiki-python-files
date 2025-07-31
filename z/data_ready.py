@@ -24,7 +24,7 @@ qid_plus = 0
 # ---
 for x, qids in results_x.items():
     # ---
-    if data_ready.get(x.lower(), False) or data_ready[x.lower()]["qid"]:
+    if data_ready.get(x.lower(), {}).get("qid", ""):
         continue
     # ---
     if not qids or len(qids) > 1:

@@ -54,7 +54,7 @@ text = f"""
 * [https://editgroups.toolforge.org/b/CB/960017df0e23/ Work Report]
 
 === with qids ({len(one_qid_rows)}) ===
-{{| class="wikitable sortbale"
+{{| class="wikitable sortable"
 |-
 ! #
 ! en
@@ -67,7 +67,7 @@ text = f"""
 |}}
 
 === multi qids ({len(multi_qids_rows)}) ===
-{{| class="wikitable sortbale"
+{{| class="wikitable sortable"
 |-
 ! #
 ! en
@@ -80,7 +80,7 @@ text = f"""
 |}}
 
 === without qids ({len(zero_qid_rows)}) ===
-{{| class="wikitable sortbale"
+{{| class="wikitable sortable"
 |-
 ! #
 ! en

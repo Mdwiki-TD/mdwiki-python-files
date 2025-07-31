@@ -53,8 +53,8 @@ def dump_one(file, data):
     # ---
     print(f"Dump : {len(data)} to: {file.name}")
     # ---
-    with open(file, 'w', encoding='utf-8') as file:
-        json.dump(data, file, ensure_ascii=False, indent=4)
+    with open(file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 if "clear" in sys.argv:
