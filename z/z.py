@@ -70,6 +70,7 @@ if "clear" in sys.argv:
     # ---
     exit()
 
+
 def dump_data():
     results_x = {z : list(set(v)) for z, v in results.items()}
     # ---
@@ -146,7 +147,7 @@ def get_term_qid(term):
         if label.lower() != term.lower():
             continue
         # ---
-        if lang != "en" and lang != "mul":
+        if lang != "en" and lang != "mul" and "alllangs" not in sys.argv:
             langs_results.setdefault(lang, 0)
             langs_results[lang] += 1
             continue
@@ -195,8 +196,12 @@ def start():
 def print_langs_results():
     print(f"langs_results: {len(langs_results)}")
     # ---
-    for lang, count in langs_results.items():
-        print(f"{lang}: {count}")
+    if langs_results:
+        # ---
+        for lang, count in langs_results.items():
+            print(f"{lang}: {count}")
+        # ---
+        print("add 'alllangs' to sys.argv to use all langs\n" * 3)
 
 
 def test():
