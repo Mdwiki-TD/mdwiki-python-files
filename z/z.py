@@ -34,6 +34,7 @@ qids_file = Dir / "qids.json"
 data_file = Dir / "data.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
+
 to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
 
 data_ready_file = Dir / "data_ready.json"
@@ -55,6 +56,19 @@ def dump_one(file, data):
     with open(file, 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
 
+
+if "clear" in sys.argv:
+    # clear results with multi qids
+    # ---
+    results = {
+        k: [] if len(v) > 1 else v
+        for k, v in results.items()
+    }
+    # ---
+    dump_one(qids_file, results)
+    dump_one(qids_file_multi, {})
+    # ---
+    exit()
 
 def dump_data():
     results_x = {z : list(set(v)) for z, v in results.items()}
