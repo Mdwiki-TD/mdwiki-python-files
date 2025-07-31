@@ -21,23 +21,13 @@ Dir = Path(__file__).parent
 # api = NEW_API('en', family='wikipedia')
 # api.Login_to_wiki()
 
-qids_file = Dir / "qids.json"
-data_file = Dir / "data.json"
+data_ready_file = Dir / "data_ready.json"
 
-to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
+data_ready_list = json.loads(data_ready_file.read_text('utf-8')) if data_ready_file.exists() else {}
 
-qids_data=json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
+print(f"data_ready_list: {len(data_ready_list)}")
 
-qids_data = {z : list(set(v)) for z, v in qids_data.items()}
-
-qids_clean = {x: v[0] for x, v in qids_data.items() if len(v) == 1}
-
-print(f"to_add: {len(to_add)}")
-
-print(f"qids_data: {len(qids_data)}")
-print(f"qids_clean: {len(qids_clean)}")
-
-data_to_work = {qid: to_add[en] for en, qid in qids_clean.items() if to_add.get(en)}
+data_to_work = {v["qid"]: data_ready_list[k] for k, v in data_ready_list.items() if v["qid"]}
 
 print(f"data_to_work: {len(data_to_work)}")
 

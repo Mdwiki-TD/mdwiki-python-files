@@ -12,6 +12,7 @@ abarticulation;ཚིགས་དཀྲུག་པ།;རྐངམ་དང་�
 
 """
 
+import sys
 import json
 # from newapi.page import NEW_API
 from tqdm import tqdm
@@ -35,6 +36,15 @@ data_file = Dir / "data.json"
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
 to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
 
+data_ready_file = Dir / "data_ready.json"
+data_ready = json.loads(data_ready_file.read_text('utf-8'))
+
+if "fix_data_ready" in sys.argv:
+    data_ready = {x.lower(): v for x, v in data_ready.items()}
+    # ---
+    with open(data_ready_file, 'w', encoding='utf-8') as file:
+        json.dump(data_ready, file, ensure_ascii=False, indent=4)
+
 
 def dump_data():
     results_x = {z : list(set(v)) for z, v in results.items()}
@@ -57,6 +67,11 @@ def dump_data():
     # ---
     with open(qids_file_mt, 'w', encoding='utf-8') as file:
         json.dump(results_x_empty, file, ensure_ascii=False, indent=4)
+
+    print(f"Dump data_ready: {len(data_ready)} to: {data_ready_file}")
+    # ---
+    with open(data_ready_file, 'w', encoding='utf-8') as file:
+        json.dump(data_ready, file, ensure_ascii=False, indent=4)
 
 
 def get_qids(english_terms_new):
