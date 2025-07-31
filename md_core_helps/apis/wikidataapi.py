@@ -17,8 +17,8 @@ import json
 from newapi import printe
 from apis.wd_bots import wd_rest_new
 
-# from apis.wd_bots.wikidataapi_post import post_it
-from apis.wd_bots.wd_post_new import post_it
+from apis.wd_bots.wikidataapi_post import post_it
+# from apis.wd_bots.wd_post_new import post_it
 
 Main_User = {1: ""}
 Save_2020_wd = {}
@@ -343,7 +343,7 @@ def Delete_claim(claimid):
     return False
 
 
-def wbsearchentities(search, language):
+def wbsearchentities(search, language, match_alias=False):
     params = {
         "action": "wbsearchentities",
         "format": "json",
@@ -366,32 +366,42 @@ def wbsearchentities(search, language):
     # ---
     table = {}
     # ---
-    if "search" in req:
-        search = req["search"]  # list
-        for s in search:
-            ss = {
-                "id": "Q111587429",
-                "title": "Q111587429",
-                "pageid": 106531075,
-                "display": {"label": {"value": "User:Mr. Ibrahem/Sodium nitrite (medical use)", "language": "en"}},
-                "repository": "wikidata",
-                "url": "//www.wikidata.org/wiki/Q111587429",
-                "concepturi": "http://www.wikidata.org/entity/Q111587429",
-                "label": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
-                "match": {"type": "label", "language": "en", "text": "User:Mr. Ibrahem/Sodium nitrite (medical use)"},
-            }
-            # ---
-            id = s["id"]
-            table[id] = {}
-            # ---
-            if s.get("display", {}).get("label", {}).get("value", "") != "":
-                table[id]["label"] = s["display"]["label"]["value"]
-                table[id]["lang"] = s["display"]["label"]["language"]
-            elif s.get("match", {}).get("type", "") == "label":
-                table[id]["label"] = s["match"]["text"]
-                table[id]["lang"] = s["match"]["language"]
-            else:
-                table[id] = s
+    search_table = req.get("search", [])
+    # ---
+    for s in search_table:
+        _ss = {
+            "id": "Q111587429",
+            "title": "Q111587429",
+            "pageid": 106531075,
+            "display": {"label": {"value": "User:Mr. Ibrahem/Sodium nitrite (medical use)", "language": "en"}},
+            "repository": "wikidata",
+            "url": "//www.wikidata.org/wiki/Q111587429",
+            "concepturi": "http://www.wikidata.org/entity/Q111587429",
+            "label": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
+            "match": {"type": "label", "language": "en", "text": "User:Mr. Ibrahem/Sodium nitrite (medical use)"},
+        }
+        # ---
+        table_x = {}
+        # ---
+        match_one = s.get("match", {})
+        # ---
+        match_one_text = match_one.get("text", "")
+        # ---
+        if match_one_text.lower() == search.lower():
+            if match_one.get("type", "") == "label":
+                table_x["label"] = match_one_text
+                table_x["lang"] = match_one["language"]
+
+            elif match_one.get("type", "") == "alias" and match_alias:
+                # "match": { "type": "alias", "language": "fi", "text": "Costae" }
+                table_x["label"] = match_one_text
+                table_x["lang"] = match_one["language"]
+        # ---
+        if not table_x and s.get("display", {}).get("label", {}).get("value", "") != "":
+            table_x["label"] = s["display"]["label"]["value"]
+            table_x["lang"] = s["display"]["label"]["language"]
+        # ---
+        table[s["id"]] = table_x or s
     # ---
     return table
 

@@ -45,33 +45,31 @@ if "fix_data_ready" in sys.argv:
     with open(data_ready_file, 'w', encoding='utf-8') as file:
         json.dump(data_ready, file, ensure_ascii=False, indent=4)
 
+langs_results = {}
+
+
+def dump_one(file, data):
+    # ---
+    print(f"Dump : {len(data)} to: {file.name}")
+    # ---
+    with open(file, 'w', encoding='utf-8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
+
 
 def dump_data():
     results_x = {z : list(set(v)) for z, v in results.items()}
     # ---
-    with open(qids_file, 'w', encoding='utf-8') as file:
-        json.dump(results_x, file, ensure_ascii=False, indent=4)
-    # ---
-    print(f"Dump results_x: {len(results_x)} to: {qids_file}")
+    dump_one(qids_file, results_x)
     # ---
     results_x_multi = {z : v for z, v in results_x.items() if len(v) > 1}
     # ---
-    print(f"Dump results_x_multi: {len(results_x_multi)} to: {qids_file_multi}")
-    # ---
-    with open(qids_file_multi, 'w', encoding='utf-8') as file:
-        json.dump(results_x_multi, file, ensure_ascii=False, indent=4)
+    dump_one(qids_file_multi, results_x_multi)
     # ---
     results_x_empty = {z : v for z, v in results_x.items() if len(v) == 0 or not v}
     # ---
-    print(f"Dump results_x_empty: {len(results_x_empty)} to: {qids_file_mt}")
+    dump_one(qids_file_mt, results_x_empty)
     # ---
-    with open(qids_file_mt, 'w', encoding='utf-8') as file:
-        json.dump(results_x_empty, file, ensure_ascii=False, indent=4)
-
-    print(f"Dump data_ready: {len(data_ready)} to: {data_ready_file}")
-    # ---
-    with open(data_ready_file, 'w', encoding='utf-8') as file:
-        json.dump(data_ready, file, ensure_ascii=False, indent=4)
+    dump_one(data_ready_file, data_ready)
 
 
 def get_qids(english_terms_new):
@@ -115,32 +113,52 @@ def sparql_work(english_terms_new):
     resultsx = wd_sparql.get_query_result(query)
 
 
+def get_qid(term):
+    # ---
+    json1 = api_wd_z.wbsearchentities(term, "en", match_alias=True) or {}
+    # ---
+    print(f"term: {term}")
+    print(json1)
+    # ---
+    # {'Q56690849': {'label': 'abaliénation s. f.', 'lang': 'fr'}, 'Q305266': {'label': 'Abalienation', 'lang': 'en'}}
+    # ---
+    qid_main = ""
+    # ---
+    for qid, data in json1.items():
+        # ---
+        label = data.get("label")
+        lang = data.get("lang")
+        # ---
+        if label.lower() != term.lower():
+            continue
+        # ---
+        if lang != "en" and lang != "mul":
+            langs_results.setdefault(lang, 0)
+            langs_results[lang] += 1
+            continue
+        # ---
+        print(f"{label}: {lang} {qid}")
+        # ---
+        qid_main = qid
+        # ---
+        break
+    # ---
+    return qid_main
+
+
 def search_wd(english_terms_new):
     # results = wd_sparql.get_query_result(query)
     for term in tqdm(english_terms_new, desc="Processing terms"):
         # ---
         results.setdefault(term, [])
         # ---
-        json1 = api_wd_z.wbsearchentities(term, "en") or {}
+        qid = get_qid(term)
         # ---
-        # print(json1)
-        # ---
-        # {'Q56690849': {'label': 'abaliénation s. f.', 'lang': 'fr'}, 'Q305266': {'label': 'Abalienation', 'lang': 'en'}}
-        # ---
-        for qid, data in json1.items():
-            # ---
-            label = data.get("label")
-            lang = data.get("lang")
-            # ---
-            if label.lower() != term.lower():
-                continue
-            # ---
-            if lang != "en":
-                continue
-            # ---
-            print(f"{label}: {lang} {qid}")
-            # ---
+        if qid:
             results[term].append(qid)
+        # ---
+        if "break" in sys.argv:
+            break
     # ---
     dump_data()
 
@@ -160,5 +178,25 @@ def start():
     # ---
 
 
+def print_langs_results():
+    print(f"langs_results: {len(langs_results)}")
+    # ---
+    for lang, count in langs_results.items():
+        print(f"{lang}: {count}")
+
+
+def test():
+    term = "costae"
+    # ---
+    result = get_qid(term)
+    # ---
+    print(f"result: ({result})")
+
+
 if __name__ == '__main__':
-    start()
+    if "test" in sys.argv:
+        test()
+    else:
+        start()
+    # ---
+    print_langs_results()

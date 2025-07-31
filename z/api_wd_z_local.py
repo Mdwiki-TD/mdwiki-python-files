@@ -29,13 +29,14 @@ def ask_put(s):
     return True
 
 
-def wbsearchentities(search, language):
+def wbsearchentities(search, language, match_alias=False):
     params = {
         "action": "wbsearchentities",
         "format": "json",
         "search": search,
         "language": language,
         "strictlanguage": 1,
+        "limit": "max",
         "type": "item",
         "utf8": 1,
     }
@@ -52,32 +53,42 @@ def wbsearchentities(search, language):
     # ---
     table = {}
     # ---
-    if "search" in req:
-        search = req["search"]  # list
-        for s in search:
-            _ss = {
-                "id": "Q111587429",
-                "title": "Q111587429",
-                "pageid": 106531075,
-                "display": {"label": {"value": "User:Mr. Ibrahem/Sodium nitrite (medical use)", "language": "en"}},
-                "repository": "wikidata",
-                "url": "//www.wikidata.org/wiki/Q111587429",
-                "concepturi": "http://www.wikidata.org/entity/Q111587429",
-                "label": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
-                "match": {"type": "label", "language": "en", "text": "User:Mr. Ibrahem/Sodium nitrite (medical use)"},
-            }
+    search_table = req.get("search", [])
+    # ---
+    for s in search_table:
+        _ss = {
+            "id": "Q111587429",
+            "title": "Q111587429",
+            "pageid": 106531075,
+            "display": {"label": {"value": "User:Mr. Ibrahem/Sodium nitrite (medical use)", "language": "en"}},
+            "repository": "wikidata",
+            "url": "//www.wikidata.org/wiki/Q111587429",
+            "concepturi": "http://www.wikidata.org/entity/Q111587429",
+            "label": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
+            "match": {"type": "label", "language": "en", "text": "User:Mr. Ibrahem/Sodium nitrite (medical use)"},
+        }
+        # ---
+        table_x = {}
+        # ---
+        match_one = s.get("match", {})
+        # ---
+        if s.get("display", {}).get("label", {}).get("value", "") != "":
+            table_x["label"] = s["display"]["label"]["value"]
+            table_x["lang"] = s["display"]["label"]["language"]
             # ---
-            idz = s["id"]
-            table[idz] = {}
-            # ---
-            if s.get("display", {}).get("label", {}).get("value", "") != "":
-                table[idz]["label"] = s["display"]["label"]["value"]
-                table[idz]["lang"] = s["display"]["label"]["language"]
-            elif s.get("match", {}).get("type", "") == "label":
-                table[idz]["label"] = s["match"]["text"]
-                table[idz]["lang"] = s["match"]["language"]
-            else:
-                table[idz] = s
+
+        elif match_one.get("type", "") == "label":
+            table_x["label"] = match_one["text"]
+            table_x["lang"] = match_one["language"]
+
+        elif match_one.get("type", "") == "alias" and match_alias:
+            # "match": { "type": "alias", "language": "fi", "text": "Costae" }
+            table_x["label"] = match_one["text"]
+            table_x["lang"] = match_one["language"]
+        else:
+            table_x = s
+        # ---
+        table[s["id"]] = table_x
     # ---
     return table
 

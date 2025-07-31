@@ -8,8 +8,8 @@ print(f"summary: {summary}")
 from apis import wikidataapi
 
 
-def wbsearchentities(search, language):
-    return wikidataapi.wbsearchentities(search, language)
+def wbsearchentities(search, language, match_alias=False):
+    return wikidataapi.wbsearchentities(search, language, match_alias=match_alias)
 
 
 def Labels_API(qid, label, lang):
