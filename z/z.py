@@ -113,12 +113,12 @@ def sparql_work(english_terms_new):
     resultsx = wd_sparql.get_query_result(query)
 
 
-def get_qid(term):
+def get_term_qid(term):
     # ---
     json1 = api_wd_z.wbsearchentities(term, "en", match_alias=True) or {}
     # ---
-    print(f"term: {term}")
-    print(json1)
+    # print(f"term: {term}")
+    # print(json1)
     # ---
     # {'Q56690849': {'label': 'abaliénation s. f.', 'lang': 'fr'}, 'Q305266': {'label': 'Abalienation', 'lang': 'en'}}
     # ---
@@ -152,7 +152,7 @@ def search_wd(english_terms_new):
         # ---
         results.setdefault(term, [])
         # ---
-        qid = get_qid(term)
+        qid = get_term_qid(term)
         # ---
         if qid:
             results[term].append(qid)
@@ -188,7 +188,7 @@ def print_langs_results():
 def test():
     term = "costae"
     # ---
-    result = get_qid(term)
+    result = get_term_qid(term)
     # ---
     print(f"result: ({result})")
 
