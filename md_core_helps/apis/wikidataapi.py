@@ -10,14 +10,30 @@ python3 core8/pwb.py apis/wikidataapi
 
 """
 import re
+import sys
 import json
 
 # ---
 from newapi import printe
 from apis.wd_bots import wd_rest_new
 
-# from apis.wd_bots.wikidataapi_post import post_it
-from apis.wd_bots.wd_post_new import post_it
+from apis.wd_bots.wikidataapi_post import post_it
+# from apis.wd_bots.wd_post_new import post_it
+
+Main_User = {1: ""}
+Save_2020_wd = {}
+
+
+def ask_put(s):
+    yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
+
+    sa = input(s)
+    if sa not in yes_answer:
+        print(" wikidataapi: wrong answer")
+        return False
+    if sa == "a" or sa == "A":
+        return "a"
+    return True
 
 
 def post(params, token=True):
@@ -28,8 +44,8 @@ def Get_sitelinks_From_Qid(q):
     return wd_rest_new.Get_sitelinks_From_Qid(q)
 
 
-def Get_claim(q, property, get_claim_id=False):
-    return wd_rest_new.Get_Claims_API(q=q, p=property)
+def Get_claim(q, pid, get_claim_id=False):
+    return wd_rest_new.Get_Claims_API(q=q, p=pid)
 
 
 def WD_Merge(q1, q2):
@@ -85,7 +101,7 @@ def WD_Merge(q1, q2):
         return False
 
 
-def Labels_API(Qid, label, lang, remove=False):
+def Labels_API(Qid, label, lang, remove=False, summary=""):
     # ---
     if not Qid:
         printe.output("Labels_API Qid == '' ")
@@ -96,13 +112,29 @@ def Labels_API(Qid, label, lang, remove=False):
         return False
     # ---
     # save the edit
-    out = f'{Qid} label:"{lang}"@{label}.'
+    _out = f'{Qid} label:"{lang}"@{label}.'
+    # ---
+    Save_2020_wd.setdefault("labels", False)
+    # ---
+    if not Save_2020_wd["labels"] and "ask" in sys.argv:
+        # ---
+        sa = ask_put(f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
+        # ---
+        if not sa:
+            return False
+        # ---
+        if sa == "a":
+            printe.output("<<lightgreen>> ----------------------------------------------")
+            printe.output("<<lightgreen>> wikidataapi.py Labels_API save without asking.")
+            printe.output("<<lightgreen>> ----------------------------------------------")
+            Save_2020_wd["labels"] = True
     # ---
     params = {
         "action": "wbsetlabel",
         "id": Qid,
         "language": lang,
         "value": label,
+        "summary": summary,
     }
     # ---
     req = post_it(params=params, token=True)
@@ -122,6 +154,50 @@ def Labels_API(Qid, label, lang, remove=False):
             printe.output(f"<<red>> r5{str(req)}")
     # ---
     return False
+
+
+def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
+    # ---
+    if not desc.strip():
+        printe.output("<<red>> Des_API desc is empty.")
+        return
+    # ---
+    # save the edit
+    _out = f'def Des_API: {Qid} description:"{lang}"@{desc}'
+    # ---
+    Save_2020_wd.setdefault("descriptions", False)
+    # ---
+    if not Save_2020_wd["descriptions"] and (ask is True or "ask" in sys.argv):
+        # ---
+        sa = ask_put(f'<<lightyellow>> wikidataapi.py Add desc:<<lightyellow>>"{lang}:{desc}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
+        if not sa:
+            return False
+        # ---
+        if sa == "a":
+            printe.output("<<lightgreen>> ---------------------------------")
+            printe.output("<<lightgreen>> wikidataapi.py save all without asking.")
+            printe.output("<<lightgreen>> ---------------------------------")
+            Save_2020_wd["descriptions"] = True
+    # ---
+    params = {
+        "action": "wbsetdescription",
+        "id": Qid,
+        "language": lang,
+        "value": desc,
+        "summary": summary,
+    }
+    # ---
+    req = post_it(params=params, token=True)
+    # ---
+    if not req:
+        return False
+    # ---
+    if "success" in req:
+        printe.output("<<green>> **Labels_API true.")
+        return True
+    else:
+        printe.output(f"<<red>> r5{str(req)}")
+    # ---
 
 
 def get_redirects(liste):
@@ -267,7 +343,7 @@ def Delete_claim(claimid):
     return False
 
 
-def wbsearchentities(search, language):
+def wbsearchentities(search, language, match_alias=False):
     params = {
         "action": "wbsearchentities",
         "format": "json",
@@ -290,32 +366,42 @@ def wbsearchentities(search, language):
     # ---
     table = {}
     # ---
-    if "search" in req:
-        search = req["search"]  # list
-        for s in search:
-            ss = {
-                "id": "Q111587429",
-                "title": "Q111587429",
-                "pageid": 106531075,
-                "display": {"label": {"value": "User:Mr. Ibrahem/Sodium nitrite (medical use)", "language": "en"}},
-                "repository": "wikidata",
-                "url": "//www.wikidata.org/wiki/Q111587429",
-                "concepturi": "http://www.wikidata.org/entity/Q111587429",
-                "label": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
-                "match": {"type": "label", "language": "en", "text": "User:Mr. Ibrahem/Sodium nitrite (medical use)"},
-            }
-            # ---
-            id = s["id"]
-            table[id] = {}
-            # ---
-            if s.get("display", {}).get("label", {}).get("value", "") != "":
-                table[id]["label"] = s["display"]["label"]["value"]
-                table[id]["lang"] = s["display"]["label"]["language"]
-            elif s.get("match", {}).get("type", "") == "label":
-                table[id]["label"] = s["match"]["text"]
-                table[id]["lang"] = s["match"]["language"]
-            else:
-                table[id] = s
+    search_table = req.get("search", [])
+    # ---
+    for s in search_table:
+        _ss = {
+            "id": "Q111587429",
+            "title": "Q111587429",
+            "pageid": 106531075,
+            "display": {"label": {"value": "User:Mr. Ibrahem/Sodium nitrite (medical use)", "language": "en"}},
+            "repository": "wikidata",
+            "url": "//www.wikidata.org/wiki/Q111587429",
+            "concepturi": "http://www.wikidata.org/entity/Q111587429",
+            "label": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
+            "match": {"type": "label", "language": "en", "text": "User:Mr. Ibrahem/Sodium nitrite (medical use)"},
+        }
+        # ---
+        table_x = {}
+        # ---
+        match_one = s.get("match", {})
+        # ---
+        match_one_text = match_one.get("text", "")
+        # ---
+        if match_one_text.lower() == search.lower():
+            if match_one.get("type", "") == "label":
+                table_x["label"] = match_one_text
+                table_x["lang"] = match_one["language"]
+
+            elif match_one.get("type", "") == "alias" and match_alias:
+                # "match": { "type": "alias", "language": "fi", "text": "Costae" }
+                table_x["label"] = match_one_text
+                table_x["lang"] = match_one["language"]
+        # ---
+        if not table_x and s.get("display", {}).get("label", {}).get("value", "") != "":
+            table_x["label"] = s["display"]["label"]["value"]
+            table_x["lang"] = s["display"]["label"]["language"]
+        # ---
+        table[s["id"]] = table_x or s
     # ---
     return table
 

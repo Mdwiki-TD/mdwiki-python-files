@@ -4,7 +4,8 @@
 python3 core8/pwb.py apis/wd_rest_new
 
 from apis.wd_bots import wd_rest_new
-# Get_Claims_API(q="", p="")
+# wd_rest_new.Get_Claims_API(q="", p="")
+# wd_rest_new.Get_one_qid_info(qid, only="labels")
 
 """
 import json
@@ -48,7 +49,7 @@ def Get_one_qid_info(qid, only=None):
         "qid": qid,
     }
     # ---
-    url = f"https://www.wikidata.org/w/rest.php/wikibase/v0/entities/items/{qid}"
+    url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{qid}"
     # ---
     if only in props:
         url += "/" + only
