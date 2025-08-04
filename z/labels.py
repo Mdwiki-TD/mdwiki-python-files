@@ -24,6 +24,25 @@ Dir = Path(__file__).parent
 data_to_work_file = Dir / "jsons/data_to_upload.json"
 
 
+def get_best_qid(e_qids):
+    # ---
+    qid_main = ""
+    best_label = None
+    highest_score = 0.0
+    # ---
+    for qid, dd in e_qids.items():
+        # ---
+        score = dd.get("score", "")
+        label = dd.get("matched_label", "")
+        # ---
+        if score > highest_score:
+            highest_score = score
+            best_label = label
+            qid_main = qid
+    # ---
+    return qid_main, highest_score, best_label
+
+
 def make_data_to_work():
     # ---
     # data_to_work = "epiglottic": { "label": "ལྕེ་ཅུངམ།", "desc": "ལྕེ་ཅུངམ་འདི་གིས་ ཆུ་དང་བཞེས་སྒོའི་རིགས་ཚུ་ ལམ་འཛྫོལ་", "qid": "Q18557843", "score": 0.741, "matched_label": "epiglottis cancer" }
@@ -46,17 +65,9 @@ def make_data_to_work():
         label = data_tab.get(en.lower(), {}).get("label", "")
         desc = data_tab.get(en.lower(), {}).get("desc", "")
         # ---
-        qid = ""
+        qid, score, matched_label = get_best_qid(e_qids)
         # ---
-        for qid_1, dd in e_qids.items():
-            # ---
-            qid = qid_1
-            score = dd.get("score", "")
-            matched_label = dd.get("matched_label", "")
-            # ---
-            break
-        # ---
-        data_to_work[en.lower()] = {
+        data_to_work[en] = {
             "label": label,
             "desc": desc,
             "qid": qid,
@@ -121,5 +132,31 @@ def main():
     work_in_list(data_to_work)
 
 
+def test():
+    # python3 core8/pwb.py z/labels test
+    # ---
+    tab = {
+        "Q111665793": {
+            "score": 0,
+            "matched_label": ""
+        },
+        "Q2026556": {
+            "score": 1,
+            "matched_label": "operating table"
+        },
+        "xsxs": {
+            "score": 1.001,
+            "matched_label": "zzz table"
+        }
+    }
+    # ---
+    qid, score, matched_label = get_best_qid(tab)
+    # ---
+    print(f"result: qid: {qid} \t score: {score} \t matched_label: {matched_label}")
+
+
 if __name__ == '__main__':
-    main()
+    if "test" in sys.argv:
+        test()
+    else:
+        main()

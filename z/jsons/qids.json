@@ -2233,8 +2233,8 @@
         }
     },
     "ABO System": {
-        "Q73409621": {
-            "score": 0.317,
+        "Q188010": {
+            "score": 1,
             "matched_label": "ABO System: molecular mimicry of Ascaris lumbricoides"
         }
     },
@@ -2839,7 +2839,7 @@
             "matched_label": ""
         }
     },
-    "glass/glasses": {},
+    "glasses": {},
     "gleets": {},
     "glossalgia": {
         "Q1532173": {

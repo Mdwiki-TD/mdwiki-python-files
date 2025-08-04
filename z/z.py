@@ -139,7 +139,6 @@ def get_term_qid(term):
     # {'Q56690849': {'label': 'abaliénation s. f.', 'lang': 'fr'}, 'Q305266': {'label': 'Abalienation', 'lang': 'en'}}
     # ---
     qid_main = ""
-    # ---
     best_label = None
     highest_score = 0.0
     # ---
