@@ -1,1 +1,12 @@
-{}
+{
+    "operating table": {
+        "Q111665793": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q2026556": {
+            "score": 1,
+            "matched_label": "operating table"
+        }
+    }
+}
