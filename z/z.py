@@ -61,7 +61,7 @@ def dump_one(file, data):
 if "fix_qids" in sys.argv:
     # ---
     results = {
-        k: v if isinstance(v, dict) else {qid: 0 for qid in v}
+        k: v if isinstance(v, dict) else {qid: {"score" : 1, "matched_label" : "", } for qid in v}
         for k, v in results.items()
     }
     # ---
@@ -167,6 +167,8 @@ def get_term_qid(term):
         # ---
         # break
     # ---
+    highest_score = round(highest_score, 3)
+    # ---
     return qid_main, best_label, highest_score
 
 
@@ -181,7 +183,10 @@ def search_wd(english_terms_new):
         print(f"{term}: {qid} {best_label} {highest_score}")
         # ---
         if qid and highest_score > 0:
-            results[term][qid] = highest_score
+            results[term][qid] = {
+                "score" : highest_score,
+                "matched_label" : best_label,
+            }
         # ---
         if "break" in sys.argv:
             break

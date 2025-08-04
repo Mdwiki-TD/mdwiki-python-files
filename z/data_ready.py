@@ -32,12 +32,13 @@ for x, qids in results_x.items():
     # ---
     qid_plus += 1
     # ---
-    for qid, score in qids.items():
+    for qid, dd in qids.items():
         # ---
-        print(f"{x}: qid: {qid}, score: {score}")
+        print(f"{x}: qid: {qid}, dd: {dd}")
         # ---
         data_ready[x.lower()]["qid"] = qid
-        data_ready[x.lower()]["score"] = score
+        data_ready[x.lower()]["score"] = dd["score"]
+        data_ready[x.lower()]["matched_label"] = dd["matched_label"]
         # ---
         break
 # ---
