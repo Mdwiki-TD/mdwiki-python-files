@@ -14,6 +14,7 @@ abarticulation;ཚིགས་དཀྲུག་པ།;རྐངམ་དང་�
 
 import sys
 import json
+import Levenshtein
 # from newapi.page import NEW_API
 from tqdm import tqdm
 from newapi.page import MainPage
@@ -139,26 +140,35 @@ def get_term_qid(term):
     # ---
     qid_main = ""
     # ---
+    best_label = None
+    highest_score = 0.0
+    # ---
     for qid, data in json1.items():
         # ---
         label = data.get("label")
         lang = data.get("lang")
-        # ---
-        if label.lower() != term.lower():
-            continue
         # ---
         if lang != "en" and lang != "mul" and "alllangs" not in sys.argv:
             langs_results.setdefault(lang, 0)
             langs_results[lang] += 1
             continue
         # ---
-        print(f"{label}: {lang} {qid}")
+        score = Levenshtein.ratio(term, label)
         # ---
-        qid_main = qid
+        if score > highest_score:
+            highest_score = score
+            best_label = label
+            qid_main = qid
         # ---
-        break
+        # if label.lower() != term.lower(): continue
+        # ---
+        # print(f"{label}: {lang} {qid}")
+        # ---
+        # qid_main = qid
+        # ---
+        # break
     # ---
-    return qid_main
+    return qid_main, best_label, highest_score
 
 
 def search_wd(english_terms_new):
@@ -167,7 +177,9 @@ def search_wd(english_terms_new):
         # ---
         results.setdefault(term, [])
         # ---
-        qid = get_term_qid(term)
+        qid, best_label, highest_score = get_term_qid(term)
+        # ---
+        print(f"{term}: {qid} {best_label} {highest_score}")
         # ---
         if qid:
             results[term].append(qid)
