@@ -50,8 +50,8 @@ old_length = {
     "qids.json": len(results),
     "data.json": len(to_add),
     "data_ready.json": len(data_ready),
-    "qids_empty.json": len(results),
-    "qids_multi.json": len(results),
+    "qids_empty.json": 0,
+    "qids_multi.json": 0,
 }
 
 langs_results = {}
