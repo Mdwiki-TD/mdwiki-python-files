@@ -205,11 +205,13 @@ def start():
     #     results[term] = search_results
 
     # ---
+    if "work_all" in sys.argv:
+        get_qids(to_add.keys())
+        return
+    # ---
     english_terms_new = get_english_terms()
     # ---
-    get_qids(to_add.keys())
-    # ---
-    # search_wd(english_terms_new)
+    search_wd(english_terms_new)
     # ---
 
 
