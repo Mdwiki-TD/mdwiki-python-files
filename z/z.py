@@ -180,7 +180,7 @@ def search_wd(english_terms_new):
         # ---
         print(f"{term}: {qid} {best_label} {highest_score}")
         # ---
-        if qid:
+        if qid and highest_score > 0:
             results[term][qid] = highest_score
         # ---
         if "break" in sys.argv:

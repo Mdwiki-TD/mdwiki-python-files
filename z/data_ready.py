@@ -32,11 +32,14 @@ for x, qids in results_x.items():
     # ---
     qid_plus += 1
     # ---
-    qids_1 = qids[0]
-    # ---
-    print(f"{x}: qids_1: {qids_1}")
-    # ---
-    data_ready[x.lower()]["qid"] = qids_1
+    for qid, score in qids.items():
+        # ---
+        print(f"{x}: qid: {qid}, score: {score}")
+        # ---
+        data_ready[x.lower()]["qid"] = qid
+        data_ready[x.lower()]["score"] = score
+        # ---
+        break
 # ---
 for x, v in data_ready.copy().items():
     # ---
