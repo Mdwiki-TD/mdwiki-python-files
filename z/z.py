@@ -96,7 +96,10 @@ def get_qids(english_terms_new):
             qid = page.get_qid()  # يحصل على معرف Wikidata
             if qid:
                 print(f"{term}: {qid}")
-                results[term][qid] = 1
+                results[term][qid] = {
+                    "score" : 1,
+                    "matched_label" : term,
+                }
 
     dump_data()
 
