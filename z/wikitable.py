@@ -35,12 +35,15 @@ for en, e_qids in qids_data.items():
     n = len(multi_qids_rows) if len(e_qids) > 1 else len(one_qid_rows) if len(e_qids) == 1 else len(zero_qid_rows)
     # ---
     n += 1
-    # ---
+    # ---{ "score" : 1, "matched_label" : term, }
     line = f"| {n} \n| {en} \n| {qid_row} \n| {label} \n| {desc}"
+    # ---
+    qids_1 = e_qids[list(e_qids.keys())[0]]
     # ---
     if len(e_qids) > 1:
         multi_qids_rows.append(line)
     elif len(e_qids) == 1:
+        line = f"| {n} \n| {en} \n| {qid_row} \n| {qids_1['score']} \n| {qids_1['matched_label']} \n| {label} \n| {desc}"
         one_qid_rows.append(line)
     else:
         zero_qid_rows.append(line)
@@ -59,6 +62,8 @@ text = f"""
 ! #
 ! en
 ! qid
+! score
+! matched_label
 ! label
 ! description
 |-
