@@ -2219,7 +2219,12 @@
             "matched_label": ""
         }
     },
-    "abarticulation": {},
+    "abarticulation": {
+        "Q56690896": {
+            "score": 0.824,
+            "matched_label": "abarticulation s. f."
+        }
+    },
     "abnormal": {},
     "Abnormal": {},
     "abo system": {
@@ -3166,7 +3171,7 @@
     },
     "operating table": {
         "Q111665793": {
-            "score": 1,
+            "score": 0,
             "matched_label": ""
         },
         "Q2026556": {
