@@ -9,13 +9,13 @@ from pathlib import Path
 
 Dir = Path(__file__).parent
 
-qids_file = Dir / "qids.json"
+qids_file = Dir / "jsons/qids.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
 
 results_x = {z : list(set(v)) for z, v in results.items()}
 
-data_ready_file = Dir / "data_ready.json"
+data_ready_file = Dir / "jsons/data_ready.json"
 data_ready = json.loads(data_ready_file.read_text('utf-8'))
 
 data_ready = {x.lower(): v for x, v in data_ready.items()}

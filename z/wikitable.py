@@ -10,8 +10,8 @@ from newapi.page import MainPage
 
 Dir = Path(__file__).parent
 
-data_ready_file = Dir / "data_ready.json"
-qids_file = Dir / "qids.json"
+data_ready_file = Dir / "jsons/data_ready.json"
+qids_file = Dir / "jsons/qids.json"
 
 data_ready = json.loads(data_ready_file.read_text('utf-8'))
 data_ready = {x.lower(): v for x, v in data_ready.items()}

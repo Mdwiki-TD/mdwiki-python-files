@@ -21,7 +21,7 @@ Dir = Path(__file__).parent
 # api = NEW_API('en', family='wikipedia')
 # api.Login_to_wiki()
 
-data_ready_file = Dir / "data_ready.json"
+data_ready_file = Dir / "jsons/data_ready.json"
 
 data_ready_list = json.loads(data_ready_file.read_text('utf-8')) if data_ready_file.exists() else {}
 

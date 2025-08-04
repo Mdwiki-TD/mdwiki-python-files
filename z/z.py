@@ -29,16 +29,16 @@ Dir = Path(__file__).parent
 # api = NEW_API('en', family='wikipedia')
 # api.Login_to_wiki()
 
-qids_file_multi = Dir / "qids_multi.json"
-qids_file_mt = Dir / "qids_empty.json"
-qids_file = Dir / "qids.json"
-data_file = Dir / "data.json"
+qids_file_multi = Dir / "jsons/qids_multi.json"
+qids_file_mt = Dir / "jsons/qids_empty.json"
+qids_file = Dir / "jsons/qids.json"
+data_file = Dir / "jsons/data.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
 
 to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
 
-data_ready_file = Dir / "data_ready.json"
+data_ready_file = Dir / "jsons/data_ready.json"
 data_ready = json.loads(data_ready_file.read_text('utf-8'))
 
 if "fix_data_ready" in sys.argv:

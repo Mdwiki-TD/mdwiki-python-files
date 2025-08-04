@@ -9,7 +9,7 @@ import csv
 
 Dir = Path(__file__).parent
 
-data_file = Dir / "data.json"
+data_file = Dir / "jsons/data.json"
 csv_file = Dir / "dictionary(ocr_resolved).csv"
 
 data = {}
