@@ -61,7 +61,7 @@ def dump_one(file, data):
 if "fix_qids" in sys.argv:
     # ---
     results = {
-        k: v if isinstance(v, dict) else {qid: {"score" : 1, "matched_label" : "", } for qid in v}
+        k: {qid: {"score" : 1, "matched_label" : "", } for qid in v}
         for k, v in results.items()
     }
     # ---

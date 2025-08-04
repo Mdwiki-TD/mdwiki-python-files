@@ -1,1113 +1,2223 @@
 {
     "worse": {
-        "Q101086025": 0
+        "Q101086025": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "immunology": {
-        "Q101929": 0
+        "Q101929": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fluid": {
-        "Q102205": 0
+        "Q102205": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "parasite": {
-        "Q10253316": 0
+        "Q10253316": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "calf": {
-        "Q1026646": 0
+        "Q1026646": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cascara": {
-        "Q1046899": 0
+        "Q1046899": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fissure": {
-        "Q104856641": 0
+        "Q104856641": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "health club": {
-        "Q1065656": 0
+        "Q1065656": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "heart": {
-        "Q1072": 0
+        "Q1072": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "chlorosis": {
-        "Q1075317": 0
+        "Q1075317": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "filter": {
-        "Q108174": 0
+        "Q108174": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "bacteria": {
-        "Q10876": 0
+        "Q10876": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dizziness": {
-        "Q10916362": 0
+        "Q10916362": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "colon": {
-        "Q1110523": 0
+        "Q1110523": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "chest": {
-        "Q113147273": 0
+        "Q113147273": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "bell's palsy": {
-        "Q1135338": 0
+        "Q1135338": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "carbohydrate": {
-        "Q11358": 0
+        "Q11358": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "neuralgia": {
-        "Q1136940": 0
+        "Q1136940": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "liquid": {
-        "Q11435": 0
+        "Q11435": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "daft": {
-        "Q1157144": 0
+        "Q1157144": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nail": {
-        "Q116529": 0
+        "Q116529": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "date rape": {
-        "Q1165309": 0
+        "Q1165309": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "myrobalan": {
-        "Q1174547": 0
+        "Q1174547": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dandruff": {
-        "Q117484": 0
+        "Q117484": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glossa": {
-        "Q1176956": 0
+        "Q1176956": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "deformity": {
-        "Q1182746": 0
+        "Q1182746": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dens": {
-        "Q1189765": 0
+        "Q1189765": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "digestion": {
-        "Q11978": 0
+        "Q11978": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pregnancy": {
-        "Q11995": 0
+        "Q11995": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "addiction": {
-        "Q12029": 0
+        "Q12029": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gash": {
-        "Q1207102": 0
+        "Q1207102": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cancer": {
-        "Q12078": 0
+        "Q12078": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dentistry": {
-        "Q12128": 0
+        "Q12128": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "list": {
-        "Q12139612": 0
+        "Q12139612": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "Acupuncture": {
-        "Q121713": 0
+        "Q121713": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "parenting": {
-        "Q1217379": 0
+        "Q1217379": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pandemic": {
-        "Q12184": 0
+        "Q12184": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "antibiotic": {
-        "Q12187": 0
+        "Q12187": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "premature": {
-        "Q1219102": 0
+        "Q1219102": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "polio": {
-        "Q12195": 0
+        "Q12195": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dumb": {
-        "Q1220375": 0
+        "Q1220375": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "diabetes": {
-        "Q12206": 0
+        "Q12206": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hookworm": {
-        "Q12212063": 0
+        "Q12212063": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "convex lens": {
-        "Q12224471": 0
+        "Q12224471": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "frailty": {
-        "Q1227527": 0
+        "Q1227527": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "physical": {
-        "Q1247875": 0
+        "Q1247875": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fat": {
-        "Q127980": 0
+        "Q127980": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hoof": {
-        "Q128007": 0
+        "Q128007": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "inlay": {
-        "Q1281067": 0
+        "Q1281067": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "bisexual": {
-        "Q12905217": 0
+        "Q12905217": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "anthrax": {
-        "Q129104": 0
+        "Q129104": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dysentery": {
-        "Q129279": 0
+        "Q129279": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "growing pains": {
-        "Q129297": 0
+        "Q129297": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "digest": {
-        "Q1296184": 0
+        "Q1296184": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hallucination": {
-        "Q130741": 0
+        "Q130741": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cerebellum": {
-        "Q130983": 0
+        "Q130983": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "colic": {
-        "Q13121526": 0
+        "Q13121526": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glossitis": {
-        "Q1324237": 0
+        "Q1324237": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gout": {
-        "Q133087": 0
+        "Q133087": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "leg": {
-        "Q133105": 0
+        "Q133105": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "jaundice": {
-        "Q133244": 0
+        "Q133244": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "blushing": {
-        "Q1338786": 0
+        "Q1338786": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "diphtheria": {
-        "Q134649": 0
+        "Q134649": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "favus": {
-        "Q1348374": 0
+        "Q1348374": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "forceps": {
-        "Q1378235": 0
+        "Q1378235": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "inhaler": {
-        "Q1394363": 0
+        "Q1394363": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "condom": {
-        "Q14076": 0
+        "Q14076": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fill": {
-        "Q1414137": 0
+        "Q1414137": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cirrhosis": {
-        "Q147778": 0
+        "Q147778": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ejaculation": {
-        "Q14820885": 0
+        "Q14820885": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gent": {
-        "Q1502615": 0
+        "Q1502615": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lip": {
-        "Q15173": 0
+        "Q15173": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "edema": {
-        "Q152234": 0
+        "Q152234": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pussy": {
-        "Q15427080": 0
+        "Q15427080": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gastroenteritis": {
-        "Q156103": 0
+        "Q156103": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "alcohol": {
-        "Q1570179": 0
+        "Q1570179": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "foot": {
-        "Q15807": 0
+        "Q15807": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dieter": {
-        "Q15883397": 0
+        "Q15883397": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "expire": {
-        "Q15906346": 0
+        "Q15906346": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cure": {
-        "Q1595418": 0
+        "Q1595418": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "eyelash": {
-        "Q160108": 0
+        "Q160108": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "humerus": {
-        "Q162595": 0
+        "Q162595": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "diet": {
-        "Q16281224": 0
+        "Q16281224": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hymen": {
-        "Q1640627": 0
+        "Q1640627": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "aphalangia": {
-        "Q16527312": 0
+        "Q16527312": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "inoculation": {
-        "Q1664296": 0
+        "Q1664296": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "itchy": {
-        "Q16799810": 0
+        "Q16799810": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "phallus": {
-        "Q168552": 0
+        "Q168552": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "neurotic": {
-        "Q16862812": 0
+        "Q16862812": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "physic": {
-        "Q16878247": 0
+        "Q16878247": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hospital": {
-        "Q16917": 0
+        "Q16917": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "psychosis": {
-        "Q170082": 0
+        "Q170082": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "zygote": {
-        "Q170145": 0
+        "Q170145": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "crotch": {
-        "Q17084917": 0
+        "Q17084917": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dermatology": {
-        "Q171171": 0
+        "Q171171": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nectar": {
-        "Q171934": 0
+        "Q171934": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "chloroform": {
-        "Q172275": 0
+        "Q172275": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "esophagus": {
-        "Q173710": 0
+        "Q173710": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "eardrum": {
-        "Q173801": 0
+        "Q173801": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "heel": {
-        "Q174647": 0
+        "Q174647": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "codeine": {
-        "Q174723": 0
+        "Q174723": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "membrane": {
-        "Q176088": 0
+        "Q176088": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "femur": {
-        "Q176503": 0
+        "Q176503": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "tegument": {
-        "Q1772554": 0
+        "Q1772554": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "consultation": {
-        "Q1782558": 0
+        "Q1782558": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "coagulation": {
-        "Q179217": 0
+        "Q179217": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "infertility": {
-        "Q179399": 0
+        "Q179399": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lash": {
-        "Q1797873": 0
+        "Q1797873": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "examination": {
-        "Q17987816": 0
+        "Q17987816": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cranial nerves": {
-        "Q180454": 0
+        "Q180454": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "patient": {
-        "Q181600": 0
+        "Q181600": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "maxilla": {
-        "Q182895": 0
+        "Q182895": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dose": {
-        "Q18411384": 0
+        "Q18411384": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mania": {
-        "Q185935": 0
+        "Q185935": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "allergen": {
-        "Q186752": 0
+        "Q186752": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nausea": {
-        "Q186889": 0
+        "Q186889": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lotion": {
-        "Q1871151": 0
+        "Q1871151": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nipple": {
-        "Q188641": 0
+        "Q188641": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "aneurysm": {
-        "Q189389": 0
+        "Q189389": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dentin": {
-        "Q189637": 0
+        "Q189637": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cerebral": {
-        "Q191555": 0
+        "Q191555": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "benzoic acid": {
-        "Q191700": 0
+        "Q191700": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "handkerchief": {
-        "Q192411": 0
+        "Q192411": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "jet lag": {
-        "Q192579": 0
+        "Q192579": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "colostrum": {
-        "Q192746": 0
+        "Q192746": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fungicide": {
-        "Q193237": 0
+        "Q193237": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hip": {
-        "Q193818": 0
+        "Q193818": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "boil": {
-        "Q193918": 0
+        "Q193918": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fang": {
-        "Q1940269": 0
+        "Q1940269": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dehydration": {
-        "Q194290": 0
+        "Q194290": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "atrophy": {
-        "Q194520": 0
+        "Q194520": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hamstring": {
-        "Q196002": 0
+        "Q196002": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "donor": {
-        "Q1968442": 0
+        "Q1968442": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fur": {
-        "Q197204": 0
+        "Q197204": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "itch": {
-        "Q199602": 0
+        "Q199602": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "encephalitis": {
-        "Q199615": 0
+        "Q199615": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "optician": {
-        "Q1996635": 0
+        "Q1996635": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "edible": {
-        "Q20012192": 0
+        "Q20012192": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nosebleed": {
-        "Q202013": 0
+        "Q202013": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "birth rate": {
-        "Q203516": 0
+        "Q203516": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "otoscope": {
-        "Q203821": 0
+        "Q203821": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "height": {
-        "Q208826": 0
+        "Q208826": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "food": {
-        "Q2095": 0
+        "Q2095": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cerebral palsy": {
-        "Q210427": 0
+        "Q210427": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "physique": {
-        "Q21072915": 0
+        "Q21072915": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "epidermis": {
-        "Q212743": 0
+        "Q212743": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "chilblains": {
-        "Q2141001": 0
+        "Q2141001": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cicatrix": {
-        "Q21447011": 0
+        "Q21447011": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "anticoagulant": {
-        "Q215118": 0
+        "Q215118": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "zein": {
-        "Q2190680": 0
+        "Q2190680": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dressing room": {
-        "Q2213191": 0
+        "Q2213191": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "caries": {
-        "Q2250111": 0
+        "Q2250111": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "instrument": {
-        "Q225829": 0
+        "Q225829": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "injection": {
-        "Q226329": 0
+        "Q226329": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "little finger": {
-        "Q228027": 0
+        "Q228027": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "forearm": {
-        "Q228537": 0
+        "Q228537": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "patella": {
-        "Q229081": 0
+        "Q229081": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dermatitis": {
-        "Q229256": 0
+        "Q229256": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "carpal bones": {
-        "Q232377": 0
+        "Q232377": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ice": {
-        "Q23392": 0
+        "Q23392": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cell": {
-        "Q2349697": 0
+        "Q2349697": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "head": {
-        "Q23640": 0
+        "Q23640": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "incubation": {
-        "Q241656": 0
+        "Q241656": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "corpuscle": {
-        "Q243217": 0
+        "Q243217": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "capsule": {
-        "Q2477733": 0
+        "Q2477733": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hard drug": {
-        "Q24892366": 0
+        "Q24892366": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hour": {
-        "Q25235": 0
+        "Q25235": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "febris": {
-        "Q2527609": 0
+        "Q2527609": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "iophobia": {
-        "Q25339134": 0
+        "Q25339134": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ichor": {
-        "Q257462": 0
+        "Q257462": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fecundity": {
-        "Q2587899": 0
+        "Q2587899": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cunt": {
-        "Q2600": 0
+        "Q2600": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "life support": {
-        "Q2624498": 0
+        "Q2624498": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "bone": {
-        "Q265868": 0
+        "Q265868": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cold": {
-        "Q270952": 0
+        "Q270952": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dentist": {
-        "Q27349": 0
+        "Q27349": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "uvula": {
-        "Q273538": 0
+        "Q273538": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "desquamation": {
-        "Q2738617": 0
+        "Q2738617": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "antiseptic": {
-        "Q274493": 0
+        "Q274493": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "paleness": {
-        "Q27787222": 0
+        "Q27787222": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nicotine": {
-        "Q28086552": 0
+        "Q28086552": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hair": {
-        "Q28472": 0
+        "Q28472": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mortality": {
-        "Q28942704": 0
+        "Q28942704": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "powder": {
-        "Q2908004": 0
+        "Q2908004": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gum": {
-        "Q292805": 0
+        "Q292805": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cabin": {
-        "Q2932327": 0
+        "Q2932327": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gut": {
-        "Q294197": 0
+        "Q294197": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cortex": {
-        "Q294564": 0
+        "Q294564": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "minor": {
-        "Q299075": 0
+        "Q299075": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "appendix": {
-        "Q299480": 0
+        "Q299480": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fibula": {
-        "Q302896": 0
+        "Q302896": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "displacement": {
-        "Q3044839": 0
+        "Q3044839": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "live": {
-        "Q3114148": 0
+        "Q3114148": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lunatic": {
-        "Q3130829": 0
+        "Q3130829": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "Abort": {
-        "Q323013": 0
+        "Q323013": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "antihistamine": {
-        "Q324089": 0
+        "Q324089": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glanders": {
-        "Q327005": 0
+        "Q327005": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "paramedic": {
-        "Q330204": 0
+        "Q330204": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hip bone": {
-        "Q3356933": 0
+        "Q3356933": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "heat stroke": {
-        "Q337554": 0
+        "Q337554": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "enamel": {
-        "Q340324": 0
+        "Q340324": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lab": {
-        "Q340640": 0
+        "Q340640": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cylinder": {
-        "Q34132": 0
+        "Q34132": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "Aconite": {
-        "Q342086": 0
+        "Q342086": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "Ache": {
-        "Q344103": 0
+        "Q344103": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ache": {
-        "Q344103": 0
+        "Q344103": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hydrophobia": {
-        "Q347274": 0
+        "Q347274": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nit": {
-        "Q351319": 0
+        "Q351319": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "die": {
-        "Q351991": 0
+        "Q351991": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "blind": {
-        "Q352269": 0
+        "Q352269": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "exit": {
-        "Q357919": 0
+        "Q357919": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cough": {
-        "Q35805": 0
+        "Q35805": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "critical": {
-        "Q3697794": 0
+        "Q3697794": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "face": {
-        "Q37017": 0
+        "Q37017": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "delivery": {
-        "Q3705086": 0
+        "Q3705086": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "knee": {
-        "Q37425": 0
+        "Q37425": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glottis": {
-        "Q374418": 0
+        "Q374418": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glucose": {
-        "Q37525": 0
+        "Q37525": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ferrule": {
-        "Q3761748": 0
+        "Q3761748": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "astringent": {
-        "Q378705": 0
+        "Q378705": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "degree": {
-        "Q383185": 0
+        "Q383185": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "autism": {
-        "Q38404": 0
+        "Q38404": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "living": {
-        "Q395956": 0
+        "Q395956": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "complication": {
-        "Q397567": 0
+        "Q397567": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ligament": {
-        "Q39888": 0
+        "Q39888": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gaga": {
-        "Q405344": 0
+        "Q405344": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cavity": {
-        "Q407320": 0
+        "Q407320": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "poison": {
-        "Q40867": 0
+        "Q40867": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "madness": {
-        "Q409723": 0
+        "Q409723": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "forehead": {
-        "Q41055": 0
+        "Q41055": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "beriberi": {
-        "Q4138763": 0
+        "Q4138763": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "autopsy": {
-        "Q41482": 0
+        "Q41482": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cocaine": {
-        "Q41576": 0
+        "Q41576": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lame": {
-        "Q417400": 0
+        "Q417400": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "condition": {
-        "Q417488": 0
+        "Q417488": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "flush": {
-        "Q419310": 0
+        "Q419310": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "bed": {
-        "Q42177": 0
+        "Q42177": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dapsone": {
-        "Q422226": 0
+        "Q422226": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "allergy": {
-        "Q42982": 0
+        "Q42982": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "neuron": {
-        "Q43054": 0
+        "Q43054": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "female": {
-        "Q43445": 0
+        "Q43445": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "eyebrow": {
-        "Q43748": 0
+        "Q43748": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "navel": {
-        "Q43801": 0
+        "Q43801": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fresh": {
-        "Q441427": 0
+        "Q441427": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "male": {
-        "Q44148": 0
+        "Q44148": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "heat": {
-        "Q44432": 0
+        "Q44432": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "check": {
-        "Q446253": 0
+        "Q446253": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fluoride": {
-        "Q44793182": 0
+        "Q44793182": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mind": {
-        "Q450": 0
+        "Q450": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "anosmia": {
-        "Q468433": 0
+        "Q468433": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cheek": {
-        "Q47038": 0
+        "Q47038": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "central nervous system": {
-        "Q47273": 0
+        "Q47273": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "thirst": {
-        "Q474187": 0
+        "Q474187": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dialysis": {
-        "Q47537646": 0
+        "Q47537646": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "anopsia": {
-        "Q4770152": 0
+        "Q4770152": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "aphtha": {
-        "Q4779746": 0
+        "Q4779746": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "eyelid": {
-        "Q48228": 0
+        "Q48228": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gender": {
-        "Q48277": 0
+        "Q48277": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "laboratory": {
-        "Q483242": 0
+        "Q483242": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cadaver": {
-        "Q48422": 0
+        "Q48422": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "garbage": {
-        "Q48995880": 0
+        "Q48995880": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "memory": {
-        "Q492": 0
+        "Q492": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "feces": {
-        "Q496": 0
+        "Q496": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cachet": {
-        "Q5015986": 0
+        "Q5015986": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "insulin": {
-        "Q50265665": 0
+        "Q50265665": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "canine": {
-        "Q5032399": 0
+        "Q5032399": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dermis": {
-        "Q505531": 0
+        "Q505531": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "naked eye": {
-        "Q506254": 0
+        "Q506254": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cephalalgia": {
-        "Q5063252": 0
+        "Q5063252": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "emergency": {
-        "Q5070802": 0
+        "Q5070802": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cold storage": {
-        "Q5142478": 0
+        "Q5142478": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "anoxia": {
-        "Q51748379": 0
+        "Q51748379": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dactylitis": {
-        "Q517782": 0
+        "Q517782": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "physiology": {
-        "Q521": 0
+        "Q521": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ichthyosis": {
-        "Q523893": 0
+        "Q523893": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dental": {
-        "Q5259388": 0
+        "Q5259388": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "obstetrics": {
-        "Q5284418": 0
+        "Q5284418": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fatality": {
-        "Q530529": 0
+        "Q530529": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "duct": {
-        "Q5311585": 0
+        "Q5311585": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "diathermy": {
-        "Q533734": 0
+        "Q533734": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "blood donation": {
-        "Q53467": 0
+        "Q53467": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "entry": {
-        "Q5380814": 0
+        "Q5380814": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "angiogenesis": {
-        "Q539568": 0
+        "Q539568": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "angiology": {
-        "Q539690": 0
+        "Q539690": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "excrescence": {
-        "Q5419717": 0
+        "Q5419717": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fibroid": {
-        "Q5446466": 0
+        "Q5446466": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "squint": {
-        "Q54487645": 0
+        "Q54487645": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "filling": {
-        "Q5448819": 0
+        "Q5448819": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "flog": {
-        "Q5459979": 0
+        "Q5459979": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fragility": {
-        "Q5477668": 0
+        "Q5477668": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pubic hair": {
-        "Q54795": 0
+        "Q54795": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pethidine": {
-        "Q55434": 0
+        "Q55434": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hydrogen": {
-        "Q556": 0
+        "Q556": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "latrine": {
-        "Q5615741": 0
+        "Q5615741": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "anoxemia": {
-        "Q568321": 0
+        "Q568321": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hemotherapy": {
-        "Q5712605": 0
+        "Q5712605": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "day": {
-        "Q573": 0
+        "Q573": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "antiemetic": {
-        "Q575136": 0
+        "Q575136": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "encephalopathy": {
-        "Q576349": 0
+        "Q576349": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "penis": {
-        "Q58": 0
+        "Q58": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "chemist": {
-        "Q593644": 0
+        "Q593644": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mark": {
-        "Q6016699": 0
+        "Q6016699": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "heroin": {
-        "Q60168": 0
+        "Q60168": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "indolent": {
-        "Q6025739": 0
+        "Q6025739": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "infantilism": {
-        "Q6029069": 0
+        "Q6029069": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "inquest": {
-        "Q6036832": 0
+        "Q6036832": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "internal": {
-        "Q6047630": 0
+        "Q6047630": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glomerulonephritis": {
-        "Q605006": 0
+        "Q605006": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "water filter": {
-        "Q605696": 0
+        "Q605696": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "labour": {
-        "Q6120474": 0
+        "Q6120474": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "finger": {
-        "Q620207": 0
+        "Q620207": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "aquaporin": {
-        "Q623090": 0
+        "Q623090": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "left hand": {
-        "Q6516964": 0
+        "Q6516964": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "entrée": {
-        "Q6545590": 0
+        "Q6545590": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "limb": {
-        "Q6548932": 0
+        "Q6548932": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lunacy": {
-        "Q6703629": 0
+        "Q6703629": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "period": {
-        "Q672154": 0
+        "Q672154": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gingivitis": {
-        "Q673083": 0
+        "Q673083": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "opacity": {
-        "Q691914": 0
+        "Q691914": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "neat": {
-        "Q6984472": 0
+        "Q6984472": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "femoral artery": {
-        "Q707174": 0
+        "Q707174": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "optical unit": {
-        "Q7098904": 0
+        "Q7098904": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gene": {
-        "Q7187": 0
+        "Q7187": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lavatory": {
-        "Q721861": 0
+        "Q721861": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "feminism": {
-        "Q7252": 0
+        "Q7252": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "kiss": {
-        "Q7307": 0
+        "Q7307": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ear": {
-        "Q7362": 0
+        "Q7362": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nose": {
-        "Q7363": 0
+        "Q7363": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "disinfectant": {
-        "Q73984": 0
+        "Q73984": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "zinc": {
-        "Q758": 0
+        "Q758": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cerebrum": {
-        "Q75855": 0
+        "Q75855": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fungus": {
-        "Q764": 0
+        "Q764": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "diplopia": {
-        "Q775940": 0
+        "Q775940": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "voice box": {
-        "Q7939499": 0
+        "Q7939499": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "Acne": {
-        "Q79928": 0
+        "Q79928": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "protein": {
-        "Q8054": 0
+        "Q8054": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pain": {
-        "Q81938": 0
+        "Q81938": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "eye liner": {
-        "Q8243409": 0
+        "Q8243409": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "liposuction": {
-        "Q825490": 0
+        "Q825490": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "chin": {
-        "Q82714": 0
+        "Q82714": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "neurology": {
-        "Q83042": 0
+        "Q83042": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mastitis": {
-        "Q835061": 0
+        "Q835061": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "drug": {
-        "Q8386": 0
+        "Q8386": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "masturbation": {
-        "Q8396": 0
+        "Q8396": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "inhalation": {
-        "Q840343": 0
+        "Q840343": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "Abortion": {
-        "Q8452": 0
+        "Q8452": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "abortion": {
-        "Q8452": 0
+        "Q8452": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cardiomyopathy": {
-        "Q847583": 0
+        "Q847583": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "napkin": {
-        "Q848532": 0
+        "Q848532": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "milk": {
-        "Q8495": 0
+        "Q8495": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "panacea": {
-        "Q850227": 0
+        "Q850227": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "convulsion": {
-        "Q852376": 0
+        "Q852376": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "enteritis": {
-        "Q854353": 0
+        "Q854353": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hearse": {
-        "Q855743": 0
+        "Q855743": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "graze": {
-        "Q92767260": 0
+        "Q92767260": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dysfunction": {
-        "Q947048": 0
+        "Q947048": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "abdomen": {
-        "Q9597": 0
+        "Q9597": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "carbuncle": {
-        "Q959922": 0
+        "Q959922": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pancreas": {
-        "Q9618": 0
+        "Q9618": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nerve": {
-        "Q9620": 0
+        "Q9620": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ovary": {
-        "Q9631": 0
+        "Q9631": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "neck": {
-        "Q9633": 0
+        "Q9633": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mouth": {
-        "Q9635": 0
+        "Q9635": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "joint": {
-        "Q9644": 0
+        "Q9644": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gland": {
-        "Q9647": 0
+        "Q9647": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fatigue": {
-        "Q9690": 0
+        "Q9690": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "aphagia": {
-        "Q969633": 0
+        "Q969633": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "blood vessel": {
-        "Q988343": 0
+        "Q988343": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "infant": {
-        "Q998": 0
+        "Q998": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "abalienation": {
-        "Q305266": 0
+        "Q305266": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "abarticulation": {},
     "abnormal": {},
@@ -1115,7 +2225,10 @@
     "abo system": {},
     "ABO System": {},
     "Abortionist": {
-        "Q113667146": 0
+        "Q113667146": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "Acapnia": {},
     "acronyx": {},
@@ -1126,63 +2239,108 @@
     "angiostenosis": {},
     "angiotrophic": {},
     "anisakiasis": {
-        "Q3091959": 0
+        "Q3091959": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "ankel": {},
     "antimalarial": {
-        "Q521616": 0
+        "Q521616": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "aortogram": {},
     "aortopathy": {},
     "arteries": {
-        "Q9655": 0
+        "Q9655": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "back": {
-        "Q285676": 0
+        "Q285676": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "backache": {
-        "Q5781808": 0
+        "Q5781808": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "bed sore": {},
     "behaviour": {
-        "Q15763174": 0
+        "Q15763174": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "benigh": {},
     "biharzia": {},
     "birth place": {
-        "Q1322263": 0
+        "Q1322263": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "bowel": {
-        "Q29810109": 0
+        "Q29810109": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "breast feed": {},
     "breating rate": {},
     "bronchi": {},
     "bulimia": {
-        "Q114491581": 0
+        "Q114491581": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "burning": {
-        "Q133235": 0
+        "Q133235": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "calvicle": {},
     "cardiograph": {
-        "Q10478823": 0
+        "Q10478823": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "carotid": {},
     "carpus": {
-        "Q1044816": 0
+        "Q1044816": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "centigrade": {
-        "Q25267": 0
+        "Q25267": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "centimeter": {
-        "Q4407906": 0
+        "Q4407906": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "chemical": {},
     "cholecystis": {},
     "cillary muscle": {},
     "clunis": {
-        "Q37061793": 0
+        "Q37061793": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cold sores": {},
     "collar-bone": {},
@@ -1190,59 +2348,107 @@
     "comminute": {},
     "community unit": {},
     "conceive": {
-        "Q5158293": 0
+        "Q5158293": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "contraception": {
-        "Q2995704": 0
+        "Q2995704": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cor pulmonale": {
-        "Q22299234": 0
+        "Q22299234": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "corn": {
-        "Q61665121": 0
+        "Q61665121": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "corpse": {
-        "Q48422": 0
+        "Q48422": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "corpulence": {
-        "Q12174": 0
+        "Q12174": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "costae": {
-        "Q19903884": 0
+        "Q19903884": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "costalgia": {},
     "cot death": {
-        "Q161801": 0
+        "Q161801": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "counter measure": {},
     "cranium": {
-        "Q13147": 0
+        "Q13147": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "cyesis": {},
     "daltonism": {
-        "Q71886970": 0
+        "Q71886970": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dark room": {
-        "Q183998": 0
+        "Q183998": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dead": {},
     "deaf": {
-        "Q1539971": 0
+        "Q1539971": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "deafen": {},
     "death bed": {
-        "Q91943648": 0
+        "Q91943648": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "defloration": {
-        "Q1640627": 0
+        "Q1640627": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "defluvium": {},
     "degeneration": {
-        "Q15467261": 0
+        "Q15467261": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dejecta": {},
     "demented": {
-        "Q105546566": 0
+        "Q105546566": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dentalgia": {},
     "deodrant": {},
@@ -1252,134 +2458,236 @@
     "didymalgia": {},
     "digestible": {},
     "disk": {
-        "Q12346540": 0
+        "Q12346540": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "dissect": {},
     "domatophobia": {
-        "Q7081267": 0
+        "Q7081267": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "doraphobia": {},
     "ear wax": {
-        "Q33446758": 0
+        "Q33446758": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "eat": {
-        "Q1773949": 0
+        "Q1773949": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "edentate": {},
     "emesis": {
-        "Q11857745": 0
+        "Q11857745": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "entrails": {
-        "Q10484989": 0
+        "Q10484989": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "epiglottic": {},
     "eradicate": {
-        "Q107382123": 0
+        "Q107382123": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "erogenous": {},
     "excrement": {
-        "Q117860178": 0
+        "Q117860178": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "eye ointment": {},
     "eye sore": {},
     "eyesight": {
-        "Q5422866": 0
+        "Q5422866": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "facioplegia": {},
     "fecal": {},
     "feeding bottle": {
-        "Q797906": 0
+        "Q797906": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fertile": {
-        "Q5445570": 0
+        "Q5445570": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fertilization": {
-        "Q45317935": 0
+        "Q45317935": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "feticide": {
-        "Q663296": 0
+        "Q663296": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fetid": {},
     "finger nail": {
-        "Q36864": 0
+        "Q36864": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "flatus": {
-        "Q160184": 0
+        "Q160184": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fleas": {
-        "Q388162": 0
+        "Q388162": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "flesh wound": {},
     "flogging": {
-        "Q13424485": 0
+        "Q13424485": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fluoridation": {
-        "Q1125466": 0
+        "Q1125466": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fontanel": {
-        "Q42951722": 0
+        "Q42951722": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "food stuff": {},
     "forefinger": {
-        "Q123002199": 0
+        "Q123002199": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fresh cut": {},
     "frigidity": {
-        "Q303555": 0
+        "Q303555": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "frons": {
-        "Q1434710": 0
+        "Q1434710": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "fungal": {},
     "galactischis": {},
     "galactorrhes": {},
     "gastralgia": {
-        "Q3758794": 0
+        "Q3758794": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gastrobrosis": {},
     "gastrocnemius": {},
     "gastrorrhagia": {
-        "Q1883970": 0
+        "Q1883970": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gastrosis": {},
     "genital": {},
     "germs": {
-        "Q27724874": 0
+        "Q27724874": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gibbous": {},
     "giddiness": {
-        "Q21402620": 0
+        "Q21402620": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "gingiva": {
-        "Q104280": 0
+        "Q104280": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glass/glasses": {},
     "gleets": {},
     "glossalgia": {
-        "Q1532173": 0
+        "Q1532173": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "glucohemia": {},
     "gooseflesh": {
-        "Q69824709": 0
+        "Q69824709": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "griping": {},
     "gullet": {
-        "Q173710": 0
+        "Q173710": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hacking cough": {},
     "haematology": {
-        "Q103824": 0
+        "Q103824": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "harelip": {
-        "Q74065450": 0
+        "Q74065450": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hay fever": {
-        "Q3740609": 0
+        "Q3740609": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "healthily": {},
     "heart ach": {},
     "heart beat": {
-        "Q3072238": 0
+        "Q3072238": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "hemopathy": {},
     "hepatic": {},
@@ -1388,23 +2696,38 @@
     "hourly": {},
     "hyperpersis": {},
     "hypochondria": {
-        "Q109472857": 0
+        "Q109472857": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "icthyophobia": {},
     "impression room": {},
     "impurity": {
-        "Q7216430": 0
+        "Q7216430": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "incisors": {
-        "Q273543": 0
+        "Q273543": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "incrustation": {
-        "Q65807465": 0
+        "Q65807465": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "infuse": {},
     "ingravescent": {},
     "inhale": {
-        "Q666182": 0
+        "Q666182": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "in-patient": {},
     "instep": {},
@@ -1413,124 +2736,223 @@
     "inveterate": {},
     "ja lap": {},
     "labour pain": {
-        "Q41889744": 0
+        "Q41889744": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lacerate": {},
     "lanky": {
-        "Q6483066": 0
+        "Q6483066": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "leper": {
-        "Q102728": 0
+        "Q102728": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "life span": {
-        "Q188419": 0
+        "Q188419": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "linctus": {},
     "litter bin": {
-        "Q216530": 0
+        "Q216530": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "lock jaw": {
-        "Q936070": 0
+        "Q936070": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "long sighted": {
-        "Q82865248": 0
+        "Q82865248": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mad man": {
-        "Q130480553": 0
+        "Q130480553": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "mad woman": {
-        "Q97653230": 0
+        "Q97653230": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "malignomy": {},
     "medico": {},
     "microbe": {
-        "Q3312055": 0
+        "Q3312055": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "microscopic": {},
     "nail cutter": {
-        "Q270380": 0
+        "Q270380": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "naked": {
-        "Q3564436": 0
+        "Q3564436": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nappy": {
-        "Q187359": 0
+        "Q187359": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "natural": {},
     "natural born": {
-        "Q3873338": 0
+        "Q3873338": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "natural death": {
-        "Q33836005": 0
+        "Q33836005": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "navel string": {
-        "Q172563": 0
+        "Q172563": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "neurological": {},
     "new born": {
-        "Q929307": 0
+        "Q929307": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nourishment": {
-        "Q2138622": 0
+        "Q2138622": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "numbness": {
-        "Q130344594": 0
+        "Q130344594": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "nutritional": {},
     "ocular": {},
     "ointment": {
-        "Q4004659": 0
+        "Q4004659": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "operating table": {
-        "Q111665793": 0
+        "Q111665793": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "optic": {},
     "ordure": {
-        "Q41496999": 0
+        "Q41496999": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "out reach": {},
     "palpitate": {},
     "pap smear": {
-        "Q83490713": 0
+        "Q83490713": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "paralegic": {},
     "paralytic": {
-        "Q35333440": 0
+        "Q35333440": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "paraplegie": {
-        "Q1049655": 0
+        "Q1049655": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "parentage": {},
     "parental": {},
     "paroxysm": {},
     "pathological": {},
     "peptic ulcer": {
-        "Q6452285": 0
+        "Q6452285": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "phalanges": {
-        "Q180335": 0
+        "Q180335": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pharyngities": {},
     "poisonous": {
-        "Q114498352": 0
+        "Q114498352": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pregnant": {
-        "Q20741850": 0
+        "Q20741850": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "pyorrhoea": {
-        "Q7248549": 0
+        "Q7248549": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "tallus": {
-        "Q50353160": 0
+        "Q50353160": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "thymion": {},
     "thyrocele": {},
     "tinea": {
-        "Q1955436": 0
+        "Q1955436": {
+            "score": 1,
+            "matched_label": ""
+        }
     },
     "tobacosis": {},
     "uvular": {},
     "zoonoses": {
-        "Q124128450": 0
+        "Q124128450": {
+            "score": 1,
+            "matched_label": ""
+        }
     }
 }
