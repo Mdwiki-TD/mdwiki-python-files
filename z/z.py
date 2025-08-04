@@ -34,22 +34,13 @@ qids_file_multi = JsonsDir / "qids_multi.json"
 qids_file_mt = JsonsDir / "qids_empty.json"
 qids_file = JsonsDir / "qids.json"
 data_file = JsonsDir / "data.json"
-data_ready_file = JsonsDir / "data_ready.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
 to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
-data_ready = json.loads(data_ready_file.read_text('utf-8'))
-
-if "fix_data_ready" in sys.argv:
-    data_ready = {x.lower(): v for x, v in data_ready.items()}
-    # ---
-    with open(data_ready_file, 'w', encoding='utf-8') as file:
-        json.dump(data_ready, file, ensure_ascii=False, indent=4)
 
 old_length = {
     "qids.json": len(results),
     "data.json": len(to_add),
-    "data_ready.json": len(data_ready),
     "qids_empty.json": 0,
     "qids_multi.json": 0,
 }
@@ -92,8 +83,6 @@ def dump_data():
     resultsx_empty = {z : v for z, v in results_x.items() if len(v) == 0 or not v}
     # ---
     dump_one(qids_file_mt, resultsx_empty)
-    # ---
-    dump_one(data_ready_file, data_ready)
 
 
 def get_qids(english_terms_new):
@@ -197,7 +186,7 @@ def search_wd(english_terms_new):
         if qid and highest_score > 0:
             results[term][qid] = {
                 "score" : highest_score,
-                "matched_label" : best_label,
+                "matched_label" : best_label#.replace('"', "'"),
             }
         # ---
         if "break" in sys.argv:

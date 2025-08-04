@@ -10,12 +10,12 @@ from newapi.page import MainPage
 
 Dir = Path(__file__).parent
 
-data_ready_file = Dir / "jsons/data_ready.json"
-qids_file = Dir / "jsons/qids.json"
 
-data_ready = json.loads(data_ready_file.read_text('utf-8'))
-data_ready = {x.lower(): v for x, v in data_ready.items()}
+data_file = Dir / "jsons/data.json"
+data_tab = json.loads(data_file.read_text('utf-8')) if data_file.exists() else {}
+data_tab = {z.lower() : v for z, v in data_tab.items()}
 # ---
+qids_file = Dir / "jsons/qids.json"
 qids_data = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
 qids_data = {z : v for z, v in qids_data.items()}
 # ---
@@ -29,8 +29,8 @@ for en, e_qids in qids_data.items():
     # ---
     qid_row = qid_row.strip()
     # ---
-    label = data_ready.get(en.lower(), {}).get("label", "")
-    desc = data_ready.get(en.lower(), {}).get("desc", "")
+    label = data_tab.get(en.lower(), {}).get("label", "")
+    desc = data_tab.get(en.lower(), {}).get("desc", "")
     # ---
     n = len(multi_qids_rows) if len(e_qids) > 1 else len(one_qid_rows) if len(e_qids) == 1 else len(zero_qid_rows)
     # ---
@@ -38,12 +38,20 @@ for en, e_qids in qids_data.items():
     # ---{ "score" : 1, "matched_label" : term, }
     line = f"| {n} \n| {en} \n| {qid_row} \n| {label} \n| {desc}"
     # ---
-    qids_1 = e_qids[list(e_qids.keys())[0]]
+    score = ""
+    matched_label = ""
+    # ---
+    for qid, dd in e_qids.items():
+        # ---
+        score = dd.get("score", "")
+        matched_label = dd.get("matched_label", "")
+        # ---
+        break
     # ---
     if len(e_qids) > 1:
         multi_qids_rows.append(line)
     elif len(e_qids) == 1:
-        line = f"| {n} \n| {en} \n| {qid_row} \n| {qids_1['score']} \n| {qids_1['matched_label']} \n| {label} \n| {desc}"
+        line = f"| {n} \n| {en} \n| {qid_row} \n| {score} \n| {matched_label} \n| {label} \n| {desc}"
         one_qid_rows.append(line)
     else:
         zero_qid_rows.append(line)
@@ -99,7 +107,7 @@ text = f"""
 """
 # ---
 
-title = "User:Mr._Ibrahem/dz"
+title = "User:Mr._Ibrahem/dz2"
 # ---
 page = MainPage(title, 'www', family='wikidata')
 
