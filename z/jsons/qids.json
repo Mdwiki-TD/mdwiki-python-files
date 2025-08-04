@@ -1112,46 +1112,28 @@
     "abarticulation": [],
     "abnormal": [],
     "Abnormal": [],
-    "abo system": [
-        "Q69982120"
-    ],
-    "ABO System": [
-        "Q73409621"
-    ],
+    "abo system": [],
+    "ABO System": [],
     "Abortionist": [
         "Q113667146"
     ],
-    "Acapnia": [
-        "Q1328215"
-    ],
+    "Acapnia": [],
     "acronyx": [],
-    "addict": [
-        "Q4681106"
-    ],
+    "addict": [],
     "alcoholic": [],
     "anadipsia": [],
-    "anephric": [
-        "Q69869650"
-    ],
+    "anephric": [],
     "angiostenosis": [],
-    "angiotrophic": [
-        "Q81769765"
-    ],
+    "angiotrophic": [],
     "anisakiasis": [
         "Q3091959"
     ],
-    "ankel": [
-        "Q12784708"
-    ],
+    "ankel": [],
     "antimalarial": [
         "Q521616"
     ],
-    "aortogram": [
-        "Q74813420"
-    ],
-    "aortopathy": [
-        "Q38219936"
-    ],
+    "aortogram": [],
+    "aortopathy": [],
     "arteries": [
         "Q9655"
     ],
@@ -1161,27 +1143,19 @@
     "backache": [
         "Q5781808"
     ],
-    "bed sore": [
-        "Q83269474"
-    ],
+    "bed sore": [],
     "behaviour": [
         "Q15763174"
     ],
-    "benigh": [
-        "Q37570342"
-    ],
-    "biharzia": [
-        "Q78594158"
-    ],
+    "benigh": [],
+    "biharzia": [],
     "birth place": [
         "Q1322263"
     ],
     "bowel": [
         "Q29810109"
     ],
-    "breast feed": [
-        "Q66026765"
-    ],
+    "breast feed": [],
     "breating rate": [],
     "bronchi": [],
     "bulimia": [
@@ -1194,9 +1168,7 @@
     "cardiograph": [
         "Q10478823"
     ],
-    "carotid": [
-        "Q18555923"
-    ],
+    "carotid": [],
     "carpus": [
         "Q1044816"
     ],
@@ -1206,27 +1178,17 @@
     "centimeter": [
         "Q4407906"
     ],
-    "chemical": [
-        "Q426303"
-    ],
+    "chemical": [],
     "cholecystis": [],
     "cillary muscle": [],
     "clunis": [
         "Q37061793"
     ],
-    "cold sores": [
-        "Q68313532"
-    ],
-    "collar-bone": [
-        "Q83680095"
-    ],
+    "cold sores": [],
+    "collar-bone": [],
     "colpatitis": [],
-    "comminute": [
-        "Q71066199"
-    ],
-    "community unit": [
-        "Q5154900"
-    ],
+    "comminute": [],
+    "community unit": [],
     "conceive": [
         "Q5158293"
     ],
@@ -1252,9 +1214,7 @@
     "cot death": [
         "Q161801"
     ],
-    "counter measure": [
-        "Q1138971"
-    ],
+    "counter measure": [],
     "cranium": [
         "Q13147"
     ],
@@ -1265,15 +1225,11 @@
     "dark room": [
         "Q183998"
     ],
-    "dead": [
-        "Q5372066"
-    ],
+    "dead": [],
     "deaf": [
         "Q1539971"
     ],
-    "deafen": [
-        "Q110859115"
-    ],
+    "deafen": [],
     "death bed": [
         "Q91943648"
     ],
@@ -1290,23 +1246,15 @@
     ],
     "dentalgia": [],
     "deodrant": [],
-    "depilatory": [
-        "Q2296561"
-    ],
+    "depilatory": [],
     "desmalgia": [],
-    "dick test": [
-        "Q40917150"
-    ],
+    "dick test": [],
     "didymalgia": [],
-    "digestible": [
-        "Q46855502"
-    ],
+    "digestible": [],
     "disk": [
         "Q12346540"
     ],
-    "dissect": [
-        "Q1145479"
-    ],
+    "dissect": [],
     "domatophobia": [
         "Q7081267"
     ],
@@ -1317,38 +1265,28 @@
     "eat": [
         "Q1773949"
     ],
-    "edentate": [
-        "Q12653866"
-    ],
+    "edentate": [],
     "emesis": [
         "Q11857745"
     ],
     "entrails": [
         "Q10484989"
     ],
-    "epiglottic": [
-        "Q18557843"
-    ],
+    "epiglottic": [],
     "eradicate": [
         "Q107382123"
     ],
-    "erogenous": [
-        "Q109042471"
-    ],
+    "erogenous": [],
     "excrement": [
         "Q117860178"
     ],
-    "eye ointment": [
-        "Q80278784"
-    ],
+    "eye ointment": [],
     "eye sore": [],
     "eyesight": [
         "Q5422866"
     ],
     "facioplegia": [],
-    "fecal": [
-        "Q111569458"
-    ],
+    "fecal": [],
     "feeding bottle": [
         "Q797906"
     ],
@@ -1361,9 +1299,7 @@
     "feticide": [
         "Q663296"
     ],
-    "fetid": [
-        "Q1766333"
-    ],
+    "fetid": [],
     "finger nail": [
         "Q36864"
     ],
@@ -1373,9 +1309,7 @@
     "fleas": [
         "Q388162"
     ],
-    "flesh wound": [
-        "Q3746575"
-    ],
+    "flesh wound": [],
     "flogging": [
         "Q13424485"
     ],
@@ -1385,46 +1319,34 @@
     "fontanel": [
         "Q42951722"
     ],
-    "food stuff": [
-        "Q52620136"
-    ],
+    "food stuff": [],
     "forefinger": [
         "Q123002199"
     ],
-    "fresh cut": [
-        "Q116210263"
-    ],
+    "fresh cut": [],
     "frigidity": [
         "Q303555"
     ],
     "frons": [
         "Q1434710"
     ],
-    "fungal": [
-        "Q5509159"
-    ],
+    "fungal": [],
     "galactischis": [],
     "galactorrhes": [],
     "gastralgia": [
         "Q3758794"
     ],
     "gastrobrosis": [],
-    "gastrocnemius": [
-        "Q37672698"
-    ],
+    "gastrocnemius": [],
     "gastrorrhagia": [
         "Q1883970"
     ],
     "gastrosis": [],
-    "genital": [
-        "Q111693701"
-    ],
+    "genital": [],
     "germs": [
         "Q27724874"
     ],
-    "gibbous": [
-        "Q24961814"
-    ],
+    "gibbous": [],
     "giddiness": [
         "Q21402620"
     ],
@@ -1440,9 +1362,7 @@
     "gooseflesh": [
         "Q69824709"
     ],
-    "griping": [
-        "Q69820120"
-    ],
+    "griping": [],
     "gullet": [
         "Q173710"
     ],
@@ -1456,28 +1376,16 @@
     "hay fever": [
         "Q3740609"
     ],
-    "healthily": [
-        "Q71909759"
-    ],
-    "heart ach": [
-        "Q1773770"
-    ],
+    "healthily": [],
+    "heart ach": [],
     "heart beat": [
         "Q3072238"
     ],
-    "hemopathy": [
-        "Q33456100"
-    ],
+    "hemopathy": [],
     "hepatic": [],
-    "hepatopathy": [
-        "Q48732011"
-    ],
-    "hot water bag": [
-        "Q41139313"
-    ],
-    "hourly": [
-        "Q1848238"
-    ],
+    "hepatopathy": [],
+    "hot water bag": [],
+    "hourly": [],
     "hyperpersis": [],
     "hypochondria": [
         "Q109472857"
@@ -1493,37 +1401,21 @@
     "incrustation": [
         "Q65807465"
     ],
-    "infuse": [
-        "Q23808224"
-    ],
-    "ingravescent": [
-        "Q1542250"
-    ],
+    "infuse": [],
+    "ingravescent": [],
     "inhale": [
         "Q666182"
     ],
-    "in-patient": [
-        "Q65545977"
-    ],
-    "instep": [
-        "Q6038883"
-    ],
-    "intoxicate": [
-        "Q20856778"
-    ],
+    "in-patient": [],
+    "instep": [],
+    "intoxicate": [],
     "inunctions": [],
-    "inveterate": [
-        "Q67480532"
-    ],
-    "ja lap": [
-        "Q7335306"
-    ],
+    "inveterate": [],
+    "ja lap": [],
     "labour pain": [
         "Q41889744"
     ],
-    "lacerate": [
-        "Q18959953"
-    ],
+    "lacerate": [],
     "lanky": [
         "Q6483066"
     ],
@@ -1533,9 +1425,7 @@
     "life span": [
         "Q188419"
     ],
-    "linctus": [
-        "Q75662520"
-    ],
+    "linctus": [],
     "litter bin": [
         "Q216530"
     ],
@@ -1552,15 +1442,11 @@
         "Q97653230"
     ],
     "malignomy": [],
-    "medico": [
-        "Q6806786"
-    ],
+    "medico": [],
     "microbe": [
         "Q3312055"
     ],
-    "microscopic": [
-        "Q27712099"
-    ],
+    "microscopic": [],
     "nail cutter": [
         "Q270380"
     ],
@@ -1580,9 +1466,7 @@
     "navel string": [
         "Q172563"
     ],
-    "neurological": [
-        "Q73501278"
-    ],
+    "neurological": [],
     "new born": [
         "Q929307"
     ],
@@ -1592,28 +1476,20 @@
     "numbness": [
         "Q130344594"
     ],
-    "nutritional": [
-        "Q67151937"
-    ],
-    "ocular": [
-        "Q69942028"
-    ],
+    "nutritional": [],
+    "ocular": [],
     "ointment": [
         "Q4004659"
     ],
     "operating table": [
         "Q111665793"
     ],
-    "optic": [
-        "Q3354459"
-    ],
+    "optic": [],
     "ordure": [
         "Q41496999"
     ],
     "out reach": [],
-    "palpitate": [
-        "Q65351569"
-    ],
+    "palpitate": [],
     "pap smear": [
         "Q83490713"
     ],
@@ -1624,15 +1500,9 @@
     "paraplegie": [
         "Q1049655"
     ],
-    "parentage": [
-        "Q111807544"
-    ],
-    "parental": [
-        "Q102108196"
-    ],
-    "paroxysm": [
-        "Q42324521"
-    ],
+    "parentage": [],
+    "parental": [],
+    "paroxysm": [],
     "pathological": [],
     "peptic ulcer": [
         "Q6452285"
@@ -1659,9 +1529,7 @@
         "Q1955436"
     ],
     "tobacosis": [],
-    "uvular": [
-        "Q4002938"
-    ],
+    "uvular": [],
     "zoonoses": [
         "Q124128450"
     ]
