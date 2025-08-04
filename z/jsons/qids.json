@@ -1,1536 +1,1536 @@
 {
-    "worse": [
-        "Q101086025"
-    ],
-    "immunology": [
-        "Q101929"
-    ],
-    "fluid": [
-        "Q102205"
-    ],
-    "parasite": [
-        "Q10253316"
-    ],
-    "calf": [
-        "Q1026646"
-    ],
-    "cascara": [
-        "Q1046899"
-    ],
-    "fissure": [
-        "Q104856641"
-    ],
-    "health club": [
-        "Q1065656"
-    ],
-    "heart": [
-        "Q1072"
-    ],
-    "chlorosis": [
-        "Q1075317"
-    ],
-    "filter": [
-        "Q108174"
-    ],
-    "bacteria": [
-        "Q10876"
-    ],
-    "dizziness": [
-        "Q10916362"
-    ],
-    "colon": [
-        "Q1110523"
-    ],
-    "chest": [
-        "Q113147273"
-    ],
-    "bell's palsy": [
-        "Q1135338"
-    ],
-    "carbohydrate": [
-        "Q11358"
-    ],
-    "neuralgia": [
-        "Q1136940"
-    ],
-    "liquid": [
-        "Q11435"
-    ],
-    "daft": [
-        "Q1157144"
-    ],
-    "nail": [
-        "Q116529"
-    ],
-    "date rape": [
-        "Q1165309"
-    ],
-    "myrobalan": [
-        "Q1174547"
-    ],
-    "dandruff": [
-        "Q117484"
-    ],
-    "glossa": [
-        "Q1176956"
-    ],
-    "deformity": [
-        "Q1182746"
-    ],
-    "dens": [
-        "Q1189765"
-    ],
-    "digestion": [
-        "Q11978"
-    ],
-    "pregnancy": [
-        "Q11995"
-    ],
-    "addiction": [
-        "Q12029"
-    ],
-    "gash": [
-        "Q1207102"
-    ],
-    "cancer": [
-        "Q12078"
-    ],
-    "dentistry": [
-        "Q12128"
-    ],
-    "list": [
-        "Q12139612"
-    ],
-    "Acupuncture": [
-        "Q121713"
-    ],
-    "parenting": [
-        "Q1217379"
-    ],
-    "pandemic": [
-        "Q12184"
-    ],
-    "antibiotic": [
-        "Q12187"
-    ],
-    "premature": [
-        "Q1219102"
-    ],
-    "polio": [
-        "Q12195"
-    ],
-    "dumb": [
-        "Q1220375"
-    ],
-    "diabetes": [
-        "Q12206"
-    ],
-    "hookworm": [
-        "Q12212063"
-    ],
-    "convex lens": [
-        "Q12224471"
-    ],
-    "frailty": [
-        "Q1227527"
-    ],
-    "physical": [
-        "Q1247875"
-    ],
-    "fat": [
-        "Q127980"
-    ],
-    "hoof": [
-        "Q128007"
-    ],
-    "inlay": [
-        "Q1281067"
-    ],
-    "bisexual": [
-        "Q12905217"
-    ],
-    "anthrax": [
-        "Q129104"
-    ],
-    "dysentery": [
-        "Q129279"
-    ],
-    "growing pains": [
-        "Q129297"
-    ],
-    "digest": [
-        "Q1296184"
-    ],
-    "hallucination": [
-        "Q130741"
-    ],
-    "cerebellum": [
-        "Q130983"
-    ],
-    "colic": [
-        "Q13121526"
-    ],
-    "glossitis": [
-        "Q1324237"
-    ],
-    "gout": [
-        "Q133087"
-    ],
-    "leg": [
-        "Q133105"
-    ],
-    "jaundice": [
-        "Q133244"
-    ],
-    "blushing": [
-        "Q1338786"
-    ],
-    "diphtheria": [
-        "Q134649"
-    ],
-    "favus": [
-        "Q1348374"
-    ],
-    "forceps": [
-        "Q1378235"
-    ],
-    "inhaler": [
-        "Q1394363"
-    ],
-    "condom": [
-        "Q14076"
-    ],
-    "fill": [
-        "Q1414137"
-    ],
-    "cirrhosis": [
-        "Q147778"
-    ],
-    "ejaculation": [
-        "Q14820885"
-    ],
-    "gent": [
-        "Q1502615"
-    ],
-    "lip": [
-        "Q15173"
-    ],
-    "edema": [
-        "Q152234"
-    ],
-    "pussy": [
-        "Q15427080"
-    ],
-    "gastroenteritis": [
-        "Q156103"
-    ],
-    "alcohol": [
-        "Q1570179"
-    ],
-    "foot": [
-        "Q15807"
-    ],
-    "dieter": [
-        "Q15883397"
-    ],
-    "expire": [
-        "Q15906346"
-    ],
-    "cure": [
-        "Q1595418"
-    ],
-    "eyelash": [
-        "Q160108"
-    ],
-    "humerus": [
-        "Q162595"
-    ],
-    "diet": [
-        "Q16281224"
-    ],
-    "hymen": [
-        "Q1640627"
-    ],
-    "aphalangia": [
-        "Q16527312"
-    ],
-    "inoculation": [
-        "Q1664296"
-    ],
-    "itchy": [
-        "Q16799810"
-    ],
-    "phallus": [
-        "Q168552"
-    ],
-    "neurotic": [
-        "Q16862812"
-    ],
-    "physic": [
-        "Q16878247"
-    ],
-    "hospital": [
-        "Q16917"
-    ],
-    "psychosis": [
-        "Q170082"
-    ],
-    "zygote": [
-        "Q170145"
-    ],
-    "crotch": [
-        "Q17084917"
-    ],
-    "dermatology": [
-        "Q171171"
-    ],
-    "nectar": [
-        "Q171934"
-    ],
-    "chloroform": [
-        "Q172275"
-    ],
-    "esophagus": [
-        "Q173710"
-    ],
-    "eardrum": [
-        "Q173801"
-    ],
-    "heel": [
-        "Q174647"
-    ],
-    "codeine": [
-        "Q174723"
-    ],
-    "membrane": [
-        "Q176088"
-    ],
-    "femur": [
-        "Q176503"
-    ],
-    "tegument": [
-        "Q1772554"
-    ],
-    "consultation": [
-        "Q1782558"
-    ],
-    "coagulation": [
-        "Q179217"
-    ],
-    "infertility": [
-        "Q179399"
-    ],
-    "lash": [
-        "Q1797873"
-    ],
-    "examination": [
-        "Q17987816"
-    ],
-    "cranial nerves": [
-        "Q180454"
-    ],
-    "patient": [
-        "Q181600"
-    ],
-    "maxilla": [
-        "Q182895"
-    ],
-    "dose": [
-        "Q18411384"
-    ],
-    "mania": [
-        "Q185935"
-    ],
-    "allergen": [
-        "Q186752"
-    ],
-    "nausea": [
-        "Q186889"
-    ],
-    "lotion": [
-        "Q1871151"
-    ],
-    "nipple": [
-        "Q188641"
-    ],
-    "aneurysm": [
-        "Q189389"
-    ],
-    "dentin": [
-        "Q189637"
-    ],
-    "cerebral": [
-        "Q191555"
-    ],
-    "benzoic acid": [
-        "Q191700"
-    ],
-    "handkerchief": [
-        "Q192411"
-    ],
-    "jet lag": [
-        "Q192579"
-    ],
-    "colostrum": [
-        "Q192746"
-    ],
-    "fungicide": [
-        "Q193237"
-    ],
-    "hip": [
-        "Q193818"
-    ],
-    "boil": [
-        "Q193918"
-    ],
-    "fang": [
-        "Q1940269"
-    ],
-    "dehydration": [
-        "Q194290"
-    ],
-    "atrophy": [
-        "Q194520"
-    ],
-    "hamstring": [
-        "Q196002"
-    ],
-    "donor": [
-        "Q1968442"
-    ],
-    "fur": [
-        "Q197204"
-    ],
-    "itch": [
-        "Q199602"
-    ],
-    "encephalitis": [
-        "Q199615"
-    ],
-    "optician": [
-        "Q1996635"
-    ],
-    "edible": [
-        "Q20012192"
-    ],
-    "nosebleed": [
-        "Q202013"
-    ],
-    "birth rate": [
-        "Q203516"
-    ],
-    "otoscope": [
-        "Q203821"
-    ],
-    "height": [
-        "Q208826"
-    ],
-    "food": [
-        "Q2095"
-    ],
-    "cerebral palsy": [
-        "Q210427"
-    ],
-    "physique": [
-        "Q21072915"
-    ],
-    "epidermis": [
-        "Q212743"
-    ],
-    "chilblains": [
-        "Q2141001"
-    ],
-    "cicatrix": [
-        "Q21447011"
-    ],
-    "anticoagulant": [
-        "Q215118"
-    ],
-    "zein": [
-        "Q2190680"
-    ],
-    "dressing room": [
-        "Q2213191"
-    ],
-    "caries": [
-        "Q2250111"
-    ],
-    "instrument": [
-        "Q225829"
-    ],
-    "injection": [
-        "Q226329"
-    ],
-    "little finger": [
-        "Q228027"
-    ],
-    "forearm": [
-        "Q228537"
-    ],
-    "patella": [
-        "Q229081"
-    ],
-    "dermatitis": [
-        "Q229256"
-    ],
-    "carpal bones": [
-        "Q232377"
-    ],
-    "ice": [
-        "Q23392"
-    ],
-    "cell": [
-        "Q2349697"
-    ],
-    "head": [
-        "Q23640"
-    ],
-    "incubation": [
-        "Q241656"
-    ],
-    "corpuscle": [
-        "Q243217"
-    ],
-    "capsule": [
-        "Q2477733"
-    ],
-    "hard drug": [
-        "Q24892366"
-    ],
-    "hour": [
-        "Q25235"
-    ],
-    "febris": [
-        "Q2527609"
-    ],
-    "iophobia": [
-        "Q25339134"
-    ],
-    "ichor": [
-        "Q257462"
-    ],
-    "fecundity": [
-        "Q2587899"
-    ],
-    "cunt": [
-        "Q2600"
-    ],
-    "life support": [
-        "Q2624498"
-    ],
-    "bone": [
-        "Q265868"
-    ],
-    "cold": [
-        "Q270952"
-    ],
-    "dentist": [
-        "Q27349"
-    ],
-    "uvula": [
-        "Q273538"
-    ],
-    "desquamation": [
-        "Q2738617"
-    ],
-    "antiseptic": [
-        "Q274493"
-    ],
-    "paleness": [
-        "Q27787222"
-    ],
-    "nicotine": [
-        "Q28086552"
-    ],
-    "hair": [
-        "Q28472"
-    ],
-    "mortality": [
-        "Q28942704"
-    ],
-    "powder": [
-        "Q2908004"
-    ],
-    "gum": [
-        "Q292805"
-    ],
-    "cabin": [
-        "Q2932327"
-    ],
-    "gut": [
-        "Q294197"
-    ],
-    "cortex": [
-        "Q294564"
-    ],
-    "minor": [
-        "Q299075"
-    ],
-    "appendix": [
-        "Q299480"
-    ],
-    "fibula": [
-        "Q302896"
-    ],
-    "displacement": [
-        "Q3044839"
-    ],
-    "live": [
-        "Q3114148"
-    ],
-    "lunatic": [
-        "Q3130829"
-    ],
-    "Abort": [
-        "Q323013"
-    ],
-    "antihistamine": [
-        "Q324089"
-    ],
-    "glanders": [
-        "Q327005"
-    ],
-    "paramedic": [
-        "Q330204"
-    ],
-    "hip bone": [
-        "Q3356933"
-    ],
-    "heat stroke": [
-        "Q337554"
-    ],
-    "enamel": [
-        "Q340324"
-    ],
-    "lab": [
-        "Q340640"
-    ],
-    "cylinder": [
-        "Q34132"
-    ],
-    "Aconite": [
-        "Q342086"
-    ],
-    "Ache": [
-        "Q344103"
-    ],
-    "ache": [
-        "Q344103"
-    ],
-    "hydrophobia": [
-        "Q347274"
-    ],
-    "nit": [
-        "Q351319"
-    ],
-    "die": [
-        "Q351991"
-    ],
-    "blind": [
-        "Q352269"
-    ],
-    "exit": [
-        "Q357919"
-    ],
-    "cough": [
-        "Q35805"
-    ],
-    "critical": [
-        "Q3697794"
-    ],
-    "face": [
-        "Q37017"
-    ],
-    "delivery": [
-        "Q3705086"
-    ],
-    "knee": [
-        "Q37425"
-    ],
-    "glottis": [
-        "Q374418"
-    ],
-    "glucose": [
-        "Q37525"
-    ],
-    "ferrule": [
-        "Q3761748"
-    ],
-    "astringent": [
-        "Q378705"
-    ],
-    "degree": [
-        "Q383185"
-    ],
-    "autism": [
-        "Q38404"
-    ],
-    "living": [
-        "Q395956"
-    ],
-    "complication": [
-        "Q397567"
-    ],
-    "ligament": [
-        "Q39888"
-    ],
-    "gaga": [
-        "Q405344"
-    ],
-    "cavity": [
-        "Q407320"
-    ],
-    "poison": [
-        "Q40867"
-    ],
-    "madness": [
-        "Q409723"
-    ],
-    "forehead": [
-        "Q41055"
-    ],
-    "beriberi": [
-        "Q4138763"
-    ],
-    "autopsy": [
-        "Q41482"
-    ],
-    "cocaine": [
-        "Q41576"
-    ],
-    "lame": [
-        "Q417400"
-    ],
-    "condition": [
-        "Q417488"
-    ],
-    "flush": [
-        "Q419310"
-    ],
-    "bed": [
-        "Q42177"
-    ],
-    "dapsone": [
-        "Q422226"
-    ],
-    "allergy": [
-        "Q42982"
-    ],
-    "neuron": [
-        "Q43054"
-    ],
-    "female": [
-        "Q43445"
-    ],
-    "eyebrow": [
-        "Q43748"
-    ],
-    "navel": [
-        "Q43801"
-    ],
-    "fresh": [
-        "Q441427"
-    ],
-    "male": [
-        "Q44148"
-    ],
-    "heat": [
-        "Q44432"
-    ],
-    "check": [
-        "Q446253"
-    ],
-    "fluoride": [
-        "Q44793182"
-    ],
-    "mind": [
-        "Q450"
-    ],
-    "anosmia": [
-        "Q468433"
-    ],
-    "cheek": [
-        "Q47038"
-    ],
-    "central nervous system": [
-        "Q47273"
-    ],
-    "thirst": [
-        "Q474187"
-    ],
-    "dialysis": [
-        "Q47537646"
-    ],
-    "anopsia": [
-        "Q4770152"
-    ],
-    "aphtha": [
-        "Q4779746"
-    ],
-    "eyelid": [
-        "Q48228"
-    ],
-    "gender": [
-        "Q48277"
-    ],
-    "laboratory": [
-        "Q483242"
-    ],
-    "cadaver": [
-        "Q48422"
-    ],
-    "garbage": [
-        "Q48995880"
-    ],
-    "memory": [
-        "Q492"
-    ],
-    "feces": [
-        "Q496"
-    ],
-    "cachet": [
-        "Q5015986"
-    ],
-    "insulin": [
-        "Q50265665"
-    ],
-    "canine": [
-        "Q5032399"
-    ],
-    "dermis": [
-        "Q505531"
-    ],
-    "naked eye": [
-        "Q506254"
-    ],
-    "cephalalgia": [
-        "Q5063252"
-    ],
-    "emergency": [
-        "Q5070802"
-    ],
-    "cold storage": [
-        "Q5142478"
-    ],
-    "anoxia": [
-        "Q51748379"
-    ],
-    "dactylitis": [
-        "Q517782"
-    ],
-    "physiology": [
-        "Q521"
-    ],
-    "ichthyosis": [
-        "Q523893"
-    ],
-    "dental": [
-        "Q5259388"
-    ],
-    "obstetrics": [
-        "Q5284418"
-    ],
-    "fatality": [
-        "Q530529"
-    ],
-    "duct": [
-        "Q5311585"
-    ],
-    "diathermy": [
-        "Q533734"
-    ],
-    "blood donation": [
-        "Q53467"
-    ],
-    "entry": [
-        "Q5380814"
-    ],
-    "angiogenesis": [
-        "Q539568"
-    ],
-    "angiology": [
-        "Q539690"
-    ],
-    "excrescence": [
-        "Q5419717"
-    ],
-    "fibroid": [
-        "Q5446466"
-    ],
-    "squint": [
-        "Q54487645"
-    ],
-    "filling": [
-        "Q5448819"
-    ],
-    "flog": [
-        "Q5459979"
-    ],
-    "fragility": [
-        "Q5477668"
-    ],
-    "pubic hair": [
-        "Q54795"
-    ],
-    "pethidine": [
-        "Q55434"
-    ],
-    "hydrogen": [
-        "Q556"
-    ],
-    "latrine": [
-        "Q5615741"
-    ],
-    "anoxemia": [
-        "Q568321"
-    ],
-    "hemotherapy": [
-        "Q5712605"
-    ],
-    "day": [
-        "Q573"
-    ],
-    "antiemetic": [
-        "Q575136"
-    ],
-    "encephalopathy": [
-        "Q576349"
-    ],
-    "penis": [
-        "Q58"
-    ],
-    "chemist": [
-        "Q593644"
-    ],
-    "mark": [
-        "Q6016699"
-    ],
-    "heroin": [
-        "Q60168"
-    ],
-    "indolent": [
-        "Q6025739"
-    ],
-    "infantilism": [
-        "Q6029069"
-    ],
-    "inquest": [
-        "Q6036832"
-    ],
-    "internal": [
-        "Q6047630"
-    ],
-    "glomerulonephritis": [
-        "Q605006"
-    ],
-    "water filter": [
-        "Q605696"
-    ],
-    "labour": [
-        "Q6120474"
-    ],
-    "finger": [
-        "Q620207"
-    ],
-    "aquaporin": [
-        "Q623090"
-    ],
-    "left hand": [
-        "Q6516964"
-    ],
-    "entrée": [
-        "Q6545590"
-    ],
-    "limb": [
-        "Q6548932"
-    ],
-    "lunacy": [
-        "Q6703629"
-    ],
-    "period": [
-        "Q672154"
-    ],
-    "gingivitis": [
-        "Q673083"
-    ],
-    "opacity": [
-        "Q691914"
-    ],
-    "neat": [
-        "Q6984472"
-    ],
-    "femoral artery": [
-        "Q707174"
-    ],
-    "optical unit": [
-        "Q7098904"
-    ],
-    "gene": [
-        "Q7187"
-    ],
-    "lavatory": [
-        "Q721861"
-    ],
-    "feminism": [
-        "Q7252"
-    ],
-    "kiss": [
-        "Q7307"
-    ],
-    "ear": [
-        "Q7362"
-    ],
-    "nose": [
-        "Q7363"
-    ],
-    "disinfectant": [
-        "Q73984"
-    ],
-    "zinc": [
-        "Q758"
-    ],
-    "cerebrum": [
-        "Q75855"
-    ],
-    "fungus": [
-        "Q764"
-    ],
-    "diplopia": [
-        "Q775940"
-    ],
-    "voice box": [
-        "Q7939499"
-    ],
-    "Acne": [
-        "Q79928"
-    ],
-    "protein": [
-        "Q8054"
-    ],
-    "pain": [
-        "Q81938"
-    ],
-    "eye liner": [
-        "Q8243409"
-    ],
-    "liposuction": [
-        "Q825490"
-    ],
-    "chin": [
-        "Q82714"
-    ],
-    "neurology": [
-        "Q83042"
-    ],
-    "mastitis": [
-        "Q835061"
-    ],
-    "drug": [
-        "Q8386"
-    ],
-    "masturbation": [
-        "Q8396"
-    ],
-    "inhalation": [
-        "Q840343"
-    ],
-    "Abortion": [
-        "Q8452"
-    ],
-    "abortion": [
-        "Q8452"
-    ],
-    "cardiomyopathy": [
-        "Q847583"
-    ],
-    "napkin": [
-        "Q848532"
-    ],
-    "milk": [
-        "Q8495"
-    ],
-    "panacea": [
-        "Q850227"
-    ],
-    "convulsion": [
-        "Q852376"
-    ],
-    "enteritis": [
-        "Q854353"
-    ],
-    "hearse": [
-        "Q855743"
-    ],
-    "graze": [
-        "Q92767260"
-    ],
-    "dysfunction": [
-        "Q947048"
-    ],
-    "abdomen": [
-        "Q9597"
-    ],
-    "carbuncle": [
-        "Q959922"
-    ],
-    "pancreas": [
-        "Q9618"
-    ],
-    "nerve": [
-        "Q9620"
-    ],
-    "ovary": [
-        "Q9631"
-    ],
-    "neck": [
-        "Q9633"
-    ],
-    "mouth": [
-        "Q9635"
-    ],
-    "joint": [
-        "Q9644"
-    ],
-    "gland": [
-        "Q9647"
-    ],
-    "fatigue": [
-        "Q9690"
-    ],
-    "aphagia": [
-        "Q969633"
-    ],
-    "blood vessel": [
-        "Q988343"
-    ],
-    "infant": [
-        "Q998"
-    ],
-    "abalienation": [
-        "Q305266"
-    ],
-    "abarticulation": [],
-    "abnormal": [],
-    "Abnormal": [],
-    "abo system": [],
-    "ABO System": [],
-    "Abortionist": [
-        "Q113667146"
-    ],
-    "Acapnia": [],
-    "acronyx": [],
-    "addict": [],
-    "alcoholic": [],
-    "anadipsia": [],
-    "anephric": [],
-    "angiostenosis": [],
-    "angiotrophic": [],
-    "anisakiasis": [
-        "Q3091959"
-    ],
-    "ankel": [],
-    "antimalarial": [
-        "Q521616"
-    ],
-    "aortogram": [],
-    "aortopathy": [],
-    "arteries": [
-        "Q9655"
-    ],
-    "back": [
-        "Q285676"
-    ],
-    "backache": [
-        "Q5781808"
-    ],
-    "bed sore": [],
-    "behaviour": [
-        "Q15763174"
-    ],
-    "benigh": [],
-    "biharzia": [],
-    "birth place": [
-        "Q1322263"
-    ],
-    "bowel": [
-        "Q29810109"
-    ],
-    "breast feed": [],
-    "breating rate": [],
-    "bronchi": [],
-    "bulimia": [
-        "Q114491581"
-    ],
-    "burning": [
-        "Q133235"
-    ],
-    "calvicle": [],
-    "cardiograph": [
-        "Q10478823"
-    ],
-    "carotid": [],
-    "carpus": [
-        "Q1044816"
-    ],
-    "centigrade": [
-        "Q25267"
-    ],
-    "centimeter": [
-        "Q4407906"
-    ],
-    "chemical": [],
-    "cholecystis": [],
-    "cillary muscle": [],
-    "clunis": [
-        "Q37061793"
-    ],
-    "cold sores": [],
-    "collar-bone": [],
-    "colpatitis": [],
-    "comminute": [],
-    "community unit": [],
-    "conceive": [
-        "Q5158293"
-    ],
-    "contraception": [
-        "Q2995704"
-    ],
-    "cor pulmonale": [
-        "Q22299234"
-    ],
-    "corn": [
-        "Q61665121"
-    ],
-    "corpse": [
-        "Q48422"
-    ],
-    "corpulence": [
-        "Q12174"
-    ],
-    "costae": [
-        "Q19903884"
-    ],
-    "costalgia": [],
-    "cot death": [
-        "Q161801"
-    ],
-    "counter measure": [],
-    "cranium": [
-        "Q13147"
-    ],
-    "cyesis": [],
-    "daltonism": [
-        "Q71886970"
-    ],
-    "dark room": [
-        "Q183998"
-    ],
-    "dead": [],
-    "deaf": [
-        "Q1539971"
-    ],
-    "deafen": [],
-    "death bed": [
-        "Q91943648"
-    ],
-    "defloration": [
-        "Q1640627"
-    ],
-    "defluvium": [],
-    "degeneration": [
-        "Q15467261"
-    ],
-    "dejecta": [],
-    "demented": [
-        "Q105546566"
-    ],
-    "dentalgia": [],
-    "deodrant": [],
-    "depilatory": [],
-    "desmalgia": [],
-    "dick test": [],
-    "didymalgia": [],
-    "digestible": [],
-    "disk": [
-        "Q12346540"
-    ],
-    "dissect": [],
-    "domatophobia": [
-        "Q7081267"
-    ],
-    "doraphobia": [],
-    "ear wax": [
-        "Q33446758"
-    ],
-    "eat": [
-        "Q1773949"
-    ],
-    "edentate": [],
-    "emesis": [
-        "Q11857745"
-    ],
-    "entrails": [
-        "Q10484989"
-    ],
-    "epiglottic": [],
-    "eradicate": [
-        "Q107382123"
-    ],
-    "erogenous": [],
-    "excrement": [
-        "Q117860178"
-    ],
-    "eye ointment": [],
-    "eye sore": [],
-    "eyesight": [
-        "Q5422866"
-    ],
-    "facioplegia": [],
-    "fecal": [],
-    "feeding bottle": [
-        "Q797906"
-    ],
-    "fertile": [
-        "Q5445570"
-    ],
-    "fertilization": [
-        "Q45317935"
-    ],
-    "feticide": [
-        "Q663296"
-    ],
-    "fetid": [],
-    "finger nail": [
-        "Q36864"
-    ],
-    "flatus": [
-        "Q160184"
-    ],
-    "fleas": [
-        "Q388162"
-    ],
-    "flesh wound": [],
-    "flogging": [
-        "Q13424485"
-    ],
-    "fluoridation": [
-        "Q1125466"
-    ],
-    "fontanel": [
-        "Q42951722"
-    ],
-    "food stuff": [],
-    "forefinger": [
-        "Q123002199"
-    ],
-    "fresh cut": [],
-    "frigidity": [
-        "Q303555"
-    ],
-    "frons": [
-        "Q1434710"
-    ],
-    "fungal": [],
-    "galactischis": [],
-    "galactorrhes": [],
-    "gastralgia": [
-        "Q3758794"
-    ],
-    "gastrobrosis": [],
-    "gastrocnemius": [],
-    "gastrorrhagia": [
-        "Q1883970"
-    ],
-    "gastrosis": [],
-    "genital": [],
-    "germs": [
-        "Q27724874"
-    ],
-    "gibbous": [],
-    "giddiness": [
-        "Q21402620"
-    ],
-    "gingiva": [
-        "Q104280"
-    ],
-    "glass/glasses": [],
-    "gleets": [],
-    "glossalgia": [
-        "Q1532173"
-    ],
-    "glucohemia": [],
-    "gooseflesh": [
-        "Q69824709"
-    ],
-    "griping": [],
-    "gullet": [
-        "Q173710"
-    ],
-    "hacking cough": [],
-    "haematology": [
-        "Q103824"
-    ],
-    "harelip": [
-        "Q74065450"
-    ],
-    "hay fever": [
-        "Q3740609"
-    ],
-    "healthily": [],
-    "heart ach": [],
-    "heart beat": [
-        "Q3072238"
-    ],
-    "hemopathy": [],
-    "hepatic": [],
-    "hepatopathy": [],
-    "hot water bag": [],
-    "hourly": [],
-    "hyperpersis": [],
-    "hypochondria": [
-        "Q109472857"
-    ],
-    "icthyophobia": [],
-    "impression room": [],
-    "impurity": [
-        "Q7216430"
-    ],
-    "incisors": [
-        "Q273543"
-    ],
-    "incrustation": [
-        "Q65807465"
-    ],
-    "infuse": [],
-    "ingravescent": [],
-    "inhale": [
-        "Q666182"
-    ],
-    "in-patient": [],
-    "instep": [],
-    "intoxicate": [],
-    "inunctions": [],
-    "inveterate": [],
-    "ja lap": [],
-    "labour pain": [
-        "Q41889744"
-    ],
-    "lacerate": [],
-    "lanky": [
-        "Q6483066"
-    ],
-    "leper": [
-        "Q102728"
-    ],
-    "life span": [
-        "Q188419"
-    ],
-    "linctus": [],
-    "litter bin": [
-        "Q216530"
-    ],
-    "lock jaw": [
-        "Q936070"
-    ],
-    "long sighted": [
-        "Q82865248"
-    ],
-    "mad man": [
-        "Q130480553"
-    ],
-    "mad woman": [
-        "Q97653230"
-    ],
-    "malignomy": [],
-    "medico": [],
-    "microbe": [
-        "Q3312055"
-    ],
-    "microscopic": [],
-    "nail cutter": [
-        "Q270380"
-    ],
-    "naked": [
-        "Q3564436"
-    ],
-    "nappy": [
-        "Q187359"
-    ],
-    "natural": [],
-    "natural born": [
-        "Q3873338"
-    ],
-    "natural death": [
-        "Q33836005"
-    ],
-    "navel string": [
-        "Q172563"
-    ],
-    "neurological": [],
-    "new born": [
-        "Q929307"
-    ],
-    "nourishment": [
-        "Q2138622"
-    ],
-    "numbness": [
-        "Q130344594"
-    ],
-    "nutritional": [],
-    "ocular": [],
-    "ointment": [
-        "Q4004659"
-    ],
-    "operating table": [
-        "Q111665793"
-    ],
-    "optic": [],
-    "ordure": [
-        "Q41496999"
-    ],
-    "out reach": [],
-    "palpitate": [],
-    "pap smear": [
-        "Q83490713"
-    ],
-    "paralegic": [],
-    "paralytic": [
-        "Q35333440"
-    ],
-    "paraplegie": [
-        "Q1049655"
-    ],
-    "parentage": [],
-    "parental": [],
-    "paroxysm": [],
-    "pathological": [],
-    "peptic ulcer": [
-        "Q6452285"
-    ],
-    "phalanges": [
-        "Q180335"
-    ],
-    "pharyngities": [],
-    "poisonous": [
-        "Q114498352"
-    ],
-    "pregnant": [
-        "Q20741850"
-    ],
-    "pyorrhoea": [
-        "Q7248549"
-    ],
-    "tallus": [
-        "Q50353160"
-    ],
-    "thymion": [],
-    "thyrocele": [],
-    "tinea": [
-        "Q1955436"
-    ],
-    "tobacosis": [],
-    "uvular": [],
-    "zoonoses": [
-        "Q124128450"
-    ]
+    "worse": {
+        "Q101086025": 0
+    },
+    "immunology": {
+        "Q101929": 0
+    },
+    "fluid": {
+        "Q102205": 0
+    },
+    "parasite": {
+        "Q10253316": 0
+    },
+    "calf": {
+        "Q1026646": 0
+    },
+    "cascara": {
+        "Q1046899": 0
+    },
+    "fissure": {
+        "Q104856641": 0
+    },
+    "health club": {
+        "Q1065656": 0
+    },
+    "heart": {
+        "Q1072": 0
+    },
+    "chlorosis": {
+        "Q1075317": 0
+    },
+    "filter": {
+        "Q108174": 0
+    },
+    "bacteria": {
+        "Q10876": 0
+    },
+    "dizziness": {
+        "Q10916362": 0
+    },
+    "colon": {
+        "Q1110523": 0
+    },
+    "chest": {
+        "Q113147273": 0
+    },
+    "bell's palsy": {
+        "Q1135338": 0
+    },
+    "carbohydrate": {
+        "Q11358": 0
+    },
+    "neuralgia": {
+        "Q1136940": 0
+    },
+    "liquid": {
+        "Q11435": 0
+    },
+    "daft": {
+        "Q1157144": 0
+    },
+    "nail": {
+        "Q116529": 0
+    },
+    "date rape": {
+        "Q1165309": 0
+    },
+    "myrobalan": {
+        "Q1174547": 0
+    },
+    "dandruff": {
+        "Q117484": 0
+    },
+    "glossa": {
+        "Q1176956": 0
+    },
+    "deformity": {
+        "Q1182746": 0
+    },
+    "dens": {
+        "Q1189765": 0
+    },
+    "digestion": {
+        "Q11978": 0
+    },
+    "pregnancy": {
+        "Q11995": 0
+    },
+    "addiction": {
+        "Q12029": 0
+    },
+    "gash": {
+        "Q1207102": 0
+    },
+    "cancer": {
+        "Q12078": 0
+    },
+    "dentistry": {
+        "Q12128": 0
+    },
+    "list": {
+        "Q12139612": 0
+    },
+    "Acupuncture": {
+        "Q121713": 0
+    },
+    "parenting": {
+        "Q1217379": 0
+    },
+    "pandemic": {
+        "Q12184": 0
+    },
+    "antibiotic": {
+        "Q12187": 0
+    },
+    "premature": {
+        "Q1219102": 0
+    },
+    "polio": {
+        "Q12195": 0
+    },
+    "dumb": {
+        "Q1220375": 0
+    },
+    "diabetes": {
+        "Q12206": 0
+    },
+    "hookworm": {
+        "Q12212063": 0
+    },
+    "convex lens": {
+        "Q12224471": 0
+    },
+    "frailty": {
+        "Q1227527": 0
+    },
+    "physical": {
+        "Q1247875": 0
+    },
+    "fat": {
+        "Q127980": 0
+    },
+    "hoof": {
+        "Q128007": 0
+    },
+    "inlay": {
+        "Q1281067": 0
+    },
+    "bisexual": {
+        "Q12905217": 0
+    },
+    "anthrax": {
+        "Q129104": 0
+    },
+    "dysentery": {
+        "Q129279": 0
+    },
+    "growing pains": {
+        "Q129297": 0
+    },
+    "digest": {
+        "Q1296184": 0
+    },
+    "hallucination": {
+        "Q130741": 0
+    },
+    "cerebellum": {
+        "Q130983": 0
+    },
+    "colic": {
+        "Q13121526": 0
+    },
+    "glossitis": {
+        "Q1324237": 0
+    },
+    "gout": {
+        "Q133087": 0
+    },
+    "leg": {
+        "Q133105": 0
+    },
+    "jaundice": {
+        "Q133244": 0
+    },
+    "blushing": {
+        "Q1338786": 0
+    },
+    "diphtheria": {
+        "Q134649": 0
+    },
+    "favus": {
+        "Q1348374": 0
+    },
+    "forceps": {
+        "Q1378235": 0
+    },
+    "inhaler": {
+        "Q1394363": 0
+    },
+    "condom": {
+        "Q14076": 0
+    },
+    "fill": {
+        "Q1414137": 0
+    },
+    "cirrhosis": {
+        "Q147778": 0
+    },
+    "ejaculation": {
+        "Q14820885": 0
+    },
+    "gent": {
+        "Q1502615": 0
+    },
+    "lip": {
+        "Q15173": 0
+    },
+    "edema": {
+        "Q152234": 0
+    },
+    "pussy": {
+        "Q15427080": 0
+    },
+    "gastroenteritis": {
+        "Q156103": 0
+    },
+    "alcohol": {
+        "Q1570179": 0
+    },
+    "foot": {
+        "Q15807": 0
+    },
+    "dieter": {
+        "Q15883397": 0
+    },
+    "expire": {
+        "Q15906346": 0
+    },
+    "cure": {
+        "Q1595418": 0
+    },
+    "eyelash": {
+        "Q160108": 0
+    },
+    "humerus": {
+        "Q162595": 0
+    },
+    "diet": {
+        "Q16281224": 0
+    },
+    "hymen": {
+        "Q1640627": 0
+    },
+    "aphalangia": {
+        "Q16527312": 0
+    },
+    "inoculation": {
+        "Q1664296": 0
+    },
+    "itchy": {
+        "Q16799810": 0
+    },
+    "phallus": {
+        "Q168552": 0
+    },
+    "neurotic": {
+        "Q16862812": 0
+    },
+    "physic": {
+        "Q16878247": 0
+    },
+    "hospital": {
+        "Q16917": 0
+    },
+    "psychosis": {
+        "Q170082": 0
+    },
+    "zygote": {
+        "Q170145": 0
+    },
+    "crotch": {
+        "Q17084917": 0
+    },
+    "dermatology": {
+        "Q171171": 0
+    },
+    "nectar": {
+        "Q171934": 0
+    },
+    "chloroform": {
+        "Q172275": 0
+    },
+    "esophagus": {
+        "Q173710": 0
+    },
+    "eardrum": {
+        "Q173801": 0
+    },
+    "heel": {
+        "Q174647": 0
+    },
+    "codeine": {
+        "Q174723": 0
+    },
+    "membrane": {
+        "Q176088": 0
+    },
+    "femur": {
+        "Q176503": 0
+    },
+    "tegument": {
+        "Q1772554": 0
+    },
+    "consultation": {
+        "Q1782558": 0
+    },
+    "coagulation": {
+        "Q179217": 0
+    },
+    "infertility": {
+        "Q179399": 0
+    },
+    "lash": {
+        "Q1797873": 0
+    },
+    "examination": {
+        "Q17987816": 0
+    },
+    "cranial nerves": {
+        "Q180454": 0
+    },
+    "patient": {
+        "Q181600": 0
+    },
+    "maxilla": {
+        "Q182895": 0
+    },
+    "dose": {
+        "Q18411384": 0
+    },
+    "mania": {
+        "Q185935": 0
+    },
+    "allergen": {
+        "Q186752": 0
+    },
+    "nausea": {
+        "Q186889": 0
+    },
+    "lotion": {
+        "Q1871151": 0
+    },
+    "nipple": {
+        "Q188641": 0
+    },
+    "aneurysm": {
+        "Q189389": 0
+    },
+    "dentin": {
+        "Q189637": 0
+    },
+    "cerebral": {
+        "Q191555": 0
+    },
+    "benzoic acid": {
+        "Q191700": 0
+    },
+    "handkerchief": {
+        "Q192411": 0
+    },
+    "jet lag": {
+        "Q192579": 0
+    },
+    "colostrum": {
+        "Q192746": 0
+    },
+    "fungicide": {
+        "Q193237": 0
+    },
+    "hip": {
+        "Q193818": 0
+    },
+    "boil": {
+        "Q193918": 0
+    },
+    "fang": {
+        "Q1940269": 0
+    },
+    "dehydration": {
+        "Q194290": 0
+    },
+    "atrophy": {
+        "Q194520": 0
+    },
+    "hamstring": {
+        "Q196002": 0
+    },
+    "donor": {
+        "Q1968442": 0
+    },
+    "fur": {
+        "Q197204": 0
+    },
+    "itch": {
+        "Q199602": 0
+    },
+    "encephalitis": {
+        "Q199615": 0
+    },
+    "optician": {
+        "Q1996635": 0
+    },
+    "edible": {
+        "Q20012192": 0
+    },
+    "nosebleed": {
+        "Q202013": 0
+    },
+    "birth rate": {
+        "Q203516": 0
+    },
+    "otoscope": {
+        "Q203821": 0
+    },
+    "height": {
+        "Q208826": 0
+    },
+    "food": {
+        "Q2095": 0
+    },
+    "cerebral palsy": {
+        "Q210427": 0
+    },
+    "physique": {
+        "Q21072915": 0
+    },
+    "epidermis": {
+        "Q212743": 0
+    },
+    "chilblains": {
+        "Q2141001": 0
+    },
+    "cicatrix": {
+        "Q21447011": 0
+    },
+    "anticoagulant": {
+        "Q215118": 0
+    },
+    "zein": {
+        "Q2190680": 0
+    },
+    "dressing room": {
+        "Q2213191": 0
+    },
+    "caries": {
+        "Q2250111": 0
+    },
+    "instrument": {
+        "Q225829": 0
+    },
+    "injection": {
+        "Q226329": 0
+    },
+    "little finger": {
+        "Q228027": 0
+    },
+    "forearm": {
+        "Q228537": 0
+    },
+    "patella": {
+        "Q229081": 0
+    },
+    "dermatitis": {
+        "Q229256": 0
+    },
+    "carpal bones": {
+        "Q232377": 0
+    },
+    "ice": {
+        "Q23392": 0
+    },
+    "cell": {
+        "Q2349697": 0
+    },
+    "head": {
+        "Q23640": 0
+    },
+    "incubation": {
+        "Q241656": 0
+    },
+    "corpuscle": {
+        "Q243217": 0
+    },
+    "capsule": {
+        "Q2477733": 0
+    },
+    "hard drug": {
+        "Q24892366": 0
+    },
+    "hour": {
+        "Q25235": 0
+    },
+    "febris": {
+        "Q2527609": 0
+    },
+    "iophobia": {
+        "Q25339134": 0
+    },
+    "ichor": {
+        "Q257462": 0
+    },
+    "fecundity": {
+        "Q2587899": 0
+    },
+    "cunt": {
+        "Q2600": 0
+    },
+    "life support": {
+        "Q2624498": 0
+    },
+    "bone": {
+        "Q265868": 0
+    },
+    "cold": {
+        "Q270952": 0
+    },
+    "dentist": {
+        "Q27349": 0
+    },
+    "uvula": {
+        "Q273538": 0
+    },
+    "desquamation": {
+        "Q2738617": 0
+    },
+    "antiseptic": {
+        "Q274493": 0
+    },
+    "paleness": {
+        "Q27787222": 0
+    },
+    "nicotine": {
+        "Q28086552": 0
+    },
+    "hair": {
+        "Q28472": 0
+    },
+    "mortality": {
+        "Q28942704": 0
+    },
+    "powder": {
+        "Q2908004": 0
+    },
+    "gum": {
+        "Q292805": 0
+    },
+    "cabin": {
+        "Q2932327": 0
+    },
+    "gut": {
+        "Q294197": 0
+    },
+    "cortex": {
+        "Q294564": 0
+    },
+    "minor": {
+        "Q299075": 0
+    },
+    "appendix": {
+        "Q299480": 0
+    },
+    "fibula": {
+        "Q302896": 0
+    },
+    "displacement": {
+        "Q3044839": 0
+    },
+    "live": {
+        "Q3114148": 0
+    },
+    "lunatic": {
+        "Q3130829": 0
+    },
+    "Abort": {
+        "Q323013": 0
+    },
+    "antihistamine": {
+        "Q324089": 0
+    },
+    "glanders": {
+        "Q327005": 0
+    },
+    "paramedic": {
+        "Q330204": 0
+    },
+    "hip bone": {
+        "Q3356933": 0
+    },
+    "heat stroke": {
+        "Q337554": 0
+    },
+    "enamel": {
+        "Q340324": 0
+    },
+    "lab": {
+        "Q340640": 0
+    },
+    "cylinder": {
+        "Q34132": 0
+    },
+    "Aconite": {
+        "Q342086": 0
+    },
+    "Ache": {
+        "Q344103": 0
+    },
+    "ache": {
+        "Q344103": 0
+    },
+    "hydrophobia": {
+        "Q347274": 0
+    },
+    "nit": {
+        "Q351319": 0
+    },
+    "die": {
+        "Q351991": 0
+    },
+    "blind": {
+        "Q352269": 0
+    },
+    "exit": {
+        "Q357919": 0
+    },
+    "cough": {
+        "Q35805": 0
+    },
+    "critical": {
+        "Q3697794": 0
+    },
+    "face": {
+        "Q37017": 0
+    },
+    "delivery": {
+        "Q3705086": 0
+    },
+    "knee": {
+        "Q37425": 0
+    },
+    "glottis": {
+        "Q374418": 0
+    },
+    "glucose": {
+        "Q37525": 0
+    },
+    "ferrule": {
+        "Q3761748": 0
+    },
+    "astringent": {
+        "Q378705": 0
+    },
+    "degree": {
+        "Q383185": 0
+    },
+    "autism": {
+        "Q38404": 0
+    },
+    "living": {
+        "Q395956": 0
+    },
+    "complication": {
+        "Q397567": 0
+    },
+    "ligament": {
+        "Q39888": 0
+    },
+    "gaga": {
+        "Q405344": 0
+    },
+    "cavity": {
+        "Q407320": 0
+    },
+    "poison": {
+        "Q40867": 0
+    },
+    "madness": {
+        "Q409723": 0
+    },
+    "forehead": {
+        "Q41055": 0
+    },
+    "beriberi": {
+        "Q4138763": 0
+    },
+    "autopsy": {
+        "Q41482": 0
+    },
+    "cocaine": {
+        "Q41576": 0
+    },
+    "lame": {
+        "Q417400": 0
+    },
+    "condition": {
+        "Q417488": 0
+    },
+    "flush": {
+        "Q419310": 0
+    },
+    "bed": {
+        "Q42177": 0
+    },
+    "dapsone": {
+        "Q422226": 0
+    },
+    "allergy": {
+        "Q42982": 0
+    },
+    "neuron": {
+        "Q43054": 0
+    },
+    "female": {
+        "Q43445": 0
+    },
+    "eyebrow": {
+        "Q43748": 0
+    },
+    "navel": {
+        "Q43801": 0
+    },
+    "fresh": {
+        "Q441427": 0
+    },
+    "male": {
+        "Q44148": 0
+    },
+    "heat": {
+        "Q44432": 0
+    },
+    "check": {
+        "Q446253": 0
+    },
+    "fluoride": {
+        "Q44793182": 0
+    },
+    "mind": {
+        "Q450": 0
+    },
+    "anosmia": {
+        "Q468433": 0
+    },
+    "cheek": {
+        "Q47038": 0
+    },
+    "central nervous system": {
+        "Q47273": 0
+    },
+    "thirst": {
+        "Q474187": 0
+    },
+    "dialysis": {
+        "Q47537646": 0
+    },
+    "anopsia": {
+        "Q4770152": 0
+    },
+    "aphtha": {
+        "Q4779746": 0
+    },
+    "eyelid": {
+        "Q48228": 0
+    },
+    "gender": {
+        "Q48277": 0
+    },
+    "laboratory": {
+        "Q483242": 0
+    },
+    "cadaver": {
+        "Q48422": 0
+    },
+    "garbage": {
+        "Q48995880": 0
+    },
+    "memory": {
+        "Q492": 0
+    },
+    "feces": {
+        "Q496": 0
+    },
+    "cachet": {
+        "Q5015986": 0
+    },
+    "insulin": {
+        "Q50265665": 0
+    },
+    "canine": {
+        "Q5032399": 0
+    },
+    "dermis": {
+        "Q505531": 0
+    },
+    "naked eye": {
+        "Q506254": 0
+    },
+    "cephalalgia": {
+        "Q5063252": 0
+    },
+    "emergency": {
+        "Q5070802": 0
+    },
+    "cold storage": {
+        "Q5142478": 0
+    },
+    "anoxia": {
+        "Q51748379": 0
+    },
+    "dactylitis": {
+        "Q517782": 0
+    },
+    "physiology": {
+        "Q521": 0
+    },
+    "ichthyosis": {
+        "Q523893": 0
+    },
+    "dental": {
+        "Q5259388": 0
+    },
+    "obstetrics": {
+        "Q5284418": 0
+    },
+    "fatality": {
+        "Q530529": 0
+    },
+    "duct": {
+        "Q5311585": 0
+    },
+    "diathermy": {
+        "Q533734": 0
+    },
+    "blood donation": {
+        "Q53467": 0
+    },
+    "entry": {
+        "Q5380814": 0
+    },
+    "angiogenesis": {
+        "Q539568": 0
+    },
+    "angiology": {
+        "Q539690": 0
+    },
+    "excrescence": {
+        "Q5419717": 0
+    },
+    "fibroid": {
+        "Q5446466": 0
+    },
+    "squint": {
+        "Q54487645": 0
+    },
+    "filling": {
+        "Q5448819": 0
+    },
+    "flog": {
+        "Q5459979": 0
+    },
+    "fragility": {
+        "Q5477668": 0
+    },
+    "pubic hair": {
+        "Q54795": 0
+    },
+    "pethidine": {
+        "Q55434": 0
+    },
+    "hydrogen": {
+        "Q556": 0
+    },
+    "latrine": {
+        "Q5615741": 0
+    },
+    "anoxemia": {
+        "Q568321": 0
+    },
+    "hemotherapy": {
+        "Q5712605": 0
+    },
+    "day": {
+        "Q573": 0
+    },
+    "antiemetic": {
+        "Q575136": 0
+    },
+    "encephalopathy": {
+        "Q576349": 0
+    },
+    "penis": {
+        "Q58": 0
+    },
+    "chemist": {
+        "Q593644": 0
+    },
+    "mark": {
+        "Q6016699": 0
+    },
+    "heroin": {
+        "Q60168": 0
+    },
+    "indolent": {
+        "Q6025739": 0
+    },
+    "infantilism": {
+        "Q6029069": 0
+    },
+    "inquest": {
+        "Q6036832": 0
+    },
+    "internal": {
+        "Q6047630": 0
+    },
+    "glomerulonephritis": {
+        "Q605006": 0
+    },
+    "water filter": {
+        "Q605696": 0
+    },
+    "labour": {
+        "Q6120474": 0
+    },
+    "finger": {
+        "Q620207": 0
+    },
+    "aquaporin": {
+        "Q623090": 0
+    },
+    "left hand": {
+        "Q6516964": 0
+    },
+    "entrée": {
+        "Q6545590": 0
+    },
+    "limb": {
+        "Q6548932": 0
+    },
+    "lunacy": {
+        "Q6703629": 0
+    },
+    "period": {
+        "Q672154": 0
+    },
+    "gingivitis": {
+        "Q673083": 0
+    },
+    "opacity": {
+        "Q691914": 0
+    },
+    "neat": {
+        "Q6984472": 0
+    },
+    "femoral artery": {
+        "Q707174": 0
+    },
+    "optical unit": {
+        "Q7098904": 0
+    },
+    "gene": {
+        "Q7187": 0
+    },
+    "lavatory": {
+        "Q721861": 0
+    },
+    "feminism": {
+        "Q7252": 0
+    },
+    "kiss": {
+        "Q7307": 0
+    },
+    "ear": {
+        "Q7362": 0
+    },
+    "nose": {
+        "Q7363": 0
+    },
+    "disinfectant": {
+        "Q73984": 0
+    },
+    "zinc": {
+        "Q758": 0
+    },
+    "cerebrum": {
+        "Q75855": 0
+    },
+    "fungus": {
+        "Q764": 0
+    },
+    "diplopia": {
+        "Q775940": 0
+    },
+    "voice box": {
+        "Q7939499": 0
+    },
+    "Acne": {
+        "Q79928": 0
+    },
+    "protein": {
+        "Q8054": 0
+    },
+    "pain": {
+        "Q81938": 0
+    },
+    "eye liner": {
+        "Q8243409": 0
+    },
+    "liposuction": {
+        "Q825490": 0
+    },
+    "chin": {
+        "Q82714": 0
+    },
+    "neurology": {
+        "Q83042": 0
+    },
+    "mastitis": {
+        "Q835061": 0
+    },
+    "drug": {
+        "Q8386": 0
+    },
+    "masturbation": {
+        "Q8396": 0
+    },
+    "inhalation": {
+        "Q840343": 0
+    },
+    "Abortion": {
+        "Q8452": 0
+    },
+    "abortion": {
+        "Q8452": 0
+    },
+    "cardiomyopathy": {
+        "Q847583": 0
+    },
+    "napkin": {
+        "Q848532": 0
+    },
+    "milk": {
+        "Q8495": 0
+    },
+    "panacea": {
+        "Q850227": 0
+    },
+    "convulsion": {
+        "Q852376": 0
+    },
+    "enteritis": {
+        "Q854353": 0
+    },
+    "hearse": {
+        "Q855743": 0
+    },
+    "graze": {
+        "Q92767260": 0
+    },
+    "dysfunction": {
+        "Q947048": 0
+    },
+    "abdomen": {
+        "Q9597": 0
+    },
+    "carbuncle": {
+        "Q959922": 0
+    },
+    "pancreas": {
+        "Q9618": 0
+    },
+    "nerve": {
+        "Q9620": 0
+    },
+    "ovary": {
+        "Q9631": 0
+    },
+    "neck": {
+        "Q9633": 0
+    },
+    "mouth": {
+        "Q9635": 0
+    },
+    "joint": {
+        "Q9644": 0
+    },
+    "gland": {
+        "Q9647": 0
+    },
+    "fatigue": {
+        "Q9690": 0
+    },
+    "aphagia": {
+        "Q969633": 0
+    },
+    "blood vessel": {
+        "Q988343": 0
+    },
+    "infant": {
+        "Q998": 0
+    },
+    "abalienation": {
+        "Q305266": 0
+    },
+    "abarticulation": {},
+    "abnormal": {},
+    "Abnormal": {},
+    "abo system": {},
+    "ABO System": {},
+    "Abortionist": {
+        "Q113667146": 0
+    },
+    "Acapnia": {},
+    "acronyx": {},
+    "addict": {},
+    "alcoholic": {},
+    "anadipsia": {},
+    "anephric": {},
+    "angiostenosis": {},
+    "angiotrophic": {},
+    "anisakiasis": {
+        "Q3091959": 0
+    },
+    "ankel": {},
+    "antimalarial": {
+        "Q521616": 0
+    },
+    "aortogram": {},
+    "aortopathy": {},
+    "arteries": {
+        "Q9655": 0
+    },
+    "back": {
+        "Q285676": 0
+    },
+    "backache": {
+        "Q5781808": 0
+    },
+    "bed sore": {},
+    "behaviour": {
+        "Q15763174": 0
+    },
+    "benigh": {},
+    "biharzia": {},
+    "birth place": {
+        "Q1322263": 0
+    },
+    "bowel": {
+        "Q29810109": 0
+    },
+    "breast feed": {},
+    "breating rate": {},
+    "bronchi": {},
+    "bulimia": {
+        "Q114491581": 0
+    },
+    "burning": {
+        "Q133235": 0
+    },
+    "calvicle": {},
+    "cardiograph": {
+        "Q10478823": 0
+    },
+    "carotid": {},
+    "carpus": {
+        "Q1044816": 0
+    },
+    "centigrade": {
+        "Q25267": 0
+    },
+    "centimeter": {
+        "Q4407906": 0
+    },
+    "chemical": {},
+    "cholecystis": {},
+    "cillary muscle": {},
+    "clunis": {
+        "Q37061793": 0
+    },
+    "cold sores": {},
+    "collar-bone": {},
+    "colpatitis": {},
+    "comminute": {},
+    "community unit": {},
+    "conceive": {
+        "Q5158293": 0
+    },
+    "contraception": {
+        "Q2995704": 0
+    },
+    "cor pulmonale": {
+        "Q22299234": 0
+    },
+    "corn": {
+        "Q61665121": 0
+    },
+    "corpse": {
+        "Q48422": 0
+    },
+    "corpulence": {
+        "Q12174": 0
+    },
+    "costae": {
+        "Q19903884": 0
+    },
+    "costalgia": {},
+    "cot death": {
+        "Q161801": 0
+    },
+    "counter measure": {},
+    "cranium": {
+        "Q13147": 0
+    },
+    "cyesis": {},
+    "daltonism": {
+        "Q71886970": 0
+    },
+    "dark room": {
+        "Q183998": 0
+    },
+    "dead": {},
+    "deaf": {
+        "Q1539971": 0
+    },
+    "deafen": {},
+    "death bed": {
+        "Q91943648": 0
+    },
+    "defloration": {
+        "Q1640627": 0
+    },
+    "defluvium": {},
+    "degeneration": {
+        "Q15467261": 0
+    },
+    "dejecta": {},
+    "demented": {
+        "Q105546566": 0
+    },
+    "dentalgia": {},
+    "deodrant": {},
+    "depilatory": {},
+    "desmalgia": {},
+    "dick test": {},
+    "didymalgia": {},
+    "digestible": {},
+    "disk": {
+        "Q12346540": 0
+    },
+    "dissect": {},
+    "domatophobia": {
+        "Q7081267": 0
+    },
+    "doraphobia": {},
+    "ear wax": {
+        "Q33446758": 0
+    },
+    "eat": {
+        "Q1773949": 0
+    },
+    "edentate": {},
+    "emesis": {
+        "Q11857745": 0
+    },
+    "entrails": {
+        "Q10484989": 0
+    },
+    "epiglottic": {},
+    "eradicate": {
+        "Q107382123": 0
+    },
+    "erogenous": {},
+    "excrement": {
+        "Q117860178": 0
+    },
+    "eye ointment": {},
+    "eye sore": {},
+    "eyesight": {
+        "Q5422866": 0
+    },
+    "facioplegia": {},
+    "fecal": {},
+    "feeding bottle": {
+        "Q797906": 0
+    },
+    "fertile": {
+        "Q5445570": 0
+    },
+    "fertilization": {
+        "Q45317935": 0
+    },
+    "feticide": {
+        "Q663296": 0
+    },
+    "fetid": {},
+    "finger nail": {
+        "Q36864": 0
+    },
+    "flatus": {
+        "Q160184": 0
+    },
+    "fleas": {
+        "Q388162": 0
+    },
+    "flesh wound": {},
+    "flogging": {
+        "Q13424485": 0
+    },
+    "fluoridation": {
+        "Q1125466": 0
+    },
+    "fontanel": {
+        "Q42951722": 0
+    },
+    "food stuff": {},
+    "forefinger": {
+        "Q123002199": 0
+    },
+    "fresh cut": {},
+    "frigidity": {
+        "Q303555": 0
+    },
+    "frons": {
+        "Q1434710": 0
+    },
+    "fungal": {},
+    "galactischis": {},
+    "galactorrhes": {},
+    "gastralgia": {
+        "Q3758794": 0
+    },
+    "gastrobrosis": {},
+    "gastrocnemius": {},
+    "gastrorrhagia": {
+        "Q1883970": 0
+    },
+    "gastrosis": {},
+    "genital": {},
+    "germs": {
+        "Q27724874": 0
+    },
+    "gibbous": {},
+    "giddiness": {
+        "Q21402620": 0
+    },
+    "gingiva": {
+        "Q104280": 0
+    },
+    "glass/glasses": {},
+    "gleets": {},
+    "glossalgia": {
+        "Q1532173": 0
+    },
+    "glucohemia": {},
+    "gooseflesh": {
+        "Q69824709": 0
+    },
+    "griping": {},
+    "gullet": {
+        "Q173710": 0
+    },
+    "hacking cough": {},
+    "haematology": {
+        "Q103824": 0
+    },
+    "harelip": {
+        "Q74065450": 0
+    },
+    "hay fever": {
+        "Q3740609": 0
+    },
+    "healthily": {},
+    "heart ach": {},
+    "heart beat": {
+        "Q3072238": 0
+    },
+    "hemopathy": {},
+    "hepatic": {},
+    "hepatopathy": {},
+    "hot water bag": {},
+    "hourly": {},
+    "hyperpersis": {},
+    "hypochondria": {
+        "Q109472857": 0
+    },
+    "icthyophobia": {},
+    "impression room": {},
+    "impurity": {
+        "Q7216430": 0
+    },
+    "incisors": {
+        "Q273543": 0
+    },
+    "incrustation": {
+        "Q65807465": 0
+    },
+    "infuse": {},
+    "ingravescent": {},
+    "inhale": {
+        "Q666182": 0
+    },
+    "in-patient": {},
+    "instep": {},
+    "intoxicate": {},
+    "inunctions": {},
+    "inveterate": {},
+    "ja lap": {},
+    "labour pain": {
+        "Q41889744": 0
+    },
+    "lacerate": {},
+    "lanky": {
+        "Q6483066": 0
+    },
+    "leper": {
+        "Q102728": 0
+    },
+    "life span": {
+        "Q188419": 0
+    },
+    "linctus": {},
+    "litter bin": {
+        "Q216530": 0
+    },
+    "lock jaw": {
+        "Q936070": 0
+    },
+    "long sighted": {
+        "Q82865248": 0
+    },
+    "mad man": {
+        "Q130480553": 0
+    },
+    "mad woman": {
+        "Q97653230": 0
+    },
+    "malignomy": {},
+    "medico": {},
+    "microbe": {
+        "Q3312055": 0
+    },
+    "microscopic": {},
+    "nail cutter": {
+        "Q270380": 0
+    },
+    "naked": {
+        "Q3564436": 0
+    },
+    "nappy": {
+        "Q187359": 0
+    },
+    "natural": {},
+    "natural born": {
+        "Q3873338": 0
+    },
+    "natural death": {
+        "Q33836005": 0
+    },
+    "navel string": {
+        "Q172563": 0
+    },
+    "neurological": {},
+    "new born": {
+        "Q929307": 0
+    },
+    "nourishment": {
+        "Q2138622": 0
+    },
+    "numbness": {
+        "Q130344594": 0
+    },
+    "nutritional": {},
+    "ocular": {},
+    "ointment": {
+        "Q4004659": 0
+    },
+    "operating table": {
+        "Q111665793": 0
+    },
+    "optic": {},
+    "ordure": {
+        "Q41496999": 0
+    },
+    "out reach": {},
+    "palpitate": {},
+    "pap smear": {
+        "Q83490713": 0
+    },
+    "paralegic": {},
+    "paralytic": {
+        "Q35333440": 0
+    },
+    "paraplegie": {
+        "Q1049655": 0
+    },
+    "parentage": {},
+    "parental": {},
+    "paroxysm": {},
+    "pathological": {},
+    "peptic ulcer": {
+        "Q6452285": 0
+    },
+    "phalanges": {
+        "Q180335": 0
+    },
+    "pharyngities": {},
+    "poisonous": {
+        "Q114498352": 0
+    },
+    "pregnant": {
+        "Q20741850": 0
+    },
+    "pyorrhoea": {
+        "Q7248549": 0
+    },
+    "tallus": {
+        "Q50353160": 0
+    },
+    "thymion": {},
+    "thyrocele": {},
+    "tinea": {
+        "Q1955436": 0
+    },
+    "tobacosis": {},
+    "uvular": {},
+    "zoonoses": {
+        "Q124128450": 0
+    }
 }

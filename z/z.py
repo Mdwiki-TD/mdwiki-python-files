@@ -58,11 +58,10 @@ def dump_one(file, data):
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
-if "clear" in sys.argv:
-    # clear results with multi qids
+if "fix_qids" in sys.argv:
     # ---
     results = {
-        k: [] if len(v) > 1 else v
+        k: v if isinstance(v, dict) else {qid: 0 for qid in v}
         for k, v in results.items()
     }
     # ---
@@ -73,31 +72,31 @@ if "clear" in sys.argv:
 
 
 def dump_data():
-    results_x = {z : list(set(v)) for z, v in results.items()}
+    results_x = {z : v for z, v in results.items()}
     # ---
     dump_one(qids_file, results_x)
     # ---
-    results_x_multi = {z : v for z, v in results_x.items() if len(v) > 1}
+    resultsx_multi = {z : v for z, v in results_x.items() if len(v) > 1}
     # ---
-    dump_one(qids_file_multi, results_x_multi)
+    dump_one(qids_file_multi, resultsx_multi)
     # ---
-    results_x_empty = {z : v for z, v in results_x.items() if len(v) == 0 or not v}
+    resultsx_empty = {z : v for z, v in results_x.items() if len(v) == 0 or not v}
     # ---
-    dump_one(qids_file_mt, results_x_empty)
+    dump_one(qids_file_mt, resultsx_empty)
     # ---
     dump_one(data_ready_file, data_ready)
 
 
 def get_qids(english_terms_new):
-
+    # ---
     for term in tqdm(english_terms_new, desc="Processing terms"):
-        results.setdefault(term, [])
+        results.setdefault(term, {})
         page = MainPage(term, 'en', family='wikipedia')
         if page.exists():
             qid = page.get_qid()  # يحصل على معرف Wikidata
             if qid:
                 print(f"{term}: {qid}")
-                results[term].append(qid)
+                results[term][qid] = 1
 
     dump_data()
 
@@ -108,7 +107,7 @@ def get_english_terms():
 
     print(f"len of english_terms: {len(english_terms)}")
 
-    english_terms_new = [x for x in english_terms if not results.get(x.strip(), [])]
+    english_terms_new = [x for x in english_terms if not results.get(x.strip(), {})]
     # ---
     print(f"len of english_terms_new: {len(english_terms_new)}")
     # ---
@@ -175,14 +174,14 @@ def search_wd(english_terms_new):
     # results = wd_sparql.get_query_result(query)
     for term in tqdm(english_terms_new, desc="Processing terms"):
         # ---
-        results.setdefault(term, [])
+        results.setdefault(term, {})
         # ---
         qid, best_label, highest_score = get_term_qid(term)
         # ---
         print(f"{term}: {qid} {best_label} {highest_score}")
         # ---
         if qid:
-            results[term].append(qid)
+            results[term][qid] = highest_score
         # ---
         if "break" in sys.argv:
             break

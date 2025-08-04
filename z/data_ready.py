@@ -13,7 +13,7 @@ qids_file = Dir / "jsons/qids.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
 
-results_x = {z : list(set(v)) for z, v in results.items()}
+results_x = {z : v for z, v in results.items()}
 
 data_ready_file = Dir / "jsons/data_ready.json"
 data_ready = json.loads(data_ready_file.read_text('utf-8'))
@@ -32,7 +32,11 @@ for x, qids in results_x.items():
     # ---
     qid_plus += 1
     # ---
-    data_ready[x.lower()]["qid"] = qids[0]
+    qids_1 = qids[0]
+    # ---
+    print(f"{x}: qids_1: {qids_1}")
+    # ---
+    data_ready[x.lower()]["qid"] = qids_1
 # ---
 for x, v in data_ready.copy().items():
     # ---

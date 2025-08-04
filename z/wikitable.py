@@ -17,7 +17,7 @@ data_ready = json.loads(data_ready_file.read_text('utf-8'))
 data_ready = {x.lower(): v for x, v in data_ready.items()}
 # ---
 qids_data = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
-qids_data = {z : list(set(v)) for z, v in qids_data.items()}
+qids_data = {z : v for z, v in qids_data.items()}
 # ---
 one_qid_rows = []
 multi_qids_rows = []
