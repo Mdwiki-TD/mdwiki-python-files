@@ -17,6 +17,7 @@ import json
 import Levenshtein
 # from newapi.page import NEW_API
 from tqdm import tqdm
+from newapi import printe
 from newapi.page import MainPage
 # from newapi.wd_sparql import get_query_result
 from pathlib import Path
@@ -95,7 +96,7 @@ def get_qids(english_terms_new):
         if page.exists():
             qid = page.get_qid()  # يحصل على معرف Wikidata
             if qid:
-                print(f"{term}: {qid}")
+                printe.output(f"<<yellow>> {term}: {qid}")
                 results[term][qid] = {
                     "score" : 1,
                     "matched_label" : term,
@@ -206,7 +207,7 @@ def start():
     # ---
     english_terms_new = get_english_terms()
     # ---
-    get_qids(english_terms_new)
+    get_qids(to_add.keys())
     # ---
     # search_wd(english_terms_new)
     # ---
