@@ -25,21 +25,19 @@ from pathlib import Path
 from newapi.api_utils import wd_sparql
 import api_wd_z
 
-Dir = Path(__file__).parent
+JsonsDir = Path(__file__).parent / "jsons"
 
 # api = NEW_API('en', family='wikipedia')
 # api.Login_to_wiki()
 
-qids_file_multi = Dir / "jsons/qids_multi.json"
-qids_file_mt = Dir / "jsons/qids_empty.json"
-qids_file = Dir / "jsons/qids.json"
-data_file = Dir / "jsons/data.json"
+qids_file_multi = JsonsDir / "qids_multi.json"
+qids_file_mt = JsonsDir / "qids_empty.json"
+qids_file = JsonsDir / "qids.json"
+data_file = JsonsDir / "data.json"
+data_ready_file = JsonsDir / "data_ready.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
-
 to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
-
-data_ready_file = Dir / "jsons/data_ready.json"
 data_ready = json.loads(data_ready_file.read_text('utf-8'))
 
 if "fix_data_ready" in sys.argv:
@@ -48,12 +46,22 @@ if "fix_data_ready" in sys.argv:
     with open(data_ready_file, 'w', encoding='utf-8') as file:
         json.dump(data_ready, file, ensure_ascii=False, indent=4)
 
+old_length = {
+    "qids.json": len(results),
+    "data.json": len(to_add),
+    "data_ready.json": len(data_ready),
+    "qids_empty.json": len(results),
+    "qids_multi.json": len(results),
+}
+
 langs_results = {}
 
 
 def dump_one(file, data):
     # ---
-    print(f"Dump : {len(data)} to: {file.name}")
+    old_len = old_length.get(file.name) or len(json.loads(file.read_text('utf-8')))
+    # ---
+    print(f"Dump : {len(data):,} old_len: {old_len:,} to: {file.name}")
     # ---
     with open(file, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
