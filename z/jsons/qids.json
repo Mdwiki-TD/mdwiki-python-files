@@ -2222,37 +2222,82 @@
     "abarticulation": {},
     "abnormal": {},
     "Abnormal": {},
-    "abo system": {},
-    "ABO System": {},
+    "abo system": {
+        "Q69982120": {
+            "score": 0.219,
+            "matched_label": "ABO system, Rh and sex interactions in newborn infants"
+        }
+    },
+    "ABO System": {
+        "Q73409621": {
+            "score": 0.317,
+            "matched_label": "ABO System: molecular mimicry of Ascaris lumbricoides"
+        }
+    },
     "Abortionist": {
         "Q113667146": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "Acapnia": {},
+    "Acapnia": {
+        "Q1328215": {
+            "score": 0.706,
+            "matched_label": "hypocapnia"
+        }
+    },
     "acronyx": {},
-    "addict": {},
+    "addict": {
+        "Q4681106": {
+            "score": 0.667,
+            "matched_label": "Addiction"
+        }
+    },
     "alcoholic": {},
     "anadipsia": {},
-    "anephric": {},
+    "anephric": {
+        "Q69869650": {
+            "score": 0.7,
+            "matched_label": "Anephric man"
+        }
+    },
     "angiostenosis": {},
-    "angiotrophic": {},
+    "angiotrophic": {
+        "Q81769765": {
+            "score": 0.423,
+            "matched_label": "Angiotrophic intravascular lymphosarcoma"
+        }
+    },
     "anisakiasis": {
         "Q3091959": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "ankel": {},
+    "ankel": {
+        "Q12784708": {
+            "score": 0.727,
+            "matched_label": "Ankele"
+        }
+    },
     "antimalarial": {
         "Q521616": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "aortogram": {},
-    "aortopathy": {},
+    "aortogram": {
+        "Q74813420": {
+            "score": 0.188,
+            "matched_label": "Aortogram after repair of common arterial trunk with interrupted aortic arch"
+        }
+    },
+    "aortopathy": {
+        "Q38219936": {
+            "score": 0.353,
+            "matched_label": "Aortopathy in Marfan syndrome: an update."
+        }
+    },
     "arteries": {
         "Q9655": {
             "score": 1,
@@ -2271,15 +2316,30 @@
             "matched_label": ""
         }
     },
-    "bed sore": {},
+    "bed sore": {
+        "Q83269474": {
+            "score": 0.706,
+            "matched_label": "Bed-sores"
+        }
+    },
     "behaviour": {
         "Q15763174": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "benigh": {},
-    "biharzia": {},
+    "benigh": {
+        "Q37570342": {
+            "score": 0.769,
+            "matched_label": "Benight"
+        }
+    },
+    "biharzia": {
+        "Q78594158": {
+            "score": 0.583,
+            "matched_label": "Biharzia control"
+        }
+    },
     "birth place": {
         "Q1322263": {
             "score": 1,
@@ -2292,7 +2352,12 @@
             "matched_label": ""
         }
     },
-    "breast feed": {},
+    "breast feed": {
+        "Q66026765": {
+            "score": 0.333,
+            "matched_label": "Breast Feeding Analgesia in Preterm Infants"
+        }
+    },
     "breating rate": {},
     "bronchi": {},
     "bulimia": {
@@ -2314,7 +2379,12 @@
             "matched_label": ""
         }
     },
-    "carotid": {},
+    "carotid": {
+        "Q18555923": {
+            "score": 0.483,
+            "matched_label": "carotid artery disease"
+        }
+    },
     "carpus": {
         "Q1044816": {
             "score": 1,
@@ -2333,7 +2403,12 @@
             "matched_label": ""
         }
     },
-    "chemical": {},
+    "chemical": {
+        "Q426303": {
+            "score": 0.452,
+            "matched_label": "Chemical Communications"
+        }
+    },
     "cholecystis": {},
     "cillary muscle": {},
     "clunis": {
@@ -2342,11 +2417,31 @@
             "matched_label": ""
         }
     },
-    "cold sores": {},
-    "collar-bone": {},
+    "cold sores": {
+        "Q68313532": {
+            "score": 0.529,
+            "matched_label": "Cold sores and safer sex"
+        }
+    },
+    "collar-bone": {
+        "Q83680095": {
+            "score": 0.471,
+            "matched_label": "Collar Bone Left Atrium"
+        }
+    },
     "colpatitis": {},
-    "comminute": {},
-    "community unit": {},
+    "comminute": {
+        "Q71066199": {
+            "score": 0.296,
+            "matched_label": "Comminuted displaced fractures of the patella"
+        }
+    },
+    "community unit": {
+        "Q5154900": {
+            "score": 0.511,
+            "matched_label": "Community Unit School District 20"
+        }
+    },
     "conceive": {
         "Q5158293": {
             "score": 1,
@@ -2396,7 +2491,12 @@
             "matched_label": ""
         }
     },
-    "counter measure": {},
+    "counter measure": {
+        "Q1138971": {
+            "score": 0.839,
+            "matched_label": "Counter Measures"
+        }
+    },
     "cranium": {
         "Q13147": {
             "score": 1,
@@ -2416,14 +2516,24 @@
             "matched_label": ""
         }
     },
-    "dead": {},
+    "dead": {
+        "Q5372066": {
+            "score": 0.308,
+            "matched_label": "hard copy"
+        }
+    },
     "deaf": {
         "Q1539971": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "deafen": {},
+    "deafen": {
+        "Q110859115": {
+            "score": 0.8,
+            "matched_label": "deafening"
+        }
+    },
     "death bed": {
         "Q91943648": {
             "score": 1,
@@ -2452,18 +2562,38 @@
     },
     "dentalgia": {},
     "deodrant": {},
-    "depilatory": {},
+    "depilatory": {
+        "Q2296561": {
+            "score": 0.833,
+            "matched_label": "depilatory wax"
+        }
+    },
     "desmalgia": {},
-    "dick test": {},
+    "dick test": {
+        "Q40917150": {
+            "score": 0.432,
+            "matched_label": "Dick Test Results: 1969-1971"
+        }
+    },
     "didymalgia": {},
-    "digestible": {},
+    "digestible": {
+        "Q46855502": {
+            "score": 0.225,
+            "matched_label": "Digestible and metabolizable energy of crude glycerol for growing pigs"
+        }
+    },
     "disk": {
         "Q12346540": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "dissect": {},
+    "dissect": {
+        "Q1145479": {
+            "score": 0.706,
+            "matched_label": "Dissection"
+        }
+    },
     "domatophobia": {
         "Q7081267": {
             "score": 1,
@@ -2483,7 +2613,12 @@
             "matched_label": ""
         }
     },
-    "edentate": {},
+    "edentate": {
+        "Q12653866": {
+            "score": 0.4,
+            "matched_label": "Eidintaičiai"
+        }
+    },
     "emesis": {
         "Q11857745": {
             "score": 1,
@@ -2496,21 +2631,36 @@
             "matched_label": ""
         }
     },
-    "epiglottic": {},
+    "epiglottic": {
+        "Q18557843": {
+            "score": 0.741,
+            "matched_label": "epiglottis cancer"
+        }
+    },
     "eradicate": {
         "Q107382123": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "erogenous": {},
+    "erogenous": {
+        "Q109042471": {
+            "score": 0.16,
+            "matched_label": "Erogenous Organs: The Metamorphosis of Polyphemus' \"Syrinx\" in Ovid, \"Metamorphoses\" 13.784"
+        }
+    },
     "excrement": {
         "Q117860178": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "eye ointment": {},
+    "eye ointment": {
+        "Q80278784": {
+            "score": 0.647,
+            "matched_label": "Eye ointment dispenser"
+        }
+    },
     "eye sore": {},
     "eyesight": {
         "Q5422866": {
@@ -2519,7 +2669,12 @@
         }
     },
     "facioplegia": {},
-    "fecal": {},
+    "fecal": {
+        "Q111569458": {
+            "score": 0.5,
+            "matched_label": "faecal analysis"
+        }
+    },
     "feeding bottle": {
         "Q797906": {
             "score": 1,
@@ -2544,7 +2699,12 @@
             "matched_label": ""
         }
     },
-    "fetid": {},
+    "fetid": {
+        "Q1766333": {
+            "score": 0.435,
+            "matched_label": "Passiflora foetida"
+        }
+    },
     "finger nail": {
         "Q36864": {
             "score": 1,
@@ -2563,7 +2723,12 @@
             "matched_label": ""
         }
     },
-    "flesh wound": {},
+    "flesh wound": {
+        "Q3746575": {
+            "score": 0.783,
+            "matched_label": "Flesh Wounds"
+        }
+    },
     "flogging": {
         "Q13424485": {
             "score": 1,
@@ -2582,14 +2747,24 @@
             "matched_label": ""
         }
     },
-    "food stuff": {},
+    "food stuff": {
+        "Q52620136": {
+            "score": 0.762,
+            "matched_label": "Food-stuffs"
+        }
+    },
     "forefinger": {
         "Q123002199": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "fresh cut": {},
+    "fresh cut": {
+        "Q116210263": {
+            "score": 0.737,
+            "matched_label": "Fresh Cutz"
+        }
+    },
     "frigidity": {
         "Q303555": {
             "score": 1,
@@ -2602,7 +2777,12 @@
             "matched_label": ""
         }
     },
-    "fungal": {},
+    "fungal": {
+        "Q5509159": {
+            "score": 0.5,
+            "matched_label": "Fungal Biology"
+        }
+    },
     "galactischis": {},
     "galactorrhes": {},
     "gastralgia": {
@@ -2612,7 +2792,12 @@
         }
     },
     "gastrobrosis": {},
-    "gastrocnemius": {},
+    "gastrocnemius": {
+        "Q37672698": {
+            "score": 0.375,
+            "matched_label": "Gastrocnemius recession to treat isolated foot pain"
+        }
+    },
     "gastrorrhagia": {
         "Q1883970": {
             "score": 1,
@@ -2620,14 +2805,24 @@
         }
     },
     "gastrosis": {},
-    "genital": {},
+    "genital": {
+        "Q111693701": {
+            "score": 0.538,
+            "matched_label": "ambiguous genitalia"
+        }
+    },
     "germs": {
         "Q27724874": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "gibbous": {},
+    "gibbous": {
+        "Q24961814": {
+            "score": 0.737,
+            "matched_label": "gibbous moon"
+        }
+    },
     "giddiness": {
         "Q21402620": {
             "score": 1,
@@ -2655,7 +2850,12 @@
             "matched_label": ""
         }
     },
-    "griping": {},
+    "griping": {
+        "Q69820120": {
+            "score": 0.293,
+            "matched_label": "Griping and grousing about nursing"
+        }
+    },
     "gullet": {
         "Q173710": {
             "score": 1,
@@ -2681,19 +2881,49 @@
             "matched_label": ""
         }
     },
-    "healthily": {},
-    "heart ach": {},
+    "healthily": {
+        "Q71909759": {
+            "score": 0.64,
+            "matched_label": "Healthily hooked"
+        }
+    },
+    "heart ach": {
+        "Q1773770": {
+            "score": 0.737,
+            "matched_label": "Heart Ache"
+        }
+    },
     "heart beat": {
         "Q3072238": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "hemopathy": {},
+    "hemopathy": {
+        "Q33456100": {
+            "score": 0.258,
+            "matched_label": "Hemopathy in pregnancy; clinical analysis of 43 cases"
+        }
+    },
     "hepatic": {},
-    "hepatopathy": {},
-    "hot water bag": {},
-    "hourly": {},
+    "hepatopathy": {
+        "Q48732011": {
+            "score": 0.357,
+            "matched_label": "Hepatopathy in 4 dogs treated with amiodarone"
+        }
+    },
+    "hot water bag": {
+        "Q41139313": {
+            "score": 0.5,
+            "matched_label": "Hot water bag for diseased prostate"
+        }
+    },
+    "hourly": {
+        "Q1848238": {
+            "score": 0.706,
+            "matched_label": "hourly wage"
+        }
+    },
     "hyperpersis": {},
     "hypochondria": {
         "Q109472857": {
@@ -2721,27 +2951,67 @@
             "matched_label": ""
         }
     },
-    "infuse": {},
-    "ingravescent": {},
+    "infuse": {
+        "Q23808224": {
+            "score": 0.526,
+            "matched_label": "Infused water"
+        }
+    },
+    "ingravescent": {
+        "Q1542250": {
+            "score": 0.647,
+            "matched_label": "Ingravescentem Aetatem"
+        }
+    },
     "inhale": {
         "Q666182": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "in-patient": {},
-    "instep": {},
-    "intoxicate": {},
+    "in-patient": {
+        "Q65545977": {
+            "score": 0.346,
+            "matched_label": "In-Patient Study In Schizophrenic Patients"
+        }
+    },
+    "instep": {
+        "Q6038883": {
+            "score": 0.667,
+            "matched_label": "instep borer"
+        }
+    },
+    "intoxicate": {
+        "Q20856778": {
+            "score": 0.857,
+            "matched_label": "Intoxicated"
+        }
+    },
     "inunctions": {},
-    "inveterate": {},
-    "ja lap": {},
+    "inveterate": {
+        "Q67480532": {
+            "score": 0.514,
+            "matched_label": "Inveterate vaginal thrush"
+        }
+    },
+    "ja lap": {
+        "Q7335306": {
+            "score": 0.25,
+            "matched_label": "Rio Pueblo de Taos"
+        }
+    },
     "labour pain": {
         "Q41889744": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "lacerate": {},
+    "lacerate": {
+        "Q18959953": {
+            "score": 0.824,
+            "matched_label": "Lacerated"
+        }
+    },
     "lanky": {
         "Q6483066": {
             "score": 1,
@@ -2760,7 +3030,12 @@
             "matched_label": ""
         }
     },
-    "linctus": {},
+    "linctus": {
+        "Q75662520": {
+            "score": 0.75,
+            "matched_label": "Linctuses"
+        }
+    },
     "litter bin": {
         "Q216530": {
             "score": 1,
@@ -2792,14 +3067,24 @@
         }
     },
     "malignomy": {},
-    "medico": {},
+    "medico": {
+        "Q6806786": {
+            "score": 0.667,
+            "matched_label": "Medicosma"
+        }
+    },
     "microbe": {
         "Q3312055": {
             "score": 1,
             "matched_label": ""
         }
     },
-    "microscopic": {},
+    "microscopic": {
+        "Q27712099": {
+            "score": 0.714,
+            "matched_label": "Microscopica acta"
+        }
+    },
     "nail cutter": {
         "Q270380": {
             "score": 1,
@@ -2837,7 +3122,12 @@
             "matched_label": ""
         }
     },
-    "neurological": {},
+    "neurological": {
+        "Q73501278": {
+            "score": 0.8,
+            "matched_label": "neurological model"
+        }
+    },
     "new born": {
         "Q929307": {
             "score": 1,
@@ -2856,8 +3146,18 @@
             "matched_label": ""
         }
     },
-    "nutritional": {},
-    "ocular": {},
+    "nutritional": {
+        "Q67151937": {
+            "score": 0.759,
+            "matched_label": "nutritional status"
+        }
+    },
+    "ocular": {
+        "Q69942028": {
+            "score": 0.632,
+            "matched_label": "ocular vision"
+        }
+    },
     "ointment": {
         "Q4004659": {
             "score": 1,
@@ -2870,7 +3170,12 @@
             "matched_label": ""
         }
     },
-    "optic": {},
+    "optic": {
+        "Q3354459": {
+            "score": 0.421,
+            "matched_label": "Optics Express"
+        }
+    },
     "ordure": {
         "Q41496999": {
             "score": 1,
@@ -2878,7 +3183,12 @@
         }
     },
     "out reach": {},
-    "palpitate": {},
+    "palpitate": {
+        "Q65351569": {
+            "score": 0.162,
+            "matched_label": "Palpitate-Eluting Balloon Angioplasty in the Treatment of Coronary Bifurcation Lesion Evaluated by OCT"
+        }
+    },
     "pap smear": {
         "Q83490713": {
             "score": 1,
@@ -2898,9 +3208,24 @@
             "matched_label": ""
         }
     },
-    "parentage": {},
-    "parental": {},
-    "paroxysm": {},
+    "parentage": {
+        "Q111807544": {
+            "score": 0.529,
+            "matched_label": "parentage of culture hero"
+        }
+    },
+    "parental": {
+        "Q102108196": {
+            "score": 0.56,
+            "matched_label": "Parental Guidance"
+        }
+    },
+    "paroxysm": {
+        "Q42324521": {
+            "score": 0.552,
+            "matched_label": "paroxysmal hemicrania"
+        }
+    },
     "pathological": {},
     "peptic ulcer": {
         "Q6452285": {
@@ -2948,7 +3273,12 @@
         }
     },
     "tobacosis": {},
-    "uvular": {},
+    "uvular": {
+        "Q4002938": {
+            "score": 0.588,
+            "matched_label": "bifid uvula"
+        }
+    },
     "zoonoses": {
         "Q124128450": {
             "score": 1,
