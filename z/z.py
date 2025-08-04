@@ -206,9 +206,9 @@ def start():
     # ---
     english_terms_new = get_english_terms()
     # ---
-    # get_qids(english_terms_new)
+    get_qids(english_terms_new)
     # ---
-    search_wd(english_terms_new)
+    # search_wd(english_terms_new)
     # ---
 
 
