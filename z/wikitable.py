@@ -10,8 +10,7 @@ from newapi.page import MainPage
 
 Dir = Path(__file__).parent
 
-
-data_file = Dir / "jsons/data.json"
+data_file = Dir / "render_data/csv.json"
 data_tab = json.loads(data_file.read_text('utf-8')) if data_file.exists() else {}
 data_tab = {z.lower() : v for z, v in data_tab.items()}
 # ---

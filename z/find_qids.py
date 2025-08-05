@@ -31,14 +31,14 @@ JsonsDir = Path(__file__).parent / "jsons"
 qids_file_multi = JsonsDir / "qids_multi.json"
 qids_file_mt = JsonsDir / "qids_empty.json"
 qids_file = JsonsDir / "qids.json"
-data_file = JsonsDir / "data.json"
+data_file = Path(__file__).parent / "render_data/csv.json"
 
 results = json.loads(qids_file.read_text('utf-8')) if qids_file.exists() else {}
-to_add = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
+csv_data = json.loads(data_file.read_text('utf-8')) if data_file.exists() else []
 
 old_length = {
     "qids.json": len(results),
-    "data.json": len(to_add),
+    "csv.json": len(csv_data),
     "qids_empty.json": 0,
     "qids_multi.json": 0,
 }
@@ -135,7 +135,7 @@ def get_qids_new(english_terms_new):
 
 def get_english_terms():
 
-    english_terms = to_add.keys()
+    english_terms = csv_data.keys()
 
     print(f"len of english_terms: {len(english_terms)}")
 
@@ -233,7 +233,7 @@ def start():
 
     # ---
     if "work_all" in sys.argv:
-        get_qids_new(to_add.keys())
+        get_qids_new(csv_data.keys())
         return
     # ---
     english_terms_new = get_english_terms()

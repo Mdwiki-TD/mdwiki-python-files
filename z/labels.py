@@ -47,7 +47,7 @@ def make_data_to_work():
     # ---
     # data_to_work = "epiglottic": { "label": "ལྕེ་ཅུངམ།", "description": "ལྕེ་ཅུངམ་འདི་གིས་ ཆུ་དང་བཞེས་སྒོའི་རིགས་ཚུ་ ལམ་འཛྫོལ་", "qid": "Q18557843", "score": 0.741, "matched_label": "epiglottis cancer" }
     # ---
-    data_file = Dir / "jsons/data.json"
+    data_file = Dir / "render_data/csv.json"
     data_tab = json.loads(data_file.read_text('utf-8')) if data_file.exists() else {}
     data_tab = {z.lower() : v for z, v in data_tab.items()}
     # ---

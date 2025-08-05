@@ -6,8 +6,9 @@ import json
 from pathlib import Path
 import csv
 
-Dir = Path(__file__).parent.parent
+Dir = Path(__file__).parent
 
+# data_file = Path(__file__).parent / "render_data/csv.json"
 data_file = Dir / "csv.json"
 data_duplicate_file = Dir / "csv_dup.json"
 csv_file = Dir / "dictionary(ocr_resolved).csv"
@@ -62,8 +63,15 @@ data = [row for i, row in enumerate(data)
 data = sorted(data, key=lambda x: (x["en"] or "").lower().strip())
 duplicate_data = sorted(duplicate_data, key=lambda x: (x["en"] or "").lower().strip())
 
+data_new = {
+    g["en"] : {"label": g["label"], "description": g["description"]}
+    for g in data
+}
+
+# data_new = dict(sorted(data_new.items()))
+
 with open(data_file, 'w', encoding='utf-8') as file:
-    json.dump(data, file, ensure_ascii=False, indent=4)
+    json.dump(data_new, file, ensure_ascii=False, indent=4)
 
 with open(data_duplicate_file, 'w', encoding='utf-8') as file:
     json.dump(duplicate_data, file, ensure_ascii=False, indent=4)
