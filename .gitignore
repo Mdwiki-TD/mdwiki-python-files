@@ -48,5 +48,5 @@ copy_to_en/bots/medwiki_account.py
 wprefs/todb.py
 md_core/update_med_views/xx.py
 !/z/*.csv
-!/z/jsons/*.json
+!/z/*/*.json
 z/jsons/pages.json
