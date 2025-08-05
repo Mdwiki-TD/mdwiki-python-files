@@ -2115,12 +2115,6 @@
             "matched_label": "Abortion"
         }
     },
-    "abortion": {
-        "Q8452": {
-            "score": 1,
-            "matched_label": "abortion"
-        }
-    },
     "cardiomyopathy": {
         "Q847583": {
             "score": 2,
