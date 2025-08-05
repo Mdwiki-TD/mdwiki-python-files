@@ -93,10 +93,12 @@ def work_in_list(data_to_work):
     diff_label = 0
     diff_desc = 0
 
-    for qid, tab in tqdm(data_to_work.items()):
+    for en, tab in tqdm(data_to_work.items()):
         # ---
         label = tab["label"]
         description = tab["description"]
+        # ---
+        qid = tab["qid"]
         # ---
         item_data = wd_rest_new.Get_one_qid_info(qid)
         # ---

@@ -6,7 +6,7 @@ python3 I:/mdwiki/pybot/z/tests/nor.py
 """
 
 
-def get_title_redirect_normolize_x(title, redirects, normalized):
+def get_title_redirect_normalize_x(title, redirects, normalized):
     # ---
     tab = {
         "user_input": title,
@@ -31,7 +31,7 @@ def get_title_redirect_normolize_x(title, redirects, normalized):
     return tab
 
 
-def get_title_redirect_normolize(title, redirects, normalized):
+def get_title_redirect_normalize(title, redirects, normalized):
     # ---
     redirects = redirects or []
     normalized = normalized or []
@@ -127,7 +127,7 @@ for x in _example["query"]["pages"]:
     title = x["title"]
     # ---
     print(f"__________\n title: {title}")
-    real_title = get_title_redirect_normolize(title, redirects, normalized)
+    real_title = get_title_redirect_normalize(title, redirects, normalized)
     # ---
     print(f"redirect_to: {real_title['redirect_to']}")
     print(f"normalized_to: {real_title['normalized_to']}")
