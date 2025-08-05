@@ -1,10 +1,9 @@
 """
 
 """
-import random
 import sys
 import re
-from api_wrap import session_post
+from z_api.api_wrap import session_post
 from newapi import printe
 
 Main_User = {1: ""}
