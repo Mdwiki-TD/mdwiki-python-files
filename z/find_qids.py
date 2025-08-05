@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py z/z
+python3 core8/pwb.py z/find_qids
 
 
 English Term;label;description
