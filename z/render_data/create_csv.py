@@ -56,11 +56,13 @@ with open(csv_file, 'r', encoding='utf-8') as file:
             data.append(row)
 
 # إزالة العناصر التي تم نقلها إلى المكررات
-data = [row for i, row in enumerate(data)
-        if i not in [idx for idx in seen.values() if idx is None]]
+data = [row for i, row in enumerate(data) if i not in [idx for idx in seen.values() if idx is None]]
+
+data = [row for row in data if row not in duplicate_data]
 
 # فرز القوائم
 data = sorted(data, key=lambda x: (x["en"] or "").lower().strip())
+
 duplicate_data = sorted(duplicate_data, key=lambda x: (x["en"] or "").lower().strip())
 
 data_new = {

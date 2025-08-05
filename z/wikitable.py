@@ -10,6 +10,8 @@ from newapi.page import MainPage
 
 Dir = Path(__file__).parent
 
+csv_dup = json.loads((Dir / "render_data/csv_dup.json").read_text('utf-8'))
+# ---
 data_file = Dir / "render_data/csv.json"
 data_tab = json.loads(data_file.read_text('utf-8')) if data_file.exists() else {}
 data_tab = {z.lower() : v for z, v in data_tab.items()}
@@ -21,6 +23,14 @@ qids_data = {z : v for z, v in qids_data.items()}
 one_qid_rows = []
 multi_qids_rows = []
 zero_qid_rows = []
+# ---
+csv_dup_rows = []
+# ---
+for n, x in enumerate(csv_dup, 1):
+    line = f"| {n} \n| {x['en']} \n| {x['label']} \n| {x['description']}"
+    csv_dup_rows.append(line)
+# ---
+text_6 = "\n|-\n".join(csv_dup_rows)
 # ---
 for en, e_qids in qids_data.items():
     # ---
@@ -63,7 +73,19 @@ text = f"""
 * All items: {len(qids_data):,}
 * [https://editgroups.toolforge.org/b/CB/960017df0e23/ Work Report]
 
-=== with qids ({len(one_qid_rows)}) ===
+== Duplicate labels ({len(csv_dup)}) ==
+{{| class="wikitable sortable"
+|-
+! #
+! en
+! label
+! description
+|-
+{text_6}
+|-
+|}}
+
+== with qids ({len(one_qid_rows)}) ==
 {{| class="wikitable sortable"
 |-
 ! #
@@ -91,7 +113,7 @@ text = f"""
 |-
 |}}
 
-=== without qids ({len(zero_qid_rows)}) ===
+== without qids ({len(zero_qid_rows)}) ==
 {{| class="wikitable sortable"
 |-
 ! #
@@ -105,7 +127,6 @@ text = f"""
 |}}
 """
 # ---
-
 title = "User:Mr._Ibrahem/dz2"
 # ---
 page = MainPage(title, 'www', family='wikidata')
