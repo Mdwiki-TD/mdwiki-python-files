@@ -24,7 +24,7 @@ from newapi.page import NEW_API, MainPage
 api_new = NEW_API('en', family='wikipedia')
 
 from newapi.api_utils import wd_sparql
-import api_wd_z
+from api_z import api_wd_z
 
 JsonsDir = Path(__file__).parent / "jsons"
 

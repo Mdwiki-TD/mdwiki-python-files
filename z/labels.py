@@ -13,7 +13,7 @@ import sys
 from tqdm import tqdm
 from pathlib import Path
 
-import api_wd_z
+from api_z import api_wd_z
 from apis.wd_bots import wd_rest_new
 
 Dir = Path(__file__).parent
