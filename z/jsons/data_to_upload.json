@@ -90,13 +90,6 @@
         "score": 1,
         "matched_label": "abdomen"
     },
-    "abo system": {
-        "label": "ཁྲག་སྡེ་དབྱེ་རིམ།",
-        "desc": "ཁྲག་གི་དབྱེ་བ་ཕྱེ་ཐངས་ཀྱི་རིམ་ལུགས། དཔེར་ན། ཁྲག་སྡེ་a ཡངན་ b ཡངན་o ཡངན་ab ཨིན་མས་སྫོགས།",
-        "qid": "Q69982120",
-        "score": 0.219,
-        "matched_label": "ABO system, Rh and sex interactions in newborn infants"
-    },
     "abortion": {
         "label": "མངལ་བཤལ།",
         "desc": "སན་དང་གཤག་བཅོས་གང་རུང་གི་ཐྫོག་ལས། ཨ་ལུ་ཕྫོཝ་ནང་ཆགས་སྟེ་ བདུན་ཕག་༢༠ ཡངན་ཉིན་གྲངས་༡༣༩འི་ནང་འཁོད།",

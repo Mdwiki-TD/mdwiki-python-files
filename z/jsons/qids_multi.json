@@ -1,12 +1,1152 @@
 {
+    "parasite": {
+        "Q10253316": {
+            "score": 1,
+            "matched_label": "parasite"
+        },
+        "Q186517": {
+            "score": 2,
+            "matched_label": "parasite"
+        }
+    },
+    "chest": {
+        "Q113147273": {
+            "score": 1,
+            "matched_label": "chest"
+        },
+        "Q9645": {
+            "score": 2,
+            "matched_label": "chest"
+        }
+    },
+    "convex lens": {
+        "Q12224471": {
+            "score": 1,
+            "matched_label": "convex lens"
+        },
+        "Q768575": {
+            "score": 2,
+            "matched_label": "convex lens"
+        }
+    },
+    "bisexual": {
+        "Q12905217": {
+            "score": 1,
+            "matched_label": "bisexual"
+        },
+        "Q43200": {
+            "score": 2,
+            "matched_label": "bisexual"
+        }
+    },
+    "dressing room": {
+        "Q2213191": {
+            "score": 1,
+            "matched_label": "dressing room"
+        },
+        "Q1070054": {
+            "score": 2,
+            "matched_label": "dressing room"
+        }
+    },
+    "caries": {
+        "Q2250111": {
+            "score": 1,
+            "matched_label": "caries"
+        },
+        "Q133772": {
+            "score": 2,
+            "matched_label": "caries"
+        }
+    },
+    "hard drug": {
+        "Q24892366": {
+            "score": 1,
+            "matched_label": "hard drug"
+        },
+        "Q7708739": {
+            "score": 2,
+            "matched_label": "hard drug"
+        }
+    },
+    "iophobia": {
+        "Q25339134": {
+            "score": 1,
+            "matched_label": "iophobia"
+        },
+        "Q18353745": {
+            "score": 2,
+            "matched_label": "iophobia"
+        }
+    },
+    "beriberi": {
+        "Q4138763": {
+            "score": 1,
+            "matched_label": "beriberi"
+        },
+        "Q184084": {
+            "score": 2,
+            "matched_label": "beriberi"
+        }
+    },
+    "anoxemia": {
+        "Q568321": {
+            "score": 1,
+            "matched_label": "anoxemia"
+        },
+        "Q1479485": {
+            "score": 2,
+            "matched_label": "anoxemia"
+        }
+    },
+    "Abortionist": {
+        "Q113667146": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q8452": {
+            "score": 2,
+            "matched_label": "Abortionist"
+        }
+    },
+    "addict": {
+        "Q4681106": {
+            "score": 0.667,
+            "matched_label": "Addiction"
+        },
+        "Q12029": {
+            "score": 2,
+            "matched_label": "addict"
+        }
+    },
+    "anephric": {
+        "Q69869650": {
+            "score": 0.7,
+            "matched_label": "Anephric man"
+        },
+        "Q476921": {
+            "score": 2,
+            "matched_label": "anephric"
+        }
+    },
+    "anisakiasis": {
+        "Q3091959": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q548871": {
+            "score": 2,
+            "matched_label": "anisakiasis"
+        }
+    },
+    "aortogram": {
+        "Q74813420": {
+            "score": 0.188,
+            "matched_label": "Aortogram after repair of common arterial trunk with interrupted aortic arch"
+        },
+        "Q4778773": {
+            "score": 2,
+            "matched_label": "aortogram"
+        }
+    },
+    "back": {
+        "Q285676": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q133279": {
+            "score": 2,
+            "matched_label": "back"
+        }
+    },
+    "bed sore": {
+        "Q83269474": {
+            "score": 0.706,
+            "matched_label": "Bed-sores"
+        },
+        "Q308978": {
+            "score": 2,
+            "matched_label": "bed sore"
+        }
+    },
+    "behaviour": {
+        "Q15763174": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q9332": {
+            "score": 2,
+            "matched_label": "behaviour"
+        }
+    },
+    "breast feed": {
+        "Q66026765": {
+            "score": 0.333,
+            "matched_label": "Breast Feeding Analgesia in Preterm Infants"
+        },
+        "Q174876": {
+            "score": 2,
+            "matched_label": "breast feed"
+        }
+    },
+    "bulimia": {
+        "Q114491581": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q64513386": {
+            "score": 2,
+            "matched_label": "bulimia"
+        }
+    },
+    "carotid": {
+        "Q18555923": {
+            "score": 0.483,
+            "matched_label": "carotid artery disease"
+        },
+        "Q214275": {
+            "score": 2,
+            "matched_label": "carotid"
+        }
+    },
+    "carpus": {
+        "Q1044816": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q185706": {
+            "score": 2,
+            "matched_label": "carpus"
+        }
+    },
+    "centimeter": {
+        "Q4407906": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q174728": {
+            "score": 2,
+            "matched_label": "centimeter"
+        }
+    },
+    "chemical": {
+        "Q426303": {
+            "score": 0.452,
+            "matched_label": "Chemical Communications"
+        },
+        "Q79529": {
+            "score": 2,
+            "matched_label": "chemical"
+        }
+    },
+    "cold sores": {
+        "Q68313532": {
+            "score": 0.529,
+            "matched_label": "Cold sores and safer sex"
+        },
+        "Q2364836": {
+            "score": 2,
+            "matched_label": "cold sores"
+        }
+    },
+    "collar-bone": {
+        "Q83680095": {
+            "score": 0.471,
+            "matched_label": "Collar Bone Left Atrium"
+        },
+        "Q16343": {
+            "score": 2,
+            "matched_label": "collar-bone"
+        }
+    },
+    "conceive": {
+        "Q5158293": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q405260": {
+            "score": 2,
+            "matched_label": "conceive"
+        }
+    },
+    "contraception": {
+        "Q2995704": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q122224": {
+            "score": 2,
+            "matched_label": "contraception"
+        }
+    },
+    "cor pulmonale": {
+        "Q22299234": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q1131786": {
+            "score": 2,
+            "matched_label": "cor pulmonale"
+        }
+    },
+    "corn": {
+        "Q61665121": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q11575": {
+            "score": 2,
+            "matched_label": "corn"
+        }
+    },
+    "costae": {
+        "Q19903884": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q196672": {
+            "score": 2,
+            "matched_label": "costae"
+        }
+    },
+    "daltonism": {
+        "Q71886970": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q2167988": {
+            "score": 2,
+            "matched_label": "daltonism"
+        }
+    },
+    "dark room": {
+        "Q183998": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q601413": {
+            "score": 2,
+            "matched_label": "dark room"
+        }
+    },
+    "dead": {
+        "Q5372066": {
+            "score": 0.308,
+            "matched_label": "hard copy"
+        },
+        "Q4": {
+            "score": 2,
+            "matched_label": "dead"
+        }
+    },
+    "deaf": {
+        "Q1539971": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q12133": {
+            "score": 2,
+            "matched_label": "deaf"
+        }
+    },
+    "death bed": {
+        "Q91943648": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q5247660": {
+            "score": 2,
+            "matched_label": "death bed"
+        }
+    },
+    "defloration": {
+        "Q1640627": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q170538": {
+            "score": 2,
+            "matched_label": "defloration"
+        }
+    },
+    "degeneration": {
+        "Q15467261": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q358799": {
+            "score": 2,
+            "matched_label": "degeneration"
+        }
+    },
+    "demented": {
+        "Q105546566": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q83030": {
+            "score": 2,
+            "matched_label": "demented"
+        }
+    },
+    "depilatory": {
+        "Q2296561": {
+            "score": 0.833,
+            "matched_label": "depilatory wax"
+        },
+        "Q625145": {
+            "score": 2,
+            "matched_label": "depilatory"
+        }
+    },
+    "dick test": {
+        "Q40917150": {
+            "score": 0.432,
+            "matched_label": "Dick Test Results: 1969-1971"
+        },
+        "Q5566408": {
+            "score": 2,
+            "matched_label": "dick test"
+        }
+    },
+    "digestible": {
+        "Q46855502": {
+            "score": 0.225,
+            "matched_label": "Digestible and metabolizable energy of crude glycerol for growing pigs"
+        },
+        "Q11978": {
+            "score": 2,
+            "matched_label": "digestible"
+        }
+    },
+    "disk": {
+        "Q12346540": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q224358": {
+            "score": 2,
+            "matched_label": "disk"
+        }
+    },
+    "dissect": {
+        "Q1145479": {
+            "score": 0.706,
+            "matched_label": "Dissection"
+        },
+        "Q116646": {
+            "score": 2,
+            "matched_label": "dissect"
+        }
+    },
+    "ear wax": {
+        "Q33446758": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q76418": {
+            "score": 2,
+            "matched_label": "ear wax"
+        }
+    },
+    "eat": {
+        "Q1773949": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q213449": {
+            "score": 2,
+            "matched_label": "eat"
+        }
+    },
+    "edentate": {
+        "Q12653866": {
+            "score": 0.4,
+            "matched_label": "Eidintaičiai"
+        },
+        "Q173612": {
+            "score": 2,
+            "matched_label": "edentate"
+        }
+    },
+    "emesis": {
+        "Q11857745": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q127076": {
+            "score": 2,
+            "matched_label": "emesis"
+        }
+    },
+    "entrails": {
+        "Q10484989": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q11829360": {
+            "score": 2,
+            "matched_label": "entrails"
+        }
+    },
+    "eradicate": {
+        "Q107382123": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q16775599": {
+            "score": 2,
+            "matched_label": "eradicate"
+        }
+    },
+    "erogenous": {
+        "Q109042471": {
+            "score": 0.16,
+            "matched_label": "Erogenous Organs: The Metamorphosis of Polyphemus' \"Syrinx\" in Ovid, \"Metamorphoses\" 13.784"
+        },
+        "Q207850": {
+            "score": 2,
+            "matched_label": "erogenous"
+        }
+    },
+    "eyesight": {
+        "Q5422866": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q162668": {
+            "score": 2,
+            "matched_label": "eyesight"
+        }
+    },
+    "fecal": {
+        "Q111569458": {
+            "score": 0.5,
+            "matched_label": "faecal analysis"
+        },
+        "Q496": {
+            "score": 2,
+            "matched_label": "fecal"
+        }
+    },
+    "fertile": {
+        "Q5445570": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q964401": {
+            "score": 2,
+            "matched_label": "fertile"
+        }
+    },
+    "fertilization": {
+        "Q45317935": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q14890574": {
+            "score": 2,
+            "matched_label": "fertilization"
+        }
+    },
+    "flesh wound": {
+        "Q3746575": {
+            "score": 0.783,
+            "matched_label": "Flesh Wounds"
+        },
+        "Q2024794": {
+            "score": 2,
+            "matched_label": "flesh wound"
+        }
+    },
+    "flogging": {
+        "Q13424485": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q779753": {
+            "score": 2,
+            "matched_label": "flogging"
+        }
+    },
+    "fontanel": {
+        "Q42951722": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q752693": {
+            "score": 2,
+            "matched_label": "fontanel"
+        }
+    },
+    "forefinger": {
+        "Q123002199": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q184848": {
+            "score": 2,
+            "matched_label": "forefinger"
+        }
+    },
+    "frons": {
+        "Q1434710": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q2684571": {
+            "score": 2,
+            "matched_label": "frons"
+        }
+    },
+    "fungal": {
+        "Q5509159": {
+            "score": 0.5,
+            "matched_label": "Fungal Biology"
+        },
+        "Q764": {
+            "score": 2,
+            "matched_label": "fungal"
+        }
+    },
+    "gastralgia": {
+        "Q3758794": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q183425": {
+            "score": 2,
+            "matched_label": "gastralgia"
+        }
+    },
+    "gastrocnemius": {
+        "Q37672698": {
+            "score": 0.375,
+            "matched_label": "Gastrocnemius recession to treat isolated foot pain"
+        },
+        "Q943203": {
+            "score": 2,
+            "matched_label": "gastrocnemius"
+        }
+    },
+    "gastrorrhagia": {
+        "Q1883970": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q3144956": {
+            "score": 2,
+            "matched_label": "gastrorrhagia"
+        }
+    },
+    "genital": {
+        "Q111693701": {
+            "score": 0.538,
+            "matched_label": "ambiguous genitalia"
+        },
+        "Q4620674": {
+            "score": 2,
+            "matched_label": "genital"
+        }
+    },
+    "germs": {
+        "Q27724874": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q170065": {
+            "score": 2,
+            "matched_label": "germs"
+        }
+    },
+    "gibbous": {
+        "Q24961814": {
+            "score": 0.737,
+            "matched_label": "gibbous moon"
+        },
+        "Q26388": {
+            "score": 2,
+            "matched_label": "gibbous"
+        }
+    },
+    "giddiness": {
+        "Q21402620": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q10916362": {
+            "score": 2,
+            "matched_label": "giddiness"
+        }
+    },
+    "glossalgia": {
+        "Q1532173": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q230047": {
+            "score": 2,
+            "matched_label": "glossalgia"
+        }
+    },
+    "gooseflesh": {
+        "Q69824709": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q684782": {
+            "score": 2,
+            "matched_label": "gooseflesh"
+        }
+    },
+    "harelip": {
+        "Q74065450": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q222634": {
+            "score": 2,
+            "matched_label": "harelip"
+        }
+    },
+    "hay fever": {
+        "Q3740609": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q272436": {
+            "score": 2,
+            "matched_label": "hay fever"
+        }
+    },
+    "heart beat": {
+        "Q3072238": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q253408": {
+            "score": 2,
+            "matched_label": "heart beat"
+        }
+    },
+    "hot water bag": {
+        "Q41139313": {
+            "score": 0.5,
+            "matched_label": "Hot water bag for diseased prostate"
+        },
+        "Q1334994": {
+            "score": 2,
+            "matched_label": "hot water bag"
+        }
+    },
+    "hypochondria": {
+        "Q109472857": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q105434": {
+            "score": 2,
+            "matched_label": "hypochondria"
+        }
+    },
+    "incrustation": {
+        "Q65807465": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q1456639": {
+            "score": 2,
+            "matched_label": "incrustation"
+        }
+    },
+    "infuse": {
+        "Q23808224": {
+            "score": 0.526,
+            "matched_label": "Infused water"
+        },
+        "Q61951": {
+            "score": 2,
+            "matched_label": "infuse"
+        }
+    },
+    "inhale": {
+        "Q666182": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q840343": {
+            "score": 2,
+            "matched_label": "inhale"
+        }
+    },
+    "in-patient": {
+        "Q65545977": {
+            "score": 0.346,
+            "matched_label": "In-Patient Study In Schizophrenic Patients"
+        },
+        "Q181600": {
+            "score": 2,
+            "matched_label": "in-patient"
+        }
+    },
+    "instep": {
+        "Q6038883": {
+            "score": 0.667,
+            "matched_label": "instep borer"
+        },
+        "Q15807": {
+            "score": 2,
+            "matched_label": "instep"
+        }
+    },
+    "intoxicate": {
+        "Q20856778": {
+            "score": 0.857,
+            "matched_label": "Intoxicated"
+        },
+        "Q274160": {
+            "score": 2,
+            "matched_label": "intoxicate"
+        }
+    },
+    "labour pain": {
+        "Q41889744": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q34581": {
+            "score": 2,
+            "matched_label": "labour pain"
+        }
+    },
+    "lacerate": {
+        "Q18959953": {
+            "score": 0.824,
+            "matched_label": "Lacerated"
+        },
+        "Q2049965": {
+            "score": 2,
+            "matched_label": "lacerate"
+        }
+    },
+    "leper": {
+        "Q102728": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q36956": {
+            "score": 2,
+            "matched_label": "leper"
+        }
+    },
+    "life span": {
+        "Q188419": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q441195": {
+            "score": 2,
+            "matched_label": "life span"
+        }
+    },
+    "linctus": {
+        "Q75662520": {
+            "score": 0.75,
+            "matched_label": "Linctuses"
+        },
+        "Q584209": {
+            "score": 2,
+            "matched_label": "linctus"
+        }
+    },
+    "lock jaw": {
+        "Q936070": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q6665678": {
+            "score": 2,
+            "matched_label": "lock jaw"
+        }
+    },
+    "long sighted": {
+        "Q82865248": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q177254": {
+            "score": 2,
+            "matched_label": "long sighted"
+        }
+    },
+    "microbe": {
+        "Q3312055": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q39833": {
+            "score": 2,
+            "matched_label": "microbe"
+        }
+    },
+    "microscopic": {
+        "Q27712099": {
+            "score": 0.714,
+            "matched_label": "Microscopica acta"
+        },
+        "Q38456": {
+            "score": 2,
+            "matched_label": "microscopic"
+        }
+    },
+    "naked": {
+        "Q3564436": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q10791": {
+            "score": 2,
+            "matched_label": "naked"
+        }
+    },
+    "natural born": {
+        "Q3873338": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q106959575": {
+            "score": 2,
+            "matched_label": "natural born"
+        }
+    },
+    "natural death": {
+        "Q33836005": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q2438541": {
+            "score": 2,
+            "matched_label": "natural death"
+        }
+    },
+    "neurological": {
+        "Q73501278": {
+            "score": 0.8,
+            "matched_label": "neurological model"
+        },
+        "Q83042": {
+            "score": 2,
+            "matched_label": "neurological"
+        }
+    },
+    "numbness": {
+        "Q130344594": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q1641556": {
+            "score": 2,
+            "matched_label": "numbness"
+        }
+    },
+    "nutritional": {
+        "Q67151937": {
+            "score": 0.759,
+            "matched_label": "nutritional status"
+        },
+        "Q2138622": {
+            "score": 2,
+            "matched_label": "nutritional"
+        }
+    },
+    "ocular": {
+        "Q69942028": {
+            "score": 0.632,
+            "matched_label": "ocular vision"
+        },
+        "Q7364": {
+            "score": 2,
+            "matched_label": "ocular"
+        }
+    },
+    "ointment": {
+        "Q4004659": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q420054": {
+            "score": 2,
+            "matched_label": "ointment"
+        }
+    },
     "operating table": {
         "Q111665793": {
             "score": 0,
             "matched_label": ""
         },
         "Q2026556": {
-            "score": 1,
+            "score": 2,
             "matched_label": "operating table"
+        }
+    },
+    "optic": {
+        "Q3354459": {
+            "score": 0.421,
+            "matched_label": "Optics Express"
+        },
+        "Q14620": {
+            "score": 2,
+            "matched_label": "optic"
+        }
+    },
+    "ordure": {
+        "Q41496999": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q8191962": {
+            "score": 2,
+            "matched_label": "ordure"
+        }
+    },
+    "palpitate": {
+        "Q65351569": {
+            "score": 0.162,
+            "matched_label": "Palpitate-Eluting Balloon Angioplasty in the Treatment of Coronary Bifurcation Lesion Evaluated by OCT"
+        },
+        "Q1123260": {
+            "score": 2,
+            "matched_label": "palpitate"
+        }
+    },
+    "pap smear": {
+        "Q83490713": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q942976": {
+            "score": 2,
+            "matched_label": "pap smear"
+        }
+    },
+    "paralytic": {
+        "Q35333440": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q107231": {
+            "score": 2,
+            "matched_label": "paralytic"
+        }
+    },
+    "parentage": {
+        "Q111807544": {
+            "score": 0.529,
+            "matched_label": "parentage of culture hero"
+        },
+        "Q7566": {
+            "score": 2,
+            "matched_label": "parentage"
+        }
+    },
+    "paroxysm": {
+        "Q42324521": {
+            "score": 0.552,
+            "matched_label": "paroxysmal hemicrania"
+        },
+        "Q2053948": {
+            "score": 2,
+            "matched_label": "paroxysm"
+        }
+    },
+    "peptic ulcer": {
+        "Q6452285": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q172941": {
+            "score": 2,
+            "matched_label": "peptic ulcer"
+        }
+    },
+    "phalanges": {
+        "Q180335": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q1057892": {
+            "score": 2,
+            "matched_label": "phalanges"
+        }
+    },
+    "poisonous": {
+        "Q114498352": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q40867": {
+            "score": 2,
+            "matched_label": "poisonous"
+        }
+    },
+    "pregnant": {
+        "Q20741850": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q11995": {
+            "score": 2,
+            "matched_label": "pregnant"
+        }
+    },
+    "pyorrhoea": {
+        "Q7248549": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q520127": {
+            "score": 2,
+            "matched_label": "pyorrhoea"
+        }
+    },
+    "tallus": {
+        "Q50353160": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q1074284": {
+            "score": 2,
+            "matched_label": "tallus"
+        }
+    },
+    "tinea": {
+        "Q1955436": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q1909343": {
+            "score": 2,
+            "matched_label": "tinea"
+        }
+    },
+    "uvular": {
+        "Q4002938": {
+            "score": 0.588,
+            "matched_label": "bifid uvula"
+        },
+        "Q623772": {
+            "score": 2,
+            "matched_label": "uvular"
+        }
+    },
+    "zoonoses": {
+        "Q124128450": {
+            "score": 1,
+            "matched_label": ""
+        },
+        "Q182672": {
+            "score": 2,
+            "matched_label": "zoonoses"
         }
     }
 }

@@ -15,20 +15,18 @@ abarticulation;ཚིགས་དཀྲུག་པ།;རྐངམ་དང་�
 import sys
 import json
 import Levenshtein
-# from newapi.page import NEW_API
 from tqdm import tqdm
 from newapi import printe
-from newapi.page import MainPage
 # from newapi.wd_sparql import get_query_result
 from pathlib import Path
+
+from newapi.page import NEW_API, MainPage
+api_new = NEW_API('en', family='wikipedia')
 
 from newapi.api_utils import wd_sparql
 import api_wd_z
 
 JsonsDir = Path(__file__).parent / "jsons"
-
-# api = NEW_API('en', family='wikipedia')
-# api.Login_to_wiki()
 
 qids_file_multi = JsonsDir / "qids_multi.json"
 qids_file_mt = JsonsDir / "qids_empty.json"
@@ -95,10 +93,43 @@ def get_qids(english_terms_new):
             if qid:
                 printe.output(f"<<yellow>> {term}: {qid}")
                 results[term][qid] = {
-                    "score" : 1,
+                    "score" : 2,
                     "matched_label" : term,
                 }
+    # ---
+    dump_data()
 
+
+def get_qids_new(english_terms_new):
+    # ---
+    titles = list(english_terms_new)
+    # ---
+    pages = api_new.Find_pages_exists_or_not_with_qids(english_terms_new, get_redirect=True, use_user_input_title=True)
+    # ---
+    with open(JsonsDir / "pages.json", 'w', encoding='utf-8') as f:
+        json.dump(pages, f, ensure_ascii=False, indent=4)
+    # ---
+    exists = {x: d for x, d in pages.items() if d.get("exist")}
+    # ---
+    not_exists = [x.lower() for x, z in pages.items() if not z.get("exist")]
+    # ---
+    print(f"all:{len(english_terms_new)} \t exists: {len(exists)} \t not_exists: {len(not_exists)}")
+    # ---
+    for term in tqdm(english_terms_new, desc="Processing terms"):
+        # ---
+        results.setdefault(term, {})
+        # ---
+        data = exists.get(term) or {}
+        # ---
+        qid = data.get("wikibase_item")
+        # ---
+        if qid:
+            printe.output(f"<<yellow>> {term}: {qid}")
+            results[term][qid] = {
+                "score" : 2,
+                "matched_label" : term,
+            }
+    # ---
     dump_data()
 
 
@@ -185,7 +216,7 @@ def search_wd(english_terms_new):
         if qid and highest_score > 0:
             results[term][qid] = {
                 "score" : highest_score,
-                "matched_label" : best_label#.replace('"', "'"),
+                "matched_label" : best_label  # .replace('"', "'"),
             }
         # ---
         if "break" in sys.argv:
@@ -202,7 +233,7 @@ def start():
 
     # ---
     if "work_all" in sys.argv:
-        get_qids(to_add.keys())
+        get_qids_new(to_add.keys())
         return
     # ---
     english_terms_new = get_english_terms()
