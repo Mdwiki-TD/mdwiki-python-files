@@ -30,13 +30,13 @@ for en, e_qids in qids_data.items():
     qid_row = qid_row.strip()
     # ---
     label = data_tab.get(en.lower(), {}).get("label", "")
-    desc = data_tab.get(en.lower(), {}).get("desc", "")
+    description = data_tab.get(en.lower(), {}).get("description", "")
     # ---
     n = len(multi_qids_rows) if len(e_qids) > 1 else len(one_qid_rows) if len(e_qids) == 1 else len(zero_qid_rows)
     # ---
     n += 1
     # ---{ "score" : 1, "matched_label" : term, }
-    line = f"| {n} \n| {en} \n| {qid_row} \n| {label} \n| {desc}"
+    line = f"| {n} \n| {en} \n| {qid_row} \n| {label} \n| {description}"
     # ---
     score = ""
     matched_label = ""
@@ -51,7 +51,7 @@ for en, e_qids in qids_data.items():
     if len(e_qids) > 1:
         multi_qids_rows.append(line)
     elif len(e_qids) == 1:
-        line = f"| {n} \n| {en} \n| {qid_row} \n| {score} \n| {matched_label} \n| {label} \n| {desc}"
+        line = f"| {n} \n| {en} \n| {qid_row} \n| {score} \n| {matched_label} \n| {label} \n| {description}"
         one_qid_rows.append(line)
     else:
         zero_qid_rows.append(line)

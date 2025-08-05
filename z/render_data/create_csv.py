@@ -1,5 +1,5 @@
 """
-python3 I:/mdwiki/pybot/z//render_datacsv_do.py
+python3 I:/mdwiki/pybot/z/render_data/create_csv.py
 """
 import re
 import json
@@ -8,8 +8,8 @@ import csv
 
 Dir = Path(__file__).parent.parent
 
-data_file = Dir / "jsons/csv.json"
-data_duplicate_file = Dir / "jsons/csv_dup.json"
+data_file = Dir / "csv.json"
+data_duplicate_file = Dir / "csv_dup.json"
 csv_file = Dir / "dictionary(ocr_resolved).csv"
 
 data = []

@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py z/data
+python3 I:/mdwiki/pybot/z/render_data/data.py
 """
 
 import re
@@ -7,10 +7,10 @@ import json
 from pathlib import Path
 import csv
 
-Dir = Path(__file__).parent
+Dir = Path(__file__).parent.parent
 
 data_file = Dir / "jsons/data.json"
-csv_file = Dir / "dictionary(ocr_resolved).csv"
+csv_file = Dir / "render_data/csv.json"
 
 data = {}
 data_Lower = {}
@@ -28,14 +28,14 @@ with open(csv_file, 'r', encoding='utf-8') as file:
         data_Lower[en.lower()] += 1
         # ---
         label = row["label"].strip()
-        desc = row["description"].strip()
+        description = row["description"].strip()
         # ---
         label = re.sub(r"\s+", " ", label)
-        desc = re.sub(r"\s+", " ", desc)
+        description = re.sub(r"\s+", " ", description)
         # ---
         entry = {
             "label": label,
-            "desc": desc
+            "description": description
         }
         # ---
         if en in data and data[en] != entry:
