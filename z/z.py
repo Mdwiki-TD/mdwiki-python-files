@@ -3,12 +3,12 @@
 python3 core8/pwb.py z/z
 
 
-English Term;Dzongkha Term;Dzongkha Explanation
+English Term;label;description
 abalienation;འཆོལ་ལྫོ་སྫོ་ལྫོ།;སེམས་ཏན་ཏན་མེད་འགྱོ་བ།
 abarticulation;ཚིགས་དཀྲུག་པ།;རྐངམ་དང་ལག་པའི་ཚིགས་དཀྲུག་ི།
 
 
-# read dictionary(oc_resolved).csv extract English Term;Dzongkha Term;Dzongkha Explanation to english_terms
+# read dictionary(oc_resolved).csv extract English Term;label;description to english_terms
 
 """
 
