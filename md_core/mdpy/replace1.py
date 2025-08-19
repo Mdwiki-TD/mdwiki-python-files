@@ -56,7 +56,7 @@ def work(title, Find, Replace, nn):
     # ---
     numbers["done"] += 1
     # ---
-    revid = page.revid
+    revid = page.get_revid()
     # ---
     sus = f"replace {nn} [[toolforge:mdwiki/qdel.php?job=replace{nn}|(stop)]] "
     # ---
@@ -66,7 +66,7 @@ def work(title, Find, Replace, nn):
     # ---
     if save_page:
         # ---
-        newrevid = page.newrevid
+        newrevid = page.get_newrevid()
         # ---
         if newrevid not in [revid, ""]:
             # ---
@@ -129,7 +129,7 @@ def main():
     line = f"<span style='font-size:12px'>{text}</span>"
     open(file_name[2], "w", encoding="utf-8").write(line)
     # ---
-    for n, page in enumerate(titles, start=1):
+    for _, page in enumerate(titles, start=1):
         # ---
         if numbers["done"] >= numbers[1]:
             break

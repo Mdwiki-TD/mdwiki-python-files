@@ -61,7 +61,7 @@ def work(title, Find, Replace, nn, log_file):
         # ---
         return 0
     # ---
-    revid = page.revid
+    revid = page.get_revid()
     # ---
     sus = f"replace {nn} [[toolforge:mdwiki/qdel.php?job=replace{nn}|(stop)]] "
     # ---
@@ -71,7 +71,7 @@ def work(title, Find, Replace, nn, log_file):
     # ---
     if save_page:
         # ---
-        newrevid = page.newrevid
+        newrevid = page.get_newrevid()
         # ---
         if newrevid not in [revid, ""]:
             # ---
