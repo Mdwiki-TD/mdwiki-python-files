@@ -17,7 +17,7 @@ from newapi import printe
 from mdapi_sql import sql_for_mdwiki
 from mdapi_sql import sql_for_mdwiki_new
 # from mdpyget.bots.to_sql import insert_dict, to_sql
-from mdpyget.bots.to_sql_new import new_to_sql
+from mdpyget.bots.to_sql import new_to_sql
 # ---
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"

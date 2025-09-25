@@ -183,3 +183,48 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
     else:
         insert_dict(new_data_insert, table_name, columns, title_column=title_column, IGNORE=IGNORE)
         update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
+
+def new_to_sql(data, table_name, columns, title_columns=["title"], update_columns=None, IGNORE=False):
+    # ---
+    que = f'''select DISTINCT * from {table_name};'''
+    # ---
+    in_sql = {}
+    # ---
+    in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
+    # ---
+    for q in in_sql_list:
+        title = ",".join([q[t] for t in title_columns])
+        in_sql[title] = q
+    # ---
+    new_data_insert = []
+    new_data_update = []
+    # ---
+    same = 0
+    # ---
+    data_to_compare = {",".join([tab[t] for t in title_columns]): tab for tab in data}
+    # ---
+    for key, values in data_to_compare.items():
+        if key in in_sql:
+            are_the_same = True
+            # ---
+            for c in columns:
+                if in_sql[key][c] != values[c]:
+                    # new_data_update[key] = values
+                    new_data_update.append(values)
+                    are_the_same = False
+                    break
+            # ---
+            if are_the_same:
+                same += 1
+        else:
+            # new_data_insert[key] = values
+            new_data_insert.append(values)
+    # ---
+    print(f"{same=}, {len(new_data_insert)=}, {len(new_data_update)=}")
+    # ---
+    if "nodump" in sys.argv:
+        print('"nodump" in sys.argv - no dump')
+    else:
+        insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], IGNORE=IGNORE)
+        # ---
+        update_table_2(new_data_update, table_name, columns_to_set=update_columns, lento=10, columns_where=title_columns)
