@@ -164,7 +164,7 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
             are_the_same = True
             # ---
             for c in columns:
-                if in_sql[key][c] != values[c]:
+                if str(in_sql[key].get(c, '')) != str(values.get(c, '')):
                     # new_data_update[key] = values
                     new_data_update.append(values)
                     are_the_same = False
@@ -209,7 +209,7 @@ def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["titl
             are_the_same = True
             # ---
             for c in columns:
-                if in_sql[key][c] != values[c]:
+                if str(in_sql[key].get(c, '')) != str(values.get(c, '')):
                     # new_data_update[key] = values
                     new_data_update.append(values)
                     are_the_same = False
