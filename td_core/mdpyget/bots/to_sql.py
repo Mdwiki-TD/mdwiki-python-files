@@ -81,14 +81,13 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
         print(f"to_sql.py insert_dict({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def update_table(list_of_lines, table_name, columns, lento=10, title_column="title"):
+def update_table(list_of_lines, table_name, columns, lento=10, title_column="title", update_columns=None):
     # ---
     print(f"update_table({table_name}): list_of_lines: {len(list_of_lines)}")
     # ---
     done = 0
     # ---
-    if title_column in columns:
-        columns.remove(title_column)
+    columns2 = update_columns or [x for x in columns if x != title_column]
     # ---
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
@@ -96,16 +95,16 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
         # ---
         for vav in tab:
             # ---
-            values = [vav.get(x, "") for x in columns]
+            values = [vav.get(x, "") for x in columns2]
             # ---
-            set_line = ", ".join([f"{x} = %s" for x in columns])
+            set_line = ", ".join([f"{x} = %s" for x in columns2])
             # ---
             qua = f""" update {table_name} set {set_line} where {title_column} = %s """
             # ---
             values.append(vav[title_column])
             # ---
             mdwiki_sql_one_table(table_name, qua, values=values)
-            # ---
+        # ---
         done += len(tab)
         # ---
         print(f"to_sql.py update_table({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
@@ -141,7 +140,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
         print(f"to_sql.py update_table_2({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def to_sql(data, table_name, columns, title_column="title"):
+def to_sql(data, table_name, columns, title_column="title", update_columns=None, IGNORE=False):
     # ---
     que = f'''select DISTINCT * from {table_name};'''
     # ---
@@ -165,7 +164,7 @@ def to_sql(data, table_name, columns, title_column="title"):
             are_the_same = True
             # ---
             for c in columns:
-                if in_sql[key][c] != values[c]:
+                if str(in_sql[key].get(c, '')) != str(values.get(c, '')):
                     # new_data_update[key] = values
                     new_data_update.append(values)
                     are_the_same = False
@@ -182,5 +181,51 @@ def to_sql(data, table_name, columns, title_column="title"):
     if "nodump" in sys.argv:
         print('"nodump" in sys.argv - no dump')
     else:
-        insert_dict(new_data_insert, table_name, columns, title_column=title_column)
-        update_table(new_data_update, table_name, columns, title_column=title_column)
+        insert_dict(new_data_insert, table_name, columns, title_column=title_column, IGNORE=IGNORE)
+        update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
+
+def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["title"], update_columns=None, IGNORE=False):
+    # ---
+    que = f'''select DISTINCT * from {table_name};'''
+    # ---
+    in_sql = {}
+    # ---
+    if not in_sql_list:
+        in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
+    # ---
+    for q in in_sql_list:
+        title = ",".join([q[t] for t in title_columns])
+        in_sql[title] = q
+    # ---
+    new_data_insert = []
+    new_data_update = []
+    # ---
+    same = 0
+    # ---
+    data_to_compare = {",".join([tab[t] for t in title_columns]): tab for tab in data}
+    # ---
+    for key, values in data_to_compare.items():
+        if key in in_sql:
+            are_the_same = True
+            # ---
+            for c in columns:
+                if str(in_sql[key].get(c, '')) != str(values.get(c, '')):
+                    # new_data_update[key] = values
+                    new_data_update.append(values)
+                    are_the_same = False
+                    break
+            # ---
+            if are_the_same:
+                same += 1
+        else:
+            # new_data_insert[key] = values
+            new_data_insert.append(values)
+    # ---
+    print(f"{same=}, {len(new_data_insert)=}, {len(new_data_update)=}")
+    # ---
+    if "nodump" in sys.argv:
+        print('"nodump" in sys.argv - no dump')
+    else:
+        insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], IGNORE=IGNORE)
+        # ---
+        update_table_2(new_data_update, table_name, columns_to_set=update_columns, lento=100, columns_where=title_columns)

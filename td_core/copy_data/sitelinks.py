@@ -4,6 +4,8 @@
 
 python3 core8/pwb.py copy_data/sitelinks
 
+tfj run sitelinks --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/sitelinks"
+
 (all_qids_titles|all_qids_exists|all_qids)
 (all_exists|all_articles_titles|all_articles|all_qids_titles|all_qids_exists|all_qids)
 """
@@ -12,11 +14,13 @@ import sys
 import tqdm
 import json
 import os
+from collections import defaultdict
 from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
 from mdapi_sql import sql_for_mdwiki_new
-from mdpyget.bots.to_sql import insert_dict
+# from mdpyget.bots.to_sql import insert_dict, to_sql
+from mdpyget.bots.to_sql import new_to_sql
 # ---
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
@@ -34,12 +38,21 @@ SELECT qid FROM qids where qid != "" and qid is not null
 """
 # ---
 mis_qids = []
+in_sql_qid_targets = defaultdict(dict)
 in_sql = {}
 # ---
-que = '''select DISTINCT qid, code from all_qids_exists;'''
+que = '''select DISTINCT qid, code, target from all_qids_exists;'''
 # ---
-for q in sql_for_mdwiki_new.select_md_sql(que, return_dict=True):
+db_data_main = sql_for_mdwiki_new.select_md_sql(que, return_dict=True)
+# ---
+for q in db_data_main:
     qid = q["qid"]
+    target = q["target"]
+    lang = q["code"]
+    # ----
+    if target and lang:
+        in_sql_qid_targets[qid][lang] = target
+    # ----
     if qid in in_sql:
         in_sql[qid].append(q["code"])
     else:
@@ -50,7 +63,8 @@ def start_to_sql(data):
     # ---
     printe.output(f"<<green>> start_to_sql {len(data)=}")
     # ---
-    data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
+    # data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
+    data = {q: v["sitelinks"] for q, v in data.items()}
     # ---
     # print(data)
     # ---
@@ -63,14 +77,31 @@ def start_to_sql(data):
         # ---
         sql_for_mdwiki_new.mdwiki_sql(qua, values=qids_list, many=True)
     # ---
-    for qid, codes in data.items():
+    new_data_all = []
+    # ---
+    # for qid, codes in data.items():
+    for qid, sitelinks in data.items():
         # ---
-        new_data = [{"qid": qid, "code": code} for code in codes if code not in in_sql.get(qid, [])]
+        # new_data = [{"qid": qid, "code": code} for code in codes if code not in in_sql.get(qid, [])]
+        new_data = [
+            {"qid": qid, "code": code, "target": target}
+            for code, target in sitelinks.items()
+            # if code not in in_sql.get(qid, [])
+            if (
+                not in_sql_qid_targets.get(qid, {}).get(code)
+                or in_sql_qid_targets.get(qid, {}).get(code) != target
+            )
+        ]
         # ---
         if new_data:
-            printe.output(f"<<yellow>> all codes: {len(codes)}, new_data: {len(new_data)}.")
-            # ---
-            insert_dict(new_data, "all_qids_exists", ["qid", "code"], lento=1000, title_column="qid", IGNORE=True)
+            new_data_all.extend(new_data)
+    # ---
+    columns = ["qid", "code", "target"]
+    # ---
+    printe.output(f"<<yellow>> all sitelinks: {len(sitelinks)}, new_data_all: {len(new_data_all)}.")
+    # ---
+    # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
+    new_to_sql(new_data_all, "all_qids_exists", columns, in_sql_list=db_data_main, title_columns=["qid", "code"], update_columns=["target"], IGNORE=True)
 
 
 def dump_sitelinks(lists):
@@ -216,7 +247,7 @@ def main():
 
 
 def test():
-    qids = ["Q133247108", "Q874563245"]
+    qids = ["Q2633143"]
     lists = get_qids_sitelinks(qids)
     printe.output(f"len of lists: {len(lists)}.")
     print(lists)
