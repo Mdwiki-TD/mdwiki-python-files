@@ -184,13 +184,14 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
         insert_dict(new_data_insert, table_name, columns, title_column=title_column, IGNORE=IGNORE)
         update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
 
-def new_to_sql(data, table_name, columns, title_columns=["title"], update_columns=None, IGNORE=False):
+def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["title"], update_columns=None, IGNORE=False):
     # ---
     que = f'''select DISTINCT * from {table_name};'''
     # ---
     in_sql = {}
     # ---
-    in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
+    if not in_sql_list:
+        in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
     # ---
     for q in in_sql_list:
         title = ",".join([q[t] for t in title_columns])

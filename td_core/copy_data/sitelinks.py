@@ -12,6 +12,7 @@ import sys
 import tqdm
 import json
 import os
+from collections import defaultdict
 from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
@@ -35,12 +36,21 @@ SELECT qid FROM qids where qid != "" and qid is not null
 """
 # ---
 mis_qids = []
+in_sql_qid_targets = defaultdict(dict)
 in_sql = {}
 # ---
 que = '''select DISTINCT qid, code, target from all_qids_exists;'''
 # ---
-for q in sql_for_mdwiki_new.select_md_sql(que, return_dict=True):
+db_data_main = sql_for_mdwiki_new.select_md_sql(que, return_dict=True)
+# ---
+for q in db_data_main:
     qid = q["qid"]
+    target = q["target"]
+    lang = q["code"]
+    # ----
+    if target and lang:
+        in_sql_qid_targets[qid][lang] = target
+    # ----
     if qid in in_sql:
         in_sql[qid].append(q["code"])
     else:
@@ -73,6 +83,7 @@ def start_to_sql(data):
             {"qid": qid, "code": code, "target": target}
             for code, target in sitelinks.items()
             # if code not in in_sql.get(qid, [])
+            if not in_sql_qid_targets.get(qid, {}).get(code)
         ]
         # ---
         if new_data:
@@ -82,7 +93,7 @@ def start_to_sql(data):
             printe.output(f"<<yellow>> all sitelinks: {len(sitelinks)}, new_data: {len(new_data)}.")
             # ---
             # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
-            new_to_sql(new_data, "all_qids_exists", columns, title_columns=["qid", "code"], update_columns=["target"], IGNORE=True)
+            new_to_sql(new_data, "all_qids_exists", columns, in_sql_list=db_data_main, title_columns=["qid", "code"], update_columns=["target"], IGNORE=True)
 
 
 def dump_sitelinks(lists):
