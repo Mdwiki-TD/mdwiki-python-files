@@ -4,7 +4,7 @@
 
 python3 core8/pwb.py copy_data/sitelinks
 
-tfj run sitelinks --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/sitelinks"
+tfj run sitelinks --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_data/sitelinks"
 
 (all_qids_titles|all_qids_exists|all_qids)
 (all_exists|all_articles_titles|all_articles|all_qids_titles|all_qids_exists|all_qids)
