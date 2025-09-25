@@ -227,4 +227,4 @@ def new_to_sql(data, table_name, columns, title_columns=["title"], update_column
     else:
         insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], IGNORE=IGNORE)
         # ---
-        update_table_2(new_data_update, table_name, columns_to_set=update_columns, lento=10, columns_where=title_columns)
+        update_table_2(new_data_update, table_name, columns_to_set=update_columns, lento=100, columns_where=title_columns)
