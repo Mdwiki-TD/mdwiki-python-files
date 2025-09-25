@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
 
-from mdpyget.bots.to_sql import to_sql
+from mdpyget.bots.to_sql_new import new_to_sql
 # data2 = [{"title": x, "importance": v} for x, v in assessments_tab[1].items()]
-# to_sql(data2, table_name, columns, title_column="title")
+# new_to_sql(data2, table_name, columns, title_column="title")
 
 """
 # ---
@@ -139,8 +139,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
         # ---
         print(f"to_sql.py update_table_2({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
-
-def to_sql(data, table_name, columns, title_column="title", update_columns=None, IGNORE=False):
+def new_to_sql(data, table_name, columns, title_columns=["title"], update_columns=None, IGNORE=False):
     # ---
     que = f'''select DISTINCT * from {table_name};'''
     # ---
@@ -149,7 +148,7 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
     in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
     # ---
     for q in in_sql_list:
-        title = q[title_column]
+        title = ",".join([q[t] for t in title_columns])
         in_sql[title] = q
     # ---
     new_data_insert = []
@@ -157,7 +156,7 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
     # ---
     same = 0
     # ---
-    data_to_compare = {x[title_column]: x for x in data}
+    data_to_compare = {",".join([tab[t] for t in title_columns]): tab for tab in data}
     # ---
     for key, values in data_to_compare.items():
         if key in in_sql:
@@ -181,5 +180,6 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
     if "nodump" in sys.argv:
         print('"nodump" in sys.argv - no dump')
     else:
-        insert_dict(new_data_insert, table_name, columns, title_column=title_column, IGNORE=IGNORE)
-        update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
+        insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], IGNORE=IGNORE)
+        # ---
+        update_table_2(new_data_update, table_name, columns_to_set=update_columns, lento=10, columns_where=title_columns)
