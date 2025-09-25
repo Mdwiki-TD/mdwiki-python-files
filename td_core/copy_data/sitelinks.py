@@ -83,7 +83,10 @@ def start_to_sql(data):
             {"qid": qid, "code": code, "target": target}
             for code, target in sitelinks.items()
             # if code not in in_sql.get(qid, [])
-            if not in_sql_qid_targets.get(qid, {}).get(code)
+            if (
+                not in_sql_qid_targets.get(qid, {}).get(code)
+                or in_sql_qid_targets.get(qid, {}).get(code) != target
+            )
         ]
         # ---
         if new_data:
