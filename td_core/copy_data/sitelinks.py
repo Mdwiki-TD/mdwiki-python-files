@@ -75,6 +75,8 @@ def start_to_sql(data):
         # ---
         sql_for_mdwiki_new.mdwiki_sql(qua, values=qids_list, many=True)
     # ---
+    new_data_all = []
+    # ---
     # for qid, codes in data.items():
     for qid, sitelinks in data.items():
         # ---
@@ -90,13 +92,14 @@ def start_to_sql(data):
         ]
         # ---
         if new_data:
-            # ---
-            columns = ["qid", "code", "target"]
-            # ---
-            printe.output(f"<<yellow>> all sitelinks: {len(sitelinks)}, new_data: {len(new_data)}.")
-            # ---
-            # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
-            new_to_sql(new_data, "all_qids_exists", columns, in_sql_list=db_data_main, title_columns=["qid", "code"], update_columns=["target"], IGNORE=True)
+            new_data_all.extend(new_data)
+    # ---
+    columns = ["qid", "code", "target"]
+    # ---
+    printe.output(f"<<yellow>> all sitelinks: {len(sitelinks)}, new_data_all: {len(new_data_all)}.")
+    # ---
+    # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
+    new_to_sql(new_data_all, "all_qids_exists", columns, in_sql_list=db_data_main, title_columns=["qid", "code"], update_columns=["target"], IGNORE=True)
 
 
 def dump_sitelinks(lists):
