@@ -242,7 +242,7 @@ def main():
 
 
 def test():
-    qids = ["Q84263196", "Q805"]
+    qids = ["Q2633143"]
     lists = get_qids_sitelinks(qids)
     printe.output(f"len of lists: {len(lists)}.")
     print(lists)
