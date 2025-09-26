@@ -39,7 +39,6 @@ SELECT qid FROM qids where qid != "" and qid is not null
 # ---
 mis_qids = []
 in_sql_qid_targets = defaultdict(dict)
-in_sql = {}
 # ---
 que = '''select DISTINCT qid, code, target from all_qids_exists;'''
 # ---
@@ -52,11 +51,8 @@ for q in db_data_main:
     # ----
     if target and lang:
         in_sql_qid_targets[qid][lang] = target
-    # ----
-    if qid in in_sql:
-        in_sql[qid].append(q["code"])
-    else:
-        in_sql[qid] = [q["code"]]
+
+printe.output(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
 
 
 def start_to_sql(data):
@@ -82,15 +78,14 @@ def start_to_sql(data):
     # for qid, codes in data.items():
     for qid, sitelinks in data.items():
         # ---
-        # new_data = [{"qid": qid, "code": code} for code in codes if code not in in_sql.get(qid, [])]
+        qid_in_sql = in_sql_qid_targets.get(qid, {})
+        # ---
+        printe.output(f"<<green>> {qid=} {len(sitelinks)=}, qid_in_sql: {len(qid_in_sql)=}")
+        # ---
         new_data = [
             {"qid": qid, "code": code, "target": target}
             for code, target in sitelinks.items()
-            # if code not in in_sql.get(qid, [])
-            if (
-                not in_sql_qid_targets.get(qid, {}).get(code)
-                or in_sql_qid_targets.get(qid, {}).get(code) != target
-            )
+            if qid_in_sql.get(code) != target
         ]
         # ---
         if new_data:
@@ -98,10 +93,11 @@ def start_to_sql(data):
     # ---
     columns = ["qid", "code", "target"]
     # ---
-    printe.output(f"<<yellow>> all sitelinks: {len(sitelinks)}, new_data_all: {len(new_data_all)}.")
+    printe.output(f"<<yellow>> new_data_all: {len(new_data_all)}.")
     # ---
-    # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
-    new_to_sql(new_data_all, "all_qids_exists", columns, in_sql_list=db_data_main, title_columns=["qid", "code"], update_columns=["target"], IGNORE=True)
+    if new_data_all:
+        # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
+        new_to_sql(new_data_all, "all_qids_exists", columns, in_sql_list=db_data_main, title_columns=["qid", "code"], update_columns=["target"], IGNORE=True)
 
 
 def dump_sitelinks(lists):
@@ -247,11 +243,12 @@ def main():
 
 
 def test():
-    qids = ["Q2633143"]
+    qids = ["Q192309"]
     lists = get_qids_sitelinks(qids)
     printe.output(f"len of lists: {len(lists)}.")
-    print(lists)
-    start_to_sql(lists.get("qids", {}))
+    qids = lists.get("qids", {})
+    # print(qids)
+    start_to_sql(qids)
 
 
 if __name__ == "__main__":
