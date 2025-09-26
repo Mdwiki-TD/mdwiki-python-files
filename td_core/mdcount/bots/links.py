@@ -19,6 +19,11 @@ def get_links_from_cats(getcat=""):
     # ---
     titles = []
     # ---
+    videos_cats = [
+        "Videowiki scripts",
+        "RTTVideo"
+    ]
+    # ---
     cac = sql_for_mdwiki.get_db_categories()
     # ---
     for cat, dep in cac.items():
@@ -26,8 +31,8 @@ def get_links_from_cats(getcat=""):
         if getcat != "" and cat != getcat:
             continue
         # ---
-        onlyns = 3000 if cat == "Videowiki scripts" else ""
-        ns = 3000 if cat == "Videowiki scripts" else 0
+        onlyns = 3000 if cat in videos_cats or "video" in cat.lower() else ""
+        ns = 3000 if cat in videos_cats or "video" in cat.lower() else 0
         # ---
         mdwiki_pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=dep, ns=ns, onlyns=onlyns)
         # ---

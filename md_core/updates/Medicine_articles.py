@@ -91,11 +91,11 @@ def start():
         languages['en'] = articles
     # ---
     # count all languages values
-    all_articles = sum(languages.values())
+    al_articles = sum(languages.values())
     # ---
     text = '{{:WPM:WikiProject Medicine/Total medical articles}}\n'
     # ---
-    text += f'Numbers are as {month} {year}. There are {all_articles:,} medical articles across {len(languages)} languages.\n'
+    text += f'Numbers are as {month} {year}. There are {al_articles:,} medical articles across {len(languages)} languages.\n'
     text += '''{| class="sortable wikitable"\n!Lang\n!#\n|-'''
     # ---
     # sort languages by count

@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_data/all_articles
-python3 core8/pwb.py copy_data/exists_db
+python3 core8/pwb.py copy_data/by_title/all_articles
+python3 core8/pwb.py copy_data/by_title/exists_db
 
 """
 import sys
@@ -22,10 +22,15 @@ def main():
     if "RTT" in cats:
         del cats["RTT"]
     # ---
+    videos_cats = [
+        "Videowiki scripts",
+        "RTTVideo"
+    ]
+    # ---
     for cat in cats.keys():
         # ---
-        onlyns = 3000 if cat == "Videowiki scripts" else ""
-        ns = 3000 if cat == "Videowiki scripts" else 0
+        onlyns = 3000 if cat in videos_cats or "video" in cat.lower() else ""
+        ns = 3000 if cat in videos_cats or "video" in cat.lower() else 0
         # ---
         mdwiki_pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns=ns, onlyns=onlyns)
         # ---

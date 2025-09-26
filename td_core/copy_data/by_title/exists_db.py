@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_data/exists_db
+python3 core8/pwb.py copy_data/by_title/exists_db
 
-(all_exists|all_articles_titles|all_articles)
 
 """
 

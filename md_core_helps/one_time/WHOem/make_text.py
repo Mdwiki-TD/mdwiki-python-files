@@ -128,10 +128,10 @@ def make_text(ViewsData):
     # Add the closing table tag and div tag to the text variable.
     text += '\n|}\n</div>'
     # ---
-    all_articles = sum([len(x) for x in ViewsData.values()])
+    al_articles = sum([len(x) for x in ViewsData.values()])
     # Create the final formatted text with the section header, number of links, and the table.
     # ---
-    faf = f'* {all_articles:,} articles with work in {len(langs_keys):,} languages\n'
+    faf = f'* {al_articles:,} articles with work in {len(langs_keys):,} languages\n'
     faf += f'* {section_views:,} pageviews from July 2015 to Sept 2023\n{text}'
 
     # Return the final formatted text.

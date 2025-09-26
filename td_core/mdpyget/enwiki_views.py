@@ -119,7 +119,7 @@ def get_old_values(json_file):
 
 def main():
     # ---
-    cat_get = "Videowiki scripts" if "video" in sys.argv else ""
+    cat_get = "RTTVideo" if "video" in sys.argv else ""
     # ---
     json_file = f"{Dashboard_path}/Tables/jsons/enwiki_pageviews.json"
     # ---
