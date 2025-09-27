@@ -29,8 +29,9 @@ def main():
     # ---
     for cat in cats.keys():
         # ---
-        onlyns = 3000 if cat in videos_cats or "video" in cat.lower() else ""
-        ns = 3000 if cat in videos_cats or "video" in cat.lower() else 0
+        is_video_cat = cat in videos_cats or "video" in cat.lower()
+        onlyns = 3000 if is_video_cat else ""
+        ns = 3000 if is_video_cat else 0
         # ---
         mdwiki_pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns=ns, onlyns=onlyns)
         # ---
