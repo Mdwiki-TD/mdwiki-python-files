@@ -28,6 +28,7 @@ def mdwiki_sql_one_table(table_name, query, **kwargs):
     # ---
     return in_sql_list
 
+
 def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
     # ---
     print(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
@@ -184,7 +185,11 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
         insert_dict(new_data_insert, table_name, columns, title_column=title_column, IGNORE=IGNORE)
         update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
 
+
 def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["title"], update_columns=None, IGNORE=False):
+    # ---
+    if not data:
+        return
     # ---
     que = f'''select DISTINCT * from {table_name};'''
     # ---
