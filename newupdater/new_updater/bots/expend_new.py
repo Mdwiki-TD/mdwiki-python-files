@@ -1,10 +1,9 @@
 """
-from newupdater.bots.expend_new import expend_infoboxs
+from .bots.expend_new import expend_infoboxs
 """
 import wikitextparser as wtp
-from newupdater.helps import echo_debug
-
-from newupdater.lists.expend_lists import main_temps_list
+from ..helps import echo_debug
+from ..lists.expend_lists import main_temps_list
 
 
 def expend_new(template, min_len=1):

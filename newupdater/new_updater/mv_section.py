@@ -1,7 +1,7 @@
 import re
 
 import wikitextparser
-from newupdater.helps import echo_debug
+from .helps import echo_debug
 
 
 class move_External_links_section:

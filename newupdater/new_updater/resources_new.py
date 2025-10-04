@@ -1,12 +1,13 @@
 """
-
+!
 """
 # ---
 import re
 import wikitextparser as wtp
-from newupdater.bots.Remove import remove_cite_web, portal_remove
-from newupdater.lists.identifier_params import identifiers_params
-from newupdater.helps import echo_debug
+
+from .bots.Remove import remove_cite_web, portal_remove
+from .lists.identifier_params import identifiers_params
+from .helps import echo_debug
 # ---
 page_identifier_params = {}
 # ---
@@ -75,8 +76,8 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     # ---
     new_text = text
     # ---
-    drugbox_old = ""
-    drugbox_params = {}
+    # drugbox_old = ""
+    # drugbox_params = {}
     # ---
     drug_resources = ""
     resources_params = {}
@@ -136,7 +137,7 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     # ---
     line = ''
     # ---
-    if resources_temp != False:
+    if resources_temp:
         # ---
         resources_old = resources_temp.string
         # ---

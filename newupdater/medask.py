@@ -9,28 +9,21 @@ python3 core8/pwb.py newupdater/medask -start:!
 python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Edoderoobot
 python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Ghuron
 """
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
+
 import sys
 import urllib
 import urllib.parse
-
-# ---
 from pathlib import Path
 
-Dir = Path(__file__).parent
-# ---
-sys.path.append(str(Dir))
+sys.path.append(str(Path(__file__).parent))
 # ---
 from newapi import printe
-from apis import mdwiki_api
 from newapi.mdwiki_page import NEW_API
 
-from newupdater import mdapi
-from newupdater.MedWorkNew import work_on_text
+from apis import mdwiki_api
+from new_updater import work_on_text
 
+import mdapi
 # ---
 api_new = NEW_API('www', family='mdwiki')
 # api_new.Login_to_wiki()
@@ -68,7 +61,7 @@ def work_on_title(title, returntext=False):
     ask = input(f"<<yellow>> save title:{title}? ")
     # ---
     if ask in ['y', '', "a"]:
-        return mdapi.page_put(text, new_text, "mdwiki changes.", title, "www")
+        return mdapi.page_put(new_text, "mdwiki changes.", title, "www")
     # ---
     print("not saved")
     return

@@ -1,18 +1,11 @@
 #!/usr/bin/python3
 """
-from newupdater.mdapi import login, submitAPI, GetPageText, missingtitles, page_put
+
 """
 import sys
 import requests
-
 # ---
-try:
-    import pywikibot
-except ImportError:
-    pywikibot = None
-# ---
-from newupdater.helps import print_s
-from newupdater import user_account_new
+import user_account_new
 
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
@@ -20,59 +13,46 @@ user_agent = user_account_new.user_agent
 
 session = {}
 session[1] = requests.Session()
+session[1].headers.update({"User-Agent": user_agent})
 # ---
-yes_answer = ["y", "a", "", "Y", "A", "all"]
+session["token"] = ""
 # ---
-ask_a = {1: False}
-# ---
-missingtitles = {}
-
 session["url"] = "https://mdwiki.org/w/api.php"
-session["family"] = "mdwiki"
+# session["url"] = "https://www.mdwiki.org/w/api.php"
 
 
-def printx(s):
-    print(s, "</br>")
+def print_s(s):
+    if 'from_toolforge' not in sys.argv:
+        print(s)
 
 
-def login(lang=""):
-    # ---
-    if not lang:
-        lang = "www"
-    # ---
-    api_urle = "https://www.mdwiki.org/w/api.php"
-    # ---
-    session[1] = requests.Session()
-    # ---
-    # if api_urle != session["url"]: print_s( "himoBOT3.py: login to %s. user:%s" % (api_urle , username)  )
-    # ---
-    family = "mdwiki"
-    # ---
-    session["url"] = api_urle
-    session["family"] = family
-    session["lang"] = lang
+def debug_print(s):
+    if 'from_toolforge' not in sys.argv:
+        print(s, "</br>")
+
+
+def login():
     # ---
     # get login token
     try:
         r1 = session[1].get(
-            api_urle,
+            session["url"],
             params={
                 "format": "json",
                 "action": "query",
                 "meta": "tokens",
                 "type": "login",
             },
-            timeout=10,
-            headers={"User-Agent": user_agent},
+            timeout=10
         )
         r1.raise_for_status()
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to mdwiki.org Error {e}")
         return False
     # ---
     try:
         r2 = session[1].post(
-            api_urle,
+            session["url"],
             data={
                 "format": "json",
                 "action": "login",
@@ -80,11 +60,10 @@ def login(lang=""):
                 "lgpassword": password,
                 "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
             },
-            timeout=10,
-            headers={"User-Agent": user_agent},
+            timeout=10
         )
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to mdwiki.org Error {e}")
         return False
     # ---
     print_s(r2)
@@ -94,33 +73,28 @@ def login(lang=""):
         # raise RuntimeError(r2.json()['login']['reason'])
         return False
     else:
-        print_s(f"wpref.py login Success to {lang}.{family}.org")
+        print_s("wpref.py login Success to mdwiki.org")
     # ---
-    # if r2.json()['login']['result'] != 'Success': printx(r2.json()['login']['reason'])
+    # if r2.json()['login']['result'] != 'Success': debug_print(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
     try:
         r3 = session[1].get(
-            api_urle,
+            session["url"],
             params={
                 "format": "json",
                 "action": "query",
                 "meta": "tokens",
             },
-            timeout=10,
-            headers={"User-Agent": user_agent},
+            timeout=10
         )
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to mdwiki.org Error {e}")
         return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
     # ---
     session["token"] = token
-
-
-def Gettoken():
-    return session["token"]
 
 
 def submitAPI(params, Type="post", add_token=False):
@@ -135,12 +109,12 @@ def submitAPI(params, Type="post", add_token=False):
     try:
         method = "POST"  # if Type == "post" else "GET"
         # ---
-        r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        r4 = session[1].request(method, session["url"], data=params, timeout=10)
         json1 = r4.json()
         # ---
     except Exception as e:
-        printx(f"submitAPI Error {e}")
-        printx(params)
+        debug_print(f"submitAPI Error {e}")
+        debug_print(params)
         return json1
     # ---
     return json1
@@ -209,11 +183,7 @@ def GetPageText(title, lang="", Print=True):
             print_s("json1 == {}")
         return ""
     # ---
-    err = json1.get("error", {}).get("code", {})
-    # {'error': {'code': 'missingtitle', 'info': "The page you specified doesn't exist.", '*': 'See https://fr.wikipedia.org/w/api.php for API usag Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/postorius/lists/mediawiki-api-announce.lists.wikimed.org/&gt; for notice of API deprecations and breaking changes.'}, 'servedby': 'mw1362'}
-    # ---
-    if err == "missingtitle":
-        missingtitles[title] = lang
+    _err = json1.get("error", {}).get("code", {})
     # ---
     parse = json1.get("parse", {})
     if not parse:
@@ -231,27 +201,11 @@ def GetPageText(title, lang="", Print=True):
     return text
 
 
-def page_put(oldtext, NewText, summary, title, lang):
+def page_put(NewText, summary, title):
     # ---
-    if not login(lang):
+    if not session["token"]:
+        print_s("login error, token empty.")
         return {}
-    # ---
-    if "ask" in sys.argv and not ask_a[1]:
-        # ---
-        if pywikibot:
-            pywikibot.showDiff(oldtext, NewText)
-        # ---
-        print_s(f" -Edit summary: {summary}:")
-        sa = input(f"<<yellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})")
-        # ---
-        if sa == "a" or sa == "all":
-            ask_a[1] = True
-            print_s(" <<green>>mdwiki/wpref.py: All changes accepted.")
-            print_s(" <<green>>mdwiki/wpref.py: All changes accepted.")
-        # ---
-        if sa not in yes_answer:
-            print_s("wrong answer")
-            return False
     # ---
     pparams = {
         "action": "edit",
@@ -274,7 +228,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         return ""
     # ---
     if "Success" in str(json1):
-        print_s(f"<<green>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
+        print_s(f"<<green>> ** true .. [[mdwiki:{title}]]")
         return True
     # ---
     else:

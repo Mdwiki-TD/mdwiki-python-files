@@ -1,5 +1,5 @@
 """
-from wprefs.helps import print_s, ec_de_code, echo_debug
+from .helps import print_s, ec_de_code, echo_debug
 """
 import os
 import sys

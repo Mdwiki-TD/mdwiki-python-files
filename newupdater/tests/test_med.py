@@ -1,5 +1,8 @@
 """
 
+python3 core8/pwb.py newupdater/tests/test_med
+python3 I:/mdwiki/pybot/newupdater/tests/test_med.py Retinol
+
 """
 import sys
 import os
@@ -9,16 +12,11 @@ from pathlib import Path
 Dir = Path(__file__).parent.parent
 sys.path.append(str(Dir))
 
+title = sys.argv[1] if len(sys.argv) > 1 else "Retinol"
 # ---
-'''
-python3 I:/mdwiki/newupdater/test_med.py Retinol
-'''
+command1 = f"python3 I:/mdwiki/pybot/newupdater/med.py {title} from_toolforge xx"
 # ---
-title = sys.argv[1]
-# ---
-command1 = f"python3 I:/mdwiki/medUpdater/med.py {title} from_toolforge xx"
-# ---
-command2 = f"python3 I:/mdwiki/newupdater/med.py {title} from_toolforge xx"
+command2 = f"python3 I:/mdwiki/pybot/newupdater/med.py {title} from_toolforge xx"
 # ---
 print(f'command1: {command1}')
 ux = os.system(command1)

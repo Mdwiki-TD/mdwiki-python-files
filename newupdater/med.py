@@ -1,25 +1,20 @@
 #!/usr/bin/python3
 """
-python3 I:/mdwiki/pybot/newupdater/med.py Aspirin from_toolforge
+python3 I:/mdwiki/pybot/newupdater/med.py -page:Aspirin from_toolforge
 """
+import os
+import re
 import sys
-from pathlib import Path
 
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+home_dir = os.getenv("HOME") or "I:/mdwiki/mdwiki"
+
+sys.path.append(home_dir + "/pybot")
+sys.path.append(home_dir + "/openssl/bin")
 # --
-dir3 = dir2 + "/pybot"
-sys.path.append(dir3)
-sys.path.append(dir2 + "/openssl/bin")
+public_html_dir = home_dir + "/public_html"
 # --
-public_html_dir = dir2 + "/public_html"
-# --
-if public_html_dir.find("I:/") != -1:
-    public_html_dir = dir2 + "/mdwiki/public_html"
-# --
-from newupdater.helps import ec_de_code
-from newupdater.MedWorkNew import work_on_text
-from newupdater.mdapi import GetPageText, page_put, login
+from new_updater import ec_de_code, work_on_text
+from mdapi import GetPageText, page_put, login, print_s
 
 
 def get_new_text(title):
@@ -56,33 +51,40 @@ def save_cash(title, new_text):
 
 def work_on_title(title):
     # ---
-    title = ec_de_code(title, "decode")
-    # ---
     text, new_text = get_new_text(title)
     # ---
     if text.strip() == "" or new_text.strip() == "":
-        print("notext")
-        return
+        return "notext", ""
     # ---
     if text == new_text:
-        print("no changes")
-        return
+        return "no changes", ""
     # ---
     if not new_text:
-        print("notext")
-        return
+        return "notext", ""
+    # ---
+    return "", new_text
+
+
+def work(title):
+    # ---
+    if title == "":
+        return "no page"
+    # ---
+    title = ec_de_code(title, "decode")
+    # ---
+    err, new_text = work_on_title(title)
+    # ---
+    if err and not new_text:
+        return err
     # ---
     if "save" in sys.argv:
-        a = page_put(text, new_text, "Med updater.", title, "")
+        a = page_put(new_text, "Med updater.", title)
         if a:
-            print("save ok")
-            return ""
+            return "save ok"
     # ---
-    filee = save_cash(title, new_text)
+    file = save_cash(title, new_text)
     # ---
-    print(filee)
-    # ---
-    return ""
+    return file
 
 
 def main():
@@ -91,20 +93,17 @@ def main():
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
-        arg = arg[1:] if arg.startswith("-") else arg
         # ---
-        if arg == "page":
+        if arg in ["-page", "page"]:
             title = value.replace("_", " ")
     # ---
-    if title == "":
-        print("no page")
-        return ""
+    # title = ec_de_code(title, "decode")
     # ---
-    login("")
+    print_s(f"title: {title}")
     # ---
-    work_on_title(title)
+    result = work(title)
     # ---
-    return ""
+    print(result)
 
 
 if __name__ == "__main__":

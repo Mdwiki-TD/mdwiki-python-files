@@ -15,7 +15,8 @@ import wikitextparser as wtp
 
 from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage
-from newupdater.bots.expend import expend_infoboxs_and_fix
+
+from newupdater import expend_infoboxs_and_fix
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()

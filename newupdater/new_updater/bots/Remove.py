@@ -1,5 +1,5 @@
 """
-from newupdater.bots.Remove import remove_cite_web, portal_remove
+from .bots.Remove import remove_cite_web, portal_remove
 """
 import re
 

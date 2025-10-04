@@ -1,6 +1,6 @@
 """
 # ---
-from newupdater import user_account_new
+import user_account_new
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
 user_agent = user_account_new.user_agent
@@ -11,12 +11,10 @@ user_agent = user_account_new.user_agent
 import os
 import configparser
 
-home_dir = os.getenv("HOME")
-
-dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
+home_dir = os.getenv("HOME") or "I:/mdwiki/mdwiki"
 
 config = configparser.ConfigParser()
-config.read(f"{dir2}/confs/user.ini")
+config.read(f"{home_dir}/confs/user.ini")
 
 my_username = config["DEFAULT"].get("my_username", "")
 
