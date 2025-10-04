@@ -4,9 +4,9 @@
 # ---
 import re
 import wikitextparser as wtp
-from newupdater.bots.Remove import remove_cite_web, portal_remove
-from newupdater.lists.identifier_params import identifiers_params
-from newupdater.helps import echo_debug
+from new_updater.bots.Remove import remove_cite_web, portal_remove
+from new_updater.lists.identifier_params import identifiers_params
+from new_updater.helps import echo_debug
 # ---
 page_identifier_params = {}
 # ---

@@ -1,9 +1,9 @@
 """
-from newupdater.bots.old_params import rename_params
+from .bots.old_params import rename_params
 """
 # ---
 import wikitextparser as wtp
-from newupdater.helps import echo_debug
+from new_updater.helps import echo_debug
 
 
 def rename_params(temptext):

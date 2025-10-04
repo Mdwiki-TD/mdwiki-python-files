@@ -1,9 +1,9 @@
 """
-from newupdater.bots.expend import expend_infoboxs_and_fix
+from .bots.expend import expend_infoboxs_and_fix
 """
 import wikitextparser as wtp
-from newupdater.lists.expend_lists import IMC_params, dup_params
-from newupdater.helps import echo_debug
+from new_updater.lists.expend_lists import IMC_params, dup_params
+from new_updater.helps import echo_debug
 
 
 def expend_infoboxs_and_fix(new_text):

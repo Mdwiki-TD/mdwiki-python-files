@@ -1,14 +1,14 @@
 import re
 
 import wikitextparser as wtp
-from newupdater.helps import echo_debug
+from new_updater.helps import echo_debug
 
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
 # ---
 lkj2 = r"(<!--\s*(?:Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status)\s*-->)"
 # ---
-from newupdater.lists.bot_params import all_params, params_to_add, params_placeholders, all_formola_params
+from new_updater.lists.bot_params import all_params, params_to_add, params_placeholders, all_formola_params
 
 
 class TextProcessor:

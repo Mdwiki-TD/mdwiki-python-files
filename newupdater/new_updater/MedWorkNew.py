@@ -6,15 +6,15 @@ python3 pwb.py newupdater/med Retinol from_toolforge
 """
 import re
 # ---
-from newupdater.bots import expend  # expend_infoboxs_and_fix(text)
-from newupdater.bots import expend_new  # expend_infoboxs(text)
-from newupdater.bots import old_params
+from new_updater.bots import expend  # expend_infoboxs_and_fix(text)
+from new_updater.bots import expend_new  # expend_infoboxs(text)
+from new_updater.bots import old_params
 
-from newupdater.helps import echo_debug
-from newupdater import mv_section  # mv_section.move_External_links_section
-from newupdater import drugbox  # drugbox.TextProcessor
-from newupdater import resources_new
-from newupdater import chembox  # fix_Chembox
+from new_updater.helps import echo_debug
+from new_updater import mv_section  # mv_section.move_External_links_section
+from new_updater import drugbox  # drugbox.TextProcessor
+from new_updater import resources_new
+from new_updater import chembox  # fix_Chembox
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
 # ---

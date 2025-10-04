@@ -4,8 +4,8 @@
 """
 import wikitextparser as wtp
 
-from newupdater.lists.chem_params import rename_chem_params
-from newupdater.helps import echo_debug
+from new_updater.lists.chem_params import rename_chem_params
+from new_updater.helps import echo_debug
 
 
 class fix_Chembox:
