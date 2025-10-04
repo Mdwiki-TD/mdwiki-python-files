@@ -15,6 +15,8 @@ session = {}
 session[1] = requests.Session()
 session[1].headers.update({"User-Agent": user_agent})
 # ---
+session["token"] = ""
+# ---
 session["url"] = "https://mdwiki.org/w/api.php"
 # session["url"] = "https://www.mdwiki.org/w/api.php"
 
@@ -199,9 +201,10 @@ def GetPageText(title, lang="", Print=True):
     return text
 
 
-def page_put(NewText, summary, title, lang):
+def page_put(NewText, summary, title):
     # ---
-    if not login():
+    if not session["token"]:
+        print_s("login error, token empty.")
         return {}
     # ---
     pparams = {
@@ -225,7 +228,7 @@ def page_put(NewText, summary, title, lang):
         return ""
     # ---
     if "Success" in str(json1):
-        print_s(f"<<green>> ** true .. [[{session['lang']}:{session['family']}:{title}]]")
+        print_s(f"<<green>> ** true .. [[mdwiki:{title}]]")
         return True
     # ---
     else:

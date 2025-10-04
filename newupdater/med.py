@@ -78,7 +78,7 @@ def work(title):
         return err
     # ---
     if "save" in sys.argv:
-        a = page_put(new_text, "Med updater.", title, "")
+        a = page_put(new_text, "Med updater.", title)
         if a:
             return "save ok"
     # ---
