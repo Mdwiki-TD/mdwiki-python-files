@@ -3,6 +3,7 @@
 python3 I:/mdwiki/pybot/newupdater/med.py -page:Aspirin from_toolforge
 """
 import os
+import re
 import sys
 
 home_dir = os.getenv("HOME") or "I:/mdwiki/mdwiki"
@@ -55,28 +56,35 @@ def work_on_title(title):
     text, new_text = get_new_text(title)
     # ---
     if text.strip() == "" or new_text.strip() == "":
-        print("notext")
-        return
+        return "notext", ""
     # ---
     if text == new_text:
-        print("no changes")
-        return
+        return "no changes", ""
     # ---
     if not new_text:
-        print("notext")
-        return
+        return "notext", ""
+    # ---
+    return "", new_text
+
+
+def work(title):
+    # ---
+    if title == "":
+        return "no page"
+    # ---
+    err, new_text = work_on_title(title)
+    # ---
+    if err and not new_text:
+        return err
     # ---
     if "save" in sys.argv:
-        a = page_put(text, new_text, "Med updater.", title, "")
+        a = page_put(new_text, "Med updater.", title, "")
         if a:
-            print("save ok")
-            return ""
+            return "save ok"
     # ---
-    filee = save_cash(title, new_text)
+    file = save_cash(title, new_text)
     # ---
-    print(filee)
-    # ---
-    return ""
+    return file
 
 
 def main():
@@ -89,15 +97,9 @@ def main():
         if arg in ["-page", "page"]:
             title = value.replace("_", " ")
     # ---
-    if title == "":
-        print("no page")
-        return ""
+    result = work(title)
     # ---
-    login("")
-    # ---
-    work_on_title(title)
-    # ---
-    return ""
+    print(result)
 
 
 if __name__ == "__main__":

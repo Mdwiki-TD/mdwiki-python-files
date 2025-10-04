@@ -24,7 +24,8 @@ def print_s(s):
 
 
 def debug_print(s):
-    print(s, "</br>")
+    if 'from_toolforge' not in sys.argv:
+        print(s, "</br>")
 
 
 def login(lang=""):
@@ -198,7 +199,6 @@ def GetPageText(title, lang="", Print=True):
         return ""
     # ---
     _err = json1.get("error", {}).get("code", {})
-    # {'error': {'code': 'missingtitle', 'info': "The page you specified doesn't exist.", '*': 'See https://fr.wikipedia.org/w/api.php for API usag Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/postorius/lists/mediawiki-api-announce.lists.wikimed.org/&gt; for notice of API deprecations and breaking changes.'}, 'servedby': 'mw1362'}
     # ---
     parse = json1.get("parse", {})
     if not parse:
@@ -216,7 +216,7 @@ def GetPageText(title, lang="", Print=True):
     return text
 
 
-def page_put(oldtext, NewText, summary, title, lang):
+def page_put(NewText, summary, title, lang):
     # ---
     if not login(lang):
         return {}

@@ -61,7 +61,7 @@ def work_on_title(title, returntext=False):
     ask = input(f"<<yellow>> save title:{title}? ")
     # ---
     if ask in ['y', '', "a"]:
-        return mdapi.page_put(text, new_text, "mdwiki changes.", title, "www")
+        return mdapi.page_put(new_text, "mdwiki changes.", title, "www")
     # ---
     print("not saved")
     return
