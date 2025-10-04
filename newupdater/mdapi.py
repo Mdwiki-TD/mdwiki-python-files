@@ -13,9 +13,10 @@ user_agent = user_account_new.user_agent
 
 session = {}
 session[1] = requests.Session()
+session[1].headers.update({"User-Agent": user_agent})
 # ---
 session["url"] = "https://mdwiki.org/w/api.php"
-session["family"] = "mdwiki"
+# session["url"] = "https://www.mdwiki.org/w/api.php"
 
 
 def print_s(s):
@@ -28,44 +29,28 @@ def debug_print(s):
         print(s, "</br>")
 
 
-def login(lang=""):
-    # ---
-    if not lang:
-        lang = "www"
-    # ---
-    api_urle = "https://www.mdwiki.org/w/api.php"
-    # ---
-    session[1] = requests.Session()
-    # ---
-    # if api_urle != session["url"]: print_s( "himoBOT3.py: login to %s. user:%s" % (api_urle , username)  )
-    # ---
-    family = "mdwiki"
-    # ---
-    session["url"] = api_urle
-    session["family"] = family
-    session["lang"] = lang
+def login():
     # ---
     # get login token
     try:
         r1 = session[1].get(
-            api_urle,
+            session["url"],
             params={
                 "format": "json",
                 "action": "query",
                 "meta": "tokens",
                 "type": "login",
             },
-            timeout=10,
-            headers={"User-Agent": user_agent},
+            timeout=10
         )
         r1.raise_for_status()
     except Exception as e:
-        debug_print(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to mdwiki.org Error {e}")
         return False
     # ---
     try:
         r2 = session[1].post(
-            api_urle,
+            session["url"],
             data={
                 "format": "json",
                 "action": "login",
@@ -73,11 +58,10 @@ def login(lang=""):
                 "lgpassword": password,
                 "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
             },
-            timeout=10,
-            headers={"User-Agent": user_agent},
+            timeout=10
         )
     except Exception as e:
-        debug_print(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to mdwiki.org Error {e}")
         return False
     # ---
     print_s(r2)
@@ -87,24 +71,23 @@ def login(lang=""):
         # raise RuntimeError(r2.json()['login']['reason'])
         return False
     else:
-        print_s(f"wpref.py login Success to {lang}.{family}.org")
+        print_s("wpref.py login Success to mdwiki.org")
     # ---
     # if r2.json()['login']['result'] != 'Success': debug_print(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
     try:
         r3 = session[1].get(
-            api_urle,
+            session["url"],
             params={
                 "format": "json",
                 "action": "query",
                 "meta": "tokens",
             },
-            timeout=10,
-            headers={"User-Agent": user_agent},
+            timeout=10
         )
     except Exception as e:
-        debug_print(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to mdwiki.org Error {e}")
         return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
@@ -124,7 +107,7 @@ def submitAPI(params, Type="post", add_token=False):
     try:
         method = "POST"  # if Type == "post" else "GET"
         # ---
-        r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        r4 = session[1].request(method, session["url"], data=params, timeout=10)
         json1 = r4.json()
         # ---
     except Exception as e:
@@ -218,7 +201,7 @@ def GetPageText(title, lang="", Print=True):
 
 def page_put(NewText, summary, title, lang):
     # ---
-    if not login(lang):
+    if not login():
         return {}
     # ---
     pparams = {
