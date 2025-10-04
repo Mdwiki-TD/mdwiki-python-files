@@ -14,7 +14,7 @@ sys.path.append(home_dir + "/openssl/bin")
 public_html_dir = home_dir + "/public_html"
 # --
 from new_updater import ec_de_code, work_on_text
-from mdapi import GetPageText, page_put, login
+from mdapi import GetPageText, page_put, login, print_s
 
 
 def get_new_text(title):
@@ -96,6 +96,10 @@ def main():
         # ---
         if arg in ["-page", "page"]:
             title = value.replace("_", " ")
+    # ---
+    # title = ec_de_code(title, "decode")
+    # ---
+    print_s(f"title: {title}")
     # ---
     result = work(title)
     # ---
