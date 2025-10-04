@@ -51,8 +51,6 @@ def save_cash(title, new_text):
 
 def work_on_title(title):
     # ---
-    title = ec_de_code(title, "decode")
-    # ---
     text, new_text = get_new_text(title)
     # ---
     if text.strip() == "" or new_text.strip() == "":
@@ -71,6 +69,8 @@ def work(title):
     # ---
     if title == "":
         return "no page"
+    # ---
+    title = ec_de_code(title, "decode")
     # ---
     err, new_text = work_on_title(title)
     # ---
