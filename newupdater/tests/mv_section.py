@@ -16,7 +16,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 os.environ["DEBUGNEW"] = "true"
 
 from new_updater import move_External_links_section
-from med import GetPageText
+from mdapi import GetPageText
 
 text = GetPageText(sys.argv[1])
 # ---

@@ -8,11 +8,12 @@ import os
 import pywikibot
 from pathlib import Path
 
-Dir = Path(__file__).parent.parent
-sys.path.append(str(Dir))
+sys.path.append(str(Path(__file__).parent.parent))
 os.environ["DEBUGNEW"] = "true"
 
-from newupdater.bots.Remove import remove_cite_web, portal_remove
+from new_updater.bots.Remove import remove_cite_web, portal_remove
+
+Dir = Path(__file__).parent.parent
 
 remove_cite_web("temptext", {}, "", "")
 

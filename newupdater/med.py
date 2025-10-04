@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-python3 I:/mdwiki/pybot/newupdater/med.py Aspirin from_toolforge
+python3 I:/mdwiki/pybot/newupdater/med.py -page:Aspirin from_toolforge
 """
 import os
 import sys
@@ -85,9 +85,8 @@ def main():
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
-        arg = arg[1:] if arg.startswith("-") else arg
         # ---
-        if arg == "page":
+        if arg in ["-page", "page"]:
             title = value.replace("_", " ")
     # ---
     if title == "":

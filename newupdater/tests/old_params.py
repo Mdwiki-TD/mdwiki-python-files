@@ -9,10 +9,9 @@ os.environ["DEBUGNEW"] = "true"
 
 import pywikibot
 from pathlib import Path
-Dir = Path(__file__).parent.parent
-sys.path.append(str(Dir))
+sys.path.append(str(Path(__file__).parent.parent))
 
-from newupdater.bots.old_params import rename_params
+from new_updater import rename_params
 
 o = '''
 {{drugbox

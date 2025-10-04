@@ -8,11 +8,12 @@ import os
 import pywikibot
 from pathlib import Path
 
-Dir = Path(__file__).parent.parent
-sys.path.append(str(Dir))
+sys.path.append(str(Path(__file__).parent.parent))
 os.environ["DEBUGNEW"] = "true"
 
-from MedWorkNew import work_on_text
+from new_updater import work_on_text
+
+Dir = Path(__file__).parent
 
 with open(Dir / "texts/1/resources.txt", "r", encoding="utf-8") as f:
     text = f.read()

@@ -9,17 +9,17 @@ os.environ["DEBUGNEW"] = "true"
 
 import pywikibot
 from pathlib import Path
-Dir = Path(__file__).parent
 
 sys.path.append(str(Path(__file__).parent.parent))
 
-from new_updater import chembox
+from new_updater import fix_Chembox
 
+Dir = Path(__file__).parent
 
 with open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8") as f:
     text = f.read()
 
-bot = chembox.fix_Chembox(text)
+bot = fix_Chembox(text)
 
 newtext = bot.run()
 
