@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 """
-from newupdater.api import login, submitAPI, GetPageText, missingtitles, page_put
+from newupdater.mdapi import login, submitAPI, GetPageText, missingtitles, page_put
 """
-import json
-import urllib.parse
 import sys
 import requests
 
@@ -22,11 +20,6 @@ user_agent = user_account_new.user_agent
 
 session = {}
 session[1] = requests.Session()
-session["url"] = ""
-# ---
-Url_To_login = {1: "", "not": True}
-# ---
-login_done = {1: "sssd"}
 # ---
 yes_answer = ["y", "a", "", "Y", "A", "all"]
 # ---
@@ -47,12 +40,7 @@ def login(lang=""):
     if not lang:
         lang = "www"
     # ---
-    if login_done[1] == lang:
-        return "done"
-    # ---
     api_urle = "https://www.mdwiki.org/w/api.php"
-    # ---
-    Url_To_login[1] = api_urle
     # ---
     session[1] = requests.Session()
     # ---
@@ -107,8 +95,6 @@ def login(lang=""):
         return False
     else:
         print_s(f"wpref.py login Success to {lang}.{family}.org")
-        login_done[1] = lang
-
     # ---
     # if r2.json()['login']['result'] != 'Success': printx(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])

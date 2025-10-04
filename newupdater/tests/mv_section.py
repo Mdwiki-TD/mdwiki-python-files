@@ -9,8 +9,10 @@ import os
 import pywikibot
 from pathlib import Path
 
-Dir = Path(__file__).parent.parent
-sys.path.append(str(Dir))
+Dir = Path(__file__).parent
+
+sys.path.append(str(Path(__file__).parent.parent))
+
 os.environ["DEBUGNEW"] = "true"
 
 from newupdater import mv_section
