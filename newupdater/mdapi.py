@@ -1,18 +1,11 @@
 #!/usr/bin/python3
 """
-from newupdater.mdapi import login, submitAPI, GetPageText, missingtitles, page_put
+
 """
 import sys
 import requests
-
 # ---
-try:
-    import pywikibot
-except ImportError:
-    pywikibot = None
-# ---
-from newupdater.helps import print_s
-from newupdater import user_account_new
+import user_account_new
 
 username = user_account_new.my_username
 password = user_account_new.mdwiki_pass
@@ -21,17 +14,16 @@ user_agent = user_account_new.user_agent
 session = {}
 session[1] = requests.Session()
 # ---
-yes_answer = ["y", "a", "", "Y", "A", "all"]
-# ---
-ask_a = {1: False}
-# ---
-missingtitles = {}
-
 session["url"] = "https://mdwiki.org/w/api.php"
 session["family"] = "mdwiki"
 
 
-def printx(s):
+def print_s(s):
+    if 'from_toolforge' not in sys.argv:
+        print(s)
+
+
+def debug_print(s):
     print(s, "</br>")
 
 
@@ -67,7 +59,7 @@ def login(lang=""):
         )
         r1.raise_for_status()
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     try:
@@ -84,7 +76,7 @@ def login(lang=""):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     print_s(r2)
@@ -96,7 +88,7 @@ def login(lang=""):
     else:
         print_s(f"wpref.py login Success to {lang}.{family}.org")
     # ---
-    # if r2.json()['login']['result'] != 'Success': printx(r2.json()['login']['reason'])
+    # if r2.json()['login']['result'] != 'Success': debug_print(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
     try:
@@ -111,16 +103,12 @@ def login(lang=""):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        debug_print(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
     # ---
     session["token"] = token
-
-
-def Gettoken():
-    return session["token"]
 
 
 def submitAPI(params, Type="post", add_token=False):
@@ -139,8 +127,8 @@ def submitAPI(params, Type="post", add_token=False):
         json1 = r4.json()
         # ---
     except Exception as e:
-        printx(f"submitAPI Error {e}")
-        printx(params)
+        debug_print(f"submitAPI Error {e}")
+        debug_print(params)
         return json1
     # ---
     return json1
@@ -209,11 +197,8 @@ def GetPageText(title, lang="", Print=True):
             print_s("json1 == {}")
         return ""
     # ---
-    err = json1.get("error", {}).get("code", {})
+    _err = json1.get("error", {}).get("code", {})
     # {'error': {'code': 'missingtitle', 'info': "The page you specified doesn't exist.", '*': 'See https://fr.wikipedia.org/w/api.php for API usag Subscribe to the mediawiki-api-announce mailing list at &lt;https://lists.wikimedia.org/postorius/lists/mediawiki-api-announce.lists.wikimed.org/&gt; for notice of API deprecations and breaking changes.'}, 'servedby': 'mw1362'}
-    # ---
-    if err == "missingtitle":
-        missingtitles[title] = lang
     # ---
     parse = json1.get("parse", {})
     if not parse:
@@ -235,23 +220,6 @@ def page_put(oldtext, NewText, summary, title, lang):
     # ---
     if not login(lang):
         return {}
-    # ---
-    if "ask" in sys.argv and not ask_a[1]:
-        # ---
-        if pywikibot:
-            pywikibot.showDiff(oldtext, NewText)
-        # ---
-        print_s(f" -Edit summary: {summary}:")
-        sa = input(f"<<yellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})")
-        # ---
-        if sa == "a" or sa == "all":
-            ask_a[1] = True
-            print_s(" <<green>>mdwiki/wpref.py: All changes accepted.")
-            print_s(" <<green>>mdwiki/wpref.py: All changes accepted.")
-        # ---
-        if sa not in yes_answer:
-            print_s("wrong answer")
-            return False
     # ---
     pparams = {
         "action": "edit",

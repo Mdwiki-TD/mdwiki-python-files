@@ -2,24 +2,18 @@
 """
 python3 I:/mdwiki/pybot/newupdater/med.py Aspirin from_toolforge
 """
+import os
 import sys
-from pathlib import Path
 
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
+home_dir = os.getenv("HOME") or "I:/mdwiki/mdwiki"
+
+sys.path.append(home_dir + "/pybot")
+sys.path.append(home_dir + "/openssl/bin")
 # --
-dir3 = dir2 + "/pybot"
-sys.path.append(dir3)
-sys.path.append(dir2 + "/openssl/bin")
+public_html_dir = home_dir + "/public_html"
 # --
-public_html_dir = dir2 + "/public_html"
-# --
-if public_html_dir.find("I:/") != -1:
-    public_html_dir = dir2 + "/mdwiki/public_html"
-# --
-from newupdater.helps import ec_de_code
-from newupdater.MedWorkNew import work_on_text
-from newupdater.mdapi import GetPageText, page_put, login
+from new_updater import ec_de_code, work_on_text
+from mdapi import GetPageText, page_put, login
 
 
 def get_new_text(title):

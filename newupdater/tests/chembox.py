@@ -13,7 +13,7 @@ Dir = Path(__file__).parent
 
 sys.path.append(str(Path(__file__).parent.parent))
 
-from MedWorkNew import chembox
+from new_updater import chembox
 
 
 with open(f"{Dir}/texts/chembox.txt", "r", encoding="utf-8") as f:

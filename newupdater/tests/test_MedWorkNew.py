@@ -14,7 +14,7 @@ os.environ["DEBUGNEW"] = "true"
 
 from MedWorkNew import work_on_text
 
-with open(Dir / "bots/resources.txt", "r", encoding="utf-8") as f:
+with open(Dir / "texts/1/resources.txt", "r", encoding="utf-8") as f:
     text = f.read()
 # ---
 newtext = work_on_text("test", text)
@@ -24,5 +24,5 @@ if "diff" in sys.argv:
 else:
     print("add 'diff' to sys.argv to see diff")
 # ---
-with open(Dir / "bots/resources_new.txt", "w", encoding="utf-8") as f:
+with open(Dir / "texts/1/resources_new.txt", "w", encoding="utf-8") as f:
     f.write(newtext)

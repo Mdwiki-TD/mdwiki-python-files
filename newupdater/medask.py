@@ -25,12 +25,12 @@ Dir = Path(__file__).parent
 sys.path.append(str(Dir))
 # ---
 from newapi import printe
-from apis import mdwiki_api
 from newapi.mdwiki_page import NEW_API
 
-from newupdater import mdapi
-from newupdater.MedWorkNew import work_on_text
+from apis import mdwiki_api
+from new_updater.MedWorkNew import work_on_text
 
+import mdapi
 # ---
 api_new = NEW_API('www', family='mdwiki')
 # api_new.Login_to_wiki()

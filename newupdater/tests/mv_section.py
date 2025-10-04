@@ -15,15 +15,15 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 os.environ["DEBUGNEW"] = "true"
 
-from newupdater import mv_section
-from newupdater.med import GetPageText
+from new_updater import move_External_links_section
+from med import GetPageText
 
 text = GetPageText(sys.argv[1])
 # ---
 with open(f"{Dir}/texts/section.txt", "w", encoding="utf-8") as f:
     f.write(text)
 # ---
-bot = mv_section.move_External_links_section(str(text))
+bot = move_External_links_section(str(text))
 # ---
 new_text = bot.make_new_txt()
 # ---
