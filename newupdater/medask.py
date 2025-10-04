@@ -24,20 +24,36 @@ Dir = Path(__file__).parent
 # ---
 sys.path.append(str(Dir))
 # ---
-from newupdater import med
 from newapi import printe
 from apis import mdwiki_api
 from newapi.mdwiki_page import NEW_API
+
+from newupdater import mdapi
+from newupdater.MedWorkNew import work_on_text
 
 # ---
 api_new = NEW_API('www', family='mdwiki')
 # api_new.Login_to_wiki()
 
+
+def get_new_text(title):
+    # ---
+    # if not text:
+    text = mdapi.GetPageText(title)
+    # ---
+    newtext = text
+    # ---
+    if newtext != "":
+        newtext = work_on_text(title, newtext)
+    # ---
+    return text, newtext
+
+
 def work_on_title(title, returntext=False):
     # ---
     title = urllib.parse.unquote(title)
     # ---
-    text, new_text = med.get_new_text(title)
+    text, new_text = get_new_text(title)
     # ---
     if text == "" or new_text == "":
         printe.output("<<red>> notext")
@@ -50,8 +66,10 @@ def work_on_title(title, returntext=False):
     printe.showDiff(text, new_text)
     # ---
     ask = input(f"<<yellow>> save title:{title}? ")
+    # ---
     if ask in ['y', '', "a"]:
-        return med.page_put(new_text, title)
+        return mdapi.page_put(text, new_text, "mdwiki changes.", title, "www")
+    # ---
     print("not saved")
     return
 

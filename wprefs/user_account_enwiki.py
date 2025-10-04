@@ -21,4 +21,4 @@ botpassword = config["DEFAULT"].get("botpassword", "")
 
 my_username = config["DEFAULT"].get("my_username", "")
 lgpass_enwiki = config["DEFAULT"].get("lgpass_enwiki", "")
-user_agent = config["DEFAULT"].get("user_agent", "")
+user_agent = config["DEFAULT"].get("user_agent", "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)")
