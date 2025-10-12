@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-!
+
+python I:/mdwiki/pybot/svg/svg-py/bots/inject_bot.py
+
 """
 
 import json
@@ -248,27 +250,3 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
     logger.info(f"Skipped {stats['skipped_translations']} existing translations")
 
     return stats
-
-
-def main():
-    Dir = Path(__file__).parent.parent
-
-    result = inject(Dir / "files1/no_translations.svg", [Dir / "data/arabic.svg.json"])
-
-    print("______________________\n"*5)
-
-    result2 = inject(Dir.parent.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
-
-    print("______________________\n"*5)
-
-    result = inject(Dir / "files2/to.svg", [Dir / "data/from.svg.json"])
-
-
-def test():
-    Dir = Path(__file__).parent.parent
-
-    result = inject(Dir / "files2/to2_raw.svg", [Dir / "data/from2.svg.json"])
-
-
-if __name__ == '__main__':
-    test()

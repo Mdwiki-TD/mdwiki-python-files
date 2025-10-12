@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-!
+
+python I:/mdwiki/pybot/svg/svg-py/bots/extract_bot.py
+
 """
 
 import json
@@ -114,27 +116,3 @@ def extract(svg_file_path, output_file=None, case_insensitive=True):
     logger.info(f"Found translations in {len(all_languages)} languages: {', '.join(sorted(all_languages))}")
 
     return translations
-
-
-def main():
-    Dir = Path(__file__).parent.parent
-    data = extract(Dir / "files1/arabic.svg")
-    print("______________________\n"*5)
-
-    data2 = extract(Dir.parent / "big_example/file2.svg")
-    print("______________________\n"*5)
-
-    data = extract(Dir / "files2/from.svg")
-    print("______________________\n"*5)
-
-
-def test():
-    Dir = Path(__file__).parent.parent
-
-    data = extract(Dir / "files2/from2.svg")
-
-    print("______________________\n"*5)
-
-
-if __name__ == '__main__':
-    test()
