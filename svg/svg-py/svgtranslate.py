@@ -336,7 +336,7 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
     output_dir = Path(__file__).parent / "translated"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    output_file = output_dir / f'{svg_file_path.name}.json'
+    output_file = output_dir / svg_file_path.name
 
     # Write the modified SVG
     tree.write(str(output_file), encoding='utf-8', xml_declaration=True, pretty_print=True)
