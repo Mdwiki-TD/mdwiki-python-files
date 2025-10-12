@@ -5,14 +5,14 @@ SVG Translation Tool
 Extract multilingual text pairs from an SVG file and save them as `original.svg.json`.
 Then apply saved translations to other SVG files by inserting missing `<text systemLanguage="XX">` blocks.
 """
-import argparse
+import io
 import json
 import logging
 import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from copy import deepcopy
-
+import shutil
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
@@ -199,6 +199,10 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
     tree = ET.parse(svg_path)
     root = tree.getroot()
 
+    output_dir = Path(__file__).parent / 'translated'
+    output_dir.mkdir(parents=True, exist_ok=True)
+    svg_path = output_dir / svg_path
+
     # Find all switch elements regardless of namespace
     def find_elements_by_tag(element, tag_name):
         """Find all elements with a specific tag name, ignoring namespace."""
@@ -270,34 +274,26 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
                 logger.info(f"Inserted {lang_code} translation for '{english_string}' in {svg_path}")
                 changes_made += 1
 
-    # Write backup and modified SVG if not in dry run mode
-    if not dry_run:
-        # Create backup
-        backup_path = f"{svg_path}.bak"
-        # Use xml_declaration=True and encoding='utf-8' to properly write the SVG
-        tree.write(backup_path, encoding='utf-8', xml_declaration=True)
+    # Validate the XML before writing the main file
+    # Write modified SVG using atomic write
+    # Create temp file in the same directory as the target to avoid cross-drive issues
+    svg_dir = Path(svg_path).parent
+    with tempfile.NamedTemporaryFile(mode='wb', delete=False, suffix='.svg', dir=svg_dir) as tmp_file:
+        # Write to a bytes buffer first
+        bytes_io = io.BytesIO()
+        tree.write(bytes_io, encoding='utf-8', xml_declaration=True)
+        tmp_file.write(bytes_io.getvalue())
+        tmp_path = tmp_file.name
 
-        # Validate the XML before writing the main file
-        # Write modified SVG using atomic write
-        # Create temp file in the same directory as the target to avoid cross-drive issues
-        svg_dir = Path(svg_path).parent
-        with tempfile.NamedTemporaryFile(mode='wb', delete=False, suffix='.svg', dir=svg_dir) as tmp_file:
-            # Write to a bytes buffer first
-            import io
-            bytes_io = io.BytesIO()
-            tree.write(bytes_io, encoding='utf-8', xml_declaration=True)
-            tmp_file.write(bytes_io.getvalue())
-            tmp_path = tmp_file.name
+    # Validate the temporary file before replacing the original
+    if not validate_xml_well_formed(tmp_path):
+        logger.error(f"Generated XML is not well-formed for {svg_path}. Aborting write.")
+        Path(tmp_path).unlink()  # Remove the invalid temp file
+        raise ET.ParseError("Generated XML is not well-formed")
 
-        # Validate the temporary file before replacing the original
-        if not validate_xml_well_formed(tmp_path):
-            logger.error(f"Generated XML is not well-formed for {svg_path}. Aborting write.")
-            Path(tmp_path).unlink()  # Remove the invalid temp file
-            raise ET.ParseError("Generated XML is not well-formed")
+    # Replace original with temp file using os.replace for cross-platform compatibility
 
-        # Replace original with temp file using os.replace for cross-platform compatibility
-        import shutil
-        shutil.move(tmp_path, svg_path)
+    shutil.move(tmp_path, svg_path)
 
     return changes_made
 
@@ -351,51 +347,11 @@ def create_language_text_element(default_element, lang_code, translated_text, ex
 
 
 def main():
-    parser = argparse.ArgumentParser(description='SVG Translation Tool')
-    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    mapping_data = extract_translations("arabic.svg")
+    changes = inject_translations("no_translations.svg", mapping_data)
 
-    # Extract command
-    extract_parser = subparsers.add_parser('extract', help='Extract translations from SVG')
-    extract_parser.add_argument('input_svg', help='Input SVG file to extract from')
-
-    # Inject command
-    inject_parser = subparsers.add_parser('inject', help='Inject translations into SVGs')
-    inject_parser.add_argument('mapping', help='JSON file with translation mappings')
-    inject_parser.add_argument('target_svgs', nargs='+', help='Target SVG files to inject into')
-    inject_parser.add_argument('--dry-run', action='store_true', help='Show what would be changed without modifying files')
-    inject_parser.add_argument('--overwrite', action='store_true', help='Overwrite existing translations')
-
-    args = parser.parse_args()
-
-    if args.command == 'extract':
-        logger.info(f"Extracting translations from {args.input_svg}")
-        try:
-            extract_translations(args.input_svg)
-        except Exception as e:
-            logger.error(f"Error during extraction: {e}")
-            return 1
-    elif args.command == 'inject':
-        logger.info(f"Loading translation mapping from {args.mapping}")
-        try:
-            with open(args.mapping, 'r', encoding='utf-8') as f:
-                mapping_data = json.load(f)
-        except Exception as e:
-            logger.error(f"Error loading mapping file: {e}")
-            return 1
-
-        for target_svg in args.target_svgs:
-            logger.info(f"Injecting translations into {target_svg}")
-            try:
-                changes = inject_translations(target_svg, mapping_data, args.dry_run, args.overwrite)
-                logger.info(f"Made {changes} changes to {target_svg}")
-            except Exception as e:
-                logger.error(f"Error injecting translations into {target_svg}: {e}")
-                return 1
-    else:
-        parser.print_help()
-        return 1
-
-    return 0
+    mapping_data = extract_translations("../big_example/file2.svg")
+    changes = inject_translations("../big_example/file1.svg", mapping_data)
 
 
 if __name__ == '__main__':

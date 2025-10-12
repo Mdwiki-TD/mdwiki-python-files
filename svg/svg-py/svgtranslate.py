@@ -76,79 +76,74 @@ def extract(svg_file_path, output_file=None, case_insensitive=False):
 
     logger.info(f"Extracting translations from {svg_file_path}")
 
-    try:
-        # Parse SVG as XML
-        parser = etree.XMLParser(remove_blank_text=True)
-        tree = etree.parse(str(svg_file_path), parser)
-        root = tree.getroot()
+    # Parse SVG as XML
+    parser = etree.XMLParser(remove_blank_text=True)
+    tree = etree.parse(str(svg_file_path), parser)
+    root = tree.getroot()
 
-        # Find all switch elements
-        switches = root.xpath('//svg:switch', namespaces={'svg': 'http://www.w3.org/2000/svg'})
-        logger.info(f"Found {len(switches)} switch elements")
+    # Find all switch elements
+    switches = root.xpath('//svg:switch', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    logger.info(f"Found {len(switches)} switch elements")
 
-        translations = {}
-        processed_switches = 0
+    translations = {}
+    processed_switches = 0
 
-        for switch in switches:
-            # Find all text elements within this switch
-            text_elements = switch.xpath('./svg:text', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    for switch in switches:
+        # Find all text elements within this switch
+        text_elements = switch.xpath('./svg:text', namespaces={'svg': 'http://www.w3.org/2000/svg'})
 
-            if not text_elements:
-                continue
+        if not text_elements:
+            continue
 
-            # Identify default text (no systemLanguage attribute)
-            default_text = None
-            default_node = None
+        # Identify default text (no systemLanguage attribute)
+        default_text = None
+        default_node = None
 
-            # Find translations
-            switch_translations = {}
+        # Find translations
+        switch_translations = {}
 
-            for text_elem in text_elements:
-                system_lang = text_elem.get('systemLanguage')
-                text_content = extract_text_from_node(text_elem)
-                normalized_content = normalize_text(text_content)
+        for text_elem in text_elements:
+            system_lang = text_elem.get('systemLanguage')
+            text_content = extract_text_from_node(text_elem)
+            normalized_content = normalize_text(text_content)
 
-                if case_insensitive:
-                    normalized_content = normalized_content.lower()
+            if case_insensitive:
+                normalized_content = normalized_content.lower()
 
-                if not system_lang:
-                    # This is the default text
-                    default_text = normalized_content
-                    default_node = text_elem
-                else:
-                    # This is a translation
-                    switch_translations[system_lang] = normalized_content
+            if not system_lang:
+                # This is the default text
+                default_text = normalized_content
+                default_node = text_elem
+            else:
+                # This is a translation
+                switch_translations[system_lang] = normalized_content
 
-            # If we found both default text and translations, add to our data
-            if default_text and switch_translations:
-                if default_text not in translations:
-                    translations[default_text] = {}
+        # If we found both default text and translations, add to our data
+        if default_text and switch_translations:
+            if default_text not in translations:
+                translations[default_text] = {}
 
-                for lang, translation in switch_translations.items():
-                    translations[default_text][lang] = translation
+            for lang, translation in switch_translations.items():
+                translations[default_text][lang] = translation
 
-                processed_switches += 1
-                logger.debug(f"Processed switch with default text: '{default_text}'")
+            processed_switches += 1
+            logger.debug(f"Processed switch with default text: '{default_text}'")
 
-        # Save translations to JSON
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(translations, f, indent=2, ensure_ascii=False)
+    # Save translations to JSON
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(translations, f, indent=2, ensure_ascii=False)
 
-        logger.info(f"Extracted translations for {processed_switches} switches")
-        logger.info(f"Saved translations to {output_file}")
+    logger.info(f"Extracted translations for {processed_switches} switches")
+    logger.info(f"Saved translations to {output_file}")
 
-        # Count languages
-        all_languages = set()
-        for text_dict in translations.values():
-            all_languages.update(text_dict.keys())
+    # Count languages
+    all_languages = set()
+    for text_dict in translations.values():
+        all_languages.update(text_dict.keys())
 
-        logger.info(f"Found translations in {len(all_languages)} languages: {', '.join(sorted(all_languages))}")
+    logger.info(f"Found translations in {len(all_languages)} languages: {', '.join(sorted(all_languages))}")
 
-        return translations
-
-    except Exception as e:
-        logger.error(f"Error extracting translations: {str(e)}")
-        return None
+    return translations
 
 
 def generate_unique_id(base_id, lang, existing_ids):
@@ -372,52 +367,14 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
 
 
 def main():
-    """Main entry point for the CLI."""
-    parser = argparse.ArgumentParser(description='Extract and inject translations in SVG files')
-    parser.add_argument('--verbose', '-v', action='store_true', help='Enable verbose logging')
-    parser.add_argument('--case-insensitive', action='store_true',
-                        help='Normalize case when matching strings')
-
-    subparsers = parser.add_subparsers(dest='command', help='Available commands')
-
-    # Extract command
-    extract_parser = subparsers.add_parser('extract', help='Extract translations from an SVG file')
-    extract_parser.add_argument('svg_file', help='Path to the SVG file to extract translations from')
-    extract_parser.add_argument('--output', '-o', help='Output JSON file path')
-
-    # Inject command
-    inject_parser = subparsers.add_parser('inject', help='Inject translations into SVG files')
-    inject_parser.add_argument('svg_files', nargs='+', help='SVG files to inject translations into')
-    inject_parser.add_argument('--mapping', '-m', action='append', required=True,
-                               help='JSON mapping file (can be specified multiple times)')
-    inject_parser.add_argument('--output-dir', '-d', help='Output directory for modified SVG files')
-    inject_parser.add_argument('--overwrite', action='store_true',
-                               help='Overwrite existing translations')
-    inject_parser.add_argument('--dry-run', action='store_true',
-                               help='Report changes without writing files')
-
-    args = parser.parse_args()
-
-    if not args.command:
-        parser.print_help()
-        return 1
-
     # Set up logging
-    logger = setup_logging(args.verbose)
+    logger = setup_logging(False)
 
-    if args.command == 'extract':
-        result = extract(args.svg_file, args.output, args.case_insensitive)
-        return 0 if result is not None else 1
+    data = extract("arabic.svg")
+    result = inject("no_translations.svg", ["arabic.svg.json"], "translated")
 
-    elif args.command == 'inject':
-        for svg_file in args.svg_files:
-            result = inject(svg_file, args.mapping, args.output_dir,
-                            args.overwrite, args.dry_run, args.case_insensitive)
-            if result is None:
-                return 1
-        return 0
-
-    return 0
+    data2 = extract("../big_example/file2.svg")
+    result2 = inject("../big_example/file1.svg", ["../big_example/file2.svg"], "translated")
 
 
 if __name__ == '__main__':
