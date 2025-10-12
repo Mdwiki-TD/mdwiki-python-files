@@ -38,7 +38,7 @@ def extract_text_from_element(element):
         text_content = element.text
     else:
         text_content = ""
-    
+
     # Look for tspan elements
     tspan_texts = []
     for child in element:
@@ -46,11 +46,11 @@ def extract_text_from_element(element):
             # Extract text from tspan - could be direct text or nested
             tspan_text = extract_text_from_tspan(child)
             tspan_texts.append(tspan_text)
-    
+
     # Combine direct text and tspan text
     all_texts = [text_content] + tspan_texts
     combined_text = ''.join(all_texts)
-    
+
     return normalize_text(combined_text)
 
 
@@ -59,18 +59,18 @@ def extract_text_from_tspan(tspan_element):
     Extract text from an SVG tspan element, handling nested content.
     """
     text_parts = []
-    
+
     # Add direct text content of tspan
     if tspan_element.text:
         text_parts.append(tspan_element.text)
-    
+
     # Process nested elements if any
     for child in tspan_element:
         if child.text:
             text_parts.append(child.text)
         if child.tail:
             text_parts.append(child.tail)
-    
+
     return ''.join(text_parts)
 
 
@@ -101,14 +101,14 @@ def generate_unique_id(base_id, existing_ids, suffix=""):
     """
     if not base_id:
         base_id = "text"
-    
+
     candidate_id = f"{base_id}{suffix}"
     counter = 1
-    
+
     while candidate_id in existing_ids:
         candidate_id = f"{base_id}{suffix}{counter}"
         counter += 1
-    
+
     return candidate_id
 
 
@@ -119,7 +119,7 @@ def extract_translations(svg_path):
     # Parse SVG as XML
     tree = ET.parse(svg_path)
     root = tree.getroot()
-    
+
     # Find all switch elements regardless of namespace
     def find_elements_by_tag(element, tag_name):
         """Find all elements with a specific tag name, ignoring namespace."""
@@ -130,35 +130,35 @@ def extract_translations(svg_path):
         for child in element:
             elements.extend(find_elements_by_tag(child, tag_name))
         return elements
-    
+
     switch_elements = find_elements_by_tag(root, 'switch')
-    
+
     data = {}
     switches_processed = 0
     languages_extracted = set()
-    
+
     for switch in switch_elements:
         # Find default (no systemLanguage) text element
         default_element = get_default_text_element(switch)
-        
+
         if default_element is None:
             logger.warning(f"Switch element without default text found in {svg_path}")
             continue
-        
+
         # Extract English string from default element
         english_string = extract_text_from_element(default_element)
-        
+
         if not english_string:
             logger.warning(f"Empty default text found in switch in {svg_path}")
             continue
-        
+
         # Initialize translations dict for this English string
         if english_string not in data:
             data[english_string] = {}
-        
+
         # Get all systemLanguage elements
         lang_elements = get_system_language_elements(switch)
-        
+
         for lang_element in lang_elements:
             lang_code = lang_element.attrib.get('systemLanguage', '')
             if lang_code:
@@ -166,17 +166,17 @@ def extract_translations(svg_path):
                 if translated_text:
                     data[english_string][lang_code] = translated_text
                     languages_extracted.add(lang_code)
-        
+
         switches_processed += 1
-    
+
     # Save data to JSON file
     json_path = f"{svg_path}.json"
     with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    
+
     logger.info(f"Extracted translations from {switches_processed} switches with {len(languages_extracted)} languages to {json_path}")
     logger.info(f"Languages found: {', '.join(sorted(languages_extracted))}")
-    
+
     return data
 
 
@@ -198,7 +198,7 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
     # Parse SVG
     tree = ET.parse(svg_path)
     root = tree.getroot()
-    
+
     # Find all switch elements regardless of namespace
     def find_elements_by_tag(element, tag_name):
         """Find all elements with a specific tag name, ignoring namespace."""
@@ -209,48 +209,49 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
         for child in element:
             elements.extend(find_elements_by_tag(child, tag_name))
         return elements
-    
+
     switch_elements = find_elements_by_tag(root, 'switch')
-    
+
     # Create a set of existing IDs to ensure uniqueness
     existing_ids = set()
+
     def collect_ids(element):
         if 'id' in element.attrib:
             existing_ids.add(element.attrib['id'])
         for child in element:
             collect_ids(child)
-    
+
     collect_ids(root)
-    
+
     changes_made = 0
-    
+
     for switch in switch_elements:
         # Find default text element
         default_element = get_default_text_element(switch)
-        
+
         if default_element is None:
             continue
-        
+
         # Extract English string from default element
         english_string = extract_text_from_element(default_element)
-        
+
         if not english_string or english_string not in mapping_data:
             continue
-        
+
         # Get translations for this English string
         translations = mapping_data[english_string]
-        
+
         for lang_code, translated_text in translations.items():
             # Check if a text element with this language already exists
             lang_element_exists = False
             existing_lang_element = None
             for child in switch:
-                if (child.tag.split('}')[-1] == 'text' and 
-                    child.attrib.get('systemLanguage', '') == lang_code):
+                if (child.tag.split('}')[-1] == 'text' and
+                        child.attrib.get('systemLanguage', '') == lang_code):
                     lang_element_exists = True
                     existing_lang_element = child
                     break
-            
+
             if lang_element_exists and overwrite:
                 # Update existing translation if different
                 existing_text = extract_text_from_element(existing_lang_element)
@@ -262,20 +263,20 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
             elif not lang_element_exists:
                 # Create new text element with systemLanguage
                 new_text_element = create_language_text_element(default_element, lang_code, translated_text, existing_ids)
-                
+
                 # Add the new element to the switch
                 switch.append(new_text_element)
-                
+
                 logger.info(f"Inserted {lang_code} translation for '{english_string}' in {svg_path}")
                 changes_made += 1
-    
+
     # Write backup and modified SVG if not in dry run mode
     if not dry_run:
         # Create backup
         backup_path = f"{svg_path}.bak"
         # Use xml_declaration=True and encoding='utf-8' to properly write the SVG
         tree.write(backup_path, encoding='utf-8', xml_declaration=True)
-        
+
         # Validate the XML before writing the main file
         # Write modified SVG using atomic write
         # Create temp file in the same directory as the target to avoid cross-drive issues
@@ -287,17 +288,17 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
             tree.write(bytes_io, encoding='utf-8', xml_declaration=True)
             tmp_file.write(bytes_io.getvalue())
             tmp_path = tmp_file.name
-        
+
         # Validate the temporary file before replacing the original
         if not validate_xml_well_formed(tmp_path):
             logger.error(f"Generated XML is not well-formed for {svg_path}. Aborting write.")
             Path(tmp_path).unlink()  # Remove the invalid temp file
             raise ET.ParseError("Generated XML is not well-formed")
-        
+
         # Replace original with temp file using os.replace for cross-platform compatibility
         import shutil
         shutil.move(tmp_path, svg_path)
-    
+
     return changes_made
 
 
@@ -312,7 +313,7 @@ def update_element_text(element, new_text):
             child.text = new_text
             tspan_updated = True
             break
-    
+
     # If no tspan found, update the element's direct text
     if not tspan_updated:
         element.text = new_text
@@ -324,20 +325,20 @@ def create_language_text_element(default_element, lang_code, translated_text, ex
     """
     # Create a deep copy of the default element
     new_text_element = deepcopy(default_element)
-    
+
     # Set the systemLanguage attribute
     new_text_element.attrib['systemLanguage'] = lang_code
-    
+
     # Generate and set unique ID if the original had one
     if 'id' in new_text_element.attrib:
         old_id = new_text_element.attrib['id']
         new_id = generate_unique_id(old_id, existing_ids, f"-{lang_code}")
         new_text_element.attrib['id'] = new_id
         existing_ids.add(new_id)
-    
+
     # Update the text content
     update_element_text(new_text_element, translated_text)
-    
+
     # Handle tspan IDs if they exist
     for child in new_text_element:
         if child.tag.split('}')[-1] == 'tspan' and 'id' in child.attrib:
@@ -345,27 +346,27 @@ def create_language_text_element(default_element, lang_code, translated_text, ex
             new_tspan_id = generate_unique_id(old_tspan_id, existing_ids, f"-{lang_code}")
             child.attrib['id'] = new_tspan_id
             existing_ids.add(new_tspan_id)
-    
+
     return new_text_element
 
 
 def main():
     parser = argparse.ArgumentParser(description='SVG Translation Tool')
     subparsers = parser.add_subparsers(dest='command', help='Available commands')
-    
+
     # Extract command
     extract_parser = subparsers.add_parser('extract', help='Extract translations from SVG')
     extract_parser.add_argument('input_svg', help='Input SVG file to extract from')
-    
+
     # Inject command
     inject_parser = subparsers.add_parser('inject', help='Inject translations into SVGs')
     inject_parser.add_argument('mapping', help='JSON file with translation mappings')
     inject_parser.add_argument('target_svgs', nargs='+', help='Target SVG files to inject into')
     inject_parser.add_argument('--dry-run', action='store_true', help='Show what would be changed without modifying files')
     inject_parser.add_argument('--overwrite', action='store_true', help='Overwrite existing translations')
-    
+
     args = parser.parse_args()
-    
+
     if args.command == 'extract':
         logger.info(f"Extracting translations from {args.input_svg}")
         try:
@@ -381,7 +382,7 @@ def main():
         except Exception as e:
             logger.error(f"Error loading mapping file: {e}")
             return 1
-        
+
         for target_svg in args.target_svgs:
             logger.info(f"Injecting translations into {target_svg}")
             try:
@@ -393,7 +394,7 @@ def main():
     else:
         parser.print_help()
         return 1
-    
+
     return 0
 
 
