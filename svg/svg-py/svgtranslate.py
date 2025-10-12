@@ -368,6 +368,12 @@ def main():
     logger = setup_logging(False)
     Dir = Path(__file__).parent
     data = extract(Dir / "arabic.svg")
+    print("______________________\n"*5)
+
+    result = inject(Dir / "no_translations.svg", [Dir / "data/arabic.svg.json"])
+
+    print("______________________\n"*5)
+
     result = inject(Dir.parent / "no_translations_raw.svg", [Dir / "data/arabic.svg.json"])
 
 
