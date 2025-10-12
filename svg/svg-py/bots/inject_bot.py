@@ -29,30 +29,9 @@ def generate_unique_id(base_id, lang, existing_ids):
     return f"{new_id}-{counter}"
 
 
-def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_run=False, case_insensitive=True):
-    """
-    Inject translations into an SVG file based on mapping files.
-
-    Args:
-        svg_file_path: Path to the SVG file to inject translations into
-        mapping_files: List of paths to JSON mapping files
-        output_dir: Directory to save modified SVG files (defaults to same directory as input)
-        overwrite: Whether to overwrite existing translations
-        dry_run: If True, only report changes without writing files
-        case_insensitive: Whether to normalize case when matching strings
-
-    Returns:
-        Dictionary with statistics about the injection process
-    """
-
-    svg_file_path = Path(svg_file_path)
-
-    if not svg_file_path.exists():
-        logger.error(f"SVG file not found: {svg_file_path}")
-        return None
-
-    # Load all mapping files
+def load_all_mappings(mapping_files):
     all_mappings = {}
+
     for mapping_file in mapping_files:
         mapping_file = Path(mapping_file)
         if not mapping_file.exists():
@@ -72,26 +51,11 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
             logger.info(f"Loaded mappings from {mapping_file}, len: {len(mappings)}")
         except Exception as e:
             logger.error(f"Error loading mapping file {mapping_file}: {str(e)}")
-            return None
 
-    if not all_mappings:
-        logger.error("No valid mappings found")
-        return None
+    return all_mappings
 
-    logger.info(f"Injecting translations into {svg_file_path}")
 
-    # Parse SVG as XML
-    parser = etree.XMLParser(remove_blank_text=True)
-    tree = etree.parse(str(svg_file_path), parser)
-    root = tree.getroot()
-
-    # Find all switch elements
-    switches = root.xpath('//svg:switch', namespaces={'svg': 'http://www.w3.org/2000/svg'})
-    logger.info(f"Found {len(switches)} switch elements")
-
-    # Collect all existing IDs to ensure uniqueness
-    existing_ids = set(root.xpath('//@id'))
-
+def work_on_switches(switches, existing_ids, all_mappings, case_insensitive=False, dry_run=False, overwrite=False):
     stats = {
         'processed_switches': 0,
         'inserted_translations': 0,
@@ -219,6 +183,54 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
                 logger.debug(f"Inserted {lang} translation for '{default_texts}'")
 
         stats['processed_switches'] += 1
+
+    return stats
+
+
+def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_run=False, case_insensitive=True):
+    """
+    Inject translations into an SVG file based on mapping files.
+
+    Args:
+        svg_file_path: Path to the SVG file to inject translations into
+        mapping_files: List of paths to JSON mapping files
+        output_dir: Directory to save modified SVG files (defaults to same directory as input)
+        overwrite: Whether to overwrite existing translations
+        dry_run: If True, only report changes without writing files
+        case_insensitive: Whether to normalize case when matching strings
+
+    Returns:
+        Dictionary with statistics about the injection process
+    """
+
+    svg_file_path = Path(svg_file_path)
+
+    if not svg_file_path.exists():
+        logger.error(f"SVG file not found: {svg_file_path}")
+        return None
+
+    # Load all mapping files
+    all_mappings = load_all_mappings(mapping_files)
+
+    if not all_mappings:
+        logger.error("No valid mappings found")
+        return None
+
+    logger.info(f"Injecting translations into {svg_file_path}")
+
+    # Parse SVG as XML
+    parser = etree.XMLParser(remove_blank_text=True)
+    tree = etree.parse(str(svg_file_path), parser)
+    root = tree.getroot()
+
+    # Find all switch elements
+    switches = root.xpath('//svg:switch', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    logger.info(f"Found {len(switches)} switch elements")
+
+    # Collect all existing IDs to ensure uniqueness
+    existing_ids = set(root.xpath('//@id'))
+
+    stats = work_on_switches(switches, existing_ids, all_mappings, case_insensitive=case_insensitive, dry_run=dry_run, overwrite=overwrite)
 
     # Save data to JSON file
     output_dir = Path(__file__).parent.parent / "translated"
