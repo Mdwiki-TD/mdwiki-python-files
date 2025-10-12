@@ -50,3 +50,7 @@ md_core/update_med_views/xx.py
 !/z/*.csv
 !/z/*/*.json
 z/jsons/pages.json
+/svg/*.svg
+/svg/**/*.svg
+/svg/*.md
+/svg/**/*.md
