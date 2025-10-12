@@ -70,7 +70,7 @@ def extract(svg_file_path, output_file=None, case_insensitive=False):
         return None
 
     if output_file is None:
-        output_file = svg_file_path.with_suffix('.json')
+        output_file = svg_file_path.with_suffix('.svg.json')
     else:
         output_file = Path(output_file)
 
@@ -389,12 +389,12 @@ def main():
     inject_parser = subparsers.add_parser('inject', help='Inject translations into SVG files')
     inject_parser.add_argument('svg_files', nargs='+', help='SVG files to inject translations into')
     inject_parser.add_argument('--mapping', '-m', action='append', required=True,
-                              help='JSON mapping file (can be specified multiple times)')
+                               help='JSON mapping file (can be specified multiple times)')
     inject_parser.add_argument('--output-dir', '-d', help='Output directory for modified SVG files')
     inject_parser.add_argument('--overwrite', action='store_true',
-                              help='Overwrite existing translations')
+                               help='Overwrite existing translations')
     inject_parser.add_argument('--dry-run', action='store_true',
-                              help='Report changes without writing files')
+                               help='Report changes without writing files')
 
     args = parser.parse_args()
 
@@ -412,7 +412,7 @@ def main():
     elif args.command == 'inject':
         for svg_file in args.svg_files:
             result = inject(svg_file, args.mapping, args.output_dir,
-                           args.overwrite, args.dry_run, args.case_insensitive)
+                            args.overwrite, args.dry_run, args.case_insensitive)
             if result is None:
                 return 1
         return 0
