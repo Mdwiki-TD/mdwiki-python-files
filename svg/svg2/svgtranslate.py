@@ -355,6 +355,8 @@ def main():
     mapping_data = extract_translations(Dir / "arabic.svg")
     changes = inject_translations(Dir / "no_translations.svg", mapping_data)
 
+    print("______________________\n"*5)
+
     mapping_data = extract_translations(Dir.parent / "big_example/file2.svg")
     changes = inject_translations(Dir.parent / "big_example/file1.svg", mapping_data)
 
