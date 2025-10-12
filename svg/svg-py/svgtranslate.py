@@ -350,7 +350,7 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
     return stats
 
 
-def main():
+def test():
     # Set up logging
     logger = setup_logging(False)
     Dir = Path(__file__).parent
@@ -361,6 +361,14 @@ def main():
 
     data2 = extract(Dir.parent / "big_example/file2.svg")
     result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
+
+
+def main():
+    # Set up logging
+    logger = setup_logging(False)
+    Dir = Path(__file__).parent
+    data = extract(Dir / "arabic.svg")
+    result = inject(Dir.parent / "no_translations_raw.svg", [Dir / "data/arabic.svg.json"])
 
 
 if __name__ == '__main__':
