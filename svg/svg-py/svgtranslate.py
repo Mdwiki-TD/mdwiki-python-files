@@ -383,8 +383,8 @@ def test():
     # Set up logging
     logger = setup_logging(False)
     Dir = Path(__file__).parent
-    data = extract(Dir / "arabic.svg")
-    result = inject(Dir / "no_translations.svg", [Dir / "data/arabic.svg.json"])
+    data = extract(Dir / "files1/arabic.svg")
+    result = inject(Dir / "files1/no_translations.svg", [Dir / "data/arabic.svg.json"])
 
     print("______________________\n"*5)
 
@@ -396,14 +396,10 @@ def main1():
     # Set up logging
     logger = setup_logging(False)
     Dir = Path(__file__).parent
-    data = extract(Dir / "arabic.svg")
+    data = extract(Dir / "files1/arabic.svg")
     print("______________________\n"*5)
 
-    result = inject(Dir / "no_translations.svg", [Dir / "data/arabic.svg.json"])
-
-    print("______________________\n"*5)
-
-    result = inject(Dir.parent / "no_translations_raw.svg", [Dir / "data/arabic.svg.json"])
+    result = inject(Dir / "files1/no_translations.svg", [Dir / "data/arabic.svg.json"])
 
     print("______________________\n"*5)
 
