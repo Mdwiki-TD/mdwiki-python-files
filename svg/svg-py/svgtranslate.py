@@ -42,12 +42,12 @@ def normalize_text(text):
 def extract_text_from_node(node):
     """Extract text from a text node, handling tspan elements."""
     # Try to find tspan elements first
-    tspans = node.xpath('.//svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    tspans = node.xpath('./svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
     if tspans:
-        # Join text from all tspan elements
-        return ' '.join(tspan.text.strip() if tspan.text else '' for tspan in tspans)
+        # Return a list of text from each tspan element
+        return [tspan.text.strip() if tspan.text else "" for tspan in tspans]
     # Fall back to direct text content
-    return node.text.strip() if node.text else ""
+    return [node.text.strip()] if node.text else [""]
 
 
 def extract(svg_file_path, output_file=None, case_insensitive=True):
@@ -104,30 +104,38 @@ def extract(svg_file_path, output_file=None, case_insensitive=True):
 
         for text_elem in text_elements:
             system_lang = text_elem.get('systemLanguage')
-            text_content = extract_text_from_node(text_elem)
-            normalized_content = normalize_text(text_content)
-
-            if case_insensitive:
-                normalized_content = normalized_content.lower()
+            text_contents = extract_text_from_node(text_elem)
 
             if not system_lang:
                 # This is the default text
-                default_text = normalized_content
+                default_texts = [normalize_text(text) for text in text_contents]
+                if case_insensitive:
+                    default_texts = [text.lower() for text in default_texts]
                 default_node = text_elem
             else:
                 # This is a translation
-                switch_translations[system_lang] = normalized_content
+                normalized_contents = [normalize_text(text) for text in text_contents]
+                if case_insensitive:
+                    normalized_contents = [text.lower() for text in normalized_contents]
+                switch_translations[system_lang] = normalized_contents
 
         # If we found both default text and translations, add to our data
-        if default_text and switch_translations:
-            if default_text not in translations:
-                translations[default_text] = {}
+        if default_texts and switch_translations:
+            # Create a key from the first default text (we could use all texts but this is simpler)
+            default_key = default_texts[0]
 
-            for lang, translation in switch_translations.items():
-                translations[default_text][lang] = translation
+            if default_key not in translations:
+                translations[default_key] = {
+                    '_texts': default_texts,  # Store all default texts
+                    '_translations': {}      # Store translations for each text
+                }
+
+            # Store translations for each language and each text
+            for lang, translated_texts in switch_translations.items():
+                translations[default_key]['_translations'][lang] = translated_texts
 
             processed_switches += 1
-            logger.debug(f"Processed switch with default text: '{default_text}'")
+            logger.debug(f"Processed switch with default texts: {default_texts}")
 
     # Save translations to JSON
     with open(output_file, 'w', encoding='utf-8') as f:
@@ -240,27 +248,47 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
             continue
 
         # Identify default text (no systemLanguage attribute)
-        default_text = None
+        default_texts = None
         default_node = None
 
         for text_elem in text_elements:
             system_lang = text_elem.get('systemLanguage')
             if not system_lang:
-                text_content = extract_text_from_node(text_elem)
-                normalized_content = normalize_text(text_content)
+                text_contents = extract_text_from_node(text_elem)
+                default_texts = [normalize_text(text) for text in text_contents]
 
                 if case_insensitive:
-                    normalized_content = normalized_content.lower()
+                    default_texts = [text.lower() for text in default_texts]
 
-                default_text = normalized_content
                 default_node = text_elem
                 break
 
-        if not default_text or default_text not in all_mappings:
+        if not default_texts:
+            continue
+
+        # Find matching translation in the mappings
+        translation_key = None
+        translations_data = None
+
+        # Try to find a match using the first text as key
+        first_text = default_texts[0]
+        if first_text in all_mappings:
+            translation_key = first_text
+            translations_data = all_mappings[first_text]
+
+        # If not found, try to match by comparing all texts
+        if not translation_key:
+            for key, data in all_mappings.items():
+                if '_texts' in data and data['_texts'] == default_texts:
+                    translation_key = key
+                    translations_data = data
+                    break
+
+        if not translation_key:
             continue
 
         # Get available translations for this text
-        available_translations = all_mappings[default_text]
+        available_translations = translations_data.get('_translations', {})
 
         # Check which translations already exist
         existing_languages = set()
@@ -270,25 +298,26 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
                 existing_languages.add(system_lang)
 
         # Add missing translations
-        for lang, translation in available_translations.items():
+        for lang, translated_texts in available_translations.items():
             if lang in existing_languages:
                 if overwrite:
                     # Find the existing translation node and update it
                     for text_elem in text_elements:
                         if text_elem.get('systemLanguage') == lang:
-                            # Update the text content
+                            # Update the text content for each tspan
                             tspans = text_elem.xpath('./svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
-                            if tspans:
-                                tspans[0].text = translation
-                            else:
-                                text_elem.text = translation
+                            if tspans and len(tspans) == len(translated_texts):
+                                for i, tspan in enumerate(tspans):
+                                    tspan.text = translated_texts[i]
+                            elif not tspans and len(translated_texts) == 1:
+                                text_elem.text = translated_texts[0]
 
                             stats['updated_translations'] += 1
-                            logger.debug(f"Updated {lang} translation for '{default_text}'")
+                            logger.debug(f"Updated {lang} translation for '{default_texts}'")
                             break
                 else:
                     stats['skipped_translations'] += 1
-                    logger.debug(f"Skipped existing {lang} translation for '{default_text}'")
+                    logger.debug(f"Skipped existing {lang} translation for '{default_texts}'")
             else:
                 # Create a new translation node
                 if not dry_run:
@@ -305,13 +334,13 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
                         new_node.set('id', new_id)
                         existing_ids.add(new_id)
 
-                    # Add the translation text
+                    # Add the translation text for each tspan
                     tspans = default_node.xpath('./svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
-                    if tspans:
+                    if tspans and len(tspans) == len(translated_texts):
                         # Clone the tspan structure
-                        for tspan in tspans:
+                        for i, tspan in enumerate(tspans):
                             new_tspan = etree.Element(tspan.tag, attrib=tspan.attrib)
-                            new_tspan.text = translation
+                            new_tspan.text = translated_texts[i]
 
                             # Generate unique ID for tspan
                             original_tspan_id = tspan.get('id')
@@ -321,14 +350,14 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
                                 existing_ids.add(new_tspan_id)
 
                             new_node.append(new_tspan)
-                    else:
-                        new_node.text = translation
+                    elif not tspans and len(translated_texts) == 1:
+                        new_node.text = translated_texts[0]
 
                     # Insert the new node
                     switch.insert(0, new_node)
 
                 stats['inserted_translations'] += 1
-                logger.debug(f"Inserted {lang} translation for '{default_text}'")
+                logger.debug(f"Inserted {lang} translation for '{default_texts}'")
 
         stats['processed_switches'] += 1
 
@@ -392,6 +421,7 @@ def main():
     print("______________________\n"*5)
 
     result = inject(Dir / "files2/to.svg", [Dir / "data/from.svg.json"])
+
 
 if __name__ == '__main__':
     sys.exit(main())
