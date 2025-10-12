@@ -213,157 +213,141 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
 
     logger.info(f"Injecting translations into {svg_file_path}")
 
-    try:
-        # Parse SVG as XML
-        parser = etree.XMLParser(remove_blank_text=True)
-        tree = etree.parse(str(svg_file_path), parser)
-        root = tree.getroot()
+    # Parse SVG as XML
+    parser = etree.XMLParser(remove_blank_text=True)
+    tree = etree.parse(str(svg_file_path), parser)
+    root = tree.getroot()
 
-        # Find all switch elements
-        switches = root.xpath('//svg:switch', namespaces={'svg': 'http://www.w3.org/2000/svg'})
-        logger.info(f"Found {len(switches)} switch elements")
+    # Find all switch elements
+    switches = root.xpath('//svg:switch', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    logger.info(f"Found {len(switches)} switch elements")
 
-        # Collect all existing IDs to ensure uniqueness
-        existing_ids = set(root.xpath('//@id'))
+    # Collect all existing IDs to ensure uniqueness
+    existing_ids = set(root.xpath('//@id'))
 
-        stats = {
-            'processed_switches': 0,
-            'inserted_translations': 0,
-            'skipped_translations': 0,
-            'updated_translations': 0
-        }
+    stats = {
+        'processed_switches': 0,
+        'inserted_translations': 0,
+        'skipped_translations': 0,
+        'updated_translations': 0
+    }
 
-        for switch in switches:
-            # Find all text elements within this switch
-            text_elements = switch.xpath('./svg:text', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+    for switch in switches:
+        # Find all text elements within this switch
+        text_elements = switch.xpath('./svg:text', namespaces={'svg': 'http://www.w3.org/2000/svg'})
 
-            if not text_elements:
-                continue
+        if not text_elements:
+            continue
 
-            # Identify default text (no systemLanguage attribute)
-            default_text = None
-            default_node = None
+        # Identify default text (no systemLanguage attribute)
+        default_text = None
+        default_node = None
 
-            for text_elem in text_elements:
-                system_lang = text_elem.get('systemLanguage')
-                if not system_lang:
-                    text_content = extract_text_from_node(text_elem)
-                    normalized_content = normalize_text(text_content)
+        for text_elem in text_elements:
+            system_lang = text_elem.get('systemLanguage')
+            if not system_lang:
+                text_content = extract_text_from_node(text_elem)
+                normalized_content = normalize_text(text_content)
 
-                    if case_insensitive:
-                        normalized_content = normalized_content.lower()
+                if case_insensitive:
+                    normalized_content = normalized_content.lower()
 
-                    default_text = normalized_content
-                    default_node = text_elem
-                    break
+                default_text = normalized_content
+                default_node = text_elem
+                break
 
-            if not default_text or default_text not in all_mappings:
-                continue
+        if not default_text or default_text not in all_mappings:
+            continue
 
-            # Get available translations for this text
-            available_translations = all_mappings[default_text]
+        # Get available translations for this text
+        available_translations = all_mappings[default_text]
 
-            # Check which translations already exist
-            existing_languages = set()
-            for text_elem in text_elements:
-                system_lang = text_elem.get('systemLanguage')
-                if system_lang:
-                    existing_languages.add(system_lang)
+        # Check which translations already exist
+        existing_languages = set()
+        for text_elem in text_elements:
+            system_lang = text_elem.get('systemLanguage')
+            if system_lang:
+                existing_languages.add(system_lang)
 
-            # Add missing translations
-            for lang, translation in available_translations.items():
-                if lang in existing_languages:
-                    if overwrite:
-                        # Find the existing translation node and update it
-                        for text_elem in text_elements:
-                            if text_elem.get('systemLanguage') == lang:
-                                # Update the text content
-                                tspans = text_elem.xpath('./svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
-                                if tspans:
-                                    tspans[0].text = translation
-                                else:
-                                    text_elem.text = translation
+        # Add missing translations
+        for lang, translation in available_translations.items():
+            if lang in existing_languages:
+                if overwrite:
+                    # Find the existing translation node and update it
+                    for text_elem in text_elements:
+                        if text_elem.get('systemLanguage') == lang:
+                            # Update the text content
+                            tspans = text_elem.xpath('./svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+                            if tspans:
+                                tspans[0].text = translation
+                            else:
+                                text_elem.text = translation
 
-                                stats['updated_translations'] += 1
-                                logger.debug(f"Updated {lang} translation for '{default_text}'")
-                                break
-                    else:
-                        stats['skipped_translations'] += 1
-                        logger.debug(f"Skipped existing {lang} translation for '{default_text}'")
+                            stats['updated_translations'] += 1
+                            logger.debug(f"Updated {lang} translation for '{default_text}'")
+                            break
                 else:
-                    # Create a new translation node
-                    if not dry_run:
-                        # Clone the default node
-                        new_node = etree.Element(default_node.tag, attrib=default_node.attrib)
-
-                        # Update attributes
-                        new_node.set('systemLanguage', lang)
-
-                        # Generate unique ID
-                        original_id = default_node.get('id')
-                        if original_id:
-                            new_id = generate_unique_id(original_id, lang, existing_ids)
-                            new_node.set('id', new_id)
-                            existing_ids.add(new_id)
-
-                        # Add the translation text
-                        tspans = default_node.xpath('./svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
-                        if tspans:
-                            # Clone the tspan structure
-                            for tspan in tspans:
-                                new_tspan = etree.Element(tspan.tag, attrib=tspan.attrib)
-                                new_tspan.text = translation
-
-                                # Generate unique ID for tspan
-                                original_tspan_id = tspan.get('id')
-                                if original_tspan_id:
-                                    new_tspan_id = generate_unique_id(original_tspan_id, lang, existing_ids)
-                                    new_tspan.set('id', new_tspan_id)
-                                    existing_ids.add(new_tspan_id)
-
-                                new_node.append(new_tspan)
-                        else:
-                            new_node.text = translation
-
-                        # Insert the new node
-                        switch.insert(0, new_node)
-
-                    stats['inserted_translations'] += 1
-                    logger.debug(f"Inserted {lang} translation for '{default_text}'")
-
-            stats['processed_switches'] += 1
-
-        if not dry_run:
-            # Determine output path
-            if output_dir:
-                output_dir = Path(output_dir)
-                output_dir.mkdir(parents=True, exist_ok=True)
-                output_path = output_dir / svg_file_path.name
+                    stats['skipped_translations'] += 1
+                    logger.debug(f"Skipped existing {lang} translation for '{default_text}'")
             else:
-                output_path = svg_file_path
+                # Create a new translation node
+                if not dry_run:
+                    # Clone the default node
+                    new_node = etree.Element(default_node.tag, attrib=default_node.attrib)
 
-            # Create backup
-            backup_path = svg_file_path.with_suffix('.svg.bak')
-            if not backup_path.exists():
-                shutil.copy2(svg_file_path, backup_path)
-                logger.info(f"Created backup at {backup_path}")
+                    # Update attributes
+                    new_node.set('systemLanguage', lang)
 
-            # Write the modified SVG
-            tree.write(str(output_path), encoding='utf-8', xml_declaration=True, pretty_print=True)
-            logger.info(f"Saved modified SVG to {output_path}")
-        else:
-            logger.info("Dry run mode - no files were modified")
+                    # Generate unique ID
+                    original_id = default_node.get('id')
+                    if original_id:
+                        new_id = generate_unique_id(original_id, lang, existing_ids)
+                        new_node.set('id', new_id)
+                        existing_ids.add(new_id)
 
-        logger.info(f"Processed {stats['processed_switches']} switches")
-        logger.info(f"Inserted {stats['inserted_translations']} translations")
-        logger.info(f"Updated {stats['updated_translations']} translations")
-        logger.info(f"Skipped {stats['skipped_translations']} existing translations")
+                    # Add the translation text
+                    tspans = default_node.xpath('./svg:tspan', namespaces={'svg': 'http://www.w3.org/2000/svg'})
+                    if tspans:
+                        # Clone the tspan structure
+                        for tspan in tspans:
+                            new_tspan = etree.Element(tspan.tag, attrib=tspan.attrib)
+                            new_tspan.text = translation
 
-        return stats
+                            # Generate unique ID for tspan
+                            original_tspan_id = tspan.get('id')
+                            if original_tspan_id:
+                                new_tspan_id = generate_unique_id(original_tspan_id, lang, existing_ids)
+                                new_tspan.set('id', new_tspan_id)
+                                existing_ids.add(new_tspan_id)
 
-    except Exception as e:
-        logger.error(f"Error injecting translations: {str(e)}")
-        return None
+                            new_node.append(new_tspan)
+                    else:
+                        new_node.text = translation
+
+                    # Insert the new node
+                    switch.insert(0, new_node)
+
+                stats['inserted_translations'] += 1
+                logger.debug(f"Inserted {lang} translation for '{default_text}'")
+
+        stats['processed_switches'] += 1
+
+    # Save data to JSON file
+    output_dir = Path(__file__).parent / "translated"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = output_dir / f'{svg_file_path.name}.json'
+
+    # Write the modified SVG
+    tree.write(str(output_file), encoding='utf-8', xml_declaration=True, pretty_print=True)
+    logger.info(f"Saved modified SVG to {output_file}")
+
+    logger.info(f"Processed {stats['processed_switches']} switches")
+    logger.info(f"Inserted {stats['inserted_translations']} translations")
+    logger.info(f"Updated {stats['updated_translations']} translations")
+    logger.info(f"Skipped {stats['skipped_translations']} existing translations")
+
+    return stats
 
 
 def main():
@@ -371,10 +355,10 @@ def main():
     logger = setup_logging(False)
     Dir = Path(__file__).parent
     data = extract(Dir / "arabic.svg")
-    result = inject(Dir / "no_translations.svg", [Dir / "arabic.svg.json"], Dir / "translated")
+    result = inject(Dir / "no_translations.svg", [Dir / "data/arabic.svg.json"])
 
     data2 = extract(Dir.parent / "big_example/file2.svg")
-    result2 = inject(Dir.parent / "big_example/file1.svg", [Dir.parent / "big_example/file2.svg"], "translated")
+    result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
 
 
 if __name__ == '__main__':
