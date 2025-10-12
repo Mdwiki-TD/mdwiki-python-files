@@ -379,40 +379,22 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
     return stats
 
 
-def test():
-    # Set up logging
-    logger = setup_logging(False)
-    Dir = Path(__file__).parent
-    data = extract(Dir / "files1/arabic.svg")
-    result = inject(Dir / "files1/no_translations.svg", [Dir / "data/arabic.svg.json"])
-
-    print("______________________\n"*5)
-
-    data2 = extract(Dir.parent / "big_example/file2.svg")
-    result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
-
-
-def main1():
-    # Set up logging
-    logger = setup_logging(False)
-    Dir = Path(__file__).parent
-    data = extract(Dir / "files1/arabic.svg")
-    print("______________________\n"*5)
-
-    result = inject(Dir / "files1/no_translations.svg", [Dir / "data/arabic.svg.json"])
-
-    print("______________________\n"*5)
-
-    data2 = extract(Dir.parent / "big_example/file2.svg")
-    print("______________________\n"*5)
-
-    result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
-
-
 def main():
     # Set up logging
     logger = setup_logging(False)
     Dir = Path(__file__).parent
+    data = extract(Dir / "files1/arabic.svg")
+    print("______________________\n"*5)
+
+    result = inject(Dir / "files1/no_translations.svg", [Dir / "data/arabic.svg.json"])
+
+    print("______________________\n"*5)
+
+    data2 = extract(Dir.parent / "big_example/file2.svg")
+    print("______________________\n"*5)
+
+    result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
+
     data = extract(Dir / "files2/from.svg")
     print("______________________\n"*5)
 
