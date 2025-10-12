@@ -11,6 +11,8 @@ import logging
 from pathlib import Path
 from lxml import etree
 
+logger = logging.getLogger(__name__)
+
 
 def normalize_text(text):
     """Normalize text by trimming whitespace and collapsing internal whitespace."""
@@ -46,7 +48,6 @@ def extract(svg_file_path, output_file=None, case_insensitive=True):
     Returns:
         Dictionary containing the extracted translations
     """
-    logger = logging.getLogger(__name__)
     svg_file_path = Path(svg_file_path)
 
     if not svg_file_path.exists():
