@@ -53,6 +53,5 @@ z/jsons/pages.json
 /svg/*.svg
 /svg/*.md
 /svg/**/*.md
-/svg/big_example
 /svg/svg-py/translated
 /svg/svg2/translated
