@@ -170,11 +170,15 @@ def extract_translations(svg_path):
         switches_processed += 1
 
     # Save data to JSON file
-    json_path = f"{svg_path}.json"
-    with open(json_path, 'w', encoding='utf-8') as f:
+    output_dir = Path(__file__).parent / "data"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = output_dir / f'{svg_path.name}.json'
+
+    with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    logger.info(f"Extracted translations from {switches_processed} switches with {len(languages_extracted)} languages to {json_path}")
+    logger.info(f"Extracted translations from {switches_processed} switches with {len(languages_extracted)} languages to {output_file}")
     logger.info(f"Languages found: {', '.join(sorted(languages_extracted))}")
 
     return data

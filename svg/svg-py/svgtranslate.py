@@ -69,10 +69,10 @@ def extract(svg_file_path, output_file=None, case_insensitive=False):
         logger.error(f"SVG file not found: {svg_file_path}")
         return None
 
-    if output_file is None:
-        output_file = svg_file_path.with_suffix('.svg.json')
-    else:
-        output_file = Path(output_file)
+    output_dir = Path(__file__).parent / "data"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = output_dir / f'{svg_file_path.name}.json'
 
     logger.info(f"Extracting translations from {svg_file_path}")
 
