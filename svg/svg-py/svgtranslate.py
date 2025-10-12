@@ -363,7 +363,7 @@ def test():
     result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
 
 
-def main():
+def main1():
     # Set up logging
     logger = setup_logging(False)
     Dir = Path(__file__).parent
@@ -383,6 +383,15 @@ def main():
 
     result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
 
+
+def main():
+    # Set up logging
+    logger = setup_logging(False)
+    Dir = Path(__file__).parent
+    data = extract(Dir / "files2/from.svg")
+    print("______________________\n"*5)
+
+    result = inject(Dir / "files2/to.svg", [Dir / "data/from.svg.json"])
 
 if __name__ == '__main__':
     sys.exit(main())
