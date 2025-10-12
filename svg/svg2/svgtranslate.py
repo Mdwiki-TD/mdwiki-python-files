@@ -201,7 +201,7 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
 
     output_dir = Path(__file__).parent / 'translated'
     output_dir.mkdir(parents=True, exist_ok=True)
-    svg_path = output_dir / svg_path
+    svg_path = output_dir / svg_path.name
 
     # Find all switch elements regardless of namespace
     def find_elements_by_tag(element, tag_name):
@@ -277,8 +277,8 @@ def inject_translations(svg_path, mapping_data, dry_run=False, overwrite=False):
     # Validate the XML before writing the main file
     # Write modified SVG using atomic write
     # Create temp file in the same directory as the target to avoid cross-drive issues
-    svg_dir = Path(svg_path).parent
-    with tempfile.NamedTemporaryFile(mode='wb', delete=False, suffix='.svg', dir=svg_dir) as tmp_file:
+
+    with tempfile.NamedTemporaryFile(mode='wb', delete=False, suffix='.svg', dir=output_dir) as tmp_file:
         # Write to a bytes buffer first
         bytes_io = io.BytesIO()
         tree.write(bytes_io, encoding='utf-8', xml_declaration=True)
