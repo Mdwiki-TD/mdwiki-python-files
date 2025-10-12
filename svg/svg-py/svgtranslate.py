@@ -376,6 +376,13 @@ def main():
 
     result = inject(Dir.parent / "no_translations_raw.svg", [Dir / "data/arabic.svg.json"])
 
+    print("______________________\n"*5)
+
+    data2 = extract(Dir.parent / "big_example/file2.svg")
+    print("______________________\n"*5)
+
+    result2 = inject(Dir.parent / "big_example/file1.svg", [Dir / "data/file2.svg.json"])
+
 
 if __name__ == '__main__':
     sys.exit(main())
