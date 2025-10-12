@@ -50,7 +50,7 @@ def extract_text_from_node(node):
     return node.text.strip() if node.text else ""
 
 
-def extract(svg_file_path, output_file=None, case_insensitive=False):
+def extract(svg_file_path, output_file=None, case_insensitive=True):
     """
     Extract translations from an SVG file and save them as JSON.
 
@@ -162,7 +162,7 @@ def generate_unique_id(base_id, lang, existing_ids):
     return f"{new_id}-{counter}"
 
 
-def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_run=False, case_insensitive=False):
+def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_run=False, case_insensitive=True):
     """
     Inject translations into an SVG file based on mapping files.
 
