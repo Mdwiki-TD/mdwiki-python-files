@@ -369,12 +369,12 @@ def inject(svg_file_path, mapping_files, output_dir=None, overwrite=False, dry_r
 def main():
     # Set up logging
     logger = setup_logging(False)
+    Dir = Path(__file__).parent
+    data = extract(Dir / "arabic.svg")
+    result = inject(Dir / "no_translations.svg", [Dir / "arabic.svg.json"], Dir / "translated")
 
-    data = extract("arabic.svg")
-    result = inject("no_translations.svg", ["arabic.svg.json"], "translated")
-
-    data2 = extract("../big_example/file2.svg")
-    result2 = inject("../big_example/file1.svg", ["../big_example/file2.svg"], "translated")
+    data2 = extract(Dir.parent / "big_example/file2.svg")
+    result2 = inject(Dir.parent / "big_example/file1.svg", [Dir.parent / "big_example/file2.svg"], "translated")
 
 
 if __name__ == '__main__':

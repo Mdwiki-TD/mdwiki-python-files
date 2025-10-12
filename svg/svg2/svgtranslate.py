@@ -347,11 +347,12 @@ def create_language_text_element(default_element, lang_code, translated_text, ex
 
 
 def main():
-    mapping_data = extract_translations("arabic.svg")
-    changes = inject_translations("no_translations.svg", mapping_data)
+    Dir = Path(__file__).parent
+    mapping_data = extract_translations(Dir / "arabic.svg")
+    changes = inject_translations(Dir / "no_translations.svg", mapping_data)
 
-    mapping_data = extract_translations("../big_example/file2.svg")
-    changes = inject_translations("../big_example/file1.svg", mapping_data)
+    mapping_data = extract_translations(Dir.parent / "big_example/file2.svg")
+    changes = inject_translations(Dir.parent / "big_example/file1.svg", mapping_data)
 
 
 if __name__ == '__main__':
