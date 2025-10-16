@@ -14,4 +14,4 @@ Pillow
 psutil
 regex
 mwapi
-Levenshtein
+python-Levenshtein
