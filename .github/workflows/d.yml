@@ -18,4 +18,7 @@ jobs:
           script_stop: true
           key: ${{ secrets.KEY }}
           script: |
-            become mdwiki sh -c "shs/update_pybot.sh; echo ''"
+            become mdwiki bash -lc "
+              shs/update_pybot.sh &&
+              toolforge-jobs run pipup --image python3.11 --command ~/web_sh/pip.sh --wait
+            "
