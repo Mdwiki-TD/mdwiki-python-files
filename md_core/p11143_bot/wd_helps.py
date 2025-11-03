@@ -3,6 +3,7 @@ Usage:
 from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_tab
 
 """
+import copy
 import sys
 import time
 
@@ -67,7 +68,7 @@ def fix_in_wd(merge_qids, qids):
     # mdwiki != P11143
     # تصحيح قيم الخاصية التي لا تساوي اسم المقالة
     # ---
-    for q, wd_value in merge_qids.copy().items():
+    for q, wd_value in copy.deepcopy(merge_qids).items():
         md_title = qids.get(q)
         if md_title == wd_value:
             continue

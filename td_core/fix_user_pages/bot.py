@@ -10,6 +10,7 @@ python3 core8/pwb.py fix_user_pages/bot test -lang:ar
 python3 core8/pwb.py fix_user_pages/bot addall
 
 """
+import copy
 import sys
 import tqdm
 from newapi import printe
@@ -159,7 +160,7 @@ def work_in_to_set(new_target, tab):
     # ---
     tab_id = tab['id']
     # ---
-    new_tab = tab.copy()
+    new_tab = copy.deepcopy(tab)
     new_tab["target"] = new_target
     # ---
     printe.output(f"<<green>> work_in_to_set() new_target:{new_target}")

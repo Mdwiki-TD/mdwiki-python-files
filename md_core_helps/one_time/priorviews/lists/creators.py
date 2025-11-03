@@ -7,6 +7,7 @@ from priorviews.lists import creators
 python3 core8/pwb.py priorviews/lists/creators
 
 '''
+import copy
 import sys
 import json
 import os
@@ -43,7 +44,7 @@ counts_creators_by_lang = {}
 Dump_it = False
 # ---
 # Iterate through each markdown file and language in `CreatorsData`
-for lang in CreatorsData.copy():
+for lang in copy.deepcopy(CreatorsData):
     # ---
     titles = CreatorsData[lang]
     # ---

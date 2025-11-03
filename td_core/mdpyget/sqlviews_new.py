@@ -6,6 +6,7 @@ python3 core8/pwb.py mdpyget/sqlviews_new -lang:ga
 
 """
 
+import copy
 import re
 import sys
 
@@ -47,7 +48,7 @@ def update_in_sql(lang, table):
         # years = {str(y) : x["all"] for y, x in tab.items() if str(y).isdigit() and x["all"] > 0}
         years = {str(y) : x for y, x in tab.items() if str(y).isdigit() and x > 0}
         # ---
-        years2 = years.copy()
+        years2 = copy.deepcopy(years)
         # ---
         for y, views in years2.items():
             if not sq.get(y):
