@@ -7,6 +7,7 @@ from mdapi_sql import sql_td_bot
 # ---
 
 """
+import copy
 import os
 import sys
 import pymysql
@@ -41,7 +42,7 @@ main_args = {
     "autocommit": True,
 }
 # ---
-main_args_new = main_args.copy()
+main_args_new = copy.deepcopy(main_args)
 main_args_new["db"] = f"{db_username}__mdwiki_new"
 # ---
 # if "localhost" in sys.argv or dir2 == "I:/mdwiki":

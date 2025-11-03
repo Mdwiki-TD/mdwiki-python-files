@@ -5,6 +5,7 @@ tfj run stats --image python3.9 --command "$HOME/jobs/stats.sh"
 python3 core8/pwb.py stats/all2 ask
 
 """
+import copy
 import json
 import os
 from pathlib import Path
@@ -40,7 +41,7 @@ def targets_text(targets):
 
 def filter_editors(editors, site):
     # ---
-    for x in editors.copy().keys():
+    for x in copy.deepcopy(editors).keys():
         if validate_ip(x):
             del editors[x]
     # ---

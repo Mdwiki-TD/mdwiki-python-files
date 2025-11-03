@@ -6,6 +6,7 @@ from mdpages import qids_help
 # qids_help.check(work_list, all_pages)
 
 """
+import copy
 import re
 import os
 import json
@@ -200,7 +201,7 @@ def get_o_qids_new(o_qids, t_qids_in):
     printe.output(f"<<green>> new len of len_empty: {len(len_empty)}")
     # ---
     # del empty qids but not empty in sql qids
-    for ti, q in o_qids_new.copy().items():
+    for ti, q in copy.deepcopy(o_qids_new).items():
         if q == "" and t_qids_in.get(ti) != "":
             del o_qids_new[ti]
     # ---
