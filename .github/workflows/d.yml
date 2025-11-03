@@ -20,5 +20,6 @@ jobs:
           script: |
             become mdwiki bash -lc "
               shs/update_pybot.sh &&
-              toolforge-jobs run pipup --image python3.11 --command ~/shs/pip.sh --wait
+              toolforge-jobs run pipup --image python3.11 --command ~/shs/pip.sh --wait &&
+              echo ''
             "
