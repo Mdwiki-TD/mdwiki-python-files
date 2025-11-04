@@ -1,0 +1,148 @@
+This is a list of templates used to create interactive graphs from {{w|Our World in Data}}. To make interactive on Commons, go to [[Special:Preferences#mw-prefsection-gadgets]] and click ''Owidslider'' in the "Interface: Other" section. For more details see [[MDWiki:WikiProjectMed:OWID]].
+
+*[https://owidimporter.toolforge.org/ OWID Commons upload tool]
+*[https://svgtranslate.toolforge.org/ SVG translate tool]
+**[https://copy-svg-langs.toolforge.org/ Moving translations]
+*[[:Category:Pages using gadget owidslider]]
+
+==[https://ourworldindata.org/data?topics=Health Health (1,939)]==
+*[[Template:OWID/Parkinsons prevalence|Parkinson's prevalence]]  {{SVGLanguages|parkinsons-disease-prevalence-ihme,World,1990.svg}}
+*[[Template:owidslider/outdoor air pollution|Death rate by source from indoor air pollution]]  {{SVGLanguages|death-rate-by-source-from-indoor-air-pollution,World,1990.svg}}
+*[[Template:OWID/maternal mortality|Maternal mortality]]  {{SVGLanguages|maternal-mortality,World,1751.svg}}
+*[[Template:OWID/dalys rate from all causes|DALYS rate from all causes]]  {{SVGLanguages|dalys-rate-from-all-causes,World,1990.svg}}
+*[[Template:OWID/cancer death rates|Cancer death rates]]  {{SVGLanguages|cancer-death-rates,World,1980.svg}}
+*[[Template:OWID/share with mental and substance disorders|Share with mental and substance disorders]] {{SVGLanguages|share-with-mental-and-substance-disorders,World,1990.svg}}
+*[[Template:OWID/share with drug use disorders|Share with drug use disorders]] {{SVGLanguages|share-with-drug-use-disorders,World,1990.svg}}
+*[[Template:OWID/number of deaths from tetanus|Number of deaths from tetanus]] {{SVGLanguages|number-of-deaths-from-tetanus,World,1980.svg}}
+*[[Template:OWID/death rate from opioid use|Death rate from opioid use]] {{SVGLanguages|death-rate-from-opioid-use,World,1980.svg}}
+*[[Template:OWID/tuberculosis deaths who|Tuberculosis deaths (WHO)]] {{SVGLanguages|}}
+*[[Template:OWID/sales of cigarettes per adult per day|Sales of cigarettes per adult per day]] {{SVGLanguages|sales_of_cigarettes_per_adult_per_day,_World,_1865.svg}}
+*[[Template:OWID/death rates cocaine|Death rates cocaine]] {{SVGLanguages|death-rates-cocaine,World,1980.svg}}
+*[[Template:OWID/hepatitis c number of deaths|Hepatitis C number of deaths]] {{SVGLanguages|hepatitis-c-number-of-deaths,World,1980.svg}}
+*[[Template:OWID/cardiovascular disease death rates|Cardiovascular disease death rates]] {{SVGLanguages|cardiovascular-disease-death-rates,World,1980.svg}}
+*[[Template:OWID/Annual healthcare expenditure per capita|Annual healthcare expenditure per capita]] {{SVGLanguages|}}
+*[[Template:OWID/number of deaths from malaria who|Number of deaths from malaria (WHO)]] {{SVGLanguages|}}
+*[[Template:OWID/dengue fever deaths|Dengue fever deaths]] {{SVGLanguages|dengue_fever_deaths,_World,_2000.svg}}
+*[[Template:OWID/hepatitis death rate|Hepatitis death rate]] {{SVGLanguages|hepatitis_death_rate,_World,_1980.svg}}
+*[[Template:OWID/dengue incidence|Dengue incidence]] {{SVGLanguages|dengue_incidence,_World,_1990.svg}}
+*[[Template:OWID/deaths from substance disorders who|Deaths from substance disorders (WHO)]] {{SVGLanguages|deaths_from_substance_disorders_who,_World,_2000.svg}}
+*[[Template:OWID/death rates substance disorders who|Death rates substance disorders (WHO)]] {{SVGLanguages|death_rates_substance_disorders_who,_World,_2000.svg}}
+*[[Template:OWID/share of deaths from opioid overdoses|Share of deaths from opioid overdoses]] {{SVGLanguages|share_of_deaths_from_opioid_overdoses,_World,_1980.svg}}
+*[[Template:OWID/death rate from maternal disorders ihme|Death rate from maternal disorders (IHME)]] {{SVGLanguages|death_rate_from_maternal_disorders_ihme,_World,_1980.svg}}
+*[[Template:OWID/death rate from digestive diseases gbd|Death rate from digestive diseases (GBD)]] {{SVGLanguages|death_rate_from_digestive_diseases_gbd,_World,_1980.svg}}
+*[[Template:OWID/death rate from drowning ghe|Death rate from drowning (GHE)]] {{SVGLanguages|death_rate_from_drowning_ghe,_World,_2000.svg}}
+*[[Template:OWID/drowning death rates under 5|Drowning death rates under 5]] {{SVGLanguages|drowning_death_rates_under_5,_World,_1980.svg}}
+*[[Template:OWID/death rate from meningitis who|Death rate from meningitis (WHO)]] (missing country graphs)  {{SVGLanguages|death_rate_from_meningitis_who,_World,_2000.svg}}
+*[[Template:OWID/death rate from smoking|Death rate from smoking]] {{SVGLanguages|death_rate_from_smoking,_World,_1990.svg}}
+*[[Template:OWID/death rate from poisoning|Death rate from poisoning]] {{SVGLanguages|death_rate_from_poisoning,_World,_1980.svg}}
+*[[Template:OWID/deaths from fires and burns|Deaths from fires and burns]] {{SVGLanguages|deaths_from_fires_and_burns,_World,_1980.svg}}
+*[[Template:OWID/infectious disease death rates|Infectious disease death rates]] {{SVGLanguages|infectious_disease_death_rates,_World,_1980.svg}}
+*[[Template:OWID/trachoma prevalence age standardized ihme|Trachoma prevalence age standardized (IHME)]] {{SVGLanguages|trachoma_prevalence_age_standardized_ihme,_World,_1990.svg}}
+*[[Template:OWID/hepatitis b incidence sdgs|Hepatitis B incidence (SDGs)]] {{SVGLanguages|hepatitis_b_incidence_sdgs,_World,_1990.svg}}
+*[[Template:OWID/deaths from liver disease|Deaths from liver disease]] {{SVGLanguages|deaths_from_liver_disease,_World,_1980.svg}}
+*[[Template:OWID/new infections with tetanus|New infections with tetanus]] {{SVGLanguages|new_infections_with_tetanus,_World,_1990.svg}}
+*[[Template:OWID/tetanus death rate|Tetanus death rate]] {{SVGLanguages|tetanus_death_rate,_World,_1980.svg}}
+*[[Template:OWID/new neonatal tetanus cases per million|New neonatal tetanus cases per million]] {{SVGLanguages|new_neonatal_tetanus_cases_per_million,_World,_1974.svg}}
+*[[Template:OWID/death rate from obesity|Death rate from obesity]] {{SVGLanguages|Death_rate_from_obesity,_World,_1990.svg}}
+*[[Template:OWID/stillbirth_rate|Stillbirth rate]] {{SVGLanguages|}}
+*[[Template:OWID/child mortality|Child mortality]] (broken, heat maps did not upload)
+*[[Template:OWID/share of the population infected with hiv|Share of the population infected with HIV]] {{SVGLanguages|share_of_the_population_infected_with_hiv,_World,_1990.svg}}
+*[[Template:OWID/share agrees vaccines are important wellcome|Share agrees vaccines are important (Wellcome)]] (broken)  {{SVGLanguages|share_agrees_vaccines_are_important_wellcome,_World,_2015.svg}}
+*[[Template:OWID/death rates from high blood pressure|Death rates from high blood pressure]] {{SVGLanguages|death_rates_from_high_blood_pressure,_World,_1990.svg}}
+*[[Template:OWID/obesity prevalence adults who gho|Obesity prevalence adults]] {{SVGLanguages|obesity_prevalence_adults_who_gho,_World,_1990.svg}}
+*[[Template:OWID/youth mortality rate|Youth mortality rate]] {{SVGLanguages|youth_mortality_rate,_World,_1950.svg}}
+
+==[https://ourworldindata.org/data?topics=Poverty+and+Economic+Development Poverty & Economic Development (4,688)]==
+*[[Template:OWID/human development index|Human development index]]  {{SVGLanguages|human-development-index,World,1990.svg}}
+
+==[https://ourworldindata.org/data?topics=Food+and+Agriculture Food & Agriculture (2,997)]==
+*[[Template:OWID/meat supply per person|Meat supply per person]]  {{SVGLanguages|meat-supply-per-person,World,1961.svg}}
+*[[Template:OWID/daily per capita protein supply|Daily per capita protein supply]]  {{SVGLanguages|daily-per-capita-protein-supply,World,1961.svg}}
+*[[Template:OWID/fish seafood production|Fish seafood production]]  {{SVGLanguages|fish_seafood_production,_World,_1961.svg}}
+*[[Template:OWID/cereal production|Cereal production]]  {{SVGLanguages|cereal_production,_World,_1961.svg}}
+*[[Template:OWID/rice production|Rice production]]  {{SVGLanguages|rice_production,_World,_1961.svg}}
+*[[Template:OWID/apple production|Apple production]]  {{SVGLanguages|apple_production,_World,_1961.svg}}
+*[[Template:OWID/avocado production|Avocado production]]  {{SVGLanguages|avocado_production,_World,_1961.svg}}
+*[[Template:OWID/soybean production|Soybean production]]  {{SVGLanguages|soybean_production,_World,_1961.svg}}
+*[[Template:OWID/banana production|Banana production]] (not loading)  {{SVGLanguages|banana_production,_World,_1961.svg}}
+*[[Template:OWID/bean production|Bean production]]  {{SVGLanguages|bean_production,_World,_1961.svg}}
+*[[Template:OWID/barley production|Barley production]]  {{SVGLanguages|barley_production,_World,_1961.svg}}
+*[[Template:OWID/cashew nut production|Cashew nut production]]  {{SVGLanguages|cashew_nut_production,_World,_1961.svg}}
+*[[Template:OWID/chicken meat production|Chicken meat production]]  {{SVGLanguages|chicken_meat_production,_World,_1961.svg}}
+*[[Template:OWID/grapes production|Grapes production]]  {{SVGLanguages|grapes_production,_World,_1961.svg}}
+*[[Template:OWID/coffee bean production|Coffee bean production]]  {{SVGLanguages|coffee_bean_production,_World,_1961.svg}}
+*[[Template:OWID/orange production|Orange production]]  {{SVGLanguages|orange_production,_World,_1961.svg}}
+*[[Template:OWID/pea production|Pea production]]  {{SVGLanguages|pea_production,_World,_1961.svg}}
+*[[Template:OWID/potato production|Potato production]]  {{SVGLanguages|potato_production,_World,_1961.svg}}
+*[[Template:OWID/rapeseed production|Rapeseed production]]  {{SVGLanguages|rapeseed_production,_World,_1961.svg}}
+*[[Template:OWID/rye production|Rye production]]  {{SVGLanguages|rye_production,_World,_1961.svg}}
+*[[Template:OWID/sesame seed production|Sesame seed production]]  {{SVGLanguages|sesame_seed_production,_World,_1961.svg}}
+*[[Template:OWID/share cereals animal feed|Share cereals animal feed]]  {{SVGLanguages|share_cereals_animal_feed,_World,_1961.svg}}
+*[[Template:OWID/sugar beet production|Sugar beet production]]  {{SVGLanguages|sugar_beet_production,_World,_1961.svg}}
+*[[Template:OWID/sugar cane production|Sugar cane production]]  {{SVGLanguages|sugar_cane_production,_World,_1961.svg}}
+
+==[https://ourworldindata.org/data?topics=Energy+and+Environment Energy & Environment (2,854)]==
+*[[Template:Owidslider/Share renewables|Share renewables]] 
+*[[Template:OWID/Energy use per person|Energy use per person]]
+*[[Template:OWID/access to clean fuels and technologies for cooking|Access to clean fuels and technologies for cooking]] (broken)  {{SVGLanguages|access_to_clean_fuels_and_technologies_for_cooking,_World,_1990.svg}}
+*[[Template:OWID/carbon intensity electricity|Carbon intensity electricity]]  {{SVGLanguages|carbon_intensity_electricity,_World,_2000.svg}}
+*[[Template:OWID/per capita electricity demand|Per capita electricity demand]]  {{SVGLanguages|per_capita_electricity_demand,_World,_1990.svg}}
+*[[Template:OWID/share of the population with access to electricity|Share of the population with access to electricity]]  {{SVGLanguages|share_of_the_population_with_access_to_electricity,_World,_1990.svg}}
+*[[Template:OWID/electricity as a share of primary energy|Electricity as a share of primary energy]]  {{SVGLanguages|electricity_as_a_share_of_primary_energy,_World,_1985.svg}}
+*[[Template:OWID/electricity demand|Electricity demand]]  {{SVGLanguages|electricity_demand,_World,_1990.svg}}
+*[[Template:OWID/electricity coal|Electricity from coal]]  {{SVGLanguages|electricity_coal,_World,_1985.svg}}
+*[[Template:OWID/per capita oil|Per capita oil]]  {{SVGLanguages|per_capita_oil,_World,_1965.svg}}
+*[[Template:OWID/per capita gas|Per capita gas]]  {{SVGLanguages|per_capita_gas,_World,_1965.svg}}
+*[[Template:OWID/per capita hydro|Per capita hydro]]  {{SVGLanguages|per_capita_hydro,_World,_1965.svg}}
+*[[Template:OWID/per capita nuclear|Per capita nuclear]]  {{SVGLanguages|per_capita_nuclear,_World,_1965.svg}}
+*[[Template:OWID/per capita solar|Per capita solar]]  {{SVGLanguages|per_capita_solar,_World,_1965.svg}}
+*[[Template:OWID/coal consumption per capita|Coal consumption per capita]]  {{SVGLanguages|coal_consumption_per_capita,_World,_1965.svg}}
+*[[Template:OWID/per capita wind|Per capita wind]]  {{SVGLanguages|per_capita_wind,_World,_1965.svg}}
+*[[Template:OWID/share electricity low carbon|Share electricity low carbon]]  {{SVGLanguages|share_electricity_low_carbon,_World,_1985.svg}}
+*[[Template:OWID/low carbon share energy|Low carbon share energy]]  {{SVGLanguages|low_carbon_share_energy,_World,_1965.svg}}
+*[[Template:OWID/fossil fuels share energy|Fossil fuels share energy]]  {{SVGLanguages|fossil_fuels_share_energy,_World,_1965.svg}}
+*[[Template:OWID/coal energy share|Coal energy share]]  {{SVGLanguages|coal_energy_share,_World,_1965.svg}}
+*[[Template:OWID/oil share energy|Oil share energy]]  {{SVGLanguages|oil_share_energy,_World,_1965.svg}}
+*[[Template:OWID/hydro share energy|Hydro share energy]]  {{SVGLanguages|hydro_share_energy,_World,_1965.svg}}
+*[[Template:OWID/solar share energy|Solar share energy]]  {{SVGLanguages|solar_share_energy,_World,_1965.svg}}
+
+==[https://ourworldindata.org/data?topics=Population+and+Demographic+Change Population & Demographic Change (2,853)]==
+*[[Template:OWID/migrant stock share|Migrant stock share]] 
+*[[Template:OWID/period average age of mothers|Average age of mothers]]  {{SVGLanguages|period_average_age_of_mothers,_World,_1891.svg}}
+*[[Template:OWID/long run birth rate|Long run birth rate]]  {{SVGLanguages|long_run_birth_rate,_World,_1751.svg}}
+*[[Template:OWID/crude birth rate|Crude birth rate]]  {{SVGLanguages|crude_birth_rate,_World,_1950.svg}}
+*[[Template:OWID/share of women using modern contraceptive methods|Share of women using modern contraceptive methods]]  {{SVGLanguages|share_of_women_using_modern_contraceptive_methods,_World,_1961.svg}}
+
+==[https://ourworldindata.org/data?topics=Violence+and+War Violence & War (770)]==
+*[[Template:OWID/military spending as a share of GDP. SIPRI|Military spending as a share of GDP (SIPRI)]]
+
+==[https://ourworldindata.org/data?topics=Human+Rights+and+Democracy Human Rights & Democracy (430)]==
+*[[Template:OWID/political regime|Political regime]] 
+
+==[https://ourworldindata.org/data?topics=Living+Conditions%2C+Community+and+Wellbeing Living Conditions, Community & Wellbeing (357)]==
+*[[Template:OWID/proportion using safely managed drinking water|Proportion using safely managed drinking water]] 
+
+==[https://ourworldindata.org/data?topics=Innovation+and+Technological+Change Innovation & Technological Change (195)]==
+*[[Template:OWID/share of individuals using the internet|Share of individuals using the internet]] (broken)  {{SVGLanguages|share_of_individuals_using_the_internet,_World,_1960.svg}}
+
+==[https://ourworldindata.org/data?topics=Education+and+Knowledge Education & Knowledge (171)]==
+*[[Template:OWID/Learning adjusted years of school. LAYS|Learning adjusted years of school lays]]  {{SVGLanguages|learning-adjusted-years-of-school-lays,World,2010.svg}}
+*[[Template:OWID/total government expenditure on education gdp|Total government expenditure on education gdp]] (broken)
+
+==[https://ourworldindata.org/sdgs SDGs]==
+*[[Template:OWID/share of population in extreme poverty|Share of population in extreme poverty]] (broken)  {{SVGLanguages|share-of-population-in-extreme-poverty,World,1963.svg}}
+*[[Template:OWID/health expenditure government expenditure|Health expenditure government expenditure]]  {{SVGLanguages|health-expenditure-government-expenditure,World,2000.svg}}
+*[[Template:OWID/share of children younger than 5 who suffer from stunting|Share of children younger than 5 who suffer from stunting]]  {{SVGLanguages|share-of-children-younger-than-5-who-suffer-from-stunting,World,1990.svg}}
+*[[Template:OWID/neonatal mortality wdi|Neonatal mortality wdi]]  {{SVGLanguages|neonatal-mortality-wdi,World,1951.svg}}
+*[[Template:OWID/incidence of tuberculosis sdgs|Incidence of tuberculosis sdgs]]  {{SVGLanguages|Incidence-of-tuberculosis-sdgs,World,2000.svg}}
+*[[Template:OWID/incidence of malaria|Incidence of malaria]]  {{SVGLanguages|incidence-of-malaria,World,2000.svg}}
+*[[Template:OWID/death rate from suicides ghe|Death rate from suicides ghe]]  {{SVGLanguages|death-rate-from-suicides-ghe,World,2000.svg}}
+*[[Template:OWID/death rate road traffic injuries|Death rate road traffic injuries]] (good but missing countries)  {{SVGLanguages|death-rate-road-traffic-injuries,World,2000.svg}}
+*[[Template:OWID/share of married women ages 15-49 years whose need for family planning is satisfied|Share of married women ages 15 49 years whose need for family planning is satisfied]] (needs some work)  {{SVGLanguages|share-of-married-women-ages-15-49-years-whose-need-for-family-planning-is-satisfied,World,2000.svg}}
+*[[Template:OWID/overarching legal frameworks regarding gender equality|Overarching legal frameworks regarding gender equality]]  {{SVGLanguages|overarching-legal-frameworks-regarding-gender-equality,World,2018.svg}}
+*[[Template:OWID/women married by age 15|Women married by age 15]] (broken and no country graphs)  {{SVGLanguages|women_married_by_age_15,_World,_2003.svg}}
+*[[Template:OWID/homicide rate unodc|Homicide rate (UNODC)]]  {{SVGLanguages|homicide_rate_unodc,_World,_1990.svg}}
+*[[Template:OWID/share of women in parliament|Share of women in parliament]]  {{SVGLanguages|share_of_women_in_parliament,_World,_1900.svg}}
+
+==Further==
+[[Category:Interactive data graphics by Our World in Data| ]]
