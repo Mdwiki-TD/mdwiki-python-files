@@ -120,7 +120,11 @@ def get_text_revid(x):
 
 
 @lru_cache(maxsize=128)
-def get_un_wb_tag(alltext, x):
+def get_un_wb_tag(x):
+    # Get alltext from the cached get_text_revid function
+    alltext, _ = get_text_revid(x)
+    if not alltext:
+        return ""
     # search for text like {{#unlinkedwikibase:id=Q423364}}
     pattern = r"\{\{#unlinkedwikibase:id=Q[0-9]+\}\}"
     # ---
@@ -156,7 +160,7 @@ def get_text(x):
     # ---
     page_cats = get_cats(alltext)
     # ---
-    unlinkedwikibase = get_un_wb_tag(alltext, x)
+    unlinkedwikibase = get_un_wb_tag(x)
     # ---
     first = alltext.split("==")[0].strip()
     # ---
@@ -191,7 +195,7 @@ def one_page(x):
         alltext, _ = get_text_revid(x)
         # ---
         if alltext:
-            unlinked_tag = get_un_wb_tag(alltext, x)
+            unlinked_tag = get_un_wb_tag(x)
             # ---
             alltext = alltext_changes.do_all_text(alltext, revid, unlinked_tag)
             titles[new_title_all] = alltext

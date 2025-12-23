@@ -131,10 +131,10 @@ def _tag_regex(tag_name: str):
 
 
 @lru_cache(maxsize=128)
-def _compile_site_regex(exc: str, site_repr: str, site):
-    """Compile a site-specific regex pattern."""
-    re_text, re_var = _SITE_SPECIFIC_PATTERNS[exc]
-    return re.compile(re_text % re_var(site), re.VERBOSE)
+def _compile_site_regex(exc: str, site_data: str):
+    """Compile a site-specific regex pattern with the given site data."""
+    re_text, _ = _SITE_SPECIFIC_PATTERNS[exc]
+    return re.compile(re_text % site_data, re.VERBOSE)
 
 
 def _get_regexes(keys, site):
@@ -154,8 +154,10 @@ def _get_regexes(keys, site):
         elif exc in _SITE_SPECIFIC_PATTERNS:
             if not site:
                 raise ValueError(f"Site cannot be None for the '{exc}' regex")
-            # Use repr(site) as a cache key since site objects may not be hashable
-            result.append(_compile_site_regex(exc, repr(site), site))
+            # Extract site-specific data and use it as cache key
+            _, site_func = _SITE_SPECIFIC_PATTERNS[exc]
+            site_data = site_func(site)
+            result.append(_compile_site_regex(exc, site_data))
         else:
             # nowiki, noinclude, includeonly, timeline, math and other
             # extensions - use cached tag regex
