@@ -12,6 +12,7 @@ import random
 import json
 import sys
 import re
+from functools import lru_cache
 from pathlib import Path
 from multiprocessing import Pool
 from apis import cat_cach
@@ -26,10 +27,6 @@ from copy_to_en.tf_page import get_cx
 CatDepth, MainPage = get_cx()
 
 Dir = Path(__file__).parent
-
-text_cache = {}
-revid_cache = {}
-un_wb_tag_cache = {}
 
 mdwiki_cats = sql_for_mdwiki.get_db_categories()
 # {'RTT': 1, 'RTTCovid': 0, 'RTTHearing': 0, 'RTTOSH': 0, 'World Health Organization essential medicines': 0, 'WHRTT': 0, 'RTTILAE': 0, 'RTTDZ': 0}
@@ -66,15 +63,14 @@ def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
     return cat_members
 
 
+@lru_cache(maxsize=128)
 def get_text_revid(x):
     alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
-    # ---
-    text_cache[x] = alltext
-    revid_cache[x] = revid
     # ---
     return alltext, revid
 
 
+@lru_cache(maxsize=128)
 def get_un_wb_tag(alltext, x):
     # search for text like {{#unlinkedwikibase:id=Q423364}}
     pattern = r"\{\{#unlinkedwikibase:id=Q[0-9]+\}\}"
@@ -82,13 +78,6 @@ def get_un_wb_tag(alltext, x):
     match = re.search(pattern, alltext)
     # ---
     unlinkedwikibase = match.group(0) if match else ""
-    # ---
-    # matches = re.findall(pattern, alltext)
-    # for m in matches:
-    #     unlinkedwikibase = m
-    #     break
-    # ---
-    un_wb_tag_cache[x] = unlinkedwikibase
     # ---
     return unlinkedwikibase
 
@@ -147,10 +136,10 @@ def one_page(x):
     if new_title.find("/") != -1:
         new_title_all = f"Md:{x}/fulltext"
         # ---
-        alltext = text_cache.get(x)
+        alltext, _ = get_text_revid(x)
         # ---
         if alltext:
-            unlinked_tag = un_wb_tag_cache.get(x, "")
+            unlinked_tag = get_un_wb_tag(alltext, x)
             # ---
             alltext = alltext_changes.do_all_text(alltext, revid, unlinked_tag)
             titles[new_title_all] = alltext

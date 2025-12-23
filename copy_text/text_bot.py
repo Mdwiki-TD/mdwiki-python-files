@@ -3,15 +3,12 @@
 
 """
 import re
+from functools import lru_cache
 from apis import mdwiki_api
 
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdapi_sql import sql_for_mdwiki
-
-text_cache = {}
-revid_cache = {}
-un_wb_tag_cache = {}
 
 mdwiki_cats = sql_for_mdwiki.get_db_categories()
 
@@ -40,15 +37,14 @@ def get_cats(alltext):
     return cats_text
 
 
+@lru_cache(maxsize=128)
 def get_text_revid(x):
     alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
-    # ---
-    text_cache[x] = alltext
-    revid_cache[x] = revid
     # ---
     return alltext, revid
 
 
+@lru_cache(maxsize=128)
 def get_un_wb_tag(alltext, x):
     # search for text like {{#unlinkedwikibase:id=Q423364}}
     pattern = r"\{\{#unlinkedwikibase:id=Q[0-9]+\}\}"
@@ -56,13 +52,6 @@ def get_un_wb_tag(alltext, x):
     match = re.search(pattern, alltext)
     # ---
     unlinkedwikibase = match.group(0) if match else ""
-    # ---
-    # matches = re.findall(pattern, alltext)
-    # for m in matches:
-    #     unlinkedwikibase = m
-    #     break
-    # ---
-    un_wb_tag_cache[x] = unlinkedwikibase
     # ---
     return unlinkedwikibase
 
