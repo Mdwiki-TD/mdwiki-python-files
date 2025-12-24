@@ -3,7 +3,6 @@
 python3 core8/pwb.py priorviews/by_lang ask
 
 """
-import copy
 from pathlib import Path
 
 # ---
@@ -30,7 +29,7 @@ te_langs = '''
 '''
 # ---
 by_lang_tra = views.count_tra_by_lang
-by_lang = copy.deepcopy(views.count_views_by_lang)
+by_lang = views.count_views_by_lang.copy()
 # ---
 # sort by_lang
 keys_1 = {x: v for x, v in sorted(by_lang.items(), key=lambda item: item[1], reverse=True)}

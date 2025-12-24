@@ -4,8 +4,6 @@ python3 core8/pwb.py priorviews/langs -lang:ar ask
 python3 core8/pwb.py priorviews/langs -lang:ar ask
 
 """
-import copy
-
 from priorviews.bots import helps
 from newapi.mdwiki_page import md_MainPage
 from pathlib import Path
@@ -72,7 +70,7 @@ def work_all(translators_all):
     # ---
     all_usrs = len(translators_a.keys())
     # ---
-    for x in copy.deepcopy(translators_a):
+    for x in list(translators_a):
         # ---
         # skip user match ip address
         if helps.is_ip(x):

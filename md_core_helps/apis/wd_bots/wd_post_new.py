@@ -6,7 +6,6 @@ python3 core8/pwb.py apis/wd_bots/wd_post_new
 from apis.wd_bots.wd_post_new import post_it
 
 """
-import copy
 import sys
 
 from newapi.except_err import exception_err
@@ -33,7 +32,7 @@ def do_request(params=None, method="POST"):
         print("no wd_site")
         return {}
     # ---
-    params = copy.deepcopy(params)
+    params = params.copy()
     # ---
     action = params["action"]
     # ---

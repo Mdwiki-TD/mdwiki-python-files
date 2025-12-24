@@ -5,7 +5,6 @@ python3 core8/pwb.py priorviews/find/find_translators removeip
 
 '''
 from priorviews.lists.links_by_section import links_by_lang
-import copy
 import sys
 import json
 import os
@@ -149,7 +148,7 @@ def test():
 
 def removeip():
     # ---
-    for lang in copy.deepcopy(tra_by_lang):
+    for lang in list(tra_by_lang):
         titles = tra_by_lang[lang]
         for title, user in titles.items():
             if not user:

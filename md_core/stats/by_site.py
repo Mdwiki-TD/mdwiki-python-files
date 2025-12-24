@@ -4,7 +4,6 @@ python3 core8/pwb.py stats/by_site
 tfj run stats2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py stats/by_site"
 
 """
-import copy
 import json
 import re
 import os
@@ -30,12 +29,12 @@ def filter_editors(editors, site):
     # ---
     editors = dict(sorted(editors.items(), key=lambda x: x[1], reverse=True))
     # ---
-    for x, v in copy.deepcopy(editors).items():
+    for x, v in editors.copy().items():
         if validate_ip(x):
             del editors[x]
     # ---
     # del editor with less then 100 edits
-    for x, v in copy.deepcopy(editors).items():
+    for x, v in editors.copy().items():
         if v < 10:
             del editors[x]
     # ---
