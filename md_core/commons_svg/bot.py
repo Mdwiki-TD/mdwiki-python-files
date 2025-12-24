@@ -16,11 +16,6 @@ RE_TRANSLATE = re.compile(
 svg_languages = {}
 
 
-def save_page(page_name, text):
-    # TODO: implement saving (e.g., site.pages[page_name].save(text, summary="Add SVGLanguages"))
-    print(f"Would save {page_name}")
-
-
 def work_page(title):
 
     page = MainPage(title, "commons", family="wikimedia")
