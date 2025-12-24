@@ -137,7 +137,7 @@ def _compile_site_regex(exc: str, site_data: str):
     return re.compile(re_text % site_data, re.VERBOSE)
 
 
-def _get_regexes(keys, site):
+def _get_regexes(keys, site=None):
     """Fetch compiled regexes."""
     result = []
 
@@ -177,16 +177,16 @@ def _get_regexes(keys, site):
     return result
 
 
-def replaceExcept(text: str, old, new, exceptions: list, caseInsensitive: bool = False, allowoverlap: bool = False, marker: str = '', site=None, count: int = 0) -> str:
+def replaceExcept(text: str, old, new, exceptions: list, count: int = 0) -> str:
     # if we got a string, compile it as a regular expression
     if isinstance(old, str):
-        old = re.compile(old, flags=re.IGNORECASE if caseInsensitive else 0)
+        old = re.compile(old)
 
     # early termination if not relevant
     if not old.search(text):
-        return text + marker
+        return text
 
-    dontTouchRegexes = _get_regexes(exceptions, site)
+    dontTouchRegexes = _get_regexes(exceptions)
 
     index = 0
     replaced = 0
@@ -248,14 +248,12 @@ def replaceExcept(text: str, old, new, exceptions: list, caseInsensitive: bool =
             text = text[: match.start()] + replacement + text[match.end():]
 
             # continue the search on the remaining text
-            if allowoverlap:
-                index = match.start() + 1
-            else:
-                index = match.start() + len(replacement)
+
+            index = match.start() + len(replacement)
             if not match.group():
                 # When the regex allows to match nothing, shift by one char
                 index += 1
             markerpos = match.start() + len(replacement)
             replaced += 1
-    text = text[:markerpos] + marker + text[markerpos:]
+    text = text[:markerpos] + text[markerpos:]
     return text
