@@ -148,7 +148,7 @@ def test():
 
 def removeip():
     # ---
-    for lang in tra_by_lang.copy():
+    for lang in list(tra_by_lang):
         titles = tra_by_lang[lang]
         for title, user in titles.items():
             if not user:

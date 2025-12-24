@@ -6,6 +6,7 @@ from priorviews.lists.links_by_section import sects_links_langlinks
 python3 core8/pwb.py priorviews/lists/links_by_section
 
 """
+import copy
 import sys
 import json
 import os
@@ -93,7 +94,7 @@ print(f'least section: {least_section}')
 print(f'length of least_section: {len(sects_links_langlinks[least_section])}')
 # ---
 # ---
-sects_links_langlinks = sects_links_langlinks.copy()
+sects_links_langlinks = copy.deepcopy(sects_links_langlinks)
 # ---
 if 'test' in sys.argv:
     sects_links_langlinks = {least_section: sects_links_langlinks[least_section]}

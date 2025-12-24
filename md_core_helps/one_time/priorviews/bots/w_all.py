@@ -70,7 +70,7 @@ def work_all(translators_all):
     # ---
     all_usrs = len(translators_a.keys())
     # ---
-    for x in translators_a.copy():
+    for x in list(translators_a):
         # ---
         # skip user match ip address
         if helps.is_ip(x):

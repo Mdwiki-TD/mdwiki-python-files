@@ -40,7 +40,7 @@ def targets_text(targets):
 
 def filter_editors(editors, site):
     # ---
-    for x in editors.copy().keys():
+    for x in list(editors.keys()):
         if validate_ip(x):
             del editors[x]
     # ---

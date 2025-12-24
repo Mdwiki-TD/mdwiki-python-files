@@ -43,7 +43,7 @@ counts_creators_by_lang = {}
 Dump_it = False
 # ---
 # Iterate through each markdown file and language in `CreatorsData`
-for lang in CreatorsData.copy():
+for lang in list(CreatorsData):
     # ---
     titles = CreatorsData[lang]
     # ---

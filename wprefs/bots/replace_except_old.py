@@ -1,7 +1,8 @@
 import re
 import sys
 from contextlib import suppress
-from functools import lru_cache
+
+_regex_cache = {}
 
 NESTED_TEMPLATE_REGEX = re.compile(
     r"""
@@ -101,44 +102,54 @@ def _tag_pattern(tag_name: str) -> str:
     return r'<{0}(?:>|\s+[^>]*(?<!/)>)' r'[\s\S]*?' r'</{0}\s*>'.format(ignore_case(tag_name))  # start tag  # contents  # end tag
 
 
-# Default regex patterns - static patterns that don't require site-specific data
-_DEFAULT_REGEXES = {
-    'comment': re.compile(r'<!--[\s\S]*?-->'),
-    'header': re.compile(r'(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*' r'=(?:[^\n]|<!--[\s\S]*?-->)+=' r' *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)'),
-    'hyperlink': compileLinkR(),
-    'link': re.compile(r'\[\[[^\]|]*(\|[^\]]*)?\]\]'),
-    'pagelist': re.compile(r'<{}[\s\S]*?/>'.format(ignore_case('pagelist'))),
-    'startcolon': re.compile(r'(?:(?<=\n)|\A):(.*?)(?=\n|\Z)'),
-    'startspace': re.compile(r'(?:(?<=\n)|\A) (.*?)(?=\n|\Z)'),
-    'table': re.compile(r'(?:(?<=\n)|\A){\|[\S\s]*?\n\|}|%s' % _tag_pattern('table')),
-    'template': NESTED_TEMPLATE_REGEX,
-}
+def _create_default_regexes() -> None:
+    """Fill (and possibly overwrite) _regex_cache with default regexes."""
+    _regex_cache.update(
+        {
+            # categories
+            'category': (r'\[\[ *(?:%s)\s*:.*?\]\]', lambda site: '|'.join(site.namespaces[14])),
+            'comment': re.compile(r'<!--[\s\S]*?-->'),
+            # files
+            'file': (FILE_LINK_REGEX, lambda site: '|'.join(site.namespaces[6])),
+            # section headers
+            'header': re.compile(r'(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*' r'=(?:[^\n]|<!--[\s\S]*?-->)+=' r' *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)'),
+            # external links
+            'hyperlink': compileLinkR(),
+            # also finds links to foreign sites with preleading ":"
+            'interwiki': (r'\[\[:?(%s)\s?:[^\]]*\]\]\s*', lambda site: '|'.join(ignore_case(i) for i in site.validLanguageLinks() + list(site.family.obsolete.keys()))),
+            # Module invocations (currently only Lua)
+            'invoke': (r'\{\{\s*\#(?:%s):[\s\S]*?\}\}', lambda site: '|'.join(ignore_case(mw) for mw in site.getmagicwords('invoke'))),
+            # this matches internal wikilinks, but also interwiki, categories, and
+            # images.
+            'link': re.compile(r'\[\[[^\]|]*(\|[^\]]*)?\]\]'),
+            # pagelist tag (used in Proofread extension).
+            'pagelist': re.compile(r'<{}[\s\S]*?/>'.format(ignore_case('pagelist'))),
+            # Wikibase property inclusions
+            'property': (r'\{\{\s*\#(?:%s):\s*[Pp]\d+.*?\}\}', lambda site: '|'.join(ignore_case(mw) for mw in site.getmagicwords('property'))),
+            # lines that start with a colon or more will be indented
+            'startcolon': re.compile(r'(?:(?<=\n)|\A):(.*?)(?=\n|\Z)'),
+            # lines that start with a space are shown in a monospace font and
+            # have whitespace preserved.
+            'startspace': re.compile(r'(?:(?<=\n)|\A) (.*?)(?=\n|\Z)'),
+            # tables often have whitespace that is used to improve wiki
+            # source code readability.
+            # TODO: handle nested tables.
+            'table': re.compile(r'(?:(?<=\n)|\A){\|[\S\s]*?\n\|}|%s' % _tag_pattern('table')),
+            'template': NESTED_TEMPLATE_REGEX,
+        }
+    )
 
-# Patterns that require site-specific data (pattern, site_func)
-_SITE_SPECIFIC_PATTERNS = {
-    'category': (r'\[\[ *(?:%s)\s*:.*?\]\]', lambda site: '|'.join(site.namespaces[14])),
-    'file': (FILE_LINK_REGEX, lambda site: '|'.join(site.namespaces[6])),
-    'interwiki': (r'\[\[:?(%s)\s?:[^\]]*\]\]\s*', lambda site: '|'.join(ignore_case(i) for i in site.validLanguageLinks() + list(site.family.obsolete.keys()))),
-    'invoke': (r'\{\{\s*\#(?:%s):[\s\S]*?\}\}', lambda site: '|'.join(ignore_case(mw) for mw in site.getmagicwords('invoke'))),
-    'property': (r'\{\{\s*\#(?:%s):\s*[Pp]\d+.*?\}\}', lambda site: '|'.join(ignore_case(mw) for mw in site.getmagicwords('property'))),
-}
 
-
-@lru_cache(maxsize=128)
 def _tag_regex(tag_name: str):
     """Return a compiled tag regex for the given tag name."""
     return re.compile(_tag_pattern(tag_name))
 
 
-@lru_cache(maxsize=128)
-def _compile_site_regex(exc: str, site_data: str):
-    """Compile a site-specific regex pattern with the given site data."""
-    re_text, _ = _SITE_SPECIFIC_PATTERNS[exc]
-    return re.compile(re_text % site_data, re.VERBOSE)
-
-
 def _get_regexes(keys, site):
     """Fetch compiled regexes."""
+    if not _regex_cache:
+        _create_default_regexes()
+
     result = []
 
     for exc in keys:
@@ -147,21 +158,25 @@ def _get_regexes(keys, site):
             result.append(exc)
             continue
 
-        # Check if it's a default static regex
-        if exc in _DEFAULT_REGEXES:
-            result.append(_DEFAULT_REGEXES[exc])
-        # Check if it's a site-specific pattern
-        elif exc in _SITE_SPECIFIC_PATTERNS:
-            if not site:
-                raise ValueError(f"Site cannot be None for the '{exc}' regex")
-            # Extract site-specific data and use it as cache key
-            _, site_func = _SITE_SPECIFIC_PATTERNS[exc]
-            site_data = site_func(site)
-            result.append(_compile_site_regex(exc, site_data))
+        # assume the string is a reference to a standard regex above,
+        # which may not yet have a site specific re compiled.
+        if exc in _regex_cache:
+            if isinstance(_regex_cache[exc], tuple):
+                if not site and exc in ('interwiki', 'property', 'invoke', 'category', 'file'):
+                    raise ValueError(f"Site cannot be None for the '{exc}' regex")
+
+                if (exc, site) not in _regex_cache:
+                    re_text, re_var = _regex_cache[exc]
+                    _regex_cache[(exc, site)] = re.compile(re_text % re_var(site), re.VERBOSE)
+
+                result.append(_regex_cache[(exc, site)])
+            else:
+                result.append(_regex_cache[exc])
         else:
             # nowiki, noinclude, includeonly, timeline, math and other
-            # extensions - use cached tag regex
-            result.append(_tag_regex(exc))
+            # extensions
+            _regex_cache[exc] = _tag_regex(exc)
+            result.append(_regex_cache[exc])
 
         # handle aliases
         if exc == 'source':
