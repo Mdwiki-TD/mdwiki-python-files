@@ -60,7 +60,7 @@ class TestGroupReferences:
         pattern = r'(\w+) (\w+)'
         replacement = r'\2, \1'
         result = replaceExcept(text, pattern, replacement, [])
-        assert result == "Smith, John and Doe, Jane"
+        assert result == "Smith, John Jane, and Doe"
 
     def test_named_group_reference(self):
         """Test replacement with named group references."""
@@ -372,7 +372,7 @@ class TestEdgeCases:
         """Test replacement with unicode characters."""
         text = "Hello مرحبا Hello"
         result = replaceExcept(text, "Hello", "مرحبا", [])
-        assert result == "مرحا مرحبا مرحبا"
+        assert result == "مرحبا مرحبا مرحبا"
 
     def test_special_regex_chars_in_string_pattern(self):
         """Test that special regex characters in string patterns work."""
@@ -403,7 +403,7 @@ class TestEdgeCases:
         text = "foo <!-- foo --> foo foo foo"
         result = replaceExcept(text, "foo", "bar", ["comment"], count=2)
         # Should replace first foo outside comment, then next two
-        assert result == "bar <!-- foo --> bar bar foo"
+        assert result == "bar <!-- foo --> bar foo foo"
 
 
 class TestInvalidGroupReference:
