@@ -104,7 +104,7 @@ def make_sql_connect(query, db='', host='', update=False, Return=False, return_d
     )
 
 
-def MySQLdbar(arcatTitle):
+def fetch_arcat_titles(arcatTitle):
     # ---
     arcats = []
     # ---
@@ -352,7 +352,7 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
         GROUP BY ll_title ;'''
     # ---
     encats = Make_sql(queries)
-    arcats = MySQLdbar(arcatTitle) if arcatTitle and arcatTitle != "" else []
+    arcats = fetch_arcat_titles(arcatTitle) if arcatTitle and arcatTitle != "" else []
     # ---
     final = tttime.time()
     printe.output(f"encats: <<red>> {len(encats)} <<default>> {item}")
@@ -364,8 +364,8 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
     return final_cat if final_cat != [] else False
 
 
-def MySQLdb_finder_New(encatTitle, arcatTitle):
-    printe.output(f'<<red>> API/sql_py MySQLdb_finder_New {encatTitle}: ')
+def get_exclusive_category_titles(encatTitle, arcatTitle):
+    printe.output(f'<<red>> API/sql_py get_exclusive_category_titles {encatTitle}: ')
     # ---
     return MySQLdb_finder_N_New(encatTitle, arcatTitle)
 
