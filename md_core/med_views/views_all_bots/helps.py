@@ -66,6 +66,8 @@ def update_data_new(all_data, data):
     for title, counts in data.items():
         all_data.setdefault(title, {})
         # ---
-        all_data[title].update({x: v for x, v in counts.items() if (x not in all_data[title] or all_data[title][x] == 0)})
+        all_data[title].update(
+            {x: v for x, v in counts.items() if (x not in all_data[title] or all_data[title][x] == 0)}
+        )
     # ---
     return all_data

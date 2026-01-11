@@ -41,7 +41,7 @@ def dump_stats(json_file_stats, new_data):
         "empty": len(empty),
         "not_empty": len(data2) - len(empty),
         "hash": len(data_hash),
-        "views": views
+        "views": views,
     }
     # ---
     # print(stats)

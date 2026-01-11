@@ -23,8 +23,8 @@ logging.basicConfig(level=logging.INFO)
 parallelism = 2
 
 for arg in sys.argv:
-    key, _, val = arg.partition(':')
-    if key == '-para':
+    key, _, val = arg.partition(":")
+    if key == "-para":
         parallelism = int(val) or parallelism
 
 view_bot = PageviewsClient(parallelism=parallelism)
@@ -32,9 +32,11 @@ view_bot = PageviewsClient(parallelism=parallelism)
 
 def article_views(site, articles, year=2024):
     # ---
-    site = 'be-tarask' if site == 'be-x-old' else site
+    site = "be-tarask" if site == "be-x-old" else site
     # ---
-    data = view_bot.article_views_new(f'{site}.wikipedia', articles, granularity='monthly', start=f'{year}0101', end=f'{year}1231')
+    data = view_bot.article_views_new(
+        f"{site}.wikipedia", articles, granularity="monthly", start=f"{year}0101", end=f"{year}1231"
+    )
     # ---
     new_data = {}
     # ---
@@ -42,7 +44,7 @@ def article_views(site, articles, year=2024):
         # ---
         title = title.replace(" ", "_")
         # ---
-        new_data[title] = views.get(year) or views.get(str(year)) or views.get('all', 0)
+        new_data[title] = views.get(year) or views.get(str(year)) or views.get("all", 0)
     # ---
     return new_data
 
@@ -78,7 +80,7 @@ def get_one_lang_views_by_titles(langcode, titles, year):
     # ---
     for i in range(0, len(titles), 20):
         # ---
-        group = titles[i:i + 20]
+        group = titles[i : i + 20]
         # ---
         data = article_views(langcode, group, year)
         # ---
@@ -100,7 +102,7 @@ def get_one_lang_views_by_titles_plus_1k(langcode, titles, year, json_file, max_
     # ---
     for i in range(0, len(titles), 200):
         # ---
-        group = titles[i:i + 200]
+        group = titles[i : i + 200]
         # ---
         data = article_views(langcode, group, year)
         # ---
@@ -132,7 +134,9 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
         titles_not_in_file = [x for x in titles if (x not in u_data or u_data[x] == 0)]
         # ---
         if len(u_data) != len(titles) or len(titles_not_in_file) > 0:
-            logger.info(f"<<red>>(lang:{json_file.name}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}")
+            logger.info(
+                f"<<red>>(lang:{json_file.name}) titles: {len(titles):,}, titles in file: {len(u_data):,}, missing: {len(titles_not_in_file):,}"
+            )
             # ---
             in_file = u_data
             # ---
@@ -176,7 +180,7 @@ def load_one_lang_views(langcode, titles, year, max_items=1000, maxv=0):
     return data
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # ---
     # titles = load_lang_titles_from_dump("ba")
     # ---
@@ -184,7 +188,7 @@ if __name__ == '__main__':
     # ---
     titles = ["Yemen", "COVID-19"]
     # ---
-    zz = view_bot.article_views_new('en.wikipedia', titles)
+    zz = view_bot.article_views_new("en.wikipedia", titles)
     # ---
     print(zz)
     print(f"{len(zz)=:,}")

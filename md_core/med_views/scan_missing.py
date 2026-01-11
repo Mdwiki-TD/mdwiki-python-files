@@ -44,18 +44,20 @@ for json_file in files:
         okay += 1
 
 # sort result by missing 2024
-result = {k: v for k, v in sorted(result.items(), key=lambda item: len(item[1]['2024 missing']), reverse=True)}
+result = {k: v for k, v in sorted(result.items(), key=lambda item: len(item[1]["2024 missing"]), reverse=True)}
 
 missing_2024, missing_2023 = {}, {}
 
 for k, v in result.items():
-    if v['2024 missing']:
-        missing_2024[k] = len(v['2024 missing'])
+    if v["2024 missing"]:
+        missing_2024[k] = len(v["2024 missing"])
 
-    if v['2023 missing']:
-        missing_2023[k] = len(v['2023 missing'])
+    if v["2023 missing"]:
+        missing_2023[k] = len(v["2023 missing"])
 
-    print(f"{k}: \t\t{str(v['titles']).ljust(12)}\t\t missing: 2024 {len(v['2024 missing'])}\t 2023 {len(v['2023 missing'])}")
+    print(
+        f"{k}: \t\t{str(v['titles']).ljust(12)}\t\t missing: 2024 {len(v['2024 missing'])}\t 2023 {len(v['2023 missing'])}"
+    )
 
 
 with open(Path(__file__).parent / "missing_2023.json", "w", encoding="utf-8") as f:

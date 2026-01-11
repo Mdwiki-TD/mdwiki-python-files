@@ -36,10 +36,10 @@ def start(lang="", filter_by="titles"):
     minx = 0
     # ---
     for arg in sys.argv:
-        key, _, val = arg.partition(':')
-        if key == '-max' and val.isdigit():
+        key, _, val = arg.partition(":")
+        if key == "-max" and val.isdigit():
             maxv = int(val)
-        elif key == '-min' and val.isdigit():
+        elif key == "-min" and val.isdigit():
             minx = int(val)
     # ---
     # sort langs by len of titles { "ar": 19972, "bg": 2138, .. }
@@ -101,7 +101,7 @@ def test2(lang=""):
     # python3 core8/pwb.py med_views/views_all_run test2
     titles = ["Yemen", "COVID-19", "Iran–Israel war", "wj2340-0"]
     # ---
-    ux = article_all_views('en', titles, 2024)
+    ux = article_all_views("en", titles, 2024)
     # ---
     for t, tt in ux.items():
         print(t, tt)
@@ -152,7 +152,7 @@ def test(lang=""):
     load_one_lang_views_all(lang, titles, "all")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # ---
     defs = {
         "start": start,
@@ -165,13 +165,13 @@ if __name__ == '__main__':
     lang = ""
     # ---
     for arg in sys.argv:
-        key, _, val = arg.partition(':')
+        key, _, val = arg.partition(":")
         # ---
-        if key == '-lang':
+        if key == "-lang":
             lang = val
     # ---
     for arg in sys.argv:
-        key, _, val = arg.partition(':')
+        key, _, val = arg.partition(":")
         # ---
         if arg in defs:
             defs[arg](lang=lang)

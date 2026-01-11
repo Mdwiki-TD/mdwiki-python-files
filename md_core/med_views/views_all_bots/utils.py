@@ -59,9 +59,9 @@ def get_en_articles():
     # ---
     print("def get_en_articles():")
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki')
+    result = wiki_sql.sql_new(query, "enwiki")
     # ---
-    articles = [x['page_title'] for x in result]
+    articles = [x["page_title"] for x in result]
     # ---
     return articles
 
@@ -105,9 +105,9 @@ def count_all_langs_sql():
     # ---
     print("def count_all_langs_sql():")
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki')
+    result = wiki_sql.sql_new(query, "enwiki")
     # ---
-    languages = {x['ll_lang']: x['counts'] for x in result}
+    languages = {x["ll_lang"]: x["counts"] for x in result}
     # ---
     if "en" not in languages:
         languages["en"] = len(get_en_articles())
@@ -142,7 +142,7 @@ def count_all_langs():
 
 def one_lang_titles(langcode):
     # ---
-    if langcode == 'en':
+    if langcode == "en":
         return get_en_articles()
     # ---
     query = """
@@ -159,9 +159,9 @@ def one_lang_titles(langcode):
     # ---
     print(f"def one_lang_titles({langcode}):")
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki', values=(langcode,))
+    result = wiki_sql.sql_new(query, "enwiki", values=(langcode,))
     # ---
-    titles = [x['ll_title'] for x in result]
+    titles = [x["ll_title"] for x in result]
     # ---
     return titles
 
@@ -181,12 +181,12 @@ def langs_titles():
     # ---
     print("def langs_titles():")
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki')
+    result = wiki_sql.sql_new(query, "enwiki")
     # ---
     titles = {}
     # ---
     for x in result:
-        titles.setdefault(x['ll_lang'], []).append(x['ll_title'])
+        titles.setdefault(x["ll_lang"], []).append(x["ll_title"])
     # ---
     titles["en"] = get_en_articles()
     # ---
