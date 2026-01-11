@@ -13,12 +13,14 @@ tfj run umv --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py me
 tfj run umvsh --image tf-python39 --command "$HOME/pybot/md_core/med_views/run.sh"
 
 """
-import sys
 import logging
+import sys
+
 from newapi.mdwiki_page import md_MainPage
-from views_all_bots.views import load_one_lang_views
-from views_all_bots.utils import count_all_langs
+
 from med_views.titles import load_lang_titles
+from views_all_bots.utils import count_all_langs
+from views_all_bots.views import load_one_lang_views
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

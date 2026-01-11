@@ -4,8 +4,8 @@
 from med_views.views_all_bots.stats_bot import dump_stats, update_all_stats
 
 """
-import sys
 import json
+import sys
 from pathlib import Path
 
 from med_views.views_all_bots.helps import is_empty_data

@@ -6,8 +6,8 @@ from med_views.helps import dump_one
 from med_views.helps import load_languages_counts
 
 """
-import sys
 import json
+import sys
 from pathlib import Path
 
 from mdapi_sql import wiki_sql

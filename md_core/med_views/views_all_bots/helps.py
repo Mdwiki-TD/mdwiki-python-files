@@ -5,8 +5,9 @@ from med_views.views_all_bots.helps import json_load, get_views_all_file, update
 
 """
 import json
-from pathlib import Path
 import logging
+from pathlib import Path
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 

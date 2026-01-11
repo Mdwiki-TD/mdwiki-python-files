@@ -5,8 +5,8 @@ python3 core8/pwb.py med_views/scan_missing is_zero
 python3 core8/pwb.py med_views/scan_missing
 
 """
-import sys
 import json
+import sys
 from pathlib import Path
 
 from views_all_bots.views import get_view_file

@@ -7,7 +7,14 @@ from med_views.titles import load_lang_titles
 
 """
 import sys
-from views_all_bots.utils import t_dump_dir, langs_titles, one_lang_titles, dump_one, load_lang_titles_from_dump
+
+from views_all_bots.utils import (
+    dump_one,
+    langs_titles,
+    load_lang_titles_from_dump,
+    one_lang_titles,
+    t_dump_dir,
+)
 
 
 def dump_data(all_data):
