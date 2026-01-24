@@ -68,7 +68,7 @@ def Expend_Infobox(text, title, section_0):
         if newtext.find('==') != -1:
             section_0 = newtext.split('==')[0]
         else:
-            tagg = f"'''{title}'''1"
+            tagg = f"'''{title}'''"
             if newtext.find(tagg) != -1:
                 section_0 = newtext.split(tagg)[0]
             else:
