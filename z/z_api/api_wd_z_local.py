@@ -1,11 +1,14 @@
 """
 
 """
+import logging
+
 import sys
 import re
 from z_api.api_wrap import session_post
 from newapi import printe
 
+logger = logging.getLogger(__name__)
 Main_User = {1: ""}
 Save_2020_wd = {}
 
