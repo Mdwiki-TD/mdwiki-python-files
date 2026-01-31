@@ -3,7 +3,7 @@
 # revid    = mdwiki_api.GetRevid(title)
 """
 from newapi import printe
-from newapi.mdwiki_page import md_MainPage, NEW_API
+from newapi.mdwiki_page import NEW_API, md_MainPage
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()

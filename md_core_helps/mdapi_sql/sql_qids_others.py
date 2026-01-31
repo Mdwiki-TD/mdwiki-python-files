@@ -11,8 +11,8 @@ from mdpages.qids_others import sql_qids_others
 # sql_qids_others. add_titles_to_qids(tab, add_empty_qid=False)
 # ---
 """
-from newapi import printe
 from mdapi_sql import sql_td_bot
+from newapi import printe
 
 # result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 

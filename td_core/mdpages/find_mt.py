@@ -10,11 +10,11 @@ sql_qids_others
 """
 
 import sys
-from newapi import printe
-from mdpy.bots.check_title import valid_title
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_qids_others
+
 from apis import cat_cach
+from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdpy.bots.check_title import valid_title
+from newapi import printe
 
 
 def remove_from_others(qids_othrs, qids_td):

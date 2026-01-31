@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
+import re
+from pathlib import Path
+
 import mwclient
 import wikitextparser as wtp
-from pathlib import Path
-import re
 
 # --- Connect to Commons ---
 site = mwclient.Site("commons.wikimedia.org")

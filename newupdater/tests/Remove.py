@@ -4,15 +4,16 @@ python3 core8/pwb.py newupdater/tests/Remove
 
 """
 
-import sys
 import os
-import pywikibot
+import sys
 from pathlib import Path
+
+import pywikibot
 
 sys.path.append(str(Path(__file__).parent.parent))
 os.environ["DEBUGNEW"] = "true"
 
-from new_updater.bots.Remove import remove_cite_web, portal_remove
+from new_updater.bots.Remove import portal_remove, remove_cite_web
 
 Dir = Path(__file__).parent.parent
 

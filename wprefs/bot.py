@@ -18,13 +18,14 @@ python3 core8/pwb.py wprefs/bot ask
 #
 #
 import sys
+
 from mdapi_sql import sql_for_mdwiki
+from newapi import printe
 
 # ---
-from wprefs.api import log, GetPageText, GetPageText_raw, missingtitles, page_put
-from wprefs.files import reffixed_list, setting, append_reffixed_file
+from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
+from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
-from newapi import printe
 
 skip_langs = ["en"]
 move_dot = {1: False}

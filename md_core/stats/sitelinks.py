@@ -5,16 +5,18 @@ tfj run stats1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 
+import json
+
 # ---
 import os
-import json
 
 # import sys
 from pathlib import Path
 
+from apis import wikidataapi
+
 # ---
 from newapi import printe
-from apis import wikidataapi
 from stats.qids import qids_list
 
 # ---

@@ -4,8 +4,9 @@ from fix_use.write_bot import write# write(oldtext, text, filepath)
 
 """
 
-from newapi import printe
 import sys
+
+from newapi import printe
 
 ASK_all = True
 

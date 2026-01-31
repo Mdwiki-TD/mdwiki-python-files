@@ -8,14 +8,14 @@ from apis/cat_cach import Cat_Depth
 all_pages = cat_cach.from_cache()
 
 """
-import time
-import sys
-import os
 import json
+import os
 import stat
+import sys
+import time
 from datetime import datetime
-
 from pathlib import Path
+
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from newapi import printe

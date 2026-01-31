@@ -4,9 +4,10 @@ python3 core8/pwb.py priorviews/bots/count_words
 
 """
 
-import sys
 import re
+import sys
 from urllib.parse import urlencode
+
 import requests
 import wikitextparser
 from newapi import printe

@@ -8,20 +8,19 @@ tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/mdwikicx nodone"
 
 """
-import random
 import json
-import sys
+import random
 import re
-from pathlib import Path
+import sys
 from multiprocessing import Pool
-from apis import cat_cach
-from apis import mdwiki_api
-from mdapi_sql import sql_for_mdwiki
+from pathlib import Path
 
+from apis import cat_cach, mdwiki_api
 from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext_changes(text)
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from copy_to_en.tf_page import get_cx
+from mdapi_sql import sql_for_mdwiki
 
 CatDepth, MainPage = get_cx()
 

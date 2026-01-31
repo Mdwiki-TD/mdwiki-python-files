@@ -1,8 +1,9 @@
 import re
 
 import wikitextparser as wtp
+
 from .helps import echo_debug
-from .lists.bot_params import all_params, params_to_add, params_placeholders, all_formola_params
+from .lists.bot_params import all_formola_params, all_params, params_placeholders, params_to_add
 
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"

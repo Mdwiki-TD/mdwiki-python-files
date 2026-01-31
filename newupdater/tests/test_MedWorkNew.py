@@ -4,10 +4,11 @@ python3 core8/pwb.py newupdater/tests/test_MedWorkNew
 
 """
 
-import sys
 import os
-import pywikibot
+import sys
 from pathlib import Path
+
+import pywikibot
 
 sys.path.append(str(Path(__file__).parent.parent))
 os.environ["DEBUGNEW"] = "true"

@@ -16,14 +16,13 @@ import urllib.parse
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent))
-# ---
-from newapi import printe
-from newapi.mdwiki_page import NEW_API
-
+import mdapi
 from apis import mdwiki_api
 from new_updater import work_on_text
 
-import mdapi
+# ---
+from newapi import printe
+from newapi.mdwiki_page import NEW_API
 
 # ---
 api_new = NEW_API("www", family="mdwiki")

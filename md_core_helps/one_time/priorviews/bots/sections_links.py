@@ -6,11 +6,11 @@ python3 core8/pwb.py priorviews/sections_links
 
 """
 
+import json
 import os
 from pathlib import Path
-import json
-import wikitextparser
 
+import wikitextparser
 
 # ---
 from newapi import printe

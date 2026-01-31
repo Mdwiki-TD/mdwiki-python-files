@@ -13,10 +13,11 @@ python3 core8/pwb.py mdpy/fixred
 # ---
 import re
 import sys
+
 from apis import mdwiki_api
-from newapi import printe
 from mdpy.bots import py_tools
-from newapi.mdwiki_page import md_MainPage, NEW_API
+from newapi import printe
+from newapi.mdwiki_page import NEW_API, md_MainPage
 
 NewList = {}
 

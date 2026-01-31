@@ -8,12 +8,11 @@ python3 core8/pwb.py p11143_bot/bot -td
 
 import sys
 
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_qids_others
-from newapi import printe
 from apis import cat_cach
-from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_tab
+from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from newapi import printe
 from p11143_bot.filter_helps import remove_in_db_elements
+from p11143_bot.wd_helps import add_P11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
 
 TD_list = cat_cach.from_cache()
 

@@ -12,10 +12,8 @@ tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 """
 # ---
 import wikitextparser as wtp
-
 from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage
-
 from newupdater import expend_infoboxs_and_fix
 
 api_new = NEW_API("www", family="mdwiki")

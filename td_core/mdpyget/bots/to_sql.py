@@ -8,12 +8,12 @@ from mdpyget.bots.to_sql import to_sql
 """
 # ---
 import sys
+
 import tqdm
 
 # from pymysql.converters import escape_string
 # ---
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_for_mdwiki_new
+from mdapi_sql import sql_for_mdwiki, sql_for_mdwiki_new
 
 new_tables = ["all_exists", "all_articles", "all_qids_exists", "all_articles_titles", "all_qids", "all_qids_titles"]
 

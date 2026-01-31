@@ -5,14 +5,13 @@ from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 
 """
 import sys
+from urllib.parse import urlencode
 
 # import printe
 import requests
-from urllib.parse import urlencode
-
-from newapi.except_err import exception_err
-from newapi import printe
 from apis import user_account_new
+from newapi import printe
+from newapi.except_err import exception_err
 
 user_agent = user_account_new.user_agent
 username = user_account_new.bot_username  # user_account_new.my_username

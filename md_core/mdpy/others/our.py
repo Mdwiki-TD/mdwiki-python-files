@@ -4,16 +4,14 @@
 python3 core8/pwb.py mdpy/our
 
 """
-import os
 import json
+import os
 import sys
-import requests
-
-from apis import txtlib2
-from apis import mdwiki_api
-from newapi import printe
-
 from pathlib import Path
+
+import requests
+from apis import mdwiki_api, txtlib2
+from newapi import printe
 
 Dir = str(Path(__file__).parents[0])
 

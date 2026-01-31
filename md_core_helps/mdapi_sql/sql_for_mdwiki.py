@@ -23,8 +23,9 @@ from mdapi_sql import sql_for_mdwiki
 # ---
 """
 import time
-from newapi import printe
+
 from mdapi_sql import sql_td_bot
+from newapi import printe
 
 # result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 

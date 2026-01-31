@@ -10,11 +10,12 @@ from after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
 #
 import sys
 import time
-from pymysql.converters import escape_string
+
+from mdapi_sql import sql_for_mdwiki
 
 # ---
 from newapi import printe
-from mdapi_sql import sql_for_mdwiki
+from pymysql.converters import escape_string
 
 cat_for_pages = {}
 # from after_translate.bots.fixcat import cat_for_pages

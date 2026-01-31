@@ -4,10 +4,10 @@
 python3 core8/pwb.py add_rtt/tests/add_r_col_to_file
 
 """
-from newapi import printe
 from pathlib import Path
-from add_rtt.r_column_bots.pup_table import add_to_tables
 
+from add_rtt.r_column_bots.pup_table import add_to_tables
+from newapi import printe
 
 file_path = Path(__file__).parent / "Popular_pages.txt"
 file_path2 = Path(__file__).parent / "Popular_pages_new.txt"

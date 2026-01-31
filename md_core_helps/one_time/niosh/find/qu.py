@@ -3,11 +3,10 @@ python pwb.py niosh/bot
 python3 core8/pwb.py niosh/bot
 """
 
-import os
-from pathlib import Path
-import re
-
 import json
+import os
+import re
+from pathlib import Path
 
 # ---
 Dir = Path(__file__).parent

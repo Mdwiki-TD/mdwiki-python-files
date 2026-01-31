@@ -4,11 +4,12 @@
 
 # ---
 import re
+
 import wikitextparser as wtp
 
-from .bots.Remove import remove_cite_web, portal_remove
-from .lists.identifier_params import identifiers_params
+from .bots.Remove import portal_remove, remove_cite_web
 from .helps import echo_debug
+from .lists.identifier_params import identifiers_params
 
 # ---
 page_identifier_params = {}

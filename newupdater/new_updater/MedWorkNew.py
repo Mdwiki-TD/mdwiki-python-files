@@ -10,12 +10,11 @@ import re
 from .bots import expend  # expend_infoboxs_and_fix(text)
 from .bots import expend_new  # expend_infoboxs(text)
 from .bots import old_params
-
+from .chembox import fix_Chembox
+from .drugbox import TextProcessor
 from .helps import echo_debug
 from .mv_section import move_External_links_section
-from .drugbox import TextProcessor
 from .resources_new import move_resources
-from .chembox import fix_Chembox
 
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"

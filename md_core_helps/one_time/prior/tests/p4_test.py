@@ -1,8 +1,8 @@
 # import os
-from prior.p4 import work_in_links
-
 # ---
 from pathlib import Path
+
+from prior.p4 import work_in_links
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')

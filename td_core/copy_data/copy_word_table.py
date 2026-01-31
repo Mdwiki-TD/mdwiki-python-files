@@ -4,16 +4,17 @@
 python3 core8/pwb.py mdcount/bots/copy_word_table
 
 """
+import json
+
 # ---
 import os
-import json
 import sys
 from pathlib import Path
-from pymysql.converters import escape_string
 
 # ---
 from mdapi_sql import sql_for_mdwiki
 from newapi import printe
+from pymysql.converters import escape_string
 
 # ---
 Dir = str(Path(__file__).parents[0])

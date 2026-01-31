@@ -11,14 +11,16 @@ tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 https://github.com/wikimedia/popularpages
 
 """
+import re
+
 # ---
 import sys
-import re
+from pathlib import Path
+
 import wikitextparser as wtp
+from add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
 from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage  # , CatDepth
-from pathlib import Path
-from add_rtt.r_column_bots.pup_table import add_to_tables, fix_title, R_NEW_ROW
 
 Dir = Path(__file__).parent
 # add_param_named(text, title)

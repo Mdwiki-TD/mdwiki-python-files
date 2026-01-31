@@ -12,9 +12,10 @@ python3 core8/pwb.py mdpy/imp -page:Infertility
 #
 #
 import sys
-from newapi import printe
+
 from mdpy.bots import py_tools
-from newapi.mdwiki_page import MainPage, NEW_API
+from newapi import printe
+from newapi.mdwiki_page import NEW_API, MainPage
 
 # ---
 offset = {1: 0}

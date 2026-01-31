@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
+import json
 import re
 import sys
-import json
-import mwclient
 from pathlib import Path
+
+import mwclient
 
 sys.argv.append("workibrahem")
 from newapi.page import MainPage
-
 
 RE_SVG_LANG = re.compile(r"\{\{\s*SVGLanguages\s*\|\s*([^}|]+)", re.I)
 RE_TRANSLATE = re.compile(r"\*'''Translate''':\s*https://svgtranslate\.toolforge\.org/File:([^ \n]+)", re.I)

@@ -3,14 +3,14 @@ python pwb.py niosh/bot
 python3 core8/pwb.py niosh/bot
 """
 
-import sys
-import os
-from pathlib import Path
-import re
 import json
+import os
+import re
+import sys
+from pathlib import Path
 
 # ---
-from newapi.wiki_page import MainPage, NEW_API
+from newapi.wiki_page import NEW_API, MainPage
 
 # ---
 Dir = Path(__file__).parent

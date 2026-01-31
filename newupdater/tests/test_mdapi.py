@@ -4,8 +4,8 @@ python3 core8/pwb.py newupdater/tests/test_mdapi Alcohol_septal_ablation
 
 """
 
-import sys
 import os
+import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent))

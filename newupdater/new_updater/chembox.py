@@ -2,8 +2,8 @@
 """ """
 import wikitextparser as wtp
 
-from .lists.chem_params import rename_chem_params
 from .helps import echo_debug
+from .lists.chem_params import rename_chem_params
 
 
 class fix_Chembox:

@@ -4,13 +4,14 @@ python3 core8/pwb.py newupdater/tests/old_params
 
 """
 
-import sys
 import os
+import sys
 
 os.environ["DEBUGNEW"] = "true"
 
-import pywikibot
 from pathlib import Path
+
+import pywikibot
 
 sys.path.append(str(Path(__file__).parent.parent))
 

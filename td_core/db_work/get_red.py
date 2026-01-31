@@ -7,10 +7,10 @@ python3 core8/pwb.py db_work/get_red
 
 """
 import sys
-from newapi import printe
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_qids_others
+
 from apis import mdwiki_api
+from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from newapi import printe
 
 # mdwiki_api.api_new.Login_to_wiki()
 

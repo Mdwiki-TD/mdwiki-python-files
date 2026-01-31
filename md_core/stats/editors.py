@@ -5,21 +5,21 @@ from stats.editors import get_editors
 """
 
 import json
-import re
 import os
+import re
 import sys
-from pathlib import Path
-from pymysql.converters import escape_string
-
 from datetime import datetime
+from pathlib import Path
+
+from pymysql.converters import escape_string
 
 last_year = datetime.now().year - 1
 # ---
 import tqdm
+from mdapi_sql import wiki_sql
 
 # ---
 from stats.ar import get_ar_results
-from mdapi_sql import wiki_sql
 
 Dir = Path(__file__).parent
 editors_dir = Dir / "editors"

@@ -26,8 +26,8 @@ sys.path.append(str(Dir))
 # print(Dir)
 # ---
 from wprefs.api import GetPageText  # , page_put
+from wprefs.files import save_wprefcash, setting
 from wprefs.helps import ec_de_code
-from wprefs.files import setting, save_wprefcash
 from wprefs.wpref_text import fix_page
 
 move_dot = {1: False}

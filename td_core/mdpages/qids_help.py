@@ -8,15 +8,14 @@ from mdpages import qids_help
 """
 
 import copy
-import re
-import os
 import json
+import os
+import re
 import sys
-from newapi import printe
-from apis import cat_cach
-from apis import wiki_api
-from apis import mdwiki_api
+
+from apis import cat_cach, mdwiki_api, wiki_api
 from mdpy.bots.check_title import valid_title
+from newapi import printe
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"

@@ -2,9 +2,9 @@
 python3 core8/pwb.py prior/remove_wikis
 """
 
+import json
 import os
 from pathlib import Path
-import json
 
 # ---
 Dir = Path(__file__).parent

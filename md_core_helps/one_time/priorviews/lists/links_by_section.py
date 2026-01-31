@@ -8,11 +8,10 @@ python3 core8/pwb.py priorviews/lists/links_by_section
 """
 
 import copy
-import sys
 import json
 import os
+import sys
 from pathlib import Path
-
 
 # ---
 from newapi import printe

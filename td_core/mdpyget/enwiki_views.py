@@ -13,17 +13,17 @@ python3 core8/pwb.py mdpyget/enwiki_views newpages nodump
 python3 core8/pwb.py mdpyget/enwiki_views newpages nowork
 
 """
-import re
-import os
-import sys
 import json
+import os
+import re
+import sys
 
-from newapi import printe
-from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
-from mdpyget.pages_list import get_links_from_cats
-from mdpyget.bots.to_sql import to_sql
-from mdapi_sql import sql_for_mdwiki
 from apis.mw_views import PageviewsClient
+from mdapi_sql import sql_for_mdwiki
+from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
+from mdpyget.bots.to_sql import to_sql
+from mdpyget.pages_list import get_links_from_cats
+from newapi import printe
 
 view_bot = PageviewsClient()
 

@@ -7,8 +7,8 @@ from add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
 """
 # ---
 import wikitextparser as wtp
-from wikitextparser._cell import Cell
 from newapi import printe
+from wikitextparser._cell import Cell
 
 
 def header_has_R(text, table=False):

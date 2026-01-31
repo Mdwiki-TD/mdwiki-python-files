@@ -3,7 +3,7 @@
 from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage, users_infos
 """
 from newapi import printe
-from newapi.wiki_page import MainPage, NEW_API
+from newapi.wiki_page import NEW_API, MainPage
 
 
 def get_new_target_log(lang, target):

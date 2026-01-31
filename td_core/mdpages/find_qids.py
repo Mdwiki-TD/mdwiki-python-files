@@ -12,12 +12,12 @@ python3 core8/pwb.py mdpages/find_qids
 """
 import sys
 
-from mdapi_sql import sql_for_mdwiki
 from apis import wiki_api
-from newapi import printe
-from mdpy.bots.check_title import valid_title
-from unlinked_wb.bot import work_un
+from mdapi_sql import sql_for_mdwiki
 from mdpages.create_qids import create_qids
+from mdpy.bots.check_title import valid_title
+from newapi import printe
+from unlinked_wb.bot import work_un
 
 qids = sql_for_mdwiki.get_all_qids()
 # ---

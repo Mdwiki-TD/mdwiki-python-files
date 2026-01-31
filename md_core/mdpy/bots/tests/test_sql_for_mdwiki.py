@@ -2,9 +2,10 @@
 python3 core8/pwb.py mdpy/bots/tests/test_sql_for_mdwiki
 """
 
+import json
+
 from mdapi_sql import sql_for_mdwiki
 from newapi import printe
-import json
 
 
 def tests():

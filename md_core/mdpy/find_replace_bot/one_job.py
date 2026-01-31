@@ -4,11 +4,12 @@
 from mdpy.find_replace_bot.one_job import do_one_job
 """
 import json
-import tqdm
 import os
 import sys
-from newapi.mdwiki_page import MainPage, NEW_API
 from pathlib import Path
+
+import tqdm
+from newapi.mdwiki_page import NEW_API, MainPage
 
 home_dir = os.getenv("HOME")
 

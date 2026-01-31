@@ -15,15 +15,14 @@ python3 core8/pwb.py after_translate/sql_new -lang:ur
 import sys
 import time
 
-from newapi import printe
-
-from after_translate.bots.get_pages import get_pages_from_db
+from after_translate import start_work
 from after_translate.bots import add_to_wd
 from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
-from after_translate import start_work
+from after_translate.bots.get_pages import get_pages_from_db
 
 # ---
 from mdapi_sql import wiki_sql
+from newapi import printe
 
 # ---
 skip_langs = ["zh-yue", "ceb"]

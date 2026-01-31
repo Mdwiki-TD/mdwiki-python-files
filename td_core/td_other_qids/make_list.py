@@ -9,13 +9,11 @@ Usage:
 """
 import sys
 
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_qids_others
-from unlinked_wb.bot import work_un
-
-from newapi import printe
+from mdapi_sql import sql_for_mdwiki, sql_qids_others
 from mdpages import qids_help
+from newapi import printe
 from p11143_bot.filter_helps import remove_in_db_elements
+from unlinked_wb.bot import work_un
 
 ALL_QIDS = {}
 

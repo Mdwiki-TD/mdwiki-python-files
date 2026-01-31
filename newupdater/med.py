@@ -12,9 +12,10 @@ sys.path.append(home_dir + "/pybot")
 sys.path.append(home_dir + "/openssl/bin")
 # --
 public_html_dir = home_dir + "/public_html"
+from mdapi import GetPageText, login, page_put, print_s
+
 # --
 from new_updater import ec_de_code, work_on_text
-from mdapi import GetPageText, page_put, login, print_s
 
 
 def get_new_text(title):

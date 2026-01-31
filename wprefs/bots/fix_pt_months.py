@@ -2,8 +2,9 @@
 from wprefs.bots.fix_pt_months import pt_months
 """
 
-import sys
 import re
+import sys
+
 import wikitextparser as wtp
 
 # ---

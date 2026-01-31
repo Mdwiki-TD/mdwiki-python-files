@@ -6,11 +6,11 @@ tfj run stats2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 """
 
 import json
-import re
 import os
+import re
 import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 # ---
 from newapi import printe

@@ -10,11 +10,10 @@ import copy
 import re
 import sys
 
-from mdapi_sql import sql_for_mdwiki
-from newapi import printe
-from mdpyget.bots.to_sql import insert_dict, update_table_2
-
 from apis.mw_views import PageviewsClient
+from mdapi_sql import sql_for_mdwiki
+from mdpyget.bots.to_sql import insert_dict, update_table_2
+from newapi import printe
 
 view_bot = PageviewsClient()
 # new_data = view_bot.article_views_new(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')

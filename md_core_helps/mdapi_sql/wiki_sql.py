@@ -16,9 +16,10 @@ from mdapi_sql import wiki_sql
 import sys
 import time as tttime
 
+from mdapi_sql import sql_qu
+
 # ---
 from newapi import printe
-from mdapi_sql import sql_qu
 
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db

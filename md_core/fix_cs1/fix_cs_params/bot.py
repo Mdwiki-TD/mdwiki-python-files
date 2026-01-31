@@ -9,11 +9,11 @@ tfj run fixrefs1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.
 
 """
 import sys
-import wikitextparser as wtp
-from newapi import printe
 
-from newapi.mdwiki_page import md_MainPage, CatDepth, NEW_API
+import wikitextparser as wtp
 from fix_cs1.archive_date_maker import make_archive_date, make_archive_date_and_url
+from newapi import printe
+from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
 
 api_new = NEW_API("www", family="mdwiki")
 

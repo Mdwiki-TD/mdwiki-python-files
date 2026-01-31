@@ -4,9 +4,8 @@
 python3 core8/pwb.py add_rtt/tests/add_r_col
 
 """
-from newapi import printe
-
 from add_rtt.r_column_bots.pup_table import add_to_tables
+from newapi import printe
 
 text = """
 {| class="wikitable sortable"

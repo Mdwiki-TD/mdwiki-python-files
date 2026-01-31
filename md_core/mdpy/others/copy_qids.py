@@ -9,9 +9,9 @@ delete from qids q1 WHERE (q1.qid = '' OR q1.qid IS NULL) and EXISTS (SELECT 1 F
 
 import sys
 from pathlib import Path
-from mdpy.bots import en_to_md
 
 from mdapi_sql import sql_for_mdwiki
+from mdpy.bots import en_to_md
 
 in_qids = sql_for_mdwiki.get_all_qids()
 # ---

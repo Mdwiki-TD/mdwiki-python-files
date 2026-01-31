@@ -4,13 +4,12 @@
 python3 core8/pwb.py mdpy/find_replace_bot/bot
 
 """
-import sys
-import os
-
 import logging
-from tqdm import tqdm
+import os
+import sys
 
 from mdpy.find_replace_bot.one_job import do_one_job
+from tqdm import tqdm
 
 home_dir = os.getenv("HOME")
 

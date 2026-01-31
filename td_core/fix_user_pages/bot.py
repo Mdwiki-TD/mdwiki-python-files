@@ -12,14 +12,15 @@ python3 core8/pwb.py fix_user_pages/bot addall
 """
 import copy
 import sys
+
 import tqdm
-from newapi import printe
-from mdapi_sql import sql_for_mdwiki
-from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage
+from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
 
 # from fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 from fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 from fix_user_pages.user_bot import get_new_user
+from mdapi_sql import sql_for_mdwiki
+from newapi import printe
 
 skip_by_lang = {
     "ar": ["الأنسولين"],

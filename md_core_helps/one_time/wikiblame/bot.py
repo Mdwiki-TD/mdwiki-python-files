@@ -5,11 +5,12 @@ from wikiblame.bot import get_blame #first, result = get_blame({"lang": "es", "a
 # ---
 """
 
-import requests
 import re
 import sys
-from bs4 import BeautifulSoup
 from urllib.parse import urlencode
+
+import requests
+from bs4 import BeautifulSoup
 
 
 class WikiBlame:

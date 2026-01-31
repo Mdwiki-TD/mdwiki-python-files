@@ -6,9 +6,9 @@ python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 """
 
 import json
-import sys
 import os
 import re
+import sys
 
 tab = {
     "Infos\\TdConfig": ["Read_ini_file", "get_configs", "set_configs", "set_configs_all_file"],

@@ -7,9 +7,10 @@ from copy_to_en import alltext_changes
 """
 
 import re
-from newapi import printe
+
 import wikitextparser as wtp
 from copy_to_en.bots import text_changes
+from newapi import printe
 
 
 def change_last_Section(section):

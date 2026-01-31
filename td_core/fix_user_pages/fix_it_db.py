@@ -6,9 +6,10 @@ from fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 """
 import sys
 
+from mdapi_sql import sql_for_mdwiki
+
 # ---
 from newapi import printe
-from mdapi_sql import sql_for_mdwiki
 
 all_infos = sql_for_mdwiki.get_all_from_table(table_name="titles_infos")
 all_infos = {x["title"]: x for x in all_infos}

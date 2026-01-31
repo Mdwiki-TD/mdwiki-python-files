@@ -15,10 +15,9 @@ python3 core8/pwb.py mdpy/listo save
 import re
 import sys
 
-from newapi.mdwiki_page import CatDepth
-
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 from apis import mdwiki_api
+from newapi.mdwiki_page import CatDepth
 
 limit_m = {1: 0}
 # ---

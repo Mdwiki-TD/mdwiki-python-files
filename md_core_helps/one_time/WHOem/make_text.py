@@ -4,9 +4,8 @@ python3 core8/pwb.py WHOem/make_text
 
 """
 
-import sys
-
 import json
+import sys
 from pathlib import Path
 
 # ---

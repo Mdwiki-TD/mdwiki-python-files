@@ -6,12 +6,10 @@ python3 core8/pwb.py copy_to_en/bot ask
 tfj run copyen --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/bot"
 
 """
-from apis import cat_cach
-from apis import mdwiki_api
-from newapi.wiki_page import MainPage
-
+from apis import cat_cach, mdwiki_api
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
+from newapi.wiki_page import MainPage
 
 
 def main():

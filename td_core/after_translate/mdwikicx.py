@@ -11,15 +11,16 @@ python3 core8/pwb.py after_translate/mdwikicx -lang:ur
 
 """
 
-import sys
-import requests
 import json
 import re
+import sys
 from pathlib import Path
+
+import requests
+from after_translate.bots import add_to_wd
+from mdpy.bots import en_to_md
 from newapi import printe
 from newapi.page import MainPage
-from mdpy.bots import en_to_md
-from after_translate.bots import add_to_wd
 
 
 def get_result():

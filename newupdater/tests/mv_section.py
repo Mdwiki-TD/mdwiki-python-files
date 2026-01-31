@@ -4,11 +4,11 @@ python3 core8/pwb.py newupdater/tests/mv_section Alcohol_septal_ablation
 
 """
 
-import sys
 import os
+import sys
+from pathlib import Path
 
 import pywikibot
-from pathlib import Path
 
 Dir = Path(__file__).parent
 
@@ -16,8 +16,8 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 os.environ["DEBUGNEW"] = "true"
 
-from new_updater import move_External_links_section
 from mdapi import GetPageText
+from new_updater import move_External_links_section
 
 text = GetPageText(sys.argv[1])
 # ---

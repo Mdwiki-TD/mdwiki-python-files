@@ -4,18 +4,18 @@
 # (C) Ibrahem Qasim, 2022
 #
 #
-from API import himoBOT3
+import sys
 
+# ---
+import requests
+from API import himoBOT3
 from newapi import printe
 
 # ---
 
-import sys
 
 # ---
 
-# ---
-import requests
 
 Session = requests.Session()
 # ---

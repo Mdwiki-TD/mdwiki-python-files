@@ -9,19 +9,19 @@ python3 core8/pwb.py prior/read5 dontsave logall
 
 """
 
-import sys
-import os
 import json
-import wikitextparser
-
-
-# ---
-from newapi.mdwiki_page import md_MainPage
-from newapi import printe
-from prior import text_bot
+import os
+import sys
 
 # ---
 from pathlib import Path
+
+import wikitextparser
+from newapi import printe
+
+# ---
+from newapi.mdwiki_page import md_MainPage
+from prior import text_bot
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')

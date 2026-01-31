@@ -2,15 +2,15 @@
 from apis.sup.su_login import Get_MwClient_Site
 """
 
-import sys
 import os
-import requests
-import mwclient
+import sys
 from http.cookiejar import MozillaCookieJar
-from mwclient.client import Site
 
-from newapi import printe
+import mwclient
+import requests
 from apis.sup.cookies_bot import get_file_name
+from mwclient.client import Site
+from newapi import printe
 
 
 def default_user_agent():

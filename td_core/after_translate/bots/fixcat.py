@@ -6,12 +6,13 @@ python3 core8/pwb.py after_translate/bots/fixcat
 
 """
 
-import tqdm
 import sys
-from pymysql.converters import escape_string
+
+import tqdm
 from mdapi_sql import sql_for_mdwiki
 from newapi import printe
 from newapi.mdwiki_page import CatDepth
+from pymysql.converters import escape_string
 
 # result_table = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
 # ---

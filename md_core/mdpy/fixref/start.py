@@ -4,18 +4,18 @@ Change refs to newlines
 python3 core8/pwb.py mdpy/fixref
 """
 
+import os
 import sys
-from mdpy.fixref.fixref_text_new import fix_ref_template
-from apis import mdwiki_api
-from newapi import printe
-
-# ---
-from newapi.mdwiki_page import CatDepth
 
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
 from pathlib import Path
 
-import os
+from apis import mdwiki_api
+from mdpy.fixref.fixref_text_new import fix_ref_template
+from newapi import printe
+
+# ---
+from newapi.mdwiki_page import CatDepth
 
 # ---
 if os.getenv("HOME"):

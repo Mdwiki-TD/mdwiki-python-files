@@ -25,14 +25,15 @@ python3 core8/pwb.py prior/add_old new  -file:en_13.json
 python3 core8/pwb.py prior/add_old new  -file:en_14.json
 """
 
-import sys
-import os
 import json
+import os
+import sys
 from pathlib import Path
+
+from newapi import printe
 
 # ---
 from prior import get_them
-from newapi import printe
 
 # ---
 Dir = str(Path(__file__).parents[0])

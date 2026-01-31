@@ -5,8 +5,8 @@ python3 I:/mdwiki/pybot/newupdater/tests/test_med.py Retinol
 
 """
 
-import sys
 import os
+import sys
 
 os.environ["DEBUGNEW"] = "true"
 

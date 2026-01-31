@@ -8,18 +8,18 @@ tfj run sitelinks --image python3.9 --command "$HOME/local/bin/python3 core8/pwb
 
 """
 
-import sys
-import tqdm
 import json
 import os
+import sys
 from collections import defaultdict
+
+import tqdm
 from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
-from newapi import printe
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_for_mdwiki_new
+from mdapi_sql import sql_for_mdwiki, sql_for_mdwiki_new
 
 # from mdpyget.bots.to_sql import insert_dict, to_sql
 from mdpyget.bots.to_sql import new_to_sql
+from newapi import printe
 
 # ---
 if os.getenv("HOME"):

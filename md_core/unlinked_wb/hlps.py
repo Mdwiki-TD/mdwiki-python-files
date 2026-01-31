@@ -4,10 +4,10 @@
 from unlinked_wb.hlps import get_pages_in_use, get_qids
 
 """
+from mdapi_sql import sql_for_mdwiki, sql_qids_others
+
 # ---
 from newapi import printe
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_qids_others
 
 
 def get_pages_in_use(all_pages):

@@ -4,14 +4,15 @@
 python3 core8/pwb.py copy_data/copy_enwiki_pageviews
 
 """
+import json
+
 # ---
 import os
-import json
 from pathlib import Path
-from pymysql.converters import escape_string
 
 # ---
 from mdapi_sql import sql_for_mdwiki
+from pymysql.converters import escape_string
 
 # ---
 Dir = str(Path(__file__).parents[0])

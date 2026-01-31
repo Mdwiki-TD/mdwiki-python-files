@@ -8,8 +8,8 @@ user_agent = user_account_new.user_agent
 # ---
 """
 
-import os
 import configparser
+import os
 
 home_dir = os.getenv("HOME") or "I:/mdwiki/mdwiki"
 

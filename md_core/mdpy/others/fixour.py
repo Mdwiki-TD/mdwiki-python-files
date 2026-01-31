@@ -4,11 +4,11 @@
 # (C) Ibrahem Qasim, 2022
 #
 #
-import re
 import os
+import re
 
 # ---
-from newapi.mdwiki_page import MainPage, NEW_API
+from newapi.mdwiki_page import NEW_API, MainPage
 
 # ---
 numbers = {1: 20000, "done": 0}

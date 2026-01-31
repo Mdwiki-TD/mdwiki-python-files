@@ -6,9 +6,10 @@ python3 core8/pwb.py copy_data/by_title/exists_db
 
 """
 import sys
+
 from mdapi_sql import sql_for_mdwiki
-from newapi.mdwiki_page import CatDepth
 from mdpyget.bots.to_sql import to_sql
+from newapi.mdwiki_page import CatDepth
 
 
 def main():

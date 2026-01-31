@@ -12,12 +12,12 @@ results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[
 #
 #
 import os
+
 import pymysql
 import pymysql.cursors
-from pywikibot import config
-
-from newapi.except_err import exception_err
 from newapi import printe
+from newapi.except_err import exception_err
+from pywikibot import config
 
 db_username = config.db_username
 db_password = config.db_password

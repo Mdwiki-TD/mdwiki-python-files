@@ -4,17 +4,17 @@ python3 core8/pwb.py priorviews/add_blame_to_tra
 
 """
 
+import json
 import sys
 from pathlib import Path
-import json
 
 # ---
 from newapi import printe
+from priorviews.bots import helps
 
 # ---
 from priorviews.find.find_blame import new_data
 from priorviews.lists.translators import tra_by_lang
-from priorviews.bots import helps
 
 # ---
 Dir = Path(__file__).parent

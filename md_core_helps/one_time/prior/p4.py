@@ -7,10 +7,12 @@ links like [[example]]
 python3 core8/pwb.py prior/p4 test
 """
 
-import sys
-import os
 import json
+import os
+import sys
 
+# ---
+from pathlib import Path
 
 # ---
 from newapi import printe
@@ -19,9 +21,6 @@ from newapi.wiki_page import MainPage, change_codes
 
 # ---
 from prior import get_them
-
-# ---
-from pathlib import Path
 
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')

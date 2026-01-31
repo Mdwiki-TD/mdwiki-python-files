@@ -12,12 +12,11 @@ tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 # ---
 import re
 import sys
+
 import wikitextparser as wtp
-
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage, CatDepth
-
 from add_rtt.named_param import add_param_named
+from newapi import printe
+from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
 
 # add_param_named(text, title)
 

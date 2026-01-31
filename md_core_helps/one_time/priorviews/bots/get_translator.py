@@ -4,11 +4,12 @@ python3 core8/pwb.py priorviews/bots/get_translator
 
 """
 
-from priorviews.bots import helps
 import sys
 from urllib.parse import urlencode
+
 import requests
 from newapi import printe
+from priorviews.bots import helps
 
 # ---
 """

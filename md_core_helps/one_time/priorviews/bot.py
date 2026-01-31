@@ -4,13 +4,14 @@ python3 core8/pwb.py priorviews/bot test
 
 """
 
-from newapi.mdwiki_page import md_MainPage
-from priorviews import by_lang
-from priorviews.lists import views
-from priorviews.bots import sections_text
-from priorviews.lists.links_by_section import sects_links_langlinks
 import sys
 from pathlib import Path
+
+from newapi.mdwiki_page import md_MainPage
+from priorviews import by_lang
+from priorviews.bots import sections_text
+from priorviews.lists import views
+from priorviews.lists.links_by_section import sects_links_langlinks
 
 # ---
 Dir = Path(__file__).parent

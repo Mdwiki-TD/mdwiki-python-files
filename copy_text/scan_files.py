@@ -5,10 +5,11 @@ python3 core8/pwb.py copy_text/scan_files
 
 
 """
-import sys
-import tqdm
 import os
+import sys
 from pathlib import Path
+
+import tqdm
 from newapi import printe
 
 dir1 = Path(__file__).parent

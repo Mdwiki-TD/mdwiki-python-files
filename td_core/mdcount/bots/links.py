@@ -1,12 +1,12 @@
-import sys
 import re
+import sys
 
 # ---
 from apis import mdwiki_api
 from mdapi_sql import sql_for_mdwiki
+from mdpy.bots.check_title import valid_title
 from newapi import printe
 from newapi.mdwiki_page import CatDepth
-from mdpy.bots.check_title import valid_title
 
 link_regex = re.compile(r"\[\[(.*?)\]\]")
 refreg = re.compile(r"(<ref[^>]*>[^<>]+</ref>|<ref[^>]*\/\s*>)")

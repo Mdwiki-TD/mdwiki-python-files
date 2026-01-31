@@ -6,10 +6,11 @@ python3 core8/pwb.py priorviews/sections_text
 
 """
 
-from priorviews.bots import helps  # views_url(title, lang, view)
-from priorviews.lists import views
 import sys
 from pathlib import Path
+
+from priorviews.bots import helps  # views_url(title, lang, view)
+from priorviews.lists import views
 
 # ---
 Dir = Path(__file__).parent

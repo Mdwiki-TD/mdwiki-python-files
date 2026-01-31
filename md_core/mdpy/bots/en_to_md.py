@@ -22,9 +22,9 @@ from mdpy.bots import en_to_md
 """
 
 import json
-from mdapi_sql import sql_for_mdwiki
-
 import os
+
+from mdapi_sql import sql_for_mdwiki
 
 # ---
 if os.getenv("HOME"):

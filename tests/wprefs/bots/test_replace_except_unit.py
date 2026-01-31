@@ -1,7 +1,7 @@
 import re
 import unittest
-import pywikibot
 
+import pywikibot
 from wprefs.bots.replace_except import replaceExcept
 
 

@@ -1,10 +1,10 @@
 """ """
 
-import sys
 import re
+import sys
 import urllib.parse
-from urllib.parse import urlparse
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
+
 import requests
 import wikitextparser
 from newapi import printe

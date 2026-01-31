@@ -9,14 +9,15 @@ python3 core8/pwb.py db_work/check_titles test
 
 """
 import sys
-import tqdm
 import time
+
+import tqdm
+from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
+from mdapi_sql import sql_for_mdwiki
 
 # ---
 from newapi import printe
-from mdapi_sql import sql_for_mdwiki
 from newapi.mdwiki_page import md_MainPage
-from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage
 
 skip_by_lang = {
     "ar": ["الأنسولين"],

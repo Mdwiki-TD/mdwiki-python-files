@@ -7,7 +7,7 @@ python3 core8/pwb.py add_rtt/remove
 # ---
 
 from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage, CatDepth
+from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
 
 # add_param_named(text, title)
 

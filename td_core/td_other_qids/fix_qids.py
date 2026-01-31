@@ -8,12 +8,10 @@ python3 core8/pwb.py td_other_qids/fix_qids redirects
 
 import sys
 
-from apis import cat_cach
-from apis import wikidataapi
-from newapi import printe
+from apis import cat_cach, wikidataapi
+from mdapi_sql import sql_for_mdwiki, sql_qids_others
 from mdpy.bots.check_title import valid_title
-from mdapi_sql import sql_for_mdwiki
-from mdapi_sql import sql_qids_others
+from newapi import printe
 from unlinked_wb.bot import work_un
 
 all_pages = cat_cach.from_cache()

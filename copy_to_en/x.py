@@ -1,5 +1,6 @@
-import requests
 import time
+
+import requests
 from apis import cat_cach
 
 all_pages = cat_cach.from_cache()

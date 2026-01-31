@@ -9,11 +9,11 @@ tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 # import re
 # import sys
 
+from fix_cs1.fix_p import fix_it
+
 # import wikitextparser as wtp
 from newapi import printe
-from newapi.mdwiki_page import md_MainPage, CatDepth
-
-from fix_cs1.fix_p import fix_it
+from newapi.mdwiki_page import CatDepth, md_MainPage
 
 
 def one_page(title):

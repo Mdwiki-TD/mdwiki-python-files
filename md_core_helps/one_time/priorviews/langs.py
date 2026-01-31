@@ -4,25 +4,20 @@ python3 core8/pwb.py priorviews/langs -lang:ar write ask
 
 """
 
-import sys
-import json
-from pathlib import Path
 import datetime
-
+import json
+import sys
+from pathlib import Path
 
 # ---
 from newapi import printe
+from newapi.mdwiki_page import md_MainPage
+from priorviews.bots import helps, w_all
+from priorviews.lists import creators, translators, views, words
+from priorviews.lists.creators_to_translators import creators_as_translators
 
 # ---
-from priorviews.lists.links_by_section import sects_links_langlinks, links_by_lang
-from priorviews.lists import views
-from priorviews.bots import helps
-from priorviews.bots import w_all
-from priorviews.lists import creators
-from priorviews.lists.creators_to_translators import creators_as_translators
-from priorviews.lists import translators
-from priorviews.lists import words
-from newapi.mdwiki_page import md_MainPage
+from priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
 
 # ---
 Dir = Path(__file__).parent

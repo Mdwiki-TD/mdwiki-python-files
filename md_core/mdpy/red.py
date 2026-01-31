@@ -6,14 +6,15 @@
 """
 
 import sys
+
 import requests
+from apis import mdwiki_api
+from mdpy.bots import py_tools
+from mdpy.bots.check_title import valid_title
+from newapi import printe
 
 # ---
-from newapi.mdwiki_page import user_agent, MainPage, NEW_API
-from newapi import printe
-from mdpy.bots import py_tools
-from apis import mdwiki_api
-from mdpy.bots.check_title import valid_title
+from newapi.mdwiki_page import NEW_API, MainPage, user_agent
 
 # ---
 Session = requests.Session()

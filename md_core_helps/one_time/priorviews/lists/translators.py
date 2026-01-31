@@ -9,11 +9,11 @@ python3 core8/pwb.py priorviews/lists/translators
 
 """
 
-from priorviews.bots import helps
 import json
 import os
 from pathlib import Path
 
+from priorviews.bots import helps
 
 # ---
 Dir = Path(__file__).parent

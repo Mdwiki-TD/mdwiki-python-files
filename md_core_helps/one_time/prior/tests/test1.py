@@ -1,5 +1,4 @@
-from prior import p4
-from prior import read4
+from prior import p4, read4
 
 # ---
 lal = [

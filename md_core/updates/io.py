@@ -8,10 +8,10 @@ python3 c8/pwb.py updates/io
 
 """
 
-from apis import mdwiki_api
 import sys
 from pathlib import Path
 
+from apis import mdwiki_api
 
 Dir = Path(__file__).parent
 # ---

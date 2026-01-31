@@ -10,8 +10,8 @@ from apis.wd_bots import wd_rest_new
 """
 import json
 import sys
-import requests
 
+import requests
 from newapi import printe
 from newapi.except_err import exception_err
 

@@ -5,10 +5,11 @@ from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 
 """
 import sys
-import requests
 import urllib
 import urllib.parse
 from pathlib import Path
+
+import requests
 
 # ---
 try:
@@ -19,9 +20,10 @@ except ImportError:
 Dir = Path(__file__).parent.parent
 # ---
 sys.path.append(Dir)
+from wprefs import user_account_enwiki
+
 # ---
 from wprefs.helps import print_s
-from wprefs import user_account_enwiki
 
 # my_username = user_account_enwiki.my_username
 # lgpass_enwiki = user_account_enwiki.lgpass_enwiki

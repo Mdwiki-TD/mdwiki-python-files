@@ -9,12 +9,13 @@ from mdapi_sql import sql_td_bot
 """
 import os
 import sys
+from pathlib import Path
+
 import pymysql
+from newapi import pymysql_bot
 
 # ---
 from pywikibot import config
-from newapi import pymysql_bot
-from pathlib import Path
 
 conversions = pymysql.converters.conversions
 conversions[pymysql.FIELD_TYPE.DATE] = lambda x: str(x)

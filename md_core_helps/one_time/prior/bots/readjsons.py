@@ -1,6 +1,6 @@
+import json
 import os
 from pathlib import Path
-import json
 
 # استدعاء الدالة وتمرير المجلد الحالي كوسيطة
 folder_path = Path(__file__).parent

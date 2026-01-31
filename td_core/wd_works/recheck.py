@@ -7,15 +7,14 @@ xpython3 core8/pwb.py wd_works/recheck
 """
 
 import sys
-from pymysql.converters import escape_string
+
+from apis import wikidataapi
 
 # ---
-from mdapi_sql import wiki_sql
+from mdapi_sql import sql_for_mdwiki, wiki_sql
+from mdpy.bots import en_to_md, py_tools
 from newapi import printe
-from mdapi_sql import sql_for_mdwiki
-from mdpy.bots import py_tools
-from apis import wikidataapi
-from mdpy.bots import en_to_md
+from pymysql.converters import escape_string
 
 targets_done = {}
 wd_tt = {}

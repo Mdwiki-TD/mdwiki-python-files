@@ -13,16 +13,14 @@ from after_translate.bots import add_to_wd
 import re
 
 # ---
-from pymysql.converters import escape_string
-from newapi import printe
+from apis import mdwiki_api, wiki_api, wikidataapi
 from mdapi_sql import sql_for_mdwiki
-from mdpy.bots import en_to_md
 from mdpy import orred
+from mdpy.bots import en_to_md
+from newapi import printe
 
 # ---
-from apis import wiki_api
-from apis import mdwiki_api
-from apis import wikidataapi
+from pymysql.converters import escape_string
 
 # ---
 wddone_table = """CREATE TABLE wddone (

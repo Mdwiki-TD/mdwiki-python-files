@@ -2,11 +2,11 @@
 python3 core8/pwb.py wprefs/tests/test_es/bot
 """
 
-from wprefs.wpref_text import fix_page
-from wprefs.bots.es_months import fix_es_months
+from pathlib import Path
 
 import pywikibot
-from pathlib import Path
+from wprefs.bots.es_months import fix_es_months
+from wprefs.wpref_text import fix_page
 
 Dir = Path(__file__).parent
 
