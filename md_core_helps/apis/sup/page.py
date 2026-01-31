@@ -4,11 +4,11 @@ python3 core8/pwb.py apis/sup/page
 
 """
 
+from apis.sup.su_login import Get_MwClient_Site
 import logging
 
 logging.basicConfig(level=logging.WARNING)
 
-from apis.sup.su_login import Get_MwClient_Site
 
 if __name__ == "__main__":
     from apis import user_account_new
