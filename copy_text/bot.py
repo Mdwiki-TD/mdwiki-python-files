@@ -60,7 +60,7 @@ class WikiProcessor:
 
             return result
         except requests.exceptions.RequestException as e:
-            logger.info(f"(): Error occurred: {e}")
+            logger.error(f"(): Error occurred: {e}")
             return None
 
     def convert_wikitext_to_html(self, text):
@@ -79,7 +79,7 @@ class WikiProcessor:
 
             return html_text
         except requests.exceptions.RequestException as e:
-            logger.info(f"(): Error occurred: {e}")
+            logger.error(f"(): Error occurred: {e}")
             return None
 
     def save_text(self, text, file_path):
@@ -87,7 +87,7 @@ class WikiProcessor:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(text)
         except Exception as e:
-            logger.info(f"(): Exception: {e}")
+            logger.error(f"(): Exception: {e}")
 
     def get_page_text(self, page_name):
         newtext, revid = get_text(page_name)
@@ -137,7 +137,7 @@ class WikiProcessor:
         html_text = self.to_html(wikitext)
 
         if html_text:
-            segments = self.to_segments(html_text)
+            _segments = self.to_segments(html_text)
 
 
 def one_page_new(title):

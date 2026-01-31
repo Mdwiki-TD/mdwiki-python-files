@@ -104,9 +104,9 @@ def WD_Merge(q1, q2):
                 logger.info("<<green>> **createredirect true.")
                 return True
             else:
-                logger.info(f"<<red>> r5{str(r5)}")
+                logger.error(f"<<red>> r5{str(r5)}")
     else:
-        logger.info(f"<<red>> r4{str(r4)}")
+        logger.error(f"<<red>> r4{str(r4)}")
         return False
 
 
@@ -156,13 +156,13 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
             # item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
             match = re.search(r"(Q\d+)", str(req["error"]["info"]))
             item2 = match.group(1) if match else "Unknown"
-            logger.info(f"<<red>>API: same label item: {item2}")
+            logger.error(f"<<red>>API: same label item: {item2}")
         # ---
         if "success" in req:
             logger.info("<<green>> ** true.")
             return True
         else:
-            logger.info(f"<<red>> r5{str(req)}")
+            logger.error(f"<<red>> r5{str(req)}")
     # ---
     return False
 
@@ -209,7 +209,7 @@ def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
         logger.info("<<green>> **Labels_API true.")
         return True
     else:
-        logger.info(f"<<red>> r5{str(req)}")
+        logger.error(f"<<red>> r5{str(req)}")
     # ---
 
 
@@ -271,7 +271,7 @@ def new_item(label="", lang="", summary="", returnid=False):
         return False
     # ---
     if "success" not in req:
-        logger.info(f"<<red>> req{str(req)}")
+        logger.error(f"<<red>> req{str(req)}")
         return False
     # ---
     logger.info("<<green>> **Claim_API true.")
@@ -338,7 +338,7 @@ def Claim_API_str(qid, property, string):
         logger.info("<<green>> **Claim_API true.")
         return True
     else:
-        logger.info(f"<<red>> req{str(req)}")
+        logger.error(f"<<red>> req{str(req)}")
     # ---
     return False
 
@@ -357,7 +357,7 @@ def Delete_claim(claimid):
         logger.info("<<green>> **Claim_API true.")
         return True
     else:
-        logger.info(f"<<red>> req{str(req)}")
+        logger.error(f"<<red>> req{str(req)}")
     # ---
     return False
 
@@ -380,7 +380,7 @@ def wbsearchentities(search, language, match_alias=False):
         return False
     # ---
     if "success" not in req:
-        logger.info(f"<<red>> : {str(req)}")
+        logger.error(f"<<red>> : {str(req)}")
         return False
     # ---
     table = {}

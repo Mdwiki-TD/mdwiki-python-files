@@ -42,14 +42,14 @@ def dump_data(file, data):
         with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
-        logger.info("<<red>> keyboard interrupt sys.exit()")
+        logger.error("<<red>> keyboard interrupt sys.exit()")
         # ---
         with open(f"{file}_1", "w", encoding="utf-8") as f:
             json.dump(data, f)
         # ---
         sys.exit()
     except Exception as e:
-        logger.info(f"<<red>> dump Error: {e}")
+        logger.error(f"<<red>> dump Error: {e}")
 
 
 def get_v(lang, links, lang_links_mdtitle_s):

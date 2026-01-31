@@ -51,7 +51,7 @@ class FindTranslator:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            logger.info(f"except: lang:{self.lang} {e}")
+            logger.error(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 

@@ -105,7 +105,7 @@ def to_add_wrk(to_add, noqids):
 def empty_qids_wrk(empty_qids):
     logger.info("===================")
     # ---
-    logger.info(f"<<red>>no qids: {len(empty_qids)}")
+    logger.error(f"<<red>>no qids: {len(empty_qids)}")
     # ---
     if empty_qids:
         # ---

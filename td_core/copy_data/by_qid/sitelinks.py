@@ -242,7 +242,7 @@ def main():
     # ---
     qids_not = [x for x in qids if x not in lists.get("qids", {})]
     # ---
-    logger.info(f"<<red>> len of qids_not: {len(qids_not)}")
+    logger.error(f"<<red>> len of qids_not: {len(qids_not)}")
     # ---
     for x in qids_not:
         lists["qids"][x] = {"mdtitle": qids_to_mdtitle.get(x, ""), "sitelinks": {}}

@@ -50,7 +50,7 @@ def do_request(params=None, method="POST"):
         status = r4.status_code
         # ---
         if status != 200:
-            logger.info(f"<<red>> wikidataapi.py: post error status: {str(status)}")
+            logger.error(f"<<red>> wikidataapi.py: post error status: {str(status)}")
             return {}
         # ---
         return r4.json()
@@ -100,8 +100,8 @@ def Log_to_wiki(url=""):
         r11.raise_for_status()
         r2_params["lgtoken"] = r11.json()["query"]["tokens"]["logintoken"]
         r22 = SS["ss"].post(SS["url"], data=r2_params, headers={"User-Agent": user_agent}, timeout=10)
-    except Exception as e:
-        logger.info("wikidataapi.py: Can't log in . ")
+    except Exception:
+        logger.exception("wikidataapi.py: Can't log in . ")
         return False
     # ---
     if r22.json().get("login", {}).get("result", "") != "Success":

@@ -82,7 +82,7 @@ def get_new_user(new_target, lang, user):
             second_revid = x["revid"]
             # ---
             if x_user != user:
-                logger.info(f"<<red>> user:{user} new page not new!, created by:({x_user}) while user is :({user})")
+                logger.error(f"<<red>> user:{user} new page not new!, created by:({x_user}) while user is :({user})")
                 return False
             else:
                 logger.info("<<green>> new page created same user:({x_user}).")

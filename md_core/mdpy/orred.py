@@ -21,7 +21,7 @@ api_new = NEW_API("or", family="wikipedia")
 def create_redirect(target, mdtitle):
     # ---
     if not target or not mdtitle:
-        logger.info(f"<<red>>** false .. {mdtitle=} | {target=} ")
+        logger.error(f"<<red>>** false .. {mdtitle=} | {target=} ")
         return
     # ---
     text = f"#redirect [[{target}]]"

@@ -106,7 +106,7 @@ def check_urls(urls):
             continue
         # ---
         if 500 <= response.status_code < 600:
-            logger.info(f"<<red>> received {response.url} status code {response.status_code}")
+            logger.error(f"<<red>> received {response.url} status code {response.status_code}")
             errors[u] = True
 
 

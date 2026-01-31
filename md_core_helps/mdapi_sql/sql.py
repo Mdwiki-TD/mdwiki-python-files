@@ -334,7 +334,7 @@ def Make_sql_1_row(queries, wiki="", printqua=False):
 
 def MySQLdb_finder_2_rows(encatTitle):
     # en category use template with ar link
-    logger.info(f"<<red>> sql . {encatTitle}: ")
+    logger.error(f"<<red>> sql . {encatTitle}: ")
     # ---
     if not GET_SQL():
         return {}
@@ -361,7 +361,7 @@ def MySQLdb_finder_2_rows(encatTitle):
 
 
 def MySQLdb_finder_N_New(encatTitle, arcatTitle):
-    logger.info(f"<<red>> sql . MySQLdb_finder {encatTitle}: ")
+    logger.error(f"<<red>> sql . MySQLdb_finder {encatTitle}: ")
     # ---
     item = encatTitle.replace("category:", "").replace("Category:", "").replace(" ", "_")
     item = str(encatTitle).replace("[[en:", "").replace("]]", "").replace(" ", "_").replace("Category:", "")
@@ -391,7 +391,7 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
 
 
 def get_exclusive_category_titles(encatTitle, arcatTitle):
-    logger.info(f"<<red>> API/sql_py {encatTitle}: ")
+    logger.error(f"<<red>> API/sql_py {encatTitle}: ")
     # ---
     return MySQLdb_finder_N_New(encatTitle, arcatTitle)
 

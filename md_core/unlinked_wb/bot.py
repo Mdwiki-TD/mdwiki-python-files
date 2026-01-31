@@ -135,7 +135,7 @@ def add_tag():
     # ---
     for q, v in vals_d.items():
         if len(v) > 1:
-            logger.info(f"<<red>> duplicate: q:{q}, v:{v}")
+            logger.error(f"<<red>> duplicate: q:{q}, v:{v}")
 
 
 if __name__ == "__main__":

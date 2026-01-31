@@ -42,7 +42,7 @@ for path in paths:
             to_del.append(file)
 
 for n, file in enumerate(to_del, 1):
-    logger.info(f"<<red>> f: {n}/{len(to_del)} : Error: {file}")
+    logger.error(f"<<red>> f: {n}/{len(to_del)} : Error: {file}")
     # del the file
     if "del" in sys.argv:
         os.remove(file)

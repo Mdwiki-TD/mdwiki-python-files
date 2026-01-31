@@ -99,7 +99,7 @@ def work_one_table_O(table_text, redirects, pages):
     # ---
     logger.info(f"<<yellow>> no_add: {len(no_add)}, already_in: {len(already_in)}")
     # ---
-    logger.info(f"<<red>> cell_errors: {len(cell_errors)}:")
+    logger.error(f"<<red>> cell_errors: {len(cell_errors)}:")
     logger.info(cell_errors)
     # ---
     logger.info(f"<<yellow>> add_done: {len(add_done)}, add_from_redirect: {len(add_from_redirect)}")
@@ -166,7 +166,7 @@ def work_one_table(table_text, redirects, pages):
     # ---
     logger.info(f"<<yellow>> no_add: {len(no_add)}, already_in: {len(already_in)}")
     # ---
-    logger.info(f"<<red>> cell_errors: {len(cell_errors)}:")
+    logger.error(f"<<red>> cell_errors: {len(cell_errors)}:")
     logger.info(cell_errors)
     # ---
     logger.info(f"<<yellow>> add_done: {len(add_done)}, add_from_redirect: {len(add_from_redirect)}")

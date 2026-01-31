@@ -278,12 +278,12 @@ def start():
     # ---
     for mdm in mdwiki_empty_qids:
         lang, target, qid_target = mdwiki_empty_qids[mdm]
-        logger.info(f"<<red>> no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}")
+        logger.error(f"<<red>> no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}")
         to_add[mdm] = qid_target
     # ---
     logger.info("<<blue>> empty_qid_target:")
     for lal in empty_qid_target:
-        logger.info(f"<<red>> qid_target is empty> target:{lal}")
+        logger.error(f"<<red>> qid_target is empty> target:{lal}")
     # ---
     if "add" in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(to_add)

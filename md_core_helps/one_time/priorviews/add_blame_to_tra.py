@@ -88,7 +88,7 @@ def sea55():
         for title in titls:
             if title.lower() not in new_data[lang] and title not in new_data[lang]:
                 n += 1
-                logger.info(f"<<red>>{n=}/{len(titls)} {lang=}, {title=}")
+                logger.error(f"<<red>>{n=}/{len(titls)} {lang=}, {title=}")
                 new_data[lang][title.lower()] = ""
         # ---
     # ---

@@ -44,14 +44,14 @@ def dump_data(revids):
             json.dump(revids, f, ensure_ascii=False)
             logger.info(f"<<blue>> dump to {file2}")
     except Exception as e:
-        logger.info(f"<<red>> dump to {file2} error: {e}")
+        logger.error(f"<<red>> dump to {file2} error: {e}")
     # ---
     try:
         with open(file3, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
             logger.info(f"<<blue>> dump to {file3}")
     except Exception as e:
-        logger.info(f"<<red>> dump to {file3} error: {e}")
+        logger.error(f"<<red>> dump to {file3} error: {e}")
 
 
 def Cat_Depth(title, depth=0):

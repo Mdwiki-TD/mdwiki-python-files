@@ -132,7 +132,7 @@ def make_title(url):
     titleBlackList = re.compile(globalbadtitles, re.I | re.S | re.X)
     # ---
     if titleBlackList.match(title):
-        logger.info(f"<<red>> WARNING<<default>> {url} : " "Blacklisted title ({title})")
+        logger.error(f"<<red>> WARNING<<default>> {url} : " "Blacklisted title ({title})")
     # ---
     Title_cash[url] = title
     # ---

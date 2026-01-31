@@ -27,7 +27,7 @@ def get_pmid_json(pmid):
         data = content.json()
         return data
     except Exception as e:
-        logger.info(f"Error: {e}")
+        logger.error(f"Error: {e}")
         return {}
 
 

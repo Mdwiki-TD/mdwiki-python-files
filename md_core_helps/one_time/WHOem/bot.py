@@ -73,7 +73,7 @@ def get_lang_links(md_links):
         page = MainPage(title, "en")
         # ---
         if not page.exists():
-            logger.info(f"<<red>> page: {title} not found in enwiki.")
+            logger.error(f"<<red>> page: {title} not found in enwiki.")
             links_not_found.append(title)
             return
         # ---
@@ -103,7 +103,7 @@ def get_lang_links(md_links):
     with open(f"{Dir}/lists/lang_links.json", "w", encoding="utf-8") as f:
         json.dump(lang_links, f, ensure_ascii=False, indent=2)
     # ---
-    logger.info(f"<<red>> len of links_not_found: {len(links_not_found)}:")
+    logger.error(f"<<red>> len of links_not_found: {len(links_not_found)}:")
     # ---
     with open(f"{Dir}/lists/links_not_found.json", "w", encoding="utf-8") as f:
         json.dump(links_not_found, f, ensure_ascii=False, indent=2)

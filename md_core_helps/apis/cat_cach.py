@@ -43,7 +43,7 @@ def dump_it(file, data):
             json.dump(data, f)
         return True
     except Exception as e:
-        logger.info(f"<<red>> Error: {e}")
+        logger.error(f"<<red>> Error: {e}")
     # ---
     return False
 
@@ -60,7 +60,7 @@ def from_cache():
                 data = json.loads(file.read_text())
                 return data
             except (json.JSONDecodeError, PermissionError) as e:
-                logger.info(f"<<red>> Error reading cache file: {e}")
+                logger.error(f"<<red>> Error reading cache file: {e}")
     # ----
     all_pages = make_cash_to_cats()
     # ---
@@ -90,7 +90,7 @@ def dump_to_cache(cat, data):
     datalist = data.get("list", [])
     # ---
     if not datalist:
-        logger.info(f"<<red>> No data for {cat}")
+        logger.error(f"<<red>> No data for {cat}")
         return
     # ---
     if dump_it(filename, data):

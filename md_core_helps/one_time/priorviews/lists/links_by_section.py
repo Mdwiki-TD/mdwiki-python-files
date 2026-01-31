@@ -88,7 +88,7 @@ if len(links_done) != len(mdtitles_lang_title.keys()):
     # ---
     diff = list(set(mdtitles_lang_title.keys()) - set(links_done))
     # ---
-    logger.info(f"<<red>> len of diff: {len(diff)}")
+    logger.error(f"<<red>> len of diff: {len(diff)}")
     print(diff)
 # ---
 # find the section with the least links

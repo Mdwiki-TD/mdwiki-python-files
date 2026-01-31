@@ -63,7 +63,7 @@ def to_sql_d(titles_data):
         # ---
         in_sql_not_in_new = [x for x in is_in if x not in titles]
         # ---
-        # logger.info(f"<<red>> {lang_code}: {same=}, {len(to_add)=}), {len(in_sql_not_in_new)=}")
+        # logger.error(f"<<red>> {lang_code}: {same=}, {len(to_add)=}), {len(in_sql_not_in_new)=}")
         # ---
         if to_add:
             new_all[lang_code] = to_add
