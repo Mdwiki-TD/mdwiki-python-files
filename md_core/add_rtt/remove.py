@@ -6,8 +6,10 @@ python3 core8/pwb.py add_rtt/remove
 """
 # ---
 
-from newapi import printe
 from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
+import logging
+
+logger = logging.getLogger(__name__)
 
 # add_param_named(text, title)
 

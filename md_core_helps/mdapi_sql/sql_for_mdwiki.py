@@ -22,10 +22,12 @@ from mdapi_sql import sql_for_mdwiki
 # get_all_from_table(table_name="titles_infos")
 # ---
 """
+import logging
 import time
 
 from mdapi_sql import sql_td_bot
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 

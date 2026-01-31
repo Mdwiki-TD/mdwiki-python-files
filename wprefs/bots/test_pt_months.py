@@ -1,5 +1,7 @@
-from newapi import printe
 from wprefs.wpref_text import fix_page
+import logging
+
+logger = logging.getLogger(__name__)
 
 text = """Boala se agravează în timp și este de obicei diagnosticată atunci când declinul cognitiv interferează cu funcționarea zilnică normală.<ref name="McKeithConsensus2017">{{Citat revistă
 |dată=July 2017

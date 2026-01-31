@@ -6,7 +6,9 @@ from after_translate.bots.users_pages import not_pages
 
 """
 
-from newapi import printe
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def not_pages(lista):

@@ -6,10 +6,12 @@ from mdcount.ref_words_bot import get_jsons, logaa, make_old_values, do_to_sql
 """
 
 import json
+import logging
 
 from mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import to_sql
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def do_to_sql(data_all, data_lead, ty="ref"):

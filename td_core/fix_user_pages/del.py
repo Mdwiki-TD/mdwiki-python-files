@@ -14,11 +14,13 @@ WHERE id IN (
 python3 core8/pwb.py fix_user_pages/del
 
 """
+import logging
 import sys
 
 import tqdm
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # id, new_target, new_user, new_qid, id, title, word, translate_type, cat, lang, user, target, date, pupdate, add_date, deleted, id, title, word, translate_type, cat, lang, user, target, date, pupdate, add_date, deleted
 query = """

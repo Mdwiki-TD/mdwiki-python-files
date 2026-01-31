@@ -5,11 +5,13 @@ from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_
 """
 
 import copy
+import logging
 import sys
 import time
 
 from apis import wikidataapi
-from newapi import printe, wd_sparql
+
+logger = logging.getLogger(__name__), wd_sparql
 
 get_query_result = wd_sparql.get_query_result
 

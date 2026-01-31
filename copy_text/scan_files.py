@@ -5,12 +5,14 @@ python3 core8/pwb.py copy_text/scan_files
 
 
 """
+import logging
 import os
 import sys
 from pathlib import Path
 
 import tqdm
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 dir1 = Path(__file__).parent
 Dir = "/data/project/medwiki/public_html/mdtexts"

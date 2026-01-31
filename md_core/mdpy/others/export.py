@@ -4,12 +4,14 @@
 # (C) Ibrahem Qasim, 2022
 #
 #
+import logging
 import sys
 
 # ---
 import requests
 from API import himoBOT3
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 

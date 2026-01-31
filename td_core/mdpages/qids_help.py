@@ -9,13 +9,15 @@ from mdpages import qids_help
 
 import copy
 import json
+import logging
 import os
 import re
 import sys
 
 from apis import cat_cach, mdwiki_api, wiki_api
 from mdpy.bots.check_title import valid_title
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"

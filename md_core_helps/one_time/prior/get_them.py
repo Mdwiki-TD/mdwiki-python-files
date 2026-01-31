@@ -1,5 +1,6 @@
 """ """
 
+import logging
 import re
 import sys
 import urllib.parse
@@ -7,7 +8,8 @@ from urllib.parse import urlencode, urlparse
 
 import requests
 import wikitextparser
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 """

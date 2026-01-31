@@ -6,17 +6,19 @@ python3 core8/pwb.py priorviews/sections_links
 
 """
 
+from newapi.mdwiki_page import md_MainPage
 import json
+
+# ---
+import logging
 import os
 from pathlib import Path
 
 import wikitextparser
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # ---
-from newapi.mdwiki_page import md_MainPage
 
 # ---
 Dir = Path(__file__).parent

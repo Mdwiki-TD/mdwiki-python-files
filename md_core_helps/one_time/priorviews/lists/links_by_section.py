@@ -7,17 +7,19 @@ python3 core8/pwb.py priorviews/lists/links_by_section
 
 """
 
+from priorviews.bots.sections_links import get_section_links
 import copy
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # ---
-from priorviews.bots.sections_links import get_section_links
 
 # ---
 Dir = Path(__file__).parent

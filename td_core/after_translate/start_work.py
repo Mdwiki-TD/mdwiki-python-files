@@ -7,13 +7,15 @@ from after_translate import start_work
 
 """
 
+import logging
 import re
 import sys
 
 from after_translate.bots.fixcat import cat_for_pages
 from after_translate.bots.users_pages import not_pages
 from mdpy.bots import py_tools
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 titles_not_0 = []

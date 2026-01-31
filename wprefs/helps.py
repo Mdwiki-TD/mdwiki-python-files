@@ -2,14 +2,12 @@
 from wprefs.helps import print_s, ec_de_code, exepts
 """
 
+import logging
 import sys
 import traceback
 import urllib.parse
 
-try:
-    from newapi import printe
-except ImportError:
-    printe = None
+logger = logging.getLogger(__name__)
 
 
 def print_s(s):

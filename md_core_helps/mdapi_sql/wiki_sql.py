@@ -9,6 +9,9 @@ from mdapi_sql import wiki_sql
 # result = wiki_sql.sql_new_title_ns(qua2, wiki="en", t1="title", t2="ns")
 # ---
 """
+# ---
+import logging
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -18,8 +21,7 @@ import time as tttime
 
 from mdapi_sql import sql_qu
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db

@@ -25,15 +25,16 @@ python3 core8/pwb.py prior/add_old new  -file:en_13.json
 python3 core8/pwb.py prior/add_old new  -file:en_14.json
 """
 
+from prior import get_them
 import json
+import logging
 import os
 import sys
 from pathlib import Path
 
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # ---
-from prior import get_them
 
 # ---
 Dir = str(Path(__file__).parents[0])

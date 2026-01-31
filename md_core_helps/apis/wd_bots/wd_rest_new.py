@@ -8,12 +8,14 @@ from apis.wd_bots import wd_rest_new
 # wd_rest_new.Get_one_qid_info(qid, only="labels")
 
 """
+from newapi.except_err import exception_err
 import json
+import logging
 import sys
 
 import requests
-from newapi import printe
-from newapi.except_err import exception_err
+
+logger = logging.getLogger(__name__)
 
 wd_cach = {}
 

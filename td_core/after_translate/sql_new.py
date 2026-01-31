@@ -12,6 +12,7 @@ python3 core8/pwb.py after_translate/sql_new -lang:ur
 
 """
 
+import logging
 import sys
 import time
 
@@ -22,7 +23,8 @@ from after_translate.bots.get_pages import get_pages_from_db
 
 # ---
 from mdapi_sql import wiki_sql
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 skip_langs = ["zh-yue", "ceb"]

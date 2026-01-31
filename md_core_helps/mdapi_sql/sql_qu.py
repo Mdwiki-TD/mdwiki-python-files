@@ -7,6 +7,10 @@ from mdapi_sql import sql_qu
 can_use_sql_db = sql_qu.can_use_sql_db
 results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[], return_dict=False)
 """
+from pywikibot import config
+from newapi.except_err import exception_err
+import logging
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -15,9 +19,8 @@ import os
 
 import pymysql
 import pymysql.cursors
-from newapi import printe
-from newapi.except_err import exception_err
-from pywikibot import config
+
+logger = logging.getLogger(__name__)
 
 db_username = config.db_username
 db_password = config.db_password

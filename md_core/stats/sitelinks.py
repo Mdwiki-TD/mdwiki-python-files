@@ -5,7 +5,11 @@ tfj run stats1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 
+from stats.qids import qids_list
 import json
+
+# ---
+import logging
 
 # ---
 import os
@@ -15,9 +19,7 @@ from pathlib import Path
 
 from apis import wikidataapi
 
-# ---
-from newapi import printe
-from stats.qids import qids_list
+logger = logging.getLogger(__name__)
 
 # ---
 Dir = Path(__file__).parent

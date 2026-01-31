@@ -6,6 +6,7 @@ python3 core8/pwb.py fix_use/bot path:I:/mdwiki/mdwiki/public_html/Translation_D
 
 import os
 import re
+import logging
 import sys
 from pathlib import Path
 
@@ -15,8 +16,7 @@ if Dir := Path("I:/core/bots/"):
 from fix_use.mtab import make_find_rep
 from fix_use.write_bot import write  # write(oldtext, text, filepath)
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 path = ""
 # ---

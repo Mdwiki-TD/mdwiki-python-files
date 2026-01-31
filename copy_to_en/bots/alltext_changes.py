@@ -6,11 +6,13 @@ from copy_to_en import alltext_changes
 
 """
 
+import logging
 import re
 
 import wikitextparser as wtp
 from copy_to_en.bots import text_changes
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def change_last_Section(section):

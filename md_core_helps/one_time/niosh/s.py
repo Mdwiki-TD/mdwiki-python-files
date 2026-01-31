@@ -4,12 +4,14 @@ python3 core8/pwb.py niosh/s
 """
 
 import json
+
+# ---
+import logging
 import os
 import re
 from pathlib import Path
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # ---
 Dir = Path(__file__).parent

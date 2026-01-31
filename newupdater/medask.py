@@ -13,18 +13,18 @@ python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Ghuron
 import sys
 import urllib
 import urllib.parse
+import logging
 from pathlib import Path
 
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
+from newapi.mdwiki_page import NEW_API
 import mdapi
 from apis import mdwiki_api
 from new_updater import work_on_text
 
-# ---
-from newapi import printe
-from newapi.mdwiki_page import NEW_API
+logger = logging.getLogger(__name__)
 
 # ---
 api_new = NEW_API("www", family="mdwiki")

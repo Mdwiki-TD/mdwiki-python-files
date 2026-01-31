@@ -13,7 +13,9 @@ python3 core8/pwb.py mdpyget/getas newpages nowork
 python3 core8/pwb.py mdpyget/getas video
 
 """
+from newapi.wiki_page import NEW_API
 import json
+import logging
 import os
 import re
 import sys
@@ -22,8 +24,8 @@ from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats
-from newapi import printe
-from newapi.wiki_page import NEW_API
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("en", family="wikipedia")
 

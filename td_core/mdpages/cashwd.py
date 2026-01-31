@@ -5,7 +5,12 @@ python3 core8/pwb.py mdpages/cashwd
 
 """
 
+from newapi.mdwiki_page import CatDepth
+from newapi.except_err import exception_err
 import json
+
+# ---
+import logging
 import os
 from datetime import datetime
 
@@ -14,10 +19,7 @@ from mdapi_sql import sql_for_mdwiki
 from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
 from mdpy.bots.check_title import valid_title
 
-# ---
-from newapi import printe
-from newapi.except_err import exception_err
-from newapi.mdwiki_page import CatDepth
+logger = logging.getLogger(__name__)
 
 # result_table = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
 

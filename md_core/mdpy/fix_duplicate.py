@@ -6,11 +6,13 @@ Category:CS1 errors: redundant parameter
 python3 core8/pwb.py mdpy/fix_duplicate ask
 
 """
+import logging
 import sys
 
 # ---
 from apis import mdwiki_api
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 offset = {1: 0}

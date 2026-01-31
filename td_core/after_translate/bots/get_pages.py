@@ -2,11 +2,14 @@
 """
 from after_translate.bots.get_pages import get_pages_from_db
 """
+import logging
+
 from mdapi_sql import sql_for_mdwiki
 
 # ---
 from mdpy.bots import py_tools
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 targets_done_by_mdtitle = {}

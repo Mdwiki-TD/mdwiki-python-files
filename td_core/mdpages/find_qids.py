@@ -10,14 +10,16 @@ Usage:
 python3 core8/pwb.py mdpages/find_qids
 
 """
+from unlinked_wb.bot import work_un
+import logging
 import sys
 
 from apis import wiki_api
 from mdapi_sql import sql_for_mdwiki
 from mdpages.create_qids import create_qids
 from mdpy.bots.check_title import valid_title
-from newapi import printe
-from unlinked_wb.bot import work_un
+
+logger = logging.getLogger(__name__)
 
 qids = sql_for_mdwiki.get_all_qids()
 # ---

@@ -5,17 +5,19 @@ python3 core8/pwb.py priorviews/find/find_word new
 
 """
 
+from priorviews.lists.links_by_section import links_by_lang
+from priorviews.bots import count_words, helps
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # ---
-from priorviews.bots import count_words, helps
-from priorviews.lists.links_by_section import links_by_lang
 
 # ---
 TEST = False

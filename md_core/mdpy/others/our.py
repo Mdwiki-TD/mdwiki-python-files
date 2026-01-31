@@ -5,13 +5,15 @@ python3 core8/pwb.py mdpy/our
 
 """
 import json
+import logging
 import os
 import sys
 from pathlib import Path
 
 import requests
 from apis import mdwiki_api, txtlib2
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 Dir = str(Path(__file__).parents[0])
 

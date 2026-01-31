@@ -13,6 +13,11 @@ python3 core8/pwb.py wprefs/bot -lang:ro ask
 python3 core8/pwb.py wprefs/bot ask
 
 """
+from wprefs.wpref_text import fix_page
+from wprefs.files import append_reffixed_file, reffixed_list, setting
+from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
+import logging
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -20,12 +25,10 @@ python3 core8/pwb.py wprefs/bot ask
 import sys
 
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
-from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
-from wprefs.files import append_reffixed_file, reffixed_list, setting
-from wprefs.wpref_text import fix_page
 
 skip_langs = ["en"]
 move_dot = {1: False}

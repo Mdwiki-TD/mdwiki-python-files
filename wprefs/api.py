@@ -4,24 +4,20 @@
 from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 
 """
+import logging
 import sys
 import urllib
 import urllib.parse
 from pathlib import Path
-
 import requests
-
-# ---
-try:
-    from newapi import printe
-except ImportError:
-    printe = None
 
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
-from wprefs import user_account_enwiki
 from wprefs.helps import print_s
+from wprefs import user_account_enwiki
+
+logger = logging.getLogger(__name__)
 
 # my_username = user_account_enwiki.my_username
 # lgpass_enwiki = user_account_enwiki.lgpass_enwiki

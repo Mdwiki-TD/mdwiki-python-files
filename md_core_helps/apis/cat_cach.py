@@ -8,7 +8,9 @@ from apis/cat_cach import Cat_Depth
 all_pages = cat_cach.from_cache()
 
 """
+from newapi.mdwiki_page import CatDepth
 import json
+import logging
 import os
 import stat
 import sys
@@ -18,8 +20,8 @@ from pathlib import Path
 
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from newapi import printe
-from newapi.mdwiki_page import CatDepth
+
+logger = logging.getLogger(__name__)
 
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 

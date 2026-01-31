@@ -2,6 +2,7 @@
 from apis.sup.su_login import Get_MwClient_Site
 """
 
+import logging
 import os
 import sys
 from http.cookiejar import MozillaCookieJar
@@ -10,7 +11,8 @@ import mwclient
 import requests
 from apis.sup.cookies_bot import get_file_name
 from mwclient.client import Site
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def default_user_agent():

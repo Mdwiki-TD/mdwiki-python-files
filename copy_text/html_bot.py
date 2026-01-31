@@ -4,8 +4,11 @@
 python3 core8/pwb.py copy_text/html_bot
 
 """
+import logging
+
 from bs4 import BeautifulSoup
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def fix_html(html):

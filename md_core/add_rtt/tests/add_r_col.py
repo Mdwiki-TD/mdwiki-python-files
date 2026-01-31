@@ -4,8 +4,11 @@
 python3 core8/pwb.py add_rtt/tests/add_r_col
 
 """
+import logging
+
 from add_rtt.r_column_bots.pup_table import add_to_tables
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 text = """
 {| class="wikitable sortable"

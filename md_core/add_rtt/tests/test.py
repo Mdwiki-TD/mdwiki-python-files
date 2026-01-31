@@ -4,8 +4,11 @@
 python3 core8/pwb.py add_rtt/tests/test
 
 """
+import logging
+
 import wikitextparser as wtp
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # from newapi.mdwiki_page import NEW_API
 # api_new = NEW_API("www", family="mdwiki")

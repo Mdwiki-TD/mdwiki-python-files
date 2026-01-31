@@ -7,6 +7,7 @@ tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 
 """
 import json
+import logging
 import random
 import sys
 from multiprocessing import Pool
@@ -16,8 +17,8 @@ import requests
 from apis import cat_cach
 from copy_text.html_bot import fix_html
 from copy_text.text_bot import get_text
-from newapi import printe
 
+logger = logging.getLogger(__name__)
 dir1 = Path(__file__).parent
 Dir = "/data/project/medwiki/public_html/mdtexts"
 

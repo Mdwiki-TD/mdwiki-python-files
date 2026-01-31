@@ -10,11 +10,14 @@ from add_rtt.named_param import add_param_named
 tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/named_param"
 
 """
+from newupdater import expend_infoboxs_and_fix
+from newapi.mdwiki_page import NEW_API, md_MainPage
+import logging
+
 # ---
 import wikitextparser as wtp
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage
-from newupdater import expend_infoboxs_and_fix
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()

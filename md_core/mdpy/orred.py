@@ -8,9 +8,12 @@
 python3 core8/pwb.py mdpy/orred
 
 """
-from mdapi_sql import sql_for_mdwiki
-from newapi import printe
 from newapi.wiki_page import NEW_API, MainPage
+import logging
+
+from mdapi_sql import sql_for_mdwiki
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("or", family="wikipedia")
 

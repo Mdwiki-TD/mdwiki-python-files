@@ -6,11 +6,13 @@ from copy_to_en import text_changes# text = text_changes.work(text)
 
 """
 
+import logging
 import re
 
 import wikitextparser as wtp
 from copy_to_en.bots.fix_refs_names import fix_ref_names
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 temps_to_delete = [
     "short description",

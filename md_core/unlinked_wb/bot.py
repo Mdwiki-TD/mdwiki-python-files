@@ -8,14 +8,17 @@ Usage:
     python3 core8/pwb.py unlinked_wb/bot
 
 """
+from unlinked_wb.hlps import get_pages_in_use, get_qids
+from newapi.mdwiki_page import NEW_API, md_MainPage
+import logging
+
 # ---
 import re
 import sys
 
 from mdpy.bots.check_title import valid_title
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage
-from unlinked_wb.hlps import get_pages_in_use, get_qids
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()

@@ -4,7 +4,9 @@ from p11143_bot.filter_helps import remove_in_db_elements
 
 """
 
-from newapi import printe
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def remove_in_db_elements(qids_x, list_1, list_2):

@@ -2,8 +2,10 @@
 """
 from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage, users_infos
 """
-from newapi import printe
 from newapi.wiki_page import NEW_API, MainPage
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_new_target_log(lang, target):

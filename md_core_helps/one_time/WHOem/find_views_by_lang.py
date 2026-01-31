@@ -5,14 +5,16 @@ python3 core8/pwb.py WHOem/find_views_by_lang
 """
 
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
 from apis.mw_views import PageviewsClient
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 view_bot = PageviewsClient()
 

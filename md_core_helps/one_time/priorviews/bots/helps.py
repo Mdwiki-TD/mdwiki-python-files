@@ -11,14 +11,16 @@ from priorviews.bots import helps
 
 import datetime
 import json
+
+# ---
+import logging
 import re
 import sys
 from datetime import timedelta
 from pathlib import Path
 from urllib.parse import urlencode
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 Dir = Path(__file__).parent
 

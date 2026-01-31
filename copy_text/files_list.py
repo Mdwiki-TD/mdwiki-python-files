@@ -6,12 +6,14 @@ python3 core8/pwb.py copy_text/files_list
 
 """
 import json
+import logging
 import sys
 from pathlib import Path
 
 from apis.cat_cach import Cat_Depth
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 dir1 = Path(__file__).parent
 Dir = "/data/project/medwiki/public_html/mdtexts"

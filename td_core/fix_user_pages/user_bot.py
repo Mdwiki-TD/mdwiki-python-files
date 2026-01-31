@@ -2,9 +2,12 @@
 """
 from fix_user_pages.user_bot import get_new_user
 """
+import logging
+
 from db_work.check_titles_helps import WikiPage, users_infos
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 db_users = sql_for_mdwiki.get_db_users()
 

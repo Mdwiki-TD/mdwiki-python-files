@@ -5,12 +5,15 @@ from add_rtt.r_column_bots.pup_table import add_to_tables
 
 
 """
+import logging
+
 # ---
 # import re
 import tqdm
 import wikitextparser as wtp
 from add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 R_NEW_ROW = '\n| style="text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05" | R'
 

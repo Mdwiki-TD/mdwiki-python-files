@@ -14,6 +14,7 @@ python3 core8/pwb.py mdpyget/enwiki_views newpages nowork
 
 """
 import json
+import logging
 import os
 import re
 import sys
@@ -23,7 +24,8 @@ from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 view_bot = PageviewsClient()
 

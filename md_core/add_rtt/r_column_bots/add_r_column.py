@@ -5,10 +5,13 @@ from add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
 
 
 """
+from wikitextparser._cell import Cell
+import logging
+
 # ---
 import wikitextparser as wtp
-from newapi import printe
-from wikitextparser._cell import Cell
+
+logger = logging.getLogger(__name__)
 
 
 def header_has_R(text, table=False):

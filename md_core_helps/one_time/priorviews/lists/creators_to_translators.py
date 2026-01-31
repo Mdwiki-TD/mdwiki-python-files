@@ -6,19 +6,21 @@ from priorviews.lists.creators_to_translators import creators_as_translators
 # ---
 """
 
+from priorviews.lists.links_by_section import links_by_lang
+from priorviews.lists import translators
+from priorviews.lists import creators  # creators.Creators_by_lang_title
+from priorviews.bots import helps
 import datetime
 import json
+
+# ---
+import logging
 import os
 from pathlib import Path
 
-# ---
-from newapi import printe
-from priorviews.bots import helps
-from priorviews.lists import creators  # creators.Creators_by_lang_title
-from priorviews.lists import translators
+logger = logging.getLogger(__name__)
 
 # ---
-from priorviews.lists.links_by_section import links_by_lang
 
 # ---
 Dir = Path(__file__).parent

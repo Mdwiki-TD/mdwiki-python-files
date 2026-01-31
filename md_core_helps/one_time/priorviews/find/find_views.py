@@ -4,8 +4,13 @@ python3 core8/pwb.py priorviews/find/find_views test
 
 """
 
+from priorviews.lists.links_by_section import sects_links_langlinks
+from priorviews.bots import helps
 import datetime
 import json
+
+# ---
+import logging
 import os
 import sys
 from datetime import timedelta
@@ -13,10 +18,7 @@ from pathlib import Path
 
 from apis.mw_views import PageviewsClient
 
-# ---
-from newapi import printe
-from priorviews.bots import helps
-from priorviews.lists.links_by_section import sects_links_langlinks
+logger = logging.getLogger(__name__)
 
 # ---
 TEST = False

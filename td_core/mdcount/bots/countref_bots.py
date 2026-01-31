@@ -5,8 +5,11 @@ from mdcount.bots.countref_bots import count_ref_from_text
 
 """
 
+import logging
+
 from mdcount.bots.regex_scanner import RegexScanner
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def get_refs_new(text):

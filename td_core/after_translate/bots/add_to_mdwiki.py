@@ -4,6 +4,9 @@
 from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 
 """
+# ---
+from pymysql.converters import escape_string
+import logging
 import sys
 import time
 
@@ -11,9 +14,7 @@ from after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
 from after_translate.bots.fixcat import cat_for_pages
 from mdapi_sql import sql_for_mdwiki
 
-# ---
-from newapi import printe
-from pymysql.converters import escape_string
+logger = logging.getLogger(__name__)
 
 
 def add_new_row(mdtitle, lang, user, pupdate, target, word, cat):

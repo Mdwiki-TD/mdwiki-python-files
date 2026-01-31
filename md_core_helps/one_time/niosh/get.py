@@ -5,14 +5,16 @@ python3 core8/pwb.py niosh/get write ask
 
 """
 
+from newapi.mdwiki_page import md_MainPage
 import codecs
 import json
+
+# ---
+import logging
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
-from newapi.mdwiki_page import md_MainPage
+logger = logging.getLogger(__name__)
 
 # ---
 Dir = Path(__file__).parent

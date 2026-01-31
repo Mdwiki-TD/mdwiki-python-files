@@ -8,6 +8,9 @@ python3 core8/pwb.py db_work/check_titles -lang:ur
 python3 core8/pwb.py db_work/check_titles test
 
 """
+# ---
+from newapi.mdwiki_page import md_MainPage
+import logging
 import sys
 import time
 
@@ -15,9 +18,7 @@ import tqdm
 from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
 from mdapi_sql import sql_for_mdwiki
 
-# ---
-from newapi import printe
-from newapi.mdwiki_page import md_MainPage
+logger = logging.getLogger(__name__)
 
 skip_by_lang = {
     "ar": ["الأنسولين"],

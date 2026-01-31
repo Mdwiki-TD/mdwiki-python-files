@@ -2,8 +2,10 @@
 """
 # revid    = mdwiki_api.GetRevid(title)
 """
-from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage
+import logging
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()

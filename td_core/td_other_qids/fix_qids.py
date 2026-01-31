@@ -6,13 +6,15 @@ python3 core8/pwb.py td_other_qids/fix_qids redirects
 
 """
 
+from unlinked_wb.bot import work_un
+import logging
 import sys
 
 from apis import cat_cach, wikidataapi
 from mdapi_sql import sql_for_mdwiki, sql_qids_others
 from mdpy.bots.check_title import valid_title
-from newapi import printe
-from unlinked_wb.bot import work_un
+
+logger = logging.getLogger(__name__)
 
 all_pages = cat_cach.from_cache()
 all_pages = [x for x in all_pages[:] if valid_title(x)]

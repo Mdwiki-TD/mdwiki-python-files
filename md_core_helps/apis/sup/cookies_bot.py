@@ -4,11 +4,12 @@ from apis.sup.cookies_bot import get_cookies, get_file_name
 # cookies = get_cookies(lang, family, username)
 """
 
+import logging
 import os
 import stat
 from pathlib import Path
 
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 statgroup = stat.S_IRWXU | stat.S_IRWXG
 tool = os.getenv("HOME")

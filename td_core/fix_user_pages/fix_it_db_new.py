@@ -4,12 +4,13 @@
 from fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 
 """
+# ---
+import logging
 import sys
 
 from mdapi_sql import sql_for_mdwiki
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 
 def work_in_new_tabs_to_db_new(new_tabs_to_db):

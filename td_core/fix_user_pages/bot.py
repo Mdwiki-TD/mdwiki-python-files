@@ -11,6 +11,7 @@ python3 core8/pwb.py fix_user_pages/bot addall
 
 """
 import copy
+import logging
 import sys
 
 import tqdm
@@ -20,7 +21,8 @@ from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_targ
 from fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 from fix_user_pages.user_bot import get_new_user
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 skip_by_lang = {
     "ar": ["الأنسولين"],

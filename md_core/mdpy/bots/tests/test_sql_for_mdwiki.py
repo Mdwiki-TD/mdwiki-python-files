@@ -3,9 +3,11 @@ python3 core8/pwb.py mdpy/bots/tests/test_sql_for_mdwiki
 """
 
 import json
+import logging
 
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def tests():

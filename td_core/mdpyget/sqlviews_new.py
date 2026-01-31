@@ -7,13 +7,15 @@ python3 core8/pwb.py mdpyget/sqlviews_new -lang:ga
 """
 
 import copy
+import logging
 import re
 import sys
 
 from apis.mw_views import PageviewsClient
 from mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import insert_dict, update_table_2
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 view_bot = PageviewsClient()
 # new_data = view_bot.article_views_new(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')

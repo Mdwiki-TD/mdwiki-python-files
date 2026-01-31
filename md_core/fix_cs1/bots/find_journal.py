@@ -9,12 +9,14 @@ Verifies that it is StatPearls and if so adds "|journal=StatPearls" to the templ
 
 """
 
-from fix_cs1.bots.pmid import pmid_journal
-
 # import re
 # import sys
 # import wikitextparser as wtp
-from newapi import printe
+import logging
+
+from fix_cs1.bots.pmid import pmid_journal
+
+logger = logging.getLogger(__name__)
 
 
 def get_param(temp, arg):

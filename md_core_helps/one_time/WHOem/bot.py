@@ -4,15 +4,16 @@ python3 core8/pwb.py WHOem/lists/lang_links new
 #---
 """
 
+from newapi.wiki_page import MainPage, change_codes
+from newapi.mdwiki_page import CatDepth
 import json
+import logging
 import sys
 from pathlib import Path
 
-from newapi import printe
-from newapi.mdwiki_page import CatDepth
+logger = logging.getLogger(__name__)
 
 # ---
-from newapi.wiki_page import MainPage, change_codes
 
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
 # ---

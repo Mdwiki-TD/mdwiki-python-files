@@ -3,14 +3,13 @@
 python3 I:/mdwiki/pybot/newupdater/med.py -page:Aspirin from_toolforge
 """
 import os
-import re
 import sys
 
 if home_dir := os.getenv("HOME") or "I:/mdwiki/mdwiki":
     sys.path.append(home_dir + "/pybot")
     sys.path.append(home_dir + "/openssl/bin")
 
-from mdapi import GetPageText, login, page_put, print_s
+from mdapi import GetPageText, page_put, print_s
 from new_updater import ec_de_code, work_on_text
 
 public_html_dir = home_dir + "/public_html"

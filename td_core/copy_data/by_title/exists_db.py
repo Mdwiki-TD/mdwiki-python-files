@@ -7,6 +7,7 @@ python3 core8/pwb.py copy_data/by_title/exists_db
 """
 
 import json
+import logging
 import os
 import sys
 
@@ -15,7 +16,8 @@ import tqdm
 # ---
 from mdapi_sql import sql_for_mdwiki_new
 from mdpyget.bots.to_sql import insert_dict
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"

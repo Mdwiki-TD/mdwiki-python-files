@@ -9,12 +9,14 @@ sql_qids_others
 
 """
 
+import logging
 import sys
 
 from apis import cat_cach
 from mdapi_sql import sql_for_mdwiki, sql_qids_others
 from mdpy.bots.check_title import valid_title
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def remove_from_others(qids_othrs, qids_td):
