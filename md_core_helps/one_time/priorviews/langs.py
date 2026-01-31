@@ -12,7 +12,7 @@ import logging
 import sys
 from pathlib import Path
 
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 from priorviews.bots import helps, w_all
 from priorviews.lists import creators, translators, views, words
 from priorviews.lists.creators_to_translators import creators_as_translators

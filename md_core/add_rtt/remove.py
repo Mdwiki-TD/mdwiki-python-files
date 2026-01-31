@@ -8,7 +8,7 @@ python3 core8/pwb.py add_rtt/remove
 
 import logging
 
-from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, CatDepth, md_MainPage
 
 logger = logging.getLogger(__name__)
 

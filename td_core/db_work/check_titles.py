@@ -17,7 +17,7 @@ from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_targ
 from mdapi_sql import sql_for_mdwiki
 
 # ---
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
 

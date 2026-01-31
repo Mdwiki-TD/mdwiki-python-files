@@ -9,7 +9,7 @@ tfj run copyen --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 from apis import cat_cach, mdwiki_api
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
-from newapi.wiki_page import MainPage
+from mdwiki_api.wiki_page import MainPage
 
 
 def main():

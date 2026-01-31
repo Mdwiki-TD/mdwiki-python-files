@@ -7,7 +7,7 @@ python3 core8/pwb.py priorviews/bot test
 import sys
 from pathlib import Path
 
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 from priorviews import by_lang
 from priorviews.bots import sections_text
 from priorviews.lists import views

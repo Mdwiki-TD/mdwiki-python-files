@@ -16,7 +16,7 @@ import logging
 import sys
 
 from mdpy.bots import py_tools
-from newapi.mdwiki_page import NEW_API, MainPage
+from mdwiki_api.mdwiki_page import NEW_API, MainPage
 
 logger = logging.getLogger(__name__)
 

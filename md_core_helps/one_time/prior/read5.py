@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 import wikitextparser
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 from prior import text_bot
 
 logger = logging.getLogger(__name__)

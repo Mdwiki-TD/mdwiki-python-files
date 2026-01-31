@@ -6,7 +6,7 @@ import sys
 from apis import mdwiki_api
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
 

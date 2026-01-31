@@ -9,8 +9,8 @@ import logging
 import sys
 from pathlib import Path
 
-from newapi.mdwiki_page import CatDepth
-from newapi.wiki_page import MainPage, change_codes
+from mdwiki_api.mdwiki_page import CatDepth
+from mdwiki_api.wiki_page import MainPage, change_codes
 
 logger = logging.getLogger(__name__)
 

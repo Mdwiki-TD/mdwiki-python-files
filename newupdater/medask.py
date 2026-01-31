@@ -22,7 +22,7 @@ if Dir := Path(__file__).parent.parent:
 import mdapi
 from apis import mdwiki_api
 from new_updater import work_on_text
-from newapi.mdwiki_page import NEW_API
+from mdwiki_api.mdwiki_page import NEW_API
 
 logger = logging.getLogger(__name__)
 

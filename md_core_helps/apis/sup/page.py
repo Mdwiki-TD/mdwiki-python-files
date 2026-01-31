@@ -12,9 +12,9 @@ logging.basicConfig(level=logging.WARNING)
 
 
 if __name__ == "__main__":
-    from apis import user_account_new
+    from apis import user_accounts
 
-    username = user_account_new.bot_username  # user_account_new.my_username
-    password = user_account_new.bot_password  # user_account_new.mdwiki_pass
+    username = user_accounts.bot_username  # user_accounts.my_username
+    password = user_accounts.bot_password  # user_accounts.mdwiki_pass
 
     md_site = Get_MwClient_Site("www", "wikidata", username, password)

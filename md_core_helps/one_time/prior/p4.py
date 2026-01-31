@@ -17,8 +17,8 @@ import sys
 # ---
 from pathlib import Path
 
-from newapi.mdwiki_page import md_MainPage
-from newapi.wiki_page import MainPage, change_codes
+from mdwiki_api.mdwiki_page import md_MainPage
+from mdwiki_api.wiki_page import MainPage, change_codes
 from prior import get_them
 
 logger = logging.getLogger(__name__)

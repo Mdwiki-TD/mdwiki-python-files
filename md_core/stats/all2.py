@@ -12,7 +12,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 from stats.editors import validate_ip
 
 logger = logging.getLogger(__name__)

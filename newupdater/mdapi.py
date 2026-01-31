@@ -5,11 +5,11 @@ import sys
 import requests
 
 # ---
-import user_account_new
+import user_accounts
 
-username = user_account_new.my_username
-password = user_account_new.mdwiki_pass
-user_agent = user_account_new.user_agent
+username = user_accounts.my_username
+password = user_accounts.mdwiki_pass
+user_agent = user_accounts.user_agent
 
 session = {}
 session[1] = requests.Session()

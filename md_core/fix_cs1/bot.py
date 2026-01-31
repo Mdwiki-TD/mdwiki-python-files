@@ -14,7 +14,7 @@ import logging
 from fix_cs1.fix_p import fix_it
 
 # import wikitextparser as wtp
-from newapi.mdwiki_page import CatDepth, md_MainPage
+from mdwiki_api.mdwiki_page import CatDepth, md_MainPage
 
 logger = logging.getLogger(__name__)
 

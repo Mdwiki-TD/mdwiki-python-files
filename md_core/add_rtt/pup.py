@@ -20,7 +20,7 @@ from pathlib import Path
 
 import wikitextparser as wtp
 from add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
-from newapi.mdwiki_page import NEW_API, md_MainPage  # , CatDepth
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage  # , CatDepth
 
 logger = logging.getLogger(__name__)
 

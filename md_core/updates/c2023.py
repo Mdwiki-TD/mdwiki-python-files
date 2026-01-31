@@ -14,7 +14,7 @@ from apis import mdwiki_api
 
 # import json
 # import wikitextparser as wtp
-from newapi.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 
 # ---
 Dir = Path(__file__).parent

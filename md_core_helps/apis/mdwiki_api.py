@@ -4,7 +4,7 @@
 """
 import logging
 
-from newapi.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 
 logger = logging.getLogger(__name__)
 

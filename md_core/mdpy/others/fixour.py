@@ -8,7 +8,7 @@ import os
 import re
 
 # ---
-from newapi.mdwiki_page import NEW_API, MainPage
+from mdwiki_api.mdwiki_page import NEW_API, MainPage
 
 # ---
 numbers = {1: 20000, "done": 0}

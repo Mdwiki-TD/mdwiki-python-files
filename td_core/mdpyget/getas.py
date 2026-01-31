@@ -23,7 +23,7 @@ from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats
-from newapi.wiki_page import NEW_API
+from mdwiki_api.wiki_page import NEW_API
 
 logger = logging.getLogger(__name__)
 

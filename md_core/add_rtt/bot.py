@@ -17,7 +17,7 @@ import sys
 
 import wikitextparser as wtp
 from add_rtt.named_param import add_param_named
-from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, CatDepth, md_MainPage
 
 logger = logging.getLogger(__name__)
 

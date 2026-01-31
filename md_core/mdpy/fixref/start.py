@@ -13,7 +13,7 @@ from pathlib import Path
 
 from apis import mdwiki_api
 from mdpy.fixref.fixref_text_new import fix_ref_template
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
 

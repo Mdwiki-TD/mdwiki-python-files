@@ -11,7 +11,7 @@ import sys
 
 import tqdm
 from mdapi_sql import sql_for_mdwiki
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
 from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)

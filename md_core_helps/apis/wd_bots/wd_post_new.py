@@ -9,18 +9,18 @@ from apis.wd_bots.wd_post_new import post_it
 import logging
 import sys
 
-from apis import user_account_new
+from apis import user_accounts
 from apis.sup.su_login import Get_MwClient_Site
 
 logger = logging.getLogger(__name__)
 
-user_agent = user_account_new.user_agent
-username = user_account_new.bot_username  # user_account_new.my_username
-password = user_account_new.bot_password  # user_account_new.mdwiki_pass
+user_agent = user_accounts.user_agent
+username = user_accounts.bot_username  # user_accounts.my_username
+password = user_accounts.bot_password  # user_accounts.mdwiki_pass
 
 if "workhimo" in sys.argv:
-    username = user_account_new.my_username
-    password = user_account_new.lgpass_enwiki
+    username = user_accounts.my_username
+    password = user_accounts.lgpass_enwiki
 
 SS = {"csrftoken": ""}
 

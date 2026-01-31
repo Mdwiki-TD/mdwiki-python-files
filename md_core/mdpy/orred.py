@@ -11,7 +11,7 @@ python3 core8/pwb.py mdpy/orred
 import logging
 
 from mdapi_sql import sql_for_mdwiki
-from newapi.wiki_page import NEW_API, MainPage
+from mdwiki_api.wiki_page import NEW_API, MainPage
 
 logger = logging.getLogger(__name__)
 

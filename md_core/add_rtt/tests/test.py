@@ -10,7 +10,7 @@ import wikitextparser as wtp
 
 logger = logging.getLogger(__name__)
 
-# from newapi.mdwiki_page import NEW_API
+# from mdwiki_api.mdwiki_page import NEW_API
 # api_new = NEW_API("www", family="mdwiki")
 
 text = """

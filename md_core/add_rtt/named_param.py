@@ -14,7 +14,7 @@ import logging
 
 # ---
 import wikitextparser as wtp
-from newapi.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 from newupdater import expend_infoboxs_and_fix
 
 logger = logging.getLogger(__name__)
