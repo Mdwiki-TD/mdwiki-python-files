@@ -6,13 +6,13 @@ python3 core8/pwb.py fix_use/add path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 """
 
 import os
-
-# import json
+from pathlib import Path
 import sys
 
 # import re
 
-sys.path.append("I:/core/bots/")
+if Dir := Path("I:/core/bots/"):
+    sys.path.append(str(Dir))
 from fix_use.bot import scan_root
 from fix_use.mtab import tab
 from fix_use.write_bot import write  # write(oldtext, text, filepath)

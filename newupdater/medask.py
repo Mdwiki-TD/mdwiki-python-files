@@ -15,7 +15,10 @@ import urllib
 import urllib.parse
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent))
+
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
+
 import mdapi
 from apis import mdwiki_api
 from new_updater import work_on_text

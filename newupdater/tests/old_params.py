@@ -13,7 +13,10 @@ from pathlib import Path
 
 import pywikibot
 
-sys.path.append(str(Path(__file__).parent.parent))
+
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
+
 
 from new_updater import rename_params
 

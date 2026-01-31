@@ -4,12 +4,15 @@ python3 core8/pwb.py fix_use/bot path:I:/mdwiki/mdwiki/public_html/Translation_D
 
 """
 
-import json
+from pathlib import Path
 import os
 import re
 import sys
 
-sys.path.append("I:/core/bots/")
+
+if Dir := Path("I:/core/bots/"):
+    sys.path.append(str(Dir))
+
 from fix_use.mtab import make_find_rep
 from fix_use.write_bot import write  # write(oldtext, text, filepath)
 

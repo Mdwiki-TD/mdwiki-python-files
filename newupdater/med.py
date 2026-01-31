@@ -6,16 +6,14 @@ import os
 import re
 import sys
 
-home_dir = os.getenv("HOME") or "I:/mdwiki/mdwiki"
+if home_dir := os.getenv("HOME") or "I:/mdwiki/mdwiki":
+    sys.path.append(home_dir + "/pybot")
+    sys.path.append(home_dir + "/openssl/bin")
 
-sys.path.append(home_dir + "/pybot")
-sys.path.append(home_dir + "/openssl/bin")
-# --
-public_html_dir = home_dir + "/public_html"
 from mdapi import GetPageText, login, page_put, print_s
-
-# --
 from new_updater import ec_de_code, work_on_text
+
+public_html_dir = home_dir + "/public_html"
 
 
 def get_new_text(title):

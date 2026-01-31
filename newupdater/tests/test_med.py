@@ -12,8 +12,10 @@ os.environ["DEBUGNEW"] = "true"
 
 from pathlib import Path
 
-Dir = Path(__file__).parent.parent
-sys.path.append(str(Dir))
+
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
+
 
 title = sys.argv[1] if len(sys.argv) > 1 else "Retinol"
 # ---

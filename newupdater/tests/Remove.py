@@ -10,7 +10,10 @@ from pathlib import Path
 
 import pywikibot
 
-sys.path.append(str(Path(__file__).parent.parent))
+
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
+
 os.environ["DEBUGNEW"] = "true"
 
 from new_updater.bots.Remove import portal_remove, remove_cite_web
