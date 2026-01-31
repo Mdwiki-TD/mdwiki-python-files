@@ -1,6 +1,7 @@
 """
 from .bots.expend_new import expend_infoboxs
 """
+
 import wikitextparser as wtp
 from ..helps import echo_debug
 from ..lists.expend_lists import main_temps_list
@@ -8,7 +9,7 @@ from ..lists.expend_lists import main_temps_list
 
 def expend_new(template, min_len=1):
     # ---
-    echo_debug('expend_new')
+    echo_debug("expend_new")
     # ---
     if not template:
         return template
@@ -34,18 +35,18 @@ def expend_new(template, min_len=1):
 
 def expend_infoboxs(new_text):
     # ---
-    echo_debug('expend_infoboxs')
+    echo_debug("expend_infoboxs")
     # ---
     parsed = wtp.parse(new_text)
     for temp in parsed.templates:
         temp_str = temp.string
 
-        if not temp_str or temp_str.strip() == '':
+        if not temp_str or temp_str.strip() == "":
             continue
 
         name = str(temp.normal_name()).strip().lower()
 
-        isvalid = name.startswith('infobox') or name.endswith('infobox') or name.endswith('box')
+        isvalid = name.startswith("infobox") or name.endswith("infobox") or name.endswith("box")
 
         if name not in main_temps_list and not isvalid:
             continue

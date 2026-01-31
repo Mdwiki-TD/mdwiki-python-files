@@ -43,6 +43,7 @@ def get_others_qids():
     sq = select_md_sql("select DISTINCT title, qid from qids_others;", return_dict=True)
     return {ta["title"]: ta["qid"] for ta in sq}
 
+
 def add_qid(title, qid):
     printe.output(f"<<yellow>> add_qid()  title:{title}, qid:{qid}")
     # ---
@@ -109,6 +110,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     printe.output(f"<<yellow>> qids_set_title_where_title_qid() {new_title=}, {qid=}, {old_title=}")
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
+
 
 def add_titles_to_qids(tab0, add_empty_qid=False):
     # ---

@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 
 # --- Connect to Commons ---
-site = mwclient.Site('commons.wikimedia.org')
+site = mwclient.Site("commons.wikimedia.org")
 
 
 def save_page(page_name, content):

@@ -24,8 +24,9 @@ from apis import mdwiki_api
 from new_updater import work_on_text
 
 import mdapi
+
 # ---
-api_new = NEW_API('www', family='mdwiki')
+api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
 
 
@@ -60,7 +61,7 @@ def work_on_title(title, returntext=False):
     # ---
     ask = input(f"<<yellow>> save title:{title}? ")
     # ---
-    if ask in ['y', '', "a"]:
+    if ask in ["y", "", "a"]:
         return mdapi.page_put(new_text, "mdwiki changes.", title)
     # ---
     print("not saved")
@@ -77,25 +78,25 @@ def main1():
 
 
 def main():
-    printe.output('*<<red>> > main:')
+    printe.output("*<<red>> > main:")
     # ---
-    user = ''
-    user_limit = '3000'
+    user = ""
+    user_limit = "3000"
     # ---
     searchlist = {
         "drug": "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
     }
     # ---
-    limite = 'max'
-    starts = ''
+    limite = "max"
+    starts = ""
     # ---
     pages = []
     # ---
-    namespaces = '0'
-    newpages = ''
+    namespaces = "0"
+    newpages = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         if not value:
             print(f"Value required for argument {arg}")
@@ -112,34 +113,34 @@ def main():
         if arg in ["-page", "page"]:
             pages.append(value)
         # ---
-        if arg in ['newpages', '-newpages']:
+        if arg in ["newpages", "-newpages"]:
             newpages = value
         # ---
         if arg in ["-user", "-usercontribs"]:
             user = value
         # ---
-        if arg in ['start', '-start']:
+        if arg in ["start", "-start"]:
             starts = value
         # ---
         if arg == "-ns":
             namespaces = value
         # ---
-        if arg == 'search':
+        if arg == "search":
             if value in searchlist:
                 value = searchlist[value]
             # ---
             ccc = api_new.Search(value=value, ns="0", srlimit="max")
             pages.extend(iter(ccc))
     # ---
-    if starts != '':
+    if starts != "":
         # ---
-        if starts == 'all':
-            starts = ''
+        if starts == "all":
+            starts = ""
         # ---
         listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
         # ---
         for n, page in enumerate(listen):
-            printe.output(f'<<green>> n:{n}, title:{page}')
+            printe.output(f"<<green>> n:{n}, title:{page}")
             work_on_title(page)
             # ---
     # ---
@@ -153,7 +154,7 @@ def main():
         lista = pages
     # ---
     for n, page in enumerate(lista):
-        printe.output(f'<<green>> n:{n}, title:{page}')
+        printe.output(f"<<green>> n:{n}, title:{page}")
         work_on_title(page)
     # ---
 

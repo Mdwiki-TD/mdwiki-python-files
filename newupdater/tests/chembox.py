@@ -3,8 +3,10 @@
 python3 core8/pwb.py newupdater/tests/chembox
 
 """
+
 import sys
 import os
+
 os.environ["DEBUGNEW"] = "true"
 
 import pywikibot

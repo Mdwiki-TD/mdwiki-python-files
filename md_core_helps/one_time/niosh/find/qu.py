@@ -1,7 +1,8 @@
-'''
+"""
 python pwb.py niosh/bot
 python3 core8/pwb.py niosh/bot
-'''
+"""
+
 import os
 from pathlib import Path
 import re
@@ -25,7 +26,7 @@ with open(file_json2, "r", encoding="utf-8") as f:
     new = json.load(f)
 # ---
 result = {}
-'''
+"""
 for item in data:
     page_title = item['page_title']
     el_to = item['el_to']
@@ -37,7 +38,7 @@ for item in data:
     result[page_title] = list(set(result[page_title]))
     result[page_title].sort()
 json.dump(result, open(file, "w", encoding="utf-8"))
-'''
+"""
 # ---
 # sort
 titles = sorted(data.keys())
@@ -46,7 +47,7 @@ all_links = []
 
 
 def fix_links(x):
-    x = re.sub(r'^https*://(www.|)cdc.gov/', 'https://www.cdc.gov/', x)
+    x = re.sub(r"^https*://(www.|)cdc.gov/", "https://www.cdc.gov/", x)
     return x
 
 
@@ -58,12 +59,12 @@ for title in titles:
     tat = new.get(title, [])
     # ---
     for x in exts:
-        if x.find('web.archive.org') > -1:
+        if x.find("web.archive.org") > -1:
             # remove url suffix like https://web.archive.org/web/20150530203735/
 
-            x = re.sub(r'^https?://web\.archive\.org/web/\d+/(.*)', r'\1', x.strip())
+            x = re.sub(r"^https?://web\.archive\.org/web/\d+/(.*)", r"\1", x.strip())
 
-        if x.find('cdc.gov/niosh/') > -1:
+        if x.find("cdc.gov/niosh/") > -1:
             x = fix_links(x)
             tat.append(x)
     # ---
@@ -78,7 +79,7 @@ all_links = sorted(set(all_links))
 # ---
 len_all_links = len(all_links)
 # ---
-print(f'all pages:{len(new.keys())}, {len_all_links=}')
+print(f"all pages:{len(new.keys())}, {len_all_links=}")
 # ---
 # sort dict keys
 new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}

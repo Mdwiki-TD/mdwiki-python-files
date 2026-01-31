@@ -1,4 +1,4 @@
-'''
+"""
 # ---
 from priorviews.lists import views
 # ---
@@ -10,7 +10,8 @@ from priorviews.lists import views
 
 python3 core8/pwb.py priorviews/views
 
-'''
+"""
+
 import json
 import os
 from pathlib import Path
@@ -22,7 +23,7 @@ from priorviews.bots import helps
 # ---
 Dir = Path(__file__).parent
 # ---
-file = f'{Dir}/views_mdwiki_langs.json'
+file = f"{Dir}/views_mdwiki_langs.json"
 # ---
 if not os.path.exists(file):
     with open(file, "w", encoding="utf-8") as f:
@@ -58,7 +59,7 @@ def makeviews():
 
         # Iterate through each language for a given markdown file
         for lang, v in langs.items():
-            _views = int(v['views'])
+            _views = int(v["views"])
             views_by_mdtitle_langs[mdtitle][lang] = _views
 
             # Add the view count
@@ -75,27 +76,27 @@ def makeviews():
             if lang not in views_by_lang:
                 views_by_lang[lang] = {}
 
-            if v['title'].lower() not in views_by_lang[lang]:
+            if v["title"].lower() not in views_by_lang[lang]:
                 # Increment the total view count for the given language
                 count_views_by_lang[lang] += _views
                 count_tra_by_lang[lang] += 1
 
                 # Add the view count
-                views_by_lang[lang][v['title'].lower()] = _views
+                views_by_lang[lang][v["title"].lower()] = _views
 
 
 # ---
 makeviews()
 # ---
 # dump count_views_by_lang to json file
-filee = f'{Dir}/count_views_by_lang.json'
+filee = f"{Dir}/count_views_by_lang.json"
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # with open(filee, "w", encoding="utf-8") as f:  json.dump(count_views_by_lang, f)
     helps.dump_data(filee, count_views_by_lang)
     # ---
-    print(f'len of views_by_mdtitle_langs: {len(views_by_mdtitle_langs)}')
-    print(f'len of count_views_by_mdtitle: {len(count_views_by_mdtitle)}')
-    print(f'len of count_views_by_lang: {len(count_views_by_lang)}')
-    print(f'len of views_by_lang: {len(views_by_lang)}')
+    print(f"len of views_by_mdtitle_langs: {len(views_by_mdtitle_langs)}")
+    print(f"len of count_views_by_mdtitle: {len(count_views_by_mdtitle)}")
+    print(f"len of count_views_by_lang: {len(count_views_by_lang)}")
+    print(f"len of views_by_lang: {len(views_by_lang)}")
 # ---

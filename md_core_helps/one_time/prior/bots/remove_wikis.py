@@ -1,6 +1,7 @@
-'''
+"""
 python3 core8/pwb.py prior/remove_wikis
-'''
+"""
+
 import os
 from pathlib import Path
 import json
@@ -8,8 +9,8 @@ import json
 # ---
 Dir = Path(__file__).parent
 # ---
-project_js_new = f'{Dir}/json_langs/'
-project_js_newen = f'{Dir}/json_en/'
+project_js_new = f"{Dir}/json_langs/"
+project_js_newen = f"{Dir}/json_en/"
 # ---
 black_list = [
     "wikidata.org",
@@ -68,18 +69,18 @@ def work_in_jsfile(filename):
 
 # ---
 for filename in os.listdir(project_js_new):
-    if filename.endswith('.json'):
+    if filename.endswith(".json"):
         filename2 = os.path.join(project_js_new, filename)
         # ---
-        print(f'filename: {filename2}..')
+        print(f"filename: {filename2}..")
         # ---
         work_in_jsfile(filename2)
 # ---
 for filename in os.listdir(project_js_newen):
-    if filename.endswith('.json'):
+    if filename.endswith(".json"):
         filename2 = os.path.join(project_js_newen, filename)
         # ---
-        print(f'filename: {filename2}..')
+        print(f"filename: {filename2}..")
         # ---
         work_in_jsfile(filename2)
         # ---

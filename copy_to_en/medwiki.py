@@ -110,7 +110,17 @@ def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
     if not cat:
         cat = "Category:Mdwiki Translation Dashboard articles"
     # ---
-    cat_members = CatDepth(cat, sitecode="medwiki", family="toolforge", depth=0, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
+    cat_members = CatDepth(
+        cat,
+        sitecode="medwiki",
+        family="toolforge",
+        depth=0,
+        ns="all",
+        nslist=[],
+        without_lang="",
+        with_lang="",
+        tempyes=[],
+    )
     cat_members = [x.replace("Md:", "") for x in cat_members]
     return cat_members
 

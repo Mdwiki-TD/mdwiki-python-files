@@ -114,7 +114,14 @@ def main():
             lang_o = value
     # ---
     result_list = [
-        {"Domain": "fr.wikipedia.org", "Timestamp": "2024-08-22T03:09:01Z", "Username": "Mr. Ibrahem", "Page_title": "Utilisateur:Mr. Ibrahem/Acute lymphoblastic leukemia", "Edit_summary": "Created by translating the page [[:mdwiki:Acute lymphoblastic leukemia|Acute lymphoblastic leukemia]]. #mdwikicx .", "Revision_ID": 217884468},
+        {
+            "Domain": "fr.wikipedia.org",
+            "Timestamp": "2024-08-22T03:09:01Z",
+            "Username": "Mr. Ibrahem",
+            "Page_title": "Utilisateur:Mr. Ibrahem/Acute lymphoblastic leukemia",
+            "Edit_summary": "Created by translating the page [[:mdwiki:Acute lymphoblastic leukemia|Acute lymphoblastic leukemia]]. #mdwikicx .",
+            "Revision_ID": 217884468,
+        },
     ]
     # ---
     _result_keys = {

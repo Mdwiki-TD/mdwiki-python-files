@@ -6,6 +6,7 @@ from mdpages import qids_help
 # qids_help.check(work_list, all_pages)
 
 """
+
 import copy
 import re
 import os
@@ -190,7 +191,9 @@ def get_o_qids_new(o_qids, t_qids_in):
     # ---
     same = [x for x in o_qids if x in t_qids_in and t_qids_in[x] == o_qids[x]]
     # ---
-    diff = [x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x] and o_qids[x] != "" and t_qids_in[x] != ""]
+    diff = [
+        x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x] and o_qids[x] != "" and t_qids_in[x] != ""
+    ]
     # ---
     printe.output(f"o_qids_new: len of same: {len(same)}")
     # ---

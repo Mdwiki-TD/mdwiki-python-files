@@ -1,6 +1,7 @@
 """
 from .bots.old_params import rename_params
 """
+
 # ---
 import wikitextparser as wtp
 from ..helps import echo_debug
@@ -26,7 +27,7 @@ def rename_params(temptext):
     parsed_old = wtp.parse(new_temptext)
     temps = parsed_old.templates
     # ---
-    temps_okay = ['drugbox', 'infobox drug']
+    temps_okay = ["drugbox", "infobox drug"]
     # ---
     _temps_ = []
     # ---
@@ -54,7 +55,7 @@ def rename_params(temptext):
         for old, new in to_replace.items():
             if temp.has_arg(old):
                 value = temp.get_arg(old).value
-                echo_debug("rename_params", f'value: {value}')
+                echo_debug("rename_params", f"value: {value}")
                 temp.set_arg(new, value, before=old)
                 temp.del_arg(old)
         # ---

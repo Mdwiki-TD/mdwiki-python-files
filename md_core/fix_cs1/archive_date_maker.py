@@ -3,6 +3,7 @@ from cite.archive_bots.archive_date_maker import make_archive_date_and_url, make
 # found_it, archivedate, url, archiveurl = make_archive_date_and_url(archiveurl)
 # archive_date = make_archive_date(archiveurl)
 """
+
 import re
 
 # Wayback Machine format
@@ -39,6 +40,7 @@ def make_archive_date(archiveurl):
     # ---
     return archivedate
 
+
 def make_archive_date_and_url(archiveurl):
     # ---
     archivedate = ""
@@ -66,17 +68,15 @@ def make_archive_date_and_url(archiveurl):
     # ---
     return found_it, archivedate, url, archiveurl
 
+
 def test():
     urls = [
         "https://archive.ph/2001-05-03-232323/https://axaaa.com/news/liveblog",
         "https://archive.ph/2021-03-03/https://axaaa.com/news/liveblog",
-
         "https://archive.ph/2024.09.01/https://axaaa.com/news/liveblog",
         "https://archive.ph/2024.09.01.54895/https://axaaa.com/news/liveblog",
-
         "https://archive.today/20210303/https://axaaa.com/news/liveblog",
         "https://archive.today/20120101548955225/https://axaaa.com/news/liveblog",
-
         "http://web.archive.org/web/20010714888888888895/https://axaaa.com/news/liveblog",
         "http://web.archive.org/web/20010101/https://axaaa.com/news/liveblog",
         "",
@@ -85,6 +85,7 @@ def test():
     for url in urls:
         date = make_archive_date(url)
         print(f"url: {url}\t{date=}")
+
 
 if __name__ == "__main__":
     # python3 core8/pwb.py cite/archive_bots/archive_date_maker

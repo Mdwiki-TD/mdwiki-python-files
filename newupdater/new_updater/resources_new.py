@@ -1,6 +1,7 @@
 """
 !
 """
+
 # ---
 import re
 import wikitextparser as wtp
@@ -8,6 +9,7 @@ import wikitextparser as wtp
 from .bots.Remove import remove_cite_web, portal_remove
 from .lists.identifier_params import identifiers_params
 from .helps import echo_debug
+
 # ---
 page_identifier_params = {}
 # ---
@@ -21,13 +23,25 @@ def add_resources(new_text, drug_resources):
     echo_debug("add_resources")
     # ---
     if not page_identifier_params:
-        return new_text, ''
+        return new_text, ""
     # ---
-    to_add = ''.join(f"| {pa} = {pap}\n" for pa, pap in page_identifier_params.items())
+    to_add = "".join(f"| {pa} = {pap}\n" for pa, pap in page_identifier_params.items())
     # ---
     to_add = to_add.replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n").replace("\n\n\n", "\n")
-    to_add = to_add.replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|").replace("\n\n|", "\n|")
-    to_add = to_add.replace("\n\n<", "\n<").replace("\n\n<", "\n<").replace("\n\n<", "\n<").replace("\n\n<", "\n<").replace("\n\n<", "\n<")
+    to_add = (
+        to_add.replace("\n\n|", "\n|")
+        .replace("\n\n|", "\n|")
+        .replace("\n\n|", "\n|")
+        .replace("\n\n|", "\n|")
+        .replace("\n\n|", "\n|")
+    )
+    to_add = (
+        to_add.replace("\n\n<", "\n<")
+        .replace("\n\n<", "\n<")
+        .replace("\n\n<", "\n<")
+        .replace("\n\n<", "\n<")
+        .replace("\n\n<", "\n<")
+    )
     # ---
     dng = r"\=\=\s*External links\s*\=\=\s*\*\s*\{\{cite web\s*\|\s*\|\s*url\s*\=\s*https\:\/\/druginfo.*?\}\}"
     # ---
@@ -91,9 +105,9 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     for temp in temps:
         name = str(temp.normal_name()).lower()
         # ---
-        if name in ['drugbox', 'infobox drug']:
+        if name in ["drugbox", "infobox drug"]:
             infobox_temp = temp
-        if name in ['drug resources']:
+        if name in ["drug resources"]:
             resources_temp = temp
     # ---
     if not infobox_temp:
@@ -112,11 +126,11 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
             fa = re.search(lkj2, value)
             # ---
             if fa:
-                echo_debug("move_resources", f'fa = {fa}')
+                echo_debug("move_resources", f"fa = {fa}")
                 echo_debug("move_resources", dir(fa))
                 tt = fa.group()
-                echo_debug("move_resources", f'tt = {tt}')
-                value = value.replace(tt, '').strip()
+                echo_debug("move_resources", f"tt = {tt}")
+                value = value.replace(tt, "").strip()
             # ---
             page_identifier_params[param] = value
             # ---
@@ -129,45 +143,45 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
     # ---<!--Identifiers-->
     if new_text.find(infobox_old) != -1:
         # ---
-        infobox_new = re.sub(r'\n\s*\n\s*[\n\s]+', '\n\n', infobox_new, flags=re.DOTALL | re.MULTILINE)
+        infobox_new = re.sub(r"\n\s*\n\s*[\n\s]+", "\n\n", infobox_new, flags=re.DOTALL | re.MULTILINE)
         # ---
         new_text = new_text.replace(infobox_old, infobox_new)
     # ---
     # add params to resources_temp
     # ---
-    line = ''
+    line = ""
     # ---
     if resources_temp:
         # ---
         resources_old = resources_temp.string
         # ---
-        echo_debug("move_resources", f'resources_temp = {resources_temp}')
+        echo_debug("move_resources", f"resources_temp = {resources_temp}")
         # ---
         resources_params = resources_temp.arguments
         # ---
-        echo_debug("move_resources", f'resources_params = {resources_params}')
+        echo_debug("move_resources", f"resources_params = {resources_params}")
         # ---
         for param, value in page_identifier_params.items():
             value = value.strip()
             # ---
             if resources_temp.has_arg(param):
                 # ---
-                echo_debug("move_resources", f'resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}')
+                echo_debug("move_resources", f"resources_temp.has_arg({param}) = {resources_temp.has_arg(param)}")
                 # ---
                 old_value = resources_temp.get_arg(param).value
                 # ---
-                if value != '' and old_value.strip() == '':
-                    resources_temp.set_arg(f' {param} ', value)
+                if value != "" and old_value.strip() == "":
+                    resources_temp.set_arg(f" {param} ", value)
                 # ---
             else:
-                resources_temp.set_arg(f' {param} ', f'{value}\n', preserve_spacing=False)
+                resources_temp.set_arg(f" {param} ", f"{value}\n", preserve_spacing=False)
         # ---
         resources_new = resources_temp.string
         # resources_new = resources_temp.pformat()
         # ---
-        echo_debug("move_resources", f'resources_new = {resources_new}')
+        echo_debug("move_resources", f"resources_new = {resources_new}")
         # ---
-        resources_new = re.sub(r'\n\n\n+<', '\n\n<', resources_new, flags=re.DOTALL | re.MULTILINE)
+        resources_new = re.sub(r"\n\n\n+<", "\n\n<", resources_new, flags=re.DOTALL | re.MULTILINE)
         # ---
         new_text = new_text.replace(resources_old, resources_new)
         # ---
@@ -177,8 +191,8 @@ def move_resources(text, title, lkj=_lkj_, lkj2=_lkj2_):
         # ---
     resources_get_NLM = False
     # ---
-    if 'NLM' in resources_params:
-        resources_get_NLM = resources_params['NLM']
+    if "NLM" in resources_params:
+        resources_get_NLM = resources_params["NLM"]
     # ---
     # إزالة استشهاد خاطىء
     new_text = remove_cite_web(new_text, resources_get_NLM, line, title)

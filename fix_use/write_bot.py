@@ -1,30 +1,33 @@
-'''
+"""
 
 from fix_use.write_bot import write# write(oldtext, text, filepath)
 
-'''
+"""
+
 from newapi import printe
 import sys
 
 ASK_all = True
+
+
 # ---
 def write(oldtext, text, filepath):
     global ASK_all
     # ---
     if oldtext == text:
-        path2 = filepath.split('/')[-1]
-        printe.output(f'No change in {path2}')
+        path2 = filepath.split("/")[-1]
+        printe.output(f"No change in {path2}")
         return False
     # ---
     printe.showDiff(oldtext, text)
     # ---
-    printe.output(filepath.replace('/', '\\'))
+    printe.output(filepath.replace("/", "\\"))
     # ---
     do_save = False
     # ---
     if ASK_all:
         # ---
-        printe.output('<<green>> Save?')
+        printe.output("<<green>> Save?")
         ask = input(f"save new text?...{filepath}:")
         if ask in ["", "a", "y"]:
             print("save new text")
@@ -51,4 +54,3 @@ def write(oldtext, text, filepath):
         return text
 
     return False
-

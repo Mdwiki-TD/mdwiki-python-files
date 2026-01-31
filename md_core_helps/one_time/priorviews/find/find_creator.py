@@ -4,6 +4,7 @@ python3 core8/pwb.py priorviews/find/find_creator new
 python3 core8/pwb.py priorviews/find/find_creator -lang:ar
 
 """
+
 from mdapi_sql import wiki_sql
 import sys
 import json
@@ -23,7 +24,7 @@ from priorviews.bots import helps
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 # ---
-file = f'{Dir2}/lists/creators_by_lang.json'
+file = f"{Dir2}/lists/creators_by_lang.json"
 # ---
 if not os.path.exists(file):
     with open(file, "w", encoding="utf-8") as f:
@@ -33,7 +34,7 @@ CreatorsData = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_Data():
-    printe.output(f'<<yellow>> log_Data {len(CreatorsData)} CreatorsData')
+    printe.output(f"<<yellow>> log_Data {len(CreatorsData)} CreatorsData")
     # dump CreatorsData
     helps.dump_data(file, CreatorsData)
 
@@ -48,7 +49,7 @@ def get_creator(links, lang):
     if lang not in CreatorsData:
         CreatorsData[lang] = {}
 
-    def valid(x, tab, empty=''):
+    def valid(x, tab, empty=""):
         i = tab.get(x) or tab.get(x.lower())
         if not i or i == empty:
             return True
@@ -59,18 +60,18 @@ def get_creator(links, lang):
         # links = [ x for x in links if not x in CreatorsData[lang] or CreatorsData[lang][x] == '']
         links = [x for x in links if valid(x, CreatorsData[lang])]
     # ---
-    print(f'lang: {lang}, links: {len(links)}')
+    print(f"lang: {lang}, links: {len(links)}")
     # ---
     if len(links) == 0:
         return
     # ---
     # split links to 100 per group
     for i in range(0, len(links), 100):
-        titles = [x.replace(" ", "_") for x in links[i: i + 100]]
+        titles = [x.replace(" ", "_") for x in links[i : i + 100]]
         # ---
         titles = ", ".join([f'"{escape_string(x)}"' for x in titles])
         # ---
-        query = f'''select rev_timestamp, page_title, actor_name, comment_text
+        query = f"""select rev_timestamp, page_title, actor_name, comment_text
             from revision, actor, page, comment
             where actor_id = rev_actor
             and rev_parent_id = 0
@@ -78,7 +79,7 @@ def get_creator(links, lang):
             and page_namespace = 0
             and rev_comment_id = comment_id
             and page_title in ({titles})
-        '''
+        """
         # ---
         result = wiki_sql.sql_new(query, lang)
         # ---
@@ -135,5 +136,5 @@ def start():
     # ---
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

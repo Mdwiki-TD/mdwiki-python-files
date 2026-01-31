@@ -3,9 +3,11 @@
 from after_translate.bots.get_pages import get_pages_from_db
 """
 from newapi import printe
+
 # ---
 from mdpy.bots import py_tools
 from mdapi_sql import sql_for_mdwiki
+
 # ---
 targets_done_by_mdtitle = {}
 targets_done = {}
@@ -19,14 +21,14 @@ def get_pages_from_db(lang_o):
     # ---
     sq = sql_for_mdwiki.get_all_pages_all_keys(lang=lang_o)
     # ---
-    len_no_target   = 0
+    len_no_target = 0
     len_done_target = 0
     # ---
     for tab in sq:
         mdtitle = tab["title"]
-        user    = tab["user"]
-        target  = tab["target"]
-        lang    = tab["lang"].lower()
+        user = tab["user"]
+        target = tab["target"]
+        lang = tab["lang"].lower()
         # ---
         if lang_o != "" and lang != lang_o.strip():
             continue

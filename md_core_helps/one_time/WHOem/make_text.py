@@ -3,6 +3,7 @@
 python3 core8/pwb.py WHOem/make_text
 
 """
+
 import sys
 
 import json
@@ -18,37 +19,37 @@ Dir = Path(__file__).parent
 
 
 def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
-    lang_text = ''
+    lang_text = ""
     u = 0
 
     # ---
-    if 'test1' in sys.argv:
-        print('mdtitle:', mdtitle)
-        print('langlinks:', langlinks)
+    if "test1" in sys.argv:
+        print("mdtitle:", mdtitle)
+        print("langlinks:", langlinks)
     # ---
 
     for l in langs_keys_sorted:
         u += 1
         if l not in section_langs_views:
             section_langs_views[l] = 0
-        view = ''
+        view = ""
 
         data = langlinks.get(l)
         # print('data:', data)#{'title': 'قائمة الأدوية الأساسية النموذجية لمنظمة الصحة العالمية', 'views': 159424}
 
         if data:
-            title = data['title']
-            view = data['views']
+            title = data["title"]
+            view = data["views"]
             section_langs_views[l] += view
             # ---
-            view = f'[[:w:{l}:{title}|{view:,}]]'
+            view = f"[[:w:{l}:{title}|{view:,}]]"
             # ---
         # Create a formatted string with the view count for the current language and title
-        tt = f' || {view}'
+        tt = f" || {view}"
 
         # If this is the first language being processed, do not prepend the formatted string with ' || '
         if u == 1:
-            tt = f'{view}'
+            tt = f"{view}"
 
         # Append the formatted string to the overall formatted string
         lang_text += tt
@@ -61,26 +62,35 @@ def format_x(x):
     if len(x) < 4:
         return x
     # ---
-    x2 = x.replace('-', '')
+    x2 = x.replace("-", "")
     x2 = x2[:3]
     # ---
     return "{{abbr|" + f"{x2}|{x}" + "}}"
 
 
 def fo_n(x):
-    return f'{x:,}'
+    return f"{x:,}"
 
 
 def make_text(ViewsData):
     """
     Generate formatted text from given section and links.
     """
-    text = '<div style="height:1500px;width:100%;overflow-x:auto; overflow-y:auto">\n' '{| class="wikitable sortable" style="width:100%;background-color:#dedede"\n' '|- style="position: sticky;top: 0; z-index: 2;"\n' '! #\n' '! style="position: sticky;top: 0;left: 0;" | Title\n' '! Views\n' '! Articles\n' '!\n'
+    text = (
+        '<div style="height:1500px;width:100%;overflow-x:auto; overflow-y:auto">\n'
+        '{| class="wikitable sortable" style="width:100%;background-color:#dedede"\n'
+        '|- style="position: sticky;top: 0; z-index: 2;"\n'
+        "! #\n"
+        '! style="position: sticky;top: 0;left: 0;" | Title\n'
+        "! Views\n"
+        "! Articles\n"
+        "!\n"
+    )
     # ---
     langs_keys = [lang for mdtitle, tab in ViewsData.items() for lang in tab.keys()]
     langs_keys = sorted(set(langs_keys))
     # ---
-    with open(f'{Dir}/lists/lang_links_mdtitles.json', "r", encoding="utf-8") as f:
+    with open(f"{Dir}/lists/lang_links_mdtitles.json", "r", encoding="utf-8") as f:
         lang_links_mdtitles = json.load(f)
     # ---
     # sort lang_links_mdtitles by length
@@ -105,34 +115,34 @@ def make_text(ViewsData):
         # Call make_lang_text to create the language text for this row.
         lang_text = make_lang_text(mdtitle, langlinks, langs_keys)
 
-        mdtitle_views = sum([x['views'] for x in langlinks.values()])
+        mdtitle_views = sum([x["views"] for x in langlinks.values()])
 
         section_views += mdtitle_views
         # Create the table row with the language text and the row number.
-        l_text = '\n|-\n'
-        l_text += f'! {n}\n'
+        l_text = "\n|-\n"
+        l_text += f"! {n}\n"
         l_text += f'! style="position: sticky;left: 0;" | [[{mdtitle}]]\n'
-        l_text += f'! {mdtitle_views:,}\n'
-        l_text += f'! {articles:,}\n'
-        l_text += f'| {lang_text}'
+        l_text += f"! {mdtitle_views:,}\n"
+        l_text += f"! {articles:,}\n"
+        l_text += f"| {lang_text}"
 
         # Add the row to the text variable.
         text += l_text
 
     # total views by language
-    text += '\n|-\n'
+    text += "\n|-\n"
     text += f'! !! style="position: sticky;left: 0;colspan:2;" | Total views !! {section_views:,} \n'
-    text += '! \n! '
+    text += "! \n! "
     text += " !! ".join([str(fo_n(section_langs_views.get(l, 0))) for l in langs_keys])
 
     # Add the closing table tag and div tag to the text variable.
-    text += '\n|}\n</div>'
+    text += "\n|}\n</div>"
     # ---
     articles_all = sum([len(x) for x in ViewsData.values()])
     # Create the final formatted text with the section header, number of links, and the table.
     # ---
-    faf = f'* {articles_all:,} articles with work in {len(langs_keys):,} languages\n'
-    faf += f'* {section_views:,} pageviews from July 2015 to Sept 2023\n{text}'
+    faf = f"* {articles_all:,} articles with work in {len(langs_keys):,} languages\n"
+    faf += f"* {section_views:,} pageviews from July 2015 to Sept 2023\n{text}"
 
     # Return the final formatted text.
     return faf
@@ -140,30 +150,30 @@ def make_text(ViewsData):
 
 def start():
     # ---
-    with open(f'{Dir}/lists/views.json', "r", encoding="utf-8") as f:
+    with open(f"{Dir}/lists/views.json", "r", encoding="utf-8") as f:
         Views_Data = json.load(f)
     # ---
-    print(f'len ViewsData: {len(Views_Data)}')
+    print(f"len ViewsData: {len(Views_Data)}")
     # ---
     ntext = make_text(Views_Data)
     # ---
-    if 'test' in sys.argv:
+    if "test" in sys.argv:
         print(ntext)
     # ---
-    with open(f'{Dir}/text.txt', "w", encoding="utf-8") as f:
+    with open(f"{Dir}/text.txt", "w", encoding="utf-8") as f:
         f.write(ntext)
     # ---
-    title = 'User:Mr. Ibrahem/WHOem'
+    title = "User:Mr. Ibrahem/WHOem"
     # ---
-    page = md_MainPage(title, 'www', family='mdwiki')
+    page = md_MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
-        create = page.Create(text=ntext, summary='update')
+        create = page.Create(text=ntext, summary="update")
     else:
         # ---
         text = page.get_text()
-        save_page = page.save(newtext=ntext, summary='update', nocreate=1, minor='')
+        save_page = page.save(newtext=ntext, summary="update", nocreate=1, minor="")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

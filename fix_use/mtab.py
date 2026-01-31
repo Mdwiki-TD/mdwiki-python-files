@@ -4,6 +4,7 @@ python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/mdwiki/public_html/td2/actions
 python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 
 """
+
 import json
 import sys
 import os
@@ -59,7 +60,14 @@ tab = {
     "EnWiki\\Fixes\\fix_langs_links": ["remove_lang_links"],
     "EnWiki\\Fixes\\FixTemps": ["remove_templates"],
     "EnWiki\\Fixes\\RefWork": ["check_one_cite", "remove_bad_refs"],
-    "EnWiki\\API": ["getLoginToken", "loginRequest", "getCSRFToken", "send_params", "do_edit", "Find_pages_exists_or_not"],
+    "EnWiki\\API": [
+        "getLoginToken",
+        "loginRequest",
+        "getCSRFToken",
+        "send_params",
+        "do_edit",
+        "Find_pages_exists_or_not",
+    ],
     "EnWiki\\FixText": ["text_changes_work"],
     "EnWiki\\Start": ["startTranslatePhp", "TranslatePhpEditText"],
     "WikiParse\\Category": ["get_categories"],
@@ -72,7 +80,16 @@ tab = {
     "Leaderboard\\LeaderTables": ["makeSqlQuery", "createNumbersTable", "makeUsersTable", "makeLangTable"],
     "Leaderboard\\LeadHelp": ["make_td_fo_user", "make_table_lead"],
     "Leaderboard\\Users": ["make_filter_form"],
-    "Results\\GetCats": ["start_with", "get_in_process", "open_json_file", "get_cat_from_cache", "get_categorymembers", "get_mmbrs", "get_mdwiki_cat_members", "get_cat_exists_and_missing"],
+    "Results\\GetCats": [
+        "start_with",
+        "get_in_process",
+        "open_json_file",
+        "get_cat_from_cache",
+        "get_categorymembers",
+        "get_mmbrs",
+        "get_mdwiki_cat_members",
+        "get_cat_exists_and_missing",
+    ],
     "Results\\GetResults": ["get_results"],
     "Results\\ResultsTable": ["sort_py_PageViews", "sort_py_importance", "make_one_row", "make_results_table"],
 }

@@ -3,6 +3,7 @@
 from stats.ar import get_ar_results
 
 """
+
 from mdapi_sql import wiki_sql
 
 from datetime import datetime

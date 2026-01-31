@@ -5,6 +5,7 @@ python3 core8/pwb.py priorviews/lists/creators_to_translators
 from priorviews.lists.creators_to_translators import creators_as_translators
 # ---
 """
+
 import json
 import os
 from pathlib import Path
@@ -23,7 +24,7 @@ from priorviews.lists import creators  # creators.Creators_by_lang_title
 # ---
 Dir = Path(__file__).parent
 # ---
-file_cts = f'{Dir}/creators_as_translators.json'
+file_cts = f"{Dir}/creators_as_translators.json"
 # ---
 if not os.path.exists(file_cts):
     with open(file_cts, "w", encoding="utf-8") as f:
@@ -46,7 +47,7 @@ for lang, links in links_by_lang.items():
     # ---
     lang_translations = translators.tra_by_lang.get(lang, {})
     # ---
-    links = [x for x in links if lang_translations.get(x.lower(), '') == '']
+    links = [x for x in links if lang_translations.get(x.lower(), "") == ""]
     # ---
     for title in links:
         # ---
@@ -56,18 +57,18 @@ for lang, links in links_by_lang.items():
         actor = _creator.get("actor", "")
         # ---
         _time_ = _creator.get("time", "")
-        _time_x = ''
+        _time_x = ""
         # ---
         if not actor:
             continue
         # ---
-        year = '0'
+        year = "0"
         # ---
-        if _time_ != '':
+        if _time_ != "":
             # Convert _time_ to a datetime object
-            datetime_obj = datetime.datetime.strptime(str(_time_), '%Y%m%d%H%M%S')
-            _time_x = datetime_obj.strftime('%Y-%m-%d')
-            year = datetime_obj.strftime('%Y')
+            datetime_obj = datetime.datetime.strptime(str(_time_), "%Y%m%d%H%M%S")
+            _time_x = datetime_obj.strftime("%Y-%m-%d")
+            year = datetime_obj.strftime("%Y")
         # ---
         if TD or int(year) > 2012:
             creators_as_translators[lang][title] = actor
@@ -77,10 +78,10 @@ for lang, links in links_by_lang.items():
         else:
             notadded += 1
 # ---
-printe.output(f'<<blue>> added: {added}')
-printe.output(f'<<blue>> notadded: {notadded}')
+printe.output(f"<<blue>> added: {added}")
+printe.output(f"<<blue>> notadded: {notadded}")
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # dump creators_as_translators
     helps.dump_data(file_cts, creators_as_translators)
     # ---

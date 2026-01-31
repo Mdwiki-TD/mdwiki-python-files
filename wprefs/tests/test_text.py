@@ -9,7 +9,7 @@ text = """{{Infocaseta Tratament medical|Name=Demența cu corpi Lewy|Image=Lewy 
 # ---
 # ---
 # ---
-newtext = fix_page(text, 'Demența cu corpi Lewy', move_dots=False, infobox=True, lang='ro')
+newtext = fix_page(text, "Demența cu corpi Lewy", move_dots=False, infobox=True, lang="ro")
 pywikibot.showDiff(text, newtext)
 
 # python3 core8/pwb.py wprefs/wpref_text

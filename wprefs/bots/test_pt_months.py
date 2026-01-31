@@ -24,7 +24,7 @@ text = """Boala se agravează în timp și este de obicei diagnosticată atunci 
 # ---
 # ---
 # ---
-newtext = fix_page(text, 'Demența cu corpi Lewy', move_dots=False, infobox=True, lang='pt')
+newtext = fix_page(text, "Demența cu corpi Lewy", move_dots=False, infobox=True, lang="pt")
 printe.showDiff(text, newtext)
 
 # python3 core8/pwb.py wprefs/bots/test_pt_months

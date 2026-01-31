@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-
-"""
+""" """
 import re
 from apis import mdwiki_api
 
@@ -15,7 +13,9 @@ un_wb_tag_cache = {}
 
 mdwiki_cats = sql_for_mdwiki.get_db_categories()
 
-full_translate = sql_for_mdwiki.select_md_sql("select DISTINCT tt_title from translate_type where tt_full = 1;", return_dict=True)
+full_translate = sql_for_mdwiki.select_md_sql(
+    "select DISTINCT tt_title from translate_type where tt_full = 1;", return_dict=True
+)
 
 full_translate = [ta["tt_title"] for ta in full_translate]
 

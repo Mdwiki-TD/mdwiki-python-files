@@ -9,8 +9,10 @@ import os
 import json
 from pathlib import Path
 from pymysql.converters import escape_string
+
 # ---
 from mdapi_sql import sql_for_mdwiki
+
 # ---
 Dir = str(Path(__file__).parents[0])
 # ---
@@ -19,15 +21,15 @@ if os.getenv("HOME"):
 else:
     public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
-project_tables = Path(public_html_dir) / 'td/Tables/jsons'
+project_tables = Path(public_html_dir) / "td/Tables/jsons"
 # ---
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(f'{project_tables}/enwiki_pageviews.json', "r", encoding="utf-8") as f:
+with open(f"{project_tables}/enwiki_pageviews.json", "r", encoding="utf-8") as f:
     data_in_json = json.load(f)
 # ---
-data_in_json = {x.strip() : data_in_json[x] for x in data_in_json}
+data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}
 # ---
 for x, numb in data_in_json.items():
     NEW_DATA[x] = numb
@@ -36,19 +38,19 @@ print(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
 # ---
 in_sql = {}
 # ---
-que = '''select DISTINCT title, en_views from enwiki_pageviews;'''
+que = """select DISTINCT title, en_views from enwiki_pageviews;"""
 # ---
 for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
-    title = q['title']
+    title = q["title"]
     if not NEW_DATA.get(title):
-        in_sql[title] = q['en_views']
+        in_sql[title] = q["en_views"]
 # ---
 print(f"{len(in_sql)=}")
 print(in_sql)
 # ---
 NEW_DATA.update(in_sql)
 # ---
-text = '''
+text = """
 -- Adminer 4.8.1 MySQL 5.5.5-10.6.20-MariaDB-log dump
 
 SET NAMES utf8;
@@ -67,7 +69,7 @@ CREATE TABLE `enwiki_pageviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `enwiki_pageviews` (`id`, `title`, `en_views`) VALUES
-'''
+"""
 # ---
 n = 0
 # ---
@@ -92,5 +94,5 @@ for title, en_views in NEW_DATA.items():
 text += ",\n".join(lines)
 text += ";"
 # ---
-with open(f'{Dir}/enwiki_pageviews.txt', "w", encoding="utf-8") as f:
+with open(f"{Dir}/enwiki_pageviews.txt", "w", encoding="utf-8") as f:
     f.write(text)

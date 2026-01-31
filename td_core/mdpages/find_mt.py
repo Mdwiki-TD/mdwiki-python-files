@@ -8,6 +8,7 @@ sql_for_mdwiki
 sql_qids_others
 
 """
+
 import sys
 from newapi import printe
 from mdpy.bots.check_title import valid_title
@@ -41,7 +42,9 @@ def remove_from_others(qids_othrs, qids_td):
     # ---
     same_q_in_td = [x for x in same_q if x in TD_list]
     # ---
-    printe.output(f"<<yellow>> len of list: {len(same_q_in_td)=:,}, add 'delete' to sys.argv to delete them from sql_qids_others.")
+    printe.output(
+        f"<<yellow>> len of list: {len(same_q_in_td)=:,}, add 'delete' to sys.argv to delete them from sql_qids_others."
+    )
     # ---
     if "delete" in sys.argv:
         for n, title in enumerate(same_q_in_td, start=1):

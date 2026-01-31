@@ -3,6 +3,7 @@
 python3 core8/pwb.py newupdater/tests/Remove
 
 """
+
 import sys
 import os
 import pywikibot

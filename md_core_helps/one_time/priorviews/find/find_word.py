@@ -1,9 +1,10 @@
-'''
+"""
 
 python3 core8/pwb.py priorviews/find/find_word -lang:ar
 python3 core8/pwb.py priorviews/find/find_word new
 
-'''
+"""
+
 from priorviews.lists.links_by_section import links_by_lang
 import sys
 import json
@@ -24,7 +25,7 @@ TEST = False
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 # ---
-file = f'{Dir2}/lists/words_mdwiki_langs.json'
+file = f"{Dir2}/lists/words_mdwiki_langs.json"
 # ---
 if not os.path.exists(file):
     with open(file, "w", encoding="utf-8") as f:
@@ -35,7 +36,7 @@ words_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_words():
-    printe.output(f'<<yellow>> log_words {len(words_by_lang)} words')
+    printe.output(f"<<yellow>> log_words {len(words_by_lang)} words")
     helps.dump_data(file, words_by_lang)
 
 
@@ -52,14 +53,14 @@ def get_w(links, lang):
     # ---
     m = 0
 
-    def valid(x, tab, empty=''):
+    def valid(x, tab, empty=""):
         i = tab.get(x) or tab.get(x.lower())
         if not i or i == empty:
             return True
         return False
 
     # ---
-    if 'onlynew' in sys.argv:
+    if "onlynew" in sys.argv:
         # links = [ x for x in links if not x in words_by_lang[lang] or words_by_lang[lang][x] == 0]
         links = [x for x in links if valid(x, words_by_lang[lang], empty=0)]
     # ---
@@ -73,10 +74,10 @@ def get_w(links, lang):
         # ---
         words_in = words_by_lang[lang].get(title_lower, 0)
         # ---
-        if 'new' in sys.argv and words_in > 40:
+        if "new" in sys.argv and words_in > 40:
             continue
         # ---
-        printe.output(f'<<yellow>> title: {m}/{lena} get_w {title}, words_in:{words_in}')
+        printe.output(f"<<yellow>> title: {m}/{lena} get_w {title}, words_in:{words_in}")
         # ---
         _words = count_words.get_words(title, lang)
         # ---
@@ -109,8 +110,8 @@ def start():
         # ---
         links = links_by_lang[lang]
         # ---
-        print(f'lang: {lang}')
-        print(f'links: {len(links)}')
+        print(f"lang: {lang}")
+        print(f"links: {len(links)}")
         # ---
         n += 1
         # ---
@@ -122,7 +123,7 @@ def start():
 
 def test():
     # ---
-    da = ['مرحاض ذو حفرة']
+    da = ["مرحاض ذو حفرة"]
     # ---
     get_w(da, "ar")
 
@@ -132,7 +133,7 @@ def test():
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     if "test1" in sys.argv:
         TEST = True
         test()

@@ -1,12 +1,11 @@
-"""
-"""
+""" """
 
 import pywikibot
 from wprefs.bot import *
 
 # ---
-title = 'Utilizator:Mr._Ibrahem/teste'
-lang = 'ro'
+title = "Utilizator:Mr._Ibrahem/teste"
+lang = "ro"
 log(lang)
 # ---
 text = GetPageText(title, lang=lang)

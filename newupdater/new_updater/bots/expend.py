@@ -1,6 +1,7 @@
 """
 from .bots.expend import expend_infoboxs_and_fix
 """
+
 import wikitextparser as wtp
 from ..lists.expend_lists import IMC_params, dup_params
 from ..helps import echo_debug
@@ -9,7 +10,7 @@ from ..helps import echo_debug
 def expend_infoboxs_and_fix(new_text):
     parseds = wtp.parse(new_text)
     # ---
-    echo_debug('expend_infoboxs_and_fix')
+    echo_debug("expend_infoboxs_and_fix")
     # ---
     for template in parseds.templates:
         # ---
@@ -22,7 +23,7 @@ def expend_infoboxs_and_fix(new_text):
                 # ---
                 dups = dup_params.get(name.lower(), {})
                 # ---
-                echo_debug('expend_infoboxs_and_fix', f'expend_and_fix: name: {name}')
+                echo_debug("expend_infoboxs_and_fix", f"expend_and_fix: name: {name}")
                 # ---
                 new_temp = "{{" + name + "\n"
                 # ---
@@ -42,8 +43,8 @@ def expend_infoboxs_and_fix(new_text):
                         _params.append(x)
                 # ---
                 for x in _params:
-                    value = params.get(x, '').strip()
-                    newparam = f'| {x.ljust(16)}'
+                    value = params.get(x, "").strip()
+                    newparam = f"| {x.ljust(16)}"
                     new_temp += f"{newparam}= {value}\n"
                 # ---
                 new_temp += "}}"

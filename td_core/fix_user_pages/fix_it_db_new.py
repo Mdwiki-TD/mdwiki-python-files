@@ -5,6 +5,7 @@ from fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 
 """
 import sys
+
 # ---
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki

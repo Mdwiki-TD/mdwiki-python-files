@@ -5,6 +5,7 @@ from fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 
 """
 import sys
+
 # ---
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
@@ -22,7 +23,7 @@ def work_in_new_tabs_to_db(new_tabs_to_db):
         new = tab["new"]
         # ---
         if new.get("id"):
-            del new['id']
+            del new["id"]
         # ---
         printe.output("work_in_new_tabs_to_db")
         printe.output(f"\t old: user: {old['user']}, target: {old['target']}")
@@ -39,7 +40,9 @@ def work_in_new_tabs_to_db(new_tabs_to_db):
         if not new.get("word") and new.get("title"):
             data = all_infos.get(new["title"])
             if data:
-                new["word"] = data.get("w_lead_words") if new.get("translate_type") == "lead" else data.get("w_all_words")
+                new["word"] = (
+                    data.get("w_lead_words") if new.get("translate_type") == "lead" else data.get("w_all_words")
+                )
         # ---
         sql_for_mdwiki.add_new_to_pages(new)
         # ---
@@ -52,6 +55,6 @@ def work_in_new_tabs_to_db(new_tabs_to_db):
             printe.output(f"<<green>> find_it: {find_it}")
             # ---
             # del it from pages_users
-            del_it = sql_for_mdwiki.mdwiki_sql("delete from pages_users where id = %s", values=[old['id']])
+            del_it = sql_for_mdwiki.mdwiki_sql("delete from pages_users where id = %s", values=[old["id"]])
             # ---
             printe.output(f"<<green>> del_it: {del_it}")

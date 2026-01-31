@@ -7,6 +7,7 @@ python3 core8/pwb.py mdpy/fix_duplicate ask
 
 """
 import sys
+
 # ---
 from apis import mdwiki_api
 from newapi import printe
@@ -59,7 +60,7 @@ def main():
         "redirects": 1,
         "utf8": 1,
         "gqppage": "DoubleRedirects",
-        "gqplimit": "max"
+        "gqplimit": "max",
     }
     # ---
     lista = mdwiki_api.post_s(fop)

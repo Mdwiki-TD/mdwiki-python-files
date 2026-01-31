@@ -29,9 +29,9 @@ def sql_result():
         #limit 10
     """
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki')
+    result = wiki_sql.sql_new(query, "enwiki")
     # ---
-    languages = {x['ll_lang']: x['counts'] for x in result}
+    languages = {x["ll_lang"]: x["counts"] for x in result}
     # ---
     return languages
 
@@ -54,9 +54,9 @@ def get_articles():
         and page_namespace = 0
     """
     # ---
-    result = wiki_sql.sql_new(query, 'enwiki')
+    result = wiki_sql.sql_new(query, "enwiki")
     # ---
-    articles = [x['articles'] for x in result]
+    articles = [x["articles"] for x in result]
     # ---
     if articles:
         return articles[0]
@@ -87,27 +87,27 @@ def start():
     # ---
     articles = get_articles()
     # ---
-    if 'en' not in languages:
-        languages['en'] = articles
+    if "en" not in languages:
+        languages["en"] = articles
     # ---
     # count all languages values
     articles_all = sum(languages.values())
     # ---
-    text = '{{:WPM:WikiProject Medicine/Total medical articles}}\n'
+    text = "{{:WPM:WikiProject Medicine/Total medical articles}}\n"
     # ---
-    text += f'Numbers are as {month} {year}. There are {articles_all:,} medical articles across {len(languages)} languages.\n'
-    text += '''{| class="sortable wikitable"\n!Lang\n!#\n|-'''
+    text += f"Numbers are as {month} {year}. There are {articles_all:,} medical articles across {len(languages)} languages.\n"
+    text += """{| class="sortable wikitable"\n!Lang\n!#\n|-"""
     # ---
     # sort languages by count
     languages = {k: v for k, v in sorted(languages.items(), key=lambda item: item[1], reverse=True)}
     # ---
     for lang, count in languages.items():
-        text += f'\n!{lang}\n|{count:,}\n|-'
+        text += f"\n!{lang}\n|{count:,}\n|-"
     # ---
-    text += '\n|}'
+    text += "\n|}"
     # ---
-    page = md_MainPage(title, 'www', family='mdwiki')
-    page.save(newtext=text, summary='update', nocreate=0, minor='')
+    page = md_MainPage(title, "www", family="mdwiki")
+    page.save(newtext=text, summary="update", nocreate=0, minor="")
 
 
 if __name__ == "__main__":

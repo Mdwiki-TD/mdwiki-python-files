@@ -1,7 +1,8 @@
-'''
+"""
 python pwb.py niosh/s
 python3 core8/pwb.py niosh/s
-'''
+"""
+
 import os
 from pathlib import Path
 import re
@@ -40,7 +41,7 @@ def work_in_file(filename):
     # ---
     tab = []
     # ---
-    for x in text.split('NN:'):
+    for x in text.split("NN:"):
         n += 1
         # ---
         if n == 1:
@@ -56,25 +57,25 @@ def work_in_file(filename):
             # printe.output(z)
             # if z match "^(\w\w):(.*?)$"
             z = z.strip()
-            mat = re.match(r'^(\w\w):(.*?)$', z)
+            mat = re.match(r"^(\w\w):(.*?)$", z)
             if mat:
                 na = mat.group(1)
                 na = nas_rep.get(na.lower(), na)
                 # ---
                 value = mat.group(2).strip()
-                value = re.sub(r'\s+', ' ', value)
+                value = re.sub(r"\s+", " ", value)
                 # ---
                 nan[na] = value
         # ---
         tab.append(nan)
         # ---
     # ---
-    lista = [x['url'].replace('http://', 'https://') for x in tab if x.get('url', '').find('cdc.gov/niosh/') != -1]
+    lista = [x["url"].replace("http://", "https://") for x in tab if x.get("url", "").find("cdc.gov/niosh/") != -1]
     lista = sorted(lista, key=lambda x: x.lower(), reverse=False)
     # ---
     lista = list(set(lista))
     # ---
-    cite_all_links[filename.replace('.txt', '')] = lista
+    cite_all_links[filename.replace(".txt", "")] = lista
     # ---
     with open(f"{filename2}.json", "w", encoding="utf-8") as ee:
         json.dump(tab, ee, ensure_ascii=False, indent=2)
@@ -82,10 +83,10 @@ def work_in_file(filename):
 
 # scan all txt files in Dir and work on them
 for filename in os.listdir(Dird):
-    if filename.endswith('.txt'):
+    if filename.endswith(".txt"):
         filename2 = os.path.join(Dird, filename)
         # ---
-        printe.output(f'filename: {filename2}..')
+        printe.output(f"filename: {filename2}..")
         # ---
         work_in_file(filename)
         # break

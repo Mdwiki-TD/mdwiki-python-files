@@ -33,4 +33,6 @@ my_password = lgpass_enwiki
 
 qs_token = config["DEFAULT"].get("qs_token", "")
 
-user_agent = config["DEFAULT"].get("user_agent", "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)")
+user_agent = config["DEFAULT"].get(
+    "user_agent", "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+)

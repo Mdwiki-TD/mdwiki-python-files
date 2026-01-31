@@ -22,10 +22,7 @@ def main():
     if "RTT" in cats:
         del cats["RTT"]
     # ---
-    videos_cats = [
-        "Videowiki scripts",
-        "RTTVideo"
-    ]
+    videos_cats = ["Videowiki scripts", "RTTVideo"]
     # ---
     for cat in cats.keys():
         # ---

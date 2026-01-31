@@ -14,6 +14,7 @@ from mdapi_sql import sql_for_mdwiki
 from after_translate.bots.fixcat import cat_for_pages
 from after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
 
+
 def add_new_row(mdtitle, lang, user, pupdate, target, word, cat):
     # ---
     mdtit = escape_string(mdtitle)
@@ -103,8 +104,8 @@ def add_to_mdwiki_sql(lange, tab, to_updatex):
     # ---
     printe.output("<<red>> add_to_mdwiki_sql:: ")
     # ---
-    ns0_pages = {x : va for x, va in tab.items() if str(va["namespace"]) == "0"}
-    ns2_pages = {x : va for x, va in tab.items() if str(va["namespace"]) != "0"}
+    ns0_pages = {x: va for x, va in tab.items() if str(va["namespace"]) == "0"}
+    ns2_pages = {x: va for x, va in tab.items() if str(va["namespace"]) != "0"}
     # ---
     add_to_pages_db(lange, ns0_pages, to_updatex)
     # ---

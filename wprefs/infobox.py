@@ -65,15 +65,15 @@ def Expend_Infobox(text, title, section_0):
     newtext = text
     # ---
     if not section_0:
-        if newtext.find('==') != -1:
-            section_0 = newtext.split('==')[0]
+        if newtext.find("==") != -1:
+            section_0 = newtext.split("==")[0]
         else:
             tagg = f"'''{title}'''"
             if newtext.find(tagg) != -1:
                 section_0 = newtext.split(tagg)[0]
             else:
                 section_0 = newtext
-                print_s('section_0 = newtext')
+                print_s("section_0 = newtext")
     # ---
     try:
         title2 = re.escape(title)
@@ -90,8 +90,8 @@ def Expend_Infobox(text, title, section_0):
     u = 0
     for temp in ingr:
         u += 1
-        name, namestrip, params, template = temp['name'], temp['namestrip'], temp['params'], temp['item']
-        if len(params) > 4 and section_0.find(f'>{template}') == -1:
+        name, namestrip, params, template = temp["name"], temp["namestrip"], temp["params"], temp["item"]
+        if len(params) > 4 and section_0.find(f">{template}") == -1:
             tempse_by_u[u] = temp
             # ---
             tempse[u] = len(template)
@@ -108,14 +108,14 @@ def Expend_Infobox(text, title, section_0):
         PP.sort(reverse=True)
         # ---
         for y2, u2 in PP:
-            print_s(f'len: {y2}, u2: {u2}')
+            print_s(f"len: {y2}, u2: {u2}")
             main_temp = tempse_by_u[u2]
             break
     # ---
     # work in main_temp:
     if main_temp != {}:
-        main_temp_text = main_temp.get('item', '')
-        params = main_temp.get('params', [])
+        main_temp_text = main_temp.get("item", "")
+        params = main_temp.get("params", [])
         # ---
         new_temp = expend_new(main_temp_text)
         # ---

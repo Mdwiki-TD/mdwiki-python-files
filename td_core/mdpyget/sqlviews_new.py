@@ -15,6 +15,7 @@ from newapi import printe
 from mdpyget.bots.to_sql import insert_dict, update_table_2
 
 from apis.mw_views import PageviewsClient
+
 view_bot = PageviewsClient()
 # new_data = view_bot.article_views_new(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')
 # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
@@ -46,7 +47,7 @@ def update_in_sql(lang, table):
             del tab["all"]
         # ---
         # years = {str(y) : x["all"] for y, x in tab.items() if str(y).isdigit() and x["all"] > 0}
-        years = {str(y) : x for y, x in tab.items() if str(y).isdigit() and x > 0}
+        years = {str(y): x for y, x in tab.items() if str(y).isdigit() and x > 0}
         # ---
         years2 = copy.deepcopy(years)
         # ---
@@ -64,7 +65,9 @@ def update_in_sql(lang, table):
     # ---
     update_table_2(new_data, "views_new", columns_to_set=["views"], columns_where=["target", "lang", "year"])
     # ---
-    insert_dict(to_insert, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", IGNORE=True)
+    insert_dict(
+        to_insert, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", IGNORE=True
+    )
 
 
 def insert_to_sql(lang, table):
@@ -75,11 +78,13 @@ def insert_to_sql(lang, table):
             del tab["all"]
         # ---
         # years = {y : x["all"] for y, x in tab.items() if y.isdigit() and x["all"] > 0}
-        years = {y : x for y, x in tab.items() if y.isdigit() and x > 0}
+        years = {y: x for y, x in tab.items() if y.isdigit() and x > 0}
         # ---
         data_list = [{"target": target, "lang": lang, "year": x, "views": views} for x, views in years.items()]
         # ---
-        insert_dict(data_list, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", IGNORE=True)
+        insert_dict(
+            data_list, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", IGNORE=True
+        )
 
 
 def get_targets(lang_o):
@@ -177,11 +182,7 @@ def main():
                 printe.output(", ".join(title_list))
             # ---
             new_data = view_bot.article_views_new(
-                f'{lange}.wikipedia',
-                title_list,
-                granularity='daily',
-                start=start,
-                end='20300101'
+                f"{lange}.wikipedia", title_list, granularity="daily", start=start, end="20300101"
             )
             # ---
             # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }

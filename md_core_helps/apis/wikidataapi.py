@@ -18,6 +18,7 @@ from newapi import printe
 from apis.wd_bots import wd_rest_new
 
 from apis.wd_bots.wikidataapi_post import post_it
+
 # from apis.wd_bots.wd_post_new import post_it
 
 Main_User = {1: ""}
@@ -87,7 +88,13 @@ def WD_Merge(q1, q2):
         else:
             printe.output("<<green>> ** true.")
             # ---
-            pams2 = {"action": "wbcreateredirect", "from": From, "to": To, "ignoreconflicts": "description", "summary": ""}
+            pams2 = {
+                "action": "wbcreateredirect",
+                "from": From,
+                "to": To,
+                "ignoreconflicts": "description",
+                "summary": "",
+            }
             # ---
             r5 = post_it(params=pams2, token=True)
             # ---
@@ -118,7 +125,9 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
     # ---
     if not Save_2020_wd["labels"] and "ask" in sys.argv:
         # ---
-        sa = ask_put(f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
+        sa = ask_put(
+            f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {Qid} Yes or No ? {Main_User[1]} '
+        )
         # ---
         if not sa:
             return False
@@ -169,7 +178,9 @@ def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
     # ---
     if not Save_2020_wd["descriptions"] and (ask is True or "ask" in sys.argv):
         # ---
-        sa = ask_put(f'<<lightyellow>> wikidataapi.py Add desc:<<lightyellow>>"{lang}:{desc}"<<default>> for {Qid} Yes or No ? {Main_User[1]} ')
+        sa = ask_put(
+            f'<<lightyellow>> wikidataapi.py Add desc:<<lightyellow>>"{lang}:{desc}"<<default>> for {Qid} Yes or No ? {Main_User[1]} '
+        )
         if not sa:
             return False
         # ---
@@ -216,7 +227,7 @@ def get_redirects(liste):
         if isinstance(liste, list):
             group = liste[i : i + 50]
         elif isinstance(liste, dict):
-            group = list(liste.keys())[i:i+50]
+            group = list(liste.keys())[i : i + 50]
         # ---
         group = [x for x in group if x]
         # ---
@@ -304,7 +315,13 @@ def Claim_API_str(qid, property, string):
     if string == "" or qid == "" or property == "":
         return ""
     # ---
-    params = {"action": "wbcreateclaim", "entity": qid, "snaktype": "value", "property": property, "value": json.JSONEncoder().encode(string)}
+    params = {
+        "action": "wbcreateclaim",
+        "entity": qid,
+        "snaktype": "value",
+        "property": property,
+        "value": json.JSONEncoder().encode(string),
+    }
     # ---
     if property == "P11143":
         params["summary"] = "([[:toollabs:editgroups/b/CB/p11143000|details]])"
@@ -407,9 +424,7 @@ def wbsearchentities(search, language, match_alias=False):
 
 
 if __name__ == "__main__":
-    qids = [
-        "Q4115189"
-    ]
+    qids = ["Q4115189"]
     # ---
     for q in qids:
         printe.output(f"<<blue>>_______\n{q} :")

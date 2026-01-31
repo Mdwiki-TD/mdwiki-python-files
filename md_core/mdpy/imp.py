@@ -22,27 +22,27 @@ offset = {1: 0}
 to_make = {}
 # ---
 for arg in sys.argv:
-    arg, _, value = arg.partition(':')
+    arg, _, value = arg.partition(":")
     # ---
-    if arg.lower() in ['offset', '-offset'] and value.isdigit():
+    if arg.lower() in ["offset", "-offset"] and value.isdigit():
         offset[1] = int(value)
 # ---
 # from export import * # export_en_history( title )
 # ---
-api_new = NEW_API('www', family='mdwiki')
+api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
 # pages   = api_new.Find_pages_exists_or_not(liste)
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 
 
-def work(title, num, length, From=''):
+def work(title, num, length, From=""):
     # ---
     printe.output(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
     # ---
-    page = MainPage(title, 'www', family='mdwiki')
+    page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         printe.output(f" page:{title} not exists in mdwiki.")
@@ -64,56 +64,56 @@ def work(title, num, length, From=''):
     # ---
     if done > 0:
         # ---
-        save_page = page.save(newtext=text, summary='', nocreate=1)
+        save_page = page.save(newtext=text, summary="", nocreate=1)
         # ---
         if save_page is not True:
-            title2 = f'User:Mr._Ibrahem/{title}'
+            title2 = f"User:Mr._Ibrahem/{title}"
             # ---
-            page2 = MainPage(title2, 'www', family='mdwiki')
-            save = page2.save(newtext=text, summary='Returns the article text after importing the history', nocreate=0)
+            page2 = MainPage(title2, "www", family="mdwiki")
+            save = page2.save(newtext=text, summary="Returns the article text after importing the history", nocreate=0)
 
 
 def main():
-    printe.output('*<<red>> > main:')
+    printe.output("*<<red>> > main:")
     # ---
     # python3 imp.py -page:Crohn's_disease
     # python imp.py -newpages:1000
     # python imp.py -newpages:20000
     # ---
-    page2 = ''
-    From = '0'
+    page2 = ""
+    From = "0"
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         arg = arg.lower()
         # ---
         if arg == "-from":
-            From = py_tools.ec_de_code(value, 'decode')
+            From = py_tools.ec_de_code(value, "decode")
         # ---
         if arg in ["-page2", "page2"]:
-            page2 = py_tools.ec_de_code(value, 'decode')
+            page2 = py_tools.ec_de_code(value, "decode")
     # ---
-    if page2 != '' and From != '':
+    if page2 != "" and From != "":
         work(page2, 0, 1, From=From)
     # ---
-    user = ''
-    user_limit = '3000'
+    user = ""
+    user_limit = "3000"
     # ---
     searchlist = {
         "drug": "insource:/https\\:\\/\\/druginfo\\.nlm\\.nih\\.gov\\/drugportal\\/name\\/lactulose/",
     }
     # ---
-    limite = 'max'
-    starts = ''
+    limite = "max"
+    starts = ""
     # ---
     pages = []
     # ---
-    namespaces = '0'
-    newpages = ''
+    namespaces = "0"
+    newpages = ""
     # ---
     for arg in sys.argv:
-        arg, _, value = arg.partition(':')
+        arg, _, value = arg.partition(":")
         # ---
         arg = arg.lower()
         # ---
@@ -127,10 +127,10 @@ def main():
             pages.append(value)
         # ---
         if arg in ["-page2", "page2"]:
-            value = py_tools.ec_de_code(value, 'decode')
+            value = py_tools.ec_de_code(value, "decode")
             pages.append(value)
         # ---
-        if arg in ['newpages', '-newpages']:
+        if arg in ["newpages", "-newpages"]:
             newpages = value
         # ---
         # python imp.py -ns:0 -usercontribs:Edoderoobot
@@ -139,7 +139,7 @@ def main():
             user = value
         # ---
         # python imp.py -start:!
-        if arg in ['start', '-start']:
+        if arg in ["start", "-start"]:
             starts = value
         # ---
         if arg == "-ns":
@@ -151,12 +151,12 @@ def main():
             # ---
             # if value == 'redirectlist.txt' :
             # ---
-            text2 = open(value, "r", 'utf8')
+            text2 = open(value, "r", "utf8")
             text = text2.read()
             pages.extend(x.strip() for x in text.split("\n"))
         # ---
         # python imp.py -ns:0 search:drug
-        if arg == 'search':
+        if arg == "search":
             if value in searchlist:
                 value = searchlist[value]
             # ---
@@ -168,7 +168,7 @@ def main():
     start_done = starts
     okay = True
     # ---
-    if starts == 'all':
+    if starts == "all":
         while okay:
             # ---
             if starts == start_done:
@@ -177,14 +177,14 @@ def main():
             # python imp.py -start:all
             #
             # ---
-            lista = api_new.Get_All_pages(start='', namespace=namespaces, limit=limite)
+            lista = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))
                 # ---
                 starts = page
     # ---
-    if starts != '':
+    if starts != "":
         listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
         for num, page in enumerate(listen, start=1):
             work(page, num, len(listen))
@@ -202,7 +202,7 @@ def main():
     for num, page in enumerate(lista, start=1):
         work(page, num, len(lista))
     # ---
-    if starts == 'all':
+    if starts == "all":
         while okay:
             # ---
             if starts == start_done:
@@ -211,13 +211,13 @@ def main():
             # python imp.py -start:all
             #
             # ---
-            lista = api_new.Get_All_pages(start='', namespace=namespaces, limit=limite)
+            lista = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))
                 # ---
                 starts = page
-    elif starts != '':
+    elif starts != "":
         # while start_done != starts :
         while okay:
             # ---

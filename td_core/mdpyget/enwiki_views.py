@@ -24,6 +24,7 @@ from mdpyget.pages_list import get_links_from_cats
 from mdpyget.bots.to_sql import to_sql
 from mdapi_sql import sql_for_mdwiki
 from apis.mw_views import PageviewsClient
+
 view_bot = PageviewsClient()
 
 if os.getenv("HOME"):
@@ -38,7 +39,7 @@ def make_n_views(en_keys, old_values):
     # ---
     en_keys = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in en_keys]
     # ---
-    enviews = view_bot.article_views_new('en.wikipedia', en_keys)
+    enviews = view_bot.article_views_new("en.wikipedia", en_keys)
     # ---
     # {'Yemen': {'all': 187379, '2025': 187379}, 'COVID-19': {'all': 230007, '2025': 230007}}
     # ---

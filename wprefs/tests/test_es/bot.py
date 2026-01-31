@@ -1,6 +1,7 @@
 """
 python3 core8/pwb.py wprefs/tests/test_es/bot
 """
+
 from wprefs.wpref_text import fix_page
 from wprefs.bots.es_months import fix_es_months
 

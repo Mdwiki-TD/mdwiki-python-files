@@ -10,7 +10,7 @@ from newapi import printe
 # from newapi.mdwiki_page import NEW_API
 # api_new = NEW_API("www", family="mdwiki")
 
-text = '''
+text = """
 {| class="wikitable sortable"
 ! Rank
 ! Page title
@@ -36,7 +36,7 @@ text = '''
 |}
 
 
-'''
+"""
 
 parsed = wtp.parse(text)
 

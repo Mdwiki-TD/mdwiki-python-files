@@ -5,6 +5,7 @@ tfj run stats --image python3.9 --command "$HOME/jobs/stats.sh"
 python3 core8/pwb.py stats/all2 ask
 
 """
+
 import json
 import os
 from pathlib import Path

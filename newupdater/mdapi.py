@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-"""
-
-"""
+""" """
 import sys
 import requests
+
 # ---
 import user_account_new
 
@@ -22,12 +21,12 @@ session["url"] = "https://mdwiki.org/w/api.php"
 
 
 def print_s(s):
-    if 'from_toolforge' not in sys.argv:
+    if "from_toolforge" not in sys.argv:
         print(s)
 
 
 def debug_print(s):
-    if 'from_toolforge' not in sys.argv:
+    if "from_toolforge" not in sys.argv:
         print(s, "</br>")
 
 
@@ -43,7 +42,7 @@ def login():
                 "meta": "tokens",
                 "type": "login",
             },
-            timeout=10
+            timeout=10,
         )
         r1.raise_for_status()
     except Exception as e:
@@ -60,7 +59,7 @@ def login():
                 "lgpassword": password,
                 "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
             },
-            timeout=10
+            timeout=10,
         )
     except Exception as e:
         debug_print(f"login to mdwiki.org Error {e}")
@@ -86,7 +85,7 @@ def login():
                 "action": "query",
                 "meta": "tokens",
             },
-            timeout=10
+            timeout=10,
         )
     except Exception as e:
         debug_print(f"login to mdwiki.org Error {e}")

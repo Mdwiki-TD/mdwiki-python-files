@@ -78,7 +78,9 @@ def get_all_pages_all_keys(lang=False, table="pages"):
 
 
 def get_db_categories():
-    return {c["category"]: c["depth"] for c in select_md_sql("select category, depth from categories;", return_dict=True)}
+    return {
+        c["category"]: c["depth"] for c in select_md_sql("select category, depth from categories;", return_dict=True)
+    }
 
 
 def get_db_users():

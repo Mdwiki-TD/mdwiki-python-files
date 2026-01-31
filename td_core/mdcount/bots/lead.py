@@ -35,15 +35,15 @@ def count_text(text):
     tem_text = re.sub(r"\d+", "", tem_text)
 
     # get counts of words
-    length = len(re.findall(r'\w+', tem_text))
+    length = len(re.findall(r"\w+", tem_text))
     # ---
     # print(f'count_text: {length}')
     return tem_text, length
 
 
-def count_all(title='', text=''):
+def count_all(title="", text=""):
     # ---
-    if text == '' and title != '':
+    if text == "" and title != "":
         text = mdwiki_api.GetPageText(title)
     # ---
     parsed = wtp.parse(text)
@@ -57,12 +57,12 @@ def count_all(title='', text=''):
     return leadword, pageword
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # ---
-    x = 'Spondyloperipheral dysplasia'
+    x = "Spondyloperipheral dysplasia"
     # ---
     leadword, pageword = count_all(title=x)
-    print(f'leadword: {leadword}, pageword: {pageword}')
+    print(f"leadword: {leadword}, pageword: {pageword}")
     # ---
     pageword2 = mdwiki_api.wordcount(x)
-    print(f'pageword2: {pageword2}')
+    print(f"pageword2: {pageword2}")

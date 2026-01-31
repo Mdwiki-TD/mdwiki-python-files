@@ -31,7 +31,7 @@ class Database:
                 host=_config.db_hostname_format.format("arwiki"),
                 read_default_file=_config.db_connect_file,
                 db=_config.db_name_format.format("arwiki"),
-                charset='utf8mb4',
+                charset="utf8mb4",
                 port=_config.db_port,
                 cursorclass=pymysql.cursors.DictCursor,
             )

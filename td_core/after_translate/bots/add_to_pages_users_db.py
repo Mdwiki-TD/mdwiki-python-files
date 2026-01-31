@@ -82,6 +82,7 @@ def update_row_new(mdtitle, lang, user, pupdate, target):
     # ---
     sql_for_mdwiki.mdwiki_sql(update_qua, values=values)
 
+
 def add_to_mdwiki_sql_users(lista):
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
@@ -114,18 +115,18 @@ def add_to_mdwiki_sql_users(lista):
             continue
         # ---
         update_row_new(mdtitle, lang, user, pupdate, target)
-        
 
 
 if __name__ == "__main__":
     # python3 core8/pwb.py after_translate/bots/add_to_pages_users_db pages_users
-    taba = [{
-        "mdtitle": "Pem'irolast", 
-        "lang": "hhh", 
-        "user": "Mina karacax", 
-        "pupdate": "2024-03-23", 
-        "target": "مستخدم:اليمن",
-        "add_date": "2024-04-14"
-    }
+    taba = [
+        {
+            "mdtitle": "Pem'irolast",
+            "lang": "hhh",
+            "user": "Mina karacax",
+            "pupdate": "2024-03-23",
+            "target": "مستخدم:اليمن",
+            "add_date": "2024-04-14",
+        }
     ]
     add_to_mdwiki_sql_users(taba)

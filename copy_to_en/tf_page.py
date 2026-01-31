@@ -5,11 +5,15 @@ from copy_to_en.tf_page import get_cx, get_md
 # CatDepth, MainPage = get_md()
 
 """
+
 from copy_to_en.bots import medwiki_account
+
+
 # ---
 def get_cx():
     # ---
     from newapi import toolforge_page as toolforge_page_cx
+
     # ---
     User_tables_cx = {
         "username": medwiki_account.username_cx,
@@ -23,9 +27,11 @@ def get_cx():
     # ---
     return CatDepth, MainPage
 
+
 def get_md():
     # ---
     from newapi import toolforge_page as toolforge_page_md
+
     # ---
     User_tables_md = {
         "username": medwiki_account.username,

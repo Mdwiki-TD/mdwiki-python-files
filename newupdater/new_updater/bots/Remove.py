@@ -1,6 +1,7 @@
 """
 from .bots.Remove import remove_cite_web, portal_remove
 """
+
 import re
 
 
@@ -23,7 +24,12 @@ def remove_cite_web(text, resources_get_NLM, line, title):
 
         # الوسيط غير موجود في القالب
         elif new_text.find("{{drug resources") != -1:
-            new_text = re.sub(r"\{\{drug resources", "{{drug resources\n<!--External links-->\n| NLM = {{PAGENAME}}", new_text, flags=re.IGNORECASE)
+            new_text = re.sub(
+                r"\{\{drug resources",
+                "{{drug resources\n<!--External links-->\n| NLM = {{PAGENAME}}",
+                new_text,
+                flags=re.IGNORECASE,
+            )
             if new_text.find("| NLM = {{PAGENAME}}") != -1:
                 new_text = new_text.replace(vas, "")  # حذف قالب الاستشهاد
 

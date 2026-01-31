@@ -40,12 +40,12 @@ def extract_templates_and_params(text):
     # ---
     parser_name = pra.__name__
     parsed = pra.parse(text)
-    if parser_name == 'wikitextparser':
+    if parser_name == "wikitextparser":
         templates = parsed.templates
-        arguments = 'arguments'
+        arguments = "arguments"
     else:
-        templates = parsed.ifilter_templates(matches=lambda x: not x.name.lstrip().startswith('#'), recursive=True)
-        arguments = 'params'
+        templates = parsed.ifilter_templates(matches=lambda x: not x.name.lstrip().startswith("#"), recursive=True)
+        arguments = "params"
     # ---
     for template in templates:
         # ---
@@ -54,13 +54,13 @@ def extract_templates_and_params(text):
         # ---
         name = template.name.strip()
         # ---
-        if parser_name == 'wikitextparser':
+        if parser_name == "wikitextparser":
             name = str(template.normal_name()).strip()
             pa_item = template.string
         else:
             pa_item = template.__str__()
         # ---
-        if not pa_item or pa_item.strip() == '':
+        if not pa_item or pa_item.strip() == "":
             continue
         # ---
         params = {}
@@ -73,10 +73,10 @@ def extract_templates_and_params(text):
         namestrip = name
         # ---
         ficrt = {
-            'name': f"قالب:{name}",
-            'namestrip': namestrip,
-            'params': params,
-            'item': pa_item,
+            "name": f"قالب:{name}",
+            "namestrip": namestrip,
+            "params": params,
+            "item": pa_item,
         }
         # ---
         result.append(ficrt)

@@ -6,6 +6,7 @@ from mdpy.bots import py_tools
 # py_tools.quoteurl(fao)
 # ---
 """
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -26,7 +27,7 @@ else:
 
         .. versionadded:: 5.4
         """
-        return string[len(prefix):] if string.startswith(prefix) else string
+        return string[len(prefix) :] if string.startswith(prefix) else string
 
     def removesuffix(string: str, suffix: str) -> str:
         """Remove prefix from a string or return a copy otherwise.
@@ -64,10 +65,10 @@ def Decode_bytes(x):
 
 def ec_de_code(tt, Type):
     fao = tt
-    if Type == 'encode':
+    if Type == "encode":
         # fao = encode_arabic(tt)
         fao = urllib.parse.quote(tt)
-    elif Type == 'decode':
+    elif Type == "decode":
         fao = urllib.parse.unquote(tt)
     return fao
 

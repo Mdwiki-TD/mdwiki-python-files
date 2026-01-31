@@ -66,9 +66,13 @@ def start():
     # ---
     mdtitle_exists, c_not_exists = check_all(list(targets_exists.values()))
     # ---
-    printe.output(f"<<yellow>> check targets({len(targets_to_titles)}) exists:{len(pages):,} not_exists:{len(p_not_exists):,}")
+    printe.output(
+        f"<<yellow>> check targets({len(targets_to_titles)}) exists:{len(pages):,} not_exists:{len(p_not_exists):,}"
+    )
     # ---
-    printe.output(f"<<yellow>> check mdwikis({len(targets_exists)}) exists:{len(mdtitle_exists):,} not_exists:{len(c_not_exists):,}")
+    printe.output(
+        f"<<yellow>> check mdwikis({len(targets_exists)}) exists:{len(mdtitle_exists):,} not_exists:{len(c_not_exists):,}"
+    )
     # ---
     to_work = {x: v for x, v in targets_exists.items() if v in c_not_exists}
     # ---

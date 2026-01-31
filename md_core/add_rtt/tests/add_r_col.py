@@ -8,7 +8,7 @@ from newapi import printe
 
 from add_rtt.r_column_bots.pup_table import add_to_tables
 
-text = '''
+text = """
 {| class="wikitable sortable"
 ! Rank
 ! Page title
@@ -33,7 +33,7 @@ text = '''
 |-
 |}
 
-'''
+"""
 
 new_text = add_to_tables(text, pages=[""])
 

@@ -5,6 +5,7 @@ python3 pwb.py newupdater/med Retinol from_toolforge
 
 """
 import re
+
 # ---
 from .bots import expend  # expend_infoboxs_and_fix(text)
 from .bots import expend_new  # expend_infoboxs(text)
@@ -15,6 +16,7 @@ from .mv_section import move_External_links_section
 from .drugbox import TextProcessor
 from .resources_new import move_resources
 from .chembox import fix_Chembox
+
 # ---
 lkj = r"<!--\s*(Monoclonal antibody data|External links|Names*|Clinical data|Legal data|Legal status|Pharmacokinetic data|Chemical and physical data|Definition and medical uses|Chemical data|Chemical and physical data|index_label\s*=\s*Free Base|\w+ \w+ data|\w+ \w+ \w+ data|\w+ data|\w+ status|Identifiers)\s*-->"
 # ---
@@ -44,7 +46,9 @@ def drugbox_work(new_text, text):
     # ---
     drug_box_new = re.sub(r"\n\s*\n\s*[\n\s]+", "\n\n", drug_box_new, flags=re.DOTALL | re.MULTILINE)
     # ---
-    drug_box_new = re.sub(r"{{(Infobox drug|Drugbox|drug resources)\s*\n*", r"{{\g<1>\n", drug_box_new, flags=re.DOTALL | re.MULTILINE)
+    drug_box_new = re.sub(
+        r"{{(Infobox drug|Drugbox|drug resources)\s*\n*", r"{{\g<1>\n", drug_box_new, flags=re.DOTALL | re.MULTILINE
+    )
     # ---
     if new_text.find(drugbox_text) == -1 and new_text.find(drugbox_text.strip()) == -1:
         echo_debug("drugbox_work", "can't find old (drugbox_text) in new_text, return original text")
@@ -53,7 +57,9 @@ def drugbox_work(new_text, text):
     # replace the old drugbox by newdrugbox
     new_text = new_text.replace(drugbox_text, drug_box_new)
     # ---
-    new_text = re.sub(r"\{\{(Infobox drug|Drugbox|drug resources)\s*\<\!", r"{{\g<1>\n<!", new_text, flags=re.IGNORECASE)
+    new_text = re.sub(
+        r"\{\{(Infobox drug|Drugbox|drug resources)\s*\<\!", r"{{\g<1>\n<!", new_text, flags=re.IGNORECASE
+    )
     # ---
     return new_text
 

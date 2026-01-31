@@ -25,6 +25,7 @@ from mdcount.bots.links import get_links_from_cats
 from mdapi_sql import sql_for_mdwiki
 from mdcount.ref_words_bot import logaa, make_old_values, do_to_sql, get_jsons_new
 from mdcount.bots.countref_bots import count_ref_from_text
+
 # ---
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
@@ -77,7 +78,7 @@ def from_sql(old_values):
 
 def get_links(ty="ref"):
     # ---
-    titles=[]
+    titles = []
     # ---
     old_values = make_old_values(tab_data["all"], tab_data["lead"])
     # ---
@@ -117,10 +118,10 @@ def main():
     vaild_links = []
     # ---
     for arg in sys.argv:
-        arg, _, value=arg.partition(":")
+        arg, _, value = arg.partition(":")
         # ---
         if arg == "-title":
-            vaild_links=[value.replace("_", " ")]
+            vaild_links = [value.replace("_", " ")]
     # ---
     if not vaild_links:
         vaild_links = get_links()
@@ -129,8 +130,8 @@ def main():
         # ---
         x = x.replace("\\'", "'")
         # ---
-        printe.output('------------------')
-        printe.output(f'page {numb} from {len(vaild_links)}, x:{x}')
+        printe.output("------------------")
+        printe.output(f"page {numb} from {len(vaild_links)}, x:{x}")
         # ---
         if numb >= limit:
             break
@@ -150,11 +151,11 @@ def main():
 def test():
     # python3 core8/pwb.py mdcount/countref test
     # ---
-    tab_data["lead"]["Yemen1"]=50
-    tab_data["all"]["Yemen1"]=50
+    tab_data["lead"]["Yemen1"] = 50
+    tab_data["all"]["Yemen1"] = 50
     # ---
-    tab_data["lead"]["Sana'a"]=500
-    tab_data["all"]["Sana'a"]=100
+    tab_data["lead"]["Sana'a"] = 500
+    tab_data["all"]["Sana'a"] = 100
     # ---
     start_to_sql()
 
@@ -167,6 +168,6 @@ if __name__ == "__main__":
     main()
     # ---
     if "sql" not in sys.argv:
-        sys.argv.append('sql')
+        sys.argv.append("sql")
         # ---
         main()

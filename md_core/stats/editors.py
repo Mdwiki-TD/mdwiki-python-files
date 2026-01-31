@@ -3,6 +3,7 @@
 from stats.editors import get_editors
 
 """
+
 import json
 import re
 import os
@@ -63,7 +64,9 @@ def get_editors_sql(links, site, split_by=100):
     # ---
     editors = {}
     # ---
-    for i in tqdm.tqdm(range(0, len(links), split_by), desc=f"get_editors_sql site:{site}", total=len(links) // split_by):
+    for i in tqdm.tqdm(
+        range(0, len(links), split_by), desc=f"get_editors_sql site:{site}", total=len(links) // split_by
+    ):
         # ---
         pages = links[i : i + split_by]
         # ---

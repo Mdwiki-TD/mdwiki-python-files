@@ -208,7 +208,9 @@ def add_tab_to_wd(table):
         number = 0
         # ---
         for tt in tab:
-            tabe = tab[tt]  # {"mdtitle": md_title.replace("'" , "\'") , "target": target, "user":user.replace("'" , "\'"),"lang":lange}
+            tabe = tab[
+                tt
+            ]  # {"mdtitle": md_title.replace("'" , "\'") , "target": target, "user":user.replace("'" , "\'"),"lang":lange}
             # ---
             mdtitle = tabe["mdtitle"]
             lang = tabe["lang"]

@@ -110,7 +110,12 @@ def replace_links2(text, oldlink, newlink):
     # ---
     oldlink2 = normalized.get(oldlink, oldlink)
     # ---
-    while text.find(f"[[{oldlink}]]") != -1 or text.find(f"[[{oldlink}|") != -1 or text.find(f"[[{oldlink2}]]") != -1 or text.find(f"[[{oldlink2}|") != -1:
+    while (
+        text.find(f"[[{oldlink}]]") != -1
+        or text.find(f"[[{oldlink}|") != -1
+        or text.find(f"[[{oldlink2}]]") != -1
+        or text.find(f"[[{oldlink2}|") != -1
+    ):
         # ---
         printe.output(f"text.replace( '[[{oldlink}]]' , '[[{newlink}|{oldlink}]]' )")
         # ---

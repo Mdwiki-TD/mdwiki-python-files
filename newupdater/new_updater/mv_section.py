@@ -15,9 +15,9 @@ class move_External_links_section:
         # ---
         self.sections = self.parser.get_sections(include_subsections=True)
         # ---
-        self.ext_sec = ''
-        self.new_ext_sec = ''
-        self.last_sec = ''
+        self.ext_sec = ""
+        self.new_ext_sec = ""
+        self.last_sec = ""
         # ---
         self.run()
 
@@ -39,13 +39,15 @@ class move_External_links_section:
         # ---
         echo_debug("add_ext_section")
         # ---
-        categoryPattern = r'\[\[\s*(Category)\s*:[^\n]*\]\]\s*'
-        interwikiPattern = r'\[\[([a-zA-Z\-]+)\s?:([^\[\]\n]*)\]\]\s*'
-        templatePattern = r'\r?\n{{((?!}}).)+?}}\s*'
-        commentPattern = r'<!--((?!-->).)*?-->\s*'
+        categoryPattern = r"\[\[\s*(Category)\s*:[^\n]*\]\]\s*"
+        interwikiPattern = r"\[\[([a-zA-Z\-]+)\s?:([^\[\]\n]*)\]\]\s*"
+        templatePattern = r"\r?\n{{((?!}}).)+?}}\s*"
+        commentPattern = r"<!--((?!-->).)*?-->\s*"
         # ---
         # metadataR = re.compile(fr'(\r?\n)?({categoryPattern}|{interwikiPattern}|{commentPattern})$', re.DOTALL)
-        metadataR = re.compile(fr'(\r?\n)?({categoryPattern}|{interwikiPattern}|{templatePattern}|{commentPattern})$', re.DOTALL)
+        metadataR = re.compile(
+            rf"(\r?\n)?({categoryPattern}|{interwikiPattern}|{templatePattern}|{commentPattern})$", re.DOTALL
+        )
         # ---
         tmpText = self.text_to_work
         # ---
@@ -57,7 +59,9 @@ class move_External_links_section:
         # ---
         index = len(tmpText)
         # ---
-        newtext = f'{self.text_to_work[:index].rstrip()}\n\n{self.new_ext_sec.strip()}\n\n{self.text_to_work[index:].strip()}'
+        newtext = (
+            f"{self.text_to_work[:index].rstrip()}\n\n{self.new_ext_sec.strip()}\n\n{self.text_to_work[index:].strip()}"
+        )
         # ---
         self.new_text = newtext
 
@@ -65,14 +69,14 @@ class move_External_links_section:
         # ---
         echo_debug("get_sects")
         # ---
-        last = ''
+        last = ""
         # ---
         for n, s in enumerate(self.sections, start=-1):
             # ---
             t = s.title
             c = s.contents
             # ---
-            if t and t.strip().lower() == 'external links':
+            if t and t.strip().lower() == "external links":
                 self.ext_sec = str(s)
                 self.new_ext_sec = str(s)
                 # ---
@@ -83,17 +87,17 @@ class move_External_links_section:
         if not self.ext_sec:
             return
         # ---
-        self.text_to_work = self.text_to_work.replace(str(self.ext_sec), '')
+        self.text_to_work = self.text_to_work.replace(str(self.ext_sec), "")
         # ---
         self.last_sec = last
         # ---
-        if self.last_sec.title.lower().strip() == 'references':
+        if self.last_sec.title.lower().strip() == "references":
             l_c = self.last_sec.contents
             # ---
-            echo_debug("get_sects", f'title: {self.last_sec.title}')
-            echo_debug("get_sects", f'contents: {l_c}')
+            echo_debug("get_sects", f"title: {self.last_sec.title}")
+            echo_debug("get_sects", f"contents: {l_c}")
             # ---
-            mata = re.search(r'^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}', l_c, flags=re.IGNORECASE)
+            mata = re.search(r"^{{reflist(?:[^{]|{[^{]|{{[^{}]+}}|)+}}", l_c, flags=re.IGNORECASE)
             # ---
             if mata:
                 # ---
@@ -106,11 +110,11 @@ class move_External_links_section:
                 # echo_debug("get_sects", f'l_c2 : {l_c2}')
                 # ---
                 g = mata.group()
-                g_to = f'== {self.last_sec.title.strip()} ==\n{g}\n'
+                g_to = f"== {self.last_sec.title.strip()} ==\n{g}\n"
                 # ---
-                echo_debug("get_sects", f'g_to: {g_to}')
+                echo_debug("get_sects", f"g_to: {g_to}")
                 # ---
-                self.ext_sec = f'{g_to}\n{self.ext_sec}'
+                self.ext_sec = f"{g_to}\n{self.ext_sec}"
                 self.new_ext_sec = self.ext_sec
                 # ---
                 self.text_to_work = self.text_to_work.replace(str(self.last_sec).strip(), l_c2.strip())
@@ -119,6 +123,6 @@ class move_External_links_section:
         # ---
         echo_debug("make_new_txt")
         # ---
-        self.new_text = re.sub(r'\n\s*\[\[Category', '\n[[Category', self.new_text, flags=re.DOTALL | re.MULTILINE)
+        self.new_text = re.sub(r"\n\s*\[\[Category", "\n[[Category", self.new_text, flags=re.DOTALL | re.MULTILINE)
         # ---
         return self.new_text

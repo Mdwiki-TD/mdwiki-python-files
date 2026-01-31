@@ -9,14 +9,13 @@ from mdpyget.bots.to_sql import to_sql
 # ---
 import sys
 import tqdm
+
 # from pymysql.converters import escape_string
 # ---
 from mdapi_sql import sql_for_mdwiki
 from mdapi_sql import sql_for_mdwiki_new
 
-new_tables = [
-    "all_exists", "all_articles", "all_qids_exists", "all_articles_titles", "all_qids", "all_qids_titles"
-]
+new_tables = ["all_exists", "all_articles", "all_qids_exists", "all_articles_titles", "all_qids", "all_qids_titles"]
 
 
 def mdwiki_sql_one_table(table_name, query, **kwargs):
@@ -41,7 +40,7 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
     # ---
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
-        tab = list_of_lines[i: i + lento]
+        tab = list_of_lines[i : i + lento]
         # ---
         values = []
         # ---
@@ -92,7 +91,7 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
     # ---
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
-        tab = list_of_lines[i: i + lento]
+        tab = list_of_lines[i : i + lento]
         # ---
         for vav in tab:
             # ---
@@ -122,7 +121,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
     # ---
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
         # ---
-        tab = list_of_lines[i: i + lento]
+        tab = list_of_lines[i : i + lento]
         # ---
         for vav in tab:
             # ---
@@ -143,7 +142,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
 
 def to_sql(data, table_name, columns, title_column="title", update_columns=None, IGNORE=False):
     # ---
-    que = f'''select DISTINCT * from {table_name};'''
+    que = f"""select DISTINCT * from {table_name};"""
     # ---
     in_sql = {}
     # ---
@@ -165,7 +164,7 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
             are_the_same = True
             # ---
             for c in columns:
-                if str(in_sql[key].get(c, '')) != str(values.get(c, '')):
+                if str(in_sql[key].get(c, "")) != str(values.get(c, "")):
                     # new_data_update[key] = values
                     new_data_update.append(values)
                     are_the_same = False
@@ -191,7 +190,7 @@ def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["titl
     if not data:
         return
     # ---
-    que = f'''select DISTINCT * from {table_name};'''
+    que = f"""select DISTINCT * from {table_name};"""
     # ---
     in_sql = {}
     # ---
@@ -214,7 +213,7 @@ def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["titl
             are_the_same = True
             # ---
             for c in columns:
-                if str(in_sql[key].get(c, '')) != str(values.get(c, '')):
+                if str(in_sql[key].get(c, "")) != str(values.get(c, "")):
                     # new_data_update[key] = values
                     new_data_update.append(values)
                     are_the_same = False
@@ -233,4 +232,6 @@ def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["titl
     else:
         insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], IGNORE=IGNORE)
         # ---
-        update_table_2(new_data_update, table_name, columns_to_set=update_columns, lento=100, columns_where=title_columns)
+        update_table_2(
+            new_data_update, table_name, columns_to_set=update_columns, lento=100, columns_where=title_columns
+        )

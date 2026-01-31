@@ -1,6 +1,7 @@
 """
 from wprefs.bots.fix_pt_months import pt_months
 """
+
 import sys
 import re
 import wikitextparser as wtp
@@ -8,18 +9,18 @@ import wikitextparser as wtp
 # ---
 # ---
 months = {
-    'January': 'janeiro',
-    'February': 'fevereiro',
-    'March': 'março',
-    'April': 'abril',
-    'May': 'maio',
-    'June': 'junho',
-    'July': 'julho',
-    'August': 'agosto',
-    'September': 'setembro',
-    'October': 'outubro',
-    'November': 'novembro',
-    'December': 'dezembro',
+    "January": "janeiro",
+    "February": "fevereiro",
+    "March": "março",
+    "April": "abril",
+    "May": "maio",
+    "June": "junho",
+    "July": "julho",
+    "August": "agosto",
+    "September": "setembro",
+    "October": "outubro",
+    "November": "novembro",
+    "December": "dezembro",
 }
 # ---
 months_lower = {k.lower(): v for k, v in months.items()}
@@ -31,22 +32,22 @@ def make_new_val(val):
     newval = val
     # match month and year
     # ---
-    maa = r'^(?P<d>\d{1,2} |)(?P<m>%s) (?P<y>\d{4})$' % months_line
+    maa = r"^(?P<d>\d{1,2} |)(?P<m>%s) (?P<y>\d{4})$" % months_line
     # match date like : January 10, 2020
-    maa2 = r'^(?P<m>%s) (?P<d>\d{1,2}), (?P<y>\d{4})$' % months_line
+    maa2 = r"^(?P<m>%s) (?P<d>\d{1,2}), (?P<y>\d{4})$" % months_line
     # ---
     sas = re.search(maa, val.strip())
     if sas:
-        d = sas.group('d')
-        m = sas.group('m')
-        y = sas.group('y')
+        d = sas.group("d")
+        m = sas.group("m")
+        y = sas.group("y")
         # ---
-        pt_m = months_lower.get(m.lower(), '')
+        pt_m = months_lower.get(m.lower(), "")
         # ---
-        if pt_m != '':
+        if pt_m != "":
             # ---
-            if d != '':
-                pt_m = f'de {pt_m}'
+            if d != "":
+                pt_m = f"de {pt_m}"
             # ---
             newval = f"{d} {pt_m} {y}"
         # ---
@@ -55,16 +56,16 @@ def make_new_val(val):
     sas2 = re.search(maa2, newval.strip())
     # ---
     if sas2:
-        d = sas2.group('d')
-        m = sas2.group('m')
-        y = sas2.group('y')
+        d = sas2.group("d")
+        m = sas2.group("m")
+        y = sas2.group("y")
         # ---
-        pt_m = months_lower.get(m.lower(), '')
+        pt_m = months_lower.get(m.lower(), "")
         # ---
-        if pt_m != '':
+        if pt_m != "":
             # ---
-            if d != '':
-                pt_m = f'de {pt_m}'
+            if d != "":
+                pt_m = f"de {pt_m}"
             # ---
             newval = f"{d} {pt_m} {y}"
         # ---
@@ -78,14 +79,14 @@ def pt_months(text):
     tags = parsed.get_tags()
     # ---
     for x in tags:
-        if 'dd' in sys.argv:
-            print('--------------------------------')
+        if "dd" in sys.argv:
+            print("--------------------------------")
             print(str(x))
             print(dir(x))
         # ---
         if not x or not x.name:
             continue
-        if x.name != 'ref':
+        if x.name != "ref":
             continue
         if not x.contents:
             continue

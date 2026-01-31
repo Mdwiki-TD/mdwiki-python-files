@@ -114,7 +114,9 @@ def Cat_Depth(title, depth=0, ns="all", print_s=True):
     # ---
     delta = round(delta, 5)
     # ---
-    printe.output(f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) ns:{ns} in {title}, depth:{depth} in {delta} seconds")
+    printe.output(
+        f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) ns:{ns} in {title}, depth:{depth} in {delta} seconds"
+    )
     # ---
     return list(result_table.keys())
 

@@ -10,6 +10,7 @@ import os
 import json
 import tqdm
 import sys
+
 # ---
 from mdapi_sql import sql_for_mdwiki_new
 from mdpyget.bots.to_sql import insert_dict
@@ -23,7 +24,7 @@ else:
 cash_exists = Dashboard_path + "/Tables/cash_exists"
 json_files = [f for f in os.listdir(cash_exists) if f.endswith(".json")]
 
-que = '''select DISTINCT article_id, code from all_exists;'''
+que = """select DISTINCT article_id, code from all_exists;"""
 # ---
 in_sql = {}
 # ---

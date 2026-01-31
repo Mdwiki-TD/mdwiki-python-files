@@ -3,6 +3,7 @@
 python3 core8/pwb.py priorviews/langs -lang:ar write ask
 
 """
+
 import sys
 import json
 from pathlib import Path
@@ -33,17 +34,17 @@ translators_all = {}
 # ---
 tab_new = {}
 # ---
-tab_new['links'] = {}
+tab_new["links"] = {}
 # ---
 for section, links in sects_links_langlinks.items():
     # ---
     for x in links:
-        tab_new['links'][x] = {'section': section, 'words': 0, 'views': 0}
+        tab_new["links"][x] = {"section": section, "words": 0, "views": 0}
     # ---
 # ---
-sql_file = f'{Dir}/lists/tab_new.json'
+sql_file = f"{Dir}/lists/tab_new.json"
 # ---
-tab_new['translates'] = []  # ['mdtitle', 'target', 'lang', 'views', 'words', 'translator', 'type']
+tab_new["translates"] = []  # ['mdtitle', 'target', 'lang', 'views', 'words', 'translator', 'type']
 
 
 def authors_table(authors, lang):
@@ -58,7 +59,7 @@ def authors_table(authors, lang):
     # sort tab2 by keys
     tab2 = dict(sorted(tab2.items(), key=lambda item: item[0], reverse=True))
     # ---
-    authors_text = '{| class=wikitable sortable\n|-\n!count!!users\n|-\n'
+    authors_text = "{| class=wikitable sortable\n|-\n!count!!users\n|-\n"
     # ---
     lang_cunt = 0
     # ---
@@ -69,12 +70,12 @@ def authors_table(authors, lang):
         # ---
         users.sort()
         # ---
-        usrs_line = ', '.join([helps.talk_url(lang, x, x) for x in users])
+        usrs_line = ", ".join([helps.talk_url(lang, x, x) for x in users])
         # ---
-        authors_text += f'\n! {cunts} \n| {usrs_line}\n|-'
+        authors_text += f"\n! {cunts} \n| {usrs_line}\n|-"
         # ---
     # ---
-    authors_text += '\n|}'
+    authors_text += "\n|}"
     # ---
     return authors_text
 
@@ -84,7 +85,7 @@ def make_lang_textso(lang):
     authors = {}
     authors_2 = {}
     # ---
-    secs_texts = '==by section=='
+    secs_texts = "==by section=="
     lang_views = 0
     lang_words = 0
     # ---
@@ -103,12 +104,12 @@ def make_lang_textso(lang):
         # ---
         # diff = len(links) - len(tab)
         # ---
-        secs_texts += f'\n==={section}===\n'
-        secs_texts += f'* section links: {len(links)}\n'
-        secs_texts += f'* with ({lang}) translations: {len(tab)}'
+        secs_texts += f"\n==={section}===\n"
+        secs_texts += f"* section links: {len(links)}\n"
+        secs_texts += f"* with ({lang}) translations: {len(tab)}"
         # ---
         if len(tab) > 0:
-            secs_texts += '\n\n'
+            secs_texts += "\n\n"
             # ---
             head_table = '{| class="wikitable sortable mw-collapsible mw-collapsed plainrowheaders"\n|-\n'
             # ---
@@ -116,7 +117,7 @@ def make_lang_textso(lang):
                 head_table = '{| class="wikitable sortable"\n|-\n'
             # ---
             secs_texts += head_table
-            secs_texts += f'! # !! title !! {lang} !! views !! words !! translator !! creator !! time\n|-\n'
+            secs_texts += f"! # !! title !! {lang} !! views !! words !! translator !! creator !! time\n|-\n"
             # ---
             n = 0
             # ---
@@ -134,35 +135,35 @@ def make_lang_textso(lang):
                 # ---
                 lang_words += arwords
                 # ---
-                ar_tra = translators.tra_by_lang.get(lang, {}).get(ar.lower(), '')
+                ar_tra = translators.tra_by_lang.get(lang, {}).get(ar.lower(), "")
                 # ---
                 _creat = creators.Creators_by_lang_title.get(lang, {}).get(ar, {})
                 _creat_user = _creat.get("actor", "")
                 # ---
                 _time_x = _creat.get("time", "")
                 # ---
-                if _time_x != '':
+                if _time_x != "":
                     # Convert _time_x to a datetime object
-                    datetime_obj = datetime.datetime.strptime(str(_time_x), '%Y%m%d%H%M%S')
-                    _time_x = datetime_obj.strftime('%Y-%m-%d')
+                    datetime_obj = datetime.datetime.strptime(str(_time_x), "%Y%m%d%H%M%S")
+                    _time_x = datetime_obj.strftime("%Y-%m-%d")
                 # ---
-                _cr_ = ''
+                _cr_ = ""
                 # ---
-                tr_type = ''
+                tr_type = ""
                 # ---
                 if not ar_tra:
-                    ar_tra = creators_as_translators.get(lang, {}).get(ar, '')
-                    if ar_tra != '':
-                        tr_type = 'creator'
+                    ar_tra = creators_as_translators.get(lang, {}).get(ar, "")
+                    if ar_tra != "":
+                        tr_type = "creator"
                 else:
-                    tr_type = 'translator'
+                    tr_type = "translator"
                 # ---
-                if _creat_user != '' and ar_tra == '':
+                if _creat_user != "" and ar_tra == "":
                     _cr_ = f"[[w:{lang}:User:{_creat_user}|{_creat_user}]]"
                 # ---
                 wi_tra = ar_tra
                 # ---
-                if ar_tra != '':
+                if ar_tra != "":
                     tr_all += 1
                     # ---
                     wi_tra = f"[[w:{lang}:User:{ar_tra}|{ar_tra}]]"
@@ -176,31 +177,39 @@ def make_lang_textso(lang):
                     authors_2[ar_tra] += 1
                     # ---
                     if ar_tra not in translators_all:
-                        translators_all[ar_tra] = {'all': 0, 'by_lang': {}}
+                        translators_all[ar_tra] = {"all": 0, "by_lang": {}}
                     # ---
-                    if lang not in translators_all[ar_tra]['by_lang']:
-                        translators_all[ar_tra]['by_lang'][lang] = 0
-                    translators_all[ar_tra]['by_lang'][lang] += 1
+                    if lang not in translators_all[ar_tra]["by_lang"]:
+                        translators_all[ar_tra]["by_lang"][lang] = 0
+                    translators_all[ar_tra]["by_lang"][lang] += 1
                     # ---
-                    translators_all[ar_tra]['all'] += 1
+                    translators_all[ar_tra]["all"] += 1
                 # ---
-                fafo = {'mdtitle': x, 'target': ar, 'lang': lang, 'views': arviews, 'words': arwords, 'translator': ar_tra, 'tr_type': tr_type}
+                fafo = {
+                    "mdtitle": x,
+                    "target": ar,
+                    "lang": lang,
+                    "views": arviews,
+                    "words": arwords,
+                    "translator": ar_tra,
+                    "tr_type": tr_type,
+                }
                 # ---
-                tab_new['translates'].append(fafo)
+                tab_new["translates"].append(fafo)
                 # ---
                 secs_texts += f"| {n} || [[{x}]] || [[w:{lang}:{ar}|{ar}]] || {view_u} || {arwords} || {wi_tra} || {_cr_} || {_time_x}\n"
             # ---
             secs_texts += "|}\n"
     # ---
     newtext = f"[https://:{lang}.wikipedia.org {lang}.wikipedia.org] statistics:\n"
-    newtext += f'* All links: {all_links:,}\n'
-    newtext += f'** With ({lang}) translations: {all_links_with_ar:,}\n'
+    newtext += f"* All links: {all_links:,}\n"
+    newtext += f"** With ({lang}) translations: {all_links_with_ar:,}\n"
     newtext += f"*** With translators: {tr_all:,}\n"
     # if TD_all > 0:
     # newtext += f"*** Articles translated by Translation Dashboard: {TD_all:,}\n"
-    newtext += f'* Views: {lang_views:,} (from July 2015 to June 2023)\n'
-    newtext += f'* Words: {lang_words:,}\n'
-    newtext += '\n'
+    newtext += f"* Views: {lang_views:,} (from July 2015 to June 2023)\n"
+    newtext += f"* Words: {lang_words:,}\n"
+    newtext += "\n"
     # ----
     print(newtext)
     # ----
@@ -221,19 +230,19 @@ def work(lang):
     # ---
     newtext = make_lang_textso(lang)
     # ---
-    if 'write' not in sys.argv:
+    if "write" not in sys.argv:
         return
     # ---
-    page = md_MainPage(f'User:Mr. Ibrahem/priorviews/bylang/{lang}', 'www', family='mdwiki')
+    page = md_MainPage(f"User:Mr. Ibrahem/priorviews/bylang/{lang}", "www", family="mdwiki")
     exists = page.exists()
     text = page.get_text()
     if not exists:
-        create = page.Create(text=newtext, summary='update')
+        create = page.Create(text=newtext, summary="update")
     elif text != newtext:
         # ---
-        save_page = page.save(newtext=newtext, summary='update', nocreate=1, minor='')
+        save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
     else:
-        print('no change')
+        print("no change")
 
     # ---
 
@@ -256,7 +265,7 @@ if __name__ == "__main__":
     # ---
     for lang in langs:
         n += 1
-        printe.output(f'<<yellow>> {n}/{lenn} langs.py lang: {lang}')
+        printe.output(f"<<yellow>> {n}/{lenn} langs.py lang: {lang}")
         # ---
         work(lang)
     # ---

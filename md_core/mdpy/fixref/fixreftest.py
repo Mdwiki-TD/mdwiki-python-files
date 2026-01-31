@@ -1,7 +1,8 @@
-'''
+"""
 python3 core8/pwb.py mdpy/fixref/fixreftest
-'''
-import printe
+"""
+
+# import printe
 from mdpy.fixref.fixref_text_new import fix_ref_template
 
 # ---
@@ -59,7 +60,7 @@ text = """
     [[Category:Pituitary disorders]]
     [[Category:RTT]]"""
 # ---
-text = '''
+text = """
 <ref>{{cite journal
 | vauthors = Grant JE, Kim SW, Odlaug BL
 | url =  https://pubmed.ncbi.nlm.nih.gov/19217077/
@@ -67,12 +68,12 @@ text = '''
 | lay-url = https://www.sciencedaily.com/releases/2009/04/090401101900.htm
 | lay-source = Science Daily
 }}</ref>
-'''
+"""
 
 
 def test():
     newtext = fix_ref_template(text)
-    printe.showDiff(text, newtext)
+    # printe.showDiff(text, newtext)
 
 
 # ---

@@ -1,7 +1,5 @@
 #
-"""
-
-"""
+""" """
 import wikitextparser as wtp
 
 from .lists.chem_params import rename_chem_params

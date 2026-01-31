@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-
-"""
+""" """
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -24,7 +22,7 @@ Session = requests.Session()
 La_si = {1: 2500000}
 # ---
 for arg in sys.argv:
-    arg, _, value = arg.partition(':')
+    arg, _, value = arg.partition(":")
     # ---
     if arg == "-lasi" or arg == "lasi" and value.isdigit():
         printe.output('<<yellow>> change La_si[1] from "%d" to %s' % (La_si[1], value))
@@ -40,16 +38,16 @@ himoBOT3.log(f"https://en.wikipedia.org/w/api.php")
 
 def export_en_history(title):
     paramse = {
-        'pages': title,
-        'title': 'Special:Export',
+        "pages": title,
+        "title": "Special:Export",
     }
     # ---
     # if title == 'Pubic lice' : paramse['pages'] =
     # ---
-    if 'teest' in sys.argv:
+    if "teest" in sys.argv:
         xmldata = {}
         # ---
-        with open('mdwiki/xml/w.xml', "r", encoding="utf-8") as f:
+        with open("mdwiki/xml/w.xml", "r", encoding="utf-8") as f:
             xmldata = f.read(f)
     else:
         # ---
@@ -59,12 +57,12 @@ def export_en_history(title):
         xmldata = himoBOT3.get_Export_xml(title)
         # ---
     # ---
-    printe.output(f'<<yellow>> len of history == {len(xmldata)} ')
+    printe.output(f"<<yellow>> len of history == {len(xmldata)} ")
     # ---
-    last = '''
+    last = """
     </page>
-</mediawiki>'''
-    first = xmldata.split('<revision>')[0]
+</mediawiki>"""
+    first = xmldata.split("<revision>")[0]
     # if 'teest' in sys.argv:
     # printe.output( 'first' )
     # printe.output( first )
@@ -74,15 +72,15 @@ def export_en_history(title):
     # ---
     texts = {}
     # ---
-    revisione = xmldata.replace(first, '').split('</page>')[0].split('</revision>')
-    revisions = [f"{x}</revision>" for x in revisione if x.strip().startswith('<revision>')]
-    if 'teest' in sys.argv:
+    revisione = xmldata.replace(first, "").split("</page>")[0].split("</revision>")
+    revisions = [f"{x}</revision>" for x in revisione if x.strip().startswith("<revision>")]
+    if "teest" in sys.argv:
         printe.output(revisions)
     # ---
     printe.output(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
     # ---
     # ---
-    title2 = title.replace(':', '-').replace('/', '-')
+    title2 = title.replace(":", "-").replace("/", "-")
     num = 1
     Lasa = [1, 2, 3, 4, 5]
     FILE_PATHS = []
@@ -92,18 +90,18 @@ def export_en_history(title):
     # ---
 
     # ---
-    if len(xmldata) > La_si[1] and 'nosplit' not in sys.argv:
+    if len(xmldata) > La_si[1] and "nosplit" not in sys.argv:
         # while done == False :
         for rev in revisions:
             # ---
             if num not in texts:
-                texts[num] = ''
+                texts[num] = ""
             # ---
             texts[num] += rev
             # ---
             if len(texts[num]) > La_si[1]:
                 # ---
-                path = f'mdwiki/xml/{title2}-{num}.xml'
+                path = f"mdwiki/xml/{title2}-{num}.xml"
                 # tf = tempfile.NamedTemporaryFile()
                 # path = tf.name
                 # ---
@@ -118,9 +116,9 @@ def export_en_history(title):
                 num += 1
             # ---
         # ---
-        if num not in numbdone and num in texts and texts[num] != '':
+        if num not in numbdone and num in texts and texts[num] != "":
             # ---
-            path2 = f'mdwiki/xml/{title2}-{num}.xml'
+            path2 = f"mdwiki/xml/{title2}-{num}.xml"
             # ---
             with open(path2, "w", encoding="utf-8") as oodfo:
                 oodfo.write(first + texts[num] + last)
@@ -128,16 +126,16 @@ def export_en_history(title):
             FILE_PATHS.append(path2)
             # ---
         # ---
-        printe.output(f' split revisions to {len(FILE_PATHS)} files..')
+        printe.output(f" split revisions to {len(FILE_PATHS)} files..")
         printe.output(FILE_PATHS)
         return FILE_PATHS
         # ---
     else:
-        FILE_PATH = f'mdwiki/xml/{title2}.xml'
+        FILE_PATH = f"mdwiki/xml/{title2}.xml"
         with open(FILE_PATH, "w", encoding="utf-8") as ooo:
             ooo.write(xmldata)
         # ---
-        printe.output(' revisions in one file.')
+        printe.output(" revisions in one file.")
         # ---
         return FILE_PATH
 
@@ -146,9 +144,9 @@ def export(title):
     paramse = {
         # 'pages' : title ,
         # 'title' : 'Special:Export' ,
-        'pagelink-depth': '0',
-        'followRedirects': True,
-        'timeout': 500,
+        "pagelink-depth": "0",
+        "followRedirects": True,
+        "timeout": 500,
     }
     # ---
     # if title == 'Pubic lice' : paramse['pages'] =
@@ -159,15 +157,15 @@ def export(title):
     gg = Session.post(url=urll, data=paramse)
     xmldata = gg.text
     # ---
-    printe.output(f'<<yellow>> len of history == {len(xmldata)} ')
+    printe.output(f"<<yellow>> len of history == {len(xmldata)} ")
     # ---
-    revisions = xmldata.split('</revision>')
+    revisions = xmldata.split("</revision>")
     # ---
     printe.output(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
     # ---
-    title2 = title.replace(':', '-').replace('/', '-')
+    title2 = title.replace(":", "-").replace("/", "-")
     # ---
-    FILE_PATH = f'mdwiki/xml/{title2}.xml'
+    FILE_PATH = f"mdwiki/xml/{title2}.xml"
     with open(FILE_PATH, "w", encoding="utf-8") as ooo:
         ooo.write(xmldata)
     # ---
@@ -178,8 +176,8 @@ def export(title):
 
 # ---
 if __name__ == "__main__":
-    if 'teest' in sys.argv:
-        export_en_history('fafa')
+    if "teest" in sys.argv:
+        export_en_history("fafa")
     elif len(sys.argv) > 1:
         export(sys.argv[1])
         # export_en_history( sys.argv[1] )

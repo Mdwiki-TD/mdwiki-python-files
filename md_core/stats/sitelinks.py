@@ -1,12 +1,14 @@
-'''
+"""
 python3 core8/pwb.py stats/sitelinks ask
 
 tfj run stats1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py stats/sitelinks"
 
-'''
+"""
+
 # ---
 import os
 import json
+
 # import sys
 from pathlib import Path
 
@@ -19,8 +21,8 @@ from stats.qids import qids_list
 Dir = Path(__file__).parent
 
 # make dir sites
-if not os.path.exists(Dir / 'sites'):
-    os.mkdir(Dir / 'sites')
+if not os.path.exists(Dir / "sites"):
+    os.mkdir(Dir / "sites")
 
 
 def get_sitelinks(qs_list, lena=300):
@@ -40,11 +42,11 @@ def get_sitelinks(qs_list, lena=300):
     # ---
     for i in range(0, len(qs_list), lena):
         # ---
-        qids = qs_list[i: i + lena]
+        qids = qs_list[i : i + lena]
         # ---
-        params_wd["ids"] = '|'.join(qids)
+        params_wd["ids"] = "|".join(qids)
         # ---
-        printe.output(f'<<green>> done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.')
+        printe.output(f"<<green>> done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
         # ---
         json1 = wikidataapi.post(params_wd)
         # ---
@@ -62,8 +64,8 @@ def get_sitelinks(qs_list, lena=300):
         # ---
         for _, tab in kk.get("sitelinks", {}).items():
             # ---
-            title = tab.get("title", '')
-            site = tab.get("site", '')
+            title = tab.get("title", "")
+            site = tab.get("site", "")
             # ---
             if site not in sitelinks:
                 sitelinks[site] = []
@@ -80,9 +82,9 @@ def start():
     # dump each site to file
     for site, links in sits.items():
         # ---
-        with open(Dir / 'sites' / f'{site}.json', "w", encoding="utf-8") as f:
+        with open(Dir / "sites" / f"{site}.json", "w", encoding="utf-8") as f:
             json.dump(links, f, sort_keys=True)
-            printe.output(f'dump <<green>> {site} of {len(links)}')
+            printe.output(f"dump <<green>> {site} of {len(links)}")
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ params_placeholders = {
 all_params = {}
 params_to_add = {}
 # ---
-all_params['first'] = [
+all_params["first"] = [
     "Verifiedfields",
     "Verifiedrevid",
     "Watchedfields",
@@ -36,7 +36,7 @@ all_params['first'] = [
     "captionLR",
 ]
 # ---
-all_params['combo'] = {
+all_params["combo"] = {
     "mab": [
         "type",
         "mab_type",
@@ -64,10 +64,10 @@ all_params['combo'] = {
     "all": [],
 }
 # ---
-all_params['combo']['all'] = all_params['combo']['mab'] + all_params['combo']['vaccine'] + all_params['combo']['combo']
-all_params['combo']['all'] = list(set(all_params['combo']['all']))
+all_params["combo"]["all"] = all_params["combo"]["mab"] + all_params["combo"]["vaccine"] + all_params["combo"]["combo"]
+all_params["combo"]["all"] = list(set(all_params["combo"]["all"]))
 # ---
-all_params['names'] = [
+all_params["names"] = [
     "pronounce",
     "pronounce_ref",
     "pronounce_comment",
@@ -81,9 +81,9 @@ all_params['names'] = [
     "IUPAC_name",
 ]
 # ---
-params_to_add['names'] = ["pronounce", "tradename", "synonyms", "IUPAC_name"]
+params_to_add["names"] = ["pronounce", "tradename", "synonyms", "IUPAC_name"]
 # ---
-all_params['gene'] = [
+all_params["gene"] = [
     "gt_target_gene",
     "gt_vector",
     "gt_nucleic_acid_type",
@@ -91,7 +91,7 @@ all_params['gene'] = [
     "gt_delivery_method",
 ]
 # ---
-all_params['clinical'] = [
+all_params["clinical"] = [
     "class",
     "uses",
     "side effects",
@@ -117,21 +117,31 @@ all_params['clinical'] = [
     "duration",
 ]
 # ---
-params_to_add['clinical'] = ["class", "uses", "side_effects", "interactions", "onset", "duration_of_action", "defined_daily_dose", "typical_dose", "breastfeeding"]
+params_to_add["clinical"] = [
+    "class",
+    "uses",
+    "side_effects",
+    "interactions",
+    "onset",
+    "duration_of_action",
+    "defined_daily_dose",
+    "typical_dose",
+    "breastfeeding",
+]
 # ---
-all_params['external'] = [
+all_params["external"] = [
     "Drugs.com",
     "NLM",
     "MedlinePlus",
 ]
 # ---
-params_to_add['external'] = [
+params_to_add["external"] = [
     "Drugs.com",
     # "NLM",
     "MedlinePlus",
 ]
 # ---
-all_params['legal'] = [
+all_params["legal"] = [
     "INN_EMA",
     "engvar",
     "legal_AU",
@@ -162,7 +172,7 @@ all_params['legal'] = [
     "license_EU",
 ]
 # ---
-all_params['physiological'] = [
+all_params["physiological"] = [
     "source_tissues",
     "target_tissues",
     "receptors",
@@ -174,7 +184,7 @@ all_params['physiological'] = [
     "targets",
 ]
 # ---
-all_params['pharmacokinetic'] = [
+all_params["pharmacokinetic"] = [
     "bioavailability",
     "protein_bound",
     "metabolism",
@@ -305,7 +315,7 @@ all_formola_params = [
     "Zr",
 ]
 # ---
-all_params['chemical'] = all_formola_params + [
+all_params["chemical"] = all_formola_params + [
     "charge",
     "chemical_formula",
     "chemical_formula_ref",
@@ -342,5 +352,5 @@ all_params['chemical'] = all_formola_params + [
     "specific_rotation",
 ]
 # ---
-all_params['last'] = []
+all_params["last"] = []
 # ---

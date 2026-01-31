@@ -1,7 +1,8 @@
-'''
+"""
 python pwb.py niosh/bot
 python3 core8/pwb.py niosh/bot
-'''
+"""
+
 import os
 from pathlib import Path
 import re
@@ -20,7 +21,7 @@ both = {}
 with open(both_file, "r", encoding="utf-8") as f:
     both = json.load(f)
 # ---
-print(f'all pages:{len(both.keys())}')
+print(f"all pages:{len(both.keys())}")
 # ---
 # sort both keys by length of it list
 
@@ -31,7 +32,7 @@ def do_all():
 
     def fix_links(x):
         x = x.split("#")[0].strip()
-        x = re.sub(r'^https*://(www.|)cdc.gov/', 'https://www.cdc.gov/', x)
+        x = re.sub(r"^https*://(www.|)cdc.gov/", "https://www.cdc.gov/", x)
         return x
 
     # ---
@@ -51,7 +52,7 @@ def do_all():
     # ---
     len_all_links = len(all_links)
     # ---
-    print(f'{len_all_links=}')
+    print(f"{len_all_links=}")
 
 
 aa = {k: v for k, v in sorted(both.items(), key=lambda item: len(item[1]), reverse=True)}
@@ -61,7 +62,7 @@ n = 0
 for x, le in aa.items():
     n += 1
     x2 = x.ljust(60)
-    print(f'x: {x2}\t length:{len(le)}')
+    print(f"x: {x2}\t length:{len(le)}")
     if len(le) < 15:
         break
 # ---

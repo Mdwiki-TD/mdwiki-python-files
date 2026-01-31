@@ -32,7 +32,11 @@ def get_users(pages):
         # ---
         print(f"num:{num}/{len(pages)}, title:{title}")
         # ---
-        revisions = api_new.get_revisions(title, rvprop="user|timestamp|comment", options={"rvstart": "2021-01-01T00:00:00.000Z", "rvend": "2025-01-01T00:00:00.000Z"})
+        revisions = api_new.get_revisions(
+            title,
+            rvprop="user|timestamp|comment",
+            options={"rvstart": "2021-01-01T00:00:00.000Z", "rvend": "2025-01-01T00:00:00.000Z"},
+        )
         # ---
         for ref in revisions:
             refs = ref.get("revisions", [])

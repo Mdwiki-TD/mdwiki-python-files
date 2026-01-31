@@ -10,6 +10,7 @@ import json
 import sys
 from pathlib import Path
 from pymysql.converters import escape_string
+
 # ---
 from mdapi_sql import sql_for_mdwiki
 from newapi import printe
@@ -22,46 +23,46 @@ if os.getenv("HOME"):
 else:
     public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
-project_tables = Path(public_html_dir) / 'td/Tables/jsons'
+project_tables = Path(public_html_dir) / "td/Tables/jsons"
 # ---
-que = '''select DISTINCT w_title, w_lead_words, w_all_words from words;'''
+que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
 # ---
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(f'{project_tables}/words.json', "r", encoding="utf-8") as f:
+with open(f"{project_tables}/words.json", "r", encoding="utf-8") as f:
     lead_words = json.load(f)
 
-with open(f'{project_tables}/allwords.json', "r", encoding="utf-8") as f:
+with open(f"{project_tables}/allwords.json", "r", encoding="utf-8") as f:
     all_words = json.load(f)
 # ---
-lead_words = {x.strip() : lead_words[x] for x in lead_words}
-all_words = {x.strip() : all_words[x] for x in all_words}
+lead_words = {x.strip(): lead_words[x] for x in lead_words}
+all_words = {x.strip(): all_words[x] for x in all_words}
 # ---
 for x, numb in lead_words.items():
-    NEW_DATA[x] = {'lead' : numb, 'all' : all_words.get(x, 0)}
+    NEW_DATA[x] = {"lead": numb, "all": all_words.get(x, 0)}
 # ---
 for x3, numb2 in all_words.items():
     if x3 not in NEW_DATA:
-        NEW_DATA[x3] = {'lead' : lead_words.get(x3, 0), 'all' : numb2}
-    elif numb2 != NEW_DATA[x3]['all']:
-        NEW_DATA_duplicate[x3] = {'lead' : lead_words.get(x3, 0), 'all' : numb2}
+        NEW_DATA[x3] = {"lead": lead_words.get(x3, 0), "all": numb2}
+    elif numb2 != NEW_DATA[x3]["all"]:
+        NEW_DATA_duplicate[x3] = {"lead": lead_words.get(x3, 0), "all": numb2}
 # ---
 print(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
 # ---
 in_sql = {}
 # ---
 for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
-    w_title = q['w_title']
+    w_title = q["w_title"]
     if not NEW_DATA.get(w_title):
-        in_sql[w_title] = {'lead' : q['w_lead_words'], 'all' : q['w_all_words']}
+        in_sql[w_title] = {"lead": q["w_lead_words"], "all": q["w_all_words"]}
 # ---
 print(f"{len(in_sql)=}")
 print(in_sql)
 # ---
 NEW_DATA.update(in_sql)
 # ---
-text = '''
+text = """
 -- Adminer 4.8.1 MySQL 5.5.5-10.6.20-MariaDB-log dump
 
 SET NAMES utf8;
@@ -81,7 +82,7 @@ CREATE TABLE `words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `words` (`w_id`, `w_title`, `w_lead_words`, `w_all_words`) VALUES
-'''
+"""
 # (1,	'Second-degree atrioventricular block',	278,	1267),
 # ---
 n = 0
@@ -100,5 +101,5 @@ for title, tab in NEW_DATA.items():
 text += ",\n".join(lines)
 text += ";"
 # ---
-with open(f'{Dir}/words.txt', "w", encoding="utf-8") as f:
+with open(f"{Dir}/words.txt", "w", encoding="utf-8") as f:
     f.write(text)

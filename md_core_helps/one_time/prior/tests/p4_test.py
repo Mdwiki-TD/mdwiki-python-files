@@ -7,7 +7,7 @@ from pathlib import Path
 Dir = str(Path(__file__).parents[0])
 # print(f'Dir : {Dir}')
 # ---
-project_json = f'{Dir}/json/'
+project_json = f"{Dir}/json/"
 
 
 def start_test(links=[]):
@@ -28,7 +28,7 @@ def start_test(links=[]):
     # log_all(main_File)
     # log_allen(main_File_en)
     # ---
-    return all#, allen
+    return all  # , allen
 
 
 # ---

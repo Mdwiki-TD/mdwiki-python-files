@@ -19,10 +19,7 @@ def get_links_from_cats(getcat=""):
     # ---
     titles = []
     # ---
-    videos_cats = [
-        "Videowiki scripts",
-        "RTTVideo"
-    ]
+    videos_cats = ["Videowiki scripts", "RTTVideo"]
     # ---
     cac = sql_for_mdwiki.get_db_categories()
     # ---

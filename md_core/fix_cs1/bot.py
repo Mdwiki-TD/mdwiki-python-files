@@ -5,6 +5,7 @@ python3 core8/pwb.py fix_cs1/bot nomwclient
 tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_cs1/bot"
 
 """
+
 # import re
 # import sys
 
@@ -30,7 +31,7 @@ def one_page(title):
 
 
 def main():
-    
+
     # ---
     cat = "Category:CS1 errors: missing periodical"
 

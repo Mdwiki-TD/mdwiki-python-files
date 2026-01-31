@@ -20,4 +20,6 @@ my_username = config["DEFAULT"].get("my_username", "")
 
 mdwiki_pass = config["DEFAULT"].get("mdwiki_pass", "")
 
-user_agent = config["DEFAULT"].get("user_agent", "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)")
+user_agent = config["DEFAULT"].get(
+    "user_agent", "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+)

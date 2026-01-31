@@ -1,10 +1,11 @@
-'''
+"""
 
 from priorviews.bots.sections_links import get_section_links
 
 python3 core8/pwb.py priorviews/sections_links
 
-'''
+"""
+
 import os
 from pathlib import Path
 import json
@@ -21,7 +22,7 @@ from newapi.mdwiki_page import md_MainPage
 Dir = Path(__file__).parent
 Dir = os.path.dirname(Dir)
 # ---
-sect_file = f'{Dir}/lists/secs_links.json'
+sect_file = f"{Dir}/lists/secs_links.json"
 if not os.path.exists(sect_file):
     with open(sect_file, "w", encoding="utf-8") as f:
         json.dump({}, f)
@@ -43,7 +44,7 @@ class Sectios_links:
         self.title = "WikiProjectMed:List/Prior"
 
         # Create a new instance of md_MainPage with the specified title and family
-        self.page = md_MainPage(self.title, 'www', family='mdwiki')
+        self.page = md_MainPage(self.title, "www", family="mdwiki")
 
         # Get the text content of the page
         self.text = self.page.get_text()
@@ -92,7 +93,7 @@ class Sectios_links:
                 continue
 
             # Replace any forward slashes in the section title with hyphens
-            t = t.replace('/', '-')
+            t = t.replace("/", "-")
 
             # Add the section and its links to the all_sections dict
             self.SectionsToLinks[t] = wikilinks
@@ -103,7 +104,7 @@ def dump_secs_links(d_links):
     global sect_file
     # ---
     if d_links != {}:
-        printe.output(f'<<yellow>> d_links(): length: {len(d_links.keys())}')
+        printe.output(f"<<yellow>> d_links(): length: {len(d_links.keys())}")
         json.dump(d_links, open(sect_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
@@ -128,14 +129,14 @@ def get_section_links(new=False):
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     all_links = {}
     # ---
     ll = get_section_links()
     # ---
     for s, ls in ll.items():
-        print(f'section: {s}')
-        print(f'len of links: {len(ls)}')
+        print(f"section: {s}")
+        print(f"len of links: {len(ls)}")
         if len(ls) < 10:
             print(ls)
         # ---
@@ -145,10 +146,10 @@ if __name__ == '__main__':
             if s not in all_links[link.lower()]:
                 all_links[link.lower()].append(s)
     # ---
-    printe.output('<<red>>---------------')
+    printe.output("<<red>>---------------")
     # ---
     for x, v in all_links.items():
         if len(v) > 1:
             sections = ", ".join(v)
-            print(f'link: ({x}) in {len(v)} sections: {sections}')
+            print(f"link: ({x}) in {len(v)} sections: {sections}")
     # ---

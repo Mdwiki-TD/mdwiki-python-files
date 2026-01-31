@@ -18,6 +18,7 @@ from newapi import printe
 from newapi.mdwiki_page import NEW_API, md_MainPage, CatDepth
 
 from add_rtt.named_param import add_param_named
+
 # add_param_named(text, title)
 
 api_new = NEW_API("www", family="mdwiki")
@@ -32,9 +33,7 @@ def add_rtt_to_text(text, title):
         printe.output(f"page already tagged.{new_line}")
         return text
 
-    target_templates = [
-        "RTT"
-    ]
+    target_templates = ["RTT"]
 
     parsed = wtp.parse(text)
 

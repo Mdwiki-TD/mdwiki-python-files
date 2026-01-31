@@ -53,10 +53,10 @@ for ns, title in ns_text_tab_1.items():
 
 
 def GET_SQL():
-    if 'nosql' in sys.argv:
+    if "nosql" in sys.argv:
         return False
     # ---
-    print(f'GET_SQL() == {can_use_sql_db[1]}')
+    print(f"GET_SQL() == {can_use_sql_db[1]}")
     # ---
     return can_use_sql_db[1]
 
@@ -100,7 +100,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
         host = f"{sub_host}.analytics.db.svc.wikimedia.cloud"
         return host, dbs_p
     # ---
-    if wiki.endswith('wiki'):
+    if wiki.endswith("wiki"):
         wiki = wiki[:-4]
     # ---
     wiki = wiki.replace("-", "_")
@@ -119,12 +119,12 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     # ---
     host = f"{wiki}.analytics.db.svc.wikimedia.cloud"
     # ---
-    dbs_p = f'{dbs}_p'
+    dbs_p = f"{dbs}_p"
     # ---
     return host, dbs_p
 
 
-def make_sql_connect(query, db='', host='', update=False, Return=False, return_dict=False):
+def make_sql_connect(query, db="", host="", update=False, Return=False, return_dict=False):
     return sql_qu.make_sql_connect(
         query,
         db=db,
@@ -142,13 +142,13 @@ def fetch_arcat_titles(arcatTitle):
     if not GET_SQL():
         return arcats
     # ---
-    arcatTitle = re.sub(r'تصنيف:', '', arcatTitle)
-    arcatTitle = re.sub(r' ', '_', arcatTitle)
+    arcatTitle = re.sub(r"تصنيف:", "", arcatTitle)
+    arcatTitle = re.sub(r" ", "_", arcatTitle)
     print(f"arcatTitle : {arcatTitle}")
     # ---
     arcatTitle = escape_string(arcatTitle)
     # ---
-    ar_queries = f'''
+    ar_queries = f"""
         SELECT page_title, page_namespace
         FROM page
         JOIN categorylinks
@@ -157,9 +157,9 @@ def fetch_arcat_titles(arcatTitle):
         AND cl_from = page_id
         AND page_id = ll_from
         AND ll_lang = "en"
-        GROUP BY page_title ;'''
+        GROUP BY page_title ;"""
     # ---
-    host, dbs_p = make_labsdb_dbs_p('ar')
+    host, dbs_p = make_labsdb_dbs_p("ar")
     # ---
     ar_results = make_sql_connect(ar_queries, db=dbs_p, host=host, Return=[], return_dict=True)
     # ---
@@ -168,10 +168,10 @@ def fetch_arcat_titles(arcatTitle):
     # ---
     for ra in ar_results:
         # ---
-        title = ra['page_title']
-        title = re.sub(r' ', '_', title)
+        title = ra["page_title"]
+        title = re.sub(r" ", "_", title)
         # ---
-        ns = ra['page_namespace']
+        ns = ra["page_namespace"]
         # ---
         if ns_text_tab.get(ns):
             title = f"{ns_text_tab.get( ns )}:{title}"
@@ -209,7 +209,7 @@ def Make_sql(queries, wiki="", printqua=False):
     # ---end of sql--------------------------------------------
     for raw in en_results:
         tit = Decode_bytes(raw[0])
-        tit = re.sub(r' ', '_', tit)
+        tit = re.sub(r" ", "_", tit)
         encats.append(tit)
     # ---
     delta = int(final - start)
@@ -339,15 +339,15 @@ def Make_sql_1_row(queries, wiki="", printqua=False):
 
 def MySQLdb_finder_2_rows(encatTitle):
     # en category use template with ar link
-    printe.output(f'<<red>> sql . MySQLdb_finder_2_rows {encatTitle}: ')
+    printe.output(f"<<red>> sql . MySQLdb_finder_2_rows {encatTitle}: ")
     # ---
     if not GET_SQL():
         return {}
     # ---
-    item = encatTitle.replace(' ', '_')
-    item = str(encatTitle).replace(' ', '_')
+    item = encatTitle.replace(" ", "_")
+    item = str(encatTitle).replace(" ", "_")
     # ---start sql---------------------------------------
-    queries = '''
+    queries = """
     select CONCAT("Category:",page_title), ll_title
     from page, templatelinks, langlinks
     where page_id = tl_from
@@ -356,7 +356,7 @@ def MySQLdb_finder_2_rows(encatTitle):
     AND ll_from = page_id
 
     AND tl_target_id = (SELECT lt_id FROM linktarget WHERE lt_namespace = 10 AND lt_title = "%s")
-    '''
+    """
     queries %= item
     encats = Make_sql_2_rows(queries)
     # ---end of sql--------------------------------------------
@@ -366,10 +366,10 @@ def MySQLdb_finder_2_rows(encatTitle):
 
 
 def MySQLdb_finder_N_New(encatTitle, arcatTitle):
-    printe.output(f'<<red>> sql . MySQLdb_finder {encatTitle}: ')
+    printe.output(f"<<red>> sql . MySQLdb_finder {encatTitle}: ")
     # ---
-    item = encatTitle.replace('category:', '').replace('Category:', '').replace(' ', '_')
-    item = str(encatTitle).replace('[[en:', '').replace(']]', '').replace(' ', '_').replace('Category:', '')
+    item = encatTitle.replace("category:", "").replace("Category:", "").replace(" ", "_")
+    item = str(encatTitle).replace("[[en:", "").replace("]]", "").replace(" ", "_").replace("Category:", "")
     # ---
     if not GET_SQL():
         return False
@@ -378,9 +378,9 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
     # ---
     item = escape_string(item)
     # ---
-    queries = f'''SELECT /* SLOW_OK */ ll_title , page_namespace  FROM page JOIN categorylinks JOIN langlinks
+    queries = f"""SELECT /* SLOW_OK */ ll_title , page_namespace  FROM page JOIN categorylinks JOIN langlinks
         WHERE cl_to = "{item}" AND cl_from=page_id AND page_id =ll_from AND ll_lang = "ar"
-        GROUP BY ll_title ;'''
+        GROUP BY ll_title ;"""
     # ---
     encats = Make_sql(queries)
     arcats = fetch_arcat_titles(arcatTitle) if arcatTitle and arcatTitle != "" else []
@@ -396,14 +396,14 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
 
 
 def get_exclusive_category_titles(encatTitle, arcatTitle):
-    printe.output(f'<<red>> API/sql_py get_exclusive_category_titles {encatTitle}: ')
+    printe.output(f"<<red>> API/sql_py get_exclusive_category_titles {encatTitle}: ")
     # ---
     return MySQLdb_finder_N_New(encatTitle, arcatTitle)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # ---
-    arqueries = '''
+    arqueries = """
         select CONCAT("تصنيف:",page_title), ll_title
         from page, templatelinks, langlinks
         where page_id = tl_from
@@ -411,8 +411,8 @@ if __name__ == '__main__':
         AND ll_lang = "en"
         AND ll_from = page_id
         AND tl_target_id = (SELECT lt_id FROM linktarget WHERE lt_namespace = 10 AND lt_title = "أشخاص_حسب_المهنة")
-        '''
+        """
     # ---
     ss = Make_sql_2_rows(arqueries, wiki="arwiki")
     # ss = MySQLdb_finder_2_rows("Fooian_fooers")
-    printe.output(f'sql py test:: Make_sql_2_rows length:{len(ss)}')
+    printe.output(f"sql py test:: Make_sql_2_rows length:{len(ss)}")

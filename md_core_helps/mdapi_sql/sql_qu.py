@@ -117,7 +117,9 @@ def make_sql_connect(query, db="", host="", update=False, Return=[], return_dict
     if u_print:
         printe.output("<<yellow>> newsql::")
     # ---
-    rows = sql_connect_pymysql(query, db=db, host=host, update=update, Return=Return, return_dict=return_dict, values=values)
+    rows = sql_connect_pymysql(
+        query, db=db, host=host, update=update, Return=Return, return_dict=return_dict, values=values
+    )
     # ---
     if return_dict:
         rows = resolve_bytes(rows)

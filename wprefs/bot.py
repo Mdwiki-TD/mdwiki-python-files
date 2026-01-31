@@ -50,7 +50,9 @@ def fix_page_here(text, title, langcode):
     if lang_default.get("add_en_lang", 0) == 1:
         adden = True
     # ---
-    newtext = fix_page(newtext, title, move_dots=dots, infobox=expend, section_0=section_0_text, lang=langcode, add_en_lang=adden)
+    newtext = fix_page(
+        newtext, title, move_dots=dots, infobox=expend, section_0=section_0_text, lang=langcode, add_en_lang=adden
+    )
     # ---
     return newtext
 

@@ -4,14 +4,13 @@ import sys
 import json
 import mwclient
 from pathlib import Path
+
 sys.argv.append("workibrahem")
 from newapi.page import MainPage
 
 
 RE_SVG_LANG = re.compile(r"\{\{\s*SVGLanguages\s*\|\s*([^}|]+)", re.I)
-RE_TRANSLATE = re.compile(
-    r"\*'''Translate''':\s*https://svgtranslate\.toolforge\.org/File:([^ \n]+)", re.I
-)
+RE_TRANSLATE = re.compile(r"\*'''Translate''':\s*https://svgtranslate\.toolforge\.org/File:([^ \n]+)", re.I)
 
 svg_languages = {}
 
@@ -50,8 +49,8 @@ def work_page(title):
 
 def start():
 
-    site = mwclient.Site('commons.wikimedia.org')
-    CATEGORY_NAME = 'Pages using gadget owidslider'
+    site = mwclient.Site("commons.wikimedia.org")
+    CATEGORY_NAME = "Pages using gadget owidslider"
 
     category = site.categories[CATEGORY_NAME]
     for page in category:

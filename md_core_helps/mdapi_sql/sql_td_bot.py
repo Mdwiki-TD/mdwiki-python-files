@@ -56,13 +56,31 @@ if "localhost" in sys.argv or not os.getenv("HOME"):
 
 def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):
     # ---
-    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args, credentials=credentials, conversions=conversions, many=many, **kwargs)
+    results = pymysql_bot.sql_connect_pymysql(
+        query,
+        return_dict=return_dict,
+        values=values,
+        main_args=main_args,
+        credentials=credentials,
+        conversions=conversions,
+        many=many,
+        **kwargs,
+    )
     # ---
     return results
 
 
 def sql_connect_mdwiki_new(query, return_dict=False, values=None, many=False, **kwargs):
     # ---
-    results = pymysql_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, main_args=main_args_new, credentials=credentials, conversions=conversions, many=many, **kwargs)
+    results = pymysql_bot.sql_connect_pymysql(
+        query,
+        return_dict=return_dict,
+        values=values,
+        main_args=main_args_new,
+        credentials=credentials,
+        conversions=conversions,
+        many=many,
+        **kwargs,
+    )
     # ---
     return results

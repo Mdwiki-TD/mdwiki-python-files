@@ -16,6 +16,7 @@ import tqdm
 from newapi import printe
 from mdapi_sql import sql_for_mdwiki
 from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage
+
 # from fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 from fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 from fix_user_pages.user_bot import get_new_user
@@ -38,9 +39,24 @@ already_in_db = [x["id"] for x in already_in_db]
 def get_titles(lang=""):
     # ---
     if "test" in sys.argv and not lang:
-        return {"ar": [
-            { "id": 5, "title": "Beta blocker toxicity", "word": 0, "translate_type": 0, "cat": 0, "lang": "ar", "user": "Mina karaca", "target": "user:Mina karaca/التسمم بحاصرات بيتا", "date": 0, "pupdate": "2024-02-11", "add_date": "2024-02-15 03:00:00", "deleted": 0 }
-        ]}
+        return {
+            "ar": [
+                {
+                    "id": 5,
+                    "title": "Beta blocker toxicity",
+                    "word": 0,
+                    "translate_type": 0,
+                    "cat": 0,
+                    "lang": "ar",
+                    "user": "Mina karaca",
+                    "target": "user:Mina karaca/التسمم بحاصرات بيتا",
+                    "date": 0,
+                    "pupdate": "2024-02-11",
+                    "add_date": "2024-02-15 03:00:00",
+                    "deleted": 0,
+                }
+            ]
+        }
     # ---
     pages_users = sql_for_mdwiki.get_all_pages_all_keys(lang=lang, table="pages_users")
     pages_users_tab = {}
@@ -99,14 +115,14 @@ def work_one_tab(tab, missing, redirects):
             # ---
             printe.output(f"<<yellow>> new_target exists, ns: {ns}")
             # ---
-            if not page2.isRedirect() and ns == 0 :
+            if not page2.isRedirect() and ns == 0:
                 # ---
                 to_set[new_target] = tab
                 # sql_for_mdwiki.set_target_where_id(new_target, iid)
                 # ---
                 text.append([lang, target, new_target])
                 # ---
-                return {new_target : tab}
+                return {new_target: tab}
         # else:
         #     printe.output(f'<<red>> page "{new_target}" deleted from {lang}')
         #     deleted.append(iid)
@@ -158,7 +174,7 @@ def work_in_to_set(new_target, tab):
     # ---
     # {'id': '3381', 'title': 'Sympathetic crashing acute pulmonary edema', 'lang': 'ar', 'user': 'Annacecilia2', 'pupdate': '2025-03-26', 'target': 'User:Annacecilia2/Sympathetic crashing acute pulmonary edema', 'add_date': '2025-03-26 23:43:12'}
     # ---
-    tab_id = tab['id']
+    tab_id = tab["id"]
     # ---
     new_tab = copy.deepcopy(tab)
     new_tab["target"] = new_target
@@ -204,7 +220,7 @@ def start():
         # ---
         work_in_titles(lang, tabs)
     # ---
-    '''
+    """
     printe.output(f"len of to_set {len(to_set)}")
     # ---
     for new_target, tab in to_set.items():
@@ -212,7 +228,7 @@ def start():
     # ---
     # work_in_new_tabs_to_db(new_tabs_to_db)
     # ---
-    work_in_new_tabs_to_db_new(new_tabs_to_db)'''
+    work_in_new_tabs_to_db_new(new_tabs_to_db)"""
 
 
 if __name__ == "__main__":

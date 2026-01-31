@@ -5,6 +5,7 @@ from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 
 """
 import sys
+
 # import printe
 import requests
 from urllib.parse import urlencode

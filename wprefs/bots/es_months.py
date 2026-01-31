@@ -1,23 +1,24 @@
 """
 July 25, 1975 should be translated as 25 de julio de 1975
 """
+
 import re
 import wikitextparser as wtp
 
 # ---
 es_months_tab = {
-    'January': 'enero',
-    'February': 'febrero',
-    'March': 'marzo',
-    'April': 'abril',
-    'May': 'mayo',
-    'June': 'junio',
-    'July': 'julio',
-    'August': 'agosto',
-    'September': 'septiembre',
-    'October': 'ctubre',
-    'November': 'noviembre',
-    'December': 'diciembre',
+    "January": "enero",
+    "February": "febrero",
+    "March": "marzo",
+    "April": "abril",
+    "May": "mayo",
+    "June": "junio",
+    "July": "julio",
+    "August": "agosto",
+    "September": "septiembre",
+    "October": "ctubre",
+    "November": "noviembre",
+    "December": "diciembre",
 }
 # ---
 es_months_lower = {k.lower(): v for k, v in es_months_tab.items()}
@@ -30,10 +31,10 @@ def make_new_val(val):
     # match month and year
     # ---
     # match date like : January, 2020 or 10 January, 2020
-    maa = r'^(?P<d>\d{1,2} |)(?P<m>%s) (?P<y>\d{4})$' % es_months_line
+    maa = r"^(?P<d>\d{1,2} |)(?P<m>%s) (?P<y>\d{4})$" % es_months_line
     # ---
     # match date like : January 10, 2020
-    maa2 = r'^(?P<m>%s) (?P<d>\d{1,2}), (?P<y>\d{4})$' % es_months_line
+    maa2 = r"^(?P<m>%s) (?P<d>\d{1,2}), (?P<y>\d{4})$" % es_months_line
     # ---
     sas = re.search(maa, val.strip())
     # ---
@@ -41,16 +42,16 @@ def make_new_val(val):
         sas = re.search(maa2, newval.strip())
     # ---
     if sas:
-        d = sas.group('d').strip()
-        m = sas.group('m').strip()
-        y = sas.group('y').strip()
+        d = sas.group("d").strip()
+        m = sas.group("m").strip()
+        y = sas.group("y").strip()
         # ---
-        pt_m = es_months_lower.get(m.lower(), '').strip()
+        pt_m = es_months_lower.get(m.lower(), "").strip()
         # ---
-        if pt_m != '':
+        if pt_m != "":
             # ---
-            if d != '':
-                pt_m = f'de {pt_m}'
+            if d != "":
+                pt_m = f"de {pt_m}"
             # ---
             newval = f"{d} {pt_m} de {y}"
         # ---
@@ -66,7 +67,7 @@ def fix_es_months(text):
     for x in tags:
         if not x or not x.name:
             continue
-        if x.name != 'ref':
+        if x.name != "ref":
             continue
         if not x.contents:
             continue

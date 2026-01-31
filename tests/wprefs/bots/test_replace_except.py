@@ -1,4 +1,3 @@
-
 import pytest
 import re
 
@@ -17,7 +16,7 @@ class TestBasicReplacement:
     def test_regex_pattern_replacement(self):
         """Test replacement with compiled regex pattern."""
         text = "The number is 123 and 456"
-        pattern = re.compile(r'\d+')
+        pattern = re.compile(r"\d+")
         result = replaceExcept(text, pattern, "XXX", [])
         assert result == "The number is XXX and XXX"
 
@@ -57,24 +56,24 @@ class TestGroupReferences:
     def test_numbered_group_reference(self):
         """Test replacement with numbered group references."""
         text = "John Smith and Jane Doe"
-        pattern = r'(\w+) (\w+)'
-        replacement = r'\2, \1'
+        pattern = r"(\w+) (\w+)"
+        replacement = r"\2, \1"
         result = replaceExcept(text, pattern, replacement, [])
         assert result == "Smith, John Jane, and Doe"
 
     def test_named_group_reference(self):
         """Test replacement with named group references."""
         text = "Price: $100"
-        pattern = r'(?P<currency>\$)(?P<amount>\d+)'
-        replacement = r'\g<amount> \g<currency>'
+        pattern = r"(?P<currency>\$)(?P<amount>\d+)"
+        replacement = r"\g<amount> \g<currency>"
         result = replaceExcept(text, pattern, replacement, [])
         assert result == "Price: 100 $"
 
     def test_mixed_group_references(self):
         """Test replacement with both numbered and named groups."""
         text = "2024-12-24"
-        pattern = r'(?P<year>\d{4})-(\d{2})-(\d{2})'
-        replacement = r'\3/\2/\g<year>'
+        pattern = r"(?P<year>\d{4})-(\d{2})-(\d{2})"
+        replacement = r"\3/\2/\g<year>"
         result = replaceExcept(text, pattern, replacement, [])
         assert result == "24/12/2024"
 
@@ -91,7 +90,7 @@ class TestCallableReplacement:
     def test_callable_replacement_basic(self):
         """Test replacement using a callable function."""
         text = "The number is 42"
-        pattern = r'\d+'
+        pattern = r"\d+"
 
         def double_number(match):
             return str(int(match.group()) * 2)
@@ -102,7 +101,7 @@ class TestCallableReplacement:
     def test_callable_replacement_with_groups(self):
         """Test callable replacement accessing match groups."""
         text = "Hello World"
-        pattern = r'(\w+) (\w+)'
+        pattern = r"(\w+) (\w+)"
 
         def swap_and_upper(match):
             return f"{match.group(2).upper()} {match.group(1).upper()}"
@@ -113,16 +112,16 @@ class TestCallableReplacement:
     def test_callable_replacement_multiple_matches(self):
         """Test callable replacement on multiple matches."""
         text = "1 2 3 4"
-        pattern = r'\d+'
-        counter = {'count': 0}
+        pattern = r"\d+"
+        counter = {"count": 0}
 
         def increment(match):
-            counter['count'] += 1
+            counter["count"] += 1
             return str(int(match.group()) + 10)
 
         result = replaceExcept(text, pattern, increment, [])
         assert result == "11 12 13 14"
-        assert counter['count'] == 4
+        assert counter["count"] == 4
 
 
 class TestCommentException:
@@ -277,14 +276,7 @@ class TestMultipleExceptions:
 
     def test_all_common_exceptions(self):
         """Test with all common exception types."""
-        text = (
-            "foo "
-            "<!-- foo --> "
-            "{{foo}} "
-            "[[foo]] "
-            "http://foo.com "
-            "foo"
-        )
+        text = "foo " "<!-- foo --> " "{{foo}} " "[[foo]] " "http://foo.com " "foo"
         exceptions = ["comment", "template", "link", "hyperlink"]
         result = replaceExcept(text, "foo", "bar", exceptions)
         # First and last foo should be replaced
@@ -303,14 +295,14 @@ class TestCustomRegexException:
     def test_custom_regex_exception(self):
         """Test that custom regex patterns can be used as exceptions."""
         text = "foo [PROTECTED foo PROTECTED] foo"
-        custom_regex = re.compile(r'\[PROTECTED.*?PROTECTED\]')
+        custom_regex = re.compile(r"\[PROTECTED.*?PROTECTED\]")
         result = replaceExcept(text, "foo", "bar", [custom_regex])
         assert result == "bar [PROTECTED foo PROTECTED] bar"
 
     def test_mixed_string_and_regex_exceptions(self):
         """Test mixing string and regex exceptions."""
         text = "foo <!-- foo --> [CUSTOM foo CUSTOM] foo"
-        custom_regex = re.compile(r'\[CUSTOM.*?CUSTOM\]')
+        custom_regex = re.compile(r"\[CUSTOM.*?CUSTOM\]")
         result = replaceExcept(text, "foo", "bar", ["comment", custom_regex])
         assert result == "bar <!-- foo --> [CUSTOM foo CUSTOM] bar"
 
@@ -349,7 +341,7 @@ class TestEdgeCases:
     def test_empty_pattern_match(self):
         """Test handling of patterns that can match empty strings."""
         text = "abc"
-        pattern = re.compile(r'x*')  # Can match empty string
+        pattern = re.compile(r"x*")  # Can match empty string
         result = replaceExcept(text, pattern, "X", [])
         # Should handle empty matches without infinite loop
         assert isinstance(result, str)
@@ -377,7 +369,7 @@ class TestEdgeCases:
     def test_special_regex_chars_in_string_pattern(self):
         """Test that special regex characters in string patterns work."""
         text = "a.b a.b"
-        result = replaceExcept(text, r'a\.b', "c", [])
+        result = replaceExcept(text, r"a\.b", "c", [])
         assert result == "c c"
 
     def test_exception_at_text_start(self):
@@ -412,8 +404,8 @@ class TestInvalidGroupReference:
     def test_invalid_group_number(self):
         """Test that invalid group numbers raise IndexError."""
         text = "Hello World"
-        pattern = r'(\w+) (\w+)'
-        replacement = r'\3'  # Only 2 groups exist
+        pattern = r"(\w+) (\w+)"
+        replacement = r"\3"  # Only 2 groups exist
 
         with pytest.raises(IndexError, match="Invalid group reference"):
             replaceExcept(text, pattern, replacement, [])
@@ -421,8 +413,8 @@ class TestInvalidGroupReference:
     def test_invalid_group_name(self):
         """Test that invalid group names raise IndexError."""
         text = "Hello World"
-        pattern = r'(?P<first>\w+) (?P<second>\w+)'
-        replacement = r'\g<third>'  # Group 'third' doesn't exist
+        pattern = r"(?P<first>\w+) (?P<second>\w+)"
+        replacement = r"\g<third>"  # Group 'third' doesn't exist
 
         with pytest.raises(IndexError):
             replaceExcept(text, pattern, replacement, [])

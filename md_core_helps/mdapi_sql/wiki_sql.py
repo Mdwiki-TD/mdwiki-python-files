@@ -176,7 +176,28 @@ def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
         "829": "نقاش الوحدة",
     }
     # ---
-    ns_text_tab_en = {"0": "", "1": "Talk", "2": "User", "3": "User talk", "4": "Project", "5": "Project talk", "6": "File", "7": "File talk", "8": "MediaWiki", "9": "MediaWiki talk", "10": "Template", "11": "Template talk", "12": "Help", "13": "Help talk", "14": "Category", "15": "Category talk", "100": "Portal", "101": "Portal talk", "828": "Module", "829": "Module talk"}
+    ns_text_tab_en = {
+        "0": "",
+        "1": "Talk",
+        "2": "User",
+        "3": "User talk",
+        "4": "Project",
+        "5": "Project talk",
+        "6": "File",
+        "7": "File talk",
+        "8": "MediaWiki",
+        "9": "MediaWiki talk",
+        "10": "Template",
+        "11": "Template talk",
+        "12": "Help",
+        "13": "Help talk",
+        "14": "Category",
+        "15": "Category talk",
+        "100": "Portal",
+        "101": "Portal talk",
+        "828": "Module",
+        "829": "Module talk",
+    }
     # ---
     for row in rows:
         title = row.get(t1)

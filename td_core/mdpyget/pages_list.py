@@ -7,10 +7,7 @@ from newapi.mdwiki_page import CatDepth
 from mdpy.bots.check_title import valid_title
 
 
-videos_cats = [
-    "Videowiki scripts",
-    "RTTVideo"
-]
+videos_cats = ["Videowiki scripts", "RTTVideo"]
 
 
 def get_links_from_cats(getcat=""):

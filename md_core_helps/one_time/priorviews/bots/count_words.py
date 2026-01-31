@@ -1,8 +1,9 @@
-'''
+"""
 
 python3 core8/pwb.py priorviews/bots/count_words
 
-'''
+"""
+
 import sys
 import re
 from urllib.parse import urlencode
@@ -11,12 +12,12 @@ import wikitextparser
 from newapi import printe
 
 # ---
-'''
+"""
 # ---
 from priorviews.bots import count_words
 tt = count_words.get_words(title, lang)
 # ---
-'''
+"""
 # ---
 
 
@@ -26,8 +27,8 @@ class InOldText:
         self.lang = lang
         self.title = title
         self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
-        self.oldtext = ''
-        self.newtext = ''
+        self.oldtext = ""
+        self.newtext = ""
         self.words = 0
         # ---
         self.session = requests.Session()
@@ -78,7 +79,7 @@ class InOldText:
         tem_text = re.sub(r"\d+", "", tem_text)
 
         # get counts of words
-        length = len(re.findall(r'\w+', tem_text))
+        length = len(re.findall(r"\w+", tem_text))
         # ---
         # print(f'count_text: {length}')
         self.words = length
@@ -95,31 +96,51 @@ class InOldText:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f'except: lang:{self.lang} {e}')
+            printe.output(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
     def get_oldtext(self):
         params = {"action": "parse", "format": "json", "prop": "wikitext", "page": self.title, "utf8": 1}
         # ---
-        params = {"action": "query", "format": "json", "prop": "revisions", "titles": self.title, "redirects": 1, "formatversion": "2", "rvprop": "timestamp|content", "rvslots": "*", "rvlimit": "1", "rvstart": "2020-05-31T22:00:00.000Z", "rvdir": "older"}
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "revisions",
+            "titles": self.title,
+            "redirects": 1,
+            "formatversion": "2",
+            "rvprop": "timestamp|content",
+            "rvslots": "*",
+            "rvlimit": "1",
+            "rvstart": "2020-05-31T22:00:00.000Z",
+            "rvdir": "older",
+        }
         # ---
         json1 = self.post_to_json(params)
         # ---
-        revisions = json1.get('query', {}).get('pages', [{}])[0].get('revisions', [{}])[0]
-        self.timestamp = revisions.get('timestamp', '')
+        revisions = json1.get("query", {}).get("pages", [{}])[0].get("revisions", [{}])[0]
+        self.timestamp = revisions.get("timestamp", "")
         # print(f'timestamp: {self.timestamp}')
-        self.oldtext = revisions.get('slots', {}).get('main', {}).get('content', '')
+        self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
     def get_newtext(self):
-        params = {"action": "parse", "format": "json", "prop": "wikitext", "page": self.title, "redirects": 1, "utf8": 1, "formatversion": "2"}
+        params = {
+            "action": "parse",
+            "format": "json",
+            "prop": "wikitext",
+            "page": self.title,
+            "redirects": 1,
+            "utf8": 1,
+            "formatversion": "2",
+        }
         # ---
         json1 = self.post_to_json(params)
         # ---
-        self.newtext = json1.get('parse', {}).get('wikitext', '')
+        self.newtext = json1.get("parse", {}).get("wikitext", "")
 
     def Words(self):
-        printe.output(f'\t\twords: {self.words}')
+        printe.output(f"\t\twords: {self.words}")
         return self.words
 
 
@@ -133,9 +154,9 @@ def get_words(title, lang):
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # ---
-    t = get_words('التهاب الفقار القسطي', "ar")
-    print(f'words: {t}')
+    t = get_words("التهاب الفقار القسطي", "ar")
+    print(f"words: {t}")
     sys.exit()
     # ---

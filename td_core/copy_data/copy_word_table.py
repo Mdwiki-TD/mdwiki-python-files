@@ -10,6 +10,7 @@ import json
 import sys
 from pathlib import Path
 from pymysql.converters import escape_string
+
 # ---
 from mdapi_sql import sql_for_mdwiki
 from newapi import printe
@@ -22,26 +23,26 @@ if os.getenv("HOME"):
 else:
     public_html_dir = "I:/mdwiki/mdwiki/public_html"
 # ---
-project_tables = Path(public_html_dir) / 'td/Tables/jsons'
+project_tables = Path(public_html_dir) / "td/Tables/jsons"
 # ---
-que = '''select DISTINCT w_title, w_lead_words, w_all_words from words;'''
+que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
 # ---
 in_sql_lead = {}
 in_sql_all = {}
 # ---
 for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     # ---
-    w_title = q['w_title']
-    w_lead_words = q['w_lead_words']
-    w_all_words = q['w_all_words']
+    w_title = q["w_title"]
+    w_lead_words = q["w_lead_words"]
+    w_all_words = q["w_all_words"]
     # ---
     in_sql_lead[w_title] = w_lead_words
     in_sql_all[w_title] = w_all_words
 # ---
-with open(f'{project_tables}/words.json', "r", encoding="utf-8") as f:
+with open(f"{project_tables}/words.json", "r", encoding="utf-8") as f:
     lead_words = json.load(f)
 
-with open(f'{project_tables}/allwords.json', "r", encoding="utf-8") as f:
+with open(f"{project_tables}/allwords.json", "r", encoding="utf-8") as f:
     all_words = json.load(f)
 # ---
 new_words = {}
@@ -89,7 +90,7 @@ print("----------------")
 printe.output("<<yellow>> UPDATE: ")
 # ---
 if UPDATE:
-    if 'update' in sys.argv:
+    if "update" in sys.argv:
         for tab in UPDATE:
             # ---
             lead, All, tit = tab
@@ -118,8 +119,8 @@ if UPDATE:
             if len(texts) % 50 == 0 or n == len(UPDATE):
                 tt = "\n".join(texts)
                 # ---
-                printe.output('====')
-                printe.output(f'{n} run sql for {len(texts)} lines.')
+                printe.output("====")
+                printe.output(f"{n} run sql for {len(texts)} lines.")
                 # ---
                 printe.output(tt)
                 # ---
@@ -127,11 +128,11 @@ if UPDATE:
                 # ---
                 texts = []
                 # ---
-                if 'break' in sys.argv:
+                if "break" in sys.argv:
                     break
     else:
         printe.output('add "update" to sys.argv to update new words.')
-        printe.output(f'{len(UPDATE)=}')
+        printe.output(f"{len(UPDATE)=}")
         printe.output(UPDATE[0])
 # ---
 print("----------------")
@@ -141,24 +142,24 @@ if INSERT != []:
     # ---
     intert_quas = [f"""('{title2}', {lead}, {All})""" for lead, All, title2 in INSERT]
     # ---
-    insert_line = ',\n'.join(INSERT)
-    if 'insert' in sys.argv:
+    insert_line = ",\n".join(INSERT)
+    if "insert" in sys.argv:
         # ---
-        qu = 'INSERT INTO words (w_title, w_lead_words, w_all_words) values\n' + insert_line
+        qu = "INSERT INTO words (w_title, w_lead_words, w_all_words) values\n" + insert_line
         printe.output(qu)
         vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True)
     else:
         printe.output('add "insert" to sys.argv to insert new words.')
-        printe.output(f'{len(INSERT)=}')
+        printe.output(f"{len(INSERT)=}")
         printe.output(insert_line[0])
 # ---
 print("----------------")
 # ---
-printe.output(f'len lead_words from file: {len(lead_words)}')
-printe.output(f'len all_words from file: {len(all_words)}')
+printe.output(f"len lead_words from file: {len(lead_words)}")
+printe.output(f"len all_words from file: {len(all_words)}")
 # ---
-printe.output(f'len sql titles: {len(in_sql_lead)}')
-printe.output(f'pages with same values in sql and file: {same}')
+printe.output(f"len sql titles: {len(in_sql_lead)}")
+printe.output(f"pages with same values in sql and file: {same}")
 # ---
-with open(f'{Dir}/words.txt', "w", encoding="utf-8") as f:
+with open(f"{Dir}/words.txt", "w", encoding="utf-8") as f:
     f.write("\n".join(all_textx))

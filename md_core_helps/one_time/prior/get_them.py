@@ -1,6 +1,5 @@
-'''
+""" """
 
-'''
 import sys
 import re
 import urllib.parse
@@ -11,12 +10,12 @@ import wikitextparser
 from newapi import printe
 
 # ---
-'''
+"""
 # ---
 from prior import get_them
 tt = get_them.work_in_one_lang_link()
 # ---
-'''
+"""
 # ---
 change_codes = {
     "bat_smg": "bat-smg",
@@ -35,28 +34,28 @@ change_codes = {
 
 def url_parser(url):
     parts = urlparse(url)
-    directories = parts.path.strip('/').split('/')
-    queries = parts.query.strip('&').split('&')
+    directories = parts.path.strip("/").split("/")
+    queries = parts.query.strip("&").split("&")
     # ---
     queries1 = {}
     # x.split('=')[0] : x.split('=')[1] for x in queries
     # ---
     for q in queries:
-        if '=' not in q:
+        if "=" not in q:
             continue
-        k, sep, v = q.partition('=')
+        k, sep, v = q.partition("=")
         queries1[k] = v
         # https://webcache.googleusercontent.com/search?hl=fr&q=cache:https://books.google.fr/books?id=faunzyqrhtgc&pg=pa47&vq=pancréas+mucoviscidose&dq=physiologie+humaine&source=gbs_search_r&cad=0_1&sig=564mkm4lqqdqy18ukodcuyffamm
     # ---
     elements = {
-        'scheme': parts.scheme,
-        'netloc': parts.netloc,
-        'path': parts.path,
-        'params': parts.params,
-        'query': parts.query,
-        'fragment': parts.fragment,
-        'directories': directories,
-        'queries': queries1,
+        "scheme": parts.scheme,
+        "netloc": parts.netloc,
+        "path": parts.path,
+        "params": parts.params,
+        "query": parts.query,
+        "fragment": parts.fragment,
+        "directories": directories,
+        "queries": queries1,
     }
 
     return elements
@@ -69,43 +68,43 @@ def filter_urls(links):
     # delete link like web.archive.org
     for x in links:
         # ---
-        if x.startswith('//'):
+        if x.startswith("//"):
             x = f"https:{x}"
         # ---
-        x = x.replace('//www.', '//').replace('http://', 'https://')
+        x = x.replace("//www.", "//").replace("http://", "https://")
         # ---
         # un urlencode
         # x = x.replace('%3A', ':').replace('%2F', '/').replace('%3F', '?').replace('%3D', '=').replace('%26', '&')
         x = urllib.parse.unquote(x)
         # ---
-        x = x.replace('//www.', '//').replace('http://', 'https://')
+        x = x.replace("//www.", "//").replace("http://", "https://")
         # https://web.archive.org/web/20100724032458/https://nlm.nih.gov/medlineplus/druginfo/natural/patient-riboflavin.html
-        if 'web.archive.org' in x:
+        if "web.archive.org" in x:
             # match https://web.archive.org/web/20230123155031 and delete it
-            x = re.sub(r'^https://web\.archive\.org/web/[\d]+/', '', x)
-        elif 'archive.org/details' in x:
+            x = re.sub(r"^https://web\.archive\.org/web/[\d]+/", "", x)
+        elif "archive.org/details" in x:
             # https://archive.org/details/masterdentistry0000unse/page/180
-            x = x.split('/page')[0]
+            x = x.split("/page")[0]
         # ---
-        if 'archive.is' in x:
-            x = re.sub(r'^https://[\w]+\.archive\.is/[\d]+/', '', x)
-        x = x.replace('//www.', '//').replace('http://', 'https://')
+        if "archive.is" in x:
+            x = re.sub(r"^https://[\w]+\.archive\.is/[\d]+/", "", x)
+        x = x.replace("//www.", "//").replace("http://", "https://")
         # ---
-        if 'googleusercontent' in x:
-            x = re.sub(r'^https://.*?googleusercontent.*?http', 'http', x)
+        if "googleusercontent" in x:
+            x = re.sub(r"^https://.*?googleusercontent.*?http", "http", x)
         # ---
-        x = re.sub(r'^http.*?https://books', 'https://books', x)
+        x = re.sub(r"^http.*?https://books", "https://books", x)
         # ---
         # https://books.google.ca/books?id=JaOoXdSlT9sC&pg=PA11
-        if 'books.google' in x and 'books' not in sys.argv:
+        if "books.google" in x and "books" not in sys.argv:
             # ---
             prased = url_parser(x)
             # {'scheme': 'https', 'netloc': 'books.google.ca', 'path': '/books', 'queries': {'id': 'JaOoXdSlT9sC', 'pg': 'PA11'}}
             # ---
-            x = re.sub(prased['netloc'], 'books.google.com', x)
-            book_id = prased['queries'].get('id', '')
-            if book_id != '':
-                x2 = f'https://books.google.com/books?id={book_id}'
+            x = re.sub(prased["netloc"], "books.google.com", x)
+            book_id = prased["queries"].get("id", "")
+            if book_id != "":
+                x2 = f"https://books.google.com/books?id={book_id}"
                 if x2 != x:
                     # printe.output('<<yellow>> google books + 1')
                     x = x2
@@ -128,9 +127,9 @@ class work_in_one_lang_link:
         # ---
         self.title = title
         self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
-        self.text = ''
-        self.section0 = ''
-        self.lead = {'extlinks': [], 'refsname': {}}
+        self.text = ""
+        self.section0 = ""
+        self.lead = {"extlinks": [], "refsname": {}}
         self.extlinks = []
         self.refsname = {}
         self.contents_all = {}
@@ -151,7 +150,7 @@ class work_in_one_lang_link:
         # ---
         self.get_expended()
         # ---
-        if self.lang == 'en':
+        if self.lang == "en":
             self.get_lead()
 
     def post_to_json(self, params):
@@ -161,7 +160,7 @@ class work_in_one_lang_link:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f'except: lang:{self.lang} {e}')
+            printe.output(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -186,7 +185,7 @@ class work_in_one_lang_link:
         refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
         # ---
         if len(refsn) > 0:
-            printe.output(f' new refsn: {len(refsn)}')
+            printe.output(f" new refsn: {len(refsn)}")
             printe.output(refsn)
             # ---
             self.refsname.update(refsn)
@@ -198,21 +197,21 @@ class work_in_one_lang_link:
         for x in tags:
             if not x or not x.name:
                 continue
-            if x.name != 'ref':
+            if x.name != "ref":
                 continue
             # ---
             attrs = x.attrs
-            name = attrs.get('name', '').replace('/', '').lower().strip()
+            name = attrs.get("name", "").replace("/", "").lower().strip()
             # ---
             if not name:
                 continue
             # ---
             contents = x.contents
             # ---
-            if contents != '':
+            if contents != "":
                 self.contents_all[name] = str(x)
             # ---
-            if re.sub(r'[:\d\s]+', '', name) == '':
+            if re.sub(r"[:\d\s]+", "", name) == "":
                 continue
             # ---
             if name not in _tags_:
@@ -227,35 +226,43 @@ class work_in_one_lang_link:
         # ---
         json1 = self.post_to_json(params)
         # ---
-        self.text = json1.get('parse', {}).get('wikitext', {}).get('*', '')
+        self.text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
 
     def get_extlinks(self):
-        params = {"action": "query", "format": "json", "prop": "extlinks", "titles": self.title, "formatversion": "2", "utf8": 1, "ellimit": "max"}
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "extlinks",
+            "titles": self.title,
+            "formatversion": "2",
+            "utf8": 1,
+            "ellimit": "max",
+        }
         # ---
-        elcontinue = 'x'
+        elcontinue = "x"
         # ---
         links = []
         # ---
-        while elcontinue != '':
+        while elcontinue != "":
             # ---
-            if elcontinue not in ['x', '']:
-                params['elcontinue'] = elcontinue
+            if elcontinue not in ["x", ""]:
+                params["elcontinue"] = elcontinue
             # ---
             json1 = self.post_to_json(params)
             # ---
-            elcontinue = json1.get('continue', {}).get('elcontinue', '')
+            elcontinue = json1.get("continue", {}).get("elcontinue", "")
             # ---
-            linkso = json1.get('query', {}).get('pages', [{}])[0].get('extlinks', [])
+            linkso = json1.get("query", {}).get("pages", [{}])[0].get("extlinks", [])
             # ---
             links.extend(linkso)
         # ---
-        links = [x['url'] for x in links]
+        links = [x["url"] for x in links]
         # ---
         # remove duplicates
         liste1 = sorted(set(links))
         # ---
         # ---
-        if 'nofilter' not in sys.argv:
+        if "nofilter" not in sys.argv:
             liste1 = filter_urls(liste1)
         # ---
         self.extlinks = liste1
@@ -275,23 +282,31 @@ class work_in_one_lang_link:
         # ---
         # printe.showDiff(section0, self.section0)
         # ---
-        self.lead['refsname'] = self.get_ref_names(tags0)
-        self.lead['extlinks'] = self.get_lead_extlinks()
+        self.lead["refsname"] = self.get_ref_names(tags0)
+        self.lead["extlinks"] = self.get_lead_extlinks()
 
     def get_lead_extlinks(self):
-        params = {"action": "parse", "format": "json", "title": self.title, "text": self.section0, "prop": "externallinks", "utf8": 1, "formatversion": "2"}
+        params = {
+            "action": "parse",
+            "format": "json",
+            "title": self.title,
+            "text": self.section0,
+            "prop": "externallinks",
+            "utf8": 1,
+            "formatversion": "2",
+        }
         # ---
         json1 = self.post_to_json(params)
         # ---
         # printe.output(json1)
         # ---
-        links = json1.get('parse', {}).get('externallinks', [])
+        links = json1.get("parse", {}).get("externallinks", [])
         # ---
         # remove duplicates
         liste1 = sorted(set(links))
         # ---
         # ---
-        if 'nofilter' not in sys.argv:
+        if "nofilter" not in sys.argv:
             liste1 = filter_urls(liste1)
         # ---
         return liste1
@@ -301,18 +316,18 @@ class work_in_one_lang_link:
         for x in tags:
             if not x or not x.name:
                 continue
-            if x.name != 'ref':
+            if x.name != "ref":
                 continue
             # ---
-            name = x.attrs.get('name', '').replace('/', '').lower().strip()
+            name = x.attrs.get("name", "").replace("/", "").lower().strip()
             if not name:
                 continue
             # ---
             contents = x.contents
             # ---
-            new_co = self.contents_all.get(name, '')
+            new_co = self.contents_all.get(name, "")
             # ---
-            if contents == '' and new_co != '':
+            if contents == "" and new_co != "":
                 self.section0 = self.section0.replace(str(x), new_co)
         # ---
 
@@ -326,10 +341,10 @@ class get_old:
         self.lang = lang
         self.title = title
         self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
-        self.oldtext = ''
-        self.text = ''
-        self.section0 = ''
-        self.lead = {'extlinks': [], 'refsname': {}}
+        self.oldtext = ""
+        self.text = ""
+        self.section0 = ""
+        self.lead = {"extlinks": [], "refsname": {}}
         self.extlinks = []
         self.refsname = {}
         self.contents_all = {}
@@ -364,7 +379,7 @@ class get_old:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f'except: lang:{self.lang} {e}')
+            printe.output(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -389,7 +404,7 @@ class get_old:
         refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
         # ---
         if len(refsn) > 0:
-            printe.output(f' new refsn: {len(refsn)}')
+            printe.output(f" new refsn: {len(refsn)}")
             printe.output(refsn)
             # ---
             self.refsname.update(refsn)
@@ -401,21 +416,21 @@ class get_old:
         for x in tags:
             if not x or not x.name:
                 continue
-            if x.name != 'ref':
+            if x.name != "ref":
                 continue
             # ---
             attrs = x.attrs
-            name = attrs.get('name', '').replace('/', '').lower().strip()
+            name = attrs.get("name", "").replace("/", "").lower().strip()
             # ---
             if not name:
                 continue
             # ---
             contents = x.contents
             # ---
-            if contents != '':
+            if contents != "":
                 self.contents_all[name] = str(x)
             # ---
-            if re.sub(r'[:\d\s]+', '', name) == '':
+            if re.sub(r"[:\d\s]+", "", name) == "":
                 continue
             # ---
             if name not in _tags_:
@@ -428,14 +443,26 @@ class get_old:
     def get_oldtext(self):
         params = {"action": "parse", "format": "json", "prop": "wikitext", "page": self.title, "utf8": 1}
         # ---
-        params = {"action": "query", "format": "json", "prop": "revisions", "titles": self.title, "formatversion": "2", "rvprop": "timestamp|content", "rvslots": "*", "rvlimit": "1", "redirects": 1, "rvstart": "2020-05-31T22:00:00.000Z", "rvdir": "older"}
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "revisions",
+            "titles": self.title,
+            "formatversion": "2",
+            "rvprop": "timestamp|content",
+            "rvslots": "*",
+            "rvlimit": "1",
+            "redirects": 1,
+            "rvstart": "2020-05-31T22:00:00.000Z",
+            "rvdir": "older",
+        }
         # ---
         json1 = self.post_to_json(params)
         # ---
-        revisions = json1.get('query', {}).get('pages', [{}])[0].get('revisions', [{}])[0]
-        self.timestamp = revisions.get('timestamp', '')
-        print(f'timestamp: {self.timestamp}')
-        self.oldtext = revisions.get('slots', {}).get('main', {}).get('content', '')
+        revisions = json1.get("query", {}).get("pages", [{}])[0].get("revisions", [{}])[0]
+        self.timestamp = revisions.get("timestamp", "")
+        print(f"timestamp: {self.timestamp}")
+        self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
     def get_lead(self):
         # ---
@@ -452,23 +479,31 @@ class get_old:
         # ---
         # printe.showDiff(section0, self.section0)
         # ---
-        self.lead['refsname'] = self.get_ref_names(tags0)
-        self.lead['extlinks'] = self.get_extlinks_from_text(self.section0)
+        self.lead["refsname"] = self.get_ref_names(tags0)
+        self.lead["extlinks"] = self.get_extlinks_from_text(self.section0)
 
     def get_extlinks_from_text(self, text):
-        params = {"action": "parse", "format": "json", "title": self.title, "text": text, "prop": "externallinks", "utf8": 1, "formatversion": "2"}
+        params = {
+            "action": "parse",
+            "format": "json",
+            "title": self.title,
+            "text": text,
+            "prop": "externallinks",
+            "utf8": 1,
+            "formatversion": "2",
+        }
         # ---
         json1 = self.post_to_json(params)
         # ---
         # printe.output(json1)
         # ---
-        links = json1.get('parse', {}).get('externallinks', [])
+        links = json1.get("parse", {}).get("externallinks", [])
         # ---
         # remove duplicates
         liste1 = sorted(set(links))
         # ---
         # ---
-        if 'nofilter' not in sys.argv:
+        if "nofilter" not in sys.argv:
             liste1 = filter_urls(liste1)
         # ---
         return liste1
@@ -478,54 +513,54 @@ class get_old:
         for x in tags:
             if not x or not x.name:
                 continue
-            if x.name != 'ref':
+            if x.name != "ref":
                 continue
             # ---
-            name = x.attrs.get('name', '').replace('/', '').lower().strip()
+            name = x.attrs.get("name", "").replace("/", "").lower().strip()
             if not name:
                 continue
             # ---
             contents = x.contents
             # ---
-            new_co = self.contents_all.get(name, '')
+            new_co = self.contents_all.get(name, "")
             # ---
-            if contents == '' and new_co != '':
+            if contents == "" and new_co != "":
                 self.section0 = self.section0.replace(str(x), new_co)
 
         # ---
 
 
 # ---
-if __name__ == '__main__':
+if __name__ == "__main__":
     # ---
-    t = work_in_one_lang_link('he', 'עששת')
+    t = work_in_one_lang_link("he", "עששת")
     sys.exit()
     # ---
-    t = work_in_one_lang_link('en', 'Deep_vein_thrombosis')
-    old = get_old('Deep_vein_thrombosis')
+    t = work_in_one_lang_link("en", "Deep_vein_thrombosis")
+    old = get_old("Deep_vein_thrombosis")
     # print
     orex = t.extlinks
     oldex = old.extlinks
-    print(f'orex: {len(orex)}')
-    print(f'oldex: {len(oldex)}')
+    print(f"orex: {len(orex)}")
+    print(f"oldex: {len(oldex)}")
     printe.showDiff("\n".join(orex), "\n".join(oldex))
     # ---
-    print('=============')
+    print("=============")
     # ---
     refsname = t.refsname
     oldrefsname = old.refsname
-    print(f'refsname: {len(refsname)}')
-    print(f'oldrefsname: {len(oldrefsname)}')
+    print(f"refsname: {len(refsname)}")
+    print(f"oldrefsname: {len(oldrefsname)}")
     printe.showDiff("\n".join(refsname), "\n".join(oldrefsname))
     # ---
-    print('=============')
+    print("=============")
     # ---
     lead = t.lead
     oldlead = old.lead
-    for x in ['extlinks', 'refsname']:
-        print('=============')
+    for x in ["extlinks", "refsname"]:
+        print("=============")
         # ---
-        print(f'{x}: {len(lead[x])}')
-        print(f'old{x}: {len(oldlead[x])}')
+        print(f"{x}: {len(lead[x])}")
+        print(f"old{x}: {len(oldlead[x])}")
         printe.showDiff("\n".join(lead[x]), "\n".join(oldlead[x]))
     # ---

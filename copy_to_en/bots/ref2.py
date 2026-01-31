@@ -54,6 +54,7 @@ def get_short_refs(first):
     # ---
     return short_refs
 
+
 def fix_ref(first, alltext):
     first = first
     # ---
@@ -71,4 +72,3 @@ def fix_ref(first, alltext):
             first = first.replace(refe, "")
     # ---
     return first
-

@@ -1,6 +1,7 @@
 """
 python3 core8/pwb.py wprefs/bots/es_refs
 """
+
 import wikitextparser as wtp
 from pathlib import Path
 

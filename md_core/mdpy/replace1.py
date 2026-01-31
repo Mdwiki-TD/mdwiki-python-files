@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-
-"""
+""" """
 import sys
 from newapi.mdwiki_page import MainPage, NEW_API
 from pathlib import Path
