@@ -12,6 +12,7 @@ python3 core8/pwb.py after_translate/sql_new -lang:ur
 
 """
 
+import logging
 import sys
 import time
 
@@ -22,7 +23,8 @@ from after_translate.bots.get_pages import get_pages_from_db
 
 # ---
 from mdapi_sql import wiki_sql
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 skip_langs = ["zh-yue", "ceb"]
@@ -91,11 +93,11 @@ def main():
         # ---
         numb_lang += 1
         # ---
-        printe.output(" \\/\\/\\/\\/\\/ ")
-        printe.output(f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"')
+        logger.info(" \\/\\/\\/\\/\\/ ")
+        logger.info(f'mdwiki/after_translate/sql.py: {numb_lang} Lang from {lnn} : "{lange}"')
         # ---
         if lange in skip_langs:
-            printe.output(f"skip lang:{lange}")
+            logger.info(f"skip lang:{lange}")
             continue
         # ---
         result = sql_results(lange)
@@ -104,7 +106,7 @@ def main():
         tgd_by_md = targets_done_by_mdtitle.get(lange, {})
         # ---
         if not result:
-            printe.output("no result")
+            logger.info("no result")
             continue
         # ---
         lang_tab = start_work.start(result, lange, tgd, tgd_by_md, tit_user_lang)

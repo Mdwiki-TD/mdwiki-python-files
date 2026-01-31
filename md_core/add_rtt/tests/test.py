@@ -4,10 +4,13 @@
 python3 core8/pwb.py add_rtt/tests/test
 
 """
-import wikitextparser as wtp
-from newapi import printe
+import logging
 
-# from newapi.mdwiki_page import NEW_API
+import wikitextparser as wtp
+
+logger = logging.getLogger(__name__)
+
+# from mdwiki_api.mdwiki_page import NEW_API
 # api_new = NEW_API("www", family="mdwiki")
 
 text = """
@@ -49,7 +52,7 @@ for table in parsed.tables:
         r_s = x[1].value.strip()
         title = x[2].value.strip()
         # ---
-        printe.output(f"<<green>> title: ({title}), r_s: ({r_s})")
+        logger.info(f"<<green>> title: ({title}), r_s: ({r_s})")
         # ---
         if x[1].is_header:
             print("skip header")
@@ -59,8 +62,6 @@ for table in parsed.tables:
         x[1].set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
 
 new_text = parsed.string
-
-# printe.showDiff(text, new_text)
 
 # titles = api_new.get_titles_redirects(["Ehlers–Danlos syndrome"]) # {'Ehlers–Danlos syndrome': 'Ehlers–Danlos syndromes'}
 

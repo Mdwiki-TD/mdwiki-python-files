@@ -9,7 +9,7 @@ import sys
 
 from mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import to_sql
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
 
 
 def main():

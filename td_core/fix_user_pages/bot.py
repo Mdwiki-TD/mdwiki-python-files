@@ -11,6 +11,7 @@ python3 core8/pwb.py fix_user_pages/bot addall
 
 """
 import copy
+import logging
 import sys
 
 import tqdm
@@ -20,7 +21,8 @@ from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_targ
 from fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 from fix_user_pages.user_bot import get_new_user
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 skip_by_lang = {
     "ar": ["الأنسولين"],
@@ -85,16 +87,16 @@ def work_one_tab(tab, missing, redirects):
     skip_it = skip_by_lang.get(lang, {})
     # ---
     if target in skip_it:
-        printe.output(f"<<yellow>> skip {target}")
+        logger.info(f"<<yellow>> skip {target}")
         return {}
     # ---
     new_target = ""
     # ---
     if target in missing:
-        printe.output(f'<<red>> page "{target}" not exists in {lang}')
+        logger.info(f'<<red>> page "{target}" not exists in {lang}')
         deleted, new_target = get_new_target_log(lang, target)
         if deleted:
-            printe.output(f'<<red>> page "{target}" deleted in {lang}')
+            logger.info(f'<<red>> page "{target}" deleted in {lang}')
             deleted_pages.append(iid)
         # ---
     elif target in redirects:
@@ -102,7 +104,7 @@ def work_one_tab(tab, missing, redirects):
         new_target = page.get_redirect_target()
     # ---
     if new_target:
-        printe.output(f"<<yellow>> work_one_tab: {target=}, {new_target=}")
+        logger.info(f"<<yellow>> : {target=}, {new_target=}")
         # ---
         page2 = WikiPage(new_target, lang, family="wikipedia")
         # ---
@@ -114,7 +116,7 @@ def work_one_tab(tab, missing, redirects):
             # ---
             tab["qid"] = page2.get_qid()
             # ---
-            printe.output(f"<<yellow>> new_target exists, ns: {ns}")
+            logger.info(f"<<yellow>> new_target exists, ns: {ns}")
             # ---
             if not page2.isRedirect() and ns == 0:
                 # ---
@@ -125,7 +127,7 @@ def work_one_tab(tab, missing, redirects):
                 # ---
                 return {new_target: tab}
         # else:
-        #     printe.output(f'<<red>> page "{new_target}" deleted from {lang}')
+        # logger.info(f'<<red>> page "{new_target}" deleted from {lang}')
         #     deleted.append(iid)
     # ---
     return {}
@@ -135,7 +137,7 @@ def work_in_titles(lang, tabs):
     # ---
     qids_all.setdefault(lang, {})
     # ---
-    printe.output(f"<<green>> lang:{lang}, has {len(tabs)} pages")
+    logger.info(f"<<green>> lang:{lang}, has {len(tabs)} pages")
     # ---
     titles = [x["target"] for x in tabs]
     # ---
@@ -144,12 +146,12 @@ def work_in_titles(lang, tabs):
     missing = [x for x, v in pages.items() if not v]
     redirects = [x for x, v in pages.items() if v == "redirect"]
     # ---
-    printe.output(f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
+    logger.info(f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
     # ---
     new_tabs = [tab for tab in tabs if tab["target"] in missing or tab["target"] in redirects]
     # ---
     if len(titles) != len(new_tabs):
-        printe.output(f"lang:{lang}, has {len(new_tabs)} new tabs")
+        logger.info(f"lang:{lang}, has {len(new_tabs)} new tabs")
     # ---
     to_set_new = {}
     # ---
@@ -180,7 +182,7 @@ def work_in_to_set(new_target, tab):
     new_tab = copy.deepcopy(tab)
     new_tab["target"] = new_target
     # ---
-    printe.output(f"<<green>> work_in_to_set() new_target:{new_target}")
+    logger.info(f"<<green>> () new_target:{new_target}")
     # ---
     user = new_tab["user"]
     # ---
@@ -195,7 +197,7 @@ def work_in_to_set(new_target, tab):
     new_tab["user"] = newuser
     # new_tab["qid"] = qids_all.get(new_tab["lang"], {}).get(new_target)
     # ---
-    printe.output(f"<<purple>> {user=}, {newuser=}")
+    logger.info(f"<<purple>> {user=}, {newuser=}")
     # ---
     new_tabs_to_db.append({"old": tab, "new": new_tab})
     # ---
@@ -215,14 +217,14 @@ def start():
     # ---
     titles_by_lang = get_titles(lang=lang)
     # ---
-    printe.output(f"<<green>> len of titles_by_lang {len(titles_by_lang)}")
+    logger.info(f"<<green>> len of titles_by_lang {len(titles_by_lang)}")
     # ---
     for lang, tabs in titles_by_lang.items():
         # ---
         work_in_titles(lang, tabs)
     # ---
     """
-    printe.output(f"len of to_set {len(to_set)}")
+    logger.info(f"len of to_set {len(to_set)}")
     # ---
     for new_target, tab in to_set.items():
         work_in_to_set(new_target, tab)

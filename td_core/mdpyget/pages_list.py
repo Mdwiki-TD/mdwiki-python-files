@@ -4,7 +4,7 @@ from mdpyget.pages_list import get_links_from_cats
 """
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
 
 videos_cats = ["Videowiki scripts", "RTTVideo"]
 

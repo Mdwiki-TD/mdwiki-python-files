@@ -6,11 +6,13 @@
 python3 core8/pwb.py db_work/get_red
 
 """
+import logging
 import sys
 
 from apis import mdwiki_api
 from mdapi_sql import sql_for_mdwiki, sql_qids_others
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # mdwiki_api.api_new.Login_to_wiki()
 
@@ -78,18 +80,18 @@ def get_pages(tab):
         elif new_qid == old_qid:
             to_del.append(old_title)
     # ---
-    printe.output(f"len to_del {len(to_del)}: \n" + "\n\t".join(to_del))
+    logger.info(f"len to_del {len(to_del)}: \n" + "\n\t".join(to_del))
     # ---
     old_way = False
     # ---
     if old_way:
-        printe.output("===================")
+        logger.info("===================")
         if tat != "":
-            printe.output("<<red>> redirects: ")
-            printe.output(tat)
-            printe.output("===================")
+            logger.info("<<red>> redirects: ")
+            logger.info(tat)
+            logger.info("===================")
         # ---
-        printe.output(f"len set_new_title {len(set_new_title)}.")
+        logger.info(f"len set_new_title {len(set_new_title)}.")
         # ---
         if "no" not in sys.argv:
             if set_new_title:

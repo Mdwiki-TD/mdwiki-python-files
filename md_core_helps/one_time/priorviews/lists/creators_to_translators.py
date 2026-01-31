@@ -8,17 +8,20 @@ from priorviews.lists.creators_to_translators import creators_as_translators
 
 import datetime
 import json
+
+# ---
+import logging
 import os
 from pathlib import Path
 
-# ---
-from newapi import printe
 from priorviews.bots import helps
 from priorviews.lists import creators  # creators.Creators_by_lang_title
 from priorviews.lists import translators
+from priorviews.lists.links_by_section import links_by_lang
+
+logger = logging.getLogger(__name__)
 
 # ---
-from priorviews.lists.links_by_section import links_by_lang
 
 # ---
 Dir = Path(__file__).parent
@@ -39,7 +42,7 @@ added = 0
 for lang, links in links_by_lang.items():
     n += 1
     # ---
-    # printe.output(f'<<yellow>> {n}/{len(links_by_lang.keys())} lang: {lang}:')
+    # logger.info(f'<<yellow>> {n}/{len(links_by_lang.keys())} lang: {lang}:')
     # ---
     if lang not in creators_as_translators:
         creators_as_translators[lang] = {}
@@ -73,12 +76,12 @@ for lang, links in links_by_lang.items():
             creators_as_translators[lang][title] = actor
             added += 1
             # ---
-            # printe.output(f'<<blue>> {added}: {title}, actor: {actor}, TD: {TD}')
+            # logger.info(f'<<blue>> {added}: {title}, actor: {actor}, TD: {TD}')
         else:
             notadded += 1
 # ---
-printe.output(f"<<blue>> added: {added}")
-printe.output(f"<<blue>> notadded: {notadded}")
+logger.info(f"<<blue>> added: {added}")
+logger.info(f"<<blue>> notadded: {notadded}")
 # ---
 if __name__ == "__main__":
     # dump creators_as_translators

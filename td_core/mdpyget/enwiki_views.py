@@ -14,6 +14,7 @@ python3 core8/pwb.py mdpyget/enwiki_views newpages nowork
 
 """
 import json
+import logging
 import os
 import re
 import sys
@@ -23,7 +24,8 @@ from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 view_bot = PageviewsClient()
 
@@ -45,7 +47,7 @@ def make_n_views(en_keys, old_values):
     # ---
     enviews_0 = {k: v for k, v in enviews.items() if v.get("all", 0) == 0}
     # ---
-    printe.output(f"<<purple>> len of enviews: {len(enviews.keys())}, len of enviews_0: {len(enviews_0.keys())}")
+    logger.info(f"<<purple>> len of enviews: {len(enviews.keys())}, len of enviews_0: {len(enviews_0.keys())}")
     # ---
     no_views = 0
     # ---
@@ -64,7 +66,7 @@ def make_n_views(en_keys, old_values):
         # ---
         old_values[k] = view_all
     # ---
-    printe.output(f"no_views:{no_views},\t len of old_values: {len(old_values.keys())}")
+    logger.info(f"no_views:{no_views},\t len of old_values: {len(old_values.keys())}")
     # ---
     return old_values
 
@@ -96,7 +98,7 @@ def get_old_values(json_file):
     old_values = {x["title"]: x["en_views"] for x in in_sql}
     # ---
     with open(json_file, "r", encoding="utf-8-sig") as file:
-        printe.output(f"<<green>> read file: {json_file}")
+        logger.info(f"<<green>> read file: {json_file}")
         in_json = json.load(file)
         # ---
         data2 = {x: y for x, y in in_json.items() if check_it(x, y, old_values)}
@@ -109,7 +111,7 @@ def get_old_values(json_file):
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(old_values, outfile, sort_keys=True, indent=2)
         # ---
-        printe.output(f"<<green>> {len(old_values)} lines to {json_file}")
+        logger.info(f"<<green>> {len(old_values)} lines to {json_file}")
         # ---
         start_to_sql(old_values)
         # ---
@@ -130,7 +132,7 @@ def main():
     if "from_cats" in sys.argv:
         vaild_links = get_links_from_cats(cat_get)
     # ---
-    printe.output(f"len of vaild_links: {len(vaild_links)}")
+    logger.info(f"len of vaild_links: {len(vaild_links)}")
     # ---
     len_old = len(old_values)
     # ---
@@ -143,14 +145,14 @@ def main():
         # ---
         vaild_links = [x for x in vaild_links if x.lower().startswith("video:")]
         # ---
-        printe.output(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
+        logger.info(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
     # ---
     elif "newpages" in sys.argv:
         en_keys_2 = list(vaild_links)
         # ---
         vaild_links = [xp for xp in en_keys_2 if old_values.get(xp, 0) < 10]
         # ---
-        printe.output(f"old vaild_links: {len(en_keys_2)}, new newpages: {len(vaild_links)}")
+        logger.info(f"old vaild_links: {len(en_keys_2)}, new newpages: {len(vaild_links)}")
     # ---
     if "nowork" in sys.argv:
         return
@@ -162,8 +164,8 @@ def main():
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(data_tab[1], outfile, sort_keys=True, indent=2)
     # ---
-    printe.output(f"<<green>> {len(data_tab[1])} lines to {json_file}")
-    printe.output(f"<<green>> len old assessments {len_old}")
+    logger.info(f"<<green>> {len(data_tab[1])} lines to {json_file}")
+    logger.info(f"<<green>> len old assessments {len_old}")
     # ---
     start_to_sql(data_tab[1])
 

@@ -4,12 +4,14 @@
 # (C) Ibrahem Qasim, 2022
 #
 #
+import logging
 import sys
 
 # ---
 import requests
 from API import himoBOT3
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 
@@ -25,7 +27,7 @@ for arg in sys.argv:
     arg, _, value = arg.partition(":")
     # ---
     if arg == "-lasi" or arg == "lasi" and value.isdigit():
-        printe.output('<<yellow>> change La_si[1] from "%d" to %s' % (La_si[1], value))
+        logger.info('<<yellow>> change La_si[1] from "%d" to %s' % (La_si[1], value))
         # ---
         La_si[1] = int(value)
         # ---
@@ -57,16 +59,16 @@ def export_en_history(title):
         xmldata = himoBOT3.get_Export_xml(title)
         # ---
     # ---
-    printe.output(f"<<yellow>> len of history == {len(xmldata)} ")
+    logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
     # ---
     last = """
     </page>
 </mediawiki>"""
     first = xmldata.split("<revision>")[0]
     # if 'teest' in sys.argv:
-    # printe.output( 'first' )
-    # printe.output( first )
-    # printe.output( 'first' )
+    # logger.info( 'first' )
+    # logger.info( first )
+    # logger.info( 'first' )
     # ---
     # 16282189
     # ---
@@ -75,9 +77,9 @@ def export_en_history(title):
     revisione = xmldata.replace(first, "").split("</page>")[0].split("</revision>")
     revisions = [f"{x}</revision>" for x in revisione if x.strip().startswith("<revision>")]
     if "teest" in sys.argv:
-        printe.output(revisions)
+        logger.info(revisions)
     # ---
-    printe.output(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
+    logger.info(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
     # ---
     # ---
     title2 = title.replace(":", "-").replace("/", "-")
@@ -126,8 +128,8 @@ def export_en_history(title):
             FILE_PATHS.append(path2)
             # ---
         # ---
-        printe.output(f" split revisions to {len(FILE_PATHS)} files..")
-        printe.output(FILE_PATHS)
+        logger.info(f" split revisions to {len(FILE_PATHS)} files..")
+        logger.info(FILE_PATHS)
         return FILE_PATHS
         # ---
     else:
@@ -135,7 +137,7 @@ def export_en_history(title):
         with open(FILE_PATH, "w", encoding="utf-8") as ooo:
             ooo.write(xmldata)
         # ---
-        printe.output(" revisions in one file.")
+        logger.info(" revisions in one file.")
         # ---
         return FILE_PATH
 
@@ -157,11 +159,11 @@ def export(title):
     gg = Session.post(url=urll, data=paramse)
     xmldata = gg.text
     # ---
-    printe.output(f"<<yellow>> len of history == {len(xmldata)} ")
+    logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
     # ---
     revisions = xmldata.split("</revision>")
     # ---
-    printe.output(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
+    logger.info(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
     # ---
     title2 = title.replace(":", "-").replace("/", "-")
     # ---
@@ -169,7 +171,7 @@ def export(title):
     with open(FILE_PATH, "w", encoding="utf-8") as ooo:
         ooo.write(xmldata)
     # ---
-    # printe.output( ' revisions in one file.' )
+    # logger.info( ' revisions in one file.' )
     # ---
     return FILE_PATH
 

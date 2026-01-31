@@ -6,6 +6,7 @@ xpython3 core8/pwb.py wd_works/recheck
 
 """
 
+import logging
 import sys
 
 from apis import wikidataapi
@@ -13,8 +14,9 @@ from apis import wikidataapi
 # ---
 from mdapi_sql import sql_for_mdwiki, wiki_sql
 from mdpy.bots import en_to_md, py_tools
-from newapi import printe
 from pymysql.converters import escape_string
+
+logger = logging.getLogger(__name__)
 
 targets_done = {}
 wd_tt = {}
@@ -36,7 +38,7 @@ def dodo_sql():
     # ---
     que += "\n;"
     # ---
-    printe.output(que)
+    logger.info(que)
     # ---
     sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
@@ -65,7 +67,7 @@ def dodo_sql():
         # targets_done[lang][py_tools.ec_de_code(target , 'encode')] = { "user" : user , "target" : target, "mdtitle" : title }
         targets_done[lang][target] = {"user": user, "target": target, "mdtitle": title}
     # ---
-    printe.output(f"<<yellow>> find {len_done_target} with target, and {len_no_target} without ")
+    logger.info(f"<<yellow>> find {len_done_target} with target, and {len_no_target} without ")
 
 
 def do_it_sql(lange, targets):
@@ -96,12 +98,12 @@ def do_it_sql(lange, targets):
         res_len = len(result)
         # ---
         if res_len == len(group):
-            printe.output("<<green>> len(result) == len(group) 100.")
+            logger.info("<<green>> len(result) == len(group) 100.")
         # ---
         result_n = []
         # ---
         if result:
-            printe.output(f'recheck.py len(result) = "{res_len}"')
+            logger.info(f'recheck.py len(result) = "{res_len}"')
             # ---
             for liste in result:
                 # ---
@@ -117,18 +119,18 @@ def do_it_sql(lange, targets):
         # ---
         if res_len < len(group):
             diff = len(group) - res_len
-            # printe.output( query )
+            # logger.info( query )
             itemdiff = [t for t in group if t.strip() != "" and t not in result_n]
             len_missing = len(itemdiff)
             if len_missing > 0:
-                printe.output(f"recheck.py {diff} missing from {len(group)}")
-                printe.output(f"recheck.py missing:({len_missing}):{','.join(itemdiff)}")
+                logger.info(f"recheck.py {diff} missing from {len(group)}")
+                logger.info(f"recheck.py missing:({len_missing}):{','.join(itemdiff)}")
 
 
 def work_with_2_qids(oldq, new_q):
     # ---
-    printe.output("=============================")
-    printe.output(f"start:work_with_2_qids: oldq:{oldq}, new_q:{new_q}")
+    logger.info("=============================")
+    logger.info(f"start:: oldq:{oldq}, new_q:{new_q}")
     # ---
     fas = wikidataapi.Get_sitelinks_From_Qid(oldq)
     # {'sitelinks': {'enwiki': 'User:Mr. Ibrahem/Baricitinib', 'orwiki': 'ବାରିସିଟିନିବ'}, 'q': 'Q112331510'}
@@ -137,36 +139,36 @@ def work_with_2_qids(oldq, new_q):
     # ---
     len_sites = len(false_sitelinks)
     # ---
-    printe.output(f"<<blue>> len_sites {len_sites}")
+    logger.info(f"<<blue>> len_sites {len_sites}")
     # ---
-    printe.output(false_sitelinks)
+    logger.info(false_sitelinks)
     # ---
     en = false_sitelinks.get("enwiki", "")
     # ---
     if en.startswith("User:Mr. Ibrahem"):
-        printe.output(f"<<blue>> remove sitelink {en}")
+        logger.info(f"<<blue>> remove sitelink {en}")
         remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, token=True)
         if "success" in remove:
             len_sites -= 1
-            printe.output("<<green>> **remove sitelink true.")
+            logger.info("<<green>> **remove sitelink true.")
         else:
-            printe.output("<<red>> **remove sitelink false.")
-            printe.output(remove)
+            logger.info("<<red>> **remove sitelink false.")
+            logger.info(remove)
         # ---
         remove2 = wikidataapi.Labels_API(oldq, "", "en", remove=True)
         # ---
         if remove2:
             len_sites -= 1
-            printe.output("<<green>> **remove2 label true.")
+            logger.info("<<green>> **remove2 label true.")
         else:
-            printe.output("<<red>> **remove2 label false.")
+            logger.info("<<red>> **remove2 label false.")
     # ---
     if len_sites in [1, 0]:
-        printe.output("<<blue>> merge qids")
+        logger.info("<<blue>> merge qids")
         wikidataapi.WD_Merge(oldq, new_q)
     # ---
-    printe.output(" work_with_2_qids ends.........")
-    printe.output("=============================")
+    logger.info(" ends.........")
+    logger.info("=============================")
 
 
 def start():
@@ -174,8 +176,8 @@ def start():
     dodo_sql()
     # ---
     for lange in targets_done:
-        # printe.output( ' ================================ ')
-        # printe.output( 'mdwiki/mdpy/sql.py: %d Lang : "%s"' % (numb_lang,lange) )
+        # logger.info( ' ================================ ')
+        # logger.info( 'mdwiki/mdpy/sql.py: %d Lang : "%s"' % (numb_lang,lange) )
         # ---
         # if "sql" in sys.argv:
         do_it_sql(lange, targets_done[lange])
@@ -196,37 +198,37 @@ def start():
         # ---
         line22 = f"{lang}:{target}:{qid_target}"
         # ---
-        # printe.output( 'recheck: target:%s, lang:%s' % (target,lang) )
+        # logger.info( 'recheck: target:%s, lang:%s' % (target,lang) )
         # ---
         if qid_mdwiki == "" and qid_2 == "":
-            # printe.output( '<<red>> qid_mdwiki is empty for mdtitle:%s' % mdtitle )
+            # logger.info( '<<red>> qid_mdwiki is empty for mdtitle:%s' % mdtitle )
             mdwiki_empty_qids[mdtitle] = (lang, target, qid_target)
             continue
         # ---
         if not qid_target:
             empty_qid_target.append(f"{line22},qid_mdwiki:{qid_mdwiki}")
-            # printe.output( '<<red>> qid_target is empty> target:%s' % dsd )
+            # logger.info( '<<red>> qid_target is empty> target:%s' % dsd )
             continue
         # ---
         if qid_mdwiki == "" and qid_2 != "":
             mdtitle = tit2
             qid_mdwiki = qid_2
-            printe.output(f"<<yellow>> mdtitle: ({mdtitle}), tit2: ({tit2})")
-            printe.output("<<yellow>> qid_mdwiki for mdtitle is empty, but qid_2 for tit2 is not empty")
+            logger.info(f"<<yellow>> mdtitle: ({mdtitle}), tit2: ({tit2})")
+            logger.info("<<yellow>> qid_mdwiki for mdtitle is empty, but qid_2 for tit2 is not empty")
         # ---
         if qid_target == qid_mdwiki:
             continue
         # ---
-        # printe.output( '<<red>> qid_target != qid_mdwiki' )
+        # logger.info( '<<red>> qid_target != qid_mdwiki' )
         # ---
         qids_to_merge[qid_target] = {"wd_qid": qid_mdwiki, "md_title": mdtitle, "lang": lang}
     # ---
-    printe.output(f'len(qids_to_merge) = "{len(qids_to_merge)}"')
+    logger.info(f'len(qids_to_merge) = "{len(qids_to_merge)}"')
     # ---
     for oldq, tab in qids_to_merge.items():
         new_q = tab["wd_qid"]
         md_title = tab["md_title"]
-        printe.output(f"<<blue>> oldq:{oldq}, new_q:{new_q},md_title:{md_title}")
+        logger.info(f"<<blue>> oldq:{oldq}, new_q:{new_q},md_title:{md_title}")
         # ---
         work_with_2_qids(oldq, new_q)
     # ---
@@ -243,8 +245,8 @@ def start():
     # ---
     numb = 0
     # ---
-    printe.output("work with newtabs: ")
-    printe.output(f'len(newtabs) = "{len(newtabs)}"')
+    logger.info("work with newtabs: ")
+    logger.info(f'len(newtabs) = "{len(newtabs)}"')
     # ---
     for oldqid, tab in newtabs.items():
         # ---
@@ -271,17 +273,17 @@ def start():
         # ---
         work_with_2_qids(oldqid, qid2)
     # ---
-    printe.output("<<blue>> mdwiki_empty_qids:")
+    logger.info("<<blue>> mdwiki_empty_qids:")
     to_add = {}
     # ---
     for mdm in mdwiki_empty_qids:
         lang, target, qid_target = mdwiki_empty_qids[mdm]
-        printe.output(f"<<red>> no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}")
+        logger.error(f"<<red>> no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}")
         to_add[mdm] = qid_target
     # ---
-    printe.output("<<blue>> empty_qid_target:")
+    logger.info("<<blue>> empty_qid_target:")
     for lal in empty_qid_target:
-        printe.output(f"<<red>> qid_target is empty> target:{lal}")
+        logger.error(f"<<red>> qid_target is empty> target:{lal}")
     # ---
     if "add" in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(to_add)

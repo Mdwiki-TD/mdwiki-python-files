@@ -5,8 +5,11 @@ from mdcount.bots.countref_bots import count_ref_from_text
 
 """
 
+import logging
+
 from mdcount.bots.regex_scanner import RegexScanner
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def get_refs_new(text):
@@ -26,7 +29,7 @@ def get_refs_new(text):
             if content.strip() not in ref_list:
                 ref_list.append(content.strip())
     # ---
-    printe.output(f"len of get_refs_new : {len(ref_list)}")
+    logger.info(f"len of : {len(ref_list)}")
     # ---
     return ref_list
 
@@ -37,7 +40,7 @@ def get_short_refs(text):
     # ---
     ref_list = scanner.attr_scan("name")
     # ---
-    # printe.output(f"len of get_short_refs : {len(ref_list)}")
+    # logger.info(f"len of : {len(ref_list)}")
     # ---
     return ref_list
 

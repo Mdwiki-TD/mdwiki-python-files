@@ -9,11 +9,12 @@ from apis.wd_bots import wd_rest_new
 
 """
 import json
+import logging
 import sys
 
 import requests
-from newapi import printe
-from newapi.except_err import exception_err
+
+logger = logging.getLogger(__name__)
 
 wd_cach = {}
 
@@ -26,7 +27,7 @@ def open_url_get(url):
         req = requests.get(url, timeout=10)
         result = req.json()
     except Exception as e:
-        exception_err(e, text=url)
+        logger.warning(e, extra={"text": url})
     # ---
     return result
 
@@ -55,7 +56,7 @@ def Get_one_qid_info(qid, only=None):
         url += "/" + only
     # ---
     if "printurl" in sys.argv:
-        printe.output(url)
+        logger.info(url)
     # ---
     result = open_url_get(url)
     # ---
@@ -88,7 +89,7 @@ def Get_Claims_API(q="", p=""):
     # ---
     statements = Get_one_qid_info(q, only="statements").get("statements", {})
     # ---
-    printe.output(f"Get_Claims_API: {len(statements)=}")
+    logger.info(f": {len(statements)=}")
     # ---
     claims = statements.get(p, [])
     # ---
@@ -111,8 +112,8 @@ if __name__ == "__main__":
     qids = ["Q26981430"]
     # ---
     for q in qids:
-        printe.output(f"<<blue>>_______\n{q} :")
+        logger.info(f"<<blue>>_______\n{q} :")
         # ---
         j = Get_one_qid_info(q)
         # ---
-        printe.output(json.dumps(j, indent=4, ensure_ascii=False))
+        logger.info(json.dumps(j, indent=4, ensure_ascii=False))

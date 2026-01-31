@@ -9,12 +9,14 @@ Verifies that it is StatPearls and if so adds "|journal=StatPearls" to the templ
 
 """
 
-from fix_cs1.bots.pmid import pmid_journal
-
 # import re
 # import sys
 # import wikitextparser as wtp
-from newapi import printe
+import logging
+
+from fix_cs1.bots.pmid import pmid_journal
+
+logger = logging.getLogger(__name__)
 
 
 def get_param(temp, arg):
@@ -24,7 +26,7 @@ def get_param(temp, arg):
         do = va.value.strip()
         return do
     # else:
-    #     printe.output(f"Parameter {arg} not found in template.")
+    # logger.info(f"Parameter {arg} not found in template.")
     # ---
     return ""
 
@@ -47,7 +49,7 @@ def get_journal_value(temp):
         if not va:
             continue
         # ---
-        # printe.output(f"** temp has |{param} = {va}")
+        # logger.info(f"** temp has |{param} = {va}")
         journal = pmid_journal(va, param)
         # ---
         if journal:

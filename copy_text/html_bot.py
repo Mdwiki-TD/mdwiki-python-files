@@ -4,8 +4,11 @@
 python3 core8/pwb.py copy_text/html_bot
 
 """
+import logging
+
 from bs4 import BeautifulSoup
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def fix_html(html):
@@ -40,7 +43,3 @@ def fix_html(html):
 
 
 text = """<a rel="mw:WikiLink" href="./Template:Mdwiki_revid?action=edit&amp;redlink=1" title="Template:Mdwiki revid" about="#mwt3" typeof="mw:Transclusion mw:LocalizedAttrs" class="new" data-mw='{"parts":[{"template":{"target":{"wt":"mdwiki revid","href":"./Template:Mdwiki_revid"},"params":{"1":{"wt":"1440189"}},"i":0}}]}' data-mw-i18n='{"title":{"lang":"x-page","key":"red-link-title","params":["Template:Mdwiki revid"]}}' id="mwBA" data-parsoid='{"stx":"simple","a":{"href":"./Template:Mdwiki_revid"},"sa":{"href":":Template:Mdwiki revid"},"pi":[[{"k":"1"}]],"dsr":[33,57,null,null]}'>Template:Mdwiki revid</a>"""
-
-if __name__ == "__main__":
-    new_text = fix_html(text)
-    printe.showDiff(text, new_text)

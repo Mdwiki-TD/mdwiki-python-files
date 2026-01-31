@@ -8,14 +8,17 @@ Usage:
     python3 core8/pwb.py unlinked_wb/bot
 
 """
+import logging
+
 # ---
 import re
 import sys
 
 from mdpy.bots.check_title import valid_title
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 from unlinked_wb.hlps import get_pages_in_use, get_qids
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
@@ -46,7 +49,7 @@ def add_un_linked_wb(title, qid):
         if m:
             qid_in = m.group(1)
         # ---
-        printe.output(f"page already tagged.{title=}\t{qid_in=}\t{qid=}")
+        logger.info(f"page already tagged.{title=}\t{qid_in=}\t{qid=}")
         return False
     # ---
     tag = "{{#unlinkedwikibase:id=" + qid + "}}\n"
@@ -61,7 +64,7 @@ def add_un_linked_wb(title, qid):
 def work_un(tab):
     for numb, (title, new_q) in enumerate(tab.items(), start=1):
         # ---
-        printe.output(f"-----------------\n<<yellow>> work_un: {numb}, {title=}, {new_q=}")
+        logger.info(f"-----------------\n<<yellow>> : {numb}, {title=}, {new_q=}")
         # ---
         if new_q:
             add_un_linked_wb(title, new_q)
@@ -73,10 +76,10 @@ def add_to_pages(pages_to_add):
         return
     # ---
     for n, (x, qid) in enumerate(pages_to_add.items(), start=1):
-        printe.output(f"-----------------\np:<<yellow>> {n}/{len(pages_to_add)}: t:{x}::")
+        logger.info(f"-----------------\np:<<yellow>> {n}/{len(pages_to_add)}: t:{x}::")
         # ---
         if not qid:
-            printe.output("no qid")
+            logger.info("no qid")
             continue
         # ---
         add_un_linked_wb(x, qid)
@@ -86,15 +89,15 @@ def pages_has_to_work(qids, pages_has):
     # ---
     f_to_work = {page: qids[page] for page in pages_has if page in qids and qids[page] != pages_has[page]}
     # ---
-    printe.output(f"len of pages_has: {len(pages_has)}, f_to_work: {len(f_to_work)}")
+    logger.info(f"len of pages_has: {len(pages_has)}, f_to_work: {len(f_to_work)}")
     # ---
     for n, (x, qid) in enumerate(f_to_work.items(), start=1):
-        printe.output("<<yellow>>-----------------")
+        logger.info("<<yellow>>-----------------")
         # ---
-        printe.output(f"p:{n}/{len(f_to_work)}: t:{x}::")
+        logger.info(f"p:{n}/{len(f_to_work)}: t:{x}::")
         # ---
         if not qid:
-            printe.output("no qid")
+            logger.info("no qid")
             continue
         # ---
         add_un_linked_wb(x, qid)
@@ -102,7 +105,7 @@ def pages_has_to_work(qids, pages_has):
 
 def add_tag():
     # ---
-    printe.output("Get all pages...")
+    logger.info("Get all pages...")
     # ---
     qids, vals_d = get_qids()
     # ---
@@ -120,11 +123,11 @@ def add_tag():
     # ---
     all_pages = [x for x in all_pages_tab if valid_title(x)]
     # ---
-    printe.output(f"<<purple>> {len(all_pages)=}, {len(pages_has)=}")
+    logger.info(f"<<purple>> {len(all_pages)=}, {len(pages_has)=}")
     # ---
     pages_to_add = {page: qids[page] for page in pages_hasnt if page in qids}
     # ---
-    printe.output(f"<<purple>> {len(pages_hasnt)=}, {len(pages_to_add)=}")
+    logger.info(f"<<purple>> {len(pages_hasnt)=}, {len(pages_to_add)=}")
     # ---
     pages_has_to_work(qids, pages_has)
     # ---
@@ -132,7 +135,7 @@ def add_tag():
     # ---
     for q, v in vals_d.items():
         if len(v) > 1:
-            printe.output(f"<<red>> duplicate: q:{q}, v:{v}")
+            logger.error(f"<<red>> duplicate: q:{q}, v:{v}")
 
 
 if __name__ == "__main__":

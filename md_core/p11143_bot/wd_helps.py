@@ -5,11 +5,14 @@ from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_
 """
 
 import copy
+import logging
 import sys
 import time
 
 from apis import wikidataapi
-from newapi import printe, wd_sparql
+from newapi import wd_sparql
+
+logger = logging.getLogger(__name__)
 
 get_query_result = wd_sparql.get_query_result
 
@@ -47,21 +50,21 @@ def add_P11143_to_qids_in_wd(newlist):
     # ---
     if len(newlist) > 0:
         # ---
-        printe.output(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
+        logger.info(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
         if len(newlist.items()) < 100:
             print("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
         # ---
         if "add" not in sys.argv:
-            printe.output('<<puruple>> add "add" to sys.argv to add them?')
+            logger.info('<<puruple>> add "add" to sys.argv to add them?')
             return
         # ---
-        for n, (q, value) in enumerate(newlist.items(), start=1):
-            printe.output(f"<<yellow>> q {n} from {len(newlist)}")
+        for n, (q, _) in enumerate(newlist.items(), start=1):
+            logger.info(f"<<yellow>> q {n} from {len(newlist)}")
             if q:
                 q = q.strip()
                 # wikidataapi.Claim_API_str(q, "P11143", value)
                 if n % 30 == 0:
-                    printe.output(f"<<yellow>> n: {n}")
+                    logger.info(f"<<yellow>> n: {n}")
                     time.sleep(5)
 
 
@@ -105,4 +108,4 @@ if __name__ == "__main__":
     # python3 core8/pwb.py p11143_bot/wd_helps
 
     op = make_in_wd_tab(limit=10)
-    printe.output("<<blue>>\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))
+    logger.info("<<blue>>\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))

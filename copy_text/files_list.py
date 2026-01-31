@@ -6,12 +6,14 @@ python3 core8/pwb.py copy_text/files_list
 
 """
 import json
+import logging
 import sys
 from pathlib import Path
 
 from apis.cat_cach import Cat_Depth
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 dir1 = Path(__file__).parent
 Dir = "/data/project/medwiki/public_html/mdtexts"
@@ -42,7 +44,7 @@ def cats_pages():
         # ---
         ca_list = [x for x in ca if x not in all_pages]
         # ---
-        printe.output(f"<<green>> ca_list({cat}): {len(ca_list)}")
+        logger.info(f"<<green>> ca_list({cat}): {len(ca_list)}")
         # ---
         to_cats[cat] = ca_list
         # ---
@@ -61,11 +63,11 @@ def dump_titles(titles):
         # read data
         with open(file, "r", encoding="utf-8") as f:
             data = json.load(f)
-            printe.output(f"<<yellow>> titles in titles.json: {len(data)}")
+            logger.info(f"<<yellow>> titles in titles.json: {len(data)}")
     # ---
     for cat, cat_titles in titles.items():
         new_data = {x: fix_title(x) for x in cat_titles if x not in data.get(cat, [])}
-        printe.output(f"<<yellow>> cat_titles({cat}) in new_data: {len(new_data)}")
+        logger.info(f"<<yellow>> cat_titles({cat}) in new_data: {len(new_data)}")
         # ---
         data.setdefault(cat, {})
         # ---

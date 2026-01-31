@@ -13,6 +13,8 @@ python3 core8/pwb.py wprefs/bot -lang:ro ask
 python3 core8/pwb.py wprefs/bot ask
 
 """
+import logging
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -20,12 +22,13 @@ python3 core8/pwb.py wprefs/bot ask
 import sys
 
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
-
-# ---
 from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
+
+logger = logging.getLogger(__name__)
+
+# ---
 
 skip_langs = ["en"]
 move_dot = {1: False}
@@ -78,10 +81,10 @@ def work_one_lang(list_, lang):
     """
 
     # ---
-    printe.output(f"<<blue>> work on lang: {lang}.wikipedia......................")
+    logger.info(f"<<blue>> work on lang: {lang}.wikipedia......................")
     # ---
     if lang in skip_langs:
-        printe.output(f"<<blue>> skip lang: {lang}.wikipedia......................")
+        logger.info(f"<<blue>> skip lang: {lang}.wikipedia......................")
         return
     # ---
     newlist = list_
@@ -101,10 +104,10 @@ def work_one_lang(list_, lang):
         # ---
         lio = f"{lang}:{title}"
         number += 1
-        printe.output(f"<<yellow>> {number} from {len(newlist)}, page: {lio}")
+        logger.info(f"<<yellow>> {number} from {len(newlist)}, page: {lio}")
         # ---
         if lio in reffixed_list and "lala" not in sys.argv:
-            printe.output("<<red>>\talready in reffixed_list.")
+            logger.info("<<red>>\talready in reffixed_list.")
             continue
         # ---
         if "adddone" in sys.argv:
@@ -114,7 +117,7 @@ def work_one_lang(list_, lang):
         text = GetPageText_raw(title, lang=lang)
         # ---
         if not text:
-            printe.output('\ttext == ""')
+            logger.info('\ttext == ""')
             continue
         # ---
         newtext = fix_page_here(text, title, lang)
@@ -150,7 +153,7 @@ def work_sql_result(lange, nolange, year=2024):
     elif lange != "":
         que = f'select lang, target from pages where target != "" and lang = "{lange}" and date like "{year}-%";'
     # ---
-    printe.output(que)
+    logger.info(que)
     # ---
     sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
@@ -192,10 +195,10 @@ def maine():
     for lang, tab in newtable.items():
         work_one_lang(tab, lang)
     # ---
-    printe.output(f"find {len(missingtitles)} pages in missingtitles")
+    logger.info(f"find {len(missingtitles)} pages in missingtitles")
     # ---
     for x, lang in missingtitles.items():
-        printe.output(f"lang: {lang}, title: {x}")
+        logger.info(f"lang: {lang}, title: {x}")
 
 
 if __name__ == "__main__":

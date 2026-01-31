@@ -5,6 +5,7 @@ python3 core8/pwb.py mdcount/bots/copy_word_table
 
 """
 import json
+import logging
 
 # ---
 import os
@@ -13,8 +14,9 @@ from pathlib import Path
 
 # ---
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
 from pymysql.converters import escape_string
+
+logger = logging.getLogger(__name__)
 
 # ---
 Dir = str(Path(__file__).parents[0])
@@ -88,7 +90,7 @@ texts = []
 n = 0
 # ---
 print("----------------")
-printe.output("<<yellow>> UPDATE: ")
+logger.info("<<yellow>> UPDATE: ")
 # ---
 if UPDATE:
     if "update" in sys.argv:
@@ -120,10 +122,10 @@ if UPDATE:
             if len(texts) % 50 == 0 or n == len(UPDATE):
                 tt = "\n".join(texts)
                 # ---
-                printe.output("====")
-                printe.output(f"{n} run sql for {len(texts)} lines.")
+                logger.info("====")
+                logger.info(f"{n} run sql for {len(texts)} lines.")
                 # ---
-                printe.output(tt)
+                logger.info(tt)
                 # ---
                 vfg = sql_for_mdwiki.mdwiki_sql(tt, values=values)
                 # ---
@@ -132,12 +134,12 @@ if UPDATE:
                 if "break" in sys.argv:
                     break
     else:
-        printe.output('add "update" to sys.argv to update new words.')
-        printe.output(f"{len(UPDATE)=}")
-        printe.output(UPDATE[0])
+        logger.info('add "update" to sys.argv to update new words.')
+        logger.info(f"{len(UPDATE)=}")
+        logger.info(UPDATE[0])
 # ---
 print("----------------")
-printe.output("<<yellow>> INSERT: ")
+logger.info("<<yellow>> INSERT: ")
 # ---
 if INSERT != []:
     # ---
@@ -147,20 +149,20 @@ if INSERT != []:
     if "insert" in sys.argv:
         # ---
         qu = "INSERT INTO words (w_title, w_lead_words, w_all_words) values\n" + insert_line
-        printe.output(qu)
+        logger.info(qu)
         vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True)
     else:
-        printe.output('add "insert" to sys.argv to insert new words.')
-        printe.output(f"{len(INSERT)=}")
-        printe.output(insert_line[0])
+        logger.info('add "insert" to sys.argv to insert new words.')
+        logger.info(f"{len(INSERT)=}")
+        logger.info(insert_line[0])
 # ---
 print("----------------")
 # ---
-printe.output(f"len lead_words from file: {len(lead_words)}")
-printe.output(f"len all_words from file: {len(all_words)}")
+logger.info(f"len lead_words from file: {len(lead_words)}")
+logger.info(f"len all_words from file: {len(all_words)}")
 # ---
-printe.output(f"len sql titles: {len(in_sql_lead)}")
-printe.output(f"pages with same values in sql and file: {same}")
+logger.info(f"len sql titles: {len(in_sql_lead)}")
+logger.info(f"pages with same values in sql and file: {same}")
 # ---
 with open(f"{Dir}/words.txt", "w", encoding="utf-8") as f:
     f.write("\n".join(all_textx))

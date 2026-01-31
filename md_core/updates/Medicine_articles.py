@@ -7,12 +7,10 @@ python3 core8/pwb.py updates/Medicine_articles
 import datetime
 
 from mdapi_sql import wiki_sql
-
-# ---
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 
 
-def sql_result():
+def sql_result() -> dict:
     """
     Executes an SQL query to retrieve the count of page titles for each language in the 'Medicine' project. The function connects to the 'enwiki' database and returns a dictionary with language codes as keys and the corresponding counts as values.
     """
@@ -100,7 +98,7 @@ def start():
     text += """{| class="sortable wikitable"\n!Lang\n!#\n|-"""
     # ---
     # sort languages by count
-    languages = {k: v for k, v in sorted(languages.items(), key=lambda item: item[1], reverse=True)}
+    languages = dict(sorted(languages.items(), key=lambda item: item[1], reverse=True))
     # ---
     for lang, count in languages.items():
         text += f"\n!{lang}\n|{count:,}\n|-"

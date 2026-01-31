@@ -7,13 +7,15 @@ python3 core8/pwb.py mdpyget/sqlviews_new -lang:ga
 """
 
 import copy
+import logging
 import re
 import sys
 
 from apis.mw_views import PageviewsClient
 from mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import insert_dict, update_table_2
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 view_bot = PageviewsClient()
 # new_data = view_bot.article_views_new(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')
@@ -25,7 +27,7 @@ Lang_to_targets = {}
 
 def print_test(strr):
     if "print" in sys.argv or "nosql" in sys.argv:
-        printe.output(strr)
+        logger.info(strr)
 
 
 def update_in_sql(lang, table):
@@ -174,11 +176,11 @@ def main():
             # ---
             lenlist = len(title_list)
             # ---
-            printe.output("---")
-            printe.output(f"<<yellow>> get pageviews for {lenlist} pages, date_start:{start}")
+            logger.info("---")
+            logger.info(f"<<yellow>> get pageviews for {lenlist} pages, date_start:{start}")
             # ---
             if lenlist < 5:
-                printe.output(", ".join(title_list))
+                logger.info(", ".join(title_list))
             # ---
             new_data = view_bot.article_views_new(
                 f"{lange}.wikipedia", title_list, granularity="daily", start=start, end="20300101"

@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 import tqdm
-from newapi.mdwiki_page import NEW_API, MainPage
+from mdwiki_api.mdwiki_page import NEW_API, MainPage
 
 home_dir = os.getenv("HOME")
 

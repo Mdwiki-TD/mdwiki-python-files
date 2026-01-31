@@ -7,6 +7,7 @@ python3 core8/pwb.py copy_data/by_title/exists_db
 """
 
 import json
+import logging
 import os
 import sys
 
@@ -15,7 +16,8 @@ import tqdm
 # ---
 from mdapi_sql import sql_for_mdwiki_new
 from mdpyget.bots.to_sql import insert_dict
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
@@ -61,16 +63,16 @@ def to_sql_d(titles_data):
         # ---
         in_sql_not_in_new = [x for x in is_in if x not in titles]
         # ---
-        # printe.output(f"<<red>> {lang_code}: {same=}, {len(to_add)=}), {len(in_sql_not_in_new)=}")
+        # logger.error(f"<<red>> {lang_code}: {same=}, {len(to_add)=}), {len(in_sql_not_in_new)=}")
         # ---
         if to_add:
             new_all[lang_code] = to_add
     # ---
-    printe.output(f"<<green>> all langs: {len(new_all)}")
+    logger.info(f"<<green>> all langs: {len(new_all)}")
     # ---
     for lang_code, to_add in new_all.items():
         # ---
-        printe.output(f"________\n<<yellow>> {lang_code}: {len(to_add)=}:")
+        logger.info(f"________\n<<yellow>> {lang_code}: {len(to_add)=}:")
         # ---
         new_data = [{"article_id": title, "code": lang_code} for title in to_add]
         # ---

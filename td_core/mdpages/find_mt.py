@@ -9,12 +9,14 @@ sql_qids_others
 
 """
 
+import logging
 import sys
 
 from apis import cat_cach
 from mdapi_sql import sql_for_mdwiki, sql_qids_others
 from mdpy.bots.check_title import valid_title
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def remove_from_others(qids_othrs, qids_td):
@@ -30,19 +32,19 @@ def remove_from_others(qids_othrs, qids_td):
     same_q = [x for x in in_both if qids_othrs[x] == qids_td[x]]
     diff_q = [x for x in in_both if qids_othrs[x] != qids_td[x]]
     # ---
-    printe.output(f"<<yellow>> len of in_both list: {len(in_both):,}, same_q: {len(same_q):,}, diff_q: {len(diff_q):,}")
+    logger.info(f"<<yellow>> len of in_both list: {len(in_both):,}, same_q: {len(same_q):,}, diff_q: {len(diff_q):,}")
     # ---
     for n, title in enumerate(diff_q, start=1):
         qid_td = qids_td[title]
         qid_othrs = qids_othrs[title]
         # ---
-        printe.output(f"t: {n}/{len(diff_q)}\t {title=} \t {qid_othrs} \t {qid_td=}")
+        logger.info(f"t: {n}/{len(diff_q)}\t {title=} \t {qid_othrs} \t {qid_td=}")
         # ---
         # sql_qids_others.set_title_where_qid(title, qid_othrs)
     # ---
     same_q_in_td = [x for x in same_q if x in TD_list]
     # ---
-    printe.output(
+    logger.info(
         f"<<yellow>> len of list: {len(same_q_in_td)=:,}, add 'delete' to sys.argv to delete them from sql_qids_others."
     )
     # ---
@@ -62,11 +64,11 @@ def doo():
 
     # ---
     to_work = [title for title, q in qids_td.items() if q == "" and valid_title(title)]
-    printe.output(f"<<green>> len of to_work list: {len(to_work)}")
+    logger.info(f"<<green>> len of to_work list: {len(to_work)}")
 
     # ---
     new_qids = {x: qids_othrs[x] for x in to_work if x in qids_othrs}
-    printe.output(f"<<green>> new_qids list: {len(new_qids)}")
+    logger.info(f"<<green>> new_qids list: {len(new_qids)}")
 
     # ---
     if to_work and new_qids:

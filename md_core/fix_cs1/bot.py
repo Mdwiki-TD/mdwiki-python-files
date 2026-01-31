@@ -9,11 +9,14 @@ tfj run fixcs --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 # import re
 # import sys
 
+import logging
+
 from fix_cs1.fix_p import fix_it
 
 # import wikitextparser as wtp
-from newapi import printe
-from newapi.mdwiki_page import CatDepth, md_MainPage
+from mdwiki_api.mdwiki_page import CatDepth, md_MainPage
+
+logger = logging.getLogger(__name__)
 
 
 def one_page(title):
@@ -39,7 +42,7 @@ def main():
 
     for n, page in enumerate(cat_members):
         # ---
-        printe.output(f"n: {n}/{len(cat_members)} - Page: {page}")
+        logger.info(f"n: {n}/{len(cat_members)} - Page: {page}")
         one_page(page)
 
 

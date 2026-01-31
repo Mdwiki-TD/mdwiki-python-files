@@ -7,16 +7,18 @@ python3 core8/pwb.py priorviews/sections_links
 """
 
 import json
+
+# ---
+import logging
 import os
 from pathlib import Path
 
 import wikitextparser
+from mdwiki_api.mdwiki_page import md_MainPage
+
+logger = logging.getLogger(__name__)
 
 # ---
-from newapi import printe
-
-# ---
-from newapi.mdwiki_page import md_MainPage
 
 # ---
 Dir = Path(__file__).parent
@@ -104,7 +106,7 @@ def dump_secs_links(d_links):
     global sect_file
     # ---
     if d_links != {}:
-        printe.output(f"<<yellow>> d_links(): length: {len(d_links.keys())}")
+        logger.info(f"<<yellow>> d_links(): length: {len(d_links.keys())}")
         json.dump(d_links, open(sect_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
@@ -146,7 +148,7 @@ if __name__ == "__main__":
             if s not in all_links[link.lower()]:
                 all_links[link.lower()].append(s)
     # ---
-    printe.output("<<red>>---------------")
+    logger.info("<<red>>---------------")
     # ---
     for x, v in all_links.items():
         if len(v) > 1:

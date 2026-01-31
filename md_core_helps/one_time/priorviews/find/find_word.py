@@ -6,16 +6,19 @@ python3 core8/pwb.py priorviews/find/find_word new
 """
 
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
-
-# ---
 from priorviews.bots import count_words, helps
 from priorviews.lists.links_by_section import links_by_lang
+
+logger = logging.getLogger(__name__)
+
+# ---
 
 # ---
 TEST = False
@@ -34,7 +37,7 @@ words_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_words():
-    printe.output(f"<<yellow>> log_words {len(words_by_lang)} words")
+    logger.info(f"<<yellow>> {len(words_by_lang)} words")
     helps.dump_data(file, words_by_lang)
 
 
@@ -75,7 +78,7 @@ def get_w(links, lang):
         if "new" in sys.argv and words_in > 40:
             continue
         # ---
-        printe.output(f"<<yellow>> title: {m}/{lena} get_w {title}, words_in:{words_in}")
+        logger.info(f"<<yellow>> title: {m}/{lena} {title}, words_in:{words_in}")
         # ---
         _words = count_words.get_words(title, lang)
         # ---

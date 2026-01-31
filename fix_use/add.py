@@ -5,20 +5,19 @@ python3 core8/pwb.py fix_use/add path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 
 """
 
+import logging
 import os
-
-# import json
 import sys
+from pathlib import Path
 
-# import re
+if Dir := Path("I:/core/bots/"):
+    sys.path.append(str(Dir))
 
-sys.path.append("I:/core/bots/")
 from fix_use.bot import scan_root
 from fix_use.mtab import tab
 from fix_use.write_bot import write  # write(oldtext, text, filepath)
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 path = ""
 # ---
@@ -100,7 +99,7 @@ def add_use(filepath, ns_line="", add_lines=""):
 
 
 def start():
-    printe.output(f"<<green>> fixpy: {path=}")
+    logger.info(f"<<green>> fixpy: {path=}")
     # ---
     pathss = []
     # ---
@@ -109,7 +108,7 @@ def start():
         scanroot = scan_root(root)
         # ---
         if not scanroot:
-            # printe.output(f"<<green>> root: {root}.")
+            # logger.info(f"<<green>> root: {root}.")
             continue
         # ---
         for f in files:
@@ -119,16 +118,16 @@ def start():
             scanit = scan_root(filepath)
             # ---
             if not scanit:
-                # printe.output(f"<<green>> filepath: {filepath}.")
+                # logger.info(f"<<green>> filepath: {filepath}.")
                 continue
             # ---
-            # printe.output(f"<<green>> file: {filepath}.")
+            # logger.info(f"<<green>> file: {filepath}.")
             # ---
             if filepath.endswith(".php"):
                 pathss.append(filepath)
     # ---
     for n, filepath in enumerate(pathss):
-        printe.output(f"<<yellow>> {n}/{len(pathss)}: file: {filepath}.")
+        logger.info(f"<<yellow>> {n}/{len(pathss)}: file: {filepath}.")
         # ---
         add_use(filepath)
 

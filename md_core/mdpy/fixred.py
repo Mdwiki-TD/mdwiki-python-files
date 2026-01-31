@@ -6,6 +6,8 @@
 python3 core8/pwb.py mdpy/fixred
 
 """
+import logging
+
 #
 # (C) Ibrahem Qasim, 2022
 #
@@ -16,8 +18,9 @@ import sys
 
 from apis import mdwiki_api
 from mdpy.bots import py_tools
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
+
+logger = logging.getLogger(__name__)
 
 NewList = {}
 
@@ -26,7 +29,7 @@ print(f"len of redirects_pages {len(redirects_pages)} ")
 # ---
 nonredirects = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 
-printe.output(f"len of nonredirects {len(nonredirects)} ")
+logger.info(f"len of nonredirects {len(nonredirects)} ")
 
 from_to = {}
 normalized = {}
@@ -48,7 +51,7 @@ def find_redirects(links):
             if str(ns) == "0":
                 titles.append(x)
             else:
-                printe.output(f"ns:{str(ns)}")
+                logger.info(f"ns:{str(ns)}")
     # ---
     oldlen = len(from_to.items())
     # ---
@@ -57,7 +60,7 @@ def find_redirects(links):
     for i in range(0, len(titles), 300):
         group = titles[i : i + 300]
         # ---
-        # printe.output(group)
+        # logger.info(group)
         # ---
         line = "|".join(group)
         # ---
@@ -80,13 +83,13 @@ def find_redirects(links):
             for nor in normal:
                 normalized[nor["to"]] = nor["from"]
                 normalized_numb += 1
-                # printe.output('normalized["%s"] = "%s"' % ( nor["to"] , nor["from"] ) )
+                # logger.info('normalized["%s"] = "%s"' % ( nor["to"] , nor["from"] ) )
             # ---
             # "redirects": [{"from": "Acetylsalicylic acid","to": "Aspirin"}]
             Redirects = query.get("redirects", [])
             for red in Redirects:
                 from_to[red["from"]] = red["to"]
-                # printe.output('from_to["%s"] = "%s"' % ( red["from"] , red["to"] ) )
+                # logger.info('from_to["%s"] = "%s"' % ( red["from"] , red["to"] ) )
             # ---
             # "pages": { "4195": {"pageid": 4195,"ns": 0,"title": "Aspirin","redirects": [{"pageid": 4953,"ns": 0,"title": "Acetylsalicylic acid"}]} }
             pages = query.get("pages", {})
@@ -96,15 +99,15 @@ def find_redirects(links):
                 tab = pages[page]
                 for pa in tab.get("redirects", []):
                     from_to[pa["title"]] = tab["title"]
-                    # printe.output('<<yellow>> from_to["%s"] = "%s"' % ( pa["title"] , tab["title"] ) )
+                    # logger.info('<<yellow>> from_to["%s"] = "%s"' % ( pa["title"] , tab["title"] ) )
         else:
-            printe.output(" no jsone")
+            logger.info(" no jsone")
     # ---
     newlen = len(from_to.items())
     nn = newlen - oldlen
     # ---
-    printe.output(f"def find_redirects: find {nn} length")
-    # printe.output( "def find_redirects: find %d for normalized" % normalized_numb )
+    logger.info(f"def : find {nn} length")
+    # logger.info( "def find_redirects: find %d for normalized" % normalized_numb )
 
 
 def replace_links2(text, oldlink, newlink):
@@ -118,7 +121,7 @@ def replace_links2(text, oldlink, newlink):
         or text.find(f"[[{oldlink2}|") != -1
     ):
         # ---
-        printe.output(f"text.replace( '[[{oldlink}]]' , '[[{newlink}|{oldlink}]]' )")
+        logger.info(f"text.replace( '[[{oldlink}]]' , '[[{newlink}|{oldlink}]]' )")
         # ---
         text = text.replace(f"[[{oldlink}]]", f"[[{newlink}|{oldlink}]]")
         text = text.replace(f"[[{oldlink}|", f"[[{newlink}|")
@@ -147,11 +150,11 @@ def treat_page(title):
     links = mdwiki_api.Get_page_links(title, namespace="0", limit="max")
     # ---
     normal = links.get("normalized", [])
-    printe.output(f"find {len(normal)} normalized..")
+    logger.info(f"find {len(normal)} normalized..")
     # ---
     for nor in normal:
         normalized[nor["to"]] = nor["from"]
-        printe.output(f"normalized[\"{nor['to']}\"] = \"{nor['from']}\"")
+        logger.info(f"normalized[\"{nor['to']}\"] = \"{nor['from']}\"")
     # ---
     newtext = text
     # ---
@@ -167,7 +170,7 @@ def treat_page(title):
             newtext = replace_links2(newtext, tit, fixed_tit)
         elif tit not in nonredirects:
             if tit2 != tit:
-                printe.output(f'<<red>> tit:["{tit}"] and tit:["{tit2}"] not in from_to')
+                logger.info(f'<<red>> tit:["{tit}"] and tit:["{tit2}"] not in from_to')
     # ---
     save_page = page.save(newtext=newtext, summary="Fix redirects")
 

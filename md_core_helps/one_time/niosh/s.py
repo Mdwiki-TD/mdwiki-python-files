@@ -4,12 +4,14 @@ python3 core8/pwb.py niosh/s
 """
 
 import json
+
+# ---
+import logging
 import os
 import re
 from pathlib import Path
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # ---
 Dir = Path(__file__).parent
@@ -53,7 +55,7 @@ def work_in_file(filename):
         nan = {}
         # ---
         for z in x.splitlines():
-            # printe.output(z)
+            # logger.info(z)
             # if z match "^(\w\w):(.*?)$"
             z = z.strip()
             mat = re.match(r"^(\w\w):(.*?)$", z)
@@ -85,7 +87,7 @@ for filename in os.listdir(Dird):
     if filename.endswith(".txt"):
         filename2 = os.path.join(Dird, filename)
         # ---
-        printe.output(f"filename: {filename2}..")
+        logger.info(f"filename: {filename2}..")
         # ---
         work_in_file(filename)
         # break

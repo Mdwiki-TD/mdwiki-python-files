@@ -10,19 +10,21 @@ python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Edoderoobot
 python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Ghuron
 """
 
+import logging
 import sys
 import urllib
 import urllib.parse
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent))
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
+
 import mdapi
 from apis import mdwiki_api
+from mdwiki_api.mdwiki_page import NEW_API
 from new_updater import work_on_text
 
-# ---
-from newapi import printe
-from newapi.mdwiki_page import NEW_API
+logger = logging.getLogger(__name__)
 
 # ---
 api_new = NEW_API("www", family="mdwiki")
@@ -49,14 +51,12 @@ def work_on_title(title, returntext=False):
     text, new_text = get_new_text(title)
     # ---
     if text == "" or new_text == "":
-        printe.output("<<red>> notext")
+        logger.info("<<red>> notext")
         return
     # ---
     if text == new_text:
-        printe.output("no changes")
+        logger.info("no changes")
         return
-    # ---
-    printe.showDiff(text, new_text)
     # ---
     ask = input(f"<<yellow>> save title:{title}? ")
     # ---
@@ -77,7 +77,7 @@ def main1():
 
 
 def main():
-    printe.output("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     user = ""
     user_limit = "3000"
@@ -139,7 +139,7 @@ def main():
         listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
         # ---
         for n, page in enumerate(listen):
-            printe.output(f"<<green>> n:{n}, title:{page}")
+            logger.info(f"<<green>> n:{n}, title:{page}")
             work_on_title(page)
             # ---
     # ---
@@ -153,7 +153,7 @@ def main():
         lista = pages
     # ---
     for n, page in enumerate(lista):
-        printe.output(f"<<green>> n:{n}, title:{page}")
+        logger.info(f"<<green>> n:{n}, title:{page}")
         work_on_title(page)
     # ---
 

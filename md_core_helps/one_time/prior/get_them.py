@@ -1,5 +1,6 @@
 """ """
 
+import logging
 import re
 import sys
 import urllib.parse
@@ -7,7 +8,8 @@ from urllib.parse import urlencode, urlparse
 
 import requests
 import wikitextparser
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 """
@@ -106,7 +108,7 @@ def filter_urls(links):
             if book_id != "":
                 x2 = f"https://books.google.com/books?id={book_id}"
                 if x2 != x:
-                    # printe.output('<<yellow>> google books + 1')
+                    # logger.info('<<yellow>> google books + 1')
                     x = x2
         # ---
         liste1.append(x.lower())
@@ -160,7 +162,7 @@ class work_in_one_lang_link:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f"except: lang:{self.lang} {e}")
+            logger.error(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -185,8 +187,8 @@ class work_in_one_lang_link:
         refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
         # ---
         if len(refsn) > 0:
-            printe.output(f" new refsn: {len(refsn)}")
-            printe.output(refsn)
+            logger.info(f" new refsn: {len(refsn)}")
+            logger.info(refsn)
             # ---
             self.refsname.update(refsn)
 
@@ -280,8 +282,6 @@ class work_in_one_lang_link:
         # ---
         self.make_new_text(tags0)
         # ---
-        # printe.showDiff(section0, self.section0)
-        # ---
         self.lead["refsname"] = self.get_ref_names(tags0)
         self.lead["extlinks"] = self.get_lead_extlinks()
 
@@ -298,7 +298,7 @@ class work_in_one_lang_link:
         # ---
         json1 = self.post_to_json(params)
         # ---
-        # printe.output(json1)
+        # logger.info(json1)
         # ---
         links = json1.get("parse", {}).get("externallinks", [])
         # ---
@@ -373,13 +373,13 @@ class get_old:
         unurl = f"{self.url}?{urlencode(params)}"
         # ---
         if "printurl" in sys.argv and "text" not in params:
-            printe.output(f"get_old:\t\t{unurl}")
+            logger.info(f"get_old:\t\t{unurl}")
         # ---
         try:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f"except: lang:{self.lang} {e}")
+            logger.error(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -404,8 +404,8 @@ class get_old:
         refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
         # ---
         if len(refsn) > 0:
-            printe.output(f" new refsn: {len(refsn)}")
-            printe.output(refsn)
+            logger.info(f" new refsn: {len(refsn)}")
+            logger.info(refsn)
             # ---
             self.refsname.update(refsn)
 
@@ -477,8 +477,6 @@ class get_old:
         # ---
         self.make_new_text(tags0)
         # ---
-        # printe.showDiff(section0, self.section0)
-        # ---
         self.lead["refsname"] = self.get_ref_names(tags0)
         self.lead["extlinks"] = self.get_extlinks_from_text(self.section0)
 
@@ -495,7 +493,7 @@ class get_old:
         # ---
         json1 = self.post_to_json(params)
         # ---
-        # printe.output(json1)
+        # logger.info(json1)
         # ---
         links = json1.get("parse", {}).get("externallinks", [])
         # ---
@@ -543,7 +541,6 @@ if __name__ == "__main__":
     oldex = old.extlinks
     print(f"orex: {len(orex)}")
     print(f"oldex: {len(oldex)}")
-    printe.showDiff("\n".join(orex), "\n".join(oldex))
     # ---
     print("=============")
     # ---
@@ -551,7 +548,6 @@ if __name__ == "__main__":
     oldrefsname = old.refsname
     print(f"refsname: {len(refsname)}")
     print(f"oldrefsname: {len(oldrefsname)}")
-    printe.showDiff("\n".join(refsname), "\n".join(oldrefsname))
     # ---
     print("=============")
     # ---
@@ -562,5 +558,4 @@ if __name__ == "__main__":
         # ---
         print(f"{x}: {len(lead[x])}")
         print(f"old{x}: {len(oldlead[x])}")
-        printe.showDiff("\n".join(lead[x]), "\n".join(oldlead[x]))
     # ---

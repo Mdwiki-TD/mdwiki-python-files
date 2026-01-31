@@ -5,7 +5,7 @@ from apis import wiki_api
 # wiki_api.submitAPI( params, site="en", returnjson = False )
 # ---
 """
-from newapi.wiki_page import NEW_API
+from mdwiki_api.wiki_page import NEW_API
 
 api_news = {}
 

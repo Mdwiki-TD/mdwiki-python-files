@@ -14,11 +14,13 @@ WHERE id IN (
 python3 core8/pwb.py fix_user_pages/del
 
 """
+import logging
 import sys
 
 import tqdm
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # id, new_target, new_user, new_qid, id, title, word, translate_type, cat, lang, user, target, date, pupdate, add_date, deleted, id, title, word, translate_type, cat, lang, user, target, date, pupdate, add_date, deleted
 query = """
@@ -46,6 +48,6 @@ for x in result:
     find_it = sql_for_mdwiki.mdwiki_sql(query="SELECT * FROM pages_users WHERE id = %s", values=[x["id"]])
     # ---
     if len(find_it) > 0:
-        printe.output("<<red>> not deleted")
+        logger.info("<<red>> not deleted")
     else:
-        printe.output("<<green>> deleted.")
+        logger.info("<<green>> deleted.")

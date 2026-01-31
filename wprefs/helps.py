@@ -2,14 +2,12 @@
 from wprefs.helps import print_s, ec_de_code, exepts
 """
 
+import logging
 import sys
 import traceback
 import urllib.parse
 
-try:
-    from newapi import printe
-except ImportError:
-    printe = None
+logger = logging.getLogger(__name__)
 
 
 def print_s(s):
@@ -28,9 +26,7 @@ def ec_de_code(tt, type1):
 
 
 def exepts():
-    if not printe or not hasattr(printe, "error"):
-        return
     if "returnfile" not in sys.argv:
-        printe.error("Traceback (most recent call last):")
-        printe.error(traceback.format_exc())
-        printe.error("CRITICAL:")
+        logger.error("Traceback (most recent call last):")
+        logger.error(traceback.format_exc())
+        logger.error("CRITICAL:")

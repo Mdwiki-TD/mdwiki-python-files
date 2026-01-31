@@ -134,7 +134,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 ### 6. Logging & Output
 
 **Issues:**
-- Custom `printe.output()` instead of standard logging
+- Custom `logger.info()` instead of standard logging
 - Custom `printe.showDiff()` for diffs
 - Inconsistent output formatting with color codes like `<<green>>`
 - No structured logging

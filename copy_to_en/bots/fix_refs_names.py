@@ -6,8 +6,11 @@ from copy_to_en.bots.fix_refs_names import fix_ref_names
 python3 core8/pwb.py copy_to_en/bots/fix_refs_names
 
 """
+import logging
+
 import wikitextparser as wtp
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def fix_ref_names(text):
@@ -28,18 +31,3 @@ def fix_ref_names(text):
     new_text = parsed_page.string
     # ---
     return new_text
-
-
-if __name__ == "__main__":
-    text = """
-    <ref name=Stat2022>{{cite journal |last1=Sapra |first1=A |last2=Bhandari |first2=P |title=Chronic Fatigue Syndrome |date=January 2022 |pmid=32491608|journal=StatPearls}}</ref>
-    <ref name="Stat2022x">{{Cite journal|last2=Bhandari |first2=P |title=Chronic Fatigue Syndrome |date=January 2022 |pmid=32491608|journal=StatPearls|last=Sapra|first=A}}</ref>
-    <ref name='sdsd'>{{Cite journal|last2=Bhandari |first2=P |title=Chronic Fatigue Syndrome |date=January 2022 |pmid=32491608|journal=StatPearls|last=Sapra|first=A}}</ref>
-
-    <ref name="Stat20223"/>
-    <ref name=RH2019/>
-    """
-
-    new_text = fix_ref_names(text)
-
-    printe.showDiff(text, new_text + "\n\n")

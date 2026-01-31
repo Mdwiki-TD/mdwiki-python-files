@@ -6,22 +6,16 @@ python pwb.py mdwiki/public_html/Translation_Dashboard/ref test
 
 """
 
+import logging
 import re
 import sys
 
-# ---
-print_pywikibot = {1: False}
-try:
-    from newapi import printe
-
-    print_pywikibot[1] = True
-except BaseException:
-    print_pywikibot[1] = False
+logger = logging.getLogger(__name__)
 
 
 def outputnew(s):
-    if print_pywikibot[1] and "test" in sys.argv:
-        printe.output(s)
+    if "test" in sys.argv:
+        logger.info(s)
 
 
 # ---
@@ -71,5 +65,4 @@ if __name__ == "__main__":
     # ---
     if "test" in sys.argv:
         new = fix_ref(ff, all)
-        printe.showDiff(ff, new)
 # ---

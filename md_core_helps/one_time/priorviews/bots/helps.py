@@ -11,14 +11,16 @@ from priorviews.bots import helps
 
 import datetime
 import json
+
+# ---
+import logging
 import re
 import sys
 from datetime import timedelta
 from pathlib import Path
 from urllib.parse import urlencode
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 Dir = Path(__file__).parent
 
@@ -88,19 +90,19 @@ def talk_url(lang, user, labl):
 
 
 def dump_data(file, data):
-    printe.output(f"<<green>> dump_data() file:{file}.")
+    logger.info(f"<<green>> () file:{file}.")
     try:
         with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
-        printe.output("<<red>> keyboard interrupt sys.exit()")
+        logger.error("<<red>> keyboard interrupt sys.exit()")
         # ---
         with open(f"{file}_1", "w", encoding="utf-8") as f:
             json.dump(data, f)
         # ---
         sys.exit()
     except Exception as e:
-        printe.output(f"<<red>> dump Error: {e}")
+        logger.error(f"<<red>> dump Error: {e}")
 
 
 # ---

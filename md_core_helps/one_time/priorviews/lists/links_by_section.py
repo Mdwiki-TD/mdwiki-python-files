@@ -9,15 +9,18 @@ python3 core8/pwb.py priorviews/lists/links_by_section
 
 import copy
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
+from priorviews.bots.sections_links import get_section_links
+
+logger = logging.getLogger(__name__)
 
 # ---
-from priorviews.bots.sections_links import get_section_links
 
 # ---
 Dir = Path(__file__).parent
@@ -27,7 +30,7 @@ _Dir_ = os.path.dirname(os.path.dirname(Dir))
 # ---
 all_pages_states = json.load(open(f"{_Dir_}/priorviews/lists/all_pages_states.json", "r", encoding="utf-8"))
 # ---
-printe.output(f"<<green>> len of all_pages_states: {len(all_pages_states)}")
+logger.info(f"<<green>> len of all_pages_states: {len(all_pages_states)}")
 # ---
 mdtitles_lang_title = {}
 # ---
@@ -39,7 +42,7 @@ for mdtitle, langs in all_pages_states.items():
     # ---
     mdtitles_lang_title[mdtitle] = newlangs
 # ---
-printe.output(f"<<green>> len of mdtitles_lang_title: {len(mdtitles_lang_title)}")
+logger.info(f"<<green>> len of mdtitles_lang_title: {len(mdtitles_lang_title)}")
 # ---
 sections_links = get_section_links()
 # ---
@@ -74,7 +77,7 @@ for section, links in sects_links_langlinks.items():
                 links_by_lang[lang] = []
             links_by_lang[lang].append(title)
 # ---
-printe.output(f"<<green>> len of sects_links_langlinks: {len(sects_links_langlinks)}")
+logger.info(f"<<green>> len of sects_links_langlinks: {len(sects_links_langlinks)}")
 # ---
 links_done = list(set(links_done))
 # ---
@@ -85,7 +88,7 @@ if len(links_done) != len(mdtitles_lang_title.keys()):
     # ---
     diff = list(set(mdtitles_lang_title.keys()) - set(links_done))
     # ---
-    printe.output(f"<<red>> len of diff: {len(diff)}")
+    logger.error(f"<<red>> len of diff: {len(diff)}")
     print(diff)
 # ---
 # find the section with the least links

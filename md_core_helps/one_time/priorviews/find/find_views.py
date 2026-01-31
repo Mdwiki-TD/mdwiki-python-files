@@ -6,17 +6,19 @@ python3 core8/pwb.py priorviews/find/find_views test
 
 import datetime
 import json
+
+# ---
+import logging
 import os
 import sys
 from datetime import timedelta
 from pathlib import Path
 
 from apis.mw_views import PageviewsClient
-
-# ---
-from newapi import printe
 from priorviews.bots import helps
 from priorviews.lists.links_by_section import sects_links_langlinks
+
+logger = logging.getLogger(__name__)
 
 # ---
 TEST = False
@@ -35,7 +37,7 @@ ViewsData = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_views():
-    printe.output(f"<<yellow>> log_views {len(ViewsData)} views")
+    logger.info(f"<<yellow>> {len(ViewsData)} views")
     # dump ViewsData
     helps.dump_data(file, ViewsData)
 
@@ -78,7 +80,7 @@ def get_v(links):
         if mdtitle not in ViewsData:
             ViewsData[mdtitle] = {}
         # ---
-        printe.output(f"<<yellow>> title: {m}/{lena} get_v {mdtitle}")
+        logger.info(f"<<yellow>> title: {m}/{lena} {mdtitle}")
         # ---
         if "en" in sys.argv:
             langs["en"] = mdtitle

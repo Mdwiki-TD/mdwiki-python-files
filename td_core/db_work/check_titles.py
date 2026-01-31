@@ -8,6 +8,7 @@ python3 core8/pwb.py db_work/check_titles -lang:ur
 python3 core8/pwb.py db_work/check_titles test
 
 """
+import logging
 import sys
 import time
 
@@ -16,8 +17,9 @@ from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_targ
 from mdapi_sql import sql_for_mdwiki
 
 # ---
-from newapi import printe
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
+
+logger = logging.getLogger(__name__)
 
 skip_by_lang = {
     "ar": ["الأنسولين"],
@@ -36,7 +38,7 @@ def get_langs_tabs():
     # ---
     langs = {}
     # ---
-    printe.output(que)
+    logger.info(que)
     # ---
     for tab in sql_for_mdwiki.select_md_sql(que, return_dict=True):
         lang = tab["lang"]
@@ -65,7 +67,7 @@ def add_text(tab):
     # ---
     wikitext += "|}\n"
     # ---
-    printe.output(wikitext)
+    logger.info(wikitext)
     itle = "User:Mr. Ibrahem/tofix"
     # ---
     page = md_MainPage(itle, "www", family="mdwiki")
@@ -86,7 +88,7 @@ def start():
     # ---
     for lang, tabs in langs.items():
         # ---
-        printe.output(f"<<green>> lang:{lang}, has {len(tabs)} tabs")
+        logger.info(f"<<green>> lang:{lang}, has {len(tabs)} tabs")
         # ---
         titles = [x["target"] for x in tabs]
         # ---
@@ -95,11 +97,11 @@ def start():
         missing = [x for x, v in pages.items() if not v]
         redirects = [x for x, v in pages.items() if v == "redirect"]
         # ---
-        printe.output(f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
+        logger.info(f"lang:{lang}, missing:{len(missing)}, redirects:{len(redirects)}")
         # ---
         new_tabs = [tab for tab in tabs if tab["target"] in missing or tab["target"] in redirects]
         # ---
-        printe.output(f"lang:{lang}, has {len(new_tabs)} new tabs")
+        logger.info(f"lang:{lang}, has {len(new_tabs)} new tabs")
         # ---
         for tab in tqdm.tqdm(new_tabs):
             iid, lang, target = tab["id"], tab["lang"], tab["target"]
@@ -107,16 +109,16 @@ def start():
             skip_it = skip_by_lang.get(lang, {})
             # ---
             if target in skip_it:
-                printe.output(f"<<yellow>> skip {target}")
+                logger.info(f"<<yellow>> skip {target}")
                 continue
             # ---
             new_target = ""
             # ---
             if target in missing and "onlyredirect" not in sys.argv:
-                printe.output(f'<<red>> page "{target}" not exists in {lang}')
+                logger.info(f'<<red>> page "{target}" not exists in {lang}')
                 deleted, new_target = get_new_target_log(lang, target)
                 if deleted:
-                    printe.output(f'<<red>> page "{target}" deleted in {lang}')
+                    logger.info(f'<<red>> page "{target}" deleted in {lang}')
                     deleted_pages.append(iid)
                 # ---
             elif target in redirects:
@@ -128,25 +130,25 @@ def start():
                 # ---
                 if page2.exists():
                     if page2.isRedirect():
-                        printe.output(f"<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}")
+                        logger.info(f"<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}")
                         # ---
                         to_set[iid] = new_target
                         # sql_for_mdwiki.set_target_where_id(new_target, iid)
                         # ---
                         text.append([lang, target, new_target])
                 # else:
-                #     printe.output(f'<<red>> page "{new_target}" deleted from {lang}')
+                # logger.info(f'<<red>> page "{new_target}" deleted from {lang}')
                 #     deleted.append(iid)
     # ---
-    printe.output(f"len of to_set {len(to_set)}")
+    logger.info(f"len of to_set {len(to_set)}")
     # ---
     for iid, new_target in to_set.items():
-        printe.output(f"<<green>> set_target_where_id() new_target:{new_target}, old iid:{iid}")
+        logger.info(f"<<green>> set_target_where_id() new_target:{new_target}, old iid:{iid}")
         if "test" not in sys.argv:
             sql_for_mdwiki.set_target_where_id(new_target, iid)
     # ---
-    printe.output(f"len of deleted_pages {len(deleted_pages)}")
-    printe.output(f"len of text {len(text)}")
+    logger.info(f"len of deleted_pages {len(deleted_pages)}")
+    logger.info(f"len of text {len(text)}")
     # ---
     if "test" not in sys.argv:
         for iid in deleted_pages:

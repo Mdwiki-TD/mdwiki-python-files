@@ -18,13 +18,9 @@ import random
 import sys
 from pathlib import Path
 
-# ---
-Dir = Path(__file__).parent.parent
-# ---
-sys.path.append(str(Dir))
-# ---
-# print(Dir)
-# ---
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
+
 from wprefs.api import GetPageText  # , page_put
 from wprefs.files import save_wprefcash, setting
 from wprefs.helps import ec_de_code

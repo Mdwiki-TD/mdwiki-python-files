@@ -5,10 +5,11 @@ from add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
 
 
 """
-# ---
+import logging
+
 import wikitextparser as wtp
-from newapi import printe
-from wikitextparser._cell import Cell
+
+logger = logging.getLogger(__name__)
 
 
 def header_has_R(text, table=False):
@@ -39,7 +40,7 @@ def add_header_R(text, table=False):
     # ---
     # Check if R column already exists
     if header_has_R(text, table):
-        printe.output("R column already exists in table header")
+        logger.info("R column already exists in table header")
         return table.string
     # ---
     count = 0
@@ -54,6 +55,6 @@ def add_header_R(text, table=False):
         # ---
         count += 1
     # ---
-    printe.output(f"Added R column to table header in {count} cells")
+    logger.info(f"Added R column to table header in {count} cells")
     # ---
     return table.string

@@ -6,19 +6,21 @@ python3 core8/pwb.py priorviews/find/find_creator -lang:ar
 """
 
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
 from mdapi_sql import wiki_sql
-
-# ---
-from newapi import printe
 from priorviews.bots import helps
-
-# ---
 from priorviews.lists.links_by_section import links_by_lang
 from pymysql.converters import escape_string
+
+logger = logging.getLogger(__name__)
+
+# ---
 
 # ---
 Dir = Path(__file__).parent
@@ -34,7 +36,7 @@ CreatorsData = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_Data():
-    printe.output(f"<<yellow>> log_Data {len(CreatorsData)} CreatorsData")
+    logger.info(f"<<yellow>> {len(CreatorsData)} CreatorsData")
     # dump CreatorsData
     helps.dump_data(file, CreatorsData)
 

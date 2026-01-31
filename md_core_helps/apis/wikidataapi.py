@@ -10,14 +10,16 @@ python3 core8/pwb.py apis/wikidataapi
 
 """
 import json
+
+# ---
+import logging
 import re
 import sys
 
 from apis.wd_bots import wd_rest_new
 from apis.wd_bots.wikidataapi_post import post_it
 
-# ---
-from newapi import printe
+logger = logging.getLogger(__name__)
 
 # from apis.wd_bots.wd_post_new import post_it
 
@@ -66,7 +68,7 @@ def WD_Merge(q1, q2):
         From = q2
         To = q1
     # ---
-    printe.output(f"from {From} to {To} ")
+    logger.info(f"from {From} to {To} ")
     # ---
     params = {
         "action": "wbmergeitems",
@@ -83,10 +85,10 @@ def WD_Merge(q1, q2):
     # ---
     if "success" in r4:
         if '"redirected":1' in r4:
-            printe.output("<<green>> ** true .. redirected.")
+            logger.info("<<green>> ** true .. redirected.")
             return True
         else:
-            printe.output("<<green>> ** true.")
+            logger.info("<<green>> ** true.")
             # ---
             pams2 = {
                 "action": "wbcreateredirect",
@@ -99,23 +101,23 @@ def WD_Merge(q1, q2):
             r5 = post_it(params=pams2, token=True)
             # ---
             if "success" in r5:
-                printe.output("<<green>> **createredirect true.")
+                logger.info("<<green>> **createredirect true.")
                 return True
             else:
-                printe.output(f"<<red>> r5{str(r5)}")
+                logger.error(f"<<red>> r5{str(r5)}")
     else:
-        printe.output(f"<<red>> r4{str(r4)}")
+        logger.error(f"<<red>> r4{str(r4)}")
         return False
 
 
 def Labels_API(Qid, label, lang, remove=False, summary=""):
     # ---
     if not Qid:
-        printe.output("Labels_API Qid == '' ")
+        logger.info(" Qid == '' ")
         return False
     # ---
     if label == "" and not remove:
-        printe.output("Labels_API label == '' and remove = False ")
+        logger.info(" label == '' and remove = False ")
         return False
     # ---
     # save the edit
@@ -133,9 +135,9 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
             return False
         # ---
         if sa == "a":
-            printe.output("<<lightgreen>> ----------------------------------------------")
-            printe.output("<<lightgreen>> wikidataapi.py Labels_API save without asking.")
-            printe.output("<<lightgreen>> ----------------------------------------------")
+            logger.info("<<lightgreen>> ----------------------------------------------")
+            logger.info("<<lightgreen>> wikidataapi.py save without asking.")
+            logger.info("<<lightgreen>> ----------------------------------------------")
             Save_2020_wd["labels"] = True
     # ---
     params = {
@@ -154,13 +156,13 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
             # item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
             match = re.search(r"(Q\d+)", str(req["error"]["info"]))
             item2 = match.group(1) if match else "Unknown"
-            printe.output(f"<<red>>API: same label item: {item2}")
+            logger.error(f"<<red>>API: same label item: {item2}")
         # ---
         if "success" in req:
-            printe.output("<<green>> **Labels_API true.")
+            logger.info("<<green>> ** true.")
             return True
         else:
-            printe.output(f"<<red>> r5{str(req)}")
+            logger.error(f"<<red>> r5{str(req)}")
     # ---
     return False
 
@@ -168,7 +170,7 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
 def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
     # ---
     if not desc.strip():
-        printe.output("<<red>> Des_API desc is empty.")
+        logger.info("<<red>> desc is empty.")
         return
     # ---
     # save the edit
@@ -185,9 +187,9 @@ def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
             return False
         # ---
         if sa == "a":
-            printe.output("<<lightgreen>> ---------------------------------")
-            printe.output("<<lightgreen>> wikidataapi.py save all without asking.")
-            printe.output("<<lightgreen>> ---------------------------------")
+            logger.info("<<lightgreen>> ---------------------------------")
+            logger.info("<<lightgreen>> wikidataapi.py save all without asking.")
+            logger.info("<<lightgreen>> ---------------------------------")
             Save_2020_wd["descriptions"] = True
     # ---
     params = {
@@ -204,10 +206,10 @@ def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
         return False
     # ---
     if "success" in req:
-        printe.output("<<green>> **Labels_API true.")
+        logger.info("<<green>> **Labels_API true.")
         return True
     else:
-        printe.output(f"<<red>> r5{str(req)}")
+        logger.error(f"<<red>> r5{str(req)}")
     # ---
 
 
@@ -265,14 +267,14 @@ def new_item(label="", lang="", summary="", returnid=False):
     req = post_it(params=params, token=True)
     # ---
     if not req:
-        printe.output(f"req:str({req})")
+        logger.info(f"req:str({req})")
         return False
     # ---
     if "success" not in req:
-        printe.output(f"<<red>> req{str(req)}")
+        logger.error(f"<<red>> req{str(req)}")
         return False
     # ---
-    printe.output("<<green>> **Claim_API true.")
+    logger.info("<<green>> **Claim_API true.")
     # ---
     if returnid:
         # ---
@@ -280,7 +282,7 @@ def new_item(label="", lang="", summary="", returnid=False):
         # ---
         if "entity" in req and "id" in req["entity"]:
             Qid = req["entity"]["id"]
-            printe.output(f'<<green>> new_item returnid:"{Qid}" ')
+            logger.info(f'<<green>> returnid:"{Qid}" ')
         # ---
         return Qid
     # ---
@@ -310,7 +312,7 @@ def Claim_API_str(qid, property, string):
     # ---
     qid = qid.strip()
     # ---
-    printe.output(f"<<yellow>> Claim_API_str: add claim to qid: {qid}, [{property}:{string}]")
+    logger.info(f"<<yellow>> : add claim to qid: {qid}, [{property}:{string}]")
     # ---
     if string == "" or qid == "" or property == "":
         return ""
@@ -329,14 +331,14 @@ def Claim_API_str(qid, property, string):
     req = post_it(params=params, token=True)
     # ---
     if not req:
-        printe.output(f"req:str({req})")
+        logger.info(f"req:str({req})")
         return False
     # ---
     if "success" in req:
-        printe.output("<<green>> **Claim_API true.")
+        logger.info("<<green>> **Claim_API true.")
         return True
     else:
-        printe.output(f"<<red>> req{str(req)}")
+        logger.error(f"<<red>> req{str(req)}")
     # ---
     return False
 
@@ -348,14 +350,14 @@ def Delete_claim(claimid):
     req = post_it(params=params, token=True)
     # ---
     if not req:
-        printe.output(f"req:str({req})")
+        logger.info(f"req:str({req})")
         return False
     # ---
     if "success" in req:
-        printe.output("<<green>> **Claim_API true.")
+        logger.info("<<green>> **Claim_API true.")
         return True
     else:
-        printe.output(f"<<red>> req{str(req)}")
+        logger.error(f"<<red>> req{str(req)}")
     # ---
     return False
 
@@ -374,11 +376,11 @@ def wbsearchentities(search, language, match_alias=False):
     req = post_it(params=params)
     # ---
     if not req:
-        printe.output(" wbsearchentities no req ")
+        logger.info(" no req ")
         return False
     # ---
     if "success" not in req:
-        printe.output(f"<<red>> wbsearchentities: {str(req)}")
+        logger.error(f"<<red>> : {str(req)}")
         return False
     # ---
     table = {}
@@ -427,17 +429,17 @@ if __name__ == "__main__":
     qids = ["Q4115189"]
     # ---
     for q in qids:
-        printe.output(f"<<blue>>_______\n{q} :")
+        logger.info(f"<<blue>>_______\n{q} :")
         # ---
         q = q.strip()
         # ---
         j = wd_rest_new.Get_Claims_API(q=q, p="P11143")
         # ---
-        printe.output(json.dumps(j, indent=4))
+        logger.info(json.dumps(j, indent=4))
         # ---
         uu = Claim_API_str(qid=q, property="P11143", string="test")
         # ---
-        printe.output(uu)
+        logger.info(uu)
         # ---
         oo = Labels_API(q, "tesst!", "en")
         # ---

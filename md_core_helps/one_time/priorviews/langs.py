@@ -6,18 +6,21 @@ python3 core8/pwb.py priorviews/langs -lang:ar write ask
 
 import datetime
 import json
+
+# ---
+import logging
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 from priorviews.bots import helps, w_all
 from priorviews.lists import creators, translators, views, words
 from priorviews.lists.creators_to_translators import creators_as_translators
+from priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
+
+logger = logging.getLogger(__name__)
 
 # ---
-from priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
 
 # ---
 Dir = Path(__file__).parent
@@ -260,7 +263,7 @@ if __name__ == "__main__":
     # ---
     for lang in langs:
         n += 1
-        printe.output(f"<<yellow>> {n}/{lenn} langs.py lang: {lang}")
+        logger.info(f"<<yellow>> {n}/{lenn} langs.py lang: {lang}")
         # ---
         work(lang)
     # ---

@@ -26,14 +26,16 @@ python3 core8/pwb.py prior/add_old new  -file:en_14.json
 """
 
 import json
+import logging
 import os
 import sys
 from pathlib import Path
 
-from newapi import printe
+from prior import get_them
+
+logger = logging.getLogger(__name__)
 
 # ---
-from prior import get_them
 
 # ---
 Dir = str(Path(__file__).parents[0])
@@ -115,8 +117,8 @@ class PriorAddOld:
                 lenex_lead1 = str(len(old.lead["extlinks"])).ljust(4)
                 lenre_lead1 = str(len(old.lead["refsname"])).ljust(4)
                 # ---
-                printe.output(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
-                printe.output(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
+                logger.info(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
+                logger.info(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
                 # ---
                 data_new[title] = tab
         # ---

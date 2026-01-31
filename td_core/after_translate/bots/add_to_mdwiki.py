@@ -4,6 +4,7 @@
 from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 
 """
+import logging
 import sys
 import time
 
@@ -12,8 +13,9 @@ from after_translate.bots.fixcat import cat_for_pages
 from mdapi_sql import sql_for_mdwiki
 
 # ---
-from newapi import printe
 from pymysql.converters import escape_string
+
+logger = logging.getLogger(__name__)
 
 
 def add_new_row(mdtitle, lang, user, pupdate, target, word, cat):
@@ -30,8 +32,8 @@ def add_new_row(mdtitle, lang, user, pupdate, target, word, cat):
         WHERE NOT EXISTS ( SELECT 1 FROM pages WHERE title='{mdtit}' AND lang='{lang}' AND user='{user2}' );
         """
     # ---
-    printe.output("______ \\/\\/\\/ _______")
-    printe.output(insert_qua_old)
+    logger.info("______ \\/\\/\\/ _______")
+    logger.info(insert_qua_old)
     # ---
     insert_qua = """
         INSERT INTO pages (title, word, translate_type, cat, lang, date, user, pupdate, target, add_date)
@@ -56,7 +58,7 @@ def update_row_new(mdtitle, lang, user, pupdate, target):
         UPDATE pages SET target = '{tar}', pupdate = "{pupdate}", add_date = "{add_date}"
         WHERE user = '{user2}' AND title = '{mdtit}' AND lang = "{lang}";"""
     # ---
-    printe.output(update_qua_old)
+    logger.info(update_qua_old)
     # ---
     update_qua = """
         UPDATE pages SET target = %s, pupdate = %s, add_date = %s
@@ -93,17 +95,17 @@ def add_to_pages_db(lange, tab, to_updatex):
         # ---
         # find if to update or to insert
         if mdtitle in date1x:
-            printe.output(f"to update: title:{mdtitle}, user:{user} ")
+            logger.info(f"to update: title:{mdtitle}, user:{user} ")
             update_row_new(mdtitle, lang, user, pupdate, target)
         else:
-            printe.output(f"to insert: title:{mdtitle}, user:{user} ")
+            logger.info(f"to insert: title:{mdtitle}, user:{user} ")
             add_new_row(mdtitle, lang, user, pupdate, target, word, cat)
 
 
 def add_to_mdwiki_sql(lange, tab, to_updatex):
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
-    printe.output("<<red>> add_to_mdwiki_sql:: ")
+    logger.info("<<red>> :: ")
     # ---
     ns0_pages = {x: va for x, va in tab.items() if str(va["namespace"]) == "0"}
     ns2_pages = {x: va for x, va in tab.items() if str(va["namespace"]) != "0"}

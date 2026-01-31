@@ -2,11 +2,14 @@
 """
 from after_translate.bots.get_pages import get_pages_from_db
 """
+import logging
+
 from mdapi_sql import sql_for_mdwiki
 
 # ---
 from mdpy.bots import py_tools
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 targets_done_by_mdtitle = {}
@@ -63,6 +66,6 @@ def get_pages_from_db(lang_o):
             # ---
             targets_done_by_mdtitle[lang][mdtitle] = target
     # ---
-    printe.output(f"<<yellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
+    logger.info(f"<<yellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
     # ---
     return to_update, langs_to_t_u, targets_done, tit_user_lang, targets_done_by_mdtitle

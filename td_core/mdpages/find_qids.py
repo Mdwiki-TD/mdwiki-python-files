@@ -10,14 +10,16 @@ Usage:
 python3 core8/pwb.py mdpages/find_qids
 
 """
+import logging
 import sys
 
 from apis import wiki_api
 from mdapi_sql import sql_for_mdwiki
 from mdpages.create_qids import create_qids
 from mdpy.bots.check_title import valid_title
-from newapi import printe
 from unlinked_wb.bot import work_un
+
+logger = logging.getLogger(__name__)
 
 qids = sql_for_mdwiki.get_all_qids()
 # ---
@@ -86,13 +88,13 @@ def get_qids(noqids_list):
 
 
 def to_add_wrk(to_add, noqids):
-    printe.output("===================")
-    printe.output(f"find qid to {len(to_add)} from {len(noqids)} pages.")
+    logger.info("===================")
+    logger.info(f"find qid to {len(to_add)} from {len(noqids)} pages.")
     # ---
     if to_add:
-        printe.output("<<yellow>>\n".join([f"{k}\t:\t{v}" for k, v in to_add.items()]))
+        logger.info("<<yellow>>\n".join([f"{k}\t:\t{v}" for k, v in to_add.items()]))
         # ---
-        printe.output('<<purple>> add "add" to sys.argv to add them?')
+        logger.info('<<purple>> add "add" to sys.argv to add them?')
         # ---
         if "add" in sys.argv:
             sql_for_mdwiki.add_titles_to_qids(to_add)
@@ -101,35 +103,35 @@ def to_add_wrk(to_add, noqids):
 
 
 def empty_qids_wrk(empty_qids):
-    printe.output("===================")
+    logger.info("===================")
     # ---
-    printe.output(f"<<red>>no qids: {len(empty_qids)}")
+    logger.error(f"<<red>>no qids: {len(empty_qids)}")
     # ---
     if empty_qids:
         # ---
         for x in empty_qids:
-            printe.output(f"\t<<red>>{x}")
+            logger.info(f"\t<<red>>{x}")
         # ---
-        printe.output('<<purple>> add "createq" to sys.argv to create new items for them?')
+        logger.info('<<purple>> add "createq" to sys.argv to create new items for them?')
         # ---
         if "createq" in sys.argv:
             create_qids(empty_qids)
 
 
 def false_qids_wrk(false_qids):
-    printe.output("===================")
+    logger.info("===================")
     if false_qids:
-        printe.output("<<red>> flase qids:")
+        logger.info("<<red>> flase qids:")
         for xz, q in false_qids.items():
             title_in = qids_already.get(q, "")
             # ---
-            printe.output(f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
+            logger.info(f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
 
 
 def start():
     # ---
     if len(noqids) == 0:
-        printe.output('<<green>> noqids list is empty. return "".')
+        logger.info('<<green>> noqids list is empty. return "".')
         return
     # ---
     new_title_qid = get_qids(noqids)

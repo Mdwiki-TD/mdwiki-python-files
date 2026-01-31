@@ -6,16 +6,19 @@ tfj run stats2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 """
 
 import json
+
+# ---
+import logging
 import os
 import re
 import sys
 from datetime import datetime
 from pathlib import Path
 
-# ---
-from newapi import printe
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 from stats.editors import get_editors, validate_ip
+
+logger = logging.getLogger(__name__)
 
 last_year = datetime.now().year - 1
 # ---
@@ -53,10 +56,10 @@ def work_in_one_site(site, links):
     # ---
     site = re.sub(r"wiki$", "", site)
     # ---
-    printe.output(f"<<green>> site:{site} links: {len(links)}")
+    logger.info(f"<<green>> site:{site} links: {len(links)}")
     # ---
     if len(links) < 100:
-        printe.output("<<red>> less than 100 articles")
+        logger.info("<<red>> less than 100 articles")
         # return
     # ---
     editors = get_editors(links, site)
@@ -64,7 +67,7 @@ def work_in_one_site(site, links):
     editors = filter_editors(editors, site)
     # ---
     if not editors:
-        printe.output("<<red>> no editors")
+        logger.info("<<red>> no editors")
         return
     # ---
     if "dump" in sys.argv:
@@ -99,7 +102,7 @@ def work_in_one_site(site, links):
     if p_text != text:
         page.save(newtext=text, summary="update", nocreate=0, minor="")
     else:
-        printe.output("<<green>> no changes")
+        logger.info("<<green>> no changes")
     # ---
     return editors
 
@@ -120,7 +123,7 @@ def start():
     # ---
     for numb, file in enumerate(files, start=1):
         # ---
-        printe.output(f"<<green>> n: {numb} file: {file}:")
+        logger.info(f"<<green>> n: {numb} file: {file}:")
         # ---
         if not file.endswith("wiki.json"):
             continue

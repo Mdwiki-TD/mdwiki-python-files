@@ -14,6 +14,7 @@ python3 core8/pwb.py mdpyget/getas video
 
 """
 import json
+import logging
 import os
 import re
 import sys
@@ -22,8 +23,9 @@ from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats
-from newapi import printe
-from newapi.wiki_page import NEW_API
+from mdwiki_api.wiki_page import NEW_API
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("en", family="wikipedia")
 
@@ -50,7 +52,7 @@ def work_for_list(en_keys, old_values):
     for i in range(0, len(en_keys), 50):
         group = en_keys[i : i + 50]
         # ---
-        printe.output(f"get_pageassessments: len of group: {len(group)}")
+        logger.info(f"get_pageassessments: len of group: {len(group)}")
         # ---
         result = api_new.get_pageassessments("|".join(group))
         # ---
@@ -66,7 +68,7 @@ def work_for_list(en_keys, old_values):
                 importance = tabe.get("pageassessments", {}).get("Videowiki", {}).get("importance", "")
             # ---
             if "video" in sys.argv:
-                printe.output(f"{title} : {importance}")
+                logger.info(f"{title} : {importance}")
             # ---
             title = title.replace("Wikipedia:VideoWiki/", "Video:")
             # ---
@@ -87,11 +89,11 @@ def work_for_list(en_keys, old_values):
                 continue
             # ---
             if importance.lower() != old_importance.lower():
-                printe.output(f"<<yellow>> {title} old:({old_importance}) new:({importance})")
+                logger.info(f"<<yellow>> {title} old:({old_importance}) new:({importance})")
             # ---
             old_values[title] = importance
     # ---
-    printe.output(f"len of new assessments:{lenn}")
+    logger.info(f"len of new assessments:{lenn}")
     # ---
     return old_values
 
@@ -123,7 +125,7 @@ def get_old_values(json_file):
     old_values = {x["title"]: x["importance"] for x in in_sql}
     # ---
     with open(json_file, "r", encoding="utf-8-sig") as file:
-        printe.output(f"<<green>> read file: {json_file}")
+        logger.info(f"<<green>> read file: {json_file}")
         in_json = json.load(file)
         # ---
         data2 = {x: y for x, y in in_json.items() if check_it(x, y, old_values)}
@@ -144,14 +146,14 @@ def get_old_values(json_file):
     # ---
     for k, v in old_dict.items():
         # ---
-        printe.output(f"<<green>> importance:({k}) count:({v})")
+        logger.info(f"<<green>> importance:({k}) count:({v})")
     # ---
     if "merge" in sys.argv:
         # ---
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(old_values, outfile, sort_keys=True, indent=2)
         # ---
-        printe.output(f"<<green>> {len(old_values)} lines to {json_file}")
+        logger.info(f"<<green>> {len(old_values)} lines to {json_file}")
         # ---
         start_to_sql(old_values)
         # ---
@@ -172,7 +174,7 @@ def main():
     if "from_cats" in sys.argv:
         vaild_links = get_links_from_cats(cat_get)
     # ---
-    printe.output(f"len of vaild_links: {len(vaild_links)}")
+    logger.info(f"len of vaild_links: {len(vaild_links)}")
     # ---
     len_old = len(old_values)
     # ---
@@ -185,7 +187,7 @@ def main():
         # ---
         vaild_links = [x for x in vaild_links if x.lower().startswith("video:")]
         # ---
-        printe.output(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
+        logger.info(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
     # ---
     elif "newpages" in sys.argv:
         # ---
@@ -197,9 +199,9 @@ def main():
         # ---
         vaild_links = pages_fals_ase + pages_new
         # ---
-        printe.output(f"pages_new:{len(pages_new)}, pages_fals_ase:{len(pages_fals_ase)}")
+        logger.info(f"pages_new:{len(pages_new)}, pages_fals_ase:{len(pages_fals_ase)}")
         # ---
-        printe.output(f"old vaild_links: {len(en_keys_2)}, new newpages: {len(vaild_links)}")
+        logger.info(f"old vaild_links: {len(en_keys_2)}, new newpages: {len(vaild_links)}")
     # ---
     if "nowork" in sys.argv:
         return
@@ -211,8 +213,8 @@ def main():
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(data_tab[1], outfile, sort_keys=True, indent=2)
     # ---
-    printe.output(f"<<green>> {len(data_tab[1])} lines to {json_file}")
-    printe.output(f"<<green>> len old assessments {len_old}")
+    logger.info(f"<<green>> {len(data_tab[1])} lines to {json_file}")
+    logger.info(f"<<green>> len old assessments {len_old}")
     # ---
     start_to_sql(data_tab[1])
 

@@ -7,13 +7,15 @@ from after_translate import start_work
 
 """
 
+import logging
 import re
 import sys
 
 from after_translate.bots.fixcat import cat_for_pages
 from after_translate.bots.users_pages import not_pages
 from mdpy.bots import py_tools
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 titles_not_0 = []
@@ -50,7 +52,7 @@ Skip_titles_global = [
 
 
 def start(result, lange, tgd, tgd_by_md, tit_user_lang):
-    printe.output(f'sql.py len(result) = "{len( result )}"')
+    logger.info(f'sql.py len(result) = "{len( result )}"')
     # ---
     tab_lang = {}
     # ---
@@ -95,7 +97,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
             laox += line_p.format("target_in", target_in)
         # ---
         if "print" in sys.argv:
-            printe.output(laox)
+            logger.info(laox)
         # ---
         if target in Skip_titles_global:
             continue
@@ -124,7 +126,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         # if ns != "0":
         if target_in != "" and target_in != target:
             if "ns" in sys.argv and tul_target == "" and cattest:
-                printe.output(laox)
+                logger.info(laox)
             continue
         # ---
         not_puplished = target2 not in tgd and target not in tgd
@@ -133,7 +135,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         if not_puplished and target_in == "":
             # ---
             if not tul_target:
-                printe.output(laox)
+                logger.info(laox)
                 to_add += 1
                 tab_lang[md_title] = Taba2
                 # ---
@@ -141,12 +143,12 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
                     titles_not_0.append(Taba2)
 
             elif tul_target == target:
-                printe.output(f"target already in, {target}")
+                logger.info(f"target already in, {target}")
 
             else:
-                printe.output(f"puplished target: {tul_target} != target to add: {target}")
+                logger.info(f"puplished target: {tul_target} != target to add: {target}")
     # ---
-    printe.output(f"lang: {lange} done: {done}, to_add: {to_add}")
+    logger.info(f"lang: {lange} done: {done}, to_add: {to_add}")
     # ---
     return tab_lang
 

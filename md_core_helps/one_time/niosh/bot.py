@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 # ---
-from newapi.wiki_page import NEW_API, MainPage
+from mdwiki_api.wiki_page import NEW_API, MainPage
 
 # ---
 Dir = Path(__file__).parent

@@ -9,13 +9,15 @@ from mdpages import qids_help
 
 import copy
 import json
+import logging
 import os
 import re
 import sys
 
 from apis import cat_cach, mdwiki_api, wiki_api
 from mdpy.bots.check_title import valid_title
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
@@ -48,7 +50,7 @@ def get_pages_to_work(ty="td|other"):
     if ty == "other":
         tds_list = [x for x in all_pages if x not in tds_list]
     # ---
-    printe.output(f"get_pages_to_work: {len(tds_list)=}, {len(all_pages)=}")
+    logger.info(f": {len(tds_list)=}, {len(all_pages)=}")
     # ---
     return tds_list, all_pages
 
@@ -56,7 +58,7 @@ def get_pages_to_work(ty="td|other"):
 def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
     # ---
     if "nodump" in sys.argv:
-        printe.output("Skipping dump of JSON files")
+        logger.info("Skipping dump of JSON files")
         return
     # ---
     json_ext = "_other.json" if "other" == ty else ".json"
@@ -147,22 +149,22 @@ def check(work_list, all_xpages, ty):
                     sames.append(title)
     # ---
     if medwiki_to_enwiki:
-        printe.output("<<yellow>> en titles medwiki_to_enwiki:")
+        logger.info("<<yellow>> en titles medwiki_to_enwiki:")
         for numb, (fromm, to) in enumerate(medwiki_to_enwiki.items(), start=1):
             faf = f'["{fromm}"]'
-            printe.output(f'\t {numb} from_to{faf.ljust(30)} = "{to}"')
+            logger.info(f'\t {numb} from_to{faf.ljust(30)} = "{to}"')
     # ---
     if missing_in_enwiki:
-        printe.output("<<yellow>> titles missing_in_enwiki:")
+        logger.info("<<yellow>> titles missing_in_enwiki:")
         for numb, mis in enumerate(missing_in_enwiki, start=1):
-            printe.output(f"\t <<yellow>>{numb}\t{mis.ljust(25)}")
+            logger.info(f"\t <<yellow>>{numb}\t{mis.ljust(25)}")
     # ---
     if medwiki_to_enwiki_conflic:
-        printe.output("<<red>> pages both in mdwiki cat:::")
+        logger.info("<<red>> pages both in mdwiki cat:::")
         for numb, (md, en) in enumerate(medwiki_to_enwiki_conflic.items(), start=1):
             faf = f'["{md}"]'
             fen = f'["{en}"]'
-            printe.output(f"\t <<red>> {numb} page{faf.ljust(40)} to enwiki{fen}")
+            logger.info(f"\t <<red>> {numb} page{faf.ljust(40)} to enwiki{fen}")
     # ---
     sames = list(set(sames))
     missing_in_enwiki = list(set(missing_in_enwiki))
@@ -173,12 +175,12 @@ def check(work_list, all_xpages, ty):
         if x not in o_qids:
             o_qids[x] = ""
     # ---
-    printe.output(f"<<green>> len of medwiki_to_enwiki: {len(medwiki_to_enwiki):,}")
-    printe.output(f"<<green>> len of missing_in_enwiki: {len(missing_in_enwiki):,}")
-    printe.output(f"<<green>> len of medwiki_to_enwiki_conflic: {len(medwiki_to_enwiki_conflic):,}")
-    printe.output(f"<<green>> len of sames: {len(sames):,}")
-    printe.output(f"<<green>> len of o_qids: {len(o_qids):,}")
-    printe.output(f'<<green>> len of o_qids (qid != ""): {len(o_qids_n):,}')
+    logger.info(f"<<green>> len of medwiki_to_enwiki: {len(medwiki_to_enwiki):,}")
+    logger.info(f"<<green>> len of missing_in_enwiki: {len(missing_in_enwiki):,}")
+    logger.info(f"<<green>> len of medwiki_to_enwiki_conflic: {len(medwiki_to_enwiki_conflic):,}")
+    logger.info(f"<<green>> len of sames: {len(sames):,}")
+    logger.info(f"<<green>> len of o_qids: {len(o_qids):,}")
+    logger.info(f'<<green>> len of o_qids (qid != ""): {len(o_qids_n):,}')
     # ---
     dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames)
     # ---
@@ -186,7 +188,7 @@ def check(work_list, all_xpages, ty):
 
 
 def get_o_qids_new(o_qids, t_qids_in):
-    # printe.output("write to sql")
+    # logger.info("write to sql")
     # ---
     same = [x for x in o_qids if x in t_qids_in and t_qids_in[x] == o_qids[x]]
     # ---
@@ -194,25 +196,25 @@ def get_o_qids_new(o_qids, t_qids_in):
         x for x in o_qids if x in t_qids_in and t_qids_in[x] != o_qids[x] and o_qids[x] != "" and t_qids_in[x] != ""
     ]
     # ---
-    printe.output(f"o_qids_new: len of same: {len(same)}")
+    logger.info(f"o_qids_new: len of same: {len(same)}")
     # ---
     # del all same from o_qids
     o_qids_new = {x: y for x, y in o_qids.items() if x not in same and x not in diff}
     # ---
     len_empty = [x for x in o_qids_new if o_qids_new[x] == "" and t_qids_in.get(x) == ""]
-    printe.output(f"<<green>> new len of len_empty: {len(len_empty)}")
+    logger.info(f"<<green>> new len of len_empty: {len(len_empty)}")
     # ---
     # del empty qids but not empty in sql qids
     for ti, q in copy.deepcopy(o_qids_new).items():
         if q == "" and t_qids_in.get(ti) != "":
             del o_qids_new[ti]
     # ---
-    printe.output(f"o_qids_new: len of diff: {len(diff)}")
+    logger.info(f"o_qids_new: len of diff: {len(diff)}")
     # ---
     if diff:
-        printe.output("<<purple>> get_o_qids_new diff:")
+        logger.info("<<purple>> diff:")
         # ---
         for x in diff:
-            printe.output(f"\t x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")
+            logger.info(f"\t x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")
     # ---
     return o_qids_new

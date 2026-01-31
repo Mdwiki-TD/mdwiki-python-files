@@ -2,9 +2,12 @@
 """
 from fix_user_pages.user_bot import get_new_user
 """
+import logging
+
 from db_work.check_titles_helps import WikiPage, users_infos
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 db_users = sql_for_mdwiki.get_db_users()
 
@@ -79,13 +82,13 @@ def get_new_user(new_target, lang, user):
             second_revid = x["revid"]
             # ---
             if x_user != user:
-                printe.output(f"<<red>> user:{user} new page not new!, created by:({x_user}) while user is :({user})")
+                logger.error(f"<<red>> user:{user} new page not new!, created by:({x_user}) while user is :({user})")
                 return False
             else:
-                printe.output("<<green>> new page created same user:({x_user}).")
+                logger.info("<<green>> new page created same user:({x_user}).")
                 # ---
                 if user not in false_users:
-                    printe.output(f"<<green>> return x_user :{x_user}")
+                    logger.info(f"<<green>> return x_user :{x_user}")
                     return x_user
             # ---
             break
@@ -100,7 +103,7 @@ def get_new_user(new_target, lang, user):
             # ---
             in_db = rev_user in db_users
             # ---
-            printe.output(f"<<green>> rev_user is :{rev_user}, {in_db=}")
+            logger.info(f"<<green>> rev_user is :{rev_user}, {in_db=}")
             # ---
             if in_db:
                 return rev_user
@@ -122,7 +125,7 @@ def get_new_user(new_target, lang, user):
                 # ---
                 in_db = x_user in db_users
                 # ---
-                printe.output(f"<<green>> x_user is: {x_user}, {in_db=}, {x_count=}")
+                logger.info(f"<<green>> x_user is: {x_user}, {in_db=}, {x_count=}")
                 # ---
                 if not in_db and x_count == 1:
                     continue

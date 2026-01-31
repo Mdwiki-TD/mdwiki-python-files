@@ -5,14 +5,16 @@ python3 core8/pwb.py WHOem/lists/lang_links new
 """
 
 import json
+import logging
 import sys
 from pathlib import Path
 
-from newapi import printe
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
+from mdwiki_api.wiki_page import MainPage, change_codes
+
+logger = logging.getLogger(__name__)
 
 # ---
-from newapi.wiki_page import MainPage, change_codes
 
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
 # ---
@@ -51,7 +53,7 @@ def get_lang_links(md_links):
     with open(f"{Dir}/lists/lang_links.json", "r", encoding="utf-8") as f:
         lang_links = json.load(f)
     # ---
-    printe.output(f"list len of it: {len(md_links)}")
+    logger.info(f"list len of it: {len(md_links)}")
     # ---
     n = 0
     # ---
@@ -64,14 +66,14 @@ def get_lang_links(md_links):
         # ---
         pap = f"p {n}/{len(md_links)}: {x}"
         # ---
-        printe.output(pap)
+        logger.info(pap)
         # ---
         title = x
         # ---
         page = MainPage(title, "en")
         # ---
         if not page.exists():
-            printe.output(f"<<red>> page: {title} not found in enwiki.")
+            logger.error(f"<<red>> page: {title} not found in enwiki.")
             links_not_found.append(title)
             return
         # ---
@@ -89,7 +91,7 @@ def get_lang_links(md_links):
         # ---
         langlinks["en"] = title
         # ---
-        printe.output(f"<<blue>> en:{title}, \n\tlanglinks: {len(langlinks)}")
+        logger.info(f"<<blue>> en:{title}, \n\tlanglinks: {len(langlinks)}")
         # ---
         for lang, tit in langlinks.items():
             # ---
@@ -101,7 +103,7 @@ def get_lang_links(md_links):
     with open(f"{Dir}/lists/lang_links.json", "w", encoding="utf-8") as f:
         json.dump(lang_links, f, ensure_ascii=False, indent=2)
     # ---
-    printe.output(f"<<red>> len of links_not_found: {len(links_not_found)}:")
+    logger.error(f"<<red>> len of links_not_found: {len(links_not_found)}:")
     # ---
     with open(f"{Dir}/lists/links_not_found.json", "w", encoding="utf-8") as f:
         json.dump(links_not_found, f, ensure_ascii=False, indent=2)

@@ -10,11 +10,14 @@ from add_rtt.named_param import add_param_named
 tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/named_param"
 
 """
+import logging
+
 # ---
 import wikitextparser as wtp
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 from newupdater import expend_infoboxs_and_fix
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("www", family="mdwiki")
 # api_new.Login_to_wiki()
@@ -54,13 +57,13 @@ def add_param_named(text, title):
             # ---
             if temp.has_arg(param):
                 value = temp.get_arg(param).value
-                printe.output(f"page {title} already had temp {name} with (|{param}={value}). ")
+                logger.info(f"page {title} already had temp {name} with (|{param}={value}). ")
                 return text
             # ---
             for x in false_params:
                 value = gt_arg(temp, x)
                 if value:
-                    printe.output(f"page {title} already had temp {name} with (|{x}={value}). ")
+                    logger.info(f"page {title} already had temp {name} with (|{x}={value}). ")
                     return text
             # ---
             t_value = ""
@@ -100,7 +103,7 @@ def main():
 
     temp_pages = api_new.Get_template_pages(temps, namespace=0)
 
-    printe.output(f"len of temp_pages: {len(temp_pages)}")
+    logger.info(f"len of temp_pages: {len(temp_pages)}")
 
     for x in temp_pages:
         work_page(x)

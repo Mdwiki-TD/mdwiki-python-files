@@ -6,8 +6,11 @@ python3 core8/pwb.py add_rtt/remove
 """
 # ---
 
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
+import logging
+
+from mdwiki_api.mdwiki_page import NEW_API, CatDepth, md_MainPage
+
+logger = logging.getLogger(__name__)
 
 # add_param_named(text, title)
 
@@ -40,10 +43,10 @@ def main():
     mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
     # ---
     temp_pages = api_new.Get_template_pages("Template:RTT", namespace=0)
-    printe.output(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
+    logger.info(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
     pages_to_remoe = [x for x in temp_pages if x not in mdwiki_pages]
 
-    printe.output(f"len of pages_to_remoe: {len(pages_to_remoe)}")
+    logger.info(f"len of pages_to_remoe: {len(pages_to_remoe)}")
 
     for x in pages_to_remoe:
         work_page(x)

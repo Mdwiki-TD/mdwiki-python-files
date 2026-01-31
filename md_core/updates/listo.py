@@ -17,7 +17,7 @@ import sys
 
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 from apis import mdwiki_api
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
 
 limit_m = {1: 0}
 # ---

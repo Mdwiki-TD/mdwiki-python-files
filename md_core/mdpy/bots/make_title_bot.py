@@ -5,12 +5,13 @@ from mdpy.bots import make_title_bot
 # _title1_ = make_title_bot.make_title(url)
 # ---
 """
+import logging
 import re
 import urllib.parse
 
 import requests
-from newapi import printe
-from newapi.except_err import exception_err  # exception_err(e)
+
+logger = logging.getLogger(__name__)
 
 # ---
 Title_cash = {}
@@ -64,12 +65,12 @@ def get_url(url):
         req = requests.get(url, timeout=10)
         # ---
         if 500 <= req.status_code < 600:
-            printe.output(f"received {req.status_code} status from {req.url}")
+            logger.info(f"received {req.status_code} status from {req.url}")
         else:
             json1 = req.json()
     # ---
     except Exception as e:
-        exception_err(e)
+        logger.warning(e)
     # ---
     return json1
 
@@ -84,7 +85,7 @@ def make_title(url):
     Title_cash[url] = ""
     # ---
     if not url.strip():
-        printe.output("<<red>> make_title url = '' return False")
+        logger.info("<<red>> url = '' return False")
         return {}
     # ---
     url2 = urllib.parse.quote(url)
@@ -131,12 +132,12 @@ def make_title(url):
     titleBlackList = re.compile(globalbadtitles, re.I | re.S | re.X)
     # ---
     if titleBlackList.match(title):
-        printe.output(f"<<red>> WARNING<<default>> {url} : " "Blacklisted title ({title})")
+        logger.error(f"<<red>> WARNING<<default>> {url} : " "Blacklisted title ({title})")
     # ---
     Title_cash[url] = title
     # ---
     if title != "":
-        printe.output(f"<<green>> make_title_bot: newtitle: ({title})")
+        logger.info(f"<<green>> make_title_bot: newtitle: ({title})")
     # ---
     return title
 

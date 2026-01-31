@@ -6,13 +6,15 @@ python3 core8/pwb.py after_translate/bots/fixcat
 
 """
 
+import logging
 import sys
 
 import tqdm
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
-from newapi.mdwiki_page import CatDepth
+from mdwiki_api.mdwiki_page import CatDepth
 from pymysql.converters import escape_string
+
+logger = logging.getLogger(__name__)
 
 # result_table = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
 # ---
@@ -47,9 +49,9 @@ def get_cats_and_pages():
                 catlen[cat] += 1
     # ---
     # for cat, lena in catlen.items():
-    # printe.output(f'cat: {cat} , len: {lena}')
+    # logger.info(f'cat: {cat} , len: {lena}')
     # ---
-    printe.output(f"<<yellow>> RTT_dpl: {RTT_dpl}")
+    logger.info(f"<<yellow>> RTT_dpl: {RTT_dpl}")
 
 
 get_cats_and_pages()
@@ -74,13 +76,13 @@ def get_pages_with_no_cat_old():
         # ---
         quanew = f"""UPDATE pages SET cat = '{cat}' WHERE title = '{tit2}';"""
         # ---
-        printe.output("=======================")
-        printe.output(quanew)
+        logger.info("=======================")
+        logger.info(quanew)
         # ---
         if "dont" not in sys.argv:
             qu = sql_for_mdwiki.mdwiki_sql(quanew, update=True)
             # ---
-            printe.output(qu)
+            logger.info(qu)
 
 
 def get_pages_with_no_cat():
@@ -112,14 +114,14 @@ def get_pages_with_no_cat():
         # ---
         quanew = f"""UPDATE pages SET cat = '{cat}' WHERE title in ({place_holder});"""
         # ---
-        printe.output("=======================")
-        printe.output(quanew)
+        logger.info("=======================")
+        logger.info(quanew)
         # ---
         if "dont" not in sys.argv:
             # qu = sql_for_mdwiki.mdwiki_sql(quanew, update=True)
             qu = sql_for_mdwiki.mdwiki_sql(quanew, values=values, update=True)
             # ---
-            printe.output(qu)
+            logger.info(qu)
     # ---
     qua2 = "update pages set cat = 'RTT' where (cat = '' OR cat IS NULL); "
     # ---

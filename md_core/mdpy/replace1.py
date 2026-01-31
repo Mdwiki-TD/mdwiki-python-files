@@ -4,7 +4,7 @@ import os
 import sys
 from pathlib import Path
 
-from newapi.mdwiki_page import NEW_API, MainPage
+from mdwiki_api.mdwiki_page import NEW_API, MainPage
 
 # ---
 if os.getenv("HOME"):

@@ -6,20 +6,21 @@ python3 core8/pwb.py apis/wd_bots/wd_post_new
 from apis.wd_bots.wd_post_new import post_it
 
 """
+import logging
 import sys
 
-from apis import user_account_new
+from apis import user_accounts
 from apis.sup.su_login import Get_MwClient_Site
-from newapi import printe
-from newapi.except_err import exception_err
 
-user_agent = user_account_new.user_agent
-username = user_account_new.bot_username  # user_account_new.my_username
-password = user_account_new.bot_password  # user_account_new.mdwiki_pass
+logger = logging.getLogger(__name__)
+
+user_agent = user_accounts.user_agent
+username = user_accounts.bot_username  # user_accounts.my_username
+password = user_accounts.bot_password  # user_accounts.mdwiki_pass
 
 if "workhimo" in sys.argv:
-    username = user_account_new.my_username
-    password = user_account_new.lgpass_enwiki
+    username = user_accounts.my_username
+    password = user_accounts.lgpass_enwiki
 
 SS = {"csrftoken": ""}
 
@@ -43,7 +44,7 @@ def do_request(params=None, method="POST"):
         return r4
 
     except Exception as e:
-        exception_err(e, text=params)
+        logger.warning(e)
     # ---
     return {}
 
@@ -57,7 +58,7 @@ def get_token(mk_new=False):
     try:
         csrftoken = wd_site.get_token("csrf")
     except Exception as e:
-        printe.error("Could not get token: %s" % e)
+        logger.error(f"Could not get token: {e}")
         return False
     # ---
     SS["csrftoken"] = csrftoken

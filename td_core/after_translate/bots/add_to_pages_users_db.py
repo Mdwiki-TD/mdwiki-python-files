@@ -5,6 +5,8 @@ from after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
 
 
 """
+import logging
+
 #
 #
 #
@@ -14,8 +16,9 @@ import time
 from mdapi_sql import sql_for_mdwiki
 
 # ---
-from newapi import printe
 from pymysql.converters import escape_string
+
+logger = logging.getLogger(__name__)
 
 cat_for_pages = {}
 # from after_translate.bots.fixcat import cat_for_pages
@@ -50,8 +53,8 @@ def add_new_row(mdtitle, lang, user, pupdate, target):
         WHERE NOT EXISTS ( SELECT 1 FROM pages_users WHERE title='{mdtit}' AND lang='{lang}' AND user='{user2}');
         """
     # ---
-    printe.output("______ \\/\\/\\/ _______")
-    printe.output(insert_qua_old)
+    logger.info("______ \\/\\/\\/ _______")
+    logger.info(insert_qua_old)
     # ---
     insert_qua = """
         INSERT INTO pages_users (title, lang, user, pupdate, target, add_date)
@@ -72,7 +75,7 @@ def update_row_new(mdtitle, lang, user, pupdate, target):
         UPDATE pages_users SET target = '{target}', pupdate = "{pupdate}",  add_date = "{add_date}"
         WHERE user = '{user}' AND title = '{mdtitle}' AND lang = "{lang}";"""
     # ---
-    printe.output(update_qua_old)
+    logger.info(update_qua_old)
     # ---
     update_qua = """
         UPDATE pages_users  SET target = %s, pupdate = %s,  add_date = %s
@@ -88,7 +91,7 @@ def add_to_mdwiki_sql_users(lista):
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
     if "pages_users" not in sys.argv:
-        printe.output('skip pages_users, <<green>> add "pages_users" to sys.argv to add it to pages_users')
+        logger.info('skip pages_users, <<green>> add "pages_users" to sys.argv to add it to pages_users')
         return
     # ---
     for _, tabe in lista.items():
@@ -101,7 +104,7 @@ def add_to_mdwiki_sql_users(lista):
         cat = cat_for_pages.get(mdtitle, "")
         # ---
         if not cat:
-            printe.output(f"cat_for_pages.get({mdtitle}) = {cat}")
+            logger.info(f"cat_for_pages.get({mdtitle}) = {cat}")
             # continue
         # ---
         is_in = pages_users_tab.get(user, {}).get(lang, {}).get(mdtitle)
@@ -112,7 +115,7 @@ def add_to_mdwiki_sql_users(lista):
         # ---
         #  "pupdate", "target"
         if pupdate == is_in["pupdate"] and target == is_in["target"]:
-            # printe.output(f"skip {mdtitle} {user} same result in sql..")
+            # logger.info(f"skip {mdtitle} {user} same result in sql..")
             continue
         # ---
         update_row_new(mdtitle, lang, user, pupdate, target)

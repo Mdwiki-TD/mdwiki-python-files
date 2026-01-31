@@ -3,8 +3,11 @@ python3 core8/pwb.py fix_cs1/tests
 
 """
 
+import logging
+
 from fix_cs1.fix_p import fix_it
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def test():
@@ -15,8 +18,6 @@ def test():
     """
 
     newtext = fix_it(text, site="ar")
-    # ---
-    printe.showDiff(text, newtext)
 
 
 if __name__ == "__main__":

@@ -7,12 +7,15 @@ python3 core8/pwb.py niosh/get write ask
 
 import codecs
 import json
+
+# ---
+import logging
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
+
+logger = logging.getLogger(__name__)
 
 # ---
 Dir = Path(__file__).parent
@@ -123,14 +126,14 @@ def run(x, urls):
     with open(file1, "w", encoding="utf-8") as outfile:
         json.dump(by_title, outfile, ensure_ascii=False, indent=2)
     # ---
-    printe.output(f"wrote {file1}")
+    logger.info(f"wrote {file1}")
     # ---
     file2 = f"{Dir}/by_url/{x}.json"
     # ---
     with open(file2, "w", encoding="utf-8") as outfile:
         json.dump(by_url, outfile, ensure_ascii=False, indent=2)
     # ---
-    printe.output(f"wrote {file2}")
+    logger.info(f"wrote {file2}")
     # ---
     write_to_mdwiki(by_title, x)
 
@@ -147,14 +150,14 @@ file3 = f"{Dir}/by_url/all.json"
 with open(file3, "w", encoding="utf-8") as outfile:
     json.dump(by_url_all, outfile, ensure_ascii=False, indent=2)
 # ---
-printe.output(f"wrote {file3}")
+logger.info(f"wrote {file3}")
 # ---
 file4 = f"{Dir}/by_title/all.json"
 # ---
 with open(file4, "w", encoding="utf-8") as hh:
     json.dump(by_title_all, hh, ensure_ascii=False, indent=2)
 # ---
-printe.output(f"wrote {file4}")
+logger.info(f"wrote {file4}")
 # ---
 write_to_mdwiki(by_title_all, "all")
 # ---

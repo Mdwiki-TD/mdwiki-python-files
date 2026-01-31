@@ -6,12 +6,14 @@ from after_translate.bots.users_pages import not_pages
 
 """
 
-from newapi import printe
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def not_pages(lista):
     # ---
-    printe.output("<<green>> start bot users_pages:")
+    logger.info("<<green>> start bot users_pages:")
     # ---
     tab = {}
     # ---
@@ -25,7 +27,7 @@ def not_pages(lista):
     # ---
     for lang, tabs in tab.items():
         # ---
-        printe.output(f"<<blue>> {lang=}, pages: {len(tabs)}:")
+        logger.info(f"<<blue>> {lang=}, pages: {len(tabs)}:")
         # ---
         for ta in tabs:
             mdtitle = ta["mdtitle"]
@@ -34,5 +36,5 @@ def not_pages(lista):
             pupdate = ta["pupdate"]
             namespace = ta["namespace"]
             # ---
-            printe.output(f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")
+            logger.info(f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")
             # ---

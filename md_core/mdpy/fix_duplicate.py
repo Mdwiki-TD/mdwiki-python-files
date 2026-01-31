@@ -6,11 +6,13 @@ Category:CS1 errors: redundant parameter
 python3 core8/pwb.py mdpy/fix_duplicate ask
 
 """
+import logging
 import sys
 
 # ---
 from apis import mdwiki_api
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 # ---
 offset = {1: 0}
@@ -37,14 +39,14 @@ def fix_dup(From, To):
     sus = f"fix duplicate redirect to [[{To}]]"
     # ---
     if oldtext == newtext:
-        printe.output("no changes.")
+        logger.info("no changes.")
         return
     # ---
     mdwiki_api.page_put(oldtext=oldtext, newtext=newtext, summary=sus, title=From, returntrue=False, diff=True)
 
 
 def main():
-    printe.output("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     # python3 dup.py -page:Allopurinol
     # python3 dup.py -page:Activated_charcoal_\(medication\)
@@ -74,7 +76,7 @@ def main():
     # ---
     for nu, title in enumerate(redirects, start=1):
         From = title["from"]
-        printe.output(f'-------\n*<<yellow>> >{nu}/{len(redirects)} From:"{From}".')
+        logger.info(f'-------\n*<<yellow>> >{nu}/{len(redirects)} From:"{From}".')
         To = title["to"]
         if To in from_to:
             fix_dup(From, To)

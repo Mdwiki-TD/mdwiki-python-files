@@ -6,17 +6,20 @@ python3 core8/pwb.py priorviews/find/find_translators removeip
 """
 
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
+from priorviews.bots import get_translator, helps
+from priorviews.lists.links_by_section import links_by_lang
+
+logger = logging.getLogger(__name__)
 
 # ---
 # ---
-from priorviews.bots import get_translator, helps
-from priorviews.lists.links_by_section import links_by_lang
 
 # v_comm = helps.isv(comment)
 # _views = helps.views_url(title, lang, view)
@@ -38,7 +41,7 @@ tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
 
 def logem():
-    printe.output(f"<<yellow>> logem {len(tra_by_lang)} words")
+    logger.info(f"<<yellow>> {len(tra_by_lang)} words")
     # dump tra_by_lang
     helps.dump_data(file, tra_by_lang)
 
@@ -79,7 +82,7 @@ def get_t(links, lang):
         if "new" in sys.argv and value_in != "":
             continue
         # ---
-        printe.output(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        logger.info(f"<<yellow>> title: {m}/{lena} {title}, value_in:{value_in}")
         # ---
         _value = get_translator.get_au(title, lang)
         # ---

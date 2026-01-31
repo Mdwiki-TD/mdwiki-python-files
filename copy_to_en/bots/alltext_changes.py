@@ -6,11 +6,13 @@ from copy_to_en import alltext_changes
 
 """
 
+import logging
 import re
 
 import wikitextparser as wtp
 from copy_to_en.bots import text_changes
-from newapi import printe
+
+logger = logging.getLogger(__name__)
 
 
 def change_last_Section(section):
@@ -64,12 +66,3 @@ def do_all_text(alltext, revid, unlinkedwikibase):
     alltext = f"{unlinkedwikibase}\n{revid_temp}\n{alltext}"
     # ---
     return alltext
-
-
-if __name__ == "__main__":
-    # python3 core8/pwb.py copy_to_en/tests/test_alltext_changes
-    tet = """"""
-    # ---
-    newtext = do_alltext_changes(tet)
-    printe.showDiff(tet, newtext)
-    # ---

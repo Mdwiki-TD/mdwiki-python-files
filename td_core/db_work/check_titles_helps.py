@@ -2,8 +2,11 @@
 """
 from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage, users_infos
 """
-from newapi import printe
-from newapi.wiki_page import NEW_API, MainPage
+import logging
+
+from mdwiki_api.wiki_page import NEW_API, MainPage
+
+logger = logging.getLogger(__name__)
 
 
 def get_new_target_log(lang, target):
@@ -16,7 +19,7 @@ def get_new_target_log(lang, target):
     # ---
     api_new1 = NEW_API(lang, family="wikipedia")
     # ---
-    printe.output(f"get_new_target_log() lang:{lang}, target:{target}")
+    logger.info(f"() lang:{lang}, target:{target}")
     # ---
     n = 0
     # ---
@@ -24,7 +27,7 @@ def get_new_target_log(lang, target):
         # ---
         n += 1
         # ---
-        printe.output(f"<<blue>> get_new_target_log({n}) lang:{lang}, target:{target}")
+        logger.info(f"<<blue>> ({n}) lang:{lang}, target:{target}")
         # ---
         logs = api_new1.get_logs(to_check)
         # ---
@@ -44,16 +47,16 @@ def get_new_target_log(lang, target):
         # ---
         if new:
             done.append(to_check)
-            printe.output(f"> title:{to_check} moved to:{new}")
+            logger.info(f"> title:{to_check} moved to:{new}")
             to_check = new
         else:
             break
         # ---
         if to_check in done:
-            printe.output(f"to_check:{to_check} in done")
+            logger.info(f"to_check:{to_check} in done")
             break
     # ---
-    printe.output(f"get_new_target_log() lang:{lang}, target:{target}, new:{to_check}")
+    logger.info(f"() lang:{lang}, target:{target}, new:{to_check}")
     # ---
     return deleted, to_check
 

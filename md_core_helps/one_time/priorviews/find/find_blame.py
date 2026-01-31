@@ -5,25 +5,28 @@ python3 core8/pwb.py priorviews/find/find_blame -lang:ar
 """
 
 import json
+
+# ---
+import logging
 import os
 import sys
 from pathlib import Path
 
-# ---
-from newapi import printe
 from prior.json_langs.lists import json_langs_by_langs
-
-# tab = json_langs_by_langs.get(lang, {}).get(title, {})# {'extlinks': extlinks, 'refsname': refsname}
-# ---
 from priorviews.bots import gt_blame, helps
 from priorviews.lists import creators
 from priorviews.lists.links_by_section import links_by_lang
 from priorviews.lists.translators import tra_by_lang
-
-# ---
 from wikiblame.bot import (  # first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
     get_blame,
 )
+
+logger = logging.getLogger(__name__)
+
+# tab = json_langs_by_langs.get(lang, {}).get(title, {})# {'extlinks': extlinks, 'refsname': refsname}
+# ---
+
+# ---
 
 # ---
 links_without_translator = {}
@@ -70,7 +73,7 @@ def gtblame_value(title, lang):
         # ---
         for ref in refname:
             # ---
-            printe.output(f"search for: ref: ({ref}), page: [[{lang}:{title}]]")
+            logger.info(f"search for: ref: ({ref}), page: [[{lang}:{title}]]")
             # ---
             tab["needle"] = ref
             # ---
@@ -83,7 +86,7 @@ def gtblame_value(title, lang):
 
 
 def logem():
-    printe.output(f"<<yellow>> logem {len(new_data)} words")
+    logger.info(f"<<yellow>> {len(new_data)} words")
     # dump new_data
     helps.dump_data(file, new_data)
 
@@ -130,17 +133,17 @@ def get_b(links, lang):
         # ---
         new_data[lang][title_lower] = value_in
         # ---
-        printe.output(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        logger.info(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
         # ---
         # {"time": 20140721110644, "actor": "CFCF", "comment": "Translated from [[:en:African trypanosomiasis|English]] by Somil.Mishra at [[:en:Translators Without Borders|Translators Without Borders]]", "TD": false}
         crate = lang_creators.get(title, {})
         page_time = crate.get("time")
         # ---
         if page_time:
-            printe.output(f"<<yellow>> page_time: {page_time}")
+            logger.info(f"<<yellow>> page_time: {page_time}")
             year = int(str(page_time)[0:4])
             if year < 2012 and "all" not in sys.argv:
-                printe.output("<<red>> skip....")
+                logger.info("<<red>> skip....")
                 continue
         # ---
         _value = gtblame_value(title, lang)
@@ -150,7 +153,7 @@ def get_b(links, lang):
         # ---
         if _value == "creator":
             _value = crate.get("actor", "")
-            printe.output(f"<<green>> creator _value: {_value}")
+            logger.info(f"<<green>> creator _value: {_value}")
         # ---
         if value_in != 0 and _value == 0:
             continue

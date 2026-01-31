@@ -11,6 +11,7 @@ tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 https://github.com/wikimedia/popularpages
 
 """
+import logging
 import re
 
 # ---
@@ -19,8 +20,9 @@ from pathlib import Path
 
 import wikitextparser as wtp
 from add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, md_MainPage  # , CatDepth
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage  # , CatDepth
+
+logger = logging.getLogger(__name__)
 
 Dir = Path(__file__).parent
 # add_param_named(text, title)
@@ -46,7 +48,7 @@ def find_redirects(pages, text):
     # ---
     mdwiki_pages = [fix_title(x.strip()) for x in mdwiki_pages if x.find("|") == -1 and x not in pages]
     # ---
-    printe.output(f"find_redirects pages: {len(mdwiki_pages)}")
+    logger.info(f" pages: {len(mdwiki_pages)}")
     # ---
     titles = api_new.get_titles_redirects(mdwiki_pages)
     # ---
@@ -87,7 +89,7 @@ def work_page():
         f.write(newtext)
 
     if newtext == text:
-        printe.output("no changes")
+        logger.info("no changes")
         return False
 
     # count R_NEW_ROW in newtext

@@ -8,9 +8,12 @@
 python3 core8/pwb.py mdpy/orred
 
 """
+import logging
+
 from mdapi_sql import sql_for_mdwiki
-from newapi import printe
-from newapi.wiki_page import NEW_API, MainPage
+from mdwiki_api.wiki_page import NEW_API, MainPage
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("or", family="wikipedia")
 
@@ -18,7 +21,7 @@ api_new = NEW_API("or", family="wikipedia")
 def create_redirect(target, mdtitle):
     # ---
     if not target or not mdtitle:
-        printe.output(f"<<red>>** false .. {mdtitle=} | {target=} ")
+        logger.error(f"<<red>>** false .. {mdtitle=} | {target=} ")
         return
     # ---
     text = f"#redirect [[{target}]]"
@@ -30,7 +33,7 @@ def create_redirect(target, mdtitle):
         create = page.Create(text=text, summary=sus)
         # ---
         if create:
-            printe.output(f"<<green>>** true .. [[or:{mdtitle}]] ")
+            logger.info(f"<<green>>** true .. [[or:{mdtitle}]] ")
 
 
 def check_all(links):
@@ -58,7 +61,7 @@ def start():
         # ---
         targets_to_titles[target] = mdtitle
     # ---
-    printe.output("<<yellow>> check targets")
+    logger.info("<<yellow>> check targets")
     # ---
     pages, p_not_exists = check_all(list(targets_to_titles.keys()))
     # ---
@@ -66,11 +69,11 @@ def start():
     # ---
     mdtitle_exists, c_not_exists = check_all(list(targets_exists.values()))
     # ---
-    printe.output(
+    logger.info(
         f"<<yellow>> check targets({len(targets_to_titles)}) exists:{len(pages):,} not_exists:{len(p_not_exists):,}"
     )
     # ---
-    printe.output(
+    logger.info(
         f"<<yellow>> check mdwikis({len(targets_exists)}) exists:{len(mdtitle_exists):,} not_exists:{len(c_not_exists):,}"
     )
     # ---
@@ -78,7 +81,7 @@ def start():
     # ---
     for n, (target, mdtitle) in enumerate(to_work.items(), start=1):
         # ---
-        printe.output(f"----------\n*<<yellow>> p{n}/{len(to_work)} >{target=}, {mdtitle=}.")
+        logger.info(f"----------\n*<<yellow>> p{n}/{len(to_work)} >{target=}, {mdtitle=}.")
         # ---
         create_redirect(target, mdtitle)
 

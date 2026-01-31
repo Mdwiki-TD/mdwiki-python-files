@@ -6,7 +6,7 @@ python3 core8/pwb.py priorviews/by_lang ask
 
 from pathlib import Path
 
-from newapi.mdwiki_page import md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 
 # ---
 from priorviews.lists import translators, views, words

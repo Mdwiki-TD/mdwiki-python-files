@@ -4,6 +4,7 @@
 from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 
 """
+import logging
 import sys
 import urllib
 import urllib.parse
@@ -11,19 +12,13 @@ from pathlib import Path
 
 import requests
 
-# ---
-try:
-    from newapi import printe
-except ImportError:
-    printe = None
-# ---
-Dir = Path(__file__).parent.parent
-# ---
-sys.path.append(Dir)
-from wprefs import user_account_enwiki
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
 
-# ---
+from wprefs import user_account_enwiki
 from wprefs.helps import print_s
+
+logger = logging.getLogger(__name__)
 
 # my_username = user_account_enwiki.my_username
 # lgpass_enwiki = user_account_enwiki.lgpass_enwiki
@@ -289,9 +284,6 @@ def page_put(oldtext, NewText, summary, title, lang):
         return {}
     # ---
     if "ask" in sys.argv and not ask_a[1]:
-        # ---
-        if printe:
-            printe.showDiff(oldtext, NewText)
         # ---
         print_s(f" -Edit summary: {summary}:")
         sa = input(

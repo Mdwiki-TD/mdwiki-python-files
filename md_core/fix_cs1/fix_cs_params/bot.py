@@ -8,12 +8,14 @@ python3 core8/pwb.py fix_cs1/fix_cs_params/bot
 tfj run fixrefs1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_cs1/fix_cs_params/bot all"
 
 """
+import logging
 import sys
 
 import wikitextparser as wtp
 from fix_cs1.archive_date_maker import make_archive_date, make_archive_date_and_url
-from newapi import printe
-from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
+from mdwiki_api.mdwiki_page import NEW_API, CatDepth, md_MainPage
+
+logger = logging.getLogger(__name__)
 
 api_new = NEW_API("www", family="mdwiki")
 
@@ -88,7 +90,7 @@ class AddArchiveDate:
         summary = "Fix reference parameters "
         # ---
         if self.added:
-            printe.output(f" >> {self.title} {added_str}")
+            logger.info(f" >> {self.title} {added_str}")
             # ---
             summary += f" (Add: {added_str})"
         # ---
@@ -168,7 +170,7 @@ class one_page(AddArchiveDate):
         self.page = md_MainPage(self.title, "www", family="mdwiki")
         # ---
         if not self.page.exists():
-            printe.output(f" page:{self.title} not exists in mdwiki.")
+            logger.info(f" page:{self.title} not exists in mdwiki.")
             return
         # ---
         self.text = self.page.get_text()
@@ -181,7 +183,7 @@ class one_page(AddArchiveDate):
 
     def run(self):
         if not hasattr(self, "text"):
-            printe.output(f" page:{self.title} text not initialized.")
+            logger.info(f" page:{self.title} text not initialized.")
             return
         # ---
         newtext = self.fix_text_2(self.text)  # AttributeError: 'one_page' object has no attribute 'text'
@@ -194,13 +196,13 @@ class one_page(AddArchiveDate):
         if self.replaced:
             replace_str = ", ".join([f"{k}>{old_to_new_params.get(k,k)}({v})" for k, v in self.replaced.items()])
             # ---
-            printe.output(f" >> {self.title} {replace_str}")
+            logger.info(f" >> {self.title} {replace_str}")
             # ---
             summary += f"(replace: {replace_str})"
         if self.removed:
             removed_str = ", ".join([f"{k}:{v}" for k, v in self.removed.items()])
             # ---
-            printe.output(f" >> {self.title} {removed_str}")
+            logger.info(f" >> {self.title} {removed_str}")
             # ---
             summary += f" (remove: {removed_str})"
         # ---
@@ -211,7 +213,7 @@ class one_page(AddArchiveDate):
         if self.text == newtext:
             return
         # ---
-        printe.output(f"save: {self.title}")
+        logger.info(f"save: {self.title}")
         # --
         save = self.page.save(newtext=newtext, summary=summary)
         # ---
@@ -228,11 +230,11 @@ class one_page(AddArchiveDate):
                 temp.set_arg(new_p, p1_value)
             # ---
             if p1_value == p2_value:
-                printe.output(f"<<yellow>> one_fix: {old_p} && {new_p} == <<green>> ({p1_value})")
+                logger.info(f"<<yellow>> : {old_p} && {new_p} == <<green>> ({p1_value})")
             else:
-                printe.output(f"<<yellow>> one_fix: |{old_p}={p1_value} && |{new_p}={p2_value}")
+                logger.info(f"<<yellow>> : |{old_p}={p1_value} && |{new_p}={p2_value}")
             # ---
-            printe.output(f"\t <<red>> del {old_p=}")
+            logger.info(f"\t <<red>> del {old_p=}")
             # ---
             self.removed.setdefault(old_p, 0)
             self.removed[old_p] += 1
@@ -306,7 +308,7 @@ def one_title(title):
 
 
 def main():
-    printe.output("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     cat = "Category:CS1 errors: redundant parameter"
     # ---
@@ -320,7 +322,7 @@ def main():
     if "all" in sys.argv:
         titles = api_new.Get_All_pages()
     else:
-        printe.output(f"cat: {cat}")
+        logger.info(f"cat: {cat}")
         titles = CatDepth(cat, sitecode="www", family="mdwiki")
     # ---
     if "re" in sys.argv:
@@ -328,7 +330,7 @@ def main():
         # titles.reverse()
     # ---
     for n, page in enumerate(titles):
-        printe.output(f"n: {n}/{len(titles)} - Page: {page}")
+        logger.info(f"n: {n}/{len(titles)} - Page: {page}")
         # ---
         one_title(page)
 
