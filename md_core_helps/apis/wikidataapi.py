@@ -113,11 +113,11 @@ def WD_Merge(q1, q2):
 def Labels_API(Qid, label, lang, remove=False, summary=""):
     # ---
     if not Qid:
-        logger.info("Labels_API Qid == '' ")
+        logger.info(" Qid == '' ")
         return False
     # ---
     if label == "" and not remove:
-        logger.info("Labels_API label == '' and remove = False ")
+        logger.info(" label == '' and remove = False ")
         return False
     # ---
     # save the edit
@@ -136,7 +136,7 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
         # ---
         if sa == "a":
             logger.info("<<lightgreen>> ----------------------------------------------")
-            logger.info("<<lightgreen>> wikidataapi.py Labels_API save without asking.")
+            logger.info("<<lightgreen>> wikidataapi.py save without asking.")
             logger.info("<<lightgreen>> ----------------------------------------------")
             Save_2020_wd["labels"] = True
     # ---
@@ -159,7 +159,7 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
             logger.info(f"<<red>>API: same label item: {item2}")
         # ---
         if "success" in req:
-            logger.info("<<green>> **Labels_API true.")
+            logger.info("<<green>> ** true.")
             return True
         else:
             logger.info(f"<<red>> r5{str(req)}")
@@ -170,7 +170,7 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
 def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
     # ---
     if not desc.strip():
-        logger.info("<<red>> Des_API desc is empty.")
+        logger.info("<<red>> desc is empty.")
         return
     # ---
     # save the edit
@@ -282,7 +282,7 @@ def new_item(label="", lang="", summary="", returnid=False):
         # ---
         if "entity" in req and "id" in req["entity"]:
             Qid = req["entity"]["id"]
-            logger.info(f'<<green>> new_item returnid:"{Qid}" ')
+            logger.info(f'<<green>> returnid:"{Qid}" ')
         # ---
         return Qid
     # ---
@@ -312,7 +312,7 @@ def Claim_API_str(qid, property, string):
     # ---
     qid = qid.strip()
     # ---
-    logger.info(f"<<yellow>> Claim_API_str: add claim to qid: {qid}, [{property}:{string}]")
+    logger.info(f"<<yellow>> : add claim to qid: {qid}, [{property}:{string}]")
     # ---
     if string == "" or qid == "" or property == "":
         return ""
@@ -376,11 +376,11 @@ def wbsearchentities(search, language, match_alias=False):
     req = post_it(params=params)
     # ---
     if not req:
-        logger.info(" wbsearchentities no req ")
+        logger.info(" no req ")
         return False
     # ---
     if "success" not in req:
-        logger.info(f"<<red>> wbsearchentities: {str(req)}")
+        logger.info(f"<<red>> : {str(req)}")
         return False
     # ---
     table = {}

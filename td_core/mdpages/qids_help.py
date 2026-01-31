@@ -50,7 +50,7 @@ def get_pages_to_work(ty="td|other"):
     if ty == "other":
         tds_list = [x for x in all_pages if x not in tds_list]
     # ---
-    logger.info(f"get_pages_to_work: {len(tds_list)=}, {len(all_pages)=}")
+    logger.info(f": {len(tds_list)=}, {len(all_pages)=}")
     # ---
     return tds_list, all_pages
 
@@ -212,7 +212,7 @@ def get_o_qids_new(o_qids, t_qids_in):
     logger.info(f"o_qids_new: len of diff: {len(diff)}")
     # ---
     if diff:
-        logger.info("<<purple>> get_o_qids_new diff:")
+        logger.info("<<purple>> diff:")
         # ---
         for x in diff:
             logger.info(f"\t x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")

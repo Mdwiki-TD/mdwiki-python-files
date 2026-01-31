@@ -209,7 +209,7 @@ def dump_all(main_table_sites, len_titles):
 
 def cash_wd():
     # ---
-    logger.info("<<green>> cash_wd")
+    logger.info("<<green>> ")
     # ---
     titles = []
     # ---
@@ -258,8 +258,8 @@ def cash_wd():
     for qd in mis_qids:
         logger.info(f"<<blue>> missing qids:{qd}.")
     # ---
-    logger.info(f" len of redirects_qids:  {len(redirects_qids.keys())}")
-    logger.info(f" len of missing qids:    {len(mis_qids)}")
+    logger.info(f" len of redirects_qids: {len(redirects_qids.keys())}")
+    logger.info(f" len of missing qids: {len(mis_qids)}")
     # ---
     if missing["all"] > 0:
         with open(f"{Dashboard_path}/Tables/jsons/missing.json", "w", encoding="utf-8") as xx:

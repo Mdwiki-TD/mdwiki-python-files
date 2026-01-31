@@ -104,7 +104,7 @@ def work_one_tab(tab, missing, redirects):
         new_target = page.get_redirect_target()
     # ---
     if new_target:
-        logger.info(f"<<yellow>> work_one_tab: {target=}, {new_target=}")
+        logger.info(f"<<yellow>> : {target=}, {new_target=}")
         # ---
         page2 = WikiPage(new_target, lang, family="wikipedia")
         # ---
@@ -127,7 +127,7 @@ def work_one_tab(tab, missing, redirects):
                 # ---
                 return {new_target: tab}
         # else:
-        #     logger.info(f'<<red>> page "{new_target}" deleted from {lang}')
+        # logger.info(f'<<red>> page "{new_target}" deleted from {lang}')
         #     deleted.append(iid)
     # ---
     return {}
@@ -182,7 +182,7 @@ def work_in_to_set(new_target, tab):
     new_tab = copy.deepcopy(tab)
     new_tab["target"] = new_target
     # ---
-    logger.info(f"<<green>> work_in_to_set() new_target:{new_target}")
+    logger.info(f"<<green>> () new_target:{new_target}")
     # ---
     user = new_tab["user"]
     # ---

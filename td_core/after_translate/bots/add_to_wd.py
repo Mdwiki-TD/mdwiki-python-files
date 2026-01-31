@@ -57,7 +57,7 @@ for tab in sq_dd:
 def work_with_2_qids(oldq, new_q):
     # ---
     logger.info("=============================")
-    logger.info(f"start:work_with_2_qids: oldq:{oldq}, new_q:{new_q}")
+    logger.info(f"start:: oldq:{oldq}, new_q:{new_q}")
     # ---
     fas = wikidataapi.Get_sitelinks_From_Qid(oldq)
     # {'sitelinks': {'enwiki': 'User:Mr. Ibrahem/Baricitinib', 'orwiki': 'ବାରିସିଟିନିବ'}, 'q': 'Q112331510'}

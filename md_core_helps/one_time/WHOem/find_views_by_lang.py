@@ -36,8 +36,8 @@ N_g = {1: 0}
 
 
 def dump_data(file, data):
-    logger.info(f"<<green>> dump_data() file:{file}.")
-    logger.info(f"<<yellow>> dump_data {len(data)} views")
+    logger.info(f"<<green>> () file:{file}.")
+    logger.info(f"<<yellow>> {len(data)} views")
     try:
         with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)

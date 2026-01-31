@@ -86,7 +86,7 @@ def gtblame_value(title, lang):
 
 
 def logem():
-    logger.info(f"<<yellow>> logem {len(new_data)} words")
+    logger.info(f"<<yellow>> {len(new_data)} words")
     # dump new_data
     helps.dump_data(file, new_data)
 

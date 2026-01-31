@@ -78,7 +78,7 @@ def work(title, num, length, From=""):
 
 
 def main():
-    logger.info("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     # python3 imp.py -page:Crohn's_disease
     # python imp.py -newpages:1000

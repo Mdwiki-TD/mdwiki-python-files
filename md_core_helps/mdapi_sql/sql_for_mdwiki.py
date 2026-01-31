@@ -100,7 +100,7 @@ def get_all_qids():
 
 def set_target_where_id(new_target, iid):
     # ---
-    logger.info(f"<<yellow>> set_target_where_id() new_target:{new_target}, id:{iid}")
+    logger.info(f"<<yellow>> () new_target:{new_target}, id:{iid}")
     # ---
     if new_target == "" or iid == "":
         return
@@ -113,7 +113,7 @@ def set_target_where_id(new_target, iid):
 
 def set_deleted_where_id(iid):
     # ---
-    logger.info(f"<<yellow>> set_deleted_where_id(), id:{iid}")
+    logger.info(f"<<yellow>> (), id:{iid}")
     # ---
     if iid == "":
         return
@@ -124,7 +124,7 @@ def set_deleted_where_id(iid):
 
 
 def add_qid(title, qid):
-    logger.info(f"<<yellow>> add_qid()  title:{title}, qid:{qid}")
+    logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
     # ---
     qua_old = "INSERT INTO qids (title, qid) SELECT %s, %s;"
     # ---
@@ -142,7 +142,7 @@ def add_qid(title, qid):
 
 
 def set_qid_where_qid(new_qid, old_qid):
-    logger.info(f"<<yellow>> set_qid_where_qid()  new_qid:{new_qid}, old_qid:{old_qid}")
+    logger.info(f"<<yellow>> () new_qid:{new_qid}, old_qid:{old_qid}")
     # ---
     qua = "UPDATE qids set qid = %s where qid = %s;"
     values = [new_qid, old_qid]
@@ -151,7 +151,7 @@ def set_qid_where_qid(new_qid, old_qid):
 
 
 def set_qid_where_title(title, qid):
-    logger.info(f"<<yellow>> set_qid_where_title()  title:{title}, qid:{qid}")
+    logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
     # ---
     qua = "UPDATE qids set qid = %s where title = %s;"
     values = [qid, title]
@@ -162,14 +162,14 @@ def set_qid_where_title(title, qid):
 def delete_title_from_db(title, pr=""):
     qua = "DELETE FROM qids where title = %s;"
     # ---
-    logger.info(f"<<yellow>> {pr} delete_title_from_db(qids) title:{title}")
+    logger.info(f"<<yellow>> {pr} (qids) title:{title}")
     # ---
     return mdwiki_sql(qua, return_dict=True, values=[title])
 
 
 def set_title_where_qid(new_title, qid):
     # ---
-    logger.info(f"<<yellow>> set_title_where_qid() new_title:{new_title}, qid:{qid}")
+    logger.info(f"<<yellow>> () new_title:{new_title}, qid:{qid}")
     # ---
     qua = "UPDATE qids set title = %s where qid = %s;"
     values = [new_title, qid]
@@ -186,17 +186,17 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
         logger.info(qua % (f'"{new_title}"', f'"{qid}"', f'"{old_title}"'))
         return
     # ---
-    logger.info(f"<<yellow>> qids_set_title_where_title_qid() {new_title=}, {qid=}, {old_title=}")
+    logger.info(f"<<yellow>> () {new_title=}, {qid=}, {old_title=}")
     # ---
     return mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def add_titles_to_qids(tab0, add_empty_qid=False):
     # ---
-    logger.info(f"<<green>> start add_titles_to_qids {add_empty_qid=}:")
+    logger.info(f"<<green>> start {add_empty_qid=}:")
     # ---
     if not tab0:
-        logger.info("<<red>> add_titles_to_qids tab0 empty..")
+        logger.info("<<red>> tab0 empty..")
         return
     # ---
     ids_in_db = get_all_qids()
@@ -244,7 +244,7 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
 
 def insert_to_pages_users_to_main(id, target, user, qid):
     # ---
-    logger.info(f"<<yellow>> insert_to_pages_users_to_main: {id}, {target=}, {user=}, {qid=}")
+    logger.info(f"<<yellow>> : {id}, {target=}, {user=}, {qid=}")
     # ---
     query = "insert into pages_users_to_main (id, new_target, new_user, new_qid) select %s, %s, %s, %s"
     # ---
@@ -257,10 +257,10 @@ def insert_to_pages_users_to_main(id, target, user, qid):
     find_it = mdwiki_sql_dict(qua, values=params)
     # ---
     if find_it:
-        logger.info("<<green>> insert_to_pages_users_to_main TRUE.. ")
+        logger.info("<<green>> TRUE.. ")
         return True
     else:
-        logger.info("<<red>> insert_to_pages_users_to_main FALSE.. ")
+        logger.info("<<red>> FALSE.. ")
         return False
 
 

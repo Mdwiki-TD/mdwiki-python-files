@@ -48,7 +48,7 @@ def find_redirects(pages, text):
     # ---
     mdwiki_pages = [fix_title(x.strip()) for x in mdwiki_pages if x.find("|") == -1 and x not in pages]
     # ---
-    logger.info(f"find_redirects pages: {len(mdwiki_pages)}")
+    logger.info(f" pages: {len(mdwiki_pages)}")
     # ---
     titles = api_new.get_titles_redirects(mdwiki_pages)
     # ---

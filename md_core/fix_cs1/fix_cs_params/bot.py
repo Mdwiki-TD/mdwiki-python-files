@@ -230,9 +230,9 @@ class one_page(AddArchiveDate):
                 temp.set_arg(new_p, p1_value)
             # ---
             if p1_value == p2_value:
-                logger.info(f"<<yellow>> one_fix: {old_p} && {new_p} == <<green>> ({p1_value})")
+                logger.info(f"<<yellow>> : {old_p} && {new_p} == <<green>> ({p1_value})")
             else:
-                logger.info(f"<<yellow>> one_fix: |{old_p}={p1_value} && |{new_p}={p2_value}")
+                logger.info(f"<<yellow>> : |{old_p}={p1_value} && |{new_p}={p2_value}")
             # ---
             logger.info(f"\t <<red>> del {old_p=}")
             # ---
@@ -308,7 +308,7 @@ def one_title(title):
 
 
 def main():
-    logger.info("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     cat = "Category:CS1 errors: redundant parameter"
     # ---

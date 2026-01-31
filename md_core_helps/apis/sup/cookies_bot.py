@@ -79,7 +79,7 @@ def get_cookies(lang, family, username):
         cookies = from_folder(lang, family, username)
     # ---
     if not cookies:
-        logger.info(f" <<red>> get_cookies: <<yellow>> [[{lang}:{family}]] user:{username} <<red>> not found")
+        logger.info(f" <<red>> : <<yellow>> [[{lang}:{family}]] user:{username} <<red>> not found")
         return "make_new"
     # ---
     return cookies

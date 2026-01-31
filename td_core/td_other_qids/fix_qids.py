@@ -43,11 +43,11 @@ def replace_in_sql(reds, ty):
 
 def get_redirects(to_work):
     # ---
-    logger.info("<<yellow>> start get_redirects()")
+    logger.info("<<yellow>> start ()")
     # ---
     new_list = list(to_work.keys())
     # ---
-    logger.info(f"<<yellow>> start get_redirects(), {len(new_list)=}")
+    logger.info(f"<<yellow>> start (), {len(new_list)=}")
     # ---
     reds = wikidataapi.get_redirects(new_list)
     # ---
@@ -56,7 +56,7 @@ def get_redirects(to_work):
 
 def add_to_qids(sql_qids, ty):
     # ---
-    logger.info(f"<<yellow>> start add_to_qids({ty=})")
+    logger.info(f"<<yellow>> start ({ty=})")
     # ---
     all_in = list(sql_qids)
     # ---

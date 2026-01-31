@@ -59,7 +59,7 @@ logger.info(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
 
 def start_to_sql(data):
     # ---
-    logger.info(f"<<green>> start_to_sql {len(data)=}")
+    logger.info(f"<<green>> {len(data)=}")
     # ---
     # data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
     data = {q: v["sitelinks"] for q, v in data.items()}
@@ -111,7 +111,7 @@ def start_to_sql(data):
 
 
 def dump_sitelinks(lists):
-    logger.info(f"<<green>> dump_sitelinks, len of qids: {len(lists.get('qids', {}))}.")
+    logger.info(f"<<green>> , len of qids: {len(lists.get('qids', {}))}.")
     with open(json_file, "w", encoding="utf-8") as aa:
         json.dump(lists, aa)
 
@@ -130,7 +130,7 @@ def wbgetentities(qs_list):
     # ---
     all_entities = {}
     # ---
-    logger.info(f"wbgetentities for:{len(qs_list)}:")
+    logger.info(f" for:{len(qs_list)}:")
     # ---
     for i in tqdm.tqdm(range(0, len(qs_list), 100)):
         # ---
@@ -156,7 +156,7 @@ def wbgetentities(qs_list):
             # ---
             all_entities.update(entities)
     # ---
-    logger.info(f"wbgetentities result: {len(all_entities)}:")
+    logger.info(f" result: {len(all_entities)}:")
     # ---
     return all_entities
 
@@ -216,7 +216,7 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle={}):
 
 def main():
     # ---
-    logger.info("<<green>> main")
+    logger.info("<<green>> ")
     # ---
     qids_tab = sql_for_mdwiki.get_all_qids()
     # ---

@@ -37,7 +37,7 @@ ViewsData = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_views():
-    logger.info(f"<<yellow>> log_views {len(ViewsData)} views")
+    logger.info(f"<<yellow>> {len(ViewsData)} views")
     # dump ViewsData
     helps.dump_data(file, ViewsData)
 
@@ -80,7 +80,7 @@ def get_v(links):
         if mdtitle not in ViewsData:
             ViewsData[mdtitle] = {}
         # ---
-        logger.info(f"<<yellow>> title: {m}/{lena} get_v {mdtitle}")
+        logger.info(f"<<yellow>> title: {m}/{lena} {mdtitle}")
         # ---
         if "en" in sys.argv:
             langs["en"] = mdtitle

@@ -60,7 +60,7 @@ class WikiProcessor:
 
             return result
         except requests.exceptions.RequestException as e:
-            logger.info(f"html_to_segments(): Error occurred: {e}")
+            logger.info(f"(): Error occurred: {e}")
             return None
 
     def convert_wikitext_to_html(self, text):
@@ -79,7 +79,7 @@ class WikiProcessor:
 
             return html_text
         except requests.exceptions.RequestException as e:
-            logger.info(f"convert_wikitext_to_html(): Error occurred: {e}")
+            logger.info(f"(): Error occurred: {e}")
             return None
 
     def save_text(self, text, file_path):
@@ -87,7 +87,7 @@ class WikiProcessor:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(text)
         except Exception as e:
-            logger.info(f"save_text(): Exception: {e}")
+            logger.info(f"(): Exception: {e}")
 
     def get_page_text(self, page_name):
         newtext, revid = get_text(page_name)
@@ -98,7 +98,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"wikitext/{self.sanitized_name}.txt"
         self.save_text(newtext, file_path)
 
-        logger.info("<<yellow>> get_page_text True.")
+        logger.info("<<yellow>> True.")
 
         return newtext
 
@@ -111,7 +111,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"html/{self.sanitized_name}.html"
         self.save_text(html, file_path)
 
-        logger.info(f"<<yellow>> to_html True. {file_path}")
+        logger.info(f"<<yellow>> True. {file_path}")
         return html
 
     def to_segments(self, html_text):
@@ -123,7 +123,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"segments/{self.sanitized_name}.html"
         self.save_text(segments, file_path)
 
-        logger.info(f"<<yellow>> to_segments True. {file_path}")
+        logger.info(f"<<yellow>> True. {file_path}")
 
         return segments
 

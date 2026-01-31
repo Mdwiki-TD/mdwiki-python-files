@@ -106,7 +106,7 @@ def find_redirects(links):
     newlen = len(from_to.items())
     nn = newlen - oldlen
     # ---
-    logger.info(f"def find_redirects: find {nn} length")
+    logger.info(f"def : find {nn} length")
     # logger.info( "def find_redirects: find %d for normalized" % normalized_numb )
 
 

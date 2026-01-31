@@ -115,7 +115,7 @@ def work(title, num, length, From=""):
 
 
 def main():
-    logger.info("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     # python3 red.py -page:Allopurinol
     # python3 red.py -page:Activated_charcoal_\(medication\)

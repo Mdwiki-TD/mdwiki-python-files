@@ -186,7 +186,7 @@ def log_all_pages_states():
     file = f"{Dir}/all_pages_states.json"
     # ---
     if all_pages_states != {}:
-        logger.info(f"<<yellow>> log_all_pages_states(): length: {len(all_pages_states.keys())}")
+        logger.info(f"<<yellow>> (): length: {len(all_pages_states.keys())}")
         json.dump(all_pages_states, open(file, "w", encoding="utf-8"))
 
     # ---

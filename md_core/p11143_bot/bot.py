@@ -41,7 +41,7 @@ def duplicate(merge_qids):
         for va, qs in va_tab_x.items():
             logger.info(f"va:{va}, qs:{qs}")
     # ---
-    logger.info("<<yellow>> duplicate() end...")
+    logger.info("<<yellow>> () end...")
 
 
 def add_q(new_qids, ty):
@@ -59,7 +59,7 @@ def add_q(new_qids, ty):
     newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in TD_list}
     newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in TD_list}
     # ---
-    logger.info(f"<<yellow>> add_q: {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
+    logger.info(f"<<yellow>> : {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
     # ---
     if not newtitles_in_td and not newtitles_not_td:
         return

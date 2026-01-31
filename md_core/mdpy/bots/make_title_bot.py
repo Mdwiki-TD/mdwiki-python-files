@@ -85,7 +85,7 @@ def make_title(url):
     Title_cash[url] = ""
     # ---
     if not url.strip():
-        logger.info("<<red>> make_title url = '' return False")
+        logger.info("<<red>> url = '' return False")
         return {}
     # ---
     url2 = urllib.parse.quote(url)

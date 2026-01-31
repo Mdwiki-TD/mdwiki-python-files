@@ -27,8 +27,8 @@ def fix_one_temp(temp, find_params):
     if journal:
         temp.set_arg("journal", journal)
     # else:
-    #     logger.info("Journal value not found for template.")
-    #     logger.info(temp)
+    # logger.info("Journal value not found for template.")
+    # logger.info(temp)
     # ---
     return temp
 

@@ -88,7 +88,7 @@ class FindInHistory:
         unurl = f"{self.url}?{urlencode(params)}"
         # ---
         if "printurl" in sys.argv and "text" not in params:
-            logger.info(f"post_to_json:\t\t{unurl}")
+            logger.info(f":\t\t{unurl}")
         # ---
         try:
             req = self.session.post(self.url, data=params, timeout=10)
@@ -125,7 +125,7 @@ class FindInHistory:
             if not data:
                 break
             # ---
-            # logger.info(f'post_continue, len:{len(data)}, all: {len(results)}')
+            # logger.info(f', len:{len(data)}, all: {len(results)}')
             # ---
             if isinstance(results, list):
                 results.extend(data)

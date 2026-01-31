@@ -137,7 +137,7 @@ def start():
                         # ---
                         text.append([lang, target, new_target])
                 # else:
-                #     logger.info(f'<<red>> page "{new_target}" deleted from {lang}')
+                # logger.info(f'<<red>> page "{new_target}" deleted from {lang}')
                 #     deleted.append(iid)
     # ---
     logger.info(f"len of to_set {len(to_set)}")

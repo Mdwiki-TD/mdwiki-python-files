@@ -46,7 +46,7 @@ def fix_dup(From, To):
 
 
 def main():
-    logger.info("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     # python3 dup.py -page:Allopurinol
     # python3 dup.py -page:Activated_charcoal_\(medication\)

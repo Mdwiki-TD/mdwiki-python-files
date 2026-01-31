@@ -56,3 +56,4 @@ z/jsons/pages.json
 /svg/**/*.md
 /apicache
 throttle.ctrl
+scan.py

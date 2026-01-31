@@ -19,7 +19,7 @@ def get_new_target_log(lang, target):
     # ---
     api_new1 = NEW_API(lang, family="wikipedia")
     # ---
-    logger.info(f"get_new_target_log() lang:{lang}, target:{target}")
+    logger.info(f"() lang:{lang}, target:{target}")
     # ---
     n = 0
     # ---
@@ -27,7 +27,7 @@ def get_new_target_log(lang, target):
         # ---
         n += 1
         # ---
-        logger.info(f"<<blue>> get_new_target_log({n}) lang:{lang}, target:{target}")
+        logger.info(f"<<blue>> ({n}) lang:{lang}, target:{target}")
         # ---
         logs = api_new1.get_logs(to_check)
         # ---
@@ -56,7 +56,7 @@ def get_new_target_log(lang, target):
             logger.info(f"to_check:{to_check} in done")
             break
     # ---
-    logger.info(f"get_new_target_log() lang:{lang}, target:{target}, new:{to_check}")
+    logger.info(f"() lang:{lang}, target:{target}, new:{to_check}")
     # ---
     return deleted, to_check
 

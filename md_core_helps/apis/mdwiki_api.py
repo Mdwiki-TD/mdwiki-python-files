@@ -177,7 +177,7 @@ def GetRevid(title):
 
 def Get_page_links(title, namespace="0", limit="max"):
     # ---
-    logger.info(f'Get_page_links for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
+    logger.info(f' for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
     params = {
         "action": "query",
@@ -211,7 +211,7 @@ def Get_page_links(title, namespace="0", limit="max"):
     else:
         logger.info("mdwiki_api.py no json1")
     # ---
-    logger.info(f"mdwiki_api.py Get_page_links : find {len(Main_table['links'])} pages.")
+    logger.info(f"mdwiki_api.py : find {len(Main_table['links'])} pages.")
     # ---
     return Main_table
 

@@ -77,7 +77,7 @@ def main1():
 
 
 def main():
-    logger.info("*<<red>> > main:")
+    logger.info("*<<red>> > :")
     # ---
     user = ""
     user_limit = "3000"

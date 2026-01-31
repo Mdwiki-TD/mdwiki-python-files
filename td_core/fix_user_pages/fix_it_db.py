@@ -27,7 +27,7 @@ def work_in_new_tabs_to_db(new_tabs_to_db):
         if new.get("id"):
             del new["id"]
         # ---
-        logger.info("work_in_new_tabs_to_db")
+        logger.info("")
         logger.info(f"\t old: user: {old['user']}, target: {old['target']}")
         logger.info(f"\t new: user: {new['user']}, target: {new['target']}")
         # ---

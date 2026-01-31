@@ -89,7 +89,7 @@ def Get_Claims_API(q="", p=""):
     # ---
     statements = Get_one_qid_info(q, only="statements").get("statements", {})
     # ---
-    logger.info(f"Get_Claims_API: {len(statements)=}")
+    logger.info(f": {len(statements)=}")
     # ---
     claims = statements.get(p, [])
     # ---

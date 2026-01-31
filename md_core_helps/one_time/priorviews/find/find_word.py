@@ -37,7 +37,7 @@ words_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_words():
-    logger.info(f"<<yellow>> log_words {len(words_by_lang)} words")
+    logger.info(f"<<yellow>> {len(words_by_lang)} words")
     helps.dump_data(file, words_by_lang)
 
 
@@ -78,7 +78,7 @@ def get_w(links, lang):
         if "new" in sys.argv and words_in > 40:
             continue
         # ---
-        logger.info(f"<<yellow>> title: {m}/{lena} get_w {title}, words_in:{words_in}")
+        logger.info(f"<<yellow>> title: {m}/{lena} {title}, words_in:{words_in}")
         # ---
         _words = count_words.get_words(title, lang)
         # ---

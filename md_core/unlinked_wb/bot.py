@@ -64,7 +64,7 @@ def add_un_linked_wb(title, qid):
 def work_un(tab):
     for numb, (title, new_q) in enumerate(tab.items(), start=1):
         # ---
-        logger.info(f"-----------------\n<<yellow>> work_un: {numb}, {title=}, {new_q=}")
+        logger.info(f"-----------------\n<<yellow>> : {numb}, {title=}, {new_q=}")
         # ---
         if new_q:
             add_un_linked_wb(title, new_q)

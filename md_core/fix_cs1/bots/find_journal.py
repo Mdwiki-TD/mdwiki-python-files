@@ -26,7 +26,7 @@ def get_param(temp, arg):
         do = va.value.strip()
         return do
     # else:
-    #     logger.info(f"Parameter {arg} not found in template.")
+    # logger.info(f"Parameter {arg} not found in template.")
     # ---
     return ""
 

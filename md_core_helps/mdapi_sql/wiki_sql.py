@@ -91,7 +91,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
 def sql_new(queries, wiki="", printqua=False, values=[], u_print=True):
     # ---
     if u_print:
-        logger.info(f"wiki_sql.py sql_new wiki '{wiki}'")
+        logger.info(f"wiki_sql.py wiki '{wiki}'")
     # ---
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
@@ -111,14 +111,14 @@ def sql_new(queries, wiki="", printqua=False, values=[], u_print=True):
     delta = int(final - start)
     # ---
     if u_print:
-        logger.info(f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
+        logger.info(f'wiki_sql.py len(encats) = "{len(rows)}", in {delta} seconds')
     # ---
     return rows
 
 
 def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     # ---
-    logger.info(f"wiki_sql.py Make_sql_many_rows wiki '{wiki}'")
+    logger.info(f"wiki_sql.py wiki '{wiki}'")
     # ---
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
@@ -137,7 +137,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     # ---
     delta = int(final - start)
     # ---
-    logger.info(f'wiki_sql.py Make_sql_many_rows len(encats) = "{len(rows2)}", in {delta} seconds')
+    logger.info(f'wiki_sql.py len(encats) = "{len(rows2)}", in {delta} seconds')
     # ---
     return rows2
 

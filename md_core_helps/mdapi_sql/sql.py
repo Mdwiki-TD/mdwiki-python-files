@@ -197,7 +197,7 @@ def Make_sql(queries, wiki="", printqua=False):
         print(queries)
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    logger.info(f'<<red>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
+    logger.info(f'<<red>> API/sql_py db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, Return=[])
     final = tttime.time()
@@ -334,7 +334,7 @@ def Make_sql_1_row(queries, wiki="", printqua=False):
 
 def MySQLdb_finder_2_rows(encatTitle):
     # en category use template with ar link
-    logger.info(f"<<red>> sql . MySQLdb_finder_2_rows {encatTitle}: ")
+    logger.info(f"<<red>> sql . {encatTitle}: ")
     # ---
     if not GET_SQL():
         return {}
@@ -391,7 +391,7 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
 
 
 def get_exclusive_category_titles(encatTitle, arcatTitle):
-    logger.info(f"<<red>> API/sql_py get_exclusive_category_titles {encatTitle}: ")
+    logger.info(f"<<red>> API/sql_py {encatTitle}: ")
     # ---
     return MySQLdb_finder_N_New(encatTitle, arcatTitle)
 

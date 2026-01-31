@@ -40,7 +40,7 @@ if not os.path.isdir(dir1) and not os.path.isdir(dir2):
 
 def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_dict=False, values=None):
     # ---
-    # logger.info("start sql_connect_pymysql:")
+    # logger.info("start :")
     Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
     args2 = {

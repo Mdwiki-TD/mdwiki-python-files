@@ -43,7 +43,7 @@ def do_request(params=None, method="POST"):
     unurl = f"{url}?{urlencode(params)}"
     # ---
     if "printurl" in sys.argv:
-        logger.info(f"do_request:\t\t{unurl}")
+        logger.info(f":\t\t{unurl}")
     # ---
     try:
         r4 = SS["ss"].request(method, url, **args)

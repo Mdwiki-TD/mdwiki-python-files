@@ -95,7 +95,7 @@ class FindTranslator:
                         return
 
     def Translator(self):
-        logger.info(f"\t\t Translator: {self.translator}")
+        logger.info(f"\t\t : {self.translator}")
         return self.translator
 
 

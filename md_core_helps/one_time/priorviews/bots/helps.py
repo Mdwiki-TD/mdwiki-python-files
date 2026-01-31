@@ -90,7 +90,7 @@ def talk_url(lang, user, labl):
 
 
 def dump_data(file, data):
-    logger.info(f"<<green>> dump_data() file:{file}.")
+    logger.info(f"<<green>> () file:{file}.")
     try:
         with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
