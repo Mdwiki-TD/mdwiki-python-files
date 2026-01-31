@@ -4,8 +4,9 @@ python3 core8/pwb.py apis/sup/page
 
 """
 
-from apis.sup.su_login import Get_MwClient_Site
 import logging
+
+from apis.sup.su_login import Get_MwClient_Site
 
 logging.basicConfig(level=logging.WARNING)
 

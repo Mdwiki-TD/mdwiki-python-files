@@ -4,11 +4,11 @@ python3 core8/pwb.py newupdater/tests/test_mdapi Alcohol_septal_ablation
 
 """
 
-from mdapi import GetPageText
 import os
 import sys
 from pathlib import Path
 
+from mdapi import GetPageText
 
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))

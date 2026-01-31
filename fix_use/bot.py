@@ -4,11 +4,10 @@ python3 core8/pwb.py fix_use/bot path:I:/mdwiki/mdwiki/public_html/Translation_D
 
 """
 
-from pathlib import Path
 import os
 import re
 import sys
-
+from pathlib import Path
 
 if Dir := Path("I:/core/bots/"):
     sys.path.append(str(Dir))

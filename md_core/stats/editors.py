@@ -4,9 +4,6 @@ from stats.editors import get_editors
 
 """
 
-from stats.ar import get_ar_results
-from mdapi_sql import wiki_sql
-import tqdm
 import json
 import os
 import re
@@ -14,7 +11,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import tqdm
+from mdapi_sql import wiki_sql
 from pymysql.converters import escape_string
+from stats.ar import get_ar_results
 
 last_year = datetime.now().year - 1
 # ---

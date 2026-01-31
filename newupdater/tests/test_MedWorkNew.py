@@ -4,13 +4,12 @@ python3 core8/pwb.py newupdater/tests/test_MedWorkNew
 
 """
 
-from new_updater import work_on_text
 import os
 import sys
 from pathlib import Path
 
 import pywikibot
-
+from new_updater import work_on_text
 
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))

@@ -15,7 +15,6 @@ import urllib
 import urllib.parse
 from pathlib import Path
 
-
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 

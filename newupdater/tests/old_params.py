@@ -4,20 +4,18 @@ python3 core8/pwb.py newupdater/tests/old_params
 
 """
 
-from new_updater import rename_params
-import pywikibot
-from pathlib import Path
 import os
 import sys
+from pathlib import Path
+
+import pywikibot
+from new_updater import rename_params
 
 os.environ["DEBUGNEW"] = "true"
 
 
-
-
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
-
 
 
 o = """

@@ -6,8 +6,8 @@ python3 core8/pwb.py fix_use/add path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 """
 
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # import re
 

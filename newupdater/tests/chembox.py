@@ -13,7 +13,6 @@ from pathlib import Path
 
 import pywikibot
 
-
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
