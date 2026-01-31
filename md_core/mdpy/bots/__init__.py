@@ -1,4 +1,4 @@
-"""
+r"""
 from mdpy import (wiki_sql)\b
 from mdpy.bots import $1
 
