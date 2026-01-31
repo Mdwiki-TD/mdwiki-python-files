@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
+
 import json
 import re
+import mwclient
 import sys
 from pathlib import Path
 
-import mwclient
-
 sys.argv.append("workibrahem")
-from newapi.page import MainPage  # noqa: E402
+from mdwiki_api.wiki_page import MainPage  # noqa: E402
 
 RE_SVG_LANG = re.compile(r"\{\{\s*SVGLanguages\s*\|\s*([^}|]+)", re.I)
 RE_TRANSLATE = re.compile(r"\*'''Translate''':\s*https://svgtranslate\.toolforge\.org/File:([^ \n]+)", re.I)
