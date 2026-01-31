@@ -10,6 +10,7 @@ tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 import json
+import logging
 import random
 import re
 import sys
@@ -26,6 +27,7 @@ from mdapi_sql import sql_for_mdwiki
 
 CatDepth, MainPage = get_md()
 
+logger = logging.getLogger(__name__)
 Dir = Path(__file__).parent
 
 text_cache = {}
@@ -57,7 +59,7 @@ def make_new_r3_token():
         csrftoken = data.get("query", {}).get("tokens", {}).get("csrftoken", "")
         return csrftoken
     except Exception as e:
-        print(f"Exception: {e}")
+        logger.error(f"Exception: {e}")
     # ---
     return ""
 
@@ -80,7 +82,7 @@ def just_save(title, text, summary, csrftoken):
     try:
         print(response.json())
     except Exception as e:
-        print(f"Exception: {e}")
+        logger.error(f"Exception: {e}")
         print(response.text)
 
 

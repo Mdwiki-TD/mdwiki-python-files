@@ -98,7 +98,7 @@ def check_urls(urls):
             response = requests.get(url, headers={"User-Agent": default_user_agent}, timeout=10)
 
         except requests.exceptions.RequestException as e:
-            print(f"Exception: {e}")
+            logger.error(f"Exception: {e}")
             response = False
         # ---
         if not response:
