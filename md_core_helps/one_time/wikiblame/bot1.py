@@ -7,9 +7,13 @@ links like [[example]]
 python3 core8/pwb.py prior/p4 test
 """
 
+import logging
 import urllib.parse
 
 import requests
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 session = requests.Session()

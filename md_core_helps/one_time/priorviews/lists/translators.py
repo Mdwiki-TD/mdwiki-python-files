@@ -1,5 +1,8 @@
 """
 # ---
+import logging
+logger = logging.getLogger(__name__)
+
 from priorviews.lists import translators
 # translators.tra_by_lang
 # translators.counts_by_translator

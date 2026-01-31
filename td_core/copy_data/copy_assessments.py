@@ -5,14 +5,19 @@ python3 core8/pwb.py copy_data/copy_assessments
 
 """
 import json
-
-# ---
+import logging
 import os
 from pathlib import Path
 
-# ---
 from mdapi_sql import sql_for_mdwiki
 from pymysql.converters import escape_string
+
+logger = logging.getLogger(__name__)
+
+
+# ---
+
+# ---
 
 # ---
 Dir = str(Path(__file__).parents[0])

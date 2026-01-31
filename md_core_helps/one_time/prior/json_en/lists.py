@@ -1,5 +1,8 @@
 """
 # ---
+import logging
+logger = logging.getLogger(__name__)
+
 from prior.json_en.lists import json_en_all
 # tab = json_en_all.get(en, {})# {'extlinks': extlinks, 'refsname': refsname}
 # ---

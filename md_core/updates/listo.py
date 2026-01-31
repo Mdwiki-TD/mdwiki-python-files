@@ -12,12 +12,17 @@ python3 $HOME/pybot/md_core/mdpy/listo.py save
 python3 core8/pwb.py mdpy/listo save
 
 """
+import logging
 import re
 import sys
 
-# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 from apis import mdwiki_api
 from mdwiki_api.mdwiki_page import CatDepth
+
+logger = logging.getLogger(__name__)
+
+
+# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 
 limit_m = {1: 0}
 # ---

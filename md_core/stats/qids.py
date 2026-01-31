@@ -6,11 +6,15 @@ from stats.qids import qids_list
 """
 
 import json
+import logging
 import os
 import sys
 from pathlib import Path
 
 from mdapi_sql import wiki_sql
+
+logger = logging.getLogger(__name__)
+
 
 Dir = Path(__file__).parent
 

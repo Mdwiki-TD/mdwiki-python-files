@@ -2,9 +2,12 @@
 python3 core8/pwb.py wprefs/bots/es_refs
 """
 
+import logging
 from pathlib import Path
 
 import wikitextparser as wtp
+
+logger = logging.getLogger(__name__)
 
 
 def make_line(refs):

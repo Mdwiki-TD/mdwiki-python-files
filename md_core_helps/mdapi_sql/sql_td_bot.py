@@ -7,15 +7,19 @@ from mdapi_sql import sql_td_bot
 # ---
 
 """
+import logging
 import os
 import sys
 from pathlib import Path
 
 import pymysql
 from newapi import pymysql_bot
+from pywikibot import config
+
+logger = logging.getLogger(__name__)
+
 
 # ---
-from pywikibot import config
 
 conversions = pymysql.converters.conversions
 conversions[pymysql.FIELD_TYPE.DATE] = lambda x: str(x)

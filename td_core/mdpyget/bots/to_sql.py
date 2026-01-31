@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """
 
+import logging
+logger = logging.getLogger(__name__)
+
 from mdpyget.bots.to_sql import to_sql
 # data2 = [{"title": x, "importance": v} for x, v in assessments_tab[1].items()]
 # to_sql(data2, table_name, columns, title_column="title")

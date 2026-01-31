@@ -1,9 +1,13 @@
 import json
+import logging
 import re
 import sys
 from pathlib import Path
 
 import mwclient
+
+logger = logging.getLogger(__name__)
+
 
 sys.argv.append("workibrahem")
 from mdwiki_api.wiki_page import MainPage  # noqa: E402

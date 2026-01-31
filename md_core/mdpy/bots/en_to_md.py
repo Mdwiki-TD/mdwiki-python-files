@@ -22,9 +22,13 @@ from mdpy.bots import en_to_md
 """
 
 import json
+import logging
 import os
 
 from mdapi_sql import sql_for_mdwiki
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 if os.getenv("HOME"):

@@ -1,6 +1,9 @@
 """
 Usage:
 
+import logging
+logger = logging.getLogger(__name__)
+
 from mdwiki_api.wiki_page import CatDepth
 
 # cat_members = CatDepth(title, sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])

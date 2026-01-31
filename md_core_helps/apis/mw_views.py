@@ -8,6 +8,7 @@ from apis.mw_views import PageviewsClient
 # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 """
+import logging
 import os
 import sys
 import time
@@ -19,6 +20,9 @@ from datetime import date, datetime, timedelta
 import requests
 from requests.utils import quote
 from tqdm import tqdm
+
+logger = logging.getLogger(__name__)
+
 
 tool = os.getenv("HOME")
 tool = tool.split("/")[-1] if tool else "himo"

@@ -4,6 +4,7 @@ python3 core8/pwb.py priorviews/bot test
 
 """
 
+import logging
 import sys
 from pathlib import Path
 
@@ -12,6 +13,9 @@ from priorviews import by_lang
 from priorviews.bots import sections_text
 from priorviews.lists import views
 from priorviews.lists.links_by_section import sects_links_langlinks
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent

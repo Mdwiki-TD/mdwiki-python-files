@@ -4,7 +4,12 @@
 python3 core8/pwb.py db_work/days_7
 
 """
+import logging
+
 from mdapi_sql import sql_for_mdwiki
+
+logger = logging.getLogger(__name__)
+
 
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # ---

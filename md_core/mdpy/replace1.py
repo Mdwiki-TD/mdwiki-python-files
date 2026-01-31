@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 """ """
+import logging
 import os
 import sys
 from pathlib import Path
 
 from mdwiki_api.mdwiki_page import NEW_API, MainPage
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 if os.getenv("HOME"):

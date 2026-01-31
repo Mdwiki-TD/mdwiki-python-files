@@ -7,14 +7,18 @@ tfj run c202c --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 
 """
 
+import logging
 import sys
 from pathlib import Path
 
 from apis import mdwiki_api
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
+
+logger = logging.getLogger(__name__)
+
 
 # import json
 # import wikitextparser as wtp
-from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 
 # ---
 Dir = Path(__file__).parent

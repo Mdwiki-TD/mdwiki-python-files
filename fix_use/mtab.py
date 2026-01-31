@@ -6,9 +6,13 @@ python3 core8/pwb.py fix_use/mtab path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 """
 
 import json
+import logging
 import os
 import re
 import sys
+
+logger = logging.getLogger(__name__)
+
 
 tab = {
     "Infos\\TdConfig": ["Read_ini_file", "get_configs", "set_configs", "set_configs_all_file"],

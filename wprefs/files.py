@@ -1,4 +1,7 @@
 """
+import logging
+logger = logging.getLogger(__name__)
+
 from wprefs.files import reffixed_list, setting, append_reffixed_file
 """
 

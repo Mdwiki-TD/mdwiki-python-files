@@ -4,12 +4,16 @@
 from mdpy.find_replace_bot.one_job import do_one_job
 """
 import json
+import logging
 import os
 import sys
 from pathlib import Path
 
 import tqdm
 from mdwiki_api.mdwiki_page import NEW_API, MainPage
+
+logger = logging.getLogger(__name__)
+
 
 home_dir = os.getenv("HOME")
 

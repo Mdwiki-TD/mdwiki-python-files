@@ -13,18 +13,24 @@ python3 core8/pwb.py wprefs/bot -lang:ro ask
 python3 core8/pwb.py wprefs/bot ask
 
 """
-# import os
+import logging
 import random
 import sys
 from pathlib import Path
 
-if Dir := Path(__file__).parent.parent:
-    sys.path.append(str(Dir))
-
 from wprefs.api import GetPageText  # , page_put
 from wprefs.files import save_wprefcash, setting
 from wprefs.helps import ec_de_code
+
+# import os
 from wprefs.wpref_text import fix_page
+
+logger = logging.getLogger(__name__)
+
+
+if Dir := Path(__file__).parent.parent:
+    sys.path.append(str(Dir))
+
 
 move_dot = {1: False}
 expend_infobox = {1: False}

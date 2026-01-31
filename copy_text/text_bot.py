@@ -1,11 +1,15 @@
 #!/usr/bin/python3
 """ """
+import logging
 import re
 
 from apis import mdwiki_api
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdapi_sql import sql_for_mdwiki
+
+logger = logging.getLogger(__name__)
+
 
 text_cache = {}
 revid_cache = {}

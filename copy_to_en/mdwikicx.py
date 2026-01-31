@@ -9,6 +9,7 @@ tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 import json
+import logging
 import random
 import re
 import sys
@@ -21,6 +22,9 @@ from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from copy_to_en.tf_page import get_cx
 from mdapi_sql import sql_for_mdwiki
+
+logger = logging.getLogger(__name__)
+
 
 CatDepth, MainPage = get_cx()
 

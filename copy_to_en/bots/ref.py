@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 """
 Usage:
+
 from copy_to_en.bots.ref import fix_ref# text = fix_ref(first, alltext)
 """
-# import re
+import logging
+
 import wikitextparser as wtp
+
+logger = logging.getLogger(__name__)
 
 
 def get_refs(alltext):

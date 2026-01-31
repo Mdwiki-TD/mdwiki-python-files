@@ -8,10 +8,14 @@ python3 c8/pwb.py updates/io
 
 """
 
+import logging
 import sys
 from pathlib import Path
 
 from apis import mdwiki_api
+
+logger = logging.getLogger(__name__)
+
 
 Dir = Path(__file__).parent
 # ---

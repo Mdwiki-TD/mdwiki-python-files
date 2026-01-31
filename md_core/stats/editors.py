@@ -5,6 +5,7 @@ from stats.editors import get_editors
 """
 
 import json
+import logging
 import os
 import re
 import sys
@@ -15,6 +16,9 @@ import tqdm
 from mdapi_sql import wiki_sql
 from pymysql.converters import escape_string
 from stats.ar import get_ar_results
+
+logger = logging.getLogger(__name__)
+
 
 last_year = datetime.now().year - 1
 # ---

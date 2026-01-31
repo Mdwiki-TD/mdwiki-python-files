@@ -1,10 +1,14 @@
 # ---
+import logging
 import re
 
 import wikitextparser as wtp
+from apis import mdwiki_api
+
+logger = logging.getLogger(__name__)
+
 
 # ---
-from apis import mdwiki_api
 
 
 def count_text(text):

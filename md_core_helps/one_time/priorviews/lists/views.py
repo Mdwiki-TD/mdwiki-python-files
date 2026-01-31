@@ -1,5 +1,8 @@
 """
 # ---
+import logging
+logger = logging.getLogger(__name__)
+
 from priorviews.lists import views
 # ---
 # views.views_by_mdtitle_langs

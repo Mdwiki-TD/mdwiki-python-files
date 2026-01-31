@@ -12,11 +12,16 @@
 #
 
 import itertools
+import logging
 import re
 from contextlib import suppress
 
-# ---
 from wprefs.bots.replace_except import removeprefix, replaceExcept
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 
 def get_html_attributes_value(text, param):

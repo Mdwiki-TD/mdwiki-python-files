@@ -4,7 +4,11 @@ from cite.archive_bots.archive_date_maker import make_archive_date_and_url, make
 # archive_date = make_archive_date(archiveurl)
 """
 
+import logging
 import re
+
+logger = logging.getLogger(__name__)
+
 
 # Wayback Machine format
 ##r"^https?://web\.archive\.org/web/(\d{4})(\d{2})(\d{2})\d*/(https?://.+)$",

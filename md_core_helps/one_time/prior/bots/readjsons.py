@@ -1,6 +1,10 @@
 import json
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # استدعاء الدالة وتمرير المجلد الحالي كوسيطة
 folder_path = Path(__file__).parent

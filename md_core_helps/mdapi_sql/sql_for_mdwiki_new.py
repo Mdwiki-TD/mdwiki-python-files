@@ -9,7 +9,11 @@ from mdapi_sql import sql_for_mdwiki_new
 # sql_for_mdwiki_new. mdwiki_sql_dict(query, values=None, many=False)
 # ---
 """
+import logging
+
 from mdapi_sql import sql_td_bot
+
+logger = logging.getLogger(__name__)
 
 
 def mdwiki_sql(query, return_dict=False, values=None, many=False, **kwargs):

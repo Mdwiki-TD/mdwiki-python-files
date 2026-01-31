@@ -1,4 +1,8 @@
+import logging
 from collections import namedtuple
+
+logger = logging.getLogger(__name__)
+
 
 # from prior.p4 import *
 

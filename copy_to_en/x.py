@@ -1,7 +1,11 @@
+import logging
 import time
 
 import requests
 from apis import cat_cach
+
+logger = logging.getLogger(__name__)
+
 
 all_pages = cat_cach.from_cache()
 

@@ -4,13 +4,18 @@ python3 core8/pwb.py niosh/bot
 """
 
 import json
+import logging
 import os
 import re
 import sys
 from pathlib import Path
 
-# ---
 from mdwiki_api.wiki_page import NEW_API, MainPage
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 # ---
 Dir = Path(__file__).parent

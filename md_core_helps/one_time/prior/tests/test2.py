@@ -1,4 +1,9 @@
+import logging
+
 from prior import p4, read4
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 lal = [

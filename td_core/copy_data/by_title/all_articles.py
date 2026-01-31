@@ -5,11 +5,14 @@ python3 core8/pwb.py copy_data/by_title/all_articles
 python3 core8/pwb.py copy_data/by_title/exists_db
 
 """
+import logging
 import sys
 
 from mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import to_sql
 from mdwiki_api.mdwiki_page import CatDepth
+
+logger = logging.getLogger(__name__)
 
 
 def main():

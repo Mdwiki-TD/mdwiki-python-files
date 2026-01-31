@@ -4,6 +4,9 @@ Usage:
 
 python3 core8/pwb.py mdpages/create_qids
 
+import logging
+logger = logging.getLogger(__name__)
+
 from mdpages.create_qids import create_qids
 
 """

@@ -5,11 +5,16 @@ python3 core8/pwb.py WHOem/make_text
 """
 
 import json
+import logging
 import sys
 from pathlib import Path
 
-# ---
 from mdwiki_api.mdwiki_page import md_MainPage
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 # ---
 section_langs_views = {}

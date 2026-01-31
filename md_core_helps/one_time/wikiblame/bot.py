@@ -1,6 +1,9 @@
 """
 python3 core8/pwb.py wikiblame/bot
 # ---
+import logging
+logger = logging.getLogger(__name__)
+
 from wikiblame.bot import get_blame #first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
 # ---
 """

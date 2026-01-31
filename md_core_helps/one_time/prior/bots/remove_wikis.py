@@ -3,8 +3,12 @@ python3 core8/pwb.py prior/remove_wikis
 """
 
 import json
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent
