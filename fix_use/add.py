@@ -5,9 +5,9 @@ python3 core8/pwb.py fix_use/add path:I:/mdwiki/mdwiki/public_html/td2/enwiki
 
 """
 
+import logging
 import os
 import sys
-import logging
 from pathlib import Path
 
 if Dir := Path("I:/core/bots/"):

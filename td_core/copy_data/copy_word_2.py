@@ -4,7 +4,6 @@
 python3 core8/pwb.py mdcount/bots/copy_word_2
 
 """
-from pymysql.converters import escape_string
 import json
 import logging
 
@@ -15,6 +14,7 @@ from pathlib import Path
 
 # ---
 from mdapi_sql import sql_for_mdwiki
+from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

@@ -19,5 +19,6 @@ def test():
 
     newtext = fix_it(text, site="ar")
 
+
 if __name__ == "__main__":
     test()

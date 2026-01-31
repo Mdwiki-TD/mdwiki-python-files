@@ -5,10 +5,8 @@ from add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
 
 
 """
-from wikitextparser._cell import Cell
 import logging
 
-# ---
 import wikitextparser as wtp
 
 logger = logging.getLogger(__name__)

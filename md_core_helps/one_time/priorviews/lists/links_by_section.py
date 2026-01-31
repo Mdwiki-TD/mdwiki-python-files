@@ -7,7 +7,6 @@ python3 core8/pwb.py priorviews/lists/links_by_section
 
 """
 
-from priorviews.bots.sections_links import get_section_links
 import copy
 import json
 
@@ -16,6 +15,8 @@ import logging
 import os
 import sys
 from pathlib import Path
+
+from priorviews.bots.sections_links import get_section_links
 
 logger = logging.getLogger(__name__)
 

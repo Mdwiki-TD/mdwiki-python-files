@@ -5,9 +5,6 @@ python3 core8/pwb.py priorviews/find/find_creator -lang:ar
 
 """
 
-from pymysql.converters import escape_string
-from priorviews.lists.links_by_section import links_by_lang
-from priorviews.bots import helps
 import json
 
 # ---
@@ -17,6 +14,9 @@ import sys
 from pathlib import Path
 
 from mdapi_sql import wiki_sql
+from priorviews.bots import helps
+from priorviews.lists.links_by_section import links_by_lang
+from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

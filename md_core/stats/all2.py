@@ -6,13 +6,14 @@ python3 core8/pwb.py stats/all2 ask
 
 """
 
-from stats.editors import validate_ip
-from newapi.mdwiki_page import md_MainPage
 import json
 import logging
 import os
 from datetime import datetime
 from pathlib import Path
+
+from newapi.mdwiki_page import md_MainPage
+from stats.editors import validate_ip
 
 logger = logging.getLogger(__name__)
 

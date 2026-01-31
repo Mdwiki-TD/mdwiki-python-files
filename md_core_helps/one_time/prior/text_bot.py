@@ -1,12 +1,13 @@
 """ """
 
-from priorviews.lists import translators
 import json
 
 # ---
 import logging
 import sys
 from pathlib import Path
+
+from priorviews.lists import translators
 
 logger = logging.getLogger(__name__)
 

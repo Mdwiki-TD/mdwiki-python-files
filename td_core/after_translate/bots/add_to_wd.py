@@ -10,7 +10,6 @@ from after_translate.bots import add_to_wd
 
 """
 
-from pymysql.converters import escape_string
 import logging
 import re
 
@@ -19,6 +18,7 @@ from apis import mdwiki_api, wiki_api, wikidataapi
 from mdapi_sql import sql_for_mdwiki
 from mdpy import orred
 from mdpy.bots import en_to_md
+from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

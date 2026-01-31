@@ -1,5 +1,6 @@
-from wprefs.wpref_text import fix_page
 import logging
+
+from wprefs.wpref_text import fix_page
 
 logger = logging.getLogger(__name__)
 

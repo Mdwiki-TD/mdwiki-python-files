@@ -5,7 +5,6 @@
 
 """
 
-from newapi.mdwiki_page import NEW_API, MainPage, user_agent
 import logging
 import sys
 
@@ -13,6 +12,7 @@ import requests
 from apis import mdwiki_api
 from mdpy.bots import py_tools
 from mdpy.bots.check_title import valid_title
+from newapi.mdwiki_page import NEW_API, MainPage, user_agent
 
 logger = logging.getLogger(__name__)
 

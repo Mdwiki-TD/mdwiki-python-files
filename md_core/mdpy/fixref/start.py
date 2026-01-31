@@ -4,7 +4,6 @@ Change refs to newlines
 python3 core8/pwb.py mdpy/fixref
 """
 
-from newapi.mdwiki_page import CatDepth
 import logging
 import os
 import sys
@@ -14,6 +13,7 @@ from pathlib import Path
 
 from apis import mdwiki_api
 from mdpy.fixref.fixref_text_new import fix_ref_template
+from newapi.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
 

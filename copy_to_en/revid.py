@@ -4,7 +4,6 @@
 tfj run revid --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/revid"
 
 """
-from newapi.mdwiki_page import CatDepth
 import json
 import logging
 import os
@@ -13,6 +12,7 @@ from pathlib import Path
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from mdpyget.bots.to_sql import to_sql
+from newapi.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
 

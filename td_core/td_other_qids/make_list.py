@@ -7,13 +7,13 @@ Usage:
 # python3 core8/pwb.py td_other_qids/make_list add
 
 """
-from unlinked_wb.bot import work_un
-from p11143_bot.filter_helps import remove_in_db_elements
 import logging
 import sys
 
 from mdapi_sql import sql_for_mdwiki, sql_qids_others
 from mdpages import qids_help
+from p11143_bot.filter_helps import remove_in_db_elements
+from unlinked_wb.bot import work_un
 
 logger = logging.getLogger(__name__)
 

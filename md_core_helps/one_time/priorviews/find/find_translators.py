@@ -5,8 +5,6 @@ python3 core8/pwb.py priorviews/find/find_translators removeip
 
 """
 
-from priorviews.lists.links_by_section import links_by_lang
-from priorviews.bots import get_translator, helps
 import json
 
 # ---
@@ -14,6 +12,9 @@ import logging
 import os
 import sys
 from pathlib import Path
+
+from priorviews.bots import get_translator, helps
+from priorviews.lists.links_by_section import links_by_lang
 
 logger = logging.getLogger(__name__)
 

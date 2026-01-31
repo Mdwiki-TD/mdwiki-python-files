@@ -4,9 +4,9 @@ python3 core8/pwb.py fix_use/bot path:I:/mdwiki/mdwiki/public_html/Translation_D
 
 """
 
+import logging
 import os
 import re
-import logging
 import sys
 from pathlib import Path
 

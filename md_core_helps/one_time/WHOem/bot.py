@@ -4,12 +4,13 @@ python3 core8/pwb.py WHOem/lists/lang_links new
 #---
 """
 
-from newapi.wiki_page import MainPage, change_codes
-from newapi.mdwiki_page import CatDepth
 import json
 import logging
 import sys
 from pathlib import Path
+
+from newapi.mdwiki_page import CatDepth
+from newapi.wiki_page import MainPage, change_codes
 
 logger = logging.getLogger(__name__)
 

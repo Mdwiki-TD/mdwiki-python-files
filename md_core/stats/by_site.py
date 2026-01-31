@@ -5,8 +5,6 @@ tfj run stats2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 
 """
 
-from stats.editors import get_editors, validate_ip
-from newapi.mdwiki_page import md_MainPage
 import json
 
 # ---
@@ -16,6 +14,9 @@ import re
 import sys
 from datetime import datetime
 from pathlib import Path
+
+from newapi.mdwiki_page import md_MainPage
+from stats.editors import get_editors, validate_ip
 
 logger = logging.getLogger(__name__)
 

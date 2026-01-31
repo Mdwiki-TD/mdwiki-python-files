@@ -11,7 +11,6 @@ python3 core8/pwb.py after_translate/mdwikicx -lang:ur
 
 """
 
-from newapi.page import MainPage
 import json
 import logging
 import re
@@ -21,6 +20,7 @@ from pathlib import Path
 import requests
 from after_translate.bots import add_to_wd
 from mdpy.bots import en_to_md
+from newapi.page import MainPage
 
 logger = logging.getLogger(__name__)
 

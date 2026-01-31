@@ -5,8 +5,6 @@ python3 core8/pwb.py mdpages/cashwd
 
 """
 
-from newapi.mdwiki_page import CatDepth
-from newapi.except_err import exception_err
 import json
 
 # ---
@@ -18,6 +16,7 @@ from apis import wikidataapi
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
 from mdpy.bots.check_title import valid_title
+from newapi.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
 
@@ -202,7 +201,7 @@ def dump_all(main_table_sites, len_titles):
                 json.dump(miss_list, aa, ensure_ascii=False, indent=2)
             logger.info(f"<<greenn>>dump to cash_exists/{site}.json done..")
         except Exception as e:
-            exception_err(e)
+            logger.warning(e)
             continue
     # ---
     return missing_langs

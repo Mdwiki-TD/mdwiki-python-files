@@ -4,7 +4,6 @@
 from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 
 """
-from newapi.except_err import exception_err
 import logging
 import sys
 from urllib.parse import urlencode
@@ -57,7 +56,7 @@ def do_request(params=None, method="POST"):
         return r4.json()
 
     except Exception as e:
-        exception_err(e, text=params)
+        logger.warning(e)
         return {}
 
 

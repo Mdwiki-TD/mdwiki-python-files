@@ -6,6 +6,7 @@ from fix_use.write_bot import write# write(oldtext, text, filepath)
 
 import logging
 import sys
+
 logger = logging.getLogger(__name__)
 
 ASK_all = True

@@ -8,12 +8,12 @@ python3 core8/pwb.py fix_cs1/fix_cs_params/bot
 tfj run fixrefs1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py fix_cs1/fix_cs_params/bot all"
 
 """
-from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
 import logging
 import sys
 
 import wikitextparser as wtp
 from fix_cs1.archive_date_maker import make_archive_date, make_archive_date_and_url
+from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
 
 logger = logging.getLogger(__name__)
 

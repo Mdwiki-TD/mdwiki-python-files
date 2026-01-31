@@ -6,7 +6,6 @@ xpython3 core8/pwb.py wd_works/recheck
 
 """
 
-from pymysql.converters import escape_string
 import logging
 import sys
 
@@ -15,6 +14,7 @@ from apis import wikidataapi
 # ---
 from mdapi_sql import sql_for_mdwiki, wiki_sql
 from mdpy.bots import en_to_md, py_tools
+from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

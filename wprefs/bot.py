@@ -13,9 +13,6 @@ python3 core8/pwb.py wprefs/bot -lang:ro ask
 python3 core8/pwb.py wprefs/bot ask
 
 """
-from wprefs.wpref_text import fix_page
-from wprefs.files import append_reffixed_file, reffixed_list, setting
-from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
 import logging
 
 #
@@ -25,6 +22,9 @@ import logging
 import sys
 
 from mdapi_sql import sql_for_mdwiki
+from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
+from wprefs.files import append_reffixed_file, reffixed_list, setting
+from wprefs.wpref_text import fix_page
 
 logger = logging.getLogger(__name__)
 

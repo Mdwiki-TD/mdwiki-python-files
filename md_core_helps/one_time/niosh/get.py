@@ -5,7 +5,6 @@ python3 core8/pwb.py niosh/get write ask
 
 """
 
-from newapi.mdwiki_page import md_MainPage
 import codecs
 import json
 
@@ -13,6 +12,8 @@ import json
 import logging
 import sys
 from pathlib import Path
+
+from newapi.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
 

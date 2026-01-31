@@ -4,11 +4,6 @@ python3 core8/pwb.py priorviews/langs -lang:ar write ask
 
 """
 
-from priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
-from priorviews.lists.creators_to_translators import creators_as_translators
-from priorviews.lists import creators, translators, views, words
-from priorviews.bots import helps, w_all
-from newapi.mdwiki_page import md_MainPage
 import datetime
 import json
 
@@ -16,6 +11,12 @@ import json
 import logging
 import sys
 from pathlib import Path
+
+from newapi.mdwiki_page import md_MainPage
+from priorviews.bots import helps, w_all
+from priorviews.lists import creators, translators, views, words
+from priorviews.lists.creators_to_translators import creators_as_translators
+from priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
 
 logger = logging.getLogger(__name__)
 

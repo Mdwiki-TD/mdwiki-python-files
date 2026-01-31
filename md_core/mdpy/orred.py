@@ -8,10 +8,10 @@
 python3 core8/pwb.py mdpy/orred
 
 """
-from newapi.wiki_page import NEW_API, MainPage
 import logging
 
 from mdapi_sql import sql_for_mdwiki
+from newapi.wiki_page import NEW_API, MainPage
 
 logger = logging.getLogger(__name__)
 

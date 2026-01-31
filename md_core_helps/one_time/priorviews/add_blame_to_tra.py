@@ -4,15 +4,16 @@ python3 core8/pwb.py priorviews/add_blame_to_tra
 
 """
 
-from priorviews.lists.translators import tra_by_lang
-from priorviews.find.find_blame import new_data
-from priorviews.bots import helps
 import json
 
 # ---
 import logging
 import sys
 from pathlib import Path
+
+from priorviews.bots import helps
+from priorviews.find.find_blame import new_data
+from priorviews.lists.translators import tra_by_lang
 
 logger = logging.getLogger(__name__)
 

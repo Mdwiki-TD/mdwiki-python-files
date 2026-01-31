@@ -9,8 +9,6 @@ python3 core8/pwb.py prior/read5 dontsave logall
 
 """
 
-from prior import text_bot
-from newapi.mdwiki_page import md_MainPage
 import json
 import logging
 import os
@@ -20,6 +18,8 @@ import sys
 from pathlib import Path
 
 import wikitextparser
+from newapi.mdwiki_page import md_MainPage
+from prior import text_bot
 
 logger = logging.getLogger(__name__)
 

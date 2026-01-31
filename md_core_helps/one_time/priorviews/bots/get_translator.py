@@ -4,12 +4,12 @@ python3 core8/pwb.py priorviews/bots/get_translator
 
 """
 
-from priorviews.bots import helps
 import logging
 import sys
 from urllib.parse import urlencode
 
 import requests
+from priorviews.bots import helps
 
 logger = logging.getLogger(__name__)
 

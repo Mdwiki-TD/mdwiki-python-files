@@ -9,7 +9,6 @@ from add_rtt.bot import add_rtt_to_text
 tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/bot list"
 
 """
-from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
 import logging
 
 # ---
@@ -18,6 +17,7 @@ import sys
 
 import wikitextparser as wtp
 from add_rtt.named_param import add_param_named
+from newapi.mdwiki_page import NEW_API, CatDepth, md_MainPage
 
 logger = logging.getLogger(__name__)
 

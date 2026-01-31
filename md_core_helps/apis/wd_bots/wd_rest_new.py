@@ -8,7 +8,6 @@ from apis.wd_bots import wd_rest_new
 # wd_rest_new.Get_one_qid_info(qid, only="labels")
 
 """
-from newapi.except_err import exception_err
 import json
 import logging
 import sys
@@ -28,7 +27,7 @@ def open_url_get(url):
         req = requests.get(url, timeout=10)
         result = req.json()
     except Exception as e:
-        exception_err(e, text=url)
+        logger.warning(e, extra={"text": url})
     # ---
     return result
 

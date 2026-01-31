@@ -4,9 +4,6 @@ python3 core8/pwb.py priorviews/bots/gt_blame
 
 """
 
-from priorviews.bots import helps
-from prior.json_langs.lists import json_langs_by_langs
-from prior.json_en.lists import json_en_all
 import logging
 import re
 import sys
@@ -14,6 +11,9 @@ from urllib.parse import urlencode
 
 import requests
 import wikitextparser
+from prior.json_en.lists import json_en_all
+from prior.json_langs.lists import json_langs_by_langs
+from priorviews.bots import helps
 
 logger = logging.getLogger(__name__)
 

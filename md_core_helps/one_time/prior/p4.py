@@ -7,9 +7,6 @@ links like [[example]]
 python3 core8/pwb.py prior/p4 test
 """
 
-from prior import get_them
-from newapi.wiki_page import MainPage, change_codes
-from newapi.mdwiki_page import md_MainPage
 import json
 
 # ---
@@ -19,6 +16,10 @@ import sys
 
 # ---
 from pathlib import Path
+
+from newapi.mdwiki_page import md_MainPage
+from newapi.wiki_page import MainPage, change_codes
+from prior import get_them
 
 logger = logging.getLogger(__name__)
 

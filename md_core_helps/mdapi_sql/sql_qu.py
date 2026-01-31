@@ -7,8 +7,6 @@ from mdapi_sql import sql_qu
 can_use_sql_db = sql_qu.can_use_sql_db
 results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[], return_dict=False)
 """
-from pywikibot import config
-from newapi.except_err import exception_err
 import logging
 
 #
@@ -19,6 +17,7 @@ import os
 
 import pymysql
 import pymysql.cursors
+from pywikibot import config
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +59,7 @@ def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_d
     try:
         connection = pymysql.connect(**args2, **credentials)
     except Exception as e:
-        exception_err(e)
+        logger.warning(e)
         return Return
     # ---
     with connection as conn, conn.cursor() as cursor:
@@ -70,7 +69,7 @@ def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_d
             cursor.execute(query, params)
 
         except Exception as e:
-            exception_err(e)
+            logger.warning(e)
             return Return
         # ---
         results = Return
@@ -79,7 +78,7 @@ def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_d
             results = cursor.fetchall()
 
         except Exception as e:
-            exception_err(e)
+            logger.warning(e)
             return Return
         # ---
         # yield from cursor

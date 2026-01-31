@@ -5,7 +5,6 @@ from mdpy.bots import make_title_bot
 # _title1_ = make_title_bot.make_title(url)
 # ---
 """
-from newapi.except_err import exception_err  # exception_err(e)
 import logging
 import re
 import urllib.parse
@@ -71,7 +70,7 @@ def get_url(url):
             json1 = req.json()
     # ---
     except Exception as e:
-        exception_err(e)
+        logger.warning(e)
     # ---
     return json1
 

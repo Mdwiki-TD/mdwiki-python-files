@@ -7,6 +7,8 @@ from mdpy.bots import py_tools
 # ---
 """
 
+import logging
+
 #
 # (C) Ibrahem Qasim, 2023
 #
@@ -14,7 +16,7 @@ from mdpy.bots import py_tools
 import sys
 import urllib
 
-from newapi.except_err import exception_err
+logger = logging.getLogger(__name__)
 
 # ---
 PYTHON_VERSION = sys.version_info[:3]
@@ -50,7 +52,7 @@ def quoteurl(fao):
     try:
         fao = urllib.parse.quote(fao)
     except Exception as e:
-        exception_err(e)
+        logger.warning(e)
     # ---
     if endash:
         fao = fao.replace("ioioioioio", "%E2%80%93")

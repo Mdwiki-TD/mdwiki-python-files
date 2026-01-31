@@ -2,8 +2,9 @@
 """
 # revid    = mdwiki_api.GetRevid(title)
 """
-from newapi.mdwiki_page import NEW_API, md_MainPage
 import logging
+
+from newapi.mdwiki_page import NEW_API, md_MainPage
 
 logger = logging.getLogger(__name__)
 

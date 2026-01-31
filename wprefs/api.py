@@ -9,13 +9,14 @@ import sys
 import urllib
 import urllib.parse
 from pathlib import Path
+
 import requests
 
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
-from wprefs.helps import print_s
 from wprefs import user_account_enwiki
+from wprefs.helps import print_s
 
 logger = logging.getLogger(__name__)
 

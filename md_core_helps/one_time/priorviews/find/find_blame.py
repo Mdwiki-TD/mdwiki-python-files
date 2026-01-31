@@ -4,14 +4,6 @@ python3 core8/pwb.py priorviews/find/find_blame -lang:ar
 
 """
 
-from wikiblame.bot import (  # first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
-    get_blame,
-)
-from priorviews.lists.translators import tra_by_lang
-from priorviews.lists.links_by_section import links_by_lang
-from priorviews.lists import creators
-from priorviews.bots import gt_blame, helps
-from prior.json_langs.lists import json_langs_by_langs
 import json
 
 # ---
@@ -19,6 +11,15 @@ import logging
 import os
 import sys
 from pathlib import Path
+
+from prior.json_langs.lists import json_langs_by_langs
+from priorviews.bots import gt_blame, helps
+from priorviews.lists import creators
+from priorviews.lists.links_by_section import links_by_lang
+from priorviews.lists.translators import tra_by_lang
+from wikiblame.bot import (  # first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
+    get_blame,
+)
 
 logger = logging.getLogger(__name__)
 
