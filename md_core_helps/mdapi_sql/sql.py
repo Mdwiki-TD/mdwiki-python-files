@@ -69,6 +69,37 @@ def Decode_bytes(x):
 
 def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     # ---
+    pre_defined_db_mapping = {
+        "gsw": "alswiki_p",
+        "sgs": "bat_smgwiki_p",
+        "bat-smg": "bat_smgwiki_p",
+        "be-tarask": "be_x_oldwiki_p",
+        "bho": "bhwiki_p",
+        "cbk": "cbk_zamwiki_p",
+        "cbk-zam": "cbk_zamwiki_p",
+        "vro": "fiu_vrowiki_p",
+        "fiu-vro": "fiu_vrowiki_p",
+        "map-bms": "map_bmswiki_p",
+        "nds-nl": "nds_nlwiki_p",
+        "nb": "nowiki_p",
+        "rup": "roa_rupwiki_p",
+        "roa-rup": "roa_rupwiki_p",
+        "roa-tara": "roa_tarawiki_p",
+        "lzh": "zh_classicalwiki_p",
+        "zh-classical": "zh_classicalwiki_p",
+        "nan": "zh_min_nanwiki_p",
+        "zh-min-nan": "zh_min_nanwiki_p",
+        "yue": "zh_yuewiki_p",
+        "zh-yue": "zh_yuewiki_p",
+    }
+    # ---
+    wiki_normalized = wiki.strip().lower().removesuffix("_p").removesuffix("wiki")
+    if wiki_normalized in pre_defined_db_mapping:
+        dbs_p = f"{pre_defined_db_mapping[wiki_normalized]}"
+        sub_host = dbs_p.removesuffix("_p")
+        host = f"{sub_host}.analytics.db.svc.wikimedia.cloud"
+        return host, dbs_p
+    # ---
     if wiki.endswith('wiki'):
         wiki = wiki[:-4]
     # ---
@@ -104,7 +135,7 @@ def make_sql_connect(query, db='', host='', update=False, Return=False, return_d
     )
 
 
-def MySQLdbar(arcatTitle):
+def fetch_arcat_titles(arcatTitle):
     # ---
     arcats = []
     # ---
@@ -352,7 +383,7 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
         GROUP BY ll_title ;'''
     # ---
     encats = Make_sql(queries)
-    arcats = MySQLdbar(arcatTitle) if arcatTitle and arcatTitle != "" else []
+    arcats = fetch_arcat_titles(arcatTitle) if arcatTitle and arcatTitle != "" else []
     # ---
     final = tttime.time()
     printe.output(f"encats: <<red>> {len(encats)} <<default>> {item}")
@@ -364,8 +395,8 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
     return final_cat if final_cat != [] else False
 
 
-def MySQLdb_finder_New(encatTitle, arcatTitle):
-    printe.output(f'<<red>> API/sql_py MySQLdb_finder_New {encatTitle}: ')
+def get_exclusive_category_titles(encatTitle, arcatTitle):
+    printe.output(f'<<red>> API/sql_py get_exclusive_category_titles {encatTitle}: ')
     # ---
     return MySQLdb_finder_N_New(encatTitle, arcatTitle)
 
