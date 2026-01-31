@@ -44,18 +44,18 @@ user        = page.get_user()
 purge       = page.purge()
 '''
 """
+import functools
+
 # ---
 import os
-import functools
 import sys
 
 if "mwclient" not in sys.argv:
     sys.argv.append("nomwclient")
 
+from mdwiki_api.user_accounts import User_tables, user_agent
 from newapi.all_apis import ALL_APIS
 from newapi.api_utils import lang_codes
-
-from mdwiki_api.user_accounts import User_tables, user_agent
 
 SITECODE = "www"
 FAMILY = "mdwiki"
@@ -83,11 +83,11 @@ CatDepth = main_api.CatDepth
 md_MainPage = MainPage  # noqa: N816
 
 __all__ = [
-    'home_dir',
-    'user_agent',
-    'MainPage',
-    'md_MainPage',
-    'NEW_API',
-    'CatDepth',
-    'change_codes',
+    "home_dir",
+    "user_agent",
+    "MainPage",
+    "md_MainPage",
+    "NEW_API",
+    "CatDepth",
+    "change_codes",
 ]

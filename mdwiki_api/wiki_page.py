@@ -23,14 +23,15 @@ from mdwiki_api.wiki_page import MainPage, NEW_API
 # wantedcats  = api_new.querypage_list(qppage='Wantedcategories', qplimit="max", Max=5000)
 # pages  = api_new.Get_template_pages(title, namespace="*", Max=10000)
 """
+
 # ---
 import os
+
+from mdwiki_api.user_accounts import User_tables_wiki, user_agent
+from newapi.super.login_wrap import LoginWrap
 from newapi.super.S_API import bot_api
 from newapi.super.S_Category import catdepth_new
 from newapi.super.S_Page import super_page
-from newapi.super.login_wrap import LoginWrap
-
-from mdwiki_api.user_accounts import User_tables_wiki, user_agent
 
 home_dir = os.getenv("HOME")
 # ---
@@ -93,10 +94,10 @@ def NEW_API(lang="", family="wikipedia"):
 
 
 __all__ = [
-    'home_dir',
-    'user_agent',
-    'MainPage',
-    'NEW_API',
-    'CatDepth',
-    'change_codes',
+    "home_dir",
+    "user_agent",
+    "MainPage",
+    "NEW_API",
+    "CatDepth",
+    "change_codes",
 ]

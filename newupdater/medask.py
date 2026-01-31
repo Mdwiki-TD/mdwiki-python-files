@@ -21,8 +21,8 @@ if Dir := Path(__file__).parent.parent:
 
 import mdapi
 from apis import mdwiki_api
-from new_updater import work_on_text
 from mdwiki_api.mdwiki_page import NEW_API
+from new_updater import work_on_text
 
 logger = logging.getLogger(__name__)
 
