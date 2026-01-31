@@ -18,9 +18,6 @@ def test():
     """
 
     newtext = fix_it(text, site="ar")
-    # ---
-    printe.showDiff(text, newtext)
-
 
 if __name__ == "__main__":
     test()

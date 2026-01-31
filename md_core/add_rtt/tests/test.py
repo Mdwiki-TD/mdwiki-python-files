@@ -63,8 +63,6 @@ for table in parsed.tables:
 
 new_text = parsed.string
 
-# printe.showDiff(text, new_text)
-
 # titles = api_new.get_titles_redirects(["Ehlers–Danlos syndrome"]) # {'Ehlers–Danlos syndrome': 'Ehlers–Danlos syndromes'}
 
 # print(titles)

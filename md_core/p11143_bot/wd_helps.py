@@ -10,8 +10,9 @@ import sys
 import time
 
 from apis import wikidataapi
+from newapi import wd_sparql
 
-logger = logging.getLogger(__name__), wd_sparql
+logger = logging.getLogger(__name__)
 
 get_query_result = wd_sparql.get_query_result
 
@@ -57,7 +58,7 @@ def add_P11143_to_qids_in_wd(newlist):
             logger.info('<<puruple>> add "add" to sys.argv to add them?')
             return
         # ---
-        for n, (q, value) in enumerate(newlist.items(), start=1):
+        for n, (q, _) in enumerate(newlist.items(), start=1):
             logger.info(f"<<yellow>> q {n} from {len(newlist)}")
             if q:
                 q = q.strip()

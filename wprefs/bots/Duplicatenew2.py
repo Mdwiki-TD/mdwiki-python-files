@@ -255,5 +255,3 @@ if __name__ == "__main__":
     # ---
     # python3 core8/pwb.py wprefs/bots/Duplicatenew2
     newt = DuplicateReferences(tet)
-    # ---
-    # printe.showDiff(tet, newt)

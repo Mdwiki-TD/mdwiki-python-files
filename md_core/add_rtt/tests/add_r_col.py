@@ -38,5 +38,3 @@ text = """
 """
 
 new_text = add_to_tables(text, pages=[""])
-
-printe.showDiff(text, new_text)

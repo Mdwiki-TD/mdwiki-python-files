@@ -282,8 +282,6 @@ class work_in_one_lang_link:
         # ---
         self.make_new_text(tags0)
         # ---
-        # printe.showDiff(section0, self.section0)
-        # ---
         self.lead["refsname"] = self.get_ref_names(tags0)
         self.lead["extlinks"] = self.get_lead_extlinks()
 
@@ -479,8 +477,6 @@ class get_old:
         # ---
         self.make_new_text(tags0)
         # ---
-        # printe.showDiff(section0, self.section0)
-        # ---
         self.lead["refsname"] = self.get_ref_names(tags0)
         self.lead["extlinks"] = self.get_extlinks_from_text(self.section0)
 
@@ -545,7 +541,6 @@ if __name__ == "__main__":
     oldex = old.extlinks
     print(f"orex: {len(orex)}")
     print(f"oldex: {len(oldex)}")
-    printe.showDiff("\n".join(orex), "\n".join(oldex))
     # ---
     print("=============")
     # ---
@@ -553,7 +548,6 @@ if __name__ == "__main__":
     oldrefsname = old.refsname
     print(f"refsname: {len(refsname)}")
     print(f"oldrefsname: {len(oldrefsname)}")
-    printe.showDiff("\n".join(refsname), "\n".join(oldrefsname))
     # ---
     print("=============")
     # ---
@@ -564,5 +558,4 @@ if __name__ == "__main__":
         # ---
         print(f"{x}: {len(lead[x])}")
         print(f"old{x}: {len(oldlead[x])}")
-        printe.showDiff("\n".join(lead[x]), "\n".join(oldlead[x]))
     # ---

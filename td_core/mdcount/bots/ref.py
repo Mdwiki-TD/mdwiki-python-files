@@ -65,5 +65,4 @@ if __name__ == "__main__":
     # ---
     if "test" in sys.argv:
         new = fix_ref(ff, all)
-        printe.showDiff(ff, new)
 # ---

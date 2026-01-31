@@ -72,7 +72,6 @@ text = """
 
 def test():
     newtext = fix_ref_template(text)
-    # printe.showDiff(text, newtext)
 
 
 # ---

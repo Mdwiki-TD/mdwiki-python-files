@@ -58,8 +58,6 @@ def work_on_title(title, returntext=False):
         logger.info("no changes")
         return
     # ---
-    printe.showDiff(text, new_text)
-    # ---
     ask = input(f"<<yellow>> save title:{title}? ")
     # ---
     if ask in ["y", "", "a"]:
