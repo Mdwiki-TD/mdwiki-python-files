@@ -1,8 +1,5 @@
 """
 # ---
-import logging
-logger = logging.getLogger(__name__)
-
 from priorviews.lists import words
 # words.words_by_lang
 # words.count_words_by_lang
@@ -12,8 +9,12 @@ python3 core8/pwb.py priorviews/words
 """
 
 import json
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent

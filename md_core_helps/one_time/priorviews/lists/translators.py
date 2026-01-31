@@ -1,8 +1,5 @@
 """
 # ---
-import logging
-logger = logging.getLogger(__name__)
-
 from priorviews.lists import translators
 # translators.tra_by_lang
 # translators.counts_by_translator
@@ -13,10 +10,14 @@ python3 core8/pwb.py priorviews/lists/translators
 """
 
 import json
+import logging
 import os
 from pathlib import Path
 
 from priorviews.bots import helps
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent

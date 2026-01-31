@@ -1,8 +1,5 @@
 """
 # ---
-import logging
-logger = logging.getLogger(__name__)
-
 from priorviews.lists import views
 # ---
 # views.views_by_mdtitle_langs
@@ -16,11 +13,16 @@ python3 core8/pwb.py priorviews/views
 """
 
 import json
+import logging
 import os
 from pathlib import Path
 
-# ---
 from priorviews.bots import helps
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 # ---
 Dir = Path(__file__).parent

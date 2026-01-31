@@ -1,19 +1,20 @@
 """
 
-import logging
-logger = logging.getLogger(__name__)
-
 from priorviews.bots import sections_text #make_text(section, links)
 
 python3 core8/pwb.py priorviews/sections_text
 
 """
 
+import logging
 import sys
 from pathlib import Path
 
 from priorviews.bots import helps  # views_url(title, lang, view)
 from priorviews.lists import views
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent

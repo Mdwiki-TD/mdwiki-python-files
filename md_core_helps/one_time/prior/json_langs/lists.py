@@ -1,16 +1,17 @@
 """
 # ---
-import logging
-logger = logging.getLogger(__name__)
-
 from prior.json_langs.lists import json_langs_by_langs
 # tab = json_langs_by_langs.get(lang, {}).get(title, {})# {'extlinks': extlinks, 'refsname': refsname}
 # ---
 """
 
 import json
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent

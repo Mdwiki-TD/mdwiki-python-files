@@ -1,15 +1,15 @@
 """
-import logging
-logger = logging.getLogger(__name__)
 
 from wprefs.bots.fix_pt_months import pt_months
 """
 
+import logging
 import re
 import sys
 
 import wikitextparser as wtp
 
+logger = logging.getLogger(__name__)
 # ---
 # ---
 months = {

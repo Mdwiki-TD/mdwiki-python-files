@@ -4,15 +4,16 @@ Usage:
 
 python3 core8/pwb.py mdpages/create_qids
 
-import logging
-logger = logging.getLogger(__name__)
-
 from mdpages.create_qids import create_qids
 
 """
+import logging
+
 from apis import wikidataapi
 from mdapi_sql import sql_for_mdwiki
 from unlinked_wb.bot import add_un_linked_wb
+
+logger = logging.getLogger(__name__)
 
 
 def create_qids(no_qids):

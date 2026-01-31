@@ -1,9 +1,6 @@
 """
 Usage:
 
-import logging
-logger = logging.getLogger(__name__)
-
 from mdwiki_api.wiki_page import CatDepth
 
 # cat_members = CatDepth(title, sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], without_lang="", with_lang="", tempyes=[])
@@ -27,14 +24,19 @@ from mdwiki_api.wiki_page import MainPage, NEW_API
 # pages  = api_new.Get_template_pages(title, namespace="*", Max=10000)
 """
 
-# ---
+import logging
 import os
 
 from mdwiki_api.user_accounts import User_tables_wiki, user_agent
 from newapi.super.login_wrap import LoginWrap
 from newapi.super.S_API import bot_api
 from newapi.super.S_Category import catdepth_new
+
+# ---
 from newapi.super.S_Page import super_page
+
+logger = logging.getLogger(__name__)
+
 
 home_dir = os.getenv("HOME")
 # ---

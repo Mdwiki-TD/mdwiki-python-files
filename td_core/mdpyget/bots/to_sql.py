@@ -1,22 +1,20 @@
 #!/usr/bin/python3
 """
 
-import logging
-logger = logging.getLogger(__name__)
-
 from mdpyget.bots.to_sql import to_sql
 # data2 = [{"title": x, "importance": v} for x, v in assessments_tab[1].items()]
 # to_sql(data2, table_name, columns, title_column="title")
 
 """
-# ---
+
+import logging
 import sys
 
 import tqdm
-
-# from pymysql.converters import escape_string
-# ---
 from mdapi_sql import sql_for_mdwiki, sql_for_mdwiki_new
+
+logger = logging.getLogger(__name__)
+
 
 new_tables = ["all_exists", "all_articles", "all_qids_exists", "all_articles_titles", "all_qids", "all_qids_titles"]
 

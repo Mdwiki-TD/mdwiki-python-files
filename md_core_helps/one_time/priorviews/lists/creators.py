@@ -1,8 +1,5 @@
 """
 # ---
-import logging
-logger = logging.getLogger(__name__)
-
 from priorviews.lists import creators
 # creators.Creators_by_lang_title
 # creators.counts_creators_by_lang
@@ -12,13 +9,18 @@ python3 core8/pwb.py priorviews/lists/creators
 """
 
 import json
+import logging
 import os
 import re
 import sys
 from pathlib import Path
 
-# ---
 from priorviews.bots import helps
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 # ---
 Dir = Path(__file__).parent

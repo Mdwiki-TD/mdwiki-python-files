@@ -1,19 +1,19 @@
 """
 python3 core8/pwb.py wikiblame/bot
 # ---
-import logging
-logger = logging.getLogger(__name__)
-
 from wikiblame.bot import get_blame #first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
 # ---
 """
 
+import logging
 import re
 import sys
 from urllib.parse import urlencode
 
 import requests
 from bs4 import BeautifulSoup
+
+logger = logging.getLogger(__name__)
 
 
 class WikiBlame:
