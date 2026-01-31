@@ -4,6 +4,7 @@ python3 core8/pwb.py newupdater/tests/test_mdapi Alcohol_septal_ablation
 
 """
 
+from mdapi import GetPageText
 import os
 import sys
 from pathlib import Path
@@ -15,7 +16,6 @@ if Dir := Path(__file__).parent.parent:
 
 os.environ["DEBUGNEW"] = "true"
 
-from mdapi import GetPageText
 
 title = sys.argv[1] if len(sys.argv) > 1 else "Retinol"
 

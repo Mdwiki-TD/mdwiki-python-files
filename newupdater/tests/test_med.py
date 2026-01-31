@@ -5,12 +5,12 @@ python3 I:/mdwiki/pybot/newupdater/tests/test_med.py Retinol
 
 """
 
+from pathlib import Path
 import os
 import sys
 
 os.environ["DEBUGNEW"] = "true"
 
-from pathlib import Path
 
 
 if Dir := Path(__file__).parent.parent:

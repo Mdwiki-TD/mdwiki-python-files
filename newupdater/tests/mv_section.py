@@ -4,6 +4,8 @@ python3 core8/pwb.py newupdater/tests/mv_section Alcohol_septal_ablation
 
 """
 
+from new_updater import move_External_links_section
+from mdapi import GetPageText
 import os
 import sys
 from pathlib import Path
@@ -19,8 +21,6 @@ if Dir := Path(__file__).parent.parent:
 
 os.environ["DEBUGNEW"] = "true"
 
-from mdapi import GetPageText
-from new_updater import move_External_links_section
 
 text = GetPageText(sys.argv[1])
 # ---

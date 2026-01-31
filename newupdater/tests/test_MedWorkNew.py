@@ -4,6 +4,7 @@ python3 core8/pwb.py newupdater/tests/test_MedWorkNew
 
 """
 
+from new_updater import work_on_text
 import os
 import sys
 from pathlib import Path
@@ -16,7 +17,6 @@ if Dir := Path(__file__).parent.parent:
 
 os.environ["DEBUGNEW"] = "true"
 
-from new_updater import work_on_text
 
 Dir = Path(__file__).parent
 
