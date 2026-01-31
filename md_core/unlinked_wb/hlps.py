@@ -24,11 +24,11 @@ def get_pages_in_use(all_pages):
         else:
             pages_hasnt.append(x)
     # ---
-    printe.output(f"<<yellow>> len of all_pages qids: {len(pages_has)}.")
+    logger.info(f"<<yellow>> len of all_pages qids: {len(pages_has)}.")
     # ---
     # pages_props = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", Max=500000)
     # pages = {x["title"]: x["value"] for x in pages_props}
-    # printe.output(f"<<yellow>> len of get_pages_in_use: {len(pages)}.")
+    # logger.info(f"<<yellow>> len of get_pages_in_use: {len(pages)}.")
     # ---
     return pages_has, pages_hasnt
 

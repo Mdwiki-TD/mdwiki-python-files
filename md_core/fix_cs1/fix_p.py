@@ -19,7 +19,7 @@ def fix_one_temp(temp, find_params):
     for param in find_params:
         va = get_param(temp, param)
         if va:
-            # printe.output(f"** temp has |{param} = {va}")
+            # logger.info(f"** temp has |{param} = {va}")
             return temp
     # ---
     journal = get_journal_value(temp)
@@ -27,8 +27,8 @@ def fix_one_temp(temp, find_params):
     if journal:
         temp.set_arg("journal", journal)
     # else:
-    #     printe.output("Journal value not found for template.")
-    #     printe.output(temp)
+    #     logger.info("Journal value not found for template.")
+    #     logger.info(temp)
     # ---
     return temp
 
@@ -51,7 +51,7 @@ def get_temps(parsed, valid_list):
         # ---
         Template_list.append(tempa)
     # ---
-    printe.output(f"** result totall reftemps is: {len(Template_list)} ")
+    logger.info(f"** result totall reftemps is: {len(Template_list)} ")
     # ---
     return Template_list
 

@@ -39,14 +39,14 @@ def fix_dup(From, To):
     sus = f"fix duplicate redirect to [[{To}]]"
     # ---
     if oldtext == newtext:
-        printe.output("no changes.")
+        logger.info("no changes.")
         return
     # ---
     mdwiki_api.page_put(oldtext=oldtext, newtext=newtext, summary=sus, title=From, returntrue=False, diff=True)
 
 
 def main():
-    printe.output("*<<red>> > main:")
+    logger.info("*<<red>> > main:")
     # ---
     # python3 dup.py -page:Allopurinol
     # python3 dup.py -page:Activated_charcoal_\(medication\)
@@ -76,7 +76,7 @@ def main():
     # ---
     for nu, title in enumerate(redirects, start=1):
         From = title["from"]
-        printe.output(f'-------\n*<<yellow>> >{nu}/{len(redirects)} From:"{From}".')
+        logger.info(f'-------\n*<<yellow>> >{nu}/{len(redirects)} From:"{From}".')
         To = title["to"]
         if To in from_to:
             fix_dup(From, To)

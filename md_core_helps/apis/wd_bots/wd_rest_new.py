@@ -57,7 +57,7 @@ def Get_one_qid_info(qid, only=None):
         url += "/" + only
     # ---
     if "printurl" in sys.argv:
-        printe.output(url)
+        logger.info(url)
     # ---
     result = open_url_get(url)
     # ---
@@ -90,7 +90,7 @@ def Get_Claims_API(q="", p=""):
     # ---
     statements = Get_one_qid_info(q, only="statements").get("statements", {})
     # ---
-    printe.output(f"Get_Claims_API: {len(statements)=}")
+    logger.info(f"Get_Claims_API: {len(statements)=}")
     # ---
     claims = statements.get(p, [])
     # ---
@@ -113,8 +113,8 @@ if __name__ == "__main__":
     qids = ["Q26981430"]
     # ---
     for q in qids:
-        printe.output(f"<<blue>>_______\n{q} :")
+        logger.info(f"<<blue>>_______\n{q} :")
         # ---
         j = Get_one_qid_info(q)
         # ---
-        printe.output(json.dumps(j, indent=4, ensure_ascii=False))
+        logger.info(json.dumps(j, indent=4, ensure_ascii=False))

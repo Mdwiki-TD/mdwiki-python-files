@@ -49,7 +49,7 @@ def main_links():
     # ---
     links = [replaces.get(x["title"], x["title"]) for x in links if x["ns"] == 0]
     # ---
-    printe.output(f"{len(links)} links found")
+    logger.info(f"{len(links)} links found")
     # ---
     return links
 
@@ -88,8 +88,8 @@ def advance_work_en(title, title2, page):
     lenex_lead = str(len(tat.lead["extlinks"])).ljust(4)
     lenre_lead = str(len(tat.lead["refsname"])).ljust(4)
     # ---
-    printe.output(f"p0/\ten\t\t{lenex} extlinks, {lenre} refsname")
-    printe.output(f"p0/\ten\t\t{lenex_lead} lead_extlinks, {lenre_lead} lead_refsname")
+    logger.info(f"p0/\ten\t\t{lenex} extlinks, {lenre} refsname")
+    logger.info(f"p0/\ten\t\t{lenex_lead} lead_extlinks, {lenre_lead} lead_refsname")
     # ---
     old = get_them.get_old(title)
     allen[title]["old"] = {}
@@ -103,8 +103,8 @@ def advance_work_en(title, title2, page):
     lenex_lead1 = str(len(old.lead["extlinks"])).ljust(4)
     lenre_lead1 = str(len(old.lead["refsname"])).ljust(4)
     # ---
-    printe.output(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
-    printe.output(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
+    logger.info(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
+    logger.info(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
 
 
 def work_in_en_page(title):
@@ -128,7 +128,7 @@ def work_in_en_page(title):
     # ---
     langlinks = page.get_langlinks()
     # ---
-    printe.output(f"<<blue>> en:{title}, \n\tlanglinks: {len(langlinks)}")
+    logger.info(f"<<blue>> en:{title}, \n\tlanglinks: {len(langlinks)}")
     # ---
     advance_work_en(title, title2, page)
     # ---
@@ -137,7 +137,7 @@ def work_in_en_page(title):
     # ---
     n = 0
     # ---
-    # if 'test' in sys.argv: printe.output(xss)
+    # if 'test' in sys.argv: logger.info(xss)
     # ---
     for lang, tit in langlinks.items():
         # ---
@@ -162,7 +162,7 @@ def work_in_en_page(title):
         lenex = str(len(tata["extlinks"])).ljust(4)
         lenre = str(len(tata["refsname"])).ljust(4)
         # ---
-        printe.output(f"\tp{n}/{len(langlinks)}:\t{lang.ljust(20)}\t{lenex} extlinks, {lenre} refsname..")
+        logger.info(f"\tp{n}/{len(langlinks)}:\t{lang.ljust(20)}\t{lenex} extlinks, {lenre} refsname..")
         # ---
         All[title]["langs"][lang] = tata
 
@@ -184,7 +184,7 @@ def work_in_links(links, main_File, main_File_en, Log=True):
     if os.path.exists(main_File_en):
         en_in = json.load(open(main_File_en, encoding="utf-8"))
         allen = en_in
-        printe.output(f"<<green>> There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links...")
+        logger.info(f"<<green>> There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links...")
     # ---
     if os.path.exists(main_File):
         All = json.load(open(main_File, encoding="utf-8"))
@@ -195,7 +195,7 @@ def work_in_links(links, main_File, main_File_en, Log=True):
         # ---
         pap = f"p {n}/{len(links)}: {x}"
         # ---
-        printe.output(pap)
+        logger.info(pap)
         # ---
         if "newenonly" in sys.argv:
             if x in en_in and en_in[x] != {}:
@@ -207,7 +207,7 @@ def work_in_links(links, main_File, main_File_en, Log=True):
                 # ---
                 if len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0 and len(lead_re) > 0:
                     # ---
-                    printe.output(f"<<yellow>> en {x} already in {basefilename}, skip..........")
+                    logger.info(f"<<yellow>> en {x} already in {basefilename}, skip..........")
                     continue
         # ---
         work_in_en_page(x)
@@ -240,7 +240,7 @@ def start_all():
         # ---
         tanko[str(n)] = {"file": main_File, "file_en": main_File_en, "links": titles}
         # ---
-        printe.output(f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"')
+        logger.info(f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"')
 
         # ---
     # ---
@@ -253,14 +253,14 @@ def start_all():
             break
     # ---
     if valu in tanko:
-        printe.output(f"list number:{valu} found")
+        logger.info(f"list number:{valu} found")
         # ---
         tanko = {valu: tanko[valu]}
     else:
-        printe.output(f"list number:{valu} not found.")
+        logger.info(f"list number:{valu} not found.")
         # ---
         if "All" not in sys.argv:
-            printe.output('Add "All" to sys.argv to work in All.. \n sys.exit()')
+            logger.info('Add "All" to sys.argv to work in All.. \n sys.exit()')
             sys.exit()
     # ---
     for x, tab in tanko.items():
@@ -269,7 +269,7 @@ def start_all():
         main_File = tab["file"]
         main_File_en = tab["file_en"]
         # ---
-        printe.output(f"list number:{valu} len of it: {len(links)}")
+        logger.info(f"list number:{valu} len of it: {len(links)}")
         # ---
         work_in_links(links, main_File, main_File_en)
         # ---

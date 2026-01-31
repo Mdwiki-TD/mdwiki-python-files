@@ -79,7 +79,7 @@ def work(title):
             newtext=newtext, summary="fix ourworldindatamirror template.", title=title, returntrue=False, diff=True
         )
     # ---
-    printe.output(pas)
+    logger.info(pas)
 
 
 def check_urls(urls):
@@ -106,7 +106,7 @@ def check_urls(urls):
             continue
         # ---
         if 500 <= response.status_code < 600:
-            printe.output(f"<<red>> received {response.url} status code {response.status_code}")
+            logger.info(f"<<red>> received {response.url} status code {response.status_code}")
             errors[u] = True
 
 
@@ -158,7 +158,7 @@ def main():
         for page in listas:
             num += 1
             # ---
-            printe.output(f"<<yellow>> work {num}/{len(listas)} page: {page}")
+            logger.info(f"<<yellow>> work {num}/{len(listas)} page: {page}")
             # ---
             work(page)
             # ---

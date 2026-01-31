@@ -58,9 +58,9 @@ def match_ref_names(r, refnames, lang):
     _tags_ = {k: v for k, v in sorted(_tags_.items(), key=lambda item: item[1], reverse=True)}
     for k, v in _tags_.items():
         if k in refnames:
-            printe.output(f"<<green>> find: {k=} count: {v=}| main: {refnames[k]=}")
-            printe.output(f'https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r["revid"]}')
-            printe.output(f"new user: {user}")
+            logger.info(f"<<green>> find: {k=} count: {v=}| main: {refnames[k]=}")
+            logger.info(f'https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r["revid"]}')
+            logger.info(f"new user: {user}")
             return user
     # ---
     return ""
@@ -88,13 +88,13 @@ class FindInHistory:
         unurl = f"{self.url}?{urlencode(params)}"
         # ---
         if "printurl" in sys.argv and "text" not in params:
-            printe.output(f"post_to_json:\t\t{unurl}")
+            logger.info(f"post_to_json:\t\t{unurl}")
         # ---
         try:
             req = self.session.post(self.url, data=params, timeout=10)
             json1 = req.json()
         except Exception as e:
-            printe.output(f"except: lang:{self.lang} {e}")
+            logger.info(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -125,7 +125,7 @@ class FindInHistory:
             if not data:
                 break
             # ---
-            # printe.output(f'post_continue, len:{len(data)}, all: {len(results)}')
+            # logger.info(f'post_continue, len:{len(data)}, all: {len(results)}')
             # ---
             if isinstance(results, list):
                 results.extend(data)
@@ -225,7 +225,7 @@ def search_history(title, lang, en="", refname=None, extlinks=None):
         if comment:
             comment_v = helps.isv(comment)
             if comment_v:
-                printe.output(f"<<green>> find: {comment_v=}")
+                logger.info(f"<<green>> find: {comment_v=}")
                 return user
         # ---
         rs = match_ref_names(r, refname, lang)

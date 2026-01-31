@@ -43,7 +43,7 @@ def dump_it(file, data):
             json.dump(data, f)
         return True
     except Exception as e:
-        printe.output(f"<<red>> Error: {e}")
+        logger.info(f"<<red>> Error: {e}")
     # ---
     return False
 
@@ -60,7 +60,7 @@ def from_cache():
                 data = json.loads(file.read_text())
                 return data
             except (json.JSONDecodeError, PermissionError) as e:
-                printe.output(f"<<red>> Error reading cache file: {e}")
+                logger.info(f"<<red>> Error reading cache file: {e}")
     # ----
     all_pages = make_cash_to_cats()
     # ---
@@ -85,17 +85,17 @@ def dump_to_cache(cat, data):
         last_modified = datetime.fromtimestamp(os.path.getmtime(filename)).strftime("%Y-%m-%d")
         # ---
         # if last_modified != today:
-        printe.output(f"<<purple>> last modified: {last_modified}, today: {today}. ")
+        logger.info(f"<<purple>> last modified: {last_modified}, today: {today}. ")
     # ---
     datalist = data.get("list", [])
     # ---
     if not datalist:
-        printe.output(f"<<red>> No data for {cat}")
+        logger.info(f"<<red>> No data for {cat}")
         return
     # ---
     if dump_it(filename, data):
         len_data = len(data.get("list") or data)
-        printe.output(f"<<green>> {cat}.json is updated ({len_data})")
+        logger.info(f"<<green>> {cat}.json is updated ({len_data})")
 
 
 def Cat_Depth(title, depth=0, ns="all", print_s=True):
@@ -116,7 +116,7 @@ def Cat_Depth(title, depth=0, ns="all", print_s=True):
     # ---
     delta = round(delta, 5)
     # ---
-    printe.output(
+    logger.info(
         f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) ns:{ns} in {title}, depth:{depth} in {delta} seconds"
     )
     # ---
@@ -148,7 +148,7 @@ def make_cash_to_cats(dump_data=False):
         filename = Path(__file__).parent / "all_pages.json"
         # ---
         if dump_it(filename, all_pages):
-            printe.output(f"<<green>> all_pages.json is updated ({len(all_pages)})")
+            logger.info(f"<<green>> all_pages.json is updated ({len(all_pages)})")
     # ---
     return all_pages
 

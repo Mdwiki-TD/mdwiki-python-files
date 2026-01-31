@@ -45,14 +45,14 @@ def add_to_translators():
             title: user for title, user in titles.items() if user != "" and not user.lower().endswith("bot")
         }
 
-        # printe.output(f'<<blue>> lang:{lang} found {len(titles_bots)} bots, {len(titles_no_bots)} no bots')
+        # logger.info(f'<<blue>> lang:{lang} found {len(titles_bots)} bots, {len(titles_no_bots)} no bots')
 
         # ---
         for title, user in titles_no_bots.items():
             # ---
             if user.lower().endswith("bot"):
                 sk += 1
-                # printe.output(f'<<red>> {sk} skip bots: {lang=}, {title=}, {user=}')
+                # logger.info(f'<<red>> {sk} skip bots: {lang=}, {title=}, {user=}')
                 continue
             # ---
             in_ = tra_by_lang[lang].get(title, "")
@@ -63,10 +63,10 @@ def add_to_translators():
             if in_ == "" or in_.lower() in skip_users or helps.is_ip(in_):
                 new += 1
                 tra_by_lang[lang][title] = user
-                printe.output(f"<<green>> {new=} {lang=}, {title=}, {user=}, old: {in_}")
+                logger.info(f"<<green>> {new=} {lang=}, {title=}, {user=}, old: {in_}")
             elif in_ != user:
                 dd += 1
-                printe.output(f"<<purple>> {dd=} skip, userin: {in_=}, new: {user}")
+                logger.info(f"<<purple>> {dd=} skip, userin: {in_=}, new: {user}")
         # ---
     # ---
     file = f"{Dir}/lists/translators_mdwiki_langs.json"
@@ -87,7 +87,7 @@ def sea55():
         for title in titls:
             if title.lower() not in new_data[lang] and title not in new_data[lang]:
                 n += 1
-                printe.output(f"<<red>>{n=}/{len(titls)} {lang=}, {title=}")
+                logger.info(f"<<red>>{n=}/{len(titls)} {lang=}, {title=}")
                 new_data[lang][title.lower()] = ""
         # ---
     # ---

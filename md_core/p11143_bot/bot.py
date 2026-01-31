@@ -36,17 +36,17 @@ def duplicate(merge_qids):
     va_tab_x = {k: v for k, v in va_tab.items() if len(v) > 1}
     # ---
     if va_tab_x:
-        printe.output(f"<<yellow>> len of va_tab_x: {len(va_tab_x)}")
+        logger.info(f"<<yellow>> len of va_tab_x: {len(va_tab_x)}")
         # ---
         for va, qs in va_tab_x.items():
-            printe.output(f"va:{va}, qs:{qs}")
+            logger.info(f"va:{va}, qs:{qs}")
     # ---
-    printe.output("<<yellow>> duplicate() end...")
+    logger.info("<<yellow>> duplicate() end...")
 
 
 def add_q(new_qids, ty):
     # ---
-    printe.output(f"len of new_qids: {len(new_qids)}")
+    logger.info(f"len of new_qids: {len(new_qids)}")
     # ---
     if len(new_qids) == 0:
         return
@@ -54,30 +54,30 @@ def add_q(new_qids, ty):
     new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
     # ---
     if len(new_qids) < 10:
-        printe.output("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
+        logger.info("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
     # ---
     newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in TD_list}
     newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in TD_list}
     # ---
-    printe.output(f"<<yellow>> add_q: {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
+    logger.info(f"<<yellow>> add_q: {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
     # ---
     if not newtitles_in_td and not newtitles_not_td:
         return
     # ---
-    printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
     # ---
     if newtitles_in_td:
-        printe.output("<<yellow>> sql_for_mdwiki.add_titles_to_qids(newtitles_in_td):")
+        logger.info("<<yellow>> sql_for_mdwiki.add_titles_to_qids(newtitles_in_td):")
         for title, qid in newtitles_in_td.items():
-            printe.output(f"\t add {title} to qid {qid}")
+            logger.info(f"\t add {title} to qid {qid}")
     # ---
     if newtitles_in_td:
-        printe.output("<<yellow>> sql_qids_others.add_titles_to_qids(newtitles_not_td):")
+        logger.info("<<yellow>> sql_qids_others.add_titles_to_qids(newtitles_not_td):")
         # ---
         for title, qid in newtitles_not_td.items():
-            printe.output(f"\t add {title} to qid {qid}")
+            logger.info(f"\t add {title} to qid {qid}")
     # ---
-    printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
     # ---
     if "addq" in sys.argv:
         sql_for_mdwiki.add_titles_to_qids(newtitles_in_td)
@@ -91,7 +91,7 @@ def work_qids(ty):
     # ---
     in_wd = make_in_wd_tab()
     # ---
-    printe.output(f"len of in_wd: {len(in_wd)}")
+    logger.info(f"len of in_wd: {len(in_wd)}")
     # ---
     if not in_wd:
         return

@@ -29,29 +29,29 @@ file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
 
 
 def dump_data(revids):
-    printe.output(f"len(revids): {len(revids)}")
+    logger.info(f"len(revids): {len(revids)}")
     # ---
     if not revids:
-        printe.output("<<red>> revids is empty")
+        logger.info("<<red>> revids is empty")
         return
     # ---
     with open(file, "w", encoding="utf-8") as f:
         json.dump(revids, f, ensure_ascii=False)
-        printe.output(f"<<blue>> dump to {file}")
+        logger.info(f"<<blue>> dump to {file}")
     # ---
     try:
         with open(file2, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
-            printe.output(f"<<blue>> dump to {file2}")
+            logger.info(f"<<blue>> dump to {file2}")
     except Exception as e:
-        printe.output(f"<<red>> dump to {file2} error: {e}")
+        logger.info(f"<<red>> dump to {file2} error: {e}")
     # ---
     try:
         with open(file3, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
-            printe.output(f"<<blue>> dump to {file3}")
+            logger.info(f"<<blue>> dump to {file3}")
     except Exception as e:
-        printe.output(f"<<red>> dump to {file3} error: {e}")
+        logger.info(f"<<red>> dump to {file3} error: {e}")
 
 
 def Cat_Depth(title, depth=0):
@@ -64,7 +64,7 @@ def Cat_Depth(title, depth=0):
     # result_table = {key: result_table[key] for key in result_table if valid_title(key)}
     result_table = dict(filter(lambda item: valid_title(item[0]), result_table.items()))
     # ---
-    printe.output(f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) in {title}, depth:{depth}.")
+    logger.info(f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) in {title}, depth:{depth}.")
     # ---
     return result_table
 

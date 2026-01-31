@@ -86,7 +86,7 @@ def work_one_page(x):
     ns = page.namespace()
     # ---
     if ns != 0:
-        printe.output(f"not article.{page_title=}\t{ns=}")
+        logger.info(f"not article.{page_title=}\t{ns=}")
         return
     # ---
     qid_in = page.get_qid()
@@ -95,7 +95,7 @@ def work_one_page(x):
         add_to_wd.add_wd(qid, "", lang, page_title)
         return
     # ---
-    printe.output(f"<<blue>> {qid_in=}, {qid=}")
+    logger.info(f"<<blue>> {qid_in=}, {qid=}")
 
 
 def main():
@@ -158,7 +158,7 @@ def main():
         if tab["username"].find("Mr. Ibrahem") != -1 or tab["username"].find("Doc James") != -1:
             continue
         # ---
-        # printe.output(tab)
+        # logger.info(tab)
         # ---
         titles.append(tab)
     # ---

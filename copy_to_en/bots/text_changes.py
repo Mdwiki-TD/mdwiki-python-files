@@ -143,7 +143,7 @@ def do_text_fixes_newxx(newtext):
     if infobox_match:
         prefix = newtext[: infobox_match.start()].strip()
         if prefix:
-            printe.output(f"Warning: Removing content before infobox: {prefix[:100]}...")
+            logger.info(f"Warning: Removing content before infobox: {prefix[:100]}...")
         newtext = newtext[infobox_match.start() :]
     # ---
     return newtext
@@ -233,5 +233,4 @@ Netilmicin was patented in 1973 and approved for medical use in 1981.<ref name=F
 """
     # ---
     newtext = work(tet)
-    printe.showDiff(tet, newtext)
     # ---

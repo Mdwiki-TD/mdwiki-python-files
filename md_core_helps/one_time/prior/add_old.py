@@ -116,8 +116,8 @@ class PriorAddOld:
                 lenex_lead1 = str(len(old.lead["extlinks"])).ljust(4)
                 lenre_lead1 = str(len(old.lead["refsname"])).ljust(4)
                 # ---
-                printe.output(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
-                printe.output(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
+                logger.info(f"p0/\told\t\t{lenex1} extlinks, {lenre1} refsname")
+                logger.info(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
                 # ---
                 data_new[title] = tab
         # ---

@@ -56,8 +56,8 @@ for tab in sq_dd:
 
 def work_with_2_qids(oldq, new_q):
     # ---
-    printe.output("=============================")
-    printe.output(f"start:work_with_2_qids: oldq:{oldq}, new_q:{new_q}")
+    logger.info("=============================")
+    logger.info(f"start:work_with_2_qids: oldq:{oldq}, new_q:{new_q}")
     # ---
     fas = wikidataapi.Get_sitelinks_From_Qid(oldq)
     # {'sitelinks': {'enwiki': 'User:Mr. Ibrahem/Baricitinib', 'orwiki': 'ବାରିସିଟିନିବ'}, 'q': 'Q112331510'}
@@ -66,32 +66,32 @@ def work_with_2_qids(oldq, new_q):
     # ---
     len_sites = len(false_sitelinks)
     # ---
-    printe.output(f"<<blue>> len_sites {len_sites}")
+    logger.info(f"<<blue>> len_sites {len_sites}")
     # ---
-    printe.output(false_sitelinks)
+    logger.info(false_sitelinks)
     # ---
     en = false_sitelinks.get("enwiki", "")
     # ---
     if en.startswith("User:Mr. Ibrahem"):
-        printe.output(f"<<blue>> remove sitelink {en}")
+        logger.info(f"<<blue>> remove sitelink {en}")
         remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, token=True)
         if "success" in remove:
             len_sites -= 1
-            printe.output("<<green>> **remove sitelink true.")
+            logger.info("<<green>> **remove sitelink true.")
         else:
-            printe.output("<<red>> **remove sitelink false.")
-            printe.output(remove)
+            logger.info("<<red>> **remove sitelink false.")
+            logger.info(remove)
         # ---
         remove2 = wikidataapi.post({"action": "wbsetlabel", "id": oldq, "language": "en", "value": ""}, token=True)
         if "success" in remove2:
             len_sites -= 1
-            printe.output("<<green>> **remove2 label true.")
+            logger.info("<<green>> **remove2 label true.")
         else:
-            printe.output("<<red>> **remove2 label false.")
-            printe.output(remove2)
+            logger.info("<<red>> **remove2 label false.")
+            logger.info(remove2)
     # ---
     if len_sites in [1, 0]:
-        printe.output("<<blue>> merge qids")
+        logger.info("<<blue>> merge qids")
         return wikidataapi.WD_Merge(oldq, new_q)
     # ---
     return False
@@ -133,7 +133,7 @@ def add_wd(qid, enlink, lang, target):
     # ---
     ss = wikidataapi.post(params, token=True)
     # ---
-    printe.output(str(ss))
+    logger.info(str(ss))
     # ---
     if ss and "success" in ss:
         return True
@@ -184,9 +184,9 @@ def Add_to_wikidata(mdtitle, lang, target, user):
                 AND user = '{user}'
             )"""
         # ---
-        printe.output("**************")
-        printe.output(done_qua)
-        printe.output("**************")
+        logger.info("**************")
+        logger.info(done_qua)
+        logger.info("**************")
         sql_for_mdwiki.mdwiki_sql(done_qua, update=True)
     # ---
     tat = mdwiki_api.GetPageText(mdtitle)
@@ -229,8 +229,8 @@ def add_tab_to_wd(table):
             # ---
             number += 1
             # ---
-            printe.output("=========================")
-            printe.output(f"<<green>>p {number}/{len(tab)}: mdtitle:{mdtitle},lang:{lang},target:{target}")
+            logger.info("=========================")
+            logger.info(f"<<green>>p {number}/{len(tab)}: mdtitle:{mdtitle},lang:{lang},target:{target}")
             # ---
             Add_to_wikidata(mdtitle, lang, target, user)
 

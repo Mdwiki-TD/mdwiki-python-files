@@ -48,7 +48,7 @@ def find_redirects(pages, text):
     # ---
     mdwiki_pages = [fix_title(x.strip()) for x in mdwiki_pages if x.find("|") == -1 and x not in pages]
     # ---
-    printe.output(f"find_redirects pages: {len(mdwiki_pages)}")
+    logger.info(f"find_redirects pages: {len(mdwiki_pages)}")
     # ---
     titles = api_new.get_titles_redirects(mdwiki_pages)
     # ---
@@ -89,7 +89,7 @@ def work_page():
         f.write(newtext)
 
     if newtext == text:
-        printe.output("no changes")
+        logger.info("no changes")
         return False
 
     # count R_NEW_ROW in newtext

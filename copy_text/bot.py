@@ -44,7 +44,7 @@ class WikiProcessor:
 
         done_pages[1] += 1
 
-        printe.output(f"p:{done_pages[1]}/{len_of_all_pages[1]} sanitized_name: {self.sanitized_name}")
+        logger.info(f"p:{done_pages[1]}/{len_of_all_pages[1]} sanitized_name: {self.sanitized_name}")
 
     def html_to_segments(self, text):
         url = "https://ncc2c.toolforge.org/textp"
@@ -60,7 +60,7 @@ class WikiProcessor:
 
             return result
         except requests.exceptions.RequestException as e:
-            printe.output(f"html_to_segments(): Error occurred: {e}")
+            logger.info(f"html_to_segments(): Error occurred: {e}")
             return None
 
     def convert_wikitext_to_html(self, text):
@@ -79,7 +79,7 @@ class WikiProcessor:
 
             return html_text
         except requests.exceptions.RequestException as e:
-            printe.output(f"convert_wikitext_to_html(): Error occurred: {e}")
+            logger.info(f"convert_wikitext_to_html(): Error occurred: {e}")
             return None
 
     def save_text(self, text, file_path):
@@ -87,7 +87,7 @@ class WikiProcessor:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(text)
         except Exception as e:
-            printe.output(f"save_text(): Exception: {e}")
+            logger.info(f"save_text(): Exception: {e}")
 
     def get_page_text(self, page_name):
         newtext, revid = get_text(page_name)
@@ -98,7 +98,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"wikitext/{self.sanitized_name}.txt"
         self.save_text(newtext, file_path)
 
-        printe.output("<<yellow>> get_page_text True.")
+        logger.info("<<yellow>> get_page_text True.")
 
         return newtext
 
@@ -111,7 +111,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"html/{self.sanitized_name}.html"
         self.save_text(html, file_path)
 
-        printe.output(f"<<yellow>> to_html True. {file_path}")
+        logger.info(f"<<yellow>> to_html True. {file_path}")
         return html
 
     def to_segments(self, html_text):
@@ -123,7 +123,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"segments/{self.sanitized_name}.html"
         self.save_text(segments, file_path)
 
-        printe.output(f"<<yellow>> to_segments True. {file_path}")
+        logger.info(f"<<yellow>> to_segments True. {file_path}")
 
         return segments
 
@@ -131,7 +131,7 @@ class WikiProcessor:
         wikitext = self.get_page_text(self.title)
 
         if not wikitext:
-            printe.output("wikitext is empty..")
+            logger.info("wikitext is empty..")
             return
 
         html_text = self.to_html(wikitext)
@@ -177,7 +177,7 @@ def start(all_pages):
         return
     # ---
     for n, x in enumerate(all_pages):
-        printe.output(f"{n}/{len(all_pages)} : {x}")
+        logger.info(f"{n}/{len(all_pages)} : {x}")
         # ---
         one_page_new(x)
 
@@ -209,16 +209,16 @@ def main():
     # ---
     len_old = len(all_pages)
     # ---
-    printe.output(f"all_pages: {len(all_pages)}")
+    logger.info(f"all_pages: {len(all_pages)}")
     # ---
     if "nodone" not in sys.argv:
         done = get_done(all_pages)
         # ---
-        printe.output(f"<<yellow>> done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
+        logger.info(f"<<yellow>> done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
         # ---
         all_pages = [x for x in all_pages if fix_title(x) not in done]
     # ---
-    printe.output(f"<<green>> all_pages: {len(all_pages)}, len_old: {len_old}")
+    logger.info(f"<<green>> all_pages: {len(all_pages)}, len_old: {len_old}")
     # ---
     start(all_pages)
 

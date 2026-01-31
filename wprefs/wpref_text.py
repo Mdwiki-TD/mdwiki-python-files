@@ -58,13 +58,13 @@ def remove_False_code(text):
         pap = Match.group("pap")
         ref = Match.group("ref")
         if not ref.strip():
-            # printe.output( "\tno ref" )
+            # logger.info( "\tno ref" )
             continue
         # ---
         # find html code like <cite></cite> and all span code after it
         # find and get html code like <cite></cite>
         if not re.search(r"(?is)<cite[^>]*>", ref):
-            # printe.output( "\tno cite" )
+            # logger.info( "\tno cite" )
             continue
         # ---
         # find and get html code like <cite></cite>

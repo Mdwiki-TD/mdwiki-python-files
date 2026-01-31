@@ -41,7 +41,7 @@ if not os.path.isdir(dir1) and not os.path.isdir(dir2):
 
 def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_dict=False, values=None):
     # ---
-    # printe.output("start sql_connect_pymysql:")
+    # logger.info("start sql_connect_pymysql:")
     Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
     args2 = {
@@ -114,11 +114,11 @@ def resolve_bytes(rows):
 def make_sql_connect(query, db="", host="", update=False, Return=[], return_dict=False, values=None, u_print=True):
     # ---
     if not query:
-        printe.output("query == ''")
+        logger.info("query == ''")
         return Return
     # ---
     if u_print:
-        printe.output("<<yellow>> newsql::")
+        logger.info("<<yellow>> newsql::")
     # ---
     rows = sql_connect_pymysql(
         query, db=db, host=host, update=update, Return=Return, return_dict=return_dict, values=values

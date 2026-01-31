@@ -14,16 +14,16 @@ logger = logging.getLogger(__name__)
 
 
 def work_in_new_tabs_to_db_new(new_tabs_to_db):
-    printe.output(f"len of new_tabs_to_db {len(new_tabs_to_db)}")
+    logger.info(f"len of new_tabs_to_db {len(new_tabs_to_db)}")
     # ---
     for tab in new_tabs_to_db:
         # ---
         old = tab["old"]
         new = tab["new"]
         # ---
-        printe.output("work_in_new_tabs_to_db")
-        printe.output(f"\t old: user: {old['user']}, target: {old['target']}")
-        printe.output(f"\t new: user: {new['user']}, target: {new['target']}")
+        logger.info("work_in_new_tabs_to_db")
+        logger.info(f"\t old: user: {old['user']}, target: {old['target']}")
+        logger.info(f"\t new: user: {new['user']}, target: {new['target']}")
         # ---
         # print(new)
         # {'id': '3381', 'title': 'Sympathetic crashing acute pulmonary edema', 'lang': 'ar', 'user': 'Karimabenkrid', 'pupdate': '2025-03-26', 'target': 'استسقاء رئوي حاد مفاجئ ودي', 'add_date': '2025-03-26 23:43:12'}

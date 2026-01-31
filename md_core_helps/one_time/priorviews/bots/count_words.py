@@ -43,7 +43,7 @@ class InOldText:
         self.count(self.oldtext)
         # ---
         if self.words < 50:
-            printe.output(f"\twords: {self.words} < 50 ")
+            logger.info(f"\twords: {self.words} < 50 ")
             words = self.words
             self.get_newtext()
             self.count(self.newtext)
@@ -93,13 +93,13 @@ class InOldText:
         unurl = f"{self.url}?{urlencode(params)}"
         # ---
         if "printurl" in sys.argv and "text" not in params:
-            printe.output(f"get_old:\t\t{unurl}")
+            logger.info(f"get_old:\t\t{unurl}")
         # ---
         try:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f"except: lang:{self.lang} {e}")
+            logger.info(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -143,7 +143,7 @@ class InOldText:
         self.newtext = json1.get("parse", {}).get("wikitext", "")
 
     def Words(self):
-        printe.output(f"\t\twords: {self.words}")
+        logger.info(f"\t\twords: {self.words}")
         return self.words
 
 

@@ -39,7 +39,7 @@ def work_one_table_O(table_text, redirects, pages):
     table = parsed.tables[0]
     # ---
     if not header_has_R(table_text, table):
-        printe.output("<<red>> no R in table header!")
+        logger.info("<<red>> no R in table header!")
         return table_text
     # ---
     already_in = []
@@ -97,12 +97,12 @@ def work_one_table_O(table_text, redirects, pages):
         # ---
         text_x += one_cell(cell_values)
     # ---
-    printe.output(f"<<yellow>> no_add: {len(no_add)}, already_in: {len(already_in)}")
+    logger.info(f"<<yellow>> no_add: {len(no_add)}, already_in: {len(already_in)}")
     # ---
-    printe.output(f"<<red>> cell_errors: {len(cell_errors)}:")
-    printe.output(cell_errors)
+    logger.info(f"<<red>> cell_errors: {len(cell_errors)}:")
+    logger.info(cell_errors)
     # ---
-    printe.output(f"<<yellow>> add_done: {len(add_done)}, add_from_redirect: {len(add_from_redirect)}")
+    logger.info(f"<<yellow>> add_done: {len(add_done)}, add_from_redirect: {len(add_from_redirect)}")
     # ---
     text_x += "\n|}"
     # ---
@@ -115,7 +115,7 @@ def work_one_table(table_text, redirects, pages):
     table = parsed.tables[0]
     # ---
     if not header_has_R(table_text, table):
-        printe.output("<<red>> no R in table header!")
+        logger.info("<<red>> no R in table header!")
         return table_text
     # ---
     already_in = []
@@ -164,12 +164,12 @@ def work_one_table(table_text, redirects, pages):
         else:
             no_add.append(title)
     # ---
-    printe.output(f"<<yellow>> no_add: {len(no_add)}, already_in: {len(already_in)}")
+    logger.info(f"<<yellow>> no_add: {len(no_add)}, already_in: {len(already_in)}")
     # ---
-    printe.output(f"<<red>> cell_errors: {len(cell_errors)}:")
-    printe.output(cell_errors)
+    logger.info(f"<<red>> cell_errors: {len(cell_errors)}:")
+    logger.info(cell_errors)
     # ---
-    printe.output(f"<<yellow>> add_done: {len(add_done)}, add_from_redirect: {len(add_from_redirect)}")
+    logger.info(f"<<yellow>> add_done: {len(add_done)}, add_from_redirect: {len(add_from_redirect)}")
     # ---
     return table.string
 
@@ -182,7 +182,7 @@ def add_rtt_to_tables(text, redirects={}, pages=[], table=False):
         new_text = add_header_R(text, table)
         # ---
         if new_text == text:
-            printe.output("<<red>> Can't add R column to table!")
+            logger.info("<<red>> Can't add R column to table!")
             return text
     # ---
     if redirects or pages:

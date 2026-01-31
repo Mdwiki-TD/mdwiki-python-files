@@ -91,12 +91,12 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
 def sql_new(queries, wiki="", printqua=False, values=[], u_print=True):
     # ---
     if u_print:
-        printe.output(f"wiki_sql.py sql_new wiki '{wiki}'")
+        logger.info(f"wiki_sql.py sql_new wiki '{wiki}'")
     # ---
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
     if printqua or "printsql" in sys.argv:
-        printe.output(queries)
+        logger.info(queries)
     # ---
     if not GET_SQL():
         return []
@@ -111,19 +111,19 @@ def sql_new(queries, wiki="", printqua=False, values=[], u_print=True):
     delta = int(final - start)
     # ---
     if u_print:
-        printe.output(f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
+        logger.info(f'wiki_sql.py sql_new len(encats) = "{len(rows)}", in {delta} seconds')
     # ---
     return rows
 
 
 def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     # ---
-    printe.output(f"wiki_sql.py Make_sql_many_rows wiki '{wiki}'")
+    logger.info(f"wiki_sql.py Make_sql_many_rows wiki '{wiki}'")
     # ---
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
     if printqua or "printsql" in sys.argv:
-        printe.output(queries)
+        logger.info(queries)
     # ---
     if not GET_SQL():
         return []
@@ -137,7 +137,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     # ---
     delta = int(final - start)
     # ---
-    printe.output(f'wiki_sql.py Make_sql_many_rows len(encats) = "{len(rows2)}", in {delta} seconds')
+    logger.info(f'wiki_sql.py Make_sql_many_rows len(encats) = "{len(rows2)}", in {delta} seconds')
     # ---
     return rows2
 
@@ -215,13 +215,13 @@ def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
             ns_text = ns_text_tab_en.get(str(ns))
         # ---
         if not ns_text:
-            printe.output(f"no ns_text for {str(ns)}")
+            logger.info(f"no ns_text for {str(ns)}")
         # ---
         if title and ns:
             new_title = f"{ns_text}:{title}"
             newlist.append(new_title)
         else:
-            printe.output(f"xa {str(row)}")
+            logger.info(f"xa {str(row)}")
             newlist.append(row)
         # ---
     # ---

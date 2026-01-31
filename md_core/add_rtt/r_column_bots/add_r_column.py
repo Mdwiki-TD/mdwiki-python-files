@@ -42,7 +42,7 @@ def add_header_R(text, table=False):
     # ---
     # Check if R column already exists
     if header_has_R(text, table):
-        printe.output("R column already exists in table header")
+        logger.info("R column already exists in table header")
         return table.string
     # ---
     count = 0
@@ -57,6 +57,6 @@ def add_header_R(text, table=False):
         # ---
         count += 1
     # ---
-    printe.output(f"Added R column to table header in {count} cells")
+    logger.info(f"Added R column to table header in {count} cells")
     # ---
     return table.string

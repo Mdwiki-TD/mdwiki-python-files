@@ -60,7 +60,7 @@ def count_refs(title):
     tab_data["all"][title] = all_c
     tab_data["lead"][title] = lead_c
     # ---
-    printe.output(f"<<green>> all:{all_c} \t lead:{lead_c}")
+    logger.info(f"<<green>> all:{all_c} \t lead:{lead_c}")
 
 
 def from_sql(old_values):
@@ -73,7 +73,7 @@ def from_sql(old_values):
     # ---
     titles = [x for x in titles2 if x not in old_values]
     # ---
-    printe.output(f"<<yellow>> sql: find {len(titles2)} titles, {len(titles)} to work. ")
+    logger.info(f"<<yellow>> sql: find {len(titles2)} titles, {len(titles)} to work. ")
     # ---
     return titles
 
@@ -102,11 +102,11 @@ def main():
     if "merge" in sys.argv:
         # ---
         with open(file_all, "w", encoding="utf-8") as outfile:
-            printe.output(f"<<green>> {len(tab_data['all'])} lines to {file_all}")
+            logger.info(f"<<green>> {len(tab_data['all'])} lines to {file_all}")
             json.dump(tab_data["all"], outfile, sort_keys=True, indent=2)
         # ---
         with open(file_lead, "w", encoding="utf-8") as outfile:
-            printe.output(f"<<green>> {len(tab_data['lead'])} lines to {file_lead}")
+            logger.info(f"<<green>> {len(tab_data['lead'])} lines to {file_lead}")
             json.dump(tab_data["lead"], outfile, sort_keys=True, indent=2)
         # ---
         start_to_sql()
@@ -132,8 +132,8 @@ def main():
         # ---
         x = x.replace("\\'", "'")
         # ---
-        printe.output("------------------")
-        printe.output(f"page {numb} from {len(vaild_links)}, x:{x}")
+        logger.info("------------------")
+        logger.info(f"page {numb} from {len(vaild_links)}, x:{x}")
         # ---
         if numb >= limit:
             break

@@ -102,7 +102,7 @@ def get_qids_sitelinks(qidslist):
         # ---
         params_wd["ids"] = "|".join(qids)
         # ---
-        printe.output(f"<<green>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.")
+        logger.info(f"<<green>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.")
         # ---
         json1 = wikidataapi.post(params_wd)
         # ---
@@ -183,7 +183,7 @@ def dump_all(main_table_sites, len_titles):
     missing_langs = {}
     # ---
     for site, miss_list in main_table_sites.items():
-        # printe.output('<<blue>> main_table_sites:%s, len:%d.' % (site, len(miss_list)) )
+        # logger.info('<<blue>> main_table_sites:%s, len:%d.' % (site, len(miss_list)) )
         # ---
         # remove duplicates
         miss_list = list(set(miss_list))
@@ -194,13 +194,13 @@ def dump_all(main_table_sites, len_titles):
         json_file = f"{Dashboard_path}/Tables/cash_exists/{site}.json"
         # ---
         if not os.path.exists(json_file):
-            printe.output(f'.... <<red>> file:"{site}.json not exists ....')
+            logger.info(f'.... <<red>> file:"{site}.json not exists ....')
         # ---
         # dump miss_list to json_file
         try:
             with open(json_file, "w", encoding="utf-8") as aa:
                 json.dump(miss_list, aa, ensure_ascii=False, indent=2)
-            printe.output(f"<<greenn>>dump to cash_exists/{site}.json done..")
+            logger.info(f"<<greenn>>dump to cash_exists/{site}.json done..")
         except Exception as e:
             exception_err(e)
             continue
@@ -210,7 +210,7 @@ def dump_all(main_table_sites, len_titles):
 
 def cash_wd():
     # ---
-    printe.output("<<green>> cash_wd")
+    logger.info("<<green>> cash_wd")
     # ---
     titles = []
     # ---
@@ -222,7 +222,7 @@ def cash_wd():
         # ---
         titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
     # ---
-    printe.output(f"<<green>> len of mdwiki_api.subcat:RTT:{len(titles)}.")
+    logger.info(f"<<green>> len of mdwiki_api.subcat:RTT:{len(titles)}.")
     # ---
     qids_list = {}
     # ---
@@ -254,21 +254,21 @@ def cash_wd():
     # mis_qids
     # ---
     for old_q, new_q in redirects_qids.items():
-        printe.output(f"<<blue>> redirects_qids:{old_q.ljust(15)} -> {new_q}.")
+        logger.info(f"<<blue>> redirects_qids:{old_q.ljust(15)} -> {new_q}.")
     # ---
     for qd in mis_qids:
-        printe.output(f"<<blue>> missing qids:{qd}.")
+        logger.info(f"<<blue>> missing qids:{qd}.")
     # ---
-    printe.output(f" len of redirects_qids:  {len(redirects_qids.keys())}")
-    printe.output(f" len of missing qids:    {len(mis_qids)}")
+    logger.info(f" len of redirects_qids:  {len(redirects_qids.keys())}")
+    logger.info(f" len of missing qids:    {len(mis_qids)}")
     # ---
     if missing["all"] > 0:
         with open(f"{Dashboard_path}/Tables/jsons/missing.json", "w", encoding="utf-8") as xx:
             json.dump(missing, xx)
         # ---
-        printe.output(" log to missing.json true.... ")
+        logger.info(" log to missing.json true.... ")
     # ---
-    printe.output(f"{missing['all']=}")
+    logger.info(f"{missing['all']=}")
 
 
 if __name__ == "__main__":

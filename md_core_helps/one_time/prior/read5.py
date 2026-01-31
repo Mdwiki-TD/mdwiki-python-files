@@ -69,10 +69,10 @@ def work_test(All, allen):
     text = text.replace("height:580px;", "")
 
     # Print the number of links found in 'All' dictionary.
-    printe.output(f"{len(All)} links found")
+    logger.info(f"{len(All)} links found")
 
     # Print a message stating where the log file was saved.
-    printe.output(f"<<yellow>> text loged to {filetitle}")
+    logger.info(f"<<yellow>> text loged to {filetitle}")
 
     # Define a page title and create an object of 'md_MainPage' class with some arguments.
     title = "User:Mr. Ibrahem/prior/test"
@@ -97,7 +97,7 @@ def get_all_json():
         if filename.endswith(".json"):
             filename2 = os.path.join(project_js_new, filename)
             # ---
-            printe.output(f"filename: {filename2}..")
+            logger.info(f"filename: {filename2}..")
             # ---
             data = json.load(open(filename2))
             All = {**All, **data}
@@ -106,7 +106,7 @@ def get_all_json():
         if filename.endswith(".json"):
             filename2 = os.path.join(project_js_newen, filename)
             # ---
-            printe.output(f"filename: {filename2}..")
+            logger.info(f"filename: {filename2}..")
             # ---
             data = json.load(open(filename2))
             # ---
@@ -119,7 +119,7 @@ def get_all_json():
             All[a]["lead"] = tab["lead"]
             All[a]["old"] = tab.get("old", {})
     # ---
-    printe.output(f"new All len:{len(All)}")
+    logger.info(f"new All len:{len(All)}")
     # ---
     return All
 
@@ -135,7 +135,7 @@ class WorkAll:
         # ---
         self.parser = wikitextparser.parse(self.text)
         # ---
-        printe.output(f"all_wikilinks: {len(self.parser.wikilinks)}")
+        logger.info(f"all_wikilinks: {len(self.parser.wikilinks)}")
         # ---
         self.sections = self.parser.get_sections(include_subsections=False)
         # ---
@@ -198,7 +198,7 @@ class WorkAll:
         for t, _all_ in self.all_sections.items():
             lrnn = len(_all_.keys())
             # ---
-            printe.output(f"<<yellow>> section:({t}), \t\twikilinks: {lrnn}")
+            logger.info(f"<<yellow>> section:({t}), \t\twikilinks: {lrnn}")
             # ---
             ttt = f"User:Mr. Ibrahem/prior/{t}"
             # ---
@@ -236,7 +236,7 @@ def work_all():
     if "logall" in sys.argv:
         text_bot.log_all_pages_states()
     else:
-        printe.output('<<yellow>> add "logall" to args to log All pages links green/red..')
+        logger.info('<<yellow>> add "logall" to args to log All pages links green/red..')
 
     # ---
 

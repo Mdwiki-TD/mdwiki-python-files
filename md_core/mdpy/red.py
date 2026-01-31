@@ -66,7 +66,7 @@ def get_red(title):
     for x in pages:
         title = pages[x].get("title", "")
         redirectsn = pages[x].get("redirects", [])
-        printe.output(redirectsn)
+        logger.info(redirectsn)
         if pages[x]["title"] == title:
             for io in redirectsn:
                 if io["ns"] != 0:
@@ -80,7 +80,7 @@ def get_red(title):
 
 def work(title, num, length, From=""):
     # ---
-    printe.output(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
+    logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
@@ -88,12 +88,12 @@ def work(title, num, length, From=""):
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
-        printe.output(f" page:{title} not exists in mdwiki.")
+        logger.info(f" page:{title} not exists in mdwiki.")
         return ""
     # ---
     redirects = get_red(title)
     # ---
-    printe.output(redirects)
+    logger.info(redirects)
     # ---
     text = f"#redirect [[{title}]]"
     sus = f"Redirected page to [[{title}]]"
@@ -105,7 +105,7 @@ def work(title, num, length, From=""):
     for tit, o in ing.items():
         num += 1
         if o:
-            printe.output(f"page n:{num}, title:'{tit}' already in mdwiki.org..")
+            logger.info(f"page n:{num}, title:'{tit}' already in mdwiki.org..")
             continue
         # ---
         if not valid_title(tit):
@@ -115,7 +115,7 @@ def work(title, num, length, From=""):
 
 
 def main():
-    printe.output("*<<red>> > main:")
+    logger.info("*<<red>> > main:")
     # ---
     # python3 red.py -page:Allopurinol
     # python3 red.py -page:Activated_charcoal_\(medication\)

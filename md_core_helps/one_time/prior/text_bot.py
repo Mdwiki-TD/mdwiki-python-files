@@ -185,7 +185,7 @@ def log_all_pages_states():
     file = f"{Dir}/all_pages_states.json"
     # ---
     if all_pages_states != {}:
-        printe.output(f"<<yellow>> log_all_pages_states(): length: {len(all_pages_states.keys())}")
+        logger.info(f"<<yellow>> log_all_pages_states(): length: {len(all_pages_states.keys())}")
         json.dump(all_pages_states, open(file, "w", encoding="utf-8"))
 
     # ---
@@ -349,7 +349,7 @@ def make_text(allo, ttt=""):
                     translator = translators.tra_by_lang.get(l, {}).get(tit.lower(), "")
                     if translator != "":
                         color = "green"
-                        printe.output(f"<<purple>> change color for [[{l}:{tit}]] to green: {translator=}")
+                        logger.info(f"<<purple>> change color for [[{l}:{tit}]] to green: {translator=}")
                 # ---
                 same1 = color_tab["same1"]
                 same2 = color_tab["same2"]

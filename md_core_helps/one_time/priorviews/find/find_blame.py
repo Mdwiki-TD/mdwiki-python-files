@@ -72,7 +72,7 @@ def gtblame_value(title, lang):
         # ---
         for ref in refname:
             # ---
-            printe.output(f"search for: ref: ({ref}), page: [[{lang}:{title}]]")
+            logger.info(f"search for: ref: ({ref}), page: [[{lang}:{title}]]")
             # ---
             tab["needle"] = ref
             # ---
@@ -85,7 +85,7 @@ def gtblame_value(title, lang):
 
 
 def logem():
-    printe.output(f"<<yellow>> logem {len(new_data)} words")
+    logger.info(f"<<yellow>> logem {len(new_data)} words")
     # dump new_data
     helps.dump_data(file, new_data)
 
@@ -132,17 +132,17 @@ def get_b(links, lang):
         # ---
         new_data[lang][title_lower] = value_in
         # ---
-        printe.output(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        logger.info(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
         # ---
         # {"time": 20140721110644, "actor": "CFCF", "comment": "Translated from [[:en:African trypanosomiasis|English]] by Somil.Mishra at [[:en:Translators Without Borders|Translators Without Borders]]", "TD": false}
         crate = lang_creators.get(title, {})
         page_time = crate.get("time")
         # ---
         if page_time:
-            printe.output(f"<<yellow>> page_time: {page_time}")
+            logger.info(f"<<yellow>> page_time: {page_time}")
             year = int(str(page_time)[0:4])
             if year < 2012 and "all" not in sys.argv:
-                printe.output("<<red>> skip....")
+                logger.info("<<red>> skip....")
                 continue
         # ---
         _value = gtblame_value(title, lang)
@@ -152,7 +152,7 @@ def get_b(links, lang):
         # ---
         if _value == "creator":
             _value = crate.get("actor", "")
-            printe.output(f"<<green>> creator _value: {_value}")
+            logger.info(f"<<green>> creator _value: {_value}")
         # ---
         if value_in != 0 and _value == 0:
             continue

@@ -40,7 +40,7 @@ tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
 
 def logem():
-    printe.output(f"<<yellow>> logem {len(tra_by_lang)} words")
+    logger.info(f"<<yellow>> logem {len(tra_by_lang)} words")
     # dump tra_by_lang
     helps.dump_data(file, tra_by_lang)
 
@@ -81,7 +81,7 @@ def get_t(links, lang):
         if "new" in sys.argv and value_in != "":
             continue
         # ---
-        printe.output(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        logger.info(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
         # ---
         _value = get_translator.get_au(title, lang)
         # ---

@@ -108,7 +108,7 @@ def filter_urls(links):
             if book_id != "":
                 x2 = f"https://books.google.com/books?id={book_id}"
                 if x2 != x:
-                    # printe.output('<<yellow>> google books + 1')
+                    # logger.info('<<yellow>> google books + 1')
                     x = x2
         # ---
         liste1.append(x.lower())
@@ -162,7 +162,7 @@ class work_in_one_lang_link:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f"except: lang:{self.lang} {e}")
+            logger.info(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -187,8 +187,8 @@ class work_in_one_lang_link:
         refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
         # ---
         if len(refsn) > 0:
-            printe.output(f" new refsn: {len(refsn)}")
-            printe.output(refsn)
+            logger.info(f" new refsn: {len(refsn)}")
+            logger.info(refsn)
             # ---
             self.refsname.update(refsn)
 
@@ -300,7 +300,7 @@ class work_in_one_lang_link:
         # ---
         json1 = self.post_to_json(params)
         # ---
-        # printe.output(json1)
+        # logger.info(json1)
         # ---
         links = json1.get("parse", {}).get("externallinks", [])
         # ---
@@ -375,13 +375,13 @@ class get_old:
         unurl = f"{self.url}?{urlencode(params)}"
         # ---
         if "printurl" in sys.argv and "text" not in params:
-            printe.output(f"get_old:\t\t{unurl}")
+            logger.info(f"get_old:\t\t{unurl}")
         # ---
         try:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f"except: lang:{self.lang} {e}")
+            logger.info(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -406,8 +406,8 @@ class get_old:
         refsn = {k: v for k, v in refsn.items() if k not in self.refsname}
         # ---
         if len(refsn) > 0:
-            printe.output(f" new refsn: {len(refsn)}")
-            printe.output(refsn)
+            logger.info(f" new refsn: {len(refsn)}")
+            logger.info(refsn)
             # ---
             self.refsname.update(refsn)
 
@@ -497,7 +497,7 @@ class get_old:
         # ---
         json1 = self.post_to_json(params)
         # ---
-        # printe.output(json1)
+        # logger.info(json1)
         # ---
         links = json1.get("parse", {}).get("externallinks", [])
         # ---

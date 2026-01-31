@@ -50,7 +50,7 @@ def logaa(file, table):
     with open(file, "w", encoding="utf-8") as outfile:
         json.dump(table, outfile, sort_keys=True, indent=2)
     # ---
-    printe.output(f"<<green>> {len(table)} lines to {file}")
+    logger.info(f"<<green>> {len(table)} lines to {file}")
 
 
 def check_it(x, y, old_values):
@@ -102,7 +102,7 @@ def get_jsons_new(file_all, file_lead, ty):
     # ---
     lead_data = get_data(file_lead, ty_lead_data)
     # ---
-    printe.output(f"len of lead_data:{len(lead_data.keys())}, all :{len(all_data.keys())}")
+    logger.info(f"len of lead_data:{len(lead_data.keys())}, all :{len(all_data.keys())}")
     # ---
     # sort lead_data by name
     lead_data = {k: lead_data[k] for k in sorted(lead_data)}
@@ -146,7 +146,7 @@ def get_jsons(file_all, file_lead, ty):
         for x, y in js_leaddata.items():
             lead_data[x] = y
     # ---
-    printe.output(f"len of lead_data:{len(lead_data.keys())}, all :{len(all_data.keys())}")
+    logger.info(f"len of lead_data:{len(lead_data.keys())}, all :{len(all_data.keys())}")
     # ---
     # sort lead_data by name
     lead_data = {k: lead_data[k] for k in sorted(lead_data)}

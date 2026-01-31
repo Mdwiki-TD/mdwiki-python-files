@@ -41,7 +41,7 @@ def main():
 
     for n, page in enumerate(cat_members):
         # ---
-        printe.output(f"n: {n}/{len(cat_members)} - Page: {page}")
+        logger.info(f"n: {n}/{len(cat_members)} - Page: {page}")
         one_page(page)
 
 

@@ -32,7 +32,7 @@ def add_rtt_to_text(text, title):
     new_line = "{{RTT}}"
 
     if text.find(new_line) != -1:
-        printe.output(f"page already tagged.{new_line}")
+        logger.info(f"page already tagged.{new_line}")
         return text
 
     target_templates = ["RTT"]
@@ -43,7 +43,7 @@ def add_rtt_to_text(text, title):
 
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
         if name in target_templates:
-            printe.output(f"page already tagged.{title=}")
+            logger.info(f"page already tagged.{title=}")
             return text
 
     newtext = text
@@ -121,7 +121,7 @@ def get_list():
     # ---
     mdwiki_pages.sort()
     # ---
-    printe.output(f"len of mdwiki_pages: {len(mdwiki_pages)}")
+    logger.info(f"len of mdwiki_pages: {len(mdwiki_pages)}")
     # ---
     return mdwiki_pages
 
@@ -145,12 +145,12 @@ def main():
 
     temp_pages = api_new.Get_template_pages("Template:RTT", namespace=0)
 
-    printe.output(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
+    logger.info(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
 
     # pages in mdwiki_pages but not in temp_pages
     pages_to_add = [x for x in mdwiki_pages if x not in temp_pages]
 
-    printe.output(f"len of pages_to_add: {len(pages_to_add)}")
+    logger.info(f"len of pages_to_add: {len(pages_to_add)}")
 
     for x in pages_to_add:
         work_page(x)

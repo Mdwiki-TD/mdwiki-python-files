@@ -54,12 +54,12 @@ for q in db_data_main:
     if target and lang:
         in_sql_qid_targets[qid][lang] = target
 
-printe.output(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
+logger.info(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
 
 
 def start_to_sql(data):
     # ---
-    printe.output(f"<<green>> start_to_sql {len(data)=}")
+    logger.info(f"<<green>> start_to_sql {len(data)=}")
     # ---
     # data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
     data = {q: v["sitelinks"] for q, v in data.items()}
@@ -82,7 +82,7 @@ def start_to_sql(data):
         # ---
         qid_in_sql = in_sql_qid_targets.get(qid, {})
         # ---
-        printe.output(f"<<green>> {qid=} {len(sitelinks)=}, qid_in_sql: {len(qid_in_sql)=}")
+        logger.info(f"<<green>> {qid=} {len(sitelinks)=}, qid_in_sql: {len(qid_in_sql)=}")
         # ---
         new_data = [
             {"qid": qid, "code": code, "target": target}
@@ -95,7 +95,7 @@ def start_to_sql(data):
     # ---
     columns = ["qid", "code", "target"]
     # ---
-    printe.output(f"<<yellow>> new_data_all: {len(new_data_all)}.")
+    logger.info(f"<<yellow>> new_data_all: {len(new_data_all)}.")
     # ---
     if new_data_all:
         # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
@@ -111,7 +111,7 @@ def start_to_sql(data):
 
 
 def dump_sitelinks(lists):
-    printe.output(f"<<green>> dump_sitelinks, len of qids: {len(lists.get('qids', {}))}.")
+    logger.info(f"<<green>> dump_sitelinks, len of qids: {len(lists.get('qids', {}))}.")
     with open(json_file, "w", encoding="utf-8") as aa:
         json.dump(lists, aa)
 
@@ -130,7 +130,7 @@ def wbgetentities(qs_list):
     # ---
     all_entities = {}
     # ---
-    printe.output(f"wbgetentities for:{len(qs_list)}:")
+    logger.info(f"wbgetentities for:{len(qs_list)}:")
     # ---
     for i in tqdm.tqdm(range(0, len(qs_list), 100)):
         # ---
@@ -140,7 +140,7 @@ def wbgetentities(qs_list):
         # ---
         params_wd["ids"] = "|".join(qids)
         # ---
-        # printe.output(f"done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
+        # logger.info(f"done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
         # ---
         # json1 = wikidataapi.post(params_wd)
         json1 = post_it(params_wd)
@@ -156,7 +156,7 @@ def wbgetentities(qs_list):
             # ---
             all_entities.update(entities)
     # ---
-    printe.output(f"wbgetentities result: {len(all_entities)}:")
+    logger.info(f"wbgetentities result: {len(all_entities)}:")
     # ---
     return all_entities
 
@@ -169,7 +169,7 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle={}):
     # ---
     heads = []
     # ---
-    printe.output(f"<<yellow>> {len(all_entities)=}.")
+    logger.info(f"<<yellow>> {len(all_entities)=}.")
     # ---
     for qid, tab in all_entities.items():
         # ---
@@ -209,21 +209,21 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle={}):
     # ---
     table_d["heads"] = list(set(heads))
     # ---
-    printe.output(f"<<yellow>> len of mis_qids: {len(mis_qids)}.")
+    logger.info(f"<<yellow>> len of mis_qids: {len(mis_qids)}.")
     # ---
     return table_d
 
 
 def main():
     # ---
-    printe.output("<<green>> main")
+    logger.info("<<green>> main")
     # ---
     qids_tab = sql_for_mdwiki.get_all_qids()
     # ---
     qids = list(qids_tab.values())
     qids = list(set(qids))
     # ---
-    printe.output(f"len of qids in sql: {len(qids)}, len of qids_tab: {len(qids_tab)}")
+    logger.info(f"len of qids in sql: {len(qids)}, len of qids_tab: {len(qids_tab)}")
     # ---
     qids_to_mdtitle = {qid: title for title, qid in qids_tab.items()}
     # ---
@@ -233,16 +233,16 @@ def main():
         with open(json_file, "r", encoding="utf-8") as aa:
             lists = json.load(aa)
         # ---
-        printe.output(f"len of qids in json file: {len(lists.get('qids', {}))}.")
+        logger.info(f"len of qids in json file: {len(lists.get('qids', {}))}.")
     else:
         # ---
         lists = get_qids_sitelinks(qids, qids_to_mdtitle)
         # ---
-        printe.output(f"len of qids from wikidata: {len(lists.get('qids', {}))}.")
+        logger.info(f"len of qids from wikidata: {len(lists.get('qids', {}))}.")
     # ---
     qids_not = [x for x in qids if x not in lists.get("qids", {})]
     # ---
-    printe.output(f"<<red>> len of qids_not: {len(qids_not)}")
+    logger.info(f"<<red>> len of qids_not: {len(qids_not)}")
     # ---
     for x in qids_not:
         lists["qids"][x] = {"mdtitle": qids_to_mdtitle.get(x, ""), "sitelinks": {}}
@@ -255,7 +255,7 @@ def main():
 def test():
     qids = ["Q192309"]
     lists = get_qids_sitelinks(qids)
-    printe.output(f"len of lists: {len(lists)}.")
+    logger.info(f"len of lists: {len(lists)}.")
     qids = lists.get("qids", {})
     # print(qids)
     start_to_sql(qids)

@@ -2,7 +2,6 @@
 python3 core8/pwb.py mdpy/fixref/fixreftest
 """
 
-# import printe
 from mdpy.fixref.fixref_text_new import fix_ref_template
 
 # ---

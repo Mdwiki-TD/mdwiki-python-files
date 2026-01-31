@@ -114,7 +114,7 @@ def GetPageText(title, redirects=False, get_revid=False):
             True.
     """
 
-    # printe.output( '**GetarPageText: ')
+    # logger.info( '**GetarPageText: ')
     # ---
     params = {
         "action": "parse",
@@ -134,11 +134,11 @@ def GetPageText(title, redirects=False, get_revid=False):
     if json1:
         text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
     else:
-        printe.output("no parse in json1:")
-        printe.output(json1)
+        logger.info("no parse in json1:")
+        logger.info(json1)
     # ---
     if not text:
-        printe.output(f'page {title} text == "".')
+        logger.info(f'page {title} text == "".')
     # ---
     if get_revid:
         return text, json1.get("parse", {}).get("revid", 0)
@@ -176,7 +176,7 @@ def GetRevid(title):
 
 def Get_page_links(title, namespace="0", limit="max"):
     # ---
-    printe.output(f'Get_page_links for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
+    logger.info(f'Get_page_links for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
     params = {
         "action": "query",
@@ -208,9 +208,9 @@ def Get_page_links(title, namespace="0", limit="max"):
             for pa in tab.get("links", []):
                 Main_table["links"][pa["title"]] = {"ns": pa["ns"], "title": pa["title"]}
     else:
-        printe.output("mdwiki_api.py no json1")
+        logger.info("mdwiki_api.py no json1")
     # ---
-    printe.output(f"mdwiki_api.py Get_page_links : find {len(Main_table['links'])} pages.")
+    logger.info(f"mdwiki_api.py Get_page_links : find {len(Main_table['links'])} pages.")
     # ---
     return Main_table
 

@@ -54,7 +54,7 @@ def work_all(editors):
     editors = filter_editors(editors, "all")
     # ---
     if not editors:
-        printe.output("<<red>> no editors")
+        logger.info("<<red>> no editors")
         return
     # ---
     title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{last_year}_(all)"
@@ -101,7 +101,7 @@ def work_all(editors):
     if p_text != text:
         page.save(newtext=text, summary="update", nocreate=0, minor="")
     else:
-        printe.output("<<green>> no changes")
+        logger.info("<<green>> no changes")
     # ---
     return editors
 
@@ -115,7 +115,7 @@ def start():
     # ---
     for numb, file in enumerate(files, start=1):
         # ---
-        printe.output(f"<<green>> n: {numb} file: {file}:")
+        logger.info(f"<<green>> n: {numb} file: {file}:")
         # ---
         if not file.endswith(".json"):
             continue

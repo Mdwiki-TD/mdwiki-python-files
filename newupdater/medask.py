@@ -51,11 +51,11 @@ def work_on_title(title, returntext=False):
     text, new_text = get_new_text(title)
     # ---
     if text == "" or new_text == "":
-        printe.output("<<red>> notext")
+        logger.info("<<red>> notext")
         return
     # ---
     if text == new_text:
-        printe.output("no changes")
+        logger.info("no changes")
         return
     # ---
     printe.showDiff(text, new_text)
@@ -79,7 +79,7 @@ def main1():
 
 
 def main():
-    printe.output("*<<red>> > main:")
+    logger.info("*<<red>> > main:")
     # ---
     user = ""
     user_limit = "3000"
@@ -141,7 +141,7 @@ def main():
         listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
         # ---
         for n, page in enumerate(listen):
-            printe.output(f"<<green>> n:{n}, title:{page}")
+            logger.info(f"<<green>> n:{n}, title:{page}")
             work_on_title(page)
             # ---
     # ---
@@ -155,7 +155,7 @@ def main():
         lista = pages
     # ---
     for n, page in enumerate(lista):
-        printe.output(f"<<green>> n:{n}, title:{page}")
+        logger.info(f"<<green>> n:{n}, title:{page}")
         work_on_title(page)
     # ---
 

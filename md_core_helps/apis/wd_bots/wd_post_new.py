@@ -59,7 +59,7 @@ def get_token(mk_new=False):
     try:
         csrftoken = wd_site.get_token("csrf")
     except Exception as e:
-        printe.error("Could not get token: %s" % e)
+        logger.error(f"Could not get token: {e}")
         return False
     # ---
     SS["csrftoken"] = csrftoken

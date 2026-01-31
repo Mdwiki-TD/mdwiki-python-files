@@ -99,7 +99,7 @@ def add_use(filepath, ns_line="", add_lines=""):
 
 
 def start():
-    printe.output(f"<<green>> fixpy: {path=}")
+    logger.info(f"<<green>> fixpy: {path=}")
     # ---
     pathss = []
     # ---
@@ -108,7 +108,7 @@ def start():
         scanroot = scan_root(root)
         # ---
         if not scanroot:
-            # printe.output(f"<<green>> root: {root}.")
+            # logger.info(f"<<green>> root: {root}.")
             continue
         # ---
         for f in files:
@@ -118,16 +118,16 @@ def start():
             scanit = scan_root(filepath)
             # ---
             if not scanit:
-                # printe.output(f"<<green>> filepath: {filepath}.")
+                # logger.info(f"<<green>> filepath: {filepath}.")
                 continue
             # ---
-            # printe.output(f"<<green>> file: {filepath}.")
+            # logger.info(f"<<green>> file: {filepath}.")
             # ---
             if filepath.endswith(".php"):
                 pathss.append(filepath)
     # ---
     for n, filepath in enumerate(pathss):
-        printe.output(f"<<yellow>> {n}/{len(pathss)}: file: {filepath}.")
+        logger.info(f"<<yellow>> {n}/{len(pathss)}: file: {filepath}.")
         # ---
         add_use(filepath)
 

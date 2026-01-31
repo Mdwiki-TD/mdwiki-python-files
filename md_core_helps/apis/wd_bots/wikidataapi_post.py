@@ -9,7 +9,6 @@ import logging
 import sys
 from urllib.parse import urlencode
 
-# import printe
 import requests
 from apis import user_account_new
 
@@ -45,14 +44,14 @@ def do_request(params=None, method="POST"):
     unurl = f"{url}?{urlencode(params)}"
     # ---
     if "printurl" in sys.argv:
-        printe.output(f"do_request:\t\t{unurl}")
+        logger.info(f"do_request:\t\t{unurl}")
     # ---
     try:
         r4 = SS["ss"].request(method, url, **args)
         status = r4.status_code
         # ---
         if status != 200:
-            printe.output(f"<<red>> wikidataapi.py: post error status: {str(status)}")
+            logger.info(f"<<red>> wikidataapi.py: post error status: {str(status)}")
             return {}
         # ---
         return r4.json()
@@ -91,7 +90,7 @@ def Log_to_wiki(url=""):
     if not url:
         url = "https://www.wikidata.org/w/api.php"
     # ---
-    printe.output(f"wikidataapi.py: log to {url} user:{r2_params['lgname']}")
+    logger.info(f"wikidataapi.py: log to {url} user:{r2_params['lgname']}")
     # ---
     SS["url"] = url
     SS["ss"] = requests.Session()
@@ -103,13 +102,13 @@ def Log_to_wiki(url=""):
         r2_params["lgtoken"] = r11.json()["query"]["tokens"]["logintoken"]
         r22 = SS["ss"].post(SS["url"], data=r2_params, headers={"User-Agent": user_agent}, timeout=10)
     except Exception as e:
-        printe.output("wikidataapi.py: Can't log in . ")
+        logger.info("wikidataapi.py: Can't log in . ")
         return False
     # ---
     if r22.json().get("login", {}).get("result", "") != "Success":
-        printe.output(r22.json()["login"]["reason"])
+        logger.info(r22.json()["login"]["reason"])
     else:
-        printe.output("wikidataapi.py login Success")
+        logger.info("wikidataapi.py login Success")
     # ---
     SS["url"] = url
     # ---

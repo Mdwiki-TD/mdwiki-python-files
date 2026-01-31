@@ -22,7 +22,7 @@ ALL_QIDS = {}
 
 def add_q(new_qids, ty):
     # ---
-    printe.output(f"len of new_qids: {len(new_qids)}")
+    logger.info(f"len of new_qids: {len(new_qids)}")
     # ---
     if len(new_qids) == 0:
         return
@@ -30,9 +30,9 @@ def add_q(new_qids, ty):
     new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
     # ---
     if len(new_qids) < 10:
-        printe.output("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
+        logger.info("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
     # ---
-    printe.output('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
     # ---
     if ty == "other":
         sql_qids_others.add_titles_to_qids(new_qids, add_empty_qid=True)
@@ -53,7 +53,7 @@ def work_qids(ty):
     # ---
     new_qids = qids_help.get_o_qids_new(o_qids, qids_list)
     # ---
-    printe.output(f"<<green>> new len of new_qids:{len(new_qids)}")
+    logger.info(f"<<green>> new len of new_qids:{len(new_qids)}")
     # ---
     work_un(new_qids)
     # ---

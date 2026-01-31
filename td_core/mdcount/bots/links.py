@@ -49,12 +49,12 @@ def get_valid_Links(words_tab):
         vav2 = vav
         vav = [t for t in vav2 if (t not in words_tab or words_tab[t] < 50)]
         # ---
-        printe.output(f"Category-members:{len(vav2)}, New-members:{len(vav)}")
+        logger.info(f"Category-members:{len(vav2)}, New-members:{len(vav)}")
     # ---
     elif "sql" in sys.argv:
         vav2 = sql_for_mdwiki.get_all_pages()
         vav = [t for t in vav2 if (t not in words_tab or words_tab[t] < 50)]
-        printe.output(f"ALL SQL LINKS:{len(vav2)}, to work:{len(vav)}")
+        logger.info(f"ALL SQL LINKS:{len(vav2)}, to work:{len(vav)}")
     # ---
     elif "oldway" in sys.argv:
         ptext = mdwiki_api.GetPageText("WikiProjectMed:List")
@@ -66,26 +66,26 @@ def get_valid_Links(words_tab):
                 itemu = itemu[0].upper() + itemu[1:]
                 vav.append(itemu)
         # ---
-        printe.output("Get vaild_links fromlist : WikiProjectMed:List (oldway)")
+        logger.info("Get vaild_links fromlist : WikiProjectMed:List (oldway)")
     # ---
     elif "listnew" in sys.argv:
-        printe.output("Get vaild_links listnew")
+        logger.info("Get vaild_links listnew")
         ttt = """Lymphogranuloma venereum"""
         vav = [x.strip() for x in ttt.split("\n") if x.strip() != ""]
     # ---
     elif "fromlist" in sys.argv:
         vav = mdwiki_api.Get_page_links("WikiProjectMed:List")
         vav = vav.get("links", {}).keys()
-        printe.output("Get vaild_links fromlist : WikiProjectMed:List")
+        logger.info("Get vaild_links fromlist : WikiProjectMed:List")
     # ---
     else:
-        printe.output("Get vaild_links from cat : RTT")
+        logger.info("Get vaild_links from cat : RTT")
     # ---
     for x in vav[:]:
         if x.startswith("Category:"):
             vav.remove(x)
     # ---
-    printe.output(f"len of vaild_links: {len(vav)}")
+    logger.info(f"len of vaild_links: {len(vav)}")
     # ---
     return vav
 

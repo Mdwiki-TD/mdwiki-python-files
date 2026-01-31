@@ -45,13 +45,13 @@ class FindTranslator:
         unurl = f"{self.url}?{urlencode(params)}"
         # ---
         if "printurl" in sys.argv and "text" not in params:
-            printe.output(f"get_old:\t\t{unurl}")
+            logger.info(f"get_old:\t\t{unurl}")
         # ---
         try:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
-            printe.output(f"except: lang:{self.lang} {e}")
+            logger.info(f"except: lang:{self.lang} {e}")
         # ---
         return json1
 
@@ -95,7 +95,7 @@ class FindTranslator:
                         return
 
     def Translator(self):
-        printe.output(f"\t\t Translator: {self.translator}")
+        logger.info(f"\t\t Translator: {self.translator}")
         return self.translator
 
 

@@ -6,30 +6,26 @@ from fix_use.write_bot import write# write(oldtext, text, filepath)
 
 import logging
 import sys
-
 logger = logging.getLogger(__name__)
 
 ASK_all = True
 
 
-# ---
 def write(oldtext, text, filepath):
     global ASK_all
     # ---
     if oldtext == text:
         path2 = filepath.split("/")[-1]
-        printe.output(f"No change in {path2}")
+        logger.info(f"No change in {path2}")
         return False
     # ---
-    printe.showDiff(oldtext, text)
-    # ---
-    printe.output(filepath.replace("/", "\\"))
+    logger.info(filepath.replace("/", "\\"))
     # ---
     do_save = False
     # ---
     if ASK_all:
         # ---
-        printe.output("<<green>> Save?")
+        logger.info("<<green>> Save?")
         ask = input(f"save new text?...{filepath}:")
         if ask in ["", "a", "y"]:
             print("save new text")
@@ -51,7 +47,7 @@ def write(oldtext, text, filepath):
         # ---
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(text)
-        printe.output("<<green>> save done..")
+        logger.info("<<green>> save done..")
         # ---
         return text
 

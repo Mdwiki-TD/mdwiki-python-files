@@ -36,20 +36,20 @@ N_g = {1: 0}
 
 
 def dump_data(file, data):
-    printe.output(f"<<green>> dump_data() file:{file}.")
-    printe.output(f"<<yellow>> dump_data {len(data)} views")
+    logger.info(f"<<green>> dump_data() file:{file}.")
+    logger.info(f"<<yellow>> dump_data {len(data)} views")
     try:
         with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
-        printe.output("<<red>> keyboard interrupt sys.exit()")
+        logger.info("<<red>> keyboard interrupt sys.exit()")
         # ---
         with open(f"{file}_1", "w", encoding="utf-8") as f:
             json.dump(data, f)
         # ---
         sys.exit()
     except Exception as e:
-        printe.output(f"<<red>> dump Error: {e}")
+        logger.info(f"<<red>> dump Error: {e}")
 
 
 def get_v(lang, links, lang_links_mdtitle_s):
@@ -61,7 +61,7 @@ def get_v(lang, links, lang_links_mdtitle_s):
     if "new" in sys.argv:
         links = {x: t for x, t in links.items() if ViewsData[t].get(lang, {}).get("views", 0) == 0}
         de = len_p - len(links)
-        printe.output(f"de: {de}")
+        logger.info(f"de: {de}")
     # ---
     # split links to groups by 50 titles
     for i in range(0, len(links), 50):
@@ -85,7 +85,7 @@ def get_v(lang, links, lang_links_mdtitle_s):
             # ---
             viws_in = ViewsData[mdtitle].get(lang, {}).get("views", 0)
             # ---
-            printe.output(f"t: {title} - {lang} - views: {all_views}")
+            logger.info(f"t: {title} - {lang} - views: {all_views}")
             # ---
             # ViewsData.setdefault(mdtitle, {})[lang] = ViewsData[mdtitle].setdefault(lang, {})
             # ---
@@ -150,7 +150,7 @@ def start():
         # ---
         ViewsData.update({x: {} for x in tab.values() if x not in ViewsData})
         # ---
-        printe.output(f"<<blue>> p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
+        logger.info(f"<<blue>> p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
         # ---
         get_v(lang, tab, lang_links_mdtitles)
         # ---

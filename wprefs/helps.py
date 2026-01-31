@@ -29,6 +29,6 @@ def exepts():
     if not printe or not hasattr(printe, "error"):
         return
     if "returnfile" not in sys.argv:
-        printe.error("Traceback (most recent call last):")
-        printe.error(traceback.format_exc())
-        printe.error("CRITICAL:")
+        logger.error("Traceback (most recent call last):")
+        logger.error(traceback.format_exc())
+        logger.error("CRITICAL:")

@@ -41,7 +41,7 @@ api_new = NEW_API("www", family="mdwiki")
 
 def work(title, num, length, From=""):
     # ---
-    printe.output(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
+    logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
         return ""
@@ -49,7 +49,7 @@ def work(title, num, length, From=""):
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
-        printe.output(f" page:{title} not exists in mdwiki.")
+        logger.info(f" page:{title} not exists in mdwiki.")
         return ""
     # ---
     # if page.isRedirect() :  return
@@ -60,11 +60,11 @@ def work(title, num, length, From=""):
     ing = page.import_page(family="wikipedia")
     # ---
     if "test" in sys.argv:
-        printe.output(ing)
+        logger.info(ing)
     # ---
     done = ing.get("import", [{}])[0].get("revisions", 0)
     # ---
-    printe.output(f"<<green>> imported {done} revisions")
+    logger.info(f"<<green>> imported {done} revisions")
     # ---
     if done > 0:
         # ---
@@ -78,7 +78,7 @@ def work(title, num, length, From=""):
 
 
 def main():
-    printe.output("*<<red>> > main:")
+    logger.info("*<<red>> > main:")
     # ---
     # python3 imp.py -page:Crohn's_disease
     # python imp.py -newpages:1000
