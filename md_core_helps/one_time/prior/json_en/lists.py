@@ -21,7 +21,7 @@ for filename in os.listdir(project_js_new):
     if filename.endswith(".json"):
         filename2 = os.path.join(project_js_new, filename)
         # ---
-        print(f"filename: {filename2}..")
+        logger.info(f"filename: {filename2}..")
         # ---
         data = json.load(open(filename2))
         # ---

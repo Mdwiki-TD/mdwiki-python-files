@@ -78,27 +78,27 @@ def one_page(page, lang):
     text = GetPageText(title, lang=lang, Print=False)
     # ---
     if not text:
-        print("notext")
+        logger.info("notext")
         return ""
     # ---
     newtext = fix_page_here(text, title, lang)
     # ---
     if text == newtext:
-        print("no changes")
+        logger.info("no changes")
         return ""
     # ---
     if not newtext:
-        print("notext")
+        logger.info("notext")
         return ""
     # ---
     # if "save" in sys.argv:
     #     a = page_put(text, newtext, "Fix references, Expand infobox mdwiki.toolforge.org.", title, lang)
     #     if a:
-    #         print("save ok")
+    #         logger.info("save ok")
     #         return ""
     # ---
     filee = save_wprefcash(title, newtext)
-    print(filee)
+    logger.info(filee)
     # ---
     return ""
 
@@ -136,26 +136,26 @@ def one_file(file, lang):
             text = f.read()
     except Exception as e:
         text = ""
-        print(e)
+        logger.info(e)
         return ""
     # ---
     if text == "":
-        print("notext")
+        logger.info("notext")
         return ""
     # ---
     newtext = fix_page_here(text, rand_title, lang)
     # ---
     if text == newtext:
-        print("no changes")
+        logger.info("no changes")
         return ""
     # ---
     if not newtext:
-        print("notext")
+        logger.info("notext")
         return ""
     # ---
     filee = save_wprefcash(rand_title, newtext)
     # ---
-    print(filee)
+    logger.info(filee)
     # ---
     return ""
 
@@ -195,11 +195,11 @@ def maine():
             file = value.replace("_", " ")
     # ---
     if page == "" and file == "":
-        print("no page or file")
+        logger.info("no page or file")
         return ""
     # ---
     if lange == "":
-        print("no lang")
+        logger.info("no lang")
         return ""
     # ---
     if file:

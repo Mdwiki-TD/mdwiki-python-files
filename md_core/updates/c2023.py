@@ -32,7 +32,7 @@ def get_users(pages):
 
     for num, title in enumerate(pages, start=1):
         # ---
-        print(f"num:{num}/{len(pages)}, title:{title}")
+        logger.info(f"num:{num}/{len(pages)}, title:{title}")
         # ---
         revisions = api_new.get_revisions(
             title,
@@ -63,7 +63,7 @@ def get_users(pages):
                 if year not in usersbyyear:
                     usersbyyear[year] = {}
                 # ---
-                # print(f'user:{user}, comment:{comment}')
+                # logger.info(f'user:{user}, comment:{comment}')
                 # ---
                 if user == "Mr. Ibrahem":
                     # if comment == 'mdwiki changes.' or comment.startswith('add link to'):

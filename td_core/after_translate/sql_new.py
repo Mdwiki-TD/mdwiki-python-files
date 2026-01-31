@@ -67,7 +67,7 @@ def sql_results(lang):
     qua += "\n;"
     # ---
     if "printquery" in sys.argv:
-        print(qua)
+        logger.info(qua)
     # ---
     result = wiki_sql.sql_new(qua, str(lang))
     return result

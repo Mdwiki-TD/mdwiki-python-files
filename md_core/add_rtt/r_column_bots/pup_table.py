@@ -82,7 +82,7 @@ def work_one_table_O(table_text, redirects, pages):
             text_x += one_cell(cell_values)
             continue
         # ---
-        # print(f"title: ({title}), r_s: ({r_s})")
+        # logger.info(f"title: ({title}), r_s: ({r_s})")
         # ---
         if title in pages:
             cell_values[1] = R_NEW_ROW
@@ -151,7 +151,7 @@ def work_one_table(table_text, redirects, pages):
             already_in.append(title)
             continue
         # ---
-        # print(f"title: ({title}), r_s: ({r_s})")
+        # logger.info(f"title: ({title}), r_s: ({r_s})")
         # ---
         if title in pages:
             x[1].string = R_NEW_ROW

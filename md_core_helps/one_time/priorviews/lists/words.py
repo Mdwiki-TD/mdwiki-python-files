@@ -38,13 +38,13 @@ for lang, titles in words_by_lang.items():
 # ---
 if __name__ == "__main__":
     for x, wo in count_words_by_lang.items():
-        print(x, wo)
+        logger.info(x, wo)
     # ---
-    print(f"len of count_words_by_lang: {len(count_words_by_lang)}")
+    logger.info(f"len of count_words_by_lang: {len(count_words_by_lang)}")
     # ---
-    print(f"len of words_by_lang: {len(words_by_lang)}")
+    logger.info(f"len of words_by_lang: {len(words_by_lang)}")
     for lang, titles in words_by_lang.items():
         for title, words in titles.items():
-            print(lang, title, words)
+            logger.info(lang, title, words)
 
 # ---

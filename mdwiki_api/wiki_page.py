@@ -37,7 +37,7 @@ home_dir = os.getenv("HOME")
 # ---
 User_tables = User_tables_wiki
 # ---
-print(f"wiki_page.py use {User_tables['username']} account.")
+logger.info(f"wiki_page.py use {User_tables['username']} account.")
 # ---
 change_codes = {
     "bat_smg": "bat-smg",

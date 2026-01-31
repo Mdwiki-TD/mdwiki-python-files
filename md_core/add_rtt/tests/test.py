@@ -47,7 +47,7 @@ for table in parsed.tables:
     # ---
     for x in table.cells():
         # ---
-        # print("x[6]:", x[6])
+        # logger.info("x[6]:", x[6])
         # ---
         r_s = x[1].value.strip()
         title = x[2].value.strip()
@@ -55,7 +55,7 @@ for table in parsed.tables:
         logger.info(f"<<green>> title: ({title}), r_s: ({r_s})")
         # ---
         if x[1].is_header:
-            print("skip header")
+            logger.info("skip header")
             continue
         # ---
         x[1].value = "R"
@@ -65,4 +65,4 @@ new_text = parsed.string
 
 # titles = api_new.get_titles_redirects(["Ehlers–Danlos syndrome"]) # {'Ehlers–Danlos syndrome': 'Ehlers–Danlos syndromes'}
 
-# print(titles)
+# logger.info(titles)

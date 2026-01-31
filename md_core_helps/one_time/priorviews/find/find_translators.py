@@ -118,8 +118,8 @@ def start():
         # ---
         links = links_by_lang[lang]
         # ---
-        print(f"lang: {lang}")
-        print(f"links: {len(links)}")
+        logger.info(f"lang: {lang}")
+        logger.info(f"links: {len(links)}")
         # ---
         n += 1
         # ---
@@ -144,7 +144,7 @@ def test():
             for title, tra in titles.items():
                 if tra != "":
                     n += 1
-                    print(n, lang, title, tra)
+                    logger.info(n, lang, title, tra)
 
 
 def removeip():
@@ -158,7 +158,7 @@ def removeip():
             # skip user match ip address
             if helps.is_ip(user):
                 tra_by_lang[lang][title] = ""
-                print(f" <<yellow>> skip user match ip address: {user}")
+                logger.info(f" <<yellow>> skip user match ip address: {user}")
                 continue
     # ---
     logem()

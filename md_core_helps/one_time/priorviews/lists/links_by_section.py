@@ -38,7 +38,7 @@ for mdtitle, langs in all_pages_states.items():
     # ---
     newlangs = {lang: v["title"] for lang, v in langs.items() if v["title"] != "" and v["color"] == "green"}
     # ---
-    # if 'test' in sys.argv: print(newlangs)
+    # if 'test' in sys.argv: logger.info(newlangs)
     # ---
     mdtitles_lang_title[mdtitle] = newlangs
 # ---
@@ -82,19 +82,19 @@ logger.info(f"<<green>> len of sects_links_langlinks: {len(sects_links_langlinks
 links_done = list(set(links_done))
 # ---
 if len(links_done) != len(mdtitles_lang_title.keys()):
-    print(f"len of links_done: {len(links_done)}")
+    logger.info(f"len of links_done: {len(links_done)}")
     # ---
     # find diff
     # ---
     diff = list(set(mdtitles_lang_title.keys()) - set(links_done))
     # ---
     logger.error(f"<<red>> len of diff: {len(diff)}")
-    print(diff)
+    logger.info(diff)
 # ---
 # find the section with the least links
-print(f"least section: {least_section}")
+logger.info(f"least section: {least_section}")
 # print length of least_section in sects_links_langlinks
-print(f"length of least_section: {len(sects_links_langlinks[least_section])}")
+logger.info(f"length of least_section: {len(sects_links_langlinks[least_section])}")
 # ---
 # ---
 sects_links_langlinks = copy.deepcopy(sects_links_langlinks)
@@ -107,12 +107,12 @@ if __name__ == "__main__":
     # ---
     """
     for s, ls in ll.items():
-        print(f'section: {s}')
-        print(f'len of links: {len(ls)}')
+        logger.info(f'section: {s}')
+        logger.info(f'len of links: {len(ls)}')
         if len(ls) < 10:
-            print(ls)
+            logger.info(ls)
     """
     # ---
-    # print(links_by_lang['ar'])
-    print(len(links_by_lang["ar"]))
+    # logger.info(links_by_lang['ar'])
+    logger.info(len(links_by_lang["ar"]))
     # ---

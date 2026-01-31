@@ -75,7 +75,7 @@ def get_editors_sql(links, site, split_by=100):
         # ---
         qua2 = qua.replace("%s", lim)
         # ---
-        # print(qua2)
+        # logger.info(qua2)
         # ---
         edits = wiki_sql.sql_new(qua2, site, u_print=False)
         # ---

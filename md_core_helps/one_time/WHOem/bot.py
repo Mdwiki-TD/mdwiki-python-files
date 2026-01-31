@@ -36,7 +36,7 @@ def get_md_links():
     for cat in cats:
         links = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
         all_p.extend(links)
-        print(f"md_links.py {len(links)} links found")
+        logger.info(f"md_links.py {len(links)} links found")
     # ---
     all_p = list(set(all_p))
     # ---
@@ -109,7 +109,7 @@ def get_lang_links(md_links):
         json.dump(links_not_found, f, ensure_ascii=False, indent=2)
     # ---
     for title in links_not_found:
-        print(f"\t{title}")
+        logger.info(f"\t{title}")
     # ---
     return lang_links
 

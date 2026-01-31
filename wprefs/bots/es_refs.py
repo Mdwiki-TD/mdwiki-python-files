@@ -62,7 +62,7 @@ def get_refs(text):
         if name not in refs[group]:
             refs[group][name] = x.contents
         # elif refs[group][name] != x.contents:
-        #     print(f"x.contents = {x.contents}")
+        #     logger.info(f"x.contents = {x.contents}")
         # ---
         refs_to_name[conts] = name
         # ---

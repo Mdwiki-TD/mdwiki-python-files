@@ -99,7 +99,7 @@ def get_v(links):
             # ---
             viws = api_views(title, lang)
             # ---
-            print(f"title {N_g}/{leno}: {title} - {lang} - {viws}")
+            logger.info(f"title {N_g}/{leno}: {title} - {lang} - {viws}")
             if viws is None:
                 continue
             # ---
@@ -120,8 +120,8 @@ def start():
     # make text for each section
     for section, links in sects_links_langlinks.items():
         # ---
-        print(f"section: {section}")
-        print(f"links: {len(links)}")
+        logger.info(f"section: {section}")
+        logger.info(f"links: {len(links)}")
         # ---
         n += 1
         # ---

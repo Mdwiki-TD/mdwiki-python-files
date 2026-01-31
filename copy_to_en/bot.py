@@ -17,12 +17,12 @@ def main():
     all_pages = cat_cach.from_cache()
     # ---
     for n, x in enumerate(all_pages):
-        print(f"{n}/{len(all_pages)} : {x}")
+        logger.info(f"{n}/{len(all_pages)} : {x}")
         # ---
         alltext = mdwiki_api.GetPageText(x)
         # ---
         if not alltext:
-            print("no text: " + x)
+            logger.info("no text: " + x)
             continue
         # ---
         first = alltext.split("==")[0].strip()
@@ -45,7 +45,7 @@ def main():
             # ---
             page.save(newtext, summary=summary, nocreate=0)
         else:
-            print("page not found: " + new_title)
+            logger.info("page not found: " + new_title)
             page.Create(text=newtext, summary=summary)
 
 

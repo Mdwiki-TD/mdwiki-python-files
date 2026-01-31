@@ -19,7 +19,7 @@ read4.work_test(all, allen)
 x = "https://books.google.ca/books?id=JaOoXdSlT9sC&pg=PA11"
 # ---
 # prased = url_parser(x)
-# print(prased)
+# logger.info(prased)
 # ---
 #
 # if 'books.google' in x: x = re.sub(r'google\.\w+/', 'google.com/', x)

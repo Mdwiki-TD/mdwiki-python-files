@@ -89,7 +89,7 @@ texts = []
 # ---
 n = 0
 # ---
-print("----------------")
+logger.info("----------------")
 logger.info("<<yellow>> UPDATE: ")
 # ---
 if UPDATE:
@@ -138,7 +138,7 @@ if UPDATE:
         logger.info(f"{len(UPDATE)=}")
         logger.info(UPDATE[0])
 # ---
-print("----------------")
+logger.info("----------------")
 logger.info("<<yellow>> INSERT: ")
 # ---
 if INSERT != []:
@@ -156,7 +156,7 @@ if INSERT != []:
         logger.info(f"{len(INSERT)=}")
         logger.info(insert_line[0])
 # ---
-print("----------------")
+logger.info("----------------")
 # ---
 logger.info(f"len lead_words from file: {len(lead_words)}")
 logger.info(f"len all_words from file: {len(all_words)}")

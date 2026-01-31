@@ -95,4 +95,4 @@ def get_all_revids():
 if __name__ == "__main__":
     get_all_revids()
     # d = Cat_Depth("RTTHearing", 0)
-    # print(d)
+    # logger.info(d)

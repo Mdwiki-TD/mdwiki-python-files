@@ -37,7 +37,7 @@ data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}
 for x, numb in data_in_json.items():
     NEW_DATA[x] = numb
 # ---
-print(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
+logger.info(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
 # ---
 in_sql = {}
 # ---
@@ -46,8 +46,8 @@ for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     if not NEW_DATA.get(title):
         in_sql[title] = q["importance"]
 # ---
-print(f"{len(in_sql)=}")
-print(in_sql)
+logger.info(f"{len(in_sql)=}")
+logger.info(in_sql)
 # ---
 NEW_DATA.update(in_sql)
 # ---
@@ -81,7 +81,7 @@ NEW_DATA = {k: v for k, v in sorted(NEW_DATA.items(), key=lambda item: item[1])}
 # ---
 len_empty = len([x for x in NEW_DATA.values() if not x])
 # ---
-print(f"{len(NEW_DATA)=}, {len_empty=}")
+logger.info(f"{len(NEW_DATA)=}, {len_empty=}")
 # ---
 for title, importance in NEW_DATA.items():
     n += 1

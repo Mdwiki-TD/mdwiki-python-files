@@ -32,7 +32,7 @@ def print_test(strr):
 
 def update_in_sql(lang, table):
     # ---
-    print("update_in_sql:")
+    logger.info("update_in_sql:")
     # ---
     sql_values = already_in_sql.get(lang, {})
     # ---
@@ -105,7 +105,7 @@ def get_targets(lang_o):
                 Lang_to_targets[lang] = {}
             Lang_to_targets[lang][target] = pupdate
     # ---
-    print(f"<<yellow>> find {len(sq)} to work. ")
+    logger.info(f"<<yellow>> find {len(sq)} to work. ")
 
 
 def get_views_sql(lang_o):
@@ -134,7 +134,7 @@ def get_views_sql(lang_o):
 
 def main():
     # ---
-    print(" _finder: ")
+    logger.info(" _finder: ")
     # ---
     lang_o = ""
     # ---

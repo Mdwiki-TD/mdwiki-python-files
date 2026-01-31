@@ -23,8 +23,8 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
 
     # ---
     if "test1" in sys.argv:
-        print("mdtitle:", mdtitle)
-        print("langlinks:", langlinks)
+        logger.info("mdtitle:", mdtitle)
+        logger.info("langlinks:", langlinks)
     # ---
 
     for l in langs_keys_sorted:
@@ -34,7 +34,7 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
         view = ""
 
         data = langlinks.get(l)
-        # print('data:', data)#{'title': 'قائمة الأدوية الأساسية النموذجية لمنظمة الصحة العالمية', 'views': 159424}
+        # logger.info('data:', data)#{'title': 'قائمة الأدوية الأساسية النموذجية لمنظمة الصحة العالمية', 'views': 159424}
 
         if data:
             title = data["title"]
@@ -152,12 +152,12 @@ def start():
     with open(f"{Dir}/lists/views.json", "r", encoding="utf-8") as f:
         Views_Data = json.load(f)
     # ---
-    print(f"len ViewsData: {len(Views_Data)}")
+    logger.info(f"len ViewsData: {len(Views_Data)}")
     # ---
     ntext = make_text(Views_Data)
     # ---
     if "test" in sys.argv:
-        print(ntext)
+        logger.info(ntext)
     # ---
     with open(f"{Dir}/text.txt", "w", encoding="utf-8") as f:
         f.write(ntext)

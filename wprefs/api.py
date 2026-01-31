@@ -29,7 +29,7 @@ botpassword = user_account_enwiki.botpassword
 user_agent = user_account_enwiki.user_agent
 # ---
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
+# logger.info(f'Dir : {Dir}')
 # ---
 SS = {"token": ""}
 session = {}
@@ -51,7 +51,7 @@ session["family"] = "mdwiki"
 
 
 def printx(s):
-    print(s)
+    logger.info(s)
 
 
 def log(lang):
@@ -88,7 +88,7 @@ def log(lang):
         )
         r1.raise_for_status()
     except Exception as e:
-        print(f"login to {lang}.{family}.org Error {e}")
+        logger.info(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     try:

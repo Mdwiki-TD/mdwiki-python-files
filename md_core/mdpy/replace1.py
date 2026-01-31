@@ -33,7 +33,7 @@ def work(title, Find, Replace, nn):
     text = page.get_text()
     # ---
     if not text.strip():
-        print(f"page:{title} text = ''")
+        logger.info(f"page:{title} text = ''")
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
         with open(file_name[1], "a", encoding="utf-8") as file:
             file.write(line)
@@ -88,7 +88,7 @@ def main():
         if arg == "-number" and value.isdigit():
             numbers[1] = int(value)
     # ---
-    print(nn)
+    logger.info(nn)
     # ---
     find_file = f"{work_dir}/{nn}/find.txt"
     replace_file = f"{work_dir}/{nn}/replace.txt"

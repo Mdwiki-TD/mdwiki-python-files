@@ -23,7 +23,7 @@ def create_qids(no_qids):
         new_qid = wikidataapi.new_item(label="", lang="", returnid=True)
         # ---
         if not new_qid or not str(new_qid).startswith("Q"):
-            print(f"Skip.. {new_qid=}")
+            logger.info(f"Skip.. {new_qid=}")
             continue
         # ---
         new_qid = new_qid.strip()

@@ -92,7 +92,7 @@ def work_one_lang(list_, lang):
     if "lala" not in sys.argv:
         newlist = [x for x in list_ if f"{lang}:{x}" not in reffixed_list]
         dd = int(len(list_)) - int(len(newlist))
-        print(f"already in reffixed_list :{dd}")
+        logger.info(f"already in reffixed_list :{dd}")
     # ---
     # if len(newlist) > 0: log(lang)
     # ---

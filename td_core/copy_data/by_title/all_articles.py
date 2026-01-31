@@ -47,7 +47,7 @@ def main():
     data.update(RTT_pages)
     # ---
     for cat, len_titles in length.items():
-        print(f"Category:{cat}: {len_titles=}")
+        logger.info(f"Category:{cat}: {len_titles=}")
     # ---
     start_to_sql(data)
 

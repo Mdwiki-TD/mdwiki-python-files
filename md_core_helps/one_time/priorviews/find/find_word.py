@@ -111,8 +111,8 @@ def start():
         # ---
         links = links_by_lang[lang]
         # ---
-        print(f"lang: {lang}")
-        print(f"links: {len(links)}")
+        logger.info(f"lang: {lang}")
+        logger.info(f"links: {len(links)}")
         # ---
         n += 1
         # ---

@@ -125,7 +125,7 @@ def get_lang_links_mdtitles(lang_links):
     to_p = dict(list(lang_links_mdtitles.items())[0:10])
     # ---
     for x, z in to_p.items():
-        print(x, len(z))
+        logger.info(x, len(z))
     # ---
     return lang_links_mdtitles
 

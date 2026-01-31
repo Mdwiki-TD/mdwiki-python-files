@@ -51,7 +51,7 @@ def GET_SQL():
     if "nosql" in sys.argv:
         return False
     # ---
-    print(f"GET_SQL() == {can_use_sql_db[1]}")
+    logger.info(f"GET_SQL() == {can_use_sql_db[1]}")
     # ---
     return can_use_sql_db[1]
 
@@ -139,7 +139,7 @@ def fetch_arcat_titles(arcatTitle):
     # ---
     arcatTitle = re.sub(r"تصنيف:", "", arcatTitle)
     arcatTitle = re.sub(r" ", "_", arcatTitle)
-    print(f"arcatTitle : {arcatTitle}")
+    logger.info(f"arcatTitle : {arcatTitle}")
     # ---
     arcatTitle = escape_string(arcatTitle)
     # ---
@@ -174,7 +174,7 @@ def fetch_arcat_titles(arcatTitle):
         arcats.append(str(title))
         # ---
     # ---
-    print(f"arcats: {len(arcats)} {arcatTitle}")
+    logger.info(f"arcats: {len(arcats)} {arcatTitle}")
     # ---
     return arcats
 
@@ -194,7 +194,7 @@ def Make_sql(queries, wiki="", printqua=False):
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
     if printqua:
-        print(queries)
+        logger.info(queries)
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
     logger.info(f'<<red>> API/sql_py db:"{dbs_p}", db_username:"{db_username}" {TTime}')
@@ -209,7 +209,7 @@ def Make_sql(queries, wiki="", printqua=False):
     # ---
     delta = int(final - start)
     # ---
-    print(f'API/sql_py Make_sql len(encats) = "{len(encats)}", in {delta} seconds')
+    logger.info(f'API/sql_py Make_sql len(encats) = "{len(encats)}", in {delta} seconds')
     # ---
     encats.sort()
     # ---
@@ -223,13 +223,13 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
-    print(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
+    logger.info(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
     # ---
     if not GET_SQL():
         return rows
     # ---
     if printqua:
-        print(queries)
+        logger.info(queries)
     # ---
     start = tttime.time()
     final = tttime.time()
@@ -251,7 +251,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
         rows.append(raw)
     # ---
     delta = int(final - start)
-    print(f'API/sql_py Make_sql_many_rows len(encats) = "{len(rows)}", in {delta} seconds')
+    logger.info(f'API/sql_py Make_sql_many_rows len(encats) = "{len(rows)}", in {delta} seconds')
     # ---
     return rows
 
@@ -263,10 +263,10 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
-    print(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
+    logger.info(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
     # ---
     if printqua:
-        print(queries)
+        logger.info(queries)
     # ---
     if not GET_SQL():
         return encats
@@ -288,7 +288,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
         encats[key] = value
     # ---
     delta = int(final - start)
-    print(f'API/sql_py Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
+    logger.info(f'API/sql_py Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
     # ---
     return encats
 
@@ -300,10 +300,10 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
-    print(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
+    logger.info(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
     # ---
     if printqua:
-        print(queries)
+        logger.info(queries)
     # ---
     if not GET_SQL():
         return encats
@@ -323,7 +323,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
         encats.append(en)
     # ---
     delta = int(final - start)
-    print(f'API/sql_py Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
+    logger.info(f'API/sql_py Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
     # ---
     return encats
 
@@ -385,7 +385,7 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
     final_cat = [str(cat) for cat in encats if cat not in arcats]
     # ---
     delta = int(final - start)
-    print(f'API/sql_py MySQLdb_finder_N_New len(final_cat) = "{len(final_cat)}", in {delta} seconds')
+    logger.info(f'API/sql_py MySQLdb_finder_N_New len(final_cat) = "{len(final_cat)}", in {delta} seconds')
     # ---
     return final_cat if final_cat != [] else False
 

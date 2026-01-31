@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 # ---
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
+# logger.info(f'Dir : {Dir}')
 # ---
 project_js_new = f"{Dir}/json_en/"
 # ---
@@ -55,7 +55,7 @@ class PriorAddOld:
             if filename.endswith(".json"):
                 p += 1
                 self.all_file.append(filename)
-                print(
+                logger.info(
                     f'toolforge jobs run p{p} --command "python3 core8/pwb.py prior/add_old -file:{filename}" --image python3.9'
                 )
         # ---
@@ -69,15 +69,15 @@ class PriorAddOld:
         # ---
         if file_to in self.all_file:
             self.all_file = [file_to]
-            print(f"file: {file_to}")
+            logger.info(f"file: {file_to}")
         else:
-            print(f"no file: {file_to}")
+            logger.info(f"no file: {file_to}")
             return
         # ---
         for filename in self.all_file:
             filename = os.path.join(project_js_new, filename)
             # ---
-            print(f"filename: {filename}..")
+            logger.info(f"filename: {filename}..")
             # ---
             with open(filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
@@ -90,7 +90,7 @@ class PriorAddOld:
                 # ---
                 n += 1
                 # ---
-                print(f"page: {n}/{len_all}")
+                logger.info(f"page: {n}/{len_all}")
                 # ---
                 title2 = tab["en"]
                 # ---
@@ -123,7 +123,7 @@ class PriorAddOld:
                 data_new[title] = tab
         # ---
         if data_new == data:
-            print(f"no change: {filename}")
+            logger.info(f"no change: {filename}")
         else:
             # ---
             with open(filename, "w", encoding="utf-8") as file:

@@ -13,7 +13,7 @@ site = mwclient.Site("commons.wikimedia.org")
 def save_page(page_name, content):
     # Uncomment next line when ready to write
     # site.pages[page_name].save(content, summary="Update SVGLanguages entries")
-    print(f"Would update {page_name} with {len(svg_map)} entries")
+    logger.info(f"Would update {page_name} with {len(svg_map)} entries")
     with open(Path(__file__).parent / "list.wiki", "w", encoding="utf-8") as f:
         f.write(content)
 

@@ -92,7 +92,7 @@ def check_urls(urls):
         if url.find("http") == -1:
             url = f"https://owidm.wmcloud.org/grapher/{url}"
         # ---
-        print(url)
+        logger.info(url)
         # ---
         try:
             response = requests.get(url, headers={"User-Agent": default_user_agent}, timeout=10)
@@ -133,7 +133,7 @@ def make_log(dad):
             ta += x
         # ---
         ta += "\n=== pages ===\n%s" % "\n".join([f"*[[{s}]]" for s in dad[x]])
-        # print(ta)
+        # logger.info(ta)
         # ---
         if vav:
             text_error += ta

@@ -17,8 +17,8 @@ def tests():
     qua = ' select DISTINCT * from pages where lang ="zh" limit 100;'
     # ---
     qids = sql_connect_pymysql(qua)
-    print('sql_connect_pymysql:')
-    print(len(qids))
+    logger.info('sql_connect_pymysql:')
+    logger.info(len(qids))
     # ---
     # test_add_qid
     a = add_qid('test', 'test')
@@ -37,10 +37,10 @@ def tests():
     pages = sql_for_mdwiki.get_all_pages_all_keys(lang="ar", table="pages_users")
     logger.info(f"<<yellow>> len of pages:{len(pages)}")
     for x in pages:
-        # print(type(x['add_date']))
-        # print(x)
-        print(json.dumps(x, indent=2))
-        # print(x['add_date'])
+        # logger.info(type(x['add_date']))
+        # logger.info(x)
+        logger.info(json.dumps(x, indent=2))
+        # logger.info(x['add_date'])
     # logger.info()
 
     # ---

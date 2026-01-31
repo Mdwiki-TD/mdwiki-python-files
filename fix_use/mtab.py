@@ -116,7 +116,7 @@ def one_file(file):
     with open(file, "r", encoding="utf-8") as f:
         lines = f.readlines()
     # ---
-    print(f"\n\n_______{file=}, {len(lines)=}")
+    logger.info(f"\n\n_______{file=}, {len(lines)=}")
     # ---
     ns = None
     ta = []
@@ -131,7 +131,7 @@ def one_file(file):
         # ---
         line = line.strip()
         # ---
-        print([line])
+        logger.info([line])
         # ---
         # match page namespace like:
         # namespace EnWiki\API;
@@ -160,10 +160,10 @@ def start():
         if arg == "path":
             path = value.strip()
     # ---
-    print(f" <<blue>> work on path : {path}\n" * 3)
+    logger.info(f" <<blue>> work on path : {path}\n" * 3)
     # ---
     if not os.path.exists(path):
-        print(" <<blue>> path not exist")
+        logger.info(" <<blue>> path not exist")
         return
     # ---
     from fix_use.add import add_use
@@ -197,7 +197,7 @@ def start():
             if "break" in sys.argv:
                 break
     # ---
-    print(json.dumps(tab2, indent=4))
+    logger.info(json.dumps(tab2, indent=4))
 
 
 if __name__ == "__main__":

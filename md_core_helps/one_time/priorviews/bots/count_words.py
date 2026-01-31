@@ -84,7 +84,7 @@ class InOldText:
         # get counts of words
         length = len(re.findall(r"\w+", tem_text))
         # ---
-        # print(f'count_text: {length}')
+        # logger.info(f'count_text: {length}')
         self.words = length
 
     def post_to_json(self, params):
@@ -124,7 +124,7 @@ class InOldText:
         # ---
         revisions = json1.get("query", {}).get("pages", [{}])[0].get("revisions", [{}])[0]
         self.timestamp = revisions.get("timestamp", "")
-        # print(f'timestamp: {self.timestamp}')
+        # logger.info(f'timestamp: {self.timestamp}')
         self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
     def get_newtext(self):
@@ -160,6 +160,6 @@ def get_words(title, lang):
 if __name__ == "__main__":
     # ---
     t = get_words("التهاب الفقار القسطي", "ar")
-    print(f"words: {t}")
+    logger.info(f"words: {t}")
     sys.exit()
     # ---

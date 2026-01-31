@@ -143,7 +143,7 @@ def make_cash_to_cats(dump_data=False):
         for cat, members in all_cats.items():
             tab = {"list": members}
             dump_to_cache(cat, tab)
-            # print(f"len of pages in {cat}: {len(members)}")
+            # logger.info(f"len of pages in {cat}: {len(members)}")
         # ---
         filename = Path(__file__).parent / "all_pages.json"
         # ---

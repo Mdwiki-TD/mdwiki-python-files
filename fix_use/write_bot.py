@@ -29,14 +29,14 @@ def write(oldtext, text, filepath):
         logger.info("<<green>> Save?")
         ask = input(f"save new text?...{filepath}:")
         if ask in ["", "a", "y"]:
-            print("save new text")
+            logger.info("save new text")
             # ---
             do_save = True
         # ---
         elif ask == "x":
             sys.exit()
         else:
-            print(f"answer is wrong:{ask}, return False")
+            logger.info(f"answer is wrong:{ask}, return False")
             return False
         # ---
         if ask == "a":

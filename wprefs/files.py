@@ -24,7 +24,7 @@ setting = {}
 if os.path.isfile(fixwikirefs):
     try:
         setting = json.load(open(fixwikirefs, "r", encoding="utf-8-sig"))
-        # print(setting)
+        # logger.info(setting)
     except Exception:
         setting = {}
 

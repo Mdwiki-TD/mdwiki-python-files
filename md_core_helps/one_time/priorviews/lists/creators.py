@@ -61,7 +61,7 @@ for lang in list(CreatorsData):
         # ---
         if comment.find("|User:Mr. Ibrahem/") == -1 and TD:
             Dump_it = True
-            print("false TD..")
+            logger.info("false TD..")
             CreatorsData[lang][title]["TD"] = False
         # ---
         # if actor match IP address : skip
@@ -80,17 +80,17 @@ if Dump_it:
 # ---
 if __name__ == "__main__":
     if "dd" not in sys.argv:
-        print(f"len of Creators_by_lang_title: {len(Creators_by_lang_title)}")
+        logger.info(f"len of Creators_by_lang_title: {len(Creators_by_lang_title)}")
         for lang, titles in Creators_by_lang_title.items():
             for title, words in titles.items():
-                print(lang, title, words)
+                logger.info(lang, title, words)
 
         for x, wo in counts_creators_by_lang.items():
-            print(x)
+            logger.info(x)
             for x, z in wo.items():
-                print(x, z)
+                logger.info(x, z)
         # ---
-        print(f"len of counts_creators_by_lang: {len(counts_creators_by_lang)}")
+        logger.info(f"len of counts_creators_by_lang: {len(counts_creators_by_lang)}")
         # ---
 
 # ---

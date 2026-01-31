@@ -30,7 +30,7 @@ def mdwiki_sql_one_table(table_name, query, **kwargs):
 
 def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
     # ---
-    print(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
+    logger.info(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
     # ---
     done = 0
     # ---
@@ -71,19 +71,19 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
                 values ({values_line})
                 """
         # ---
-        # print(qua)
-        # print(values)
+        # logger.info(qua)
+        # logger.info(values)
         # ---
         mdwiki_sql_one_table(table_name, qua, values=values, many=True)
         # ---
         done += len(tab)
         # ---
-        print(f"to_sql.py insert_dict({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
+        logger.info(f"to_sql.py insert_dict({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
 def update_table(list_of_lines, table_name, columns, lento=10, title_column="title", update_columns=None):
     # ---
-    print(f"update_table({table_name}): list_of_lines: {len(list_of_lines)}")
+    logger.info(f"update_table({table_name}): list_of_lines: {len(list_of_lines)}")
     # ---
     done = 0
     # ---
@@ -107,7 +107,7 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
         # ---
         done += len(tab)
         # ---
-        print(f"to_sql.py update_table({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
+        logger.info(f"to_sql.py update_table({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
 def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, columns_where=None):
@@ -115,7 +115,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
     columns_to_set = columns_to_set or []
     columns_where = columns_where or []
     # ---
-    print(f"update_table_2({table_name}): list_of_lines: {len(list_of_lines)}")
+    logger.info(f"update_table_2({table_name}): list_of_lines: {len(list_of_lines)}")
     # ---
     done = 0
     # ---
@@ -137,7 +137,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
         # ---
         done += len(tab)
         # ---
-        print(f"to_sql.py update_table_2({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
+        logger.info(f"to_sql.py update_table_2({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
 def to_sql(data, table_name, columns, title_column="title", update_columns=None, IGNORE=False):
@@ -176,10 +176,10 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
             # new_data_insert[key] = values
             new_data_insert.append(values)
     # ---
-    print(f"{same=}, {len(new_data_insert)=}, {len(new_data_update)=}")
+    logger.info(f"{same=}, {len(new_data_insert)=}, {len(new_data_update)=}")
     # ---
     if "nodump" in sys.argv:
-        print('"nodump" in sys.argv - no dump')
+        logger.info('"nodump" in sys.argv - no dump')
     else:
         insert_dict(new_data_insert, table_name, columns, title_column=title_column, IGNORE=IGNORE)
         update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
@@ -225,10 +225,10 @@ def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["titl
             # new_data_insert[key] = values
             new_data_insert.append(values)
     # ---
-    print(f"{same=}, {len(new_data_insert)=}, {len(new_data_update)=}")
+    logger.info(f"{same=}, {len(new_data_insert)=}, {len(new_data_update)=}")
     # ---
     if "nodump" in sys.argv:
-        print('"nodump" in sys.argv - no dump')
+        logger.info('"nodump" in sys.argv - no dump')
     else:
         insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], IGNORE=IGNORE)
         # ---

@@ -84,7 +84,7 @@ def main():
     # ---
     all_pages = cats_pages()
     # ---
-    print(f"all_pages: {len(all_pages)}")
+    logger.info(f"all_pages: {len(all_pages)}")
     # ---
     dump_titles(all_pages)
 

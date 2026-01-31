@@ -59,13 +59,13 @@ for lang, titles in tra_by_lang.items():
         counts_by_lang[lang] += 1
 # ---
 if __name__ == "__main__":
-    # for x, wo in counts_by_translator.items():   print(x, wo)
+    # for x, wo in counts_by_translator.items():   logger.info(x, wo)
     # ---
-    print(f"len of counts_by_translator: {len(counts_by_translator)}")
+    logger.info(f"len of counts_by_translator: {len(counts_by_translator)}")
     # ---
-    print(f"len of tra_by_lang: {len(tra_by_lang)}")
+    logger.info(f"len of tra_by_lang: {len(tra_by_lang)}")
     for lang, titles in tra_by_lang.items():
         for title, user in titles.items():
             if user != "":
-                print(f"{lang=}, {title=}, {user=}")
+                logger.info(f"{lang=}, {title=}, {user=}")
 # ---

@@ -94,7 +94,7 @@ def do(ty):
     # ----
     work_un(tab)
     # ---
-    print("_______________")
+    logger.info("_______________")
     # ---
     add_to_qids(sql_qids, ty)
 

@@ -94,7 +94,7 @@ def fix_ref(first, alltext):
         contents = all_name_refs.get(ref_name)
         # ---
         if not contents:
-            print("ref not found: " + ref_name)
+            logger.info("ref not found: " + ref_name)
             continue
         # ---
         tag_short = tags[0].string

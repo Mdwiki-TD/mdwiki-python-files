@@ -163,12 +163,12 @@ def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_ref
         color = "red"
         # ---
         for x, count in p_names.items():
-            # print(f'{x}: {count}')
+            # logger.info(f'{x}: {count}')
             if x.lower() in lead_refsname or x.lower() in en_refsname:
                 if count > 6:
                     color = "green"
                     same2 = count
-                    print(f"ref {x}, count:{count}....")
+                    logger.info(f"ref {x}, count:{count}....")
                     break
         # ---
     # ---
@@ -209,7 +209,7 @@ def make_text(allo, ttt=""):
         if "langs" in ta:
             langs_keys.extend(ta["langs"].keys())
         else:
-            print(f"no langs for {en}, keys:{ta.keys()}")
+            logger.info(f"no langs for {en}, keys:{ta.keys()}")
     # ---
     langs_keys = [x.strip() for x in langs_keys if x.strip() != ""]
     # ---
@@ -229,7 +229,7 @@ def make_text(allo, ttt=""):
     # sort langs_keys_2 by number of references
     langs_keys_2 = sorted(langs_keys_2.items(), key=lambda x: x[1], reverse=True)
     # ---
-    # print(langs_keys_2)
+    # logger.info(langs_keys_2)
     # ---
     text = text_main
 
@@ -272,7 +272,7 @@ def make_text(allo, ttt=""):
         langs = ta["langs"]
         # ---
         if len(langs) == 0:
-            print(f"{en}: no langs.....")
+            logger.info(f"{en}: no langs.....")
         # ---
         if en not in all_pages_states:
             all_pages_states[en] = {}

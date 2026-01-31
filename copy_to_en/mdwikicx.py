@@ -32,7 +32,7 @@ un_wb_tag_cache = {}
 
 mdwiki_cats = sql_for_mdwiki.get_db_categories()
 # {'RTT': 1, 'RTTCovid': 0, 'RTTHearing': 0, 'RTTOSH': 0, 'World Health Organization essential medicines': 0, 'WHRTT': 0, 'RTTILAE': 0, 'RTTDZ': 0}
-# print(mdwiki_cats)
+# logger.info(mdwiki_cats)
 
 
 def get_cats(alltext):
@@ -119,7 +119,7 @@ def get_text(x):
     alltext, revid = get_text_revid(x)
     # ---
     if not alltext:
-        print("no text: " + x)
+        logger.info("no text: " + x)
         return "", ""
     # ---
     page_cats = get_cats(alltext)
@@ -164,7 +164,7 @@ def one_page(x):
             alltext = alltext_changes.do_all_text(alltext, revid, unlinked_tag)
             titles[new_title_all] = alltext
         else:
-            print(f"no text:{new_title_all}")
+            logger.info(f"no text:{new_title_all}")
     # ---
     x2 = x.replace(" ", "_")
     # ---
@@ -175,7 +175,7 @@ def one_page(x):
         # Create(new_title, newtext, summary)
         # # ---
         if text2 == "":
-            print("no text: " + title)
+            logger.info("no text: " + title)
             continue
         # # ---
         # return
@@ -185,12 +185,12 @@ def one_page(x):
             _p_t = page.get_text()
             # ---
             if _p_t == text2:
-                print("page exists: " + title)
+                logger.info("page exists: " + title)
                 continue
             # ---
             page.save(text2, summary=summary, nocreate=0)
         else:
-            print("page not found: " + title)
+            logger.info("page not found: " + title)
             page.Create(text=text2, summary=summary)
 
 
@@ -224,7 +224,7 @@ def start(all_pages):
         return
     # ---
     for n, x in enumerate(all_pages):
-        print(f"{n}/{len(all_pages)} : {x}")
+        logger.info(f"{n}/{len(all_pages)} : {x}")
         # ---
         one_page(x)
 
@@ -241,12 +241,12 @@ def main():
     # ---
     all_pages = get_all()
     # ---
-    print(f"all_pages: {len(all_pages)}")
+    logger.info(f"all_pages: {len(all_pages)}")
     # ---
     if "nodone" not in sys.argv:
         done = medwiki_cat_members()
         # ---
-        print(f" done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
+        logger.info(f" done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
         # ---
         all_pages = [x for x in all_pages if x not in done]
     # ---
@@ -259,7 +259,7 @@ def main2():
     # ---
     to_work = medwiki_cat_members(cat)
     # ---
-    print(f"to_works: {len(to_work)}")
+    logger.info(f"to_works: {len(to_work)}")
     # ---
     start(to_work)
 

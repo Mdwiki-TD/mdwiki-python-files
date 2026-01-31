@@ -38,7 +38,7 @@ def count_text(text):
     # get counts of words
     length = len(re.findall(r"\w+", tem_text))
     # ---
-    # print(f'count_text: {length}')
+    # logger.info(f'count_text: {length}')
     return tem_text, length
 
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     x = "Spondyloperipheral dysplasia"
     # ---
     leadword, pageword = count_all(title=x)
-    print(f"leadword: {leadword}, pageword: {pageword}")
+    logger.info(f"leadword: {leadword}, pageword: {pageword}")
     # ---
     pageword2 = mdwiki_api.wordcount(x)
-    print(f"pageword2: {pageword2}")
+    logger.info(f"pageword2: {pageword2}")

@@ -20,7 +20,7 @@ def change_last_Section(section):
     text = section.contents
     # ---
     for cat in section.wikilinks:
-        # print(cat)
+        # logger.info(cat)
         if str(cat).startswith("[[Category:"):
             text = text.replace(str(cat), "")
 

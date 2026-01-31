@@ -69,7 +69,7 @@ def add_use(filepath, ns_line="", add_lines=""):
     try:
         text = open(filepath, encoding="utf-8").read()
     except Exception as e:
-        print(f"Exception : {e}")
+        logger.info(f"Exception : {e}")
         return
     # ---
     oldtext = text

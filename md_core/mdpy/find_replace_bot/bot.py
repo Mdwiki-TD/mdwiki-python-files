@@ -32,7 +32,7 @@ def get_jobs():
             continue
         jobs.append(nn)
 
-    print(f"done:{done}, new jobs:{len(jobs)}")
+    logger.info(f"done:{done}, new jobs:{len(jobs)}")
 
     return jobs
 

@@ -24,7 +24,7 @@ def header_has_R(text, table=False):
         if x[1].is_header:
             for numb, v in enumerate(x, 1):
                 if v.value.strip() == "R":
-                    print(f"header has R: in column {numb}")
+                    logger.info(f"header has R: in column {numb}")
                     return True
     # ---
     return False

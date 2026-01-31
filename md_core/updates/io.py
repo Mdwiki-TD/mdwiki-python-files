@@ -33,7 +33,7 @@ if "test" in sys.argv:
 if "200" in sys.argv:
     listo = listo[:200]
 # ---
-print(f"len of listo: {len(listo)}")
+logger.info(f"len of listo: {len(listo)}")
 
 
 def get_timestamp(titles):
@@ -60,7 +60,7 @@ def get_timestamp(titles):
             NewList[page] = timestamp
         # ---
         if str(num).endswith("00"):
-            print("page:%d:%s,timestamp:%s" % (num, page, timestamp))
+            logger.info("page:%d:%s,timestamp:%s" % (num, page, timestamp))
 
         # ---
 
@@ -71,7 +71,7 @@ get_timestamp(listo)
 laly = [[int(io.split("T")[0].replace("-", "")), x] for x, io in NewList.items() if io.split("T")[0].replace("-", "")]
 laly.sort(reverse=True)
 # ---
-print(f"has {len(laly)} pages. ")
+logger.info(f"has {len(laly)} pages. ")
 # ---
 if not laly:
     exit()
@@ -82,8 +82,8 @@ new.sort(reverse=True)
 old = [[z, g] for z, g in laly if z < 20200701]
 old.sort(reverse=True)
 # ---
-print(f"we have {len(old)} pages with date < 20200701. ")
-print(f"we have {len(new)} pages with date > 20200701. ")
+logger.info(f"we have {len(old)} pages with date < 20200701. ")
+logger.info(f"we have {len(new)} pages with date > 20200701. ")
 # ---
 masha = "\n".join([f"{s}" for d, s in new])
 # ---
@@ -119,7 +119,7 @@ text += """|-
 |}
 """
 if "test" in sys.argv:
-    print(text)
+    logger.info(text)
 else:
     mdwiki_api.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
 # ---

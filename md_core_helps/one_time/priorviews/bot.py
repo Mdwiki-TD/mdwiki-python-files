@@ -35,7 +35,7 @@ for section, links in sects_links_langlinks.items():
     ntext = sections_text.make_text(section, links)
     # ---
     if "test" in sys.argv:
-        print(ntext)
+        logger.info(ntext)
     # ---
     title = f"User:Mr. Ibrahem/priorviews/{section}"
     # ---
@@ -54,7 +54,7 @@ for section, links in sects_links_langlinks.items():
 
 # ---
 all_section_views = sections_text.all_section_views - by_lang.en_views
-print(f"<<green>> all_section_views: {all_section_views:,}")
+logger.info(f"<<green>> all_section_views: {all_section_views:,}")
 # ---
 newtext = ""
 newtext += "; (Views from July 2015 to June 2023).\n"

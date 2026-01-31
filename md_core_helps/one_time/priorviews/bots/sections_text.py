@@ -44,10 +44,10 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
     u = 0
 
     if "test1" in sys.argv:
-        print("mdtitle:")
-        print(mdtitle)
-        print("langlinks:")
-        print(langlinks)
+        logger.info("mdtitle:")
+        logger.info(mdtitle)
+        logger.info("langlinks:")
+        logger.info(langlinks)
 
     # Loop through all available languages in the sorted order
     for l in langs_keys_sorted:
@@ -140,7 +140,7 @@ def make_text(section, links):
     n = 0
 
     if "test" in sys.argv:
-        print(langs_keys)
+        logger.info(langs_keys)
 
     section_views = 0
 
@@ -306,5 +306,5 @@ if __name__ == "__main__":
         "Tonsil stones": {},
     }
     u = make_text("Dentistry", lala)
-    print(u.replace("height:580px;", ""))
+    logger.info(u.replace("height:580px;", ""))
 # ---

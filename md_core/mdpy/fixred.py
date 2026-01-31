@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 NewList = {}
 
 redirects_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="redirects")
-print(f"len of redirects_pages {len(redirects_pages)} ")
+logger.info(f"len of redirects_pages {len(redirects_pages)} ")
 # ---
 nonredirects = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 
@@ -38,7 +38,7 @@ normalized = {}
 
 def printtest(s):
     if "test" in sys.argv:
-        print(s)
+        logger.info(s)
 
 
 def find_redirects(links):

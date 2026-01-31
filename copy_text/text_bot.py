@@ -86,7 +86,7 @@ def get_text(x):
     revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
     # ---
     if not alltext:
-        print("no text: " + x)
+        logger.info("no text: " + x)
         return "", ""
     # ---
     if x.strip().lower().startswith("video:") or x.strip() in full_translate:

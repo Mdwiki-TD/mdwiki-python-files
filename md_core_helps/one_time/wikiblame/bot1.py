@@ -20,7 +20,7 @@ def get_url(url):
         html = session.get(url)
         return html.text
     except Exception as e:
-        print(f"except: {e}")
+        logger.info(f"except: {e}")
     return ""
 
 

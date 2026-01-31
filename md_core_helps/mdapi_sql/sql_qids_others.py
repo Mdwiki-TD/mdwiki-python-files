@@ -23,17 +23,17 @@ logger = logging.getLogger(__name__)
 def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
     # ---
     if not query:
-        print("query == ''")
+        logger.info("query == ''")
         return {}
     # ---
-    # print('<<yellow>> newsql::')
+    # logger.info('<<yellow>> newsql::')
     return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
 def select_md_sql(query, *args, **kwargs):
     # ---
     if not query:
-        print("query == ''")
+        logger.info("query == ''")
         return {}
     # ---
     return mdwiki_sql(query, *args, **kwargs)
@@ -169,4 +169,4 @@ def add_titles_to_qids(tab0, add_empty_qid=False):
 if __name__ == "__main__":
     # python3 core8/pwb.py md_core_helps/mdapi_sql/sql_for_mdwiki
     d = get_others_qids()
-    print(f"{len(d)=}")
+    logger.info(f"{len(d)=}")

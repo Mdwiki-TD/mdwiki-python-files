@@ -31,7 +31,7 @@ def work_in_new_tabs_to_db(new_tabs_to_db):
         logger.info(f"\t old: user: {old['user']}, target: {old['target']}")
         logger.info(f"\t new: user: {new['user']}, target: {new['target']}")
         # ---
-        # print(new)
+        # logger.info(new)
         # {'id': '3381', 'title': 'Sympathetic crashing acute pulmonary edema', 'lang': 'ar', 'user': 'Karimabenkrid', 'pupdate': '2025-03-26', 'target': 'استسقاء رئوي حاد مفاجئ ودي', 'add_date': '2025-03-26 23:43:12'}
         # ---
         if "test" in sys.argv:

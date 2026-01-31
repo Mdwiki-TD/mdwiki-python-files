@@ -35,9 +35,9 @@ for tab in sq:
     # ---
     values = [mdtitle, target, lang, user, mdtitle, lang, user]
     # ---
-    print("**************")
-    print(done_qu)
-    print("**************")
+    logger.info("**************")
+    logger.info(done_qu)
+    logger.info("**************")
     # ---
     vfg = sql_for_mdwiki.mdwiki_sql(done_qu, update=True, values=values)
 # ---

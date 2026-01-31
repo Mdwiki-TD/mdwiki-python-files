@@ -27,7 +27,7 @@ def write_text(text_file, line, w_or_a="w"):
         with open(text_file, w_or_a, encoding="utf-8") as file:
             file.write(line)
     except Exception as e:
-        print(f"write_text error:{e}")
+        logger.info(f"write_text error:{e}")
 
 
 def work(title, Find, Replace, nn, log_file):
@@ -42,7 +42,7 @@ def work(title, Find, Replace, nn, log_file):
     text = page.get_text()
     # ---
     if not text.strip():
-        print(f"page:{title} text = ''")
+        logger.info(f"page:{title} text = ''")
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
         # ---
         write_text(log_file, line, w_or_a="a")
@@ -101,7 +101,7 @@ def check_for_stop(nn, text_file):
 
 def do_one_job(nn):
     # ---
-    print(nn)
+    logger.info(nn)
     # ---
     info_file = f"{work_dir}/{nn}/info.json"
     # ---
@@ -112,7 +112,7 @@ def do_one_job(nn):
             with open(Path(info_file), "r", encoding="utf-8") as file:
                 nn_info = json.load(file)
         except Exception as e:
-            print(f"can't load {info_file}, {e}")
+            logger.info(f"can't load {info_file}, {e}")
     # ---
     log_file = f"{work_dir}/{nn}/log.txt"
     text_file = f"{work_dir}/{nn}/text.txt"
@@ -181,14 +181,14 @@ def get_find_and_replace(nn):
         with open(find_file, "r", encoding="utf-8") as file:
             find = file.read()
     except Exception as e:
-        print(f"Error reading find file: {e}")
+        logger.info(f"Error reading find file: {e}")
         # return
     # ---
     try:
         with open(replace_file, "r", encoding="utf-8") as file:
             replace = file.read()
     except Exception as e:
-        print(f"Error reading replace file: {e}")
+        logger.info(f"Error reading replace file: {e}")
         # return
     # ---
     if replace.strip() == "empty":

@@ -49,7 +49,7 @@ def start():
     # ---
     articles = get_en_articles()
     # ---
-    print(f"len articles: {len(articles)}")
+    logger.info(f"len articles: {len(articles)}")
     # ---
     qids_list = list(articles.values())
     # ---

@@ -32,7 +32,7 @@ def ask_put(s):
 
     sa = input(s)
     if sa not in yes_answer:
-        print(" wikidataapi: wrong answer")
+        logger.info(" wikidataapi: wrong answer")
         return False
     if sa == "a" or sa == "A":
         return "a"
@@ -220,7 +220,7 @@ def get_redirects(liste):
     # ---
     redirects = {}
     # ---
-    # print(liste)
+    # logger.info(liste)
     # ---
     for i in range(0, len(liste), 50):
         # ---

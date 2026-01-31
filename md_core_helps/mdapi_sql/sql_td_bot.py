@@ -52,7 +52,7 @@ if "localhost" in sys.argv or not os.getenv("HOME"):
     main_args_new["host"] = "127.0.0.1"
     main_args["db"] = f"{db_username}__mdwiki"
     main_args_new["db"] = f"{db_username}__mdwiki_new"
-    print("sql_td_bot localhost")
+    logger.info("sql_td_bot localhost")
 
 
 def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):

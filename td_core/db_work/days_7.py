@@ -14,19 +14,19 @@ queries = {
 }
 # ---
 for name, qua in queries.items():
-    print(f"--- {name} ---")
+    logger.info(f"--- {name} ---")
     # ---
     qua_select = f"select * from {name} {qua}"
     # ---
     pages = sql_for_mdwiki.mdwiki_sql_dict(qua_select)
     # ---
     for n, page in enumerate(pages, start=1):
-        print(name, n, page)
+        logger.info(name, n, page)
     # ---
     qua_del = f"delete from {name} {qua}"
     # ---
-    print(qua_del)
+    logger.info(qua_del)
     # ---
     ty = sql_for_mdwiki.mdwiki_sql(qua_del, update=True)
     # ---
-    print(ty)
+    logger.info(ty)
