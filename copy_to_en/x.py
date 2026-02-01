@@ -35,16 +35,16 @@ for title in all_pages:
         time.sleep(0.5)  # Rate limiting
 
     except requests.exceptions.Timeout:
-        logger.info(f"✗ TIMEOUT: {title}")
+        logger.error(f"✗ TIMEOUT: {title}")
         failure_count += 1
     except requests.exceptions.ConnectionError:
-        logger.info(f"✗ CONNECTION ERROR: {title}")
+        logger.error(f"✗ CONNECTION ERROR: {title}")
         failure_count += 1
     except requests.exceptions.HTTPError as e:
-        logger.info(f"✗ HTTP ERROR: {title} - {e}")
+        logger.error(f"✗ HTTP ERROR: {title} - {e}")
         failure_count += 1
     except requests.RequestException as e:
-        logger.info(f"✗ REQUEST ERROR: {title} - {e}")
+        logger.error(f"✗ REQUEST ERROR: {title} - {e}")
         failure_count += 1
 
 logger.info(f"\nSummary: {success_count} successful, {failure_count} failed")

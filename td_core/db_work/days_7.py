@@ -26,7 +26,7 @@ for name, qua in queries.items():
     pages = sql_for_mdwiki.mdwiki_sql_dict(qua_select)
     # ---
     for n, page in enumerate(pages, start=1):
-        logger.info(name, n, page)
+        print(name, n, page)
     # ---
     qua_del = f"delete from {name} {qua}"
     # ---

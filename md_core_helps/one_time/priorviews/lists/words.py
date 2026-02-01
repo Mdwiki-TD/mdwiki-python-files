@@ -37,12 +37,12 @@ for lang, titles in words_by_lang.items():
     if lang not in count_words_by_lang:
         count_words_by_lang[lang] = 0
     # ---
-    for title, words in titles.items():
+    for _, words in titles.items():
         count_words_by_lang[lang] += words
 # ---
 if __name__ == "__main__":
     for x, wo in count_words_by_lang.items():
-        print(x, wo)
+        logger.info(x, wo)
     # ---
     logger.info(f"len of count_words_by_lang: {len(count_words_by_lang)}")
     # ---

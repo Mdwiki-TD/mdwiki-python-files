@@ -47,7 +47,7 @@ for lang, titles in tra_by_lang.items():
     if lang not in counts_by_lang:
         counts_by_lang[lang] = 0
     # ---
-    for title, user in titles.items():
+    for _, user in titles.items():
         # ---
         if not user:
             continue
@@ -63,7 +63,7 @@ for lang, titles in tra_by_lang.items():
         counts_by_lang[lang] += 1
 # ---
 if __name__ == "__main__":
-    # for x, wo in counts_by_translator.items():   logger.info(x, wo)
+    # for x, wo in counts_by_translator.items():   logger.info(f"{x} {wo}")
     # ---
     logger.info(f"len of counts_by_translator: {len(counts_by_translator)}")
     # ---

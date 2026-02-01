@@ -20,9 +20,9 @@ from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 
-# ---
 
-# ---
+ADDED = 0
+
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 # ---
@@ -40,13 +40,9 @@ def log_Data():
     # dump CreatorsData
     helps.dump_data(file, CreatorsData)
 
-    # ---
-
-
-ADDED = 0
-
 
 def get_creator(links, lang):
+    global ADDED
     # ---
     if lang not in CreatorsData:
         CreatorsData[lang] = {}
@@ -96,7 +92,7 @@ def get_creator(links, lang):
             if comment_text.find("|User:Mr. Ibrahem/") != -1:
                 TD = True
             # ---
-            logger.info(f"time:{time_stamp}", f"title:{page_title}", f"actor:{actor_name}")
+            logger.info(f"time:{time_stamp} title:{page_title} actor:{actor_name}")
             # ---
             tab = {"time": time_stamp, "actor": actor_name, "comment": comment_text, "TD": TD}
             # ---
