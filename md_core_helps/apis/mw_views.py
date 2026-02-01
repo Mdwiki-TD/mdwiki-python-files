@@ -176,7 +176,8 @@ class PageviewsClient:
                     details[detail] += 1
 
                 if "printresult" in sys.argv:
-                    logger.info("result:", result)
+                    logger.info("result:")
+                    logger.info(result)
                 continue
 
             for item in result["items"]:

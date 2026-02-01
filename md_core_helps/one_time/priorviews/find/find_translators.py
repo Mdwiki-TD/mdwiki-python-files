@@ -144,7 +144,7 @@ def test():
             for title, tra in titles.items():
                 if tra != "":
                     n += 1
-                    logger.info(n, lang, title, tra)
+                    print(n, lang, title, tra)
 
 
 def removeip():

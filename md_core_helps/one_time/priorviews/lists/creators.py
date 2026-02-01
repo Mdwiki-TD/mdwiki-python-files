@@ -88,12 +88,12 @@ if __name__ == "__main__":
         logger.info(f"len of Creators_by_lang_title: {len(Creators_by_lang_title)}")
         for lang, titles in Creators_by_lang_title.items():
             for title, words in titles.items():
-                logger.info(lang, title, words)
+                print(lang, title, words)
 
         for x, wo in counts_creators_by_lang.items():
             logger.info(x)
             for x, z in wo.items():
-                logger.info(x, z)
+                print(x, z)
         # ---
         logger.info(f"len of counts_creators_by_lang: {len(counts_creators_by_lang)}")
         # ---

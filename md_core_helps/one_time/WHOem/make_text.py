@@ -28,8 +28,8 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
 
     # ---
     if "test1" in sys.argv:
-        logger.info("mdtitle:", mdtitle)
-        logger.info("langlinks:", langlinks)
+        print("mdtitle:", mdtitle)
+        print("langlinks:", langlinks)
     # ---
 
     for l in langs_keys_sorted:
