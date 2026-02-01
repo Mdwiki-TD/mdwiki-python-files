@@ -30,7 +30,7 @@ wd_site = Get_MwClient_Site("www", "wikidata", username, password)
 def do_request(params=None, method="POST"):
     # ---
     if not wd_site:
-        print("no wd_site")
+        logger.info("no wd_site")
         return {}
     # ---
     params = params.copy()

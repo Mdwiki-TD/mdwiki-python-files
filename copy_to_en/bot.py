@@ -6,10 +6,14 @@ python3 core8/pwb.py copy_to_en/bot ask
 tfj run copyen --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/bot"
 
 """
+import logging
+
 from apis import cat_cach, mdwiki_api
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdwiki_api.wiki_page import MainPage
+
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -17,12 +21,12 @@ def main():
     all_pages = cat_cach.from_cache()
     # ---
     for n, x in enumerate(all_pages):
-        print(f"{n}/{len(all_pages)} : {x}")
+        logger.info(f"{n}/{len(all_pages)} : {x}")
         # ---
         alltext = mdwiki_api.GetPageText(x)
         # ---
         if not alltext:
-            print("no text: " + x)
+            logger.info("no text: " + x)
             continue
         # ---
         first = alltext.split("==")[0].strip()
@@ -45,7 +49,7 @@ def main():
             # ---
             page.save(newtext, summary=summary, nocreate=0)
         else:
-            print("page not found: " + new_title)
+            logger.info("page not found: " + new_title)
             page.Create(text=newtext, summary=summary)
 
 

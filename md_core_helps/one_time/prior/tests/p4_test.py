@@ -1,11 +1,15 @@
 # import os
 # ---
+import logging
 from pathlib import Path
 
 from prior.p4 import work_in_links
 
+logger = logging.getLogger(__name__)
+
+
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
+# logger.info(f'Dir : {Dir}')
 # ---
 project_json = f"{Dir}/json/"
 

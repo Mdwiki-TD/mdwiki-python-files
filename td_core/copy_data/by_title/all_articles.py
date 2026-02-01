@@ -5,11 +5,14 @@ python3 core8/pwb.py copy_data/by_title/all_articles
 python3 core8/pwb.py copy_data/by_title/exists_db
 
 """
+import logging
 import sys
 
 from mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import to_sql
 from mdwiki_api.mdwiki_page import CatDepth
+
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -47,7 +50,7 @@ def main():
     data.update(RTT_pages)
     # ---
     for cat, len_titles in length.items():
-        print(f"Category:{cat}: {len_titles=}")
+        logger.info(f"Category:{cat}: {len_titles=}")
     # ---
     start_to_sql(data)
 

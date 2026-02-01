@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def print_s(s):
     if "returnfile" not in sys.argv:
-        print(s)
+        logger.info(s)
 
 
 def ec_de_code(tt, type1):

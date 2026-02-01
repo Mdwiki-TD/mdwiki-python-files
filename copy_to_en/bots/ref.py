@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 """
 Usage:
+
 from copy_to_en.bots.ref import fix_ref# text = fix_ref(first, alltext)
 """
-# import re
+import logging
+
 import wikitextparser as wtp
+
+logger = logging.getLogger(__name__)
 
 
 def get_refs(alltext):
@@ -94,7 +98,7 @@ def fix_ref(first, alltext):
         contents = all_name_refs.get(ref_name)
         # ---
         if not contents:
-            print("ref not found: " + ref_name)
+            logger.info("ref not found: " + ref_name)
             continue
         # ---
         tag_short = tags[0].string

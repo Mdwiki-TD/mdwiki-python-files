@@ -12,11 +12,16 @@
 #
 
 import itertools
+import logging
 import re
 from contextlib import suppress
 
-# ---
 from wprefs.bots.replace_except import removeprefix, replaceExcept
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 
 def get_html_attributes_value(text, param):
@@ -48,7 +53,7 @@ def merge_references(text):
             continue
         # ---
         params = Match.group("params")
-        # print(f"{params=}")
+        # logger.info(f"{params=}")
         Group = re.search(group_r, params, re.IGNORECASE | re.DOTALL)
         if Group:
             Group = Group.group("group")
@@ -145,7 +150,7 @@ def DuplicateReferences(text):
             # if params.find('"') == -1 and params.find("'") == -1:
             if Group is None:
                 if quote == "" or quote is None:
-                    # print("get the name again:" )
+                    # logger.info("get the name again:" )
                     name = get_html_attributes_value(params, "name")
             # ---
             if not v[0]:
@@ -201,8 +206,8 @@ def DuplicateReferences(text):
             repeated_ref = f"<ref {group}name={name} />"
             # ---
             sas = v[1][1:]
-            # print(f"v[1]: {v[1]}")
-            # print(f"sas : {sas}")
+            # logger.info(f"v[1]: {v[1]}")
+            # logger.info(f"sas : {sas}")
             # ---
             iui = rf"<ref\s+{group}name\s*=\s*{name}\s*\/\>"
             iui_to_named[iui] = named
@@ -230,7 +235,7 @@ def DuplicateReferences(text):
     for iui, named in iui_to_named.items():
         if text.find(named) == -1:
             # ---
-            # print("text not found: " + named)
+            # logger.info("text not found: " + named)
             # ---
             text = replaceExcept(text, iui, named, exceptions=["template"], count=1)
             if text.find(named) == -1:

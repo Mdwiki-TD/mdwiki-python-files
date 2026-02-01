@@ -64,7 +64,7 @@ def start_to_sql(data):
     # data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
     data = {q: v["sitelinks"] for q, v in data.items()}
     # ---
-    # print(data)
+    # logger.info(data)
     # ---
     qids_list = list(data.keys())
     # ---
@@ -152,7 +152,7 @@ def wbgetentities(qs_list):
             # {'Q133247108': {'type': 'item', 'id': 'Q133247108', 'sitelinks': {'arwiki': {'site': 'arwiki', 'title': 'تصنيف:حشرات كولومبيا', 'badges': []}, 'enwiki': {'site': 'enwiki', 'title': 'Category:Insects of Colombia', 'badges': []}}}}
             entities = json.loads(json.dumps(entities))
             # ---
-            # print(entities)
+            # logger.info(entities)
             # ---
             all_entities.update(entities)
     # ---
@@ -257,7 +257,7 @@ def test():
     lists = get_qids_sitelinks(qids)
     logger.info(f"len of lists: {len(lists)}.")
     qids = lists.get("qids", {})
-    # print(qids)
+    # logger.info(qids)
     start_to_sql(qids)
 
 

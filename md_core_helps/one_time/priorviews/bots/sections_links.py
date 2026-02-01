@@ -137,10 +137,10 @@ if __name__ == "__main__":
     ll = get_section_links()
     # ---
     for s, ls in ll.items():
-        print(f"section: {s}")
-        print(f"len of links: {len(ls)}")
+        logger.info(f"section: {s}")
+        logger.info(f"len of links: {len(ls)}")
         if len(ls) < 10:
-            print(ls)
+            logger.info(ls)
         # ---
         for link in ls:
             if link.lower() not in all_links:
@@ -153,5 +153,5 @@ if __name__ == "__main__":
     for x, v in all_links.items():
         if len(v) > 1:
             sections = ", ".join(v)
-            print(f"link: ({x}) in {len(v)} sections: {sections}")
+            logger.info(f"link: ({x}) in {len(v)} sections: {sections}")
     # ---

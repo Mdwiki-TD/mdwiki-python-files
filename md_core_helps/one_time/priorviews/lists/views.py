@@ -13,11 +13,16 @@ python3 core8/pwb.py priorviews/views
 """
 
 import json
+import logging
 import os
 from pathlib import Path
 
-# ---
 from priorviews.bots import helps
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 # ---
 Dir = Path(__file__).parent
@@ -94,8 +99,8 @@ if __name__ == "__main__":
     # with open(filee, "w", encoding="utf-8") as f:  json.dump(count_views_by_lang, f)
     helps.dump_data(filee, count_views_by_lang)
     # ---
-    print(f"len of views_by_mdtitle_langs: {len(views_by_mdtitle_langs)}")
-    print(f"len of count_views_by_mdtitle: {len(count_views_by_mdtitle)}")
-    print(f"len of count_views_by_lang: {len(count_views_by_lang)}")
-    print(f"len of views_by_lang: {len(views_by_lang)}")
+    logger.info(f"len of views_by_mdtitle_langs: {len(views_by_mdtitle_langs)}")
+    logger.info(f"len of count_views_by_mdtitle: {len(count_views_by_mdtitle)}")
+    logger.info(f"len of count_views_by_lang: {len(count_views_by_lang)}")
+    logger.info(f"len of views_by_lang: {len(views_by_lang)}")
 # ---

@@ -116,7 +116,7 @@ def add_wd(qid, enlink, lang, target):
         bool: True if the site link was successfully added, False otherwise.
     """
 
-    print("add_wd:")
+    logger.info("add_wd:")
     params = {
         "action": "wbsetsitelink",
         "linktitle": target,

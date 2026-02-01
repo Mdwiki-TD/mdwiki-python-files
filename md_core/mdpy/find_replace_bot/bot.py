@@ -11,6 +11,9 @@ import sys
 from mdpy.find_replace_bot.one_job import do_one_job
 from tqdm import tqdm
 
+logger = logging.getLogger(__name__)
+
+
 home_dir = os.getenv("HOME")
 
 dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
@@ -32,7 +35,7 @@ def get_jobs():
             continue
         jobs.append(nn)
 
-    print(f"done:{done}, new jobs:{len(jobs)}")
+    logger.info(f"done:{done}, new jobs:{len(jobs)}")
 
     return jobs
 

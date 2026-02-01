@@ -1,4 +1,7 @@
+import logging
 import re
+
+logger = logging.getLogger(__name__)
 
 
 class RegexScanner:
@@ -29,4 +32,4 @@ if __name__ == "__main__":
     text = """[[Mediastinitis]], [[sepsis]]<ref name=Og2015/><ref name=Bau2020/>"""
     scanner = RegexScanner(r"<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>", text)
     for m in scanner.requests:
-        print(m)
+        logger.info(m)

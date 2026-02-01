@@ -201,10 +201,10 @@ def search_history(title, lang, en="", refname=None, extlinks=None):
     # ---
     bots_length = length_before - len(revisions)
     # ---
-    print(f"len of revisions: {len(revisions)}, bots_lents: {bots_length}")
+    logger.info(f"len of revisions: {len(revisions)}, bots_lents: {bots_length}")
     # ---
     for r in revisions:
-        # print(r.keys())
+        # logger.info(r.keys())
         # dict_keys(['revid', 'parentid', 'user', 'timestamp', 'contentformat', 'contentmodel', 'content', 'comment'])
         # ---
         timestamp = r.get("timestamp", "")
@@ -215,10 +215,10 @@ def search_history(title, lang, en="", refname=None, extlinks=None):
             continue
         if not user:
             continue
-        # print(timestamp)
+        # logger.info(timestamp)
         # ---
         if user.lower().endswith("bot"):
-            print(f"skip bots {user}...")
+            logger.info(f"skip bots {user}...")
             continue
         # ---
         comment = r.get("comment")
@@ -233,7 +233,7 @@ def search_history(title, lang, en="", refname=None, extlinks=None):
         if rs != "":
             return rs
     # ---
-    # print(f'len of revisions: {len(revisions)}')
+    # logger.info(f'len of revisions: {len(revisions)}')
     # ---
     return ""
 
@@ -242,6 +242,6 @@ def search_history(title, lang, en="", refname=None, extlinks=None):
 if __name__ == "__main__":
     # ---
     t = search_history("نكاف", "ar")
-    print(f"au: {t}")
+    logger.info(f"au: {t}")
     sys.exit()
     # ---

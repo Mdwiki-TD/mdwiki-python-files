@@ -46,13 +46,13 @@ def make_in_wd_tab(limit=None):
 
 def add_P11143_to_qids_in_wd(newlist):
     # ---
-    print(f"len of newlist: {len(newlist)}")
+    logger.info(f"len of newlist: {len(newlist)}")
     # ---
     if len(newlist) > 0:
         # ---
         logger.info(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
         if len(newlist.items()) < 100:
-            print("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
+            logger.info("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
         # ---
         if "add" not in sys.argv:
             logger.info('<<puruple>> add "add" to sys.argv to add them?')
@@ -77,7 +77,7 @@ def fix_in_wd(merge_qids, qids):
         if md_title == wd_value:
             continue
         # ---
-        print(f"wd_value:{wd_value} != md_title:{md_title}, qid:{q}")
+        logger.info(f"wd_value:{wd_value} != md_title:{md_title}, qid:{q}")
         # ---
         merge_qids[q] = md_title
         # ---
@@ -90,18 +90,18 @@ def fix_in_wd(merge_qids, qids):
                 if value == wd_value:
                     uxx = wikidataapi.Delete_claim(claimid)
                     if uxx:
-                        print(f"True.. Deleted {claimid}")
+                        logger.info(f"True.. Deleted {claimid}")
                     else:
-                        print(f"Failed to delete {claimid}")
+                        logger.info(f"Failed to delete {claimid}")
         # ---
 
         # add the correct claim
         ase = False
         # ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
         if ase:
-            print(f"True.. Added P11143:{md_title}")
+            logger.info(f"True.. Added P11143:{md_title}")
         else:
-            print(f"Failed to add P11143:{md_title}")
+            logger.info(f"Failed to add P11143:{md_title}")
 
 
 if __name__ == "__main__":

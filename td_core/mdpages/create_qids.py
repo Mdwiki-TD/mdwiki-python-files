@@ -7,9 +7,13 @@ python3 core8/pwb.py mdpages/create_qids
 from mdpages.create_qids import create_qids
 
 """
+import logging
+
 from apis import wikidataapi
 from mdapi_sql import sql_for_mdwiki
 from unlinked_wb.bot import add_un_linked_wb
+
+logger = logging.getLogger(__name__)
 
 
 def create_qids(no_qids):
@@ -23,7 +27,7 @@ def create_qids(no_qids):
         new_qid = wikidataapi.new_item(label="", lang="", returnid=True)
         # ---
         if not new_qid or not str(new_qid).startswith("Q"):
-            print(f"Skip.. {new_qid=}")
+            logger.info(f"Skip.. {new_qid=}")
             continue
         # ---
         new_qid = new_qid.strip()

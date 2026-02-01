@@ -37,7 +37,7 @@ query = """
 result = sql_for_mdwiki.mdwiki_sql_dict(query=query)
 
 for x in result:
-    print(x)
+    logger.info(x)
     # ---
     query = "DELETE FROM pages_users_to_main WHERE id = %s"
     sql_for_mdwiki.mdwiki_sql(query=query, values=[x["id"]])

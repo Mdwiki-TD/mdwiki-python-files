@@ -22,9 +22,13 @@ from mdpy.bots import en_to_md
 """
 
 import json
+import logging
 import os
 
 from mdapi_sql import sql_for_mdwiki
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 if os.getenv("HOME"):
@@ -50,7 +54,7 @@ def make_mdwiki_list():
     try:
         From_json = json.loads(open(ffile, "r", encoding="utf-8-sig").read())
     except Exception as e:
-        print(e)
+        logger.info(e)
         return
     # ---
     for md, en in From_json.items():

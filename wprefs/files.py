@@ -1,4 +1,7 @@
 """
+import logging
+logger = logging.getLogger(__name__)
+
 from wprefs.files import reffixed_list, setting, append_reffixed_file
 """
 
@@ -24,7 +27,7 @@ setting = {}
 if os.path.isfile(fixwikirefs):
     try:
         setting = json.load(open(fixwikirefs, "r", encoding="utf-8-sig"))
-        # print(setting)
+        # logger.info(setting)
     except Exception:
         setting = {}
 

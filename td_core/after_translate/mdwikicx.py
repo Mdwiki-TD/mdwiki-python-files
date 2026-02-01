@@ -48,7 +48,7 @@ def get_result():
         return rows
 
     except Exception as e:
-        print(f"Exception: {e}")
+        logger.error(f"Exception: {e}")
     # ---
     return []
 

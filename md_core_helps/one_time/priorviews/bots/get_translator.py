@@ -83,14 +83,14 @@ class FindTranslator:
             for p in pages:
                 revisions = p.get("revisions", [])
                 for r in revisions:
-                    # print(r)
+                    # logger.info(r)
                     user = r.get("user", "")
                     if user == "" or helps.is_ip(user):
                         continue
                     # ---
                     comment = r.get("comment", "").lower()
                     if helps.isv(comment):
-                        # print(r)
+                        # logger.info(r)
                         self.translator = user
                         return
 
@@ -112,6 +112,6 @@ def get_au(title, lang):
 if __name__ == "__main__":
     # ---
     t = get_au("نكاف", "ar")
-    print(f"au: {t}")
+    logger.info(f"au: {t}")
     sys.exit()
     # ---

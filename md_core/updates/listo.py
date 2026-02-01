@@ -12,12 +12,17 @@ python3 $HOME/pybot/md_core/mdpy/listo.py save
 python3 core8/pwb.py mdpy/listo save
 
 """
+import logging
 import re
 import sys
 
-# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 from apis import mdwiki_api
 from mdwiki_api.mdwiki_page import CatDepth
+
+logger = logging.getLogger(__name__)
+
+
+# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
 
 limit_m = {1: 0}
 # ---
@@ -48,13 +53,13 @@ for m2 in link_regex.finditer(ptext):
         itemu = m2.group(1).split("|")[0].strip()
         vaild_links.append(itemu)
 # ---
-print(f"len of vaild_links: {len(vaild_links)}")
+logger.info(f"len of vaild_links: {len(vaild_links)}")
 # ---
 for x in vaild_links:
     x1 = x
     x2 = x  # .replace(x[0], x[0].upper() , 1)
     if x1 != x2:
-        print(f"x1:{x1},x2:{x2}")
+        logger.info(f"x1:{x1},x2:{x2}")
     if x2 not in dones:
         dones.append(x2)
         if x2 in redirects_pages or x1 in redirects_pages:
@@ -62,24 +67,24 @@ for x in vaild_links:
         else:
             links.append(x2)
 # ---
-print(f"len of re_links: {len(re_links)}")
-print(f"len of links: {len(links)}")
-# print(str(links))
+logger.info(f"len of re_links: {len(re_links)}")
+logger.info(f"len of links: {len(links)}")
+# logger.info(str(links))
 # ---
 catpages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns="0")
 catpages = [x.replace("_", " ") for x in catpages]
 # ---
-print(f"len of catpages: {len(catpages)}")
+logger.info(f"len of catpages: {len(catpages)}")
 if "Biceps tendon rupture" in catpages:
-    print("Biceps tendon rupture in catpages")
-# print(str(catpages))
+    logger.info("Biceps tendon rupture in catpages")
+# logger.info(str(catpages))
 # ---
 listo = [x for x in links if x not in catpages]
 # ---
 re_listo = [d for d in re_links if d not in catpages]
 num = 0
 # ---
-print(f"len of listo: {len(listo)}")
+logger.info(f"len of listo: {len(listo)}")
 # ---
 lines = "\n".join([f"# [[{x}]]" for x in listo])
 text = """Pages in [[WikiProjectMed:List]] missing [[:Category:RTT]]:
@@ -94,7 +99,7 @@ text += "\n\n== Redirects ==\n\n"
 # ---
 text += "\n".join([f"# [[{dx}]]" for dx in re_listo])
 # ---
-print(text)
+logger.info(text)
 # ---
 mdwiki_api.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/List", nocreate=0)
 # ---

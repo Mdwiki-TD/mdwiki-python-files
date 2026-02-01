@@ -58,7 +58,7 @@ def remove_images(text):
     images = {}
     for link in matches:
         link, v, c = link
-        print(link)
+        logger.info(link)
         file_name = link.split("|")[0]
         new_text = "{{" + f"subst:#ifexist:{file_name}|{link}" + "}}"
         text = text.replace(link, new_text)

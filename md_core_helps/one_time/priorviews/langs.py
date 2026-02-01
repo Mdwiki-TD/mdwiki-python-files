@@ -209,7 +209,7 @@ def make_lang_textso(lang):
     newtext += f"* Words: {lang_words:,}\n"
     newtext += "\n"
     # ----
-    print(newtext)
+    logger.info(newtext)
     # ----
     # authors = sorted(authors.items(), key=lambda x: x[1])
     authors_2 = {x: v for x, v in sorted(authors_2.items(), key=lambda item: item[1], reverse=True)}
@@ -240,7 +240,7 @@ def work(lang):
         # ---
         save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
     else:
-        print("no change")
+        logger.info("no change")
 
     # ---
 

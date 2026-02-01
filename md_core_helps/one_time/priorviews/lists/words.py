@@ -9,8 +9,12 @@ python3 core8/pwb.py priorviews/words
 """
 
 import json
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent
@@ -33,16 +37,16 @@ for lang, titles in words_by_lang.items():
     if lang not in count_words_by_lang:
         count_words_by_lang[lang] = 0
     # ---
-    for title, words in titles.items():
+    for _, words in titles.items():
         count_words_by_lang[lang] += words
 # ---
 if __name__ == "__main__":
     for x, wo in count_words_by_lang.items():
-        print(x, wo)
+        logger.info(x, wo)
     # ---
-    print(f"len of count_words_by_lang: {len(count_words_by_lang)}")
+    logger.info(f"len of count_words_by_lang: {len(count_words_by_lang)}")
     # ---
-    print(f"len of words_by_lang: {len(words_by_lang)}")
+    logger.info(f"len of words_by_lang: {len(words_by_lang)}")
     for lang, titles in words_by_lang.items():
         for title, words in titles.items():
             print(lang, title, words)

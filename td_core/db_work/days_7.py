@@ -4,7 +4,12 @@
 python3 core8/pwb.py db_work/days_7
 
 """
+import logging
+
 from mdapi_sql import sql_for_mdwiki
+
+logger = logging.getLogger(__name__)
+
 
 # sql_for_mdwiki.mdwiki_sql(query , update = False)
 # ---
@@ -14,7 +19,7 @@ queries = {
 }
 # ---
 for name, qua in queries.items():
-    print(f"--- {name} ---")
+    logger.info(f"--- {name} ---")
     # ---
     qua_select = f"select * from {name} {qua}"
     # ---
@@ -25,8 +30,8 @@ for name, qua in queries.items():
     # ---
     qua_del = f"delete from {name} {qua}"
     # ---
-    print(qua_del)
+    logger.info(qua_del)
     # ---
     ty = sql_for_mdwiki.mdwiki_sql(qua_del, update=True)
     # ---
-    print(ty)
+    logger.info(ty)

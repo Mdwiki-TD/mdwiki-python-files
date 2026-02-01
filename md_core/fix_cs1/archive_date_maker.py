@@ -4,7 +4,11 @@ from cite.archive_bots.archive_date_maker import make_archive_date_and_url, make
 # archive_date = make_archive_date(archiveurl)
 """
 
+import logging
 import re
+
+logger = logging.getLogger(__name__)
+
 
 # Wayback Machine format
 ##r"^https?://web\.archive\.org/web/(\d{4})(\d{2})(\d{2})\d*/(https?://.+)$",
@@ -24,7 +28,7 @@ def make_archive_date(archiveurl):
     # ---
     archivedate = ""
     # ---
-    # print(f"make_archive_date: {archiveurl=}")
+    # logger.info(f"make_archive_date: {archiveurl=}")
     # ---
     # http://archive.today/2024.05.23-204959/
     # ---
@@ -47,7 +51,7 @@ def make_archive_date_and_url(archiveurl):
     url = ""
     # ---
     # ---
-    # print(f"make_archive_date: {archiveurl=}")
+    # logger.info(f"make_archive_date: {archiveurl=}")
     # ---
     # http://archive.today/2024.05.23-204959/
     # ---
@@ -61,7 +65,7 @@ def make_archive_date_and_url(archiveurl):
         # ---
         if matche:
             found_it = True
-            # print("found_it = True")
+            # logger.info("found_it = True")
             archivedate = matche.group(1) + "-" + matche.group(2) + "-" + matche.group(3)
             url = matche.group(4)
             break
@@ -84,7 +88,7 @@ def test():
     ]
     for url in urls:
         date = make_archive_date(url)
-        print(f"url: {url}\t{date=}")
+        logger.info(f"url: {url}\t{date=}")
 
 
 if __name__ == "__main__":

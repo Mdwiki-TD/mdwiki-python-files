@@ -5,9 +5,13 @@ python3 core8/pwb.py niosh/bot
 
 import codecs
 import json
+import logging
 import os
 import re
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent
@@ -21,7 +25,7 @@ both = {}
 with open(both_file, "r", encoding="utf-8") as f:
     both = json.load(f)
 # ---
-print(f"all pages:{len(both.keys())}")
+logger.info(f"all pages:{len(both.keys())}")
 # ---
 # sort both keys by length of it list
 
@@ -52,7 +56,7 @@ def do_all():
     # ---
     len_all_links = len(all_links)
     # ---
-    print(f"{len_all_links=}")
+    logger.info(f"{len_all_links=}")
 
 
 aa = {k: v for k, v in sorted(both.items(), key=lambda item: len(item[1]), reverse=True)}
@@ -62,7 +66,7 @@ n = 0
 for x, le in aa.items():
     n += 1
     x2 = x.ljust(60)
-    print(f"x: {x2}\t length:{len(le)}")
+    logger.info(f"x: {x2}\t length:{len(le)}")
     if len(le) < 15:
         break
 # ---

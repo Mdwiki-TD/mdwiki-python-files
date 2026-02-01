@@ -7,14 +7,18 @@ tfj run c202c --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py 
 
 """
 
+import logging
 import sys
 from pathlib import Path
 
 from apis import mdwiki_api
+from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
+
+logger = logging.getLogger(__name__)
+
 
 # import json
 # import wikitextparser as wtp
-from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 
 # ---
 Dir = Path(__file__).parent
@@ -32,7 +36,7 @@ def get_users(pages):
 
     for num, title in enumerate(pages, start=1):
         # ---
-        print(f"num:{num}/{len(pages)}, title:{title}")
+        logger.info(f"num:{num}/{len(pages)}, title:{title}")
         # ---
         revisions = api_new.get_revisions(
             title,
@@ -63,7 +67,7 @@ def get_users(pages):
                 if year not in usersbyyear:
                     usersbyyear[year] = {}
                 # ---
-                # print(f'user:{user}, comment:{comment}')
+                # logger.info(f'user:{user}, comment:{comment}')
                 # ---
                 if user == "Mr. Ibrahem":
                     # if comment == 'mdwiki changes.' or comment.startswith('add link to'):

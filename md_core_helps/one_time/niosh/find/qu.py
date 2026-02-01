@@ -4,10 +4,12 @@ python3 core8/pwb.py niosh/bot
 """
 
 import json
+import logging
 import os
 import re
 from pathlib import Path
 
+logger = logging.getLogger(__name__)
 # ---
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
@@ -78,7 +80,7 @@ all_links = sorted(set(all_links))
 # ---
 len_all_links = len(all_links)
 # ---
-print(f"all pages:{len(new.keys())}, {len_all_links=}")
+logger.info(f"all pages:{len(new.keys())}, {len_all_links=}")
 # ---
 # sort dict keys
 new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}

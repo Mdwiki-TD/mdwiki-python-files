@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # ---
 
 Dir = str(Path(__file__).parents[0])
-# print(f'Dir : {Dir}')
+# logger.info(f'Dir : {Dir}')
 # ---
 project_json = f"{Dir}/json"
 project_js_new = f"{Dir}/json_langs/"

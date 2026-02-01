@@ -7,9 +7,13 @@ links like [[example]]
 python3 core8/pwb.py prior/p4 test
 """
 
+import logging
 import urllib.parse
 
 import requests
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 session = requests.Session()
@@ -20,7 +24,7 @@ def get_url(url):
         html = session.get(url)
         return html.text
     except Exception as e:
-        print(f"except: {e}")
+        logger.info(f"except: {e}")
     return ""
 
 

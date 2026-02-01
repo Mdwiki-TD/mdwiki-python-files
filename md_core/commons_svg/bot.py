@@ -1,9 +1,13 @@
 import json
+import logging
 import re
 import sys
 from pathlib import Path
 
 import mwclient
+
+logger = logging.getLogger(__name__)
+
 
 sys.argv.append("workibrahem")
 from mdwiki_api.wiki_page import MainPage  # noqa: E402
@@ -59,7 +63,7 @@ def start():
     with open(Path(__file__).parent / "svg_languages.json", "w", encoding="utf-8") as f:
         json.dump(svg_languages, f, ensure_ascii=False, indent=2)
 
-    print(f"Saved {len(svg_languages)} entries to svg_languages.json")
+    logger.info(f"Saved {len(svg_languages)} entries to svg_languages.json")
 
 
 if __name__ == "__main__":

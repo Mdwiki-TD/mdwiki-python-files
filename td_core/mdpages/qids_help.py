@@ -26,12 +26,12 @@ else:
 # ---
 dir2 = Dashboard_path + "/Tables/jsons"
 
-print("Get_All_pages:")
+logger.info("Get_All_pages:")
 # ---
 all_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 all_pages = [x for x in all_pages if valid_title(x)]
 # ---
-print("make_cash_to_cats:")
+logger.info("make_cash_to_cats:")
 # ---
 td_list = cat_cach.from_cache()
 td_list = [x for x in td_list if valid_title(x)]

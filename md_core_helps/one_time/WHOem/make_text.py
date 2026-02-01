@@ -5,11 +5,16 @@ python3 core8/pwb.py WHOem/make_text
 """
 
 import json
+import logging
 import sys
 from pathlib import Path
 
-# ---
 from mdwiki_api.mdwiki_page import md_MainPage
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 # ---
 section_langs_views = {}
@@ -34,7 +39,7 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
         view = ""
 
         data = langlinks.get(l)
-        # print('data:', data)#{'title': 'قائمة الأدوية الأساسية النموذجية لمنظمة الصحة العالمية', 'views': 159424}
+        # logger.info('data:', data)#{'title': 'قائمة الأدوية الأساسية النموذجية لمنظمة الصحة العالمية', 'views': 159424}
 
         if data:
             title = data["title"]
@@ -152,12 +157,12 @@ def start():
     with open(f"{Dir}/lists/views.json", "r", encoding="utf-8") as f:
         Views_Data = json.load(f)
     # ---
-    print(f"len ViewsData: {len(Views_Data)}")
+    logger.info(f"len ViewsData: {len(Views_Data)}")
     # ---
     ntext = make_text(Views_Data)
     # ---
     if "test" in sys.argv:
-        print(ntext)
+        logger.info(ntext)
     # ---
     with open(f"{Dir}/text.txt", "w", encoding="utf-8") as f:
         f.write(ntext)

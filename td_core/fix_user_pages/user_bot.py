@@ -134,6 +134,6 @@ def get_new_user(new_target, lang, user):
         # ---
         return user_2nd
     # ---
-    # print(f"get_new_user: {user=}, {revisions=}")
+    # logger.info(f"get_new_user: {user=}, {revisions=}")
     # ---
     return ""

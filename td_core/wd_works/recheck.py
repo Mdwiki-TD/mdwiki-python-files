@@ -253,9 +253,9 @@ def start():
         en = tab.get("label", "").replace("User:Mr. Ibrahem/", "")
         # ---
         numb += 1
-        print(f"------------------\n{numb}/{len(newtabs)}")
-        print(f"false qid : {oldqid}")
-        print(f"en title: {en}")
+        logger.info(f"------------------\n{numb}/{len(newtabs)}")
+        logger.info(f"false qid : {oldqid}")
+        logger.info(f"en title: {en}")
         # ---
         # get qid for en page
         qid2 = en_to_md.mdtitle_to_qid.get(en, "")
@@ -263,10 +263,10 @@ def start():
             en2 = en_to_md.enwiki_to_mdwiki.get(en, en)
             qid2 = en_to_md.mdtitle_to_qid.get(en2, "")
         # ---
-        print(f"qid2: {qid2}")
+        logger.info(f"qid2: {qid2}")
         # ---
         if not qid2:
-            print("no qid for en page.")
+            logger.info("no qid for en page.")
             continue
         # ---
         remove = wikidataapi.Labels_API(oldqid, "", "en", remove=True)

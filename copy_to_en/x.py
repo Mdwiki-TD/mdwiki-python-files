@@ -1,11 +1,15 @@
+import logging
 import time
 
 import requests
 from apis import cat_cach
 
+logger = logging.getLogger(__name__)
+
+
 all_pages = cat_cach.from_cache()
 
-print(f"Found {len(all_pages)} pages")
+logger.info(f"Found {len(all_pages)} pages")
 
 success_count = 0
 failure_count = 0
@@ -17,12 +21,12 @@ for title in all_pages:
 
         # Check HTTP status code
         if response.status_code == 200:
-            print(f"✓ SUCCESS: {title} - Status: {response.status_code}")
+            logger.info(f"✓ SUCCESS: {title} - Status: {response.status_code}")
             success_count += 1
             # Process successful response
             # content = response.text
         else:
-            print(f"✗ FAILED: {title} - Status: {response.status_code}")
+            logger.info(f"✗ FAILED: {title} - Status: {response.status_code}")
             failure_count += 1
 
         # Alternative: Use raise_for_status() to raise exception for 4xx/5xx
@@ -31,16 +35,16 @@ for title in all_pages:
         time.sleep(0.5)  # Rate limiting
 
     except requests.exceptions.Timeout:
-        print(f"✗ TIMEOUT: {title}")
+        logger.error(f"✗ TIMEOUT: {title}")
         failure_count += 1
     except requests.exceptions.ConnectionError:
-        print(f"✗ CONNECTION ERROR: {title}")
+        logger.error(f"✗ CONNECTION ERROR: {title}")
         failure_count += 1
     except requests.exceptions.HTTPError as e:
-        print(f"✗ HTTP ERROR: {title} - {e}")
+        logger.error(f"✗ HTTP ERROR: {title} - {e}")
         failure_count += 1
     except requests.RequestException as e:
-        print(f"✗ REQUEST ERROR: {title} - {e}")
+        logger.error(f"✗ REQUEST ERROR: {title} - {e}")
         failure_count += 1
 
-print(f"\nSummary: {success_count} successful, {failure_count} failed")
+logger.info(f"\nSummary: {success_count} successful, {failure_count} failed")

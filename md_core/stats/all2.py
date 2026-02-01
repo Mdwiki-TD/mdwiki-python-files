@@ -123,7 +123,7 @@ def start():
         # ---
         site = file[:-5]
         # ---
-        print(f"{file=}, {site=}")
+        logger.info(f"{file=}, {site=}")
         # ---
         if f"{site}wiki" in skip_sites:
             continue

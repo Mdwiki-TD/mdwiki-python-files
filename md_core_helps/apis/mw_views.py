@@ -8,6 +8,7 @@ from apis.mw_views import PageviewsClient
 # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 """
+import logging
 import os
 import sys
 import time
@@ -19,6 +20,9 @@ from datetime import date, datetime, timedelta
 import requests
 from requests.utils import quote
 from tqdm import tqdm
+
+logger = logging.getLogger(__name__)
+
 
 tool = os.getenv("HOME")
 tool = tool.split("/")[-1] if tool else "himo"
@@ -172,7 +176,8 @@ class PageviewsClient:
                     details[detail] += 1
 
                 if "printresult" in sys.argv:
-                    print("result:", result)
+                    logger.info("result:")
+                    logger.info(result)
                 continue
 
             for item in result["items"]:
@@ -180,17 +185,17 @@ class PageviewsClient:
                 output[parse_date(item["timestamp"])][article] = item["views"]
 
         if not some_data_returned:
-            print(Exception(f"The pageview API returned nothing useful at: ({len(urls)})"))
+            logger.info(Exception(f"The pageview API returned nothing useful at: ({len(urls)})"))
 
             for detail, count in details.items():
-                print(Exception(f">>>>>>>>>({count}): {detail=}"))
+                logger.info(Exception(f">>>>>>>>>({count}): {detail=}"))
 
             if "printurl" in sys.argv:
-                print(Exception(urls))
+                logger.info(Exception(urls))
 
         return output
         # except Exception as e:
-        #     print(f'ERROR {e} while fetching and parsing ' + str(urls))
+        #     logger.info(f'ERROR {e} while fetching and parsing ' + str(urls))
         #     traceback.print_exc()
 
         return {}
@@ -266,7 +271,9 @@ class PageviewsClient:
         # ---
         delta = time.time() - time_start
         # ---
-        print(f"<<green>> article_views, (articles:{len(articles):,}) new_data:{len(new_data):,} time: {delta:.2f} sec")
+        logger.info(
+            f"<<green>> article_views, (articles:{len(articles):,}) new_data:{len(new_data):,} time: {delta:.2f} sec"
+        )
         # ---
         return new_data
 
@@ -279,5 +286,5 @@ if __name__ == "__main__":
     )
     # ---
     for title, views in data.items():
-        print(title)
-        print(views)
+        logger.info(title)
+        logger.info(views)

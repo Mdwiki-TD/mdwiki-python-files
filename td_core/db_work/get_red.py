@@ -34,11 +34,11 @@ def get_table(titles):
         # ---
         asa = mdwiki_api.get_redirect(group)
         # ---
-        print(f"work on {len_grup} pagees, done: {done}/{len(titles)}.")
+        logger.info(f"work on {len_grup} pagees, done: {done}/{len(titles)}.")
         # ---
         table = {**table, **asa}
     # ---
-    print(f"len of table {len(table)} ")
+    logger.info(f"len of table {len(table)} ")
     # ---
     return table
 

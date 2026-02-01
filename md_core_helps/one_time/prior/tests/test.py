@@ -1,4 +1,8 @@
+import logging
 from collections import namedtuple
+
+logger = logging.getLogger(__name__)
+
 
 # from prior.p4 import *
 
@@ -22,8 +26,8 @@ class testmycode:
         expected = ["https://www.bbc.com", "https://www.cnn.com"]
         f = ""
         # f = get_weblinks(refs, '')
-        print(f)
-        print(f"test_incomplete_links: {str(set(f) == set(expected))}")
+        logger.info(f)
+        logger.info(f"test_incomplete_links: {str(set(f) == set(expected))}")
 
 
 # ---

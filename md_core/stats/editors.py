@@ -5,6 +5,7 @@ from stats.editors import get_editors
 """
 
 import json
+import logging
 import os
 import re
 import sys
@@ -15,6 +16,9 @@ import tqdm
 from mdapi_sql import wiki_sql
 from pymysql.converters import escape_string
 from stats.ar import get_ar_results
+
+logger = logging.getLogger(__name__)
+
 
 last_year = datetime.now().year - 1
 # ---
@@ -75,7 +79,7 @@ def get_editors_sql(links, site, split_by=100):
         # ---
         qua2 = qua.replace("%s", lim)
         # ---
-        # print(qua2)
+        # logger.info(qua2)
         # ---
         edits = wiki_sql.sql_new(qua2, site, u_print=False)
         # ---

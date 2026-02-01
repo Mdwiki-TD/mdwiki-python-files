@@ -3,8 +3,12 @@ python3 core8/pwb.py prior/remove_wikis
 """
 
 import json
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent
@@ -72,7 +76,7 @@ for filename in os.listdir(project_js_new):
     if filename.endswith(".json"):
         filename2 = os.path.join(project_js_new, filename)
         # ---
-        print(f"filename: {filename2}..")
+        logger.info(f"filename: {filename2}..")
         # ---
         work_in_jsfile(filename2)
 # ---
@@ -80,7 +84,7 @@ for filename in os.listdir(project_js_newen):
     if filename.endswith(".json"):
         filename2 = os.path.join(project_js_newen, filename)
         # ---
-        print(f"filename: {filename2}..")
+        logger.info(f"filename: {filename2}..")
         # ---
         work_in_jsfile(filename2)
         # ---

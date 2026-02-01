@@ -4,13 +4,18 @@ python3 core8/pwb.py niosh/bot
 """
 
 import json
+import logging
 import os
 import re
 import sys
 from pathlib import Path
 
-# ---
 from mdwiki_api.wiki_page import NEW_API, MainPage
+
+logger = logging.getLogger(__name__)
+
+
+# ---
 
 # ---
 Dir = Path(__file__).parent
@@ -53,7 +58,7 @@ def new_search():
     for x in search:
         na += 1
         page = MainPage(x, "en", family="wikipedia")
-        print(f"p:{na}/{nn}, title:{x}, get_extlinks:")
+        logger.info(f"p:{na}/{nn}, title:{x}, get_extlinks:")
         extlinks = page.get_extlinks()
         toto[x] = extlinks
     # ---
@@ -113,7 +118,7 @@ def start():
     for x, exts in new.items():
         n += 1
         all_links.extend(exts)
-        # print(f'n:{n}/{ns}, title:{x} length:{len(exts)}')
+        # logger.info(f'n:{n}/{ns}, title:{x} length:{len(exts)}')
     # ---
     all_links = sorted(set(all_links))
     # ---
@@ -123,7 +128,7 @@ def start():
     # ---
     len_all_links = len(all_links)
     # ---
-    print(f"all pages:{n}, {len_all_links=}")
+    logger.info(f"all pages:{n}, {len_all_links=}")
 
 
 if __name__ == "__main__":

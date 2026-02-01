@@ -80,7 +80,7 @@ def get_titles(lang=""):
 
 def work_one_tab(tab, missing, redirects):
     # ---
-    print("---------------- work_one_tab -----------------------")
+    logger.info("---------------- work_one_tab -----------------------")
     # ---
     iid, lang, target = tab["id"], tab["lang"], tab["target"]
     # ---
@@ -173,7 +173,7 @@ def work_in_titles(lang, tabs):
 
 def work_in_to_set(new_target, tab):
     # ---
-    print("------------- work_in_to_set ---------------")
+    logger.info("------------- work_in_to_set ---------------")
     # ---
     # {'id': '3381', 'title': 'Sympathetic crashing acute pulmonary edema', 'lang': 'ar', 'user': 'Annacecilia2', 'pupdate': '2025-03-26', 'target': 'User:Annacecilia2/Sympathetic crashing acute pulmonary edema', 'add_date': '2025-03-26 23:43:12'}
     # ---

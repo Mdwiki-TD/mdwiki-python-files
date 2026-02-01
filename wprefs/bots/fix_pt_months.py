@@ -1,12 +1,15 @@
 """
+
 from wprefs.bots.fix_pt_months import pt_months
 """
 
+import logging
 import re
 import sys
 
 import wikitextparser as wtp
 
+logger = logging.getLogger(__name__)
 # ---
 # ---
 months = {
@@ -81,9 +84,9 @@ def pt_months(text):
     # ---
     for x in tags:
         if "dd" in sys.argv:
-            print("--------------------------------")
-            print(str(x))
-            print(dir(x))
+            logger.info("--------------------------------")
+            logger.info(str(x))
+            logger.info(dir(x))
         # ---
         if not x or not x.name:
             continue

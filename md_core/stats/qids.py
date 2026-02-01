@@ -6,11 +6,15 @@ from stats.qids import qids_list
 """
 
 import json
+import logging
 import os
 import sys
 from pathlib import Path
 
 from mdapi_sql import wiki_sql
+
+logger = logging.getLogger(__name__)
+
 
 Dir = Path(__file__).parent
 
@@ -49,7 +53,7 @@ def start():
     # ---
     articles = get_en_articles()
     # ---
-    print(f"len articles: {len(articles)}")
+    logger.info(f"len articles: {len(articles)}")
     # ---
     qids_list = list(articles.values())
     # ---

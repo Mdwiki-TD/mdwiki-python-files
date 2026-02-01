@@ -7,19 +7,23 @@ delete from qids q1 WHERE (q1.qid = '' OR q1.qid IS NULL) and EXISTS (SELECT 1 F
 
 """
 
+import logging
 import sys
 from pathlib import Path
 
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots import en_to_md
 
+logger = logging.getLogger(__name__)
+
+
 in_qids = sql_for_mdwiki.get_all_qids()
 # ---
 len_qids_empty = len([x for x in in_qids if in_qids[x].find("Q") == -1])
 len_qids_not_empty = len([x for x in in_qids if in_qids[x] != ""])
 # ---
-print(f"len_qids_empty = {len_qids_empty}")
-print(f"len_qids_not_empty = {len_qids_not_empty}")
+logger.info(f"len_qids_empty = {len_qids_empty}")
+logger.info(f"len_qids_not_empty = {len_qids_not_empty}")
 # ---
 
 Dir = str(Path(__file__).parents[0])
@@ -31,7 +35,7 @@ num = 0
 all_texts = ""
 texts = ""
 # ---
-print(f"len(qids_list) = {len(qids_list)}")
+logger.info(f"len(qids_list) = {len(qids_list)}")
 # ---
 for title, qid in qids_list.items():
     # ---
@@ -57,11 +61,11 @@ for title, qid in qids_list.items():
     # ---
     if num % 300 == 0:
         if texts != "":
-            print(texts)
+            logger.info(texts)
             texts = ""
 # ---
 if texts != "":
-    print(texts)
+    logger.info(texts)
     vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True)
 # ---
 # log all_texts

@@ -179,8 +179,8 @@ def start():
         # ---
         links = links_without_translator[la]
         # ---
-        print("=============================" * 2)
-        print(f"lang: {la}, links: {len(links)}")
+        logger.info("=============================" * 2)
+        logger.info(f"lang: {la}, links: {len(links)}")
         # ---
         n += 1
         # ---

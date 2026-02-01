@@ -78,7 +78,7 @@ def fix_used(filepath):
     try:
         text = open(filepath, encoding="utf-8").read()
     except Exception as e:
-        print(f"Exception : {e}")
+        logger.info(f"Exception : {e}")
         return
     # ---
     oldtext = text

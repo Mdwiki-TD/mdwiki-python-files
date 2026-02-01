@@ -7,15 +7,19 @@ from mdapi_sql import sql_td_bot
 # ---
 
 """
+import logging
 import os
 import sys
 from pathlib import Path
 
 import pymysql
 from newapi import pymysql_bot
+from pywikibot import config
+
+logger = logging.getLogger(__name__)
+
 
 # ---
-from pywikibot import config
 
 conversions = pymysql.converters.conversions
 conversions[pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
@@ -52,7 +56,7 @@ if "localhost" in sys.argv or not os.getenv("HOME"):
     main_args_new["host"] = "127.0.0.1"
     main_args["db"] = f"{db_username}__mdwiki"
     main_args_new["db"] = f"{db_username}__mdwiki_new"
-    print("sql_td_bot localhost")
+    logger.info("sql_td_bot localhost")
 
 
 def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):

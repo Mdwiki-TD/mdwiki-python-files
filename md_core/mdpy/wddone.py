@@ -5,8 +5,13 @@
 python3 core8/pwb.py mdpy/wddone
 
 """
+import logging
+
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots import py_tools
+
+logger = logging.getLogger(__name__)
+
 
 que = """
 select title,user,lang,target
@@ -35,9 +40,9 @@ for tab in sq:
     # ---
     values = [mdtitle, target, lang, user, mdtitle, lang, user]
     # ---
-    print("**************")
-    print(done_qu)
-    print("**************")
+    logger.info("**************")
+    logger.info(done_qu)
+    logger.info("**************")
     # ---
     vfg = sql_for_mdwiki.mdwiki_sql(done_qu, update=True, values=values)
 # ---

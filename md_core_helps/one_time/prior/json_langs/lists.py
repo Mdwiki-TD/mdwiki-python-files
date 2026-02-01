@@ -6,8 +6,12 @@ from prior.json_langs.lists import json_langs_by_langs
 """
 
 import json
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent
@@ -21,7 +25,7 @@ for filename in os.listdir(project_js_new):
     if filename.endswith(".json"):
         filename2 = os.path.join(project_js_new, filename)
         # ---
-        print(f"filename: {filename2}..")
+        logger.info(f"filename: {filename2}..")
         # ---
         data = json.load(open(filename2))
         # ---

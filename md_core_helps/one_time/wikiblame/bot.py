@@ -5,12 +5,15 @@ from wikiblame.bot import get_blame #first, result = get_blame({"lang": "es", "a
 # ---
 """
 
+import logging
 import re
 import sys
 from urllib.parse import urlencode
 
 import requests
 from bs4 import BeautifulSoup
+
+logger = logging.getLogger(__name__)
 
 
 class WikiBlame:
@@ -58,7 +61,7 @@ class WikiBlame:
         url = f"{self.base_url}?{urlencode(self.params)}"
         # ---
         if "printurl" in sys.argv:
-            print(url)
+            logger.info(url)
         # ---
         response = requests.get(url)
         self.content = response.text
@@ -66,13 +69,13 @@ class WikiBlame:
     def parse_content(self):
         """Parse the content of the web page."""
         if self.content is None:
-            print("No content fetched yet. Run fetch_content() first.")
+            logger.info("No content fetched yet. Run fetch_content() first.")
             return None
 
         soup = BeautifulSoup(self.content, "html.parser")
         results_div = soup.find("div", {"class": "results"})
         if not results_div:
-            print("No results found.")
+            logger.info("No results found.")
             return None
         # ---
         text = results_div.text
@@ -85,10 +88,10 @@ class WikiBlame:
             href = x.get("href")
 
             if not href:
-                print("No href found.")
+                logger.info("No href found.")
                 continue
             # match url like https://es.wikipedia.org/w/index.php?title=Letrina_de_hoyo&amp;diff=prev&amp;oldid=87638632
-            # print(href)
+            # logger.info(href)
             search = re.search(r"oldid=(\d+)", href)
             if search:
                 oldid = search.group(1)
@@ -118,4 +121,4 @@ if __name__ == "__main__":
         "needle": "Till2014",
     }
     aa = get_blame(params)
-    print(aa)
+    logger.info(aa)

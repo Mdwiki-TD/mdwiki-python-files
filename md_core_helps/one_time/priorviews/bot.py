@@ -4,6 +4,7 @@ python3 core8/pwb.py priorviews/bot test
 
 """
 
+import logging
 import sys
 from pathlib import Path
 
@@ -12,6 +13,9 @@ from priorviews import by_lang
 from priorviews.bots import sections_text
 from priorviews.lists import views
 from priorviews.lists.links_by_section import sects_links_langlinks
+
+logger = logging.getLogger(__name__)
+
 
 # ---
 Dir = Path(__file__).parent
@@ -35,7 +39,7 @@ for section, links in sects_links_langlinks.items():
     ntext = sections_text.make_text(section, links)
     # ---
     if "test" in sys.argv:
-        print(ntext)
+        logger.info(ntext)
     # ---
     title = f"User:Mr. Ibrahem/priorviews/{section}"
     # ---
@@ -54,7 +58,7 @@ for section, links in sects_links_langlinks.items():
 
 # ---
 all_section_views = sections_text.all_section_views - by_lang.en_views
-print(f"<<green>> all_section_views: {all_section_views:,}")
+logger.info(f"<<green>> all_section_views: {all_section_views:,}")
 # ---
 newtext = ""
 newtext += "; (Views from July 2015 to June 2023).\n"

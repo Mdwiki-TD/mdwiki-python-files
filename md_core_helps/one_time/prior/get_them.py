@@ -461,7 +461,7 @@ class get_old:
         # ---
         revisions = json1.get("query", {}).get("pages", [{}])[0].get("revisions", [{}])[0]
         self.timestamp = revisions.get("timestamp", "")
-        print(f"timestamp: {self.timestamp}")
+        logger.info(f"timestamp: {self.timestamp}")
         self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
     def get_lead(self):
@@ -539,23 +539,23 @@ if __name__ == "__main__":
     # print
     orex = t.extlinks
     oldex = old.extlinks
-    print(f"orex: {len(orex)}")
-    print(f"oldex: {len(oldex)}")
+    logger.info(f"orex: {len(orex)}")
+    logger.info(f"oldex: {len(oldex)}")
     # ---
-    print("=============")
+    logger.info("=============")
     # ---
     refsname = t.refsname
     oldrefsname = old.refsname
-    print(f"refsname: {len(refsname)}")
-    print(f"oldrefsname: {len(oldrefsname)}")
+    logger.info(f"refsname: {len(refsname)}")
+    logger.info(f"oldrefsname: {len(oldrefsname)}")
     # ---
-    print("=============")
+    logger.info("=============")
     # ---
     lead = t.lead
     oldlead = old.lead
     for x in ["extlinks", "refsname"]:
-        print("=============")
+        logger.info("=============")
         # ---
-        print(f"{x}: {len(lead[x])}")
-        print(f"old{x}: {len(oldlead[x])}")
+        logger.info(f"{x}: {len(lead[x])}")
+        logger.info(f"old{x}: {len(oldlead[x])}")
     # ---

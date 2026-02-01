@@ -24,20 +24,25 @@ from mdwiki_api.wiki_page import MainPage, NEW_API
 # pages  = api_new.Get_template_pages(title, namespace="*", Max=10000)
 """
 
-# ---
+import logging
 import os
 
 from mdwiki_api.user_accounts import User_tables_wiki, user_agent
 from newapi.super.login_wrap import LoginWrap
 from newapi.super.S_API import bot_api
 from newapi.super.S_Category import catdepth_new
+
+# ---
 from newapi.super.S_Page import super_page
+
+logger = logging.getLogger(__name__)
+
 
 home_dir = os.getenv("HOME")
 # ---
 User_tables = User_tables_wiki
 # ---
-print(f"wiki_page.py use {User_tables['username']} account.")
+logger.info(f"wiki_page.py use {User_tables['username']} account.")
 # ---
 change_codes = {
     "bat_smg": "bat-smg",
