@@ -75,7 +75,7 @@ tab = {
     "EnWiki\\FixText": ["text_changes_work"],
     "EnWiki\\Start": ["startTranslatePhp", "TranslatePhpEditText"],
     "WikiParse\\Category": ["get_categories"],
-    "WikiParse\\Citations": ["get_name", "getCitations", "get_full_refs", "getShortCitations"],
+    "WikiParse\\Citations": ["get_name", "getCitations", "get_full_refs", "get_short_citations"],
     "WikiParse\\Template": ["getTemplate"],
     "Leaderboard\\Camps": ["camps_list"],
     "Leaderboard\\Graph": ["graph_html", "print_graph_from_sql", "print_graph_for_table", "print_graph_tab"],
