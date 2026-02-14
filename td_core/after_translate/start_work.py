@@ -72,8 +72,11 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         pupdate = pupdate[:8]
         pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>", pupdate)
         # ---
+        # Normalize the title: replace underscores with spaces and strip whitespace
         md_title = co_text.replace("_", " ").strip()
-        md_title = re.sub("/full$", "", co_text)
+        # Remove "/full" suffix from the title (used for full-page translations)
+        # BUGFIX: Use md_title instead of co_text to preserve the normalization
+        md_title = re.sub("/full$", "", md_title)
         # ---
         target = target.replace("_", " ")
         # ---
