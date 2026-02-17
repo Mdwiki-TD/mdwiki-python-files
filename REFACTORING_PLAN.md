@@ -39,11 +39,11 @@ This static analysis identified **27 issues** across 4 categories: Security, Per
 
   ```python
   # VULNERABLE CODE
-  username = "Mr. Ibrahem 1"
-  password = "Mr._Ibrahem_1@3vfairp3i17r6hru34tpdbuth6e14fvt"
+  username = ""
+  password = "
 
-  username_cx = "Mr. Ibrahem"
-  password_cx = "Mr._Ibrahem@fe8oqgj7u6kbcrs1kaqdc0aik7r6cr9p"
+  username_cx = ""
+  password_cx = ""
   ```
 
 #### Recommendations:
