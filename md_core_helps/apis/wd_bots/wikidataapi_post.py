@@ -56,7 +56,7 @@ def do_request(params=None, method="POST"):
         return r4.json()
 
     except Exception as e:
-        logger.warning(e)
+        logger.exception('Exception:', exc_info=True)
         return {}
 
 
