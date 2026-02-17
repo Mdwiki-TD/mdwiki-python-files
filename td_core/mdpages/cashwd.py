@@ -201,7 +201,7 @@ def dump_all(main_table_sites, len_titles):
                 json.dump(miss_list, aa, ensure_ascii=False, indent=2)
             logger.info(f"<<greenn>>dump to cash_exists/{site}.json done..")
         except Exception as e:
-            logger.warning(e)
+            logger.exception('Exception:', exc_info=True)
             continue
     # ---
     return missing_langs

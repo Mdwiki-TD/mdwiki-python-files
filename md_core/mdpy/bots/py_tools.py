@@ -52,7 +52,7 @@ def quoteurl(fao):
     try:
         fao = urllib.parse.quote(fao)
     except Exception as e:
-        logger.warning(e)
+        logger.exception('Exception:', exc_info=True)
     # ---
     if endash:
         fao = fao.replace("ioioioioio", "%E2%80%93")

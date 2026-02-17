@@ -44,7 +44,7 @@ def do_request(params=None, method="POST"):
         return r4
 
     except Exception as e:
-        logger.warning(e)
+        logger.exception('Exception:', exc_info=True)
     # ---
     return {}
 

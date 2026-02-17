@@ -49,11 +49,6 @@ missingtitles = {}
 session["url"] = "https://mdwiki.org/w/api.php"
 session["family"] = "mdwiki"
 
-
-def printx(s):
-    logger.info(s)
-
-
 def log(lang):
     # ---
     if login_done[1] == lang:
@@ -105,7 +100,7 @@ def log(lang):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        logger.info(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     print_s(r2)
@@ -119,7 +114,7 @@ def log(lang):
         login_done[1] = lang
 
     # ---
-    # if r2.json()['login']['result'] != 'Success': printx(r2.json()['login']['reason'])
+    # if r2.json()['login']['result'] != 'Success': logger.info(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
     try:
@@ -134,7 +129,7 @@ def log(lang):
             headers={"User-Agent": user_agent},
         )
     except Exception as e:
-        printx(f"login to {lang}.{family}.org Error {e}")
+        logger.info(f"login to {lang}.{family}.org Error {e}")
         return False
     # ---
     token = r3.json()["query"]["tokens"]["csrftoken"]
@@ -162,8 +157,8 @@ def submitAPI(params, lang="", Type="post", add_token=False):
         json1 = r4.json()
         # ---
     except Exception as e:
-        printx(f"submitAPI Error {e}")
-        printx(params)
+        logger.exception(params)
+        logger.exception('Exception:', exc_info=True)
         return json1
     # ---
     return json1
