@@ -8,7 +8,7 @@ tfj run copyen --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py
 """
 import logging
 
-from apis import cat_cach, mdwiki_api
+from apis import cat_cach, mdwiki_api_call
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdwiki_api.wiki_page import MainPage
@@ -23,7 +23,7 @@ def main():
     for n, x in enumerate(all_pages):
         logger.info(f"{n}/{len(all_pages)} : {x}")
         # ---
-        alltext = mdwiki_api.GetPageText(x)
+        alltext = mdwiki_api_call.GetPageText(x)
         # ---
         if not alltext:
             logger.info("no text: " + x)

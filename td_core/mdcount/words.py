@@ -24,7 +24,7 @@ import logging
 import os
 import sys
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdapi_sql import sql_for_mdwiki
 from mdcount.bots import lead
 from mdcount.bots.links import get_links_from_cats
@@ -50,7 +50,7 @@ def start_to_sql():
 
 def count_words(title):
     # ---
-    text = mdwiki_api.GetPageText(title)
+    text = mdwiki_api_call.GetPageText(title)
     # ---
     lead_c, all_c = lead.count_all(title="", text=text)
     # ---

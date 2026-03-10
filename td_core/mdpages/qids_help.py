@@ -14,7 +14,7 @@ import os
 import re
 import sys
 
-from apis import cat_cach, mdwiki_api, wiki_api
+from apis import cat_cach, mdwiki_api_call, wiki_api
 from mdpy.bots.check_title import valid_title
 
 logger = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ dir2 = Dashboard_path + "/Tables/jsons"
 
 logger.info("Get_All_pages:")
 # ---
-all_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
+all_pages = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 all_pages = [x for x in all_pages if valid_title(x)]
 # ---
 logger.info("make_cash_to_cats:")

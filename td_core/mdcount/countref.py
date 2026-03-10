@@ -20,7 +20,7 @@ import logging
 import os
 import sys
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdapi_sql import sql_for_mdwiki
 from mdcount.bots.countref_bots import count_ref_from_text
 from mdcount.bots.links import get_links_from_cats
@@ -46,7 +46,7 @@ def start_to_sql():
 
 def count_refs(title):
     # ---
-    text = mdwiki_api.GetPageText(title)
+    text = mdwiki_api_call.GetPageText(title)
     # ---
     # extend short refs
     text2 = text

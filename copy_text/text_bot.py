@@ -3,7 +3,7 @@
 import logging
 import re
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from mdapi_sql import sql_for_mdwiki
@@ -45,7 +45,7 @@ def get_cats(alltext):
 
 
 def get_text_revid(x):
-    alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
+    alltext, revid = mdwiki_api_call.GetPageText(x, get_revid=True)
     # ---
     text_cache[x] = alltext
     revid_cache[x] = revid

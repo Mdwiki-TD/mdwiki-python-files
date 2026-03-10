@@ -9,7 +9,7 @@ import logging
 import sys
 
 import requests
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdpy.bots import py_tools
 from mdpy.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import NEW_API, MainPage, user_agent
@@ -111,7 +111,7 @@ def work(title, num, length, From=""):
         if not valid_title(tit):
             continue
         # ---
-        mdwiki_api.create_Page(text, sus, tit, False, family="mdwiki", sleep=1)
+        mdwiki_api_call.create_Page(text, sus, tit, False, family="mdwiki", sleep=1)
 
 
 def main():
@@ -239,7 +239,7 @@ def main():
     if newpages != "":
         list = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        list = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
+        list = mdwiki_api_call.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
     elif pages != []:
         list = pages
     for num, page in enumerate(list, start=1):

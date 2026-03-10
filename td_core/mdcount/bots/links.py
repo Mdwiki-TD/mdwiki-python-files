@@ -3,7 +3,7 @@ import re
 import sys
 
 # ---
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
@@ -57,7 +57,7 @@ def get_valid_Links(words_tab):
         logger.info(f"ALL SQL LINKS:{len(vav2)}, to work:{len(vav)}")
     # ---
     elif "oldway" in sys.argv:
-        ptext = mdwiki_api.GetPageText("WikiProjectMed:List")
+        ptext = mdwiki_api_call.GetPageText("WikiProjectMed:List")
         for m2 in link_regex.finditer(ptext):
             sa = re.compile(r"\[\[(\:|)(\w{2}|\w{3}|w|en|image|file|category|template)\:", flags=re.IGNORECASE)
             sal = sa.findall(m2.group(0))
@@ -74,7 +74,7 @@ def get_valid_Links(words_tab):
         vav = [x.strip() for x in ttt.split("\n") if x.strip() != ""]
     # ---
     elif "fromlist" in sys.argv:
-        vav = mdwiki_api.Get_page_links("WikiProjectMed:List")
+        vav = mdwiki_api_call.Get_page_links("WikiProjectMed:List")
         vav = vav.get("links", {}).keys()
         logger.info("Get vaild_links fromlist : WikiProjectMed:List")
     # ---

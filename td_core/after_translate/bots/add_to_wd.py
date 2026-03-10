@@ -14,7 +14,7 @@ import logging
 import re
 
 # ---
-from apis import mdwiki_api, wiki_api, wikidataapi
+from apis import mdwiki_api_call, wiki_api, wikidataapi
 from mdapi_sql import sql_for_mdwiki
 from mdpy import orred
 from mdpy.bots import en_to_md
@@ -189,13 +189,13 @@ def Add_to_wikidata(mdtitle, lang, target, user):
         logger.info("**************")
         sql_for_mdwiki.mdwiki_sql(done_qua, update=True)
     # ---
-    tat = mdwiki_api.GetPageText(mdtitle)
+    tat = mdwiki_api_call.GetPageText(mdtitle)
     # ---
     lalas = f"[[{lang}:"
     # ---
     line = f"[[{lang}:{target}]]"
     if tat != "" and tat.find(line) == -1 and tat.find(lalas) == -1:
-        mdwiki_api.Add_To_Bottom(f"\n{line}", f"add link to {line}", mdtitle)
+        mdwiki_api_call.Add_To_Bottom(f"\n{line}", f"add link to {line}", mdtitle)
     # ---
     if lang == "or":
         orred.create_redirect(target, mdtitle)

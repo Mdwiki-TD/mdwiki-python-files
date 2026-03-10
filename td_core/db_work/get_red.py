@@ -9,7 +9,7 @@ python3 core8/pwb.py db_work/get_red
 import logging
 import sys
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdapi_sql import sql_for_mdwiki, sql_qids_others
 
 logger = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ def get_table(titles):
         # ---
         done += len(group)
         # ---
-        asa = mdwiki_api.get_redirect(group)
+        asa = mdwiki_api_call.get_redirect(group)
         # ---
         logger.info(f"work on {len_grup} pagees, done: {done}/{len(titles)}.")
         # ---

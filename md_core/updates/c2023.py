@@ -11,7 +11,7 @@ import logging
 import sys
 from pathlib import Path
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 
 logger = logging.getLogger(__name__)
@@ -81,7 +81,7 @@ def get_users(pages):
 
 title = "User:Mr. Ibrahem/stats"
 
-pages = mdwiki_api.Get_All_pages("!", namespace="0", limit=limit, limit_all=limit, apfilterredir="nonredirects")
+pages = mdwiki_api_call.Get_All_pages("!", namespace="0", limit=limit, limit_all=limit, apfilterredir="nonredirects")
 # ---
 usersbyyear = get_users(pages)
 # ---

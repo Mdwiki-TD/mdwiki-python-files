@@ -3,7 +3,7 @@ import logging
 import re
 
 import wikitextparser as wtp
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ def count_text(text):
 def count_all(title="", text=""):
     # ---
     if text == "" and title != "":
-        text = mdwiki_api.GetPageText(title)
+        text = mdwiki_api_call.GetPageText(title)
     # ---
     parsed = wtp.parse(text)
     # ---
@@ -69,5 +69,5 @@ if __name__ == "__main__":
     leadword, pageword = count_all(title=x)
     logger.info(f"leadword: {leadword}, pageword: {pageword}")
     # ---
-    pageword2 = mdwiki_api.wordcount(x)
+    pageword2 = mdwiki_api_call.wordcount(x)
     logger.info(f"pageword2: {pageword2}")

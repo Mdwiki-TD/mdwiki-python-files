@@ -20,7 +20,7 @@ if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
 import mdapi
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdwiki_api.mdwiki_page import NEW_API
 from new_updater import work_on_text
 
@@ -148,7 +148,7 @@ def main():
     if newpages != "":
         lista = api_new.Get_Newpages(limit=newpages, namespace=namespaces)
     elif user != "":
-        lista = mdwiki_api.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
+        lista = mdwiki_api_call.Get_UserContribs(user, limit=user_limit, namespace=namespaces, ucshow="new")
     elif pages != []:
         lista = pages
     # ---

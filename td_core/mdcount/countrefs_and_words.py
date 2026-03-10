@@ -20,7 +20,7 @@ import logging
 import os
 import sys
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdapi_sql import sql_for_mdwiki
 from mdcount.bots import lead
 from mdcount.bots.countref_bots import count_ref_from_text
@@ -165,7 +165,7 @@ def main():
         if numb >= limit:
             break
         # ---
-        text = mdwiki_api.GetPageText(x)
+        text = mdwiki_api_call.GetPageText(x)
         # ---
         count_words(x, text)
         count_refs(x, text)

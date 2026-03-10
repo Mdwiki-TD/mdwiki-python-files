@@ -11,7 +11,7 @@ import sys
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
 from pathlib import Path
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdpy.fixref.fixref_text_new import fix_ref_template
 from mdwiki_api.mdwiki_page import CatDepth
 
@@ -31,7 +31,7 @@ thenumbers = {1: 20000, "done": 0}
 def work(title):
     Ask = "ask" in sys.argv
     # ---
-    text = mdwiki_api.GetPageText(title)
+    text = mdwiki_api_call.GetPageText(title)
     # ---
     summary = "Normalize references"
     # ---
@@ -40,7 +40,7 @@ def work(title):
     if new_text != text:
         thenumbers["done"] += 1
         # ---
-        mdwiki_api.page_put(oldtext=text, newtext=new_text, summary=summary, title=title, returntrue=False, diff=True)
+        mdwiki_api_call.page_put(oldtext=text, newtext=new_text, summary=summary, title=title, returntrue=False, diff=True)
     else:
         logger.info("no changes.")
 
@@ -60,7 +60,7 @@ def main():
             List = [x.strip() for x in text.split("\n") if x.strip() != ""]
         # ---
         if arg == "allpages":
-            List = mdwiki_api.Get_All_pages("")
+            List = mdwiki_api_call.Get_All_pages("")
         # ---
         # python pwb.py mdpy/fixref/start -cat:CS1_errors:_deprecated_parameters ask
         if arg == "-cat":
