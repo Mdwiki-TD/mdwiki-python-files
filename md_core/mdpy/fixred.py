@@ -16,7 +16,7 @@ import logging
 import re
 import sys
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdpy.bots import py_tools
 from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
 
@@ -24,10 +24,10 @@ logger = logging.getLogger(__name__)
 
 NewList = {}
 
-redirects_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="redirects")
+redirects_pages = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="redirects")
 logger.info(f"len of redirects_pages {len(redirects_pages)} ")
 # ---
-nonredirects = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
+nonredirects = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 
 logger.info(f"len of nonredirects {len(nonredirects)} ")
 
@@ -74,7 +74,7 @@ def find_redirects(links):
             "utf8": 1,
             "rdlimit": "max",
         }
-        if jsone := mdwiki_api.post_s(params):
+        if jsone := mdwiki_api_call.post_s(params):
             # ---
             query = jsone.get("query", {})
             # ---
@@ -147,7 +147,7 @@ def treat_page(title):
     text = page.get_text()
     # ---
     # links = page.page_links_query(plnamespace="0")
-    links = mdwiki_api.Get_page_links(title, namespace="0", limit="max")
+    links = mdwiki_api_call.Get_page_links(title, namespace="0", limit="max")
     # ---
     normal = links.get("normalized", [])
     logger.info(f"find {len(normal)} normalized..")

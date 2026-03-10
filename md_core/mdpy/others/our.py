@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 import requests
-from apis import mdwiki_api, txtlib2
+from apis import mdwiki_api_call, txtlib2
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +41,7 @@ def work(title):
     # ---
     # global values
     # ---
-    text = mdwiki_api.GetPageText(title)
+    text = mdwiki_api_call.GetPageText(title)
     # ---
     ingr = txtlib2.extract_templates_and_params(text)
     # ---
@@ -75,7 +75,7 @@ def work(title):
                 values[param].append(title)
     # ---
     if newtext != text:
-        mdwiki_api.page_put(
+        mdwiki_api_call.page_put(
             newtext=newtext, summary="fix ourworldindatamirror template.", title=title, returntrue=False, diff=True
         )
     # ---
@@ -143,7 +143,7 @@ def make_log(dad):
     te = f"= errors = \n{text_error}\n"
     te += f"= no errors = \n{text}\n"
     # ---
-    mdwiki_api.page_put(newtext=te, summary="update", title="User:Mr. Ibrahem/Ourworldindatamirror", diff=False)
+    mdwiki_api_call.page_put(newtext=te, summary="update", title="User:Mr. Ibrahem/Ourworldindatamirror", diff=False)
 
 
 def main():
@@ -151,7 +151,7 @@ def main():
     global values
     # ---
     if "read" in sys.argv:
-        listas = mdwiki_api.Get_template_pages("Template:Ourworldindatamirror", namespace="0", limit="max")
+        listas = mdwiki_api_call.Get_template_pages("Template:Ourworldindatamirror", namespace="0", limit="max")
         # ---
         num = 0
         # ---

@@ -18,7 +18,7 @@ from multiprocessing import Pool
 from pathlib import Path
 
 import requests
-from apis import cat_cach, mdwiki_api
+from apis import cat_cach, mdwiki_api_call
 from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext_changes(text)
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
@@ -127,7 +127,7 @@ def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
 
 
 def get_text_revid(x):
-    alltext, revid = mdwiki_api.GetPageText(x, get_revid=True)
+    alltext, revid = mdwiki_api_call.GetPageText(x, get_revid=True)
     # ---
     text_cache[x] = alltext
     revid_cache[x] = revid

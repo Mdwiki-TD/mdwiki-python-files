@@ -12,7 +12,7 @@ import logging
 import sys
 from pathlib import Path
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ if date_before_20200701.exists():
     fska = date_before_20200701.read_text()
     fakalist = [x.strip().split("]]")[0].replace("[[", "").strip() for x in fska.split("\n")]
 # ---
-listo = mdwiki_api.Get_All_pages("!", namespace="0")
+listo = mdwiki_api_call.Get_All_pages("!", namespace="0")
 listo = [x for x in listo if x not in fakalist]
 if "test" in sys.argv:
     listo = listo[:100]
@@ -54,7 +54,7 @@ def get_timestamp(titles):
             "rvlimit": "1",
             "rvdir": "newer",
         }
-        hh = mdwiki_api.post_s(params)
+        hh = mdwiki_api_call.post_s(params)
         # ---
         # { "action": "query", "format": "json", "prop": "revisions", "titles": "Etizolam", "utf8": 1, "rvprop": "timestamp", "rvlimit": "1", "rvdir": "newer" }
         # ---
@@ -125,5 +125,5 @@ text += """|-
 if "test" in sys.argv:
     logger.info(text)
 else:
-    mdwiki_api.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
+    mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
 # ---

@@ -16,7 +16,7 @@ import logging
 import re
 import sys
 
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
@@ -35,13 +35,13 @@ for arg in sys.argv:
 redirects_pages = []
 # ---
 if "nored" not in sys.argv:
-    redirects_pages = mdwiki_api.Get_All_pages("!", namespace="0", apfilterredir="redirects", limit_all=limit_m[1])
+    redirects_pages = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="redirects", limit_all=limit_m[1])
 # ---
 dones = []
 links = []
 re_links = []
 # ---
-ptext = mdwiki_api.GetPageText("WikiProjectMed:List")
+ptext = mdwiki_api_call.GetPageText("WikiProjectMed:List")
 link_regex = re.compile(r"\[\[(.*?)\]\]")
 # ---
 vaild_links = []
@@ -101,5 +101,5 @@ text += "\n".join([f"# [[{dx}]]" for dx in re_listo])
 # ---
 logger.info(text)
 # ---
-mdwiki_api.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/List", nocreate=0)
+mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/List", nocreate=0)
 # ---

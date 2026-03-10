@@ -10,7 +10,7 @@ import logging
 import sys
 
 # ---
-from apis import mdwiki_api
+from apis import mdwiki_api_call
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ def fix_dup(From, To):
     # ---
     newtext = f"#REDIRECT [[{To}]]"
     # ---
-    oldtext = mdwiki_api.GetPageText(From)
+    oldtext = mdwiki_api_call.GetPageText(From)
     # ---
     sus = f"fix duplicate redirect to [[{To}]]"
     # ---
@@ -42,7 +42,7 @@ def fix_dup(From, To):
         logger.info("no changes.")
         return
     # ---
-    mdwiki_api.page_put(oldtext=oldtext, newtext=newtext, summary=sus, title=From, returntrue=False, diff=True)
+    mdwiki_api_call.page_put(oldtext=oldtext, newtext=newtext, summary=sus, title=From, returntrue=False, diff=True)
 
 
 def main():
@@ -65,7 +65,7 @@ def main():
         "gqplimit": "max",
     }
     # ---
-    lista = mdwiki_api.post_s(fop)
+    lista = mdwiki_api_call.post_s(fop)
     # ---
     redirects = lista.get("query", {}).get("redirects", [])
     # ---
