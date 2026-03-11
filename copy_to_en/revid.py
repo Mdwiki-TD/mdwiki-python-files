@@ -24,8 +24,9 @@ if not dir2:
 # ---
 file = Dir / "all_pages_revids.json"
 # ---
-file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
+# file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
 file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
+file4 = Path(dir2) / "data" / "all_pages_revids.json"
 
 
 def dump_data(revids):
@@ -39,12 +40,12 @@ def dump_data(revids):
         json.dump(revids, f, ensure_ascii=False)
         logger.info(f"<<blue>> dump to {file}")
     # ---
-    try:
-        with open(file2, "w", encoding="utf-8") as f:
-            json.dump(revids, f, ensure_ascii=False)
-            logger.info(f"<<blue>> dump to {file2}")
-    except Exception as e:
-        logger.error(f"<<red>> dump to {file2} error: {e}")
+    # try:
+        # with open(file2, "w", encoding="utf-8") as f:
+            # json.dump(revids, f, ensure_ascii=False)
+            # logger.info(f"<<blue>> dump to {file2}")
+    # except Exception as e:
+        # logger.error(f"<<red>> dump to {file2} error: {e}")
     # ---
     try:
         with open(file3, "w", encoding="utf-8") as f:
@@ -52,6 +53,13 @@ def dump_data(revids):
             logger.info(f"<<blue>> dump to {file3}")
     except Exception as e:
         logger.error(f"<<red>> dump to {file3} error: {e}")
+    # ---
+    try:
+        with open(file4, "w", encoding="utf-8") as f:
+            json.dump(revids, f, ensure_ascii=False)
+            logger.info(f"<<blue>> dump to {file4}")
+    except Exception as e:
+        logger.error(f"<<red>> dump to {file4} error: {e}")
 
 
 def Cat_Depth(title, depth=0):
