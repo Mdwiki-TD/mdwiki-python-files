@@ -12,7 +12,6 @@ load_dotenv()
 
 username = os.getenv("WIKIPEDIA_BOT_USERNAME")
 password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
-qs_token = os.getenv("QS_TOKEN")
 
 bot_username = username
 bot_password = password

@@ -12,13 +12,9 @@ my_password = lgpass_enwiki
 
 username = os.getenv("WIKIPEDIA_BOT_USERNAME")
 password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
-qs_token = os.getenv("QS_TOKEN")
 
 bot_username = username
 bot_password = password
-
-if qs_token and not qs_token.startswith("$2y$10$"):
-    qs_token = "$2y$10$" + qs_token
 
 user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 # ---
