@@ -23,8 +23,8 @@ logger = logging.getLogger(__name__)
 # my_username = user_account_enwiki.my_username
 # lgpass_enwiki = user_account_enwiki.lgpass_enwiki
 # ---
-botusername = user_account_enwiki.botusername
-botpassword = user_account_enwiki.botpassword
+bot_username = user_account_enwiki.bot_username
+bot_password = user_account_enwiki.bot_password
 # ---
 user_agent = user_account_enwiki.user_agent
 # ---
@@ -92,8 +92,8 @@ def log(lang):
             data={
                 "format": "json",
                 "action": "login",
-                "lgname": botusername,
-                "lgpassword": botpassword,
+                "lgname": bot_username,
+                "lgpassword": bot_password,
                 "lgtoken": r1.json()["query"]["tokens"]["logintoken"],
             },
             timeout=10,
