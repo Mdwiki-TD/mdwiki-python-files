@@ -57,3 +57,4 @@ z/jsons/pages.json
 /apicache
 throttle.ctrl
 scan.py
+.env
