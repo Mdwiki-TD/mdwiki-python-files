@@ -10,7 +10,10 @@ user_agent = user_accounts.user_agent
 
 import os
 from dotenv import load_dotenv
-load_dotenv()
+try:
+    load_dotenv()
+except Exception:
+    pass
 
 my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
 
