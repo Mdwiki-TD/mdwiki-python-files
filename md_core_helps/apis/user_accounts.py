@@ -9,30 +9,24 @@ user_agent   = user_accounts.user_agent
 # ---
 """
 
-import configparser
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
-home_dir = os.getenv("HOME")
-dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
-# ---
-config = configparser.ConfigParser()
-config.read(f"{dir2}/confs/user.ini")
+username = os.getenv("WIKIPEDIA_BOT_USERNAME")
+password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
+qs_token = os.getenv("QS_TOKEN")
 
-username = config["DEFAULT"].get("botusername", "")
-password = config["DEFAULT"].get("botpassword", "")
+bot_username = username
+bot_password = password
 
-bot_username = config["DEFAULT"].get("botusername", "")
-bot_password = config["DEFAULT"].get("botpassword", "")
+my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
+lgpass_enwiki = os.getenv("WIKIPEDIA_HIMO_PASSWORD")
 
-my_username = config["DEFAULT"].get("my_username", "")
-
-mdwiki_pass = config["DEFAULT"].get("mdwiki_pass", "")
-
-lgpass_enwiki = config["DEFAULT"].get("lgpass_enwiki", "")
 my_password = lgpass_enwiki
 
-qs_token = config["DEFAULT"].get("qs_token", "")
+if qs_token and not qs_token.startswith("$2y$10$"):
+    qs_token = "$2y$10$" + qs_token
 
-user_agent = config["DEFAULT"].get(
-    "user_agent", "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
-)
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
