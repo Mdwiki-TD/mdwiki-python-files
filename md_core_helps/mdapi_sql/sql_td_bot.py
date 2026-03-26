@@ -10,7 +10,6 @@ from mdapi_sql import sql_td_bot
 import logging
 import os
 import sys
-from pathlib import Path
 
 import pymysql
 from newapi import pymysql_bot
@@ -18,15 +17,9 @@ from pywikibot import config
 
 logger = logging.getLogger(__name__)
 
-
-# ---
-
 conversions = pymysql.converters.conversions
 conversions[pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
-# ---
-Dir = str(Path(__file__).parents[0])
-dir2 = Dir.replace("\\", "/").split("/pybot/")[0]
-# ---
+
 db_username = config.db_username
 db_password = config.db_password
 # ---
@@ -35,7 +28,7 @@ if config.db_connect_file is None:
 else:
     credentials = {"read_default_file": config.db_connect_file}
     # read default fil
-    db_username = "s55992" if dir2.find("medwiki") != -1 else "s54732"
+    db_username = os.getenv("TOOL_TOOLSDB_USER")
 # ---
 main_args = {
     "host": "tools.db.svc.wikimedia.cloud",
