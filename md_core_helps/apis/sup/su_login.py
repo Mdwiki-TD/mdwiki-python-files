@@ -14,23 +14,7 @@ from mwclient.client import Site
 
 logger = logging.getLogger(__name__)
 
-
-def default_user_agent():
-    tool = os.getenv("HOME")
-    if tool:
-        # "/data/project/mdwiki"
-        tool = tool.split("/")[-1]
-    else:
-        tool = "himo"
-    # ---
-    li = f"{tool} bot/1.0 (https://{tool}.toolforge.org/; tools.{tool}@toolforge.org)"
-    # ---
-    # logger.info(f": {li}")
-    # ---
-    return li
-
-
-user_agent = default_user_agent()
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 
 def Get_MwClient_Site(lang, family, username, password):

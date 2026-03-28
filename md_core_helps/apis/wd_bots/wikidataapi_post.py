@@ -9,17 +9,11 @@ import sys
 from urllib.parse import urlencode
 
 import requests
-from apis import user_accounts
+from apis.user_accounts import username, password
 
 logger = logging.getLogger(__name__)
 
-user_agent = user_accounts.user_agent
-username = user_accounts.bot_username  # user_accounts.my_username
-password = user_accounts.bot_password  # user_accounts.mdwiki_pass
-
-if "workhimo" in sys.argv:
-    username = user_accounts.my_username
-    password = user_accounts.lgpass_enwiki
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 SS = {"ss": requests.Session(), "r3_token": ""}
 
@@ -55,7 +49,7 @@ def do_request(params=None, method="POST"):
         # ---
         return r4.json()
 
-    except Exception as e:
+    except Exception:
         logger.exception('Exception:', exc_info=True)
         return {}
 

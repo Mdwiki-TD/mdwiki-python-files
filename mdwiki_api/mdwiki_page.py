@@ -44,34 +44,32 @@ user        = page.get_user()
 purge       = page.purge()
 '''
 """
-import functools
-
-# ---
 import os
+import functools
 import sys
 
 if "mwclient" not in sys.argv:
     sys.argv.append("nomwclient")
 
-from mdwiki_api.user_accounts import User_tables, user_agent
-from newapi.all_apis import ALL_APIS
-from newapi.api_utils import lang_codes
+from newapi import ALL_APIS
 
-SITECODE = "www"
-FAMILY = "mdwiki"
-
-change_codes = lang_codes.change_codes
-
-home_dir = os.getenv("HOME")
+my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
 
 
 @functools.lru_cache(maxsize=1)
 def load_main_api() -> ALL_APIS:
+    username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+    password = os.getenv("MDWIKI_HIMO_PASSWORD")
+
+    if not username or not password:
+        raise RuntimeError("Missing credentials: WIKIPEDIA_HIMO_USERNAME / MDWIKI_HIMO_PASSWORD")
+
     return ALL_APIS(
         lang="www",
         family="mdwiki",
-        username=User_tables["username"],
-        password=User_tables["password"],
+        username=username,
+        password=password,
     )
 
 
@@ -83,11 +81,8 @@ CatDepth = main_api.CatDepth
 md_MainPage = MainPage  # noqa: N816
 
 __all__ = [
-    "home_dir",
-    "user_agent",
     "MainPage",
     "md_MainPage",
     "NEW_API",
     "CatDepth",
-    "change_codes",
 ]

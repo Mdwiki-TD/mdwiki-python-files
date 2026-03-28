@@ -1,19 +1,14 @@
 #!/usr/bin/python3
 """
-# ---
-from mdapi_sql import sql_td_bot
-# result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
-# result = sql_td_bot.sql_connect_mdwiki_new(query, return_dict=return_dict, values=values)
-# ---
 
 """
 import logging
 import os
 import sys
-
 import pymysql
-from newapi import pymysql_bot
 from pywikibot import config
+import copy
+import pymysql.cursors
 
 logger = logging.getLogger(__name__)
 
@@ -52,29 +47,58 @@ if "localhost" in sys.argv or not os.getenv("HOME"):
     logger.info("sql_td_bot localhost")
 
 
+def _sql_connect_pymysql(
+    query,
+    return_dict=False,
+    values=None,
+    main_args={},
+    credentials={},
+    conversions=None,
+    many=False,
+    **kwargs,
+):
+    args = copy.deepcopy(main_args)
+    args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
+    if conversions:
+        args["conv"] = conversions
+
+    params = values or None  # Simplify condition
+
+    try:
+        connection = pymysql.connect(**args, **credentials)
+    except Exception as e:
+        logger.exception(e)
+        return []
+
+    with connection as conn, conn.cursor() as cursor:
+        # skip sql errors
+        try:
+            if many:
+                cursor.executemany(query, params)
+            else:
+                cursor.execute(query, params)
+
+        except Exception as e:
+            logger.exception(e)
+            return []
+
+        try:
+            results = cursor.fetchall()
+        except Exception as e:
+            logger.exception(e)
+            logger.exception('Exception during fetchall', exc_info=True)
+            return []
+
+    return results
+
+
 def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):
     # ---
-    results = pymysql_bot.sql_connect_pymysql(
+    results = _sql_connect_pymysql(
         query,
         return_dict=return_dict,
         values=values,
         main_args=main_args,
-        credentials=credentials,
-        conversions=conversions,
-        many=many,
-        **kwargs,
-    )
-    # ---
-    return results
-
-
-def sql_connect_mdwiki_new(query, return_dict=False, values=None, many=False, **kwargs):
-    # ---
-    results = pymysql_bot.sql_connect_pymysql(
-        query,
-        return_dict=return_dict,
-        values=values,
-        main_args=main_args_new,
         credentials=credentials,
         conversions=conversions,
         many=many,

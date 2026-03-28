@@ -4,6 +4,7 @@
 from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 
 """
+import os
 import logging
 import sys
 import urllib
@@ -15,18 +16,25 @@ import requests
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
-from wprefs import user_account_enwiki
 from wprefs.helps import print_s
+
+from dotenv import load_dotenv
+try:
+    load_dotenv()
+except Exception:
+    pass
 
 logger = logging.getLogger(__name__)
 
-# my_username = user_account_enwiki.my_username
-# lgpass_enwiki = user_account_enwiki.lgpass_enwiki
+username = os.getenv("WIKIPEDIA_BOT_USERNAME")
+password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
+
+my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+
+bot_username = os.getenv("WIKIPEDIA_BOT_USERNAME")
+bot_password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
 # ---
-bot_username = user_account_enwiki.bot_username
-bot_password = user_account_enwiki.bot_password
-# ---
-user_agent = user_account_enwiki.user_agent
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 # ---
 Dir = str(Path(__file__).parents[0])
 # logger.info(f'Dir : {Dir}')
@@ -48,6 +56,7 @@ missingtitles = {}
 
 session["url"] = "https://mdwiki.org/w/api.php"
 session["family"] = "mdwiki"
+
 
 def log(lang):
     # ---
@@ -141,7 +150,7 @@ def Gettoken():
     return session["token"]
 
 
-def submitAPI(params, lang="", Type="post", add_token=False):
+def submitAPI(params, lang="", _type="post", add_token=False):
     # ---
     log(lang)
     # ---
@@ -151,12 +160,15 @@ def submitAPI(params, lang="", Type="post", add_token=False):
         params["token"] = session["token"]
     # ---
     try:
-        method = "POST" if Type == "post" else "GET"
+        method = _type.lower().strip()
+        if method == "post":
+            r4 = session[1].post(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        else:
+            r4 = session[1].get(session["url"], params=params, headers={"User-Agent": user_agent}, timeout=10)
         # ---
-        r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
         json1 = r4.json()
         # ---
-    except Exception as e:
+    except Exception:
         logger.exception(params)
         logger.exception('Exception:', exc_info=True)
         return json1
@@ -201,7 +213,7 @@ def get_revisions(title, lang=""):
     return revisions
 
 
-def GetPageText(title, lang="", Print=True):
+def GetPageText(title, lang="", print_text=True):
     # ---
     params = {
         "action": "parse",
@@ -217,13 +229,13 @@ def GetPageText(title, lang="", Print=True):
     json1 = submitAPI(params, lang=lang)
     # ---
     if not json1 or not isinstance(json1, dict):
-        if Print:
+        if print_text:
             print_s("json1 ==:")
             print_s(json1)
         return ""
     # ---
     if not json1:
-        if Print:
+        if print_text:
             print_s("json1 == {}")
         return ""
     # ---
@@ -235,7 +247,7 @@ def GetPageText(title, lang="", Print=True):
     # ---
     parse = json1.get("parse", {})
     if not parse:
-        if Print:
+        if print_text:
             print_s("parse == {}")
             print_s(json1)
         return ""
@@ -243,13 +255,13 @@ def GetPageText(title, lang="", Print=True):
     text = parse.get("wikitext", {}).get("*", "")
     # ---
     if not text:
-        if Print:
+        if print_text:
             print_s(f'page {title} text == "".')
     # ---
     return text
 
 
-def GetPageText_raw(title, lang="", Print=True):
+def GetPageText_raw(title, lang="", print_text=True):
     # ---
     # parse.quote
     title2 = urllib.parse.quote(title)
@@ -261,19 +273,19 @@ def GetPageText_raw(title, lang="", Print=True):
         # ---
         text = r.text
     except Exception as e:
-        if Print:
+        if print_text:
             print_s(f"GetPageText_raw Error {e}")
         return ""
     # ---
     if not text:
-        if Print:
+        if print_text:
             print_s(f"page {title} text == ''.")
         return ""
     # ---
     return text
 
 
-def page_put(oldtext, NewText, summary, title, lang):
+def page_put(oldtext, new_text, summary, title, lang):
     # ---
     if not log(lang):
         return {}
@@ -299,7 +311,7 @@ def page_put(oldtext, NewText, summary, title, lang):
         "format": "json",
         # "maxlag": ar_lag[1],
         "title": title,
-        "text": NewText,
+        "text": new_text,
         "summary": summary,
         # "starttimestamp": starttimestamp,
         # "minor": minor,
@@ -323,7 +335,7 @@ def page_put(oldtext, NewText, summary, title, lang):
     # ---
     if "savetofile" in sys.argv:
         with open(f"{str(Dir)}/wpref_1.txt", "w", encoding="utf-8") as ggg:
-            ggg.write(NewText)
+            ggg.write(new_text)
     # ---
     return False
 

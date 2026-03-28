@@ -17,11 +17,11 @@ import re
 import sys
 
 from apis.wd_bots import wd_rest_new
+# from apis.wd_bots.wd_post_new import post_it
 from apis.wd_bots.wikidataapi_post import post_it
 
 logger = logging.getLogger(__name__)
 
-# from apis.wd_bots.wd_post_new import post_it
 
 Main_User = {1: ""}
 Save_2020_wd = {}
@@ -110,9 +110,9 @@ def WD_Merge(q1, q2):
         return False
 
 
-def Labels_API(Qid, label, lang, remove=False, summary=""):
+def Labels_API(qid, label, lang, remove=False, summary=""):
     # ---
-    if not Qid:
+    if not qid:
         logger.info(" Qid == '' ")
         return False
     # ---
@@ -121,14 +121,14 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
         return False
     # ---
     # save the edit
-    _out = f'{Qid} label:"{lang}"@{label}.'
+    _out = f'{qid} label:"{lang}"@{label}.'
     # ---
     Save_2020_wd.setdefault("labels", False)
     # ---
     if not Save_2020_wd["labels"] and "ask" in sys.argv:
         # ---
         sa = ask_put(
-            f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {Qid} Yes or No ? {Main_User[1]} '
+            f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {qid} Yes or No ? {Main_User[1]} '
         )
         # ---
         if not sa:
@@ -142,7 +142,7 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
     # ---
     params = {
         "action": "wbsetlabel",
-        "id": Qid,
+        "id": qid,
         "language": lang,
         "value": label,
         "summary": summary,
@@ -165,52 +165,6 @@ def Labels_API(Qid, label, lang, remove=False, summary=""):
             logger.error(f"<<red>> r5{str(req)}")
     # ---
     return False
-
-
-def Des_API(Qid, desc, lang, ask="", rea=True, nowait=False, summary=""):
-    # ---
-    if not desc.strip():
-        logger.info("<<red>> desc is empty.")
-        return
-    # ---
-    # save the edit
-    _out = f'def Des_API: {Qid} description:"{lang}"@{desc}'
-    # ---
-    Save_2020_wd.setdefault("descriptions", False)
-    # ---
-    if not Save_2020_wd["descriptions"] and (ask is True or "ask" in sys.argv):
-        # ---
-        sa = ask_put(
-            f'<<lightyellow>> wikidataapi.py Add desc:<<lightyellow>>"{lang}:{desc}"<<default>> for {Qid} Yes or No ? {Main_User[1]} '
-        )
-        if not sa:
-            return False
-        # ---
-        if sa == "a":
-            logger.info("<<lightgreen>> ---------------------------------")
-            logger.info("<<lightgreen>> wikidataapi.py save all without asking.")
-            logger.info("<<lightgreen>> ---------------------------------")
-            Save_2020_wd["descriptions"] = True
-    # ---
-    params = {
-        "action": "wbsetdescription",
-        "id": Qid,
-        "language": lang,
-        "value": desc,
-        "summary": summary,
-    }
-    # ---
-    req = post_it(params=params, token=True)
-    # ---
-    if not req:
-        return False
-    # ---
-    if "success" in req:
-        logger.info("<<green>> **Labels_API true.")
-        return True
-    else:
-        logger.error(f"<<red>> r5{str(req)}")
-    # ---
 
 
 def get_redirects(liste):

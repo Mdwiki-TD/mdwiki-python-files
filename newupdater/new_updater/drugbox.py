@@ -144,23 +144,23 @@ class TextProcessor:
         # ---
         all_combo = all_params["combo"]["all"]
         # ---
-        Type = self.drugbox_params.get("type", "").lower().strip()
+        _type = self.drugbox_params.get("type", "").lower().strip()
         # ---
         sec_title = "| type = mab / vaccine / combo"
         # ---
-        if Type:
-            empty = bool(re.match(r"<!--\s*empty\s*-->", Type))
+        if _type:
+            empty = bool(re.match(r"<!--\s*empty\s*-->", _type))
             # ---
             echo_debug("get_combo", f"{empty=}")
             # ---
             # remove html coments
-            Type = re.sub(r"<!--.*?-->", "", Type)
+            _type = re.sub(r"<!--.*?-->", "", _type)
             # ---
-            sec_title = combo_titles.get(Type) or sec_title
+            sec_title = combo_titles.get(_type) or sec_title
             # ---
-            if Type in combo_titles:
+            if _type in combo_titles:
                 # ---
-                params = all_params["combo"][Type]
+                params = all_params["combo"][_type]
                 # ---
                 for p in all_combo:
                     if p not in params:
@@ -168,7 +168,7 @@ class TextProcessor:
                 # ---
                 all_combo = params
             else:
-                echo_debug("get_combo", f" {Type=} not in combo_titles")
+                echo_debug("get_combo", f" {_type=} not in combo_titles")
             # ---
             if empty:
                 sec_title = ""

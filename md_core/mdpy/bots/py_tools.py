@@ -66,14 +66,11 @@ def Decode_bytes(x):
     return x
 
 
-def ec_de_code(tt, Type):
+def ec_de_code(tt, _type):
     fao = tt
-    if Type == "encode":
+    if _type == "encode":
         # fao = encode_arabic(tt)
         fao = urllib.parse.quote(tt)
-    elif Type == "decode":
+    elif _type == "decode":
         fao = urllib.parse.unquote(tt)
     return fao
-
-
-# ---

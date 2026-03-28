@@ -12,9 +12,11 @@ import requests
 from apis import mdwiki_api_call
 from mdpy.bots import py_tools
 from mdpy.bots.check_title import valid_title
-from mdwiki_api.mdwiki_page import NEW_API, MainPage, user_agent
+from mdwiki_api.mdwiki_page import NEW_API, MainPage
 
 logger = logging.getLogger(__name__)
+
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 # ---
 

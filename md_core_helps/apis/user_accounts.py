@@ -1,31 +1,26 @@
 """
-# ---
-from apis import user_accounts
-# ---
-username = user_accounts.bot_username     #user_accounts.my_username
-password = user_accounts.bot_password     #user_accounts.mdwiki_pass
-lgpass_enwiki   = user_accounts.lgpass_enwiki
-user_agent   = user_accounts.user_agent
-# ---
+
 """
 
+import sys
 import os
+
 from dotenv import load_dotenv
 try:
     load_dotenv()
 except Exception:
     pass
 
-username = os.getenv("WIKIPEDIA_BOT_USERNAME")
-password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
-
-bot_username = username
-bot_password = password
+bot_username = os.getenv("WIKIPEDIA_BOT_USERNAME")
+bot_password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
 
 my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
 mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
 lgpass_enwiki = os.getenv("WIKIPEDIA_HIMO_PASSWORD")
 
-my_password = lgpass_enwiki
+username = bot_username
+password = bot_password
 
-user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+if "workhimo" in sys.argv:
+    username = my_username
+    password = lgpass_enwiki

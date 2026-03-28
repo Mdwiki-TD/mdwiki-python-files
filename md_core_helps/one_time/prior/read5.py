@@ -68,10 +68,10 @@ def work_test(All, allen):
     # Remove a specific string from 'text' variable.
     text = text.replace("height:580px;", "")
 
-    # Print the number of links found in 'All' dictionary.
+    # print_text the number of links found in 'All' dictionary.
     logger.info(f"{len(All)} links found")
 
-    # Print a message stating where the log file was saved.
+    # print_text a message stating where the log file was saved.
     logger.info(f"<<yellow>> text loged to {filetitle}")
 
     # Define a page title and create an object of 'md_MainPage' class with some arguments.

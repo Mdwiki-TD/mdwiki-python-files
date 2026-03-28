@@ -1,15 +1,18 @@
 #!/usr/bin/python3
 """ """
 import sys
-
 import requests
+import os
 
-# ---
-import user_accounts
+from dotenv import load_dotenv
+try:
+    load_dotenv()
+except Exception:
+    pass
 
-username = user_accounts.my_username
-password = user_accounts.mdwiki_pass
-user_agent = user_accounts.user_agent
+username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+password = os.getenv("MDWIKI_HIMO_PASSWORD")
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 session = {}
 session[1] = requests.Session()
@@ -97,7 +100,7 @@ def login():
     session["token"] = token
 
 
-def submitAPI(params, Type="post", add_token=False):
+def submitAPI(params, _type="post", add_token=False):
     # ---
     login()
     # ---
@@ -107,7 +110,7 @@ def submitAPI(params, Type="post", add_token=False):
         params["token"] = session["token"]
     # ---
     try:
-        method = "POST"  # if Type == "post" else "GET"
+        method = "POST"  # if _type == "post" else "GET"
         # ---
         r4 = session[1].request(method, session["url"], data=params, timeout=10)
         json1 = r4.json()
@@ -141,7 +144,7 @@ def get_revisions(title, lang=""):
         if rvcontinue != "x":
             params["rvcontinue"] = rvcontinue
         # ---
-        json1 = submitAPI(params, Type="post")
+        json1 = submitAPI(params, _type="post")
         # ---
         if not json1 or not isinstance(json1, dict):
             return ""
@@ -157,7 +160,7 @@ def get_revisions(title, lang=""):
     return revisions
 
 
-def GetPageText(title, lang="", Print=True):
+def GetPageText(title, lang="", print_text=True):
     # ---
     params = {
         "action": "parse",
@@ -170,16 +173,16 @@ def GetPageText(title, lang="", Print=True):
         # "normalize": 1,
     }
     # ---
-    json1 = submitAPI(params, Type="post")
+    json1 = submitAPI(params, _type="post")
     # ---
     if not json1 or not isinstance(json1, dict):
-        if Print:
+        if print_text:
             print_s("json1 ==:")
             print_s(json1)
         return ""
     # ---
     if not json1:
-        if Print:
+        if print_text:
             print_s("json1 == {}")
         return ""
     # ---
@@ -187,7 +190,7 @@ def GetPageText(title, lang="", Print=True):
     # ---
     parse = json1.get("parse", {})
     if not parse:
-        if Print:
+        if print_text:
             print_s("parse == {}")
             print_s(json1)
         return ""
@@ -195,13 +198,13 @@ def GetPageText(title, lang="", Print=True):
     text = parse.get("wikitext", {}).get("*", "")
     # ---
     if not text:
-        if Print:
+        if print_text:
             print_s(f'page {title} text == "".')
     # ---
     return text
 
 
-def page_put(NewText, summary, title):
+def page_put(new_text, summary, title):
     # ---
     if not session["token"]:
         print_s("login error, token empty.")
@@ -212,7 +215,7 @@ def page_put(NewText, summary, title):
         "format": "json",
         # "maxlag": ar_lag[1],
         "title": title,
-        "text": NewText,
+        "text": new_text,
         "summary": summary,
         # "starttimestamp": starttimestamp,
         # "minor": minor,
