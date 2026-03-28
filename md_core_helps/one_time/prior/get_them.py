@@ -26,6 +26,7 @@ change_codes = {
     "cbk_zam": "cbk-zam",
     "fiu_vro": "fiu-vro",
     "map_bms": "map-bms",
+    "nb": "no",
     "nds_nl": "nds-nl",
     "roa_rup": "roa-rup",
     "zh_classical": "zh-classical",

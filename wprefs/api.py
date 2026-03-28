@@ -30,7 +30,6 @@ username = os.getenv("WIKIPEDIA_BOT_USERNAME")
 password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
 
 my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
-lgpass_enwiki = os.getenv("WIKIPEDIA_HIMO_PASSWORD")
 
 bot_username = os.getenv("WIKIPEDIA_BOT_USERNAME")
 bot_password = os.getenv("WIKIPEDIA_BOT_PASSWORD")

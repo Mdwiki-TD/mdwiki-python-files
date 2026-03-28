@@ -51,7 +51,7 @@ import sys
 if "mwclient" not in sys.argv:
     sys.argv.append("nomwclient")
 
-from newapi import ALL_APIS, change_codes
+from newapi import ALL_APIS
 
 my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
 mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
@@ -79,5 +79,4 @@ __all__ = [
     "md_MainPage",
     "NEW_API",
     "CatDepth",
-    "change_codes",
 ]

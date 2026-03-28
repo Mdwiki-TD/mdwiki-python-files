@@ -22,7 +22,7 @@ def mdwiki_sql(query, return_dict=False, values=None, many=False, **kwargs):
         logger.info("query == ''")
         return {}
     # ---
-    return sql_td_bot.sql_connect_mdwiki_new(query, return_dict=return_dict, values=values, many=many, **kwargs)
+    return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, many=many, **kwargs)
 
 
 def mdwiki_sql_dict(query, values=None, many=False, **kwargs):
@@ -31,7 +31,7 @@ def mdwiki_sql_dict(query, values=None, many=False, **kwargs):
         logger.info("query == ''")
         return {}
     # ---
-    return sql_td_bot.sql_connect_mdwiki_new(query, return_dict=True, values=values, many=many, **kwargs)
+    return sql_td_bot.sql_connect_pymysql(query, return_dict=True, values=values, many=many, **kwargs)
 
 
 def select_md_sql(query, *args, **kwargs):

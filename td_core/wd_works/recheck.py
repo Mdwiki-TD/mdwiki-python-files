@@ -240,7 +240,6 @@ def start():
             }
             LIMIT 100
     """
-    # newtabs = get_query_result(quary)
     newtabs = wikidataapi.wbsearchentities("User:Mr. Ibrahem", "en")
     # ---
     numb = 0
