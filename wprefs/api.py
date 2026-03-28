@@ -160,9 +160,12 @@ def submitAPI(params, lang="", _type="post", add_token=False):
         params["token"] = session["token"]
     # ---
     try:
-        method = "POST" if _type == "post" else "GET"
+        method = _type.lower().strip()
+        if method == "post":
+            r4 = session[1].post(session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
+        else:
+            r4 = session[1].get(session["url"], params=params, headers={"User-Agent": user_agent}, timeout=10)
         # ---
-        r4 = session[1].request(method, session["url"], data=params, headers={"User-Agent": user_agent}, timeout=10)
         json1 = r4.json()
         # ---
     except Exception:

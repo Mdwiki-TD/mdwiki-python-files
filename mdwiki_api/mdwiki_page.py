@@ -59,11 +59,17 @@ mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
 
 @functools.lru_cache(maxsize=1)
 def load_main_api() -> ALL_APIS:
+    username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+    password = os.getenv("MDWIKI_HIMO_PASSWORD")
+
+    if not username or not password:
+        raise RuntimeError("Missing credentials: WIKIPEDIA_HIMO_USERNAME / MDWIKI_HIMO_PASSWORD")
+
     return ALL_APIS(
         lang="www",
         family="mdwiki",
-        username=my_username,
-        password=mdwiki_pass,
+        username=username,
+        password=password,
     )
 
 

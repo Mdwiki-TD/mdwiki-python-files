@@ -7,7 +7,9 @@ from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_
 import copy
 import logging
 import sys
+import json
 import time
+from urllib.error import HTTPError, URLError
 from SPARQLWrapper import JSON, SPARQLWrapper
 from apis import wikidataapi
 
@@ -45,13 +47,14 @@ def get_query_data(query):
     # ---
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
+    sparql.setTimeout(30)
     # ---
     data = {}
     # ---
     try:
         data = sparql.query().convert()
-    except Exception as e:
-        logger.error(f"API/tools.py : Exception: {e}")
+    except (HTTPError, URLError, TimeoutError, ValueError, json.JSONDecodeError):
+        logger.exception("wd_helps.get_query_data failed")
     # ---
     return data
 
