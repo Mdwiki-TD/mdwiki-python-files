@@ -44,20 +44,17 @@ user        = page.get_user()
 purge       = page.purge()
 '''
 """
+import os
 import functools
 import sys
 
 if "mwclient" not in sys.argv:
     sys.argv.append("nomwclient")
 
-from mdwiki_api.user_accounts import User_tables
-from newapi import ALL_APIS
-from newapi.api_utils import lang_codes
+from newapi import ALL_APIS, change_codes
 
-SITECODE = "www"
-FAMILY = "mdwiki"
-
-change_codes = lang_codes.change_codes
+my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
 
 
 @functools.lru_cache(maxsize=1)
@@ -65,8 +62,8 @@ def load_main_api() -> ALL_APIS:
     return ALL_APIS(
         lang="www",
         family="mdwiki",
-        username=User_tables["username"],
-        password=User_tables["password"],
+        username=my_username,
+        password=mdwiki_pass,
     )
 
 

@@ -17,4 +17,3 @@ bot_password = password
 
 my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
 mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
-lgpass_enwiki = os.getenv("WIKIPEDIA_HIMO_PASSWORD")
