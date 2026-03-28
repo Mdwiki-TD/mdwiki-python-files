@@ -81,7 +81,7 @@ def one_page(page, lang):
 
     title = ec_de_code(page, "decode")
     # ---
-    text = GetPageText(title, lang=lang, Print=False)
+    text = GetPageText(title, lang=lang, print_text=False)
     # ---
     if not text:
         logger.info("notext")

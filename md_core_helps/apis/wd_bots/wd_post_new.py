@@ -14,9 +14,10 @@ from apis.sup.su_login import Get_MwClient_Site
 
 logger = logging.getLogger(__name__)
 
-user_agent = user_accounts.user_agent
-username = user_accounts.bot_username  # user_accounts.my_username
-password = user_accounts.bot_password  # user_accounts.mdwiki_pass
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+
+username = user_accounts.bot_username
+password = user_accounts.bot_password
 
 if "workhimo" in sys.argv:
     username = user_accounts.my_username
@@ -43,7 +44,7 @@ def do_request(params=None, method="POST"):
         r4 = wd_site.api(action, http_method=method, **params)
         return r4
 
-    except Exception as e:
+    except Exception:
         logger.exception('Exception:', exc_info=True)
     # ---
     return {}

@@ -45,24 +45,19 @@ purge       = page.purge()
 '''
 """
 import functools
-
-# ---
-import os
 import sys
 
 if "mwclient" not in sys.argv:
     sys.argv.append("nomwclient")
 
-from mdwiki_api.user_accounts import User_tables, user_agent
-from newapi.all_apis import ALL_APIS
+from mdwiki_api.user_accounts import User_tables
+from newapi import ALL_APIS
 from newapi.api_utils import lang_codes
 
 SITECODE = "www"
 FAMILY = "mdwiki"
 
 change_codes = lang_codes.change_codes
-
-home_dir = os.getenv("HOME")
 
 
 @functools.lru_cache(maxsize=1)
@@ -83,8 +78,6 @@ CatDepth = main_api.CatDepth
 md_MainPage = MainPage  # noqa: N816
 
 __all__ = [
-    "home_dir",
-    "user_agent",
     "MainPage",
     "md_MainPage",
     "NEW_API",

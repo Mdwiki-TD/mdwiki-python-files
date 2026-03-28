@@ -26,8 +26,9 @@ logger = logging.getLogger(__name__)
 
 tool = os.getenv("HOME")
 tool = tool.split("/")[-1] if tool else "himo"
-# ---
-default_user_agent = f"{tool} bot/1.0 (https://{tool}.toolforge.org/; tools.{tool}@toolforge.org)"
+
+default_user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+
 
 endpoints = {
     "article": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article",
