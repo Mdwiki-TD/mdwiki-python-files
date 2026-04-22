@@ -30,7 +30,7 @@ Day_History = datetime.now().strftime("%Y-%m-%d")
 if os.getenv("HOME"):
     dump_path = os.getenv("HOME") + "/public_html/td/Tables/cats_cash"
 else:
-    dump_path = "I:/mdwiki/mdwiki/public_html/td/Tables/cats_cash"
+    dump_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td/Tables/cats_cash"
 
 dump_path = Path(dump_path)
 

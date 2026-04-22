@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
-    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
+    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
 # ---
 # json_file = f"{Dashboard_path}/Tables/jsons/sitelinks1.json"
 json_file = f"{Dashboard_path}/Tables/jsons/sitelinks.json"

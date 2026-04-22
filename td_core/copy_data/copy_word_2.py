@@ -24,7 +24,7 @@ Dir = str(Path(__file__).parents[0])
 if os.getenv("HOME"):
     public_html_dir = os.getenv("HOME") + "/public_html"
 else:
-    public_html_dir = "I:/mdwiki/mdwiki/public_html"
+    public_html_dir = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
 # ---
 project_tables = Path(public_html_dir) / "td/Tables/jsons"
 # ---

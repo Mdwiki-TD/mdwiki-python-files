@@ -20,7 +20,7 @@ Dir = Path(__file__).parent
 dir2 = os.getenv("HOME")
 # ---
 if not dir2:
-    dir2 = "I:/mdwiki/mdwiki"
+    dir2 = "I:/MD_TOOLS/MDWIKI_MAIN_REPO"
 # ---
 file = Dir / "all_pages_revids.json"
 # ---

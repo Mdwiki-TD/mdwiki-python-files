@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 if os.getenv("HOME"):
     dir2 = os.getenv("HOME") + "/public_html"
 else:
-    dir2 = "I:/mdwiki/mdwiki/public_html"
+    dir2 = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
 # ---
 work_dir = f"{dir2}/replace/find"
 # ---

@@ -32,7 +32,7 @@ view_bot = PageviewsClient()
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
-    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
+    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
 # ---
 data_tab = {1: {}}
 

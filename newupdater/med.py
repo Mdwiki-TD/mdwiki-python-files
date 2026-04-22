@@ -5,7 +5,7 @@ python3 I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/pybot/newupdater/med.py -p
 import os
 import sys
 
-if home_dir := os.getenv("HOME") or "I:/mdwiki/mdwiki":
+if home_dir := os.getenv("HOME") or "I:/MD_TOOLS/MDWIKI_MAIN_REPO":
     sys.path.append(home_dir + "/pybot")
     sys.path.append(home_dir + "/openssl/bin")
 

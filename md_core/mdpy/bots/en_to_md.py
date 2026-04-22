@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 if os.getenv("HOME"):
     public_html_dir = os.getenv("HOME") + "/public_html"
 else:
-    public_html_dir = "I:/mdwiki/mdwiki/public_html"
+    public_html_dir = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
 # ---
 enwiki_to_mdwiki = {}
 mdwiki_to_enwiki = {}
