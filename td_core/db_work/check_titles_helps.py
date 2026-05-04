@@ -4,7 +4,7 @@ from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, Wi
 """
 import logging
 
-from mdwiki_api.wiki_page import NEW_API, MainPage
+from mdwiki_api.wiki_page import NewApi, MainPage
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ def get_new_target_log(lang, target):
     # ---
     to_check = target
     # ---
-    api_new1 = NEW_API(lang, family="wikipedia")
+    api_new1 = NewApi(lang, family="wikipedia")
     # ---
     logger.info(f"() lang:{lang}, target:{target}")
     # ---
@@ -62,14 +62,14 @@ def get_new_target_log(lang, target):
 
 
 def Find_pages_exists(lang, titles):
-    api_newx = NEW_API(lang, family="wikipedia")
+    api_newx = NewApi(lang, family="wikipedia")
     pages = api_newx.Find_pages_exists_or_not(titles, get_redirect=True)
     # ---
     return pages
 
 
 def users_infos(lang, users):
-    api_newx = NEW_API(lang, family="wikipedia")
+    api_newx = NewApi(lang, family="wikipedia")
     result = api_newx.users_infos(ususers=users)
     # ---
     return result

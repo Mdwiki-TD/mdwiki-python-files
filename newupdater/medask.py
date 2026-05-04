@@ -21,14 +21,14 @@ if Dir := Path(__file__).parent.parent:
 
 import mdapi
 from apis import mdwiki_api_call
-from mdwiki_api.mdwiki_page import NEW_API
+from mdwiki_api.mdwiki_page import NewApi
 from new_updater import work_on_text
 
 logger = logging.getLogger(__name__)
 
 # ---
-api_new = NEW_API("www", family="mdwiki")
-# api_new.Login_to_wiki()
+api_new = NewApi("www", family="mdwiki")
+
 
 
 def get_new_text(title):

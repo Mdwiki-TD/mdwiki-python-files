@@ -5,7 +5,7 @@
 import functools
 import logging
 import os
-from newapi import ALL_APIS
+from newapi import AllAPIS
 
 from dotenv import load_dotenv
 try:
@@ -38,8 +38,8 @@ change_codes = {
 
 
 @functools.lru_cache(maxsize=1024)
-def load_main_api(lang="www", family="wikipedia") -> ALL_APIS:
-    return ALL_APIS(
+def load_main_api(lang="www", family="wikipedia") -> AllAPIS:
+    return AllAPIS(
         lang=lang,
         family=family,
         username=username,
@@ -58,16 +58,16 @@ def CatDepth(title, sitecode="", family="wikipedia", **kwargs) -> dict:
     return main_api.CatDepth(title, sitecode=sitecode, family=family, **kwargs)
 
 
-def NEW_API(lang="", family="wikipedia"):
+def NewApi(lang="", family="wikipedia"):
     lang = lang or "www"
     main_api = load_main_api(lang, family)
-    return main_api.NEW_API()
+    return main_api.NewApi()
 
 
 __all__ = [
     "user_agent",
     "MainPage",
-    "NEW_API",
+    "NewApi",
     "CatDepth",
     "change_codes",
 ]

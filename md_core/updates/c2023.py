@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 from apis import mdwiki_api_call
-from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 Dir = Path(__file__).parent
 # ---
 
-api_new = NEW_API("www", family="mdwiki")
+api_new = NewApi("www", family="mdwiki")
 # login    = api_new.Login_to_wiki()
 # ---
 limit = 200 if "test" in sys.argv else 100000

@@ -5,7 +5,7 @@ from apis import wiki_api
 # wiki_api.submitAPI( params, site="en", returnjson = False )
 # ---
 """
-from mdwiki_api.wiki_page import NEW_API
+from mdwiki_api.wiki_page import NewApi
 
 api_news = {}
 
@@ -15,7 +15,7 @@ def submitAPI(params, site="", returnjson=False):
     params["format"] = "json"
     # ---
     if site not in api_news:
-        api_news[site] = NEW_API(site, family="wikipedia")
+        api_news[site] = NewApi(site, family="wikipedia")
         # api_news[site].Login_to_wiki()
     # ---
     json1 = api_news[site].post_params(params, addtoken=True)

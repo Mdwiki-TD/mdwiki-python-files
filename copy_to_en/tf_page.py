@@ -7,12 +7,12 @@ from copy_to_en.tf_page import get_cx, get_md
 """
 
 from copy_to_en.bots import medwiki_account
-from newapi import ALL_APIS
+from newapi import AllAPIS
 
 
 def get_cx():
     # ---
-    api = ALL_APIS(
+    api = AllAPIS(
         lang="mdwikicx",
         family="toolforge",
         username=medwiki_account.username_cx,
@@ -27,7 +27,7 @@ def get_cx():
 
 def get_md():
     # ---
-    api = ALL_APIS(
+    api = AllAPIS(
         lang="medwiki",
         family="toolforge",
         username=medwiki_account.username,
