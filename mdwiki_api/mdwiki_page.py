@@ -3,7 +3,7 @@
 from mdwiki_api.mdwiki_page import load_main_api
 main_api = load_main_api("www", "mdwiki")
 
-NEW_API = main_api.NEW_API
+NewApi = main_api.NewApi
 MainPage = main_api.MainPage
 CatDepth = main_api.CatDepth
 
@@ -51,21 +51,21 @@ import sys
 if "mwclient" not in sys.argv:
     sys.argv.append("nomwclient")
 
-from newapi import ALL_APIS
+from newapi import AllAPIS
 
 my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
 mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
 
 
 @functools.lru_cache(maxsize=1)
-def load_main_api() -> ALL_APIS:
+def load_main_api() -> AllAPIS:
     username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
     password = os.getenv("MDWIKI_HIMO_PASSWORD")
 
     if not username or not password:
         raise RuntimeError("Missing credentials: WIKIPEDIA_HIMO_USERNAME / MDWIKI_HIMO_PASSWORD")
 
-    return ALL_APIS(
+    return AllAPIS(
         lang="www",
         family="mdwiki",
         username=username,
@@ -75,7 +75,7 @@ def load_main_api() -> ALL_APIS:
 
 main_api = load_main_api()
 
-NEW_API = main_api.NEW_API
+NewApi = main_api.NewApi
 MainPage = main_api.MainPage
 CatDepth = main_api.CatDepth
 md_MainPage = MainPage  # noqa: N816
@@ -83,6 +83,6 @@ md_MainPage = MainPage  # noqa: N816
 __all__ = [
     "MainPage",
     "md_MainPage",
-    "NEW_API",
+    "NewApi",
     "CatDepth",
 ]

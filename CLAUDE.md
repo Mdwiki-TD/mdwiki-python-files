@@ -43,7 +43,7 @@ tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 
 ### Core Modules
 
-- **`mdwiki_api/`** - Low-level API wrappers for MediaWiki interaction. Contains `NEW_API` class and `MainPage` for page operations. Wraps the external `newapi` library.
+- **`mdwiki_api/`** - Low-level API wrappers for MediaWiki interaction. Contains `NewApi` class and `MainPage` for page operations. Wraps the external `newapi` library.
 
 - **`md_core_helps/apis/`** - High-level API helpers:
   - `mdwiki_api.py` - MDWiki-specific API operations
@@ -81,9 +81,9 @@ The codebase relies heavily on an external `newapi` library (imported as `from n
 
 ### API Usage Pattern
 ```python
-from mdwiki_api.wiki_page import MainPage, NEW_API
+from mdwiki_api.wiki_page import MainPage, NewApi
 # For MDWiki
-from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 # High-level helpers
 from apis import wiki_api, mdwiki_api, wikidataapi
 ```

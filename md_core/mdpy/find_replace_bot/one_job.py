@@ -10,18 +10,18 @@ import sys
 from pathlib import Path
 
 import tqdm
-from mdwiki_api.mdwiki_page import NEW_API, MainPage
+from mdwiki_api.mdwiki_page import NewApi, MainPage
 
 logger = logging.getLogger(__name__)
 
 
 home_dir = os.getenv("HOME")
 
-dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
+dir2 = home_dir if home_dir else "I:/MD_TOOLS/MDWIKI_MAIN_REPO"
 
 work_dir = f"{dir2}/public_html/replace/find"
 
-api_new = NEW_API("www", family="mdwiki")
+api_new = NewApi("www", family="mdwiki")
 
 
 def write_text(text_file, line, w_or_a="w"):
@@ -166,7 +166,7 @@ def get_titles(find, listtype):
     # ---
     if listtype == "newlist":
         Add_pa = {"srsort": "just_match", "srwhat": "text"}
-        titles = api_new.Search(value=find, ns="0", srlimit="max", RETURN_dict=False, addparams=Add_pa)
+        titles = api_new.Search(value=find, ns="0", srlimit="max", return_dict=False, addparams=Add_pa)
     else:
         titles = api_new.Get_All_pages()
     # ---

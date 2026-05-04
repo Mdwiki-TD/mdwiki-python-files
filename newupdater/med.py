@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
-python3 I:/mdwiki/pybot/newupdater/med.py -page:Aspirin from_toolforge
+python3 I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/pybot/newupdater/med.py -page:Aspirin from_toolforge
 """
 import os
 import sys
 
-if home_dir := os.getenv("HOME") or "I:/mdwiki/mdwiki":
+if home_dir := os.getenv("HOME") or "I:/MD_TOOLS/MDWIKI_MAIN_REPO":
     sys.path.append(home_dir + "/pybot")
     sys.path.append(home_dir + "/openssl/bin")
 

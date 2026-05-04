@@ -5,7 +5,7 @@ import os
 import sys
 from pathlib import Path
 
-from mdwiki_api.mdwiki_page import NEW_API, MainPage
+from mdwiki_api.mdwiki_page import NewApi, MainPage
 
 logger = logging.getLogger(__name__)
 
@@ -14,11 +14,11 @@ logger = logging.getLogger(__name__)
 if os.getenv("HOME"):
     dir2 = os.getenv("HOME") + "/public_html"
 else:
-    dir2 = "I:/mdwiki/mdwiki/public_html"
+    dir2 = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
 # ---
 work_dir = f"{dir2}/replace/find"
 # ---
-api_new = NEW_API("www", family="mdwiki")
+api_new = NewApi("www", family="mdwiki")
 file_name = {}
 
 numbers = {1: 20000, "done": 0}
@@ -123,7 +123,7 @@ def main():
     if "newlist" in sys.argv:
         Add_pa = {"srsort": "just_match", "srwhat": "text"}
         # ---
-        titles = api_new.Search(value=find, ns="0", srlimit="max", RETURN_dict=False, addparams=Add_pa)
+        titles = api_new.Search(value=find, ns="0", srlimit="max", return_dict=False, addparams=Add_pa)
     else:
         titles = api_new.Get_All_pages()
     # ---

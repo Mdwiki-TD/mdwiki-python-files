@@ -23,11 +23,11 @@ from mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats
-from mdwiki_api.wiki_page import NEW_API
+from mdwiki_api.wiki_page import NewApi
 
 logger = logging.getLogger(__name__)
 
-api_new = NEW_API("en", family="wikipedia")
+api_new = NewApi("en", family="wikipedia")
 
 # ---
 fals_ase = ["", "na", "unknown"]
@@ -35,7 +35,7 @@ fals_ase = ["", "na", "unknown"]
 if os.getenv("HOME"):
     Dashboard_path = os.getenv("HOME") + "/public_html/td"
 else:
-    Dashboard_path = "I:/mdwiki/mdwiki/public_html/td"
+    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
 # ---
 data_tab = {1: {}}
 

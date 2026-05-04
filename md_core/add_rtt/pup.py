@@ -20,15 +20,15 @@ from pathlib import Path
 
 import wikitextparser as wtp
 from add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
-from mdwiki_api.mdwiki_page import NEW_API, md_MainPage  # , CatDepth
+from mdwiki_api.mdwiki_page import NewApi, md_MainPage  # , CatDepth
 
 logger = logging.getLogger(__name__)
 
 Dir = Path(__file__).parent
 # add_param_named(text, title)
 
-api_new = NEW_API("www", family="mdwiki")
-# api_new.Login_to_wiki()
+api_new = NewApi("www", family="mdwiki")
+
 
 
 def find_redirects(pages, text):

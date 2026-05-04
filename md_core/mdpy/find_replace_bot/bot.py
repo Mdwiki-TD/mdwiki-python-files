@@ -13,7 +13,7 @@ from mdpy.find_replace_bot.one_job import do_one_job
 logger = logging.getLogger(__name__)
 home_dir = os.getenv("HOME")
 
-dir2 = home_dir if home_dir else "I:/mdwiki/mdwiki"
+dir2 = home_dir if home_dir else "I:/MD_TOOLS/MDWIKI_MAIN_REPO"
 
 work_dir = f"{dir2}/public_html/replace/find"
 

@@ -11,11 +11,11 @@ python3 core8/pwb.py mdpy/orred
 import logging
 
 from mdapi_sql import sql_for_mdwiki
-from mdwiki_api.wiki_page import NEW_API, MainPage
+from mdwiki_api.wiki_page import NewApi, MainPage
 
 logger = logging.getLogger(__name__)
 
-api_new = NEW_API("or", family="wikipedia")
+api_new = NewApi("or", family="wikipedia")
 
 
 def create_redirect(target, mdtitle):

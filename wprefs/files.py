@@ -15,7 +15,7 @@ Dir = Path(__file__).parents[0]
 dir2 = os.getenv("HOME")
 # ---
 if not dir2:
-    dir2 = "I:/mdwiki/mdwiki"
+    dir2 = "I:/MD_TOOLS/MDWIKI_MAIN_REPO"
 # ---
 public_html_dir = dir2 + "/public_html"
 # ---

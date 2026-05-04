@@ -4,12 +4,12 @@
 """
 import logging
 
-from mdwiki_api.mdwiki_page import NEW_API, md_MainPage
+from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)
 
-api_new = NEW_API("www", family="mdwiki")
-# api_new.Login_to_wiki()
+api_new = NewApi("www", family="mdwiki")
+
 
 # json1    = api_new.post_params(params, addtoken=False)
 # login    = api_new.Login_to_wiki()
@@ -17,7 +17,7 @@ api_new = NEW_API("www", family="mdwiki")
 # pages    = api_new.Find_pages_exists_or_not(liste, get_redirect=False)
 # pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 # all_pages= api_new.Get_All_pages_generator(start="", namespace="0", limit="max", filterredir="", ppprop="", limit_all=100000)
-# search   = api_new.Search(value='', ns="", offset='', srlimit="max", RETURN_dict=False, addparams={})
+# search   = api_new.Search(value='', ns="", offset='', srlimit="max", return_dict=False, addparams={})
 # newpages = api_new.Get_Newpages(limit="max", namespace="0", rcstart="", user='')
 # usercont = api_new.UserContribs(user, limit=5000, namespace="*", ucshow="")
 # l_links  = api_new.Get_langlinks_for_list(titles, targtsitecode="", numbes=50)
@@ -26,9 +26,9 @@ api_new = NEW_API("www", family="mdwiki")
 # extlinks = api_new.get_extlinks(title)
 # revisions= api_new.get_revisions(title)
 # logs     = api_new.get_logs(title)
-# wantedcategories  = api_new.querypage_list(qppage='Wantedcategories|Wantedfiles', qplimit="max", Max=5000)
-# pages  = api_new.Get_template_pages(title, namespace="*", Max=10000)
-# pages_props  = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", Max=None)
+# wantedcategories  = api_new.querypage_list(qppage='Wantedcategories|Wantedfiles', qplimit="max", max=5000)
+# pages  = api_new.Get_template_pages(title, namespace="*", max=10000)
+# pages_props  = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", max=None)
 # img_url  = api_new.Get_image_url(title)
 # added    = api_new.Add_To_Bottom(text, summary, title, poss="Head|Bottom")
 # titles   = api_new.get_titles_redirects(titles)

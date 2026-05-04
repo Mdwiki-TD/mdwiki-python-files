@@ -8,13 +8,13 @@ python3 core8/pwb.py add_rtt/remove
 
 import logging
 
-from mdwiki_api.mdwiki_page import NEW_API, CatDepth, md_MainPage
+from mdwiki_api.mdwiki_page import NewApi, CatDepth, md_MainPage
 
 logger = logging.getLogger(__name__)
 
 # add_param_named(text, title)
 
-api_new = NEW_API("www", family="mdwiki")
+api_new = NewApi("www", family="mdwiki")
 
 
 def work_page(title):
