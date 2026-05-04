@@ -26,7 +26,7 @@ def get_pages_in_use(all_pages):
     # ---
     logger.info(f"<<yellow>> len of all_pages qids: {len(pages_has)}.")
     # ---
-    # pages_props = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", Max=500000)
+    # pages_props = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", max=500000)
     # pages = {x["title"]: x["value"] for x in pages_props}
     # logger.info(f"<<yellow>> len of : {len(pages)}.")
     # ---
