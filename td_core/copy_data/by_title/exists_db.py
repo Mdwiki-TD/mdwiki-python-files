@@ -14,7 +14,7 @@ import sys
 import tqdm
 
 # ---
-from mdapi_sql import sql_for_mdwiki_new
+from mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import insert_dict
 
 logger = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ que = """select DISTINCT article_id, code from all_exists;"""
 # ---
 in_sql = {}
 # ---
-for q in sql_for_mdwiki_new.select_md_sql(que, return_dict=True):
+for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     title = q["article_id"]
     code = q["code"]
     # ---

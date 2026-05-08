@@ -16,7 +16,7 @@ from collections import defaultdict
 
 import tqdm
 from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
-from mdapi_sql import sql_for_mdwiki, sql_for_mdwiki_new
+from mdapi_sql import sql_for_mdwiki
 
 # from mdpyget.bots.to_sql import insert_dict, to_sql
 from mdpyget.bots.to_sql import new_to_sql
@@ -44,7 +44,7 @@ in_sql_qid_targets = defaultdict(dict)
 # ---
 que = """select DISTINCT qid, code, target from all_qids_exists;"""
 # ---
-db_data_main = sql_for_mdwiki_new.select_md_sql(que, return_dict=True)
+db_data_main = sql_for_mdwiki.select_md_sql(que, return_dict=True)
 # ---
 for q in db_data_main:
     qid = q["qid"]
@@ -73,7 +73,7 @@ def start_to_sql(data):
             INSERT IGNORE INTO all_qids (qid)
             values (%s)"""
         # ---
-        sql_for_mdwiki_new.mdwiki_sql(qua, values=qids_list, many=True)
+        sql_for_mdwiki.mdwiki_sql(qua, values=qids_list, many=True)
     # ---
     new_data_all = []
     # ---
