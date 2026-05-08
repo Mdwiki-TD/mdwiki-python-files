@@ -33,17 +33,11 @@ main_args = {
     "use_unicode": True,
     "autocommit": True,
 }
-# ---
-main_args_new = main_args.copy()
-main_args_new["db"] = f"{db_username}__mdwiki_new"
-# ---
 # if "localhost" in sys.argv or dir2 == "I:/mdwiki":
 if "localhost" in sys.argv or not os.getenv("HOME"):
     credentials = {"user": "root", "password": "root11"}
     main_args["host"] = "127.0.0.1"
-    main_args_new["host"] = "127.0.0.1"
     main_args["db"] = f"{db_username}__mdwiki"
-    main_args_new["db"] = f"{db_username}__mdwiki_new"
     logger.info("sql_td_bot localhost")
 
 

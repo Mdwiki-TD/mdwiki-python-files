@@ -11,20 +11,14 @@ import logging
 import sys
 
 import tqdm
-from mdapi_sql import sql_for_mdwiki, sql_for_mdwiki_new
+from mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
 
-new_tables = ["all_exists", "all_articles", "all_qids_exists", "all_articles_titles", "all_qids", "all_qids_titles"]
-
-
 def mdwiki_sql_one_table(table_name, query, **kwargs):
     # ---
-    if table_name in new_tables:
-        in_sql_list = sql_for_mdwiki_new.mdwiki_sql(query, **kwargs)
-    else:
-        in_sql_list = sql_for_mdwiki.mdwiki_sql(query, **kwargs)
+    in_sql_list = sql_for_mdwiki.mdwiki_sql(query, **kwargs)
     # ---
     return in_sql_list
 
