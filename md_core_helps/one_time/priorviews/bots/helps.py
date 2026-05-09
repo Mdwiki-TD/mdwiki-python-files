@@ -34,7 +34,7 @@ def views_url(title, lang, view):
         "redirects": "0",
         "pages": title,
     }
-    d_end = datetime.datetime.utcnow() - timedelta(days=1)
+    d_end = datetime.datetime.now(datetime.UTC) - timedelta(days=1)
     d_end = d_end.strftime("%Y-%m-%d")
     # params['end'] = d_end
     params["end"] = "2023-06-01"

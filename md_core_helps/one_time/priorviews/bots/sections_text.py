@@ -78,7 +78,7 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
                 'redirects': '0',
                 'pages': title
             }
-            d_end   = datetime.datetime.utcnow() - timedelta(days = 1)
+            d_end   = datetime.datetime.now(datetime.UTC) - timedelta(days = 1)
             d_end   = d_end.strftime('%Y-%m-%d')
             params['end'] = d_end
             params = urlencode(params)

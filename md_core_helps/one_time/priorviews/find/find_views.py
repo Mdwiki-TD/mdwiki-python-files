@@ -44,7 +44,7 @@ def log_views():
 
 def api_views(title, lang):
     # ---
-    d_end = datetime.datetime.utcnow() - timedelta(days=1)
+    d_end = datetime.datetime.now(datetime.UTC) - timedelta(days=1)
     d_start = d_end - timedelta()
     # ---
     d_end = d_end.strftime("%Y%m%d")
