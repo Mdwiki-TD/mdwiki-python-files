@@ -30,7 +30,6 @@ logger = logging.getLogger(__name__)
 api_new = NewApi("www", family="mdwiki")
 
 
-
 def get_new_text(title):
     # ---
     # if not text:

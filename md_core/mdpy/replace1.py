@@ -5,7 +5,7 @@ import os
 import sys
 from pathlib import Path
 
-from mdwiki_api.mdwiki_page import NewApi, MainPage
+from mdwiki_api.mdwiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)
 

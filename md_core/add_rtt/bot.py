@@ -17,14 +17,13 @@ import sys
 
 import wikitextparser as wtp
 from add_rtt.named_param import add_param_named
-from mdwiki_api.mdwiki_page import NewApi, CatDepth, md_MainPage
+from mdwiki_api.mdwiki_page import CatDepth, NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)
 
 # add_param_named(text, title)
 
 api_new = NewApi("www", family="mdwiki")
-
 
 
 def add_rtt_to_text(text, title):

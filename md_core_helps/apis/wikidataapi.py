@@ -17,6 +17,7 @@ import re
 import sys
 
 from apis.wd_bots import wd_rest_new
+
 # from apis.wd_bots.wd_post_new import post_it
 from apis.wd_bots.wikidataapi_post import post_it
 

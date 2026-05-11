@@ -9,7 +9,7 @@ import sys
 from urllib.parse import urlencode
 
 import requests
-from apis.user_accounts import username, password
+from apis.user_accounts import password, username
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ def do_request(params=None, method="POST"):
         return r4.json()
 
     except Exception:
-        logger.exception('Exception:', exc_info=True)
+        logger.exception("Exception:", exc_info=True)
         return {}
 
 

@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-"""
-
-"""
-import logging
+""" """
 import functools
+import logging
 import os
-import pymysql
 from dataclasses import dataclass
+
+import pymysql
 import pymysql.cursors
 
 logger = logging.getLogger(__name__)
@@ -77,7 +76,7 @@ def _sql_connect_pymysql(
             results = cursor.fetchall()
         except Exception as e:
             logger.exception(e)
-            logger.exception('Exception during fetchall', exc_info=True)
+            logger.exception("Exception during fetchall", exc_info=True)
             return []
 
     return results

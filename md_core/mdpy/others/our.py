@@ -20,7 +20,9 @@ Dir = str(Path(__file__).parents[0])
 values = {}
 errors = {}
 
-default_user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+default_user_agent = (
+    "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+)
 
 
 def fix_p(title, text, param):

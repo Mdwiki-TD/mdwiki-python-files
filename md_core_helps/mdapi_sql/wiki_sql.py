@@ -11,8 +11,6 @@ from mdapi_sql import wiki_sql
 """
 # ---
 import logging
-
-
 import sys
 import time as tttime
 

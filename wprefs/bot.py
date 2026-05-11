@@ -14,8 +14,6 @@ python3 core8/pwb.py wprefs/bot ask
 
 """
 import logging
-
-
 import sys
 
 from mdapi_sql import sql_for_mdwiki

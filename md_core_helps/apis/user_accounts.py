@@ -1,11 +1,10 @@
-"""
+""" """
 
-"""
-
-import sys
 import os
+import sys
 
 from dotenv import load_dotenv
+
 try:
     load_dotenv()
 except Exception:

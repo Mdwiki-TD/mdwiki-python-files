@@ -70,7 +70,7 @@ def get_url(url):
             json1 = req.json()
     # ---
     except Exception as e:
-        logger.exception('Exception:', exc_info=True)
+        logger.exception("Exception:", exc_info=True)
     # ---
     return json1
 

@@ -1,4 +1,5 @@
 import os
+
 import pymysql
 
 
@@ -26,8 +27,8 @@ class Database:
         # db_name = "arwiki"  # _config.db_name_format.format("arwiki")
         db_name = "arwiki_p"
 
-        db_hostname_format = '{0}.analytics.db.svc.wikimedia.cloud'  # _config.db_hostname_format
-        db_connect_file = os.path.join(os.path.expanduser('~'), '.my.cnf')  # _config.db_connect_file
+        db_hostname_format = "{0}.analytics.db.svc.wikimedia.cloud"  # _config.db_hostname_format
+        db_connect_file = os.path.join(os.path.expanduser("~"), ".my.cnf")  # _config.db_connect_file
 
         if self._connection is not None:
             return self._connection

@@ -5,13 +5,14 @@ from p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_
 """
 
 import copy
+import json
 import logging
 import sys
-import json
 import time
 from urllib.error import HTTPError, URLError
-from SPARQLWrapper import JSON, SPARQLWrapper
+
 from apis import wikidataapi
+from SPARQLWrapper import JSON, SPARQLWrapper
 
 logger = logging.getLogger(__name__)
 

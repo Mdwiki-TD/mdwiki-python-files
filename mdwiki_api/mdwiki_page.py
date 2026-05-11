@@ -44,8 +44,8 @@ user        = page.get_user()
 purge       = page.purge()
 '''
 """
-import os
 import functools
+import os
 import sys
 
 if "mwclient" not in sys.argv:

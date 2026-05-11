@@ -22,7 +22,6 @@ logger = logging.getLogger(__name__)
 api_new = NewApi("www", family="mdwiki")
 
 
-
 target_infoboxs = [
     "infobox medical condition",
     "infobox medical condition (new)",

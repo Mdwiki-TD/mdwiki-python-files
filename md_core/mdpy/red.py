@@ -12,7 +12,7 @@ import requests
 from apis import mdwiki_api_call
 from mdpy.bots import py_tools
 from mdpy.bots.check_title import valid_title
-from mdwiki_api.mdwiki_page import NewApi, MainPage
+from mdwiki_api.mdwiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)
 

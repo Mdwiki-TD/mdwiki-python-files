@@ -30,7 +30,6 @@ Dir = Path(__file__).parent
 api_new = NewApi("www", family="mdwiki")
 
 
-
 def find_redirects(pages, text):
     # ---
     to_f = "== List =="

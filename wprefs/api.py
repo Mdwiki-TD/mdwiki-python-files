@@ -4,8 +4,8 @@
 from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 
 """
-import os
 import logging
+import os
 import sys
 import urllib
 import urllib.parse
@@ -16,9 +16,9 @@ import requests
 if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
+from dotenv import load_dotenv
 from wprefs.helps import print_s
 
-from dotenv import load_dotenv
 try:
     load_dotenv()
 except Exception:
@@ -170,7 +170,7 @@ def submitAPI(params, lang="", _type="post", add_token=False):
         # ---
     except Exception:
         logger.exception(params)
-        logger.exception('Exception:', exc_info=True)
+        logger.exception("Exception:", exc_info=True)
         return json1
     # ---
     return json1

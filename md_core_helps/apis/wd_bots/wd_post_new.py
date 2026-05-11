@@ -8,8 +8,8 @@ from apis.wd_bots.wd_post_new import post_it
 """
 import logging
 
-from apis.user_accounts import username, password
 from apis.sup.su_login import Get_MwClient_Site
+from apis.user_accounts import password, username
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,7 @@ def do_request(params=None, method="POST"):
         return r4
 
     except Exception:
-        logger.exception('Exception:', exc_info=True)
+        logger.exception("Exception:", exc_info=True)
     # ---
     return {}
 

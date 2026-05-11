@@ -8,8 +8,6 @@ from mdpy.bots import py_tools
 """
 
 import logging
-
-
 import sys
 import urllib
 
@@ -49,7 +47,7 @@ def quoteurl(fao):
     try:
         fao = urllib.parse.quote(fao)
     except Exception as e:
-        logger.exception('Exception:', exc_info=True)
+        logger.exception("Exception:", exc_info=True)
     # ---
     if endash:
         fao = fao.replace("ioioioioio", "%E2%80%93")

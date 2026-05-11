@@ -4,7 +4,7 @@ from db_work.check_titles_helps import get_new_target_log, Find_pages_exists, Wi
 """
 import logging
 
-from mdwiki_api.wiki_page import NewApi, MainPage
+from mdwiki_api.wiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)
 

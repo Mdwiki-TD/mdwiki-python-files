@@ -5,7 +5,7 @@ import os
 import re
 
 # ---
-from mdwiki_api.mdwiki_page import NewApi, MainPage
+from mdwiki_api.mdwiki_page import MainPage, NewApi
 
 # ---
 numbers = {1: 20000, "done": 0}

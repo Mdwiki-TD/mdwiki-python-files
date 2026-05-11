@@ -41,11 +41,11 @@ def dump_data(revids):
         logger.info(f"<<blue>> dump to {file}")
     # ---
     # try:
-        # with open(file2, "w", encoding="utf-8") as f:
-            # json.dump(revids, f, ensure_ascii=False)
-            # logger.info(f"<<blue>> dump to {file2}")
+    # with open(file2, "w", encoding="utf-8") as f:
+    # json.dump(revids, f, ensure_ascii=False)
+    # logger.info(f"<<blue>> dump to {file2}")
     # except Exception as e:
-        # logger.error(f"<<red>> dump to {file2} error: {e}")
+    # logger.error(f"<<red>> dump to {file2} error: {e}")
     # ---
     try:
         with open(file3, "w", encoding="utf-8") as f:

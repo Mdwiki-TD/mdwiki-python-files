@@ -8,7 +8,6 @@ can_use_sql_db = sql_qu.can_use_sql_db
 results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=[], return_dict=False)
 """
 import logging
-
 import os
 
 import pymysql
@@ -113,7 +112,16 @@ def resolve_bytes(rows):
     return decoded_rows
 
 
-def make_sql_connect(query, db="", host="", update=False, _return=[], return_dict=False, values=None, u_print=True,):
+def make_sql_connect(
+    query,
+    db="",
+    host="",
+    update=False,
+    _return=[],
+    return_dict=False,
+    values=None,
+    u_print=True,
+):
     # ---
     if not query:
         logger.info("query == ''")

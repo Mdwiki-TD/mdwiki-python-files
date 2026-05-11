@@ -1,13 +1,12 @@
-"""
-
-"""
+""" """
 
 import functools
 import logging
 import os
-from newapi import AllAPIS
 
 from dotenv import load_dotenv
+from newapi import AllAPIS
+
 try:
     load_dotenv()
 except Exception:

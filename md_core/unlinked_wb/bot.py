@@ -23,7 +23,6 @@ logger = logging.getLogger(__name__)
 api_new = NewApi("www", family="mdwiki")
 
 
-
 def add_un_linked_wb(title, qid):
     # ---
     page = md_MainPage(title, "www", family="mdwiki")

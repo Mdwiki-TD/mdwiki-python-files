@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ """
-import sys
-import requests
 import os
+import sys
 
+import requests
 from dotenv import load_dotenv
+
 try:
     load_dotenv()
 except Exception:
