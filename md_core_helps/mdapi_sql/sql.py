@@ -119,13 +119,13 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     return host, dbs_p
 
 
-def make_sql_connect(query, db="", host="", update=False, Return=False, return_dict=False):
+def make_sql_connect(query, db="", host="", update=False, _return=False, return_dict=False):
     return sql_qu.make_sql_connect(
         query,
         db=db,
         host=host,
         update=update,
-        Return=Return,
+        _return=_return,
         return_dict=return_dict,
     )
 
@@ -156,7 +156,7 @@ def fetch_arcat_titles(arcatTitle):
     # ---
     host, dbs_p = make_labsdb_dbs_p("ar")
     # ---
-    ar_results = make_sql_connect(ar_queries, db=dbs_p, host=host, Return=[], return_dict=True)
+    ar_results = make_sql_connect(ar_queries, db=dbs_p, host=host, _return=[], return_dict=True)
     # ---
     if not ar_results or len(ar_results) == 0:
         return arcats
@@ -199,7 +199,7 @@ def Make_sql(queries, wiki="", printqua=False):
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
     logger.info(f'<<red>> API/sql_py db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
-    en_results = make_sql_connect(queries, host=host, db=dbs_p, Return=[])
+    en_results = make_sql_connect(queries, host=host, db=dbs_p, _return=[])
     final = tttime.time()
     # ---end of sql--------------------------------------------
     for raw in en_results:
@@ -237,7 +237,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
     logger.info(f'<<red>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
-    en_results = make_sql_connect(queries, host=host, db=dbs_p, Return={})
+    en_results = make_sql_connect(queries, host=host, db=dbs_p, _return={})
     # ---
     final = tttime.time()
     # ---
@@ -277,7 +277,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
     logger.info(f'<<red>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
-    en_results = make_sql_connect(queries, host=host, db=dbs_p, Return={})
+    en_results = make_sql_connect(queries, host=host, db=dbs_p, _return={})
     # ---
     final = tttime.time()
     # ---
@@ -314,7 +314,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
     logger.info(f'<<red>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
-    en_results = make_sql_connect(queries, host=host, db=dbs_p, Return=[])
+    en_results = make_sql_connect(queries, host=host, db=dbs_p, _return=[])
     # ---
     final = tttime.time()
     # ---

@@ -5,7 +5,7 @@
 
 from mdapi_sql import sql_qu
 can_use_sql_db = sql_qu.can_use_sql_db
-results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[], return_dict=False)
+results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=[], return_dict=False)
 """
 import logging
 
@@ -39,7 +39,7 @@ def sql_connect_pymysql(
     db="",
     host="",
     update=False,
-    Return=[],
+    _return=[],
     return_dict=False,
     values=None,
 ):
@@ -63,7 +63,7 @@ def sql_connect_pymysql(
         connection = pymysql.connect(**args2, **credentials)
     except Exception as e:
         logger.warning(e)
-        return Return
+        return _return
     # ---
     with connection as conn, conn.cursor() as cursor:
         # ---
@@ -73,16 +73,16 @@ def sql_connect_pymysql(
 
         except Exception as e:
             logger.warning(e)
-            return Return
+            return _return
         # ---
-        results = Return
+        results = _return
         # ---
         try:
             results = cursor.fetchall()
 
         except Exception as e:
             logger.warning(e)
-            return Return
+            return _return
         # ---
         # yield from cursor
         return results
@@ -113,17 +113,17 @@ def resolve_bytes(rows):
     return decoded_rows
 
 
-def make_sql_connect(query, db="", host="", update=False, Return=[], return_dict=False, values=None, u_print=True):
+def make_sql_connect(query, db="", host="", update=False, _return=[], return_dict=False, values=None, u_print=True,):
     # ---
     if not query:
         logger.info("query == ''")
-        return Return
+        return _return
     # ---
     if u_print:
         logger.info("<<yellow>> newsql::")
     # ---
     rows = sql_connect_pymysql(
-        query, db=db, host=host, update=update, Return=Return, return_dict=return_dict, values=values
+        query, db=db, host=host, update=update, _return=_return, return_dict=return_dict, values=values
     )
     # ---
     if return_dict:

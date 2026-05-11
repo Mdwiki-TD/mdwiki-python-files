@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db
-# results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[], return_dict=False)
+# results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=[], return_dict=False)
 
 
 def GET_SQL():
