@@ -10,7 +10,7 @@ import logging
 import sys
 
 from apis import mdwiki_api_call
-from mdapi_sql import sql_for_mdwiki, sql_qids_others, sql_qids
+from mdapi_sql import sql_for_mdwiki, sql_qids, sql_qids_others
 
 logger = logging.getLogger(__name__)
 
