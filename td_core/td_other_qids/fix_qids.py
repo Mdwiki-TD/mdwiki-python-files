@@ -54,11 +54,11 @@ def get_redirects(to_work):
     return reds
 
 
-def add_to_qids(sql_qids, ty):
+def add_to_qids(sql_results_qids, ty):
     # ---
     logger.info(f"<<yellow>> start ({ty=})")
     # ---
-    all_in = list(sql_qids)
+    all_in = list(sql_results_qids)
     # ---
     new_list = {title: "" for title in all_pages if title not in all_in}
     # ---
@@ -74,11 +74,11 @@ def add_to_qids(sql_qids, ty):
 def do(ty):
     # ---
     if ty == "other":
-        sql_qids = sql_qids_others.get_others_qids()
+        sql_results_qids = sql_qids_others.get_others_qids()
     else:
-        sql_qids = sql_for_mdwiki.get_all_qids()
+        sql_results_qids = sql_for_mdwiki.get_all_qids()
     # ---
-    to_work = {q: t for t, q in sql_qids.items() if q != ""}
+    to_work = {q: t for t, q in sql_results_qids.items() if q != ""}
     # ---
     p_reds = get_redirects(to_work)
     # ---
@@ -96,7 +96,7 @@ def do(ty):
     # ---
     logger.info("_______________")
     # ---
-    add_to_qids(sql_qids, ty)
+    add_to_qids(sql_results_qids, ty)
 
 
 def start():

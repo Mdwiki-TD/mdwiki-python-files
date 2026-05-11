@@ -21,16 +21,12 @@ can_use_sql_db = os.getenv("APP_ENV", "").lower() == "production"
 
 
 @dataclass(frozen=True)
-class DbConfig:
-    db_name: str
-    db_host: str
+class WikiDbConfig:
     db_user: str | None
     db_password: str | None
 
     def to_dict(self) -> dict:
         return {
-            "db": self.db_name,
-            "host": self.db_host,
             "user": self.db_user,
             "password": self.db_password,
             "charset": "utf8mb4",
@@ -40,22 +36,17 @@ class DbConfig:
 
 
 @functools.lru_cache(maxsize=1)
-def _load_db_config() -> DbConfig:
-    db_user: str = os.getenv("TOOL_TOOLSDB_USER") or "root"
-    db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD") or "root11"
+def _load_db_config() -> WikiDbConfig:
+    db_user: str = os.getenv("TOOL_TOOLSDB_USER")
+    db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD")
 
-    db_name: str = os.getenv("DB_NAME") or f"{db_user}__mdwiki"
-    db_host: str = os.getenv("DB_HOST_TOOLS") or "127.0.0.1"
-
-    return DbConfig(
-        db_name=db_name,
-        db_host=db_host,
+    return WikiDbConfig(
         db_user=db_user,
         db_password=db_password,
     )
 
 
-def sql_connect_pymysql(
+def wiki_sql_connect(
     query,
     db="",
     host="",
@@ -152,7 +143,7 @@ def make_sql_connect(
     if u_print:
         logger.info("<<yellow>> newsql::")
     # ---
-    rows = sql_connect_pymysql(
+    rows = wiki_sql_connect(
         query,
         db=db,
         host=host,

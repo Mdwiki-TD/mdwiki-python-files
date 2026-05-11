@@ -17,8 +17,6 @@ from mdapi_sql import sql_td_bot
 
 logger = logging.getLogger(__name__)
 
-# result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
-
 
 def mdwiki_sql(
     query,
@@ -32,7 +30,7 @@ def mdwiki_sql(
         return {}
     # ---
     # logger.info('<<yellow>> newsql::')
-    return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
+    return sql_td_bot.toolforge_tools_sql_connect(query, return_dict=return_dict, values=values)
 
 
 def select_md_sql(
@@ -62,8 +60,6 @@ def get_others_qids():
 
 def add_qid(title, qid):
     logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
-    # ---
-    qua_old = "INSERT INTO qids_others (title, qid) SELECT %s, %s;"
     # ---
     qua = """
         INSERT INTO qids_others (title, qid)
@@ -121,7 +117,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     # ---
     if no_do:
         logger.info(qua % (f'"{new_title}"', f'"{qid}"', f'"{old_title}"'))
-        return
+        return None
     # ---
     logger.info(f"<<yellow>> () {new_title=}, {qid=}, {old_title=}")
     # ---

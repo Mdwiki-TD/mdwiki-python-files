@@ -82,7 +82,7 @@ def _sql_connect_pymysql(
     return results
 
 
-def sql_connect_pymysql(
+def toolforge_tools_sql_connect(
     query,
     return_dict=False,
     values=None,

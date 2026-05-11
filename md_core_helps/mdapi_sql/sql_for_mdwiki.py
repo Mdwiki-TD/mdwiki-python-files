@@ -29,8 +29,6 @@ from mdapi_sql import sql_td_bot
 
 logger = logging.getLogger(__name__)
 
-# result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
-
 
 def mdwiki_sql(
     query,
@@ -44,7 +42,7 @@ def mdwiki_sql(
         logger.info("query == ''")
         return {}
     # ---
-    return sql_td_bot.sql_connect_pymysql(
+    return sql_td_bot.toolforge_tools_sql_connect(
         query,
         return_dict=return_dict,
         values=values,
@@ -64,7 +62,7 @@ def mdwiki_sql_dict(
         logger.info("query == ''")
         return {}
     # ---
-    return sql_td_bot.sql_connect_pymysql(
+    return sql_td_bot.toolforge_tools_sql_connect(
         query,
         return_dict=True,
         values=values,
@@ -108,7 +106,7 @@ def get_all_pages_all_keys(lang=False, table="pages"):
         table = "pages"
     # ---
     qua = f"select DISTINCT * from {table} {lang_line};"
-    return [ta for ta in select_md_sql(qua, return_dict=True)]
+    return list(select_md_sql(qua, return_dict=True))
 
 
 def get_db_categories():
@@ -134,7 +132,7 @@ def set_target_where_id(new_target, iid):
     logger.info(f"<<yellow>> () new_target:{new_target}, id:{iid}")
     # ---
     if new_target == "" or iid == "":
-        return
+        return None
     # ---
     query = "UPDATE pages set target = %s where id = %s;"
     values = [new_target, iid]
@@ -147,7 +145,7 @@ def set_deleted_where_id(iid):
     logger.info(f"<<yellow>> (), id:{iid}")
     # ---
     if iid == "":
-        return
+        return None
     # ---
     query = "UPDATE pages set deleted = 1 where id = %s;"
     # ---
@@ -156,9 +154,6 @@ def set_deleted_where_id(iid):
 
 def add_qid(title, qid):
     logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
-    # ---
-    qua_old = "INSERT INTO qids (title, qid) SELECT %s, %s;"
-    # ---
     qua = """
         INSERT INTO qids (title, qid)
         SELECT %s, %s
@@ -215,7 +210,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     # ---
     if no_do:
         logger.info(qua % (f'"{new_title}"', f'"{qid}"', f'"{old_title}"'))
-        return
+        return None
     # ---
     logger.info(f"<<yellow>> () {new_title=}, {qid=}, {old_title=}")
     # ---
