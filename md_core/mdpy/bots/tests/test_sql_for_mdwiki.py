@@ -13,24 +13,6 @@ logger = logging.getLogger(__name__)
 def tests():
     # ---
     # test_get_all_qids
-    """
-    qua = ' select DISTINCT * from pages where lang ="zh" limit 100;'
-    # ---
-    qids = sql_connect_pymysql(qua)
-    logger.info('sql_connect_pymysql:')
-    logger.info(len(qids))
-    # ---
-    # test_add_qid
-    a = add_qid('test', 'test')
-    logger.info(f'<<yellow>> add: {a}')
-    aa = add_qid('test11', '11')
-    logger.info(f'<<yellow>> add: {aa}')
-    # ---
-    # test_update_qid
-    zz = set_qid_where_title('test11', 'xxx')
-    logger.info(f'<<yellow>> update: {zz}')
-    # ---
-    """
     # return
     # test_get_all_pages
     # pages = select_md_sql(' select DISTINCT * from pages limit 10;', return_dict=True)
