@@ -10,10 +10,10 @@ results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=
 import functools
 import logging
 import os
+from dataclasses import dataclass
 
 import pymysql
 import pymysql.cursors
-from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 

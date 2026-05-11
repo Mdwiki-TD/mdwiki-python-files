@@ -6,7 +6,6 @@ python3 core8/pwb.py mdpy/sql_for_mdwiki
 from mdapi_sql import sql_for_mdwiki
 # sql_for_mdwiki. select_md_sql(query, return_dict=False, values=None)
 # sql_for_mdwiki. mdwiki_sql(query, return_dict=False, values=None, many=False)
-# sql_for_mdwiki. mdwiki_sql_dict(query, values=None, many=False)
 # sql_for_mdwiki. get_all_qids()
 # sql_for_mdwiki. set_title_where_qid(new_title, qid)
 # sql_for_mdwiki. add_titles_to_qids(tab, add_empty_qid=False)
