@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 """ """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 import logging
 import sys
 

@@ -12,10 +12,7 @@ from mdapi_sql import wiki_sql
 # ---
 import logging
 
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
+
 import sys
 import time as tttime
 

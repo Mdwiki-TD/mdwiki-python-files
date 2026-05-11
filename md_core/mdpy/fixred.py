@@ -8,17 +8,12 @@ python3 core8/pwb.py mdpy/fixred
 """
 import logging
 
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
-# ---
 import re
 import sys
 
 from apis import mdwiki_api_call
 from mdpy.bots import py_tools
-from mdwiki_api.mdwiki_page import NewApi, md_MainPage
+from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
 

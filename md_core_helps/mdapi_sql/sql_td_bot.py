@@ -3,63 +3,60 @@
 
 """
 import logging
+import functools
 import os
-import sys
 import pymysql
-from pywikibot import config
-import copy
+from dataclasses import dataclass
 import pymysql.cursors
 
 logger = logging.getLogger(__name__)
 
-conversions = pymysql.converters.conversions
-conversions[pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
 
-db_username = config.db_username
-db_password = config.db_password
-# ---
-if config.db_connect_file is None:
-    credentials = {"user": db_username, "password": db_password}
-else:
-    credentials = {"read_default_file": config.db_connect_file}
-    # read default fil
-    db_username = os.getenv("TOOL_TOOLSDB_USER")
-# ---
-main_args = {
-    "host": "tools.db.svc.wikimedia.cloud",
-    "db": f"{db_username}__mdwiki",
-    "charset": "utf8mb4",
-    # 'collation':  'utf8_general_ci',
-    "use_unicode": True,
-    "autocommit": True,
-}
-# if "localhost" in sys.argv or dir2 == "I:/mdwiki":
-if "localhost" in sys.argv or not os.getenv("HOME"):
-    credentials = {"user": "root", "password": "root11"}
-    main_args["host"] = "127.0.0.1"
-    main_args["db"] = f"{db_username}__mdwiki"
-    logger.info("sql_td_bot localhost")
+@dataclass(frozen=True)
+class DbConfig:
+    db_name: str
+    db_host: str
+    db_user: str | None
+    db_password: str | None
+
+    def to_dict(self) -> dict:
+        return {
+            "db": self.db_name,
+            "host": self.db_host,
+            "user": self.db_user,
+            "password": self.db_password,
+            "charset": "utf8mb4",
+            "use_unicode": True,
+            "autocommit": True,
+        }
+
+
+@functools.lru_cache(maxsize=1)
+def _load_db_config() -> DbConfig:
+    db_user: str = os.getenv("TOOL_TOOLSDB_USER") or "root"
+    db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD") or "root11"
+
+    db_name: str = os.getenv("DB_NAME") or f"{db_user}__mdwiki"
+    db_host: str = os.getenv("DB_HOST_TOOLS") or "127.0.0.1"
+
+    return DbConfig(
+        db_name=db_name,
+        db_host=db_host,
+        db_user=db_user,
+        db_password=db_password,
+    )
 
 
 def _sql_connect_pymysql(
     query,
-    return_dict=False,
     values=None,
-    main_args={},
-    credentials={},
-    conversions=None,
+    db_args: dict = None,
     many=False,
-    **kwargs,
 ):
-    args = copy.deepcopy(main_args)
-    args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
-    if conversions:
-        args["conv"] = conversions
-
     params = values or None  # Simplify condition
 
     try:
-        connection = pymysql.connect(**args, **credentials)
+        connection = pymysql.connect(**db_args)
     except Exception as e:
         logger.exception(e)
         return []
@@ -87,16 +84,19 @@ def _sql_connect_pymysql(
 
 
 def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):
-    # ---
+
+    db_args = _load_db_config().to_dict()
+
+    db_args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
+    db_args["conv"] = pymysql.converters.conversions
+    db_args["conv"][pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
+
     results = _sql_connect_pymysql(
         query,
-        return_dict=return_dict,
         values=values,
-        main_args=main_args,
-        credentials=credentials,
-        conversions=conversions,
+        db_args=db_args,
         many=many,
         **kwargs,
     )
-    # ---
+
     return results

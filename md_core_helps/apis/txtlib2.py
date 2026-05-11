@@ -4,14 +4,7 @@ from apis import txtlib2
 # ingr = txtlib2.extract_templates_and_params(text)
 # for temp in ingr: name, namestrip, params, template = temp['name'], temp['namestrip'], temp['params'], temp['item']
 """
-#
-# (C) Ibrahem Qasim, 2021
-#
-#
-# ---
 
-# ---
-# ---
 try:
     import wikitextparser
 except ImportError:

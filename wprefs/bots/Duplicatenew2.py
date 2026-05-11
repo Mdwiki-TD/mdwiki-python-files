@@ -6,10 +6,7 @@
 
 
 """
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 
 import itertools
 import logging

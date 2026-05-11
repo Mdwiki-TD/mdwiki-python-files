@@ -9,10 +9,6 @@ results = sql_qu.make_sql_connect( query, db='', host='', update=False, Return=[
 """
 import logging
 
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
 import os
 
 import pymysql
@@ -38,9 +34,16 @@ if not os.path.isdir(dir1) and not os.path.isdir(dir2):
     can_use_sql_db[1] = False
 
 
-def sql_connect_pymysql(query, db="", host="", update=False, Return=[], return_dict=False, values=None):
+def sql_connect_pymysql(
+    query,
+    db="",
+    host="",
+    update=False,
+    Return=[],
+    return_dict=False,
+    values=None,
+):
     # ---
-    # logger.info("start :")
     Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     # ---
     args2 = {

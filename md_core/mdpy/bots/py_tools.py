@@ -9,10 +9,7 @@ from mdpy.bots import py_tools
 
 import logging
 
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
+
 import sys
 import urllib
 

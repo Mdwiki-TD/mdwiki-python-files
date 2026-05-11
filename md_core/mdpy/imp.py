@@ -9,10 +9,7 @@ python3 core8/pwb.py mdpy/imp -page:Infertility
 
 import logging
 
-#
-# (C) Ibrahem Qasim, 2022
-#
-#
+
 import sys
 
 from mdpy.bots import py_tools

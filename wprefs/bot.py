@@ -15,10 +15,7 @@ python3 core8/pwb.py wprefs/bot ask
 """
 import logging
 
-#
-# (C) Ibrahem Qasim, 2023
-#
-#
+
 import sys
 
 from mdapi_sql import sql_for_mdwiki

@@ -1,5 +1,5 @@
+import os
 import pymysql
-from pywikibot import config as _config
 
 
 class Database:
@@ -23,16 +23,21 @@ class Database:
         Returns:
             pymysql.connections.Connection: A connection to the database.
         """
+        # db_name = "arwiki"  # _config.db_name_format.format("arwiki")
+        db_name = "arwiki_p"
+
+        db_hostname_format = '{0}.analytics.db.svc.wikimedia.cloud'  # _config.db_hostname_format
+        db_connect_file = os.path.join(os.path.expanduser('~'), '.my.cnf')  # _config.db_connect_file
 
         if self._connection is not None:
             return self._connection
         else:
             return pymysql.connect(
-                host=_config.db_hostname_format.format("arwiki"),
-                read_default_file=_config.db_connect_file,
-                db=_config.db_name_format.format("arwiki"),
+                host=db_hostname_format.format("arwiki"),
+                read_default_file=db_connect_file,
+                db=db_name,
                 charset="utf8mb4",
-                port=_config.db_port,
+                port=3306,
                 cursorclass=pymysql.cursors.DictCursor,
             )
 
