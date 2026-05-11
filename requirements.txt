@@ -5,9 +5,7 @@ PyMySQL
 Requests
 setuptools
 tqdm
-tweepy
 wikitextparser
-wikiwho_wrapper
 jsonlines
 MySQL-python
 Pillow
@@ -15,3 +13,4 @@ psutil
 regex
 mwapi
 python-Levenshtein
+mwclient
