@@ -13,6 +13,8 @@
 *.sqlite
 *.tmp.py
 *.txt
+!requirements.txt
+!dev-requirements.txt
 *.zip
 */.gitx/**
 */__pycache__/**
