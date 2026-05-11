@@ -4,7 +4,7 @@ Usage:
 python3 core8/pwb.py mdpages/find_mt
 
 ايحاد العناوين المكررة بين قاعدتي البيانات
-sql_for_mdwiki
+sql_qids
 sql_qids_others
 
 """
@@ -13,7 +13,7 @@ import logging
 import sys
 
 from apis import cat_cach
-from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdapi_sql import sql_qids, sql_qids_others
 from mdpy.bots.check_title import valid_title
 
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ def doo():
     logger.info(f"len of qids_othrs: {len(qids_othrs):,}")
 
     # ---
-    qids_td = sql_for_mdwiki.get_all_qids()
+    qids_td = sql_qids.get_all_qids()
     logger.info(f"len of qids_td: {len(qids_td):,}")
 
     # ---
@@ -72,7 +72,7 @@ def doo():
 
     # ---
     if to_work and new_qids:
-        sql_for_mdwiki.add_titles_to_qids(new_qids)
+        sql_qids.add_titles_to_qids(new_qids)
 
     # ---
     remove_from_others(qids_othrs, qids_td)

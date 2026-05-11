@@ -68,7 +68,7 @@ def add_to_qids(sql_results_qids, ty):
         logger.info("<<red>> new_list empty.. exit()..")
         return
     # ---
-    sql_for_mdwiki.add_titles_to_qids(new_list, add_empty_qid=True)
+    sql_qids.add_titles_to_qids(new_list, add_empty_qid=True)
 
 
 def do(ty):
@@ -76,7 +76,7 @@ def do(ty):
     if ty == "other":
         sql_results_qids = sql_qids_others.get_others_qids()
     else:
-        sql_results_qids = sql_for_mdwiki.get_all_qids()
+        sql_results_qids = sql_qids.get_all_qids()
     # ---
     to_work = {q: t for t, q in sql_results_qids.items() if q != ""}
     # ---

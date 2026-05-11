@@ -10,7 +10,7 @@ import logging
 import sys
 
 from apis import cat_cach
-from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdapi_sql import sql_qids, sql_qids_others
 from p11143_bot.filter_helps import remove_in_db_elements
 from p11143_bot.wd_helps import add_P11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
 
@@ -67,7 +67,7 @@ def add_q(new_qids, ty):
     logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
     # ---
     if newtitles_in_td:
-        logger.info("<<yellow>> sql_for_mdwiki.add_titles_to_qids(newtitles_in_td):")
+        logger.info("<<yellow>> sql_qids.add_titles_to_qids(newtitles_in_td):")
         for title, qid in newtitles_in_td.items():
             logger.info(f"\t add {title} to qid {qid}")
     # ---
@@ -80,7 +80,7 @@ def add_q(new_qids, ty):
     logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
     # ---
     if "addq" in sys.argv:
-        sql_for_mdwiki.add_titles_to_qids(newtitles_in_td)
+        sql_qids.add_titles_to_qids(newtitles_in_td)
         # ---
         sql_qids_others.add_titles_to_qids(newtitles_not_td)
 
@@ -117,7 +117,7 @@ def work_qids(ty):
 def start():
     # ---
     ALL_QIDS["other"] = sql_qids_others.get_others_qids()
-    ALL_QIDS["td"] = sql_for_mdwiki.get_all_qids()
+    ALL_QIDS["td"] = sql_qids.get_all_qids()
     # ---
     tab = ["td"]
     # ---

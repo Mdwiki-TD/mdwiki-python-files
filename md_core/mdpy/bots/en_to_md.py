@@ -25,7 +25,7 @@ import json
 import logging
 import os
 
-from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ else:
 enwiki_to_mdwiki = {}
 mdwiki_to_enwiki = {}
 # ---
-mdtitle_to_qid = sql_for_mdwiki.get_all_qids()
+mdtitle_to_qid = sql_qids.get_all_qids()
 # ---
 lala = ""
 

@@ -14,14 +14,14 @@ import logging
 import sys
 
 from apis import wiki_api
-from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids
 from mdpages.create_qids import create_qids
 from mdpy.bots.check_title import valid_title
 from unlinked_wb.bot import work_un
 
 logger = logging.getLogger(__name__)
 
-qids = sql_for_mdwiki.get_all_qids()
+qids = sql_qids.get_all_qids()
 # ---
 qids_already = {q: title for title, q in qids.items() if q != ""}
 # ---
@@ -97,7 +97,7 @@ def to_add_wrk(to_add, noqids):
         logger.info('<<purple>> add "add" to sys.argv to add them?')
         # ---
         if "add" in sys.argv:
-            sql_for_mdwiki.add_titles_to_qids(to_add)
+            sql_qids.add_titles_to_qids(to_add)
         # ----
         work_un(to_add)
 

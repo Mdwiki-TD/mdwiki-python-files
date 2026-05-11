@@ -16,7 +16,7 @@ from collections import defaultdict
 
 import tqdm
 from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
-from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki, sql_qids
 
 # from mdpyget.bots.to_sql import insert_dict, to_sql
 from mdpyget.bots.to_sql import new_to_sql
@@ -220,7 +220,7 @@ def main():
     # ---
     logger.info("<<green>> ")
     # ---
-    qids_tab = sql_for_mdwiki.get_all_qids()
+    qids_tab = sql_qids.get_all_qids()
     # ---
     qids = list(qids_tab.values())
     qids = list(set(qids))

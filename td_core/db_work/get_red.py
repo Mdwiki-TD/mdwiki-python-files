@@ -10,13 +10,13 @@ import logging
 import sys
 
 from apis import mdwiki_api_call
-from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdapi_sql import sql_for_mdwiki, sql_qids_others, sql_qids
 
 logger = logging.getLogger(__name__)
 
 # mdwiki_api.api_new.Login_to_wiki()
 
-qids_title_to_qid = sql_for_mdwiki.get_all_qids()
+qids_title_to_qid = sql_qids.get_all_qids()
 qids_others_title_to_qid = sql_qids_others.get_others_qids()
 
 
@@ -68,7 +68,7 @@ def get_pages(tab):
             # استبدال
             # ---
             if qids_title_to_qid.get(old_title):
-                sql_for_mdwiki.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
+                sql_qids.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
             # ---
             if qids_others_title_to_qid.get(old_title):
                 sql_qids_others.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
@@ -97,9 +97,9 @@ def get_pages(tab):
             if set_new_title:
                 # ---
                 for new_title, old_qid in set_new_title.items():
-                    sql_for_mdwiki.set_title_where_qid(new_title, old_qid)
+                    sql_qids.set_title_where_qid(new_title, old_qid)
                 # ---
-                sql_for_mdwiki.add_titles_to_qids(set_new_title)
+                sql_qids.add_titles_to_qids(set_new_title)
 
 
 def start():
