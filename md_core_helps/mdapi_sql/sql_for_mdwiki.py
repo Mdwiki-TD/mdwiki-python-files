@@ -32,31 +32,62 @@ logger = logging.getLogger(__name__)
 # result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
-def mdwiki_sql(query, return_dict=False, values=None, many=False, **kwargs):
+def mdwiki_sql(
+    query,
+    return_dict=False,
+    values=None,
+    many=False,
+    **kwargs,
+):
     # ---
     if not query:
         logger.info("query == ''")
         return {}
     # ---
-    return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values, many=many, **kwargs)
+    return sql_td_bot.sql_connect_pymysql(
+        query,
+        return_dict=return_dict,
+        values=values,
+        many=many,
+        **kwargs,
+    )
 
 
-def mdwiki_sql_dict(query, values=None, many=False, **kwargs):
+def mdwiki_sql_dict(
+    query,
+    values=None,
+    many=False,
+    **kwargs,
+):
     # ---
     if not query:
         logger.info("query == ''")
         return {}
     # ---
-    return sql_td_bot.sql_connect_pymysql(query, return_dict=True, values=values, many=many, **kwargs)
+    return sql_td_bot.sql_connect_pymysql(
+        query,
+        return_dict=True,
+        values=values,
+        many=many,
+        **kwargs,
+    )
 
 
-def select_md_sql(query, *args, **kwargs):
+def select_md_sql(
+    query,
+    *args,
+    **kwargs,
+):
     # ---
     if not query:
         logger.info("query == ''")
         return {}
     # ---
-    return mdwiki_sql(query, *args, **kwargs)
+    return mdwiki_sql(
+        query,
+        *args,
+        **kwargs,
+    )
 
 
 def get_all_pages():
