@@ -51,10 +51,20 @@ def MainPage(title, lang, family="wikipedia"):
     return main_api.MainPage(title)
 
 
-def CatDepth(title, sitecode="", family="wikipedia", **kwargs) -> dict:
+def CatDepth(
+    title,
+    sitecode="",
+    family="wikipedia",
+    **kwargs,
+) -> dict:
     sitecode = sitecode or "www"
     main_api = load_main_api(sitecode, family)
-    return main_api.CatDepth(title, sitecode=sitecode, family=family, **kwargs)
+    return main_api.CatDepth(
+        title,
+        sitecode=sitecode,
+        family=family,
+        **kwargs,
+    )
 
 
 def NewApi(lang="", family="wikipedia"):

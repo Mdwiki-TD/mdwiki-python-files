@@ -20,7 +20,12 @@ logger = logging.getLogger(__name__)
 # result = sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
-def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
+def mdwiki_sql(
+    query,
+    return_dict=False,
+    values=None,
+    **kwargs,
+):
     # ---
     if not query:
         logger.info("query == ''")
@@ -30,13 +35,21 @@ def mdwiki_sql(query, return_dict=False, values=None, **kwargs):
     return sql_td_bot.sql_connect_pymysql(query, return_dict=return_dict, values=values)
 
 
-def select_md_sql(query, *args, **kwargs):
+def select_md_sql(
+    query,
+    *args,
+    **kwargs,
+):
     # ---
     if not query:
         logger.info("query == ''")
         return {}
     # ---
-    return mdwiki_sql(query, *args, **kwargs)
+    return mdwiki_sql(
+        query,
+        *args,
+        **kwargs,
+    )
 
 
 def get_others_qids():

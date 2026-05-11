@@ -87,7 +87,7 @@ def sql_connect_pymysql(
         return results
 
 
-def decode_value(value):
+def _decode_value(value):
     try:
         value = value.decode("utf-8")  # Assuming UTF-8 encoding
     except BaseException:
@@ -98,14 +98,14 @@ def decode_value(value):
     return value
 
 
-def resolve_bytes(rows):
+def _resolve_bytes(rows):
     decoded_rows = []
     # ---
     for row in rows:
         decoded_row = {}
         for key, value in row.items():
             if isinstance(value, bytes):
-                value = decode_value(value)
+                value = _decode_value(value)
             decoded_row[key] = value
         decoded_rows.append(decoded_row)
     # ---
@@ -117,7 +117,7 @@ def make_sql_connect(
     db="",
     host="",
     update=False,
-    _return=[],
+    _return=None,
     return_dict=False,
     values=None,
     u_print=True,
@@ -131,10 +131,16 @@ def make_sql_connect(
         logger.info("<<yellow>> newsql::")
     # ---
     rows = sql_connect_pymysql(
-        query, db=db, host=host, update=update, _return=_return, return_dict=return_dict, values=values
+        query,
+        db=db,
+        host=host,
+        update=update,
+        _return=_return,
+        return_dict=return_dict,
+        values=values,
     )
     # ---
     if return_dict:
-        rows = resolve_bytes(rows)
+        rows = _resolve_bytes(rows)
     # ---
     return rows

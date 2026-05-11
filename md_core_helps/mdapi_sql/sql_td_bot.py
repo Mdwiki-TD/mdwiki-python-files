@@ -82,7 +82,13 @@ def _sql_connect_pymysql(
     return results
 
 
-def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):
+def sql_connect_pymysql(
+    query,
+    return_dict=False,
+    values=None,
+    many=False,
+    **kwargs,
+):
 
     db_args = _load_db_config().to_dict()
 

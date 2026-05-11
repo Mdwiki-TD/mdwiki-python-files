@@ -16,9 +16,16 @@ from mdapi_sql import sql_for_mdwiki
 logger = logging.getLogger(__name__)
 
 
-def mdwiki_sql_one_table(table_name, query, **kwargs):
+def mdwiki_sql_one_table(
+    table_name,
+    query,
+    **kwargs,
+):
     # ---
-    in_sql_list = sql_for_mdwiki.mdwiki_sql(query, **kwargs)
+    in_sql_list = sql_for_mdwiki.mdwiki_sql(
+        query,
+        **kwargs,
+    )
     # ---
     return in_sql_list
 
