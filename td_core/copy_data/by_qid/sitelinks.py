@@ -161,7 +161,9 @@ def wbgetentities(qs_list):
     return all_entities
 
 
-def get_qids_sitelinks(qs_list, qids_to_mdtitle={}):
+def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
+    # ---
+    qids_to_mdtitle = qids_to_mdtitle or {}
     # ---
     all_entities = wbgetentities(qs_list)
     # ---
@@ -188,10 +190,10 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle={}):
         # ---
         # "abwiki": {"site": "abwiki","title": "Обама, Барак","badges": []}
         # ---
-        for _, tab in tab.get("sitelinks", {}).items():
+        for _, sub_tab in tab.get("sitelinks", {}).items():
             # ---
-            title = tab.get("title", "")
-            site = tab.get("site", "")
+            title = sub_tab.get("title", "")
+            site = sub_tab.get("site", "")
             # ---
             if site in skip_codes or site[:-4] in skip_codes:
                 continue

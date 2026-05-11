@@ -7,30 +7,52 @@ from mdapi_sql import sql_qu
 can_use_sql_db = sql_qu.can_use_sql_db
 results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=[], return_dict=False)
 """
+import functools
 import logging
 import os
 
 import pymysql
 import pymysql.cursors
-from pywikibot import config
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
-db_username = config.db_username
-db_password = config.db_password
-# ---
-if config.db_connect_file is None:
-    credentials = {"user": db_username, "password": db_password}
-else:
-    credentials = {"read_default_file": config.db_connect_file}
-# ---
-can_use_sql_db = {1: True}
-# ---
-dir1 = "/mnt/nfs/labstore-secondary-tools-project/"
-dir2 = "/data/project/"
-# ---
-if not os.path.isdir(dir1) and not os.path.isdir(dir2):
-    can_use_sql_db[1] = False
+can_use_sql_db = os.getenv("APP_ENV", "").lower() == "production"
+
+
+@dataclass(frozen=True)
+class DbConfig:
+    db_name: str
+    db_host: str
+    db_user: str | None
+    db_password: str | None
+
+    def to_dict(self) -> dict:
+        return {
+            "db": self.db_name,
+            "host": self.db_host,
+            "user": self.db_user,
+            "password": self.db_password,
+            "charset": "utf8mb4",
+            "use_unicode": True,
+            "autocommit": True,
+        }
+
+
+@functools.lru_cache(maxsize=1)
+def _load_db_config() -> DbConfig:
+    db_user: str = os.getenv("TOOL_TOOLSDB_USER") or "root"
+    db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD") or "root11"
+
+    db_name: str = os.getenv("DB_NAME") or f"{db_user}__mdwiki"
+    db_host: str = os.getenv("DB_HOST_TOOLS") or "127.0.0.1"
+
+    return DbConfig(
+        db_name=db_name,
+        db_host=db_host,
+        db_user=db_user,
+        db_password=db_password,
+    )
 
 
 def sql_connect_pymysql(
@@ -38,28 +60,26 @@ def sql_connect_pymysql(
     db="",
     host="",
     update=False,
-    _return=[],
+    _return=None,
     return_dict=False,
     values=None,
 ):
     # ---
-    Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
-    # ---
-    args2 = {
-        "host": host,
-        "db": db,
-        "charset": "utf8mb4",
-        "cursorclass": Typee,
-        "use_unicode": True,
-        "autocommit": True,
-    }
+    _return = _return or []
     # ---
     params = values if values else None
+
+    db_args = _load_db_config().to_dict()
+
+    db_args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
+    db_args["conv"] = pymysql.converters.conversions
+    db_args["conv"][pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
     # ---
-    # connect to the database server without error
+    db_args["host"] = host
+    db_args["db"] = db
     # ---
     try:
-        connection = pymysql.connect(**args2, **credentials)
+        connection = pymysql.connect(**db_args)
     except Exception as e:
         logger.warning(e)
         return _return
@@ -122,6 +142,8 @@ def make_sql_connect(
     values=None,
     u_print=True,
 ):
+    # ---
+    _return = _return or []
     # ---
     if not query:
         logger.info("query == ''")

@@ -18,9 +18,7 @@ logger = logging.getLogger(__name__)
 # ---
 can_use_sql_db = sql_qu.can_use_sql_db
 db_username = sql_qu.db_username
-# ---
-# ar_site = pywikibot.Site('ar' , "wikipedia")
-# ---
+
 ns_text_tab_1 = {
     1: "نقاش",
     2: "مستخدم",
@@ -95,8 +93,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
         host = f"{sub_host}.analytics.db.svc.wikimedia.cloud"
         return host, dbs_p
     # ---
-    if wiki.endswith("wiki"):
-        wiki = wiki[:-4]
+    wiki = wiki.removesuffix("wiki")
     # ---
     wiki = wiki.replace("-", "_")
     # ---
@@ -130,25 +127,25 @@ def make_sql_connect(query, db="", host="", update=False, _return=False, return_
     )
 
 
-def fetch_arcat_titles(arcatTitle):
+def fetch_arcat_titles(arcat_title):
     # ---
     arcats = []
     # ---
     if not GET_SQL():
         return arcats
     # ---
-    arcatTitle = re.sub(r"تصنيف:", "", arcatTitle)
-    arcatTitle = re.sub(r" ", "_", arcatTitle)
-    logger.info(f"arcatTitle : {arcatTitle}")
+    arcat_title = re.sub(r"تصنيف:", "", arcat_title)
+    arcat_title = re.sub(r" ", "_", arcat_title)
+    logger.info(f"arcat_title : {arcat_title}")
     # ---
-    arcatTitle = escape_string(arcatTitle)
+    arcat_title = escape_string(arcat_title)
     # ---
     ar_queries = f"""
         SELECT page_title, page_namespace
         FROM page
         JOIN categorylinks
         JOIN langlinks
-        WHERE cl_to = "{arcatTitle}"
+        WHERE cl_to = "{arcat_title}"
         AND cl_from = page_id
         AND page_id = ll_from
         AND ll_lang = "en"
@@ -174,7 +171,7 @@ def fetch_arcat_titles(arcatTitle):
         arcats.append(str(title))
         # ---
     # ---
-    logger.info(f"arcats: {len(arcats)} {arcatTitle}")
+    logger.info(f"arcats: {len(arcats)} {arcat_title}")
     # ---
     return arcats
 
@@ -332,15 +329,15 @@ def Make_sql_1_row(queries, wiki="", printqua=False):
     return Make_sql_1_rows(queries, wiki=wiki, printqua=printqua)
 
 
-def MySQLdb_finder_2_rows(encatTitle):
+def MySQLdb_finder_2_rows(encat_title):
     # en category use template with ar link
-    logger.error(f"<<red>> sql . {encatTitle}: ")
+    logger.error(f"<<red>> sql . {encat_title}: ")
     # ---
     if not GET_SQL():
         return {}
     # ---
-    item = encatTitle.replace(" ", "_")
-    item = str(encatTitle).replace(" ", "_")
+    item = encat_title.replace(" ", "_")
+    item = str(encat_title).replace(" ", "_")
     # ---start sql---------------------------------------
     queries = """
     select CONCAT("Category:",page_title), ll_title
@@ -360,11 +357,11 @@ def MySQLdb_finder_2_rows(encatTitle):
     return encats
 
 
-def MySQLdb_finder_N_New(encatTitle, arcatTitle):
-    logger.error(f"<<red>> sql . MySQLdb_finder {encatTitle}: ")
+def MySQLdb_finder_N_New(encat_title, arcat_title):
+    logger.error(f"<<red>> sql . MySQLdb_finder {encat_title}: ")
     # ---
-    item = encatTitle.replace("category:", "").replace("Category:", "").replace(" ", "_")
-    item = str(encatTitle).replace("[[en:", "").replace("]]", "").replace(" ", "_").replace("Category:", "")
+    item = encat_title.replace("category:", "").replace("Category:", "").replace(" ", "_")
+    item = str(encat_title).replace("[[en:", "").replace("]]", "").replace(" ", "_").replace("Category:", "")
     # ---
     if not GET_SQL():
         return False
@@ -378,7 +375,7 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
         GROUP BY ll_title ;"""
     # ---
     encats = Make_sql(queries)
-    arcats = fetch_arcat_titles(arcatTitle) if arcatTitle and arcatTitle != "" else []
+    arcats = fetch_arcat_titles(arcat_title) if arcat_title and arcat_title != "" else []
     # ---
     final = tttime.time()
     logger.info(f"encats: <<red>> {len(encats)} <<default>> {item}")
@@ -390,10 +387,10 @@ def MySQLdb_finder_N_New(encatTitle, arcatTitle):
     return final_cat if final_cat != [] else False
 
 
-def get_exclusive_category_titles(encatTitle, arcatTitle):
-    logger.error(f"<<red>> API/sql_py {encatTitle}: ")
+def get_exclusive_category_titles(encat_title, arcat_title):
+    logger.error(f"<<red>> API/sql_py {encat_title}: ")
     # ---
-    return MySQLdb_finder_N_New(encatTitle, arcatTitle)
+    return MySQLdb_finder_N_New(encat_title, arcat_title)
 
 
 if __name__ == "__main__":
