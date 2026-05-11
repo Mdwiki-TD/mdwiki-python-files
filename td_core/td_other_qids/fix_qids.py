@@ -10,7 +10,7 @@ import logging
 import sys
 
 from apis import cat_cach, wikidataapi
-from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdapi_sql import sql_qids, sql_qids_others
 from mdpy.bots.check_title import valid_title
 from unlinked_wb.bot import work_un
 
@@ -35,7 +35,7 @@ def replace_in_sql(reds, ty):
             if table_name == "qids_others":
                 sql_qids_others.set_qid_where_qid(new_q, old_q)
             else:
-                sql_for_mdwiki.set_qid_where_qid(new_q, old_q)
+                sql_qids.set_qid_where_qid(new_q, old_q)
         else:
             logger.info(qua)
             logger.info('<<green>> add "fix" to sys.argv to fix them..')
