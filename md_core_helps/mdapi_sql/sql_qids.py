@@ -1,24 +1,6 @@
 #!/usr/bin/python3
 """
 python3 core8/pwb.py mdpy/sql_for_mdwiki
-
-# ---
-from mdapi_sql import sql_for_mdwiki
-# sql_for_mdwiki. mdwiki_sql_dict(query, values=None, many=False)
-# sql_for_mdwiki. get_all_qids()
-# sql_for_mdwiki. set_title_where_qid(new_title, qid)
-# sql_for_mdwiki. add_titles_to_qids(tab, add_empty_qid=False)
-# sql_for_mdwiki. set_target_where_id(new_target, iid)
-# sql_for_mdwiki. set_deleted_where_id(iid)
-# sql_for_mdwiki. insert_to_pages_users_to_main(id, target, user, qid)
-# sql_for_mdwiki. add_new_to_pages(tab)
-
-# pages = sql_for_mdwiki.get_all_pages()
-# cats = sql_for_mdwiki.get_db_categories() # title:depth
-# users = sql_for_mdwiki.get_db_users() # list
-# sql_for_mdwiki.get_all_pages_all_keys(lang=False)
-# get_all_from_table(table_name="titles_infos")
-# ---
 """
 import logging
 
@@ -27,13 +9,7 @@ from mdapi_sql.sql_td_bot import toolforge_tools_sql_connect
 logger = logging.getLogger(__name__)
 
 
-def _mdwiki_sql(
-    query,
-    return_dict=False,
-    values=None,
-    many=False,
-    **kwargs,
-):
+def _mdwiki_sql(query, values=None):
     # ---
     if not query:
         logger.info("query == ''")
@@ -41,10 +17,9 @@ def _mdwiki_sql(
     # ---
     return toolforge_tools_sql_connect(
         query,
-        return_dict=return_dict,
+        return_dict=True,
         values=values,
-        many=many,
-        **kwargs,
+        many=False,
     )
 
 
@@ -52,7 +27,7 @@ def get_all_qids():
     # ---
     # xxxx iiii oooo gggg
     # ---
-    sq = _mdwiki_sql("select DISTINCT title, qid from qids;", return_dict=True)
+    sq = _mdwiki_sql("select DISTINCT title, qid from qids;")
     return {ta["title"]: ta["qid"] for ta in sq}
 
 
@@ -68,7 +43,7 @@ def add_qid(title, qid):
     # ---
     values = [title, qid, title, qid, title, qid]
     # ---
-    return _mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, values=values)
 
 
 def set_qid_where_qid(new_qid, old_qid):
@@ -77,7 +52,7 @@ def set_qid_where_qid(new_qid, old_qid):
     qua = "UPDATE qids set qid = %s where qid = %s;"
     values = [new_qid, old_qid]
     # ---
-    return _mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, values=values)
 
 
 def set_qid_where_title(title, qid):
@@ -86,7 +61,7 @@ def set_qid_where_title(title, qid):
     qua = "UPDATE qids set qid = %s where title = %s;"
     values = [qid, title]
     # ---
-    return _mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, values=values)
 
 
 def delete_title_from_db(title, pr=""):
@@ -94,7 +69,7 @@ def delete_title_from_db(title, pr=""):
     # ---
     logger.info(f"<<yellow>> {pr} (qids) title:{title}")
     # ---
-    return _mdwiki_sql(qua, return_dict=True, values=[title])
+    return _mdwiki_sql(qua, values=[title])
 
 
 def set_title_where_qid(new_title, qid):
@@ -104,7 +79,7 @@ def set_title_where_qid(new_title, qid):
     qua = "UPDATE qids set title = %s where qid = %s;"
     values = [new_title, qid]
     # ---
-    return _mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, values=values)
 
 
 def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
@@ -118,7 +93,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     # ---
     logger.info(f"<<yellow>> () {new_title=}, {qid=}, {old_title=}")
     # ---
-    return _mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, values=values)
 
 
 def add_titles_to_qids(tab0, add_empty_qid=False):

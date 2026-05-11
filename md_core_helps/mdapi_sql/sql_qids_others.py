@@ -1,15 +1,6 @@
 #!/usr/bin/python3
 """
 python3 core8/pwb.py mdpy/sql_qids_others
-
-# ---
-from mdpages.qids_others import sql_qids_others
-# sql_qids_others. select_md_sql(query, return_dict=False, values=None)
-# sql_qids_others. mdwiki_sql(query, return_dict=False, values=None)
-# sql_qids_others. get_others_qids()
-# sql_qids_others. set_title_where_qid(new_title, qid)
-# sql_qids_others. add_titles_to_qids(tab, add_empty_qid=False)
-# ---
 """
 import logging
 
@@ -18,7 +9,7 @@ from mdapi_sql import sql_td_bot
 logger = logging.getLogger(__name__)
 
 
-def mdwiki_sql(
+def _mdwiki_sql(
     query,
     return_dict=False,
     values=None,
@@ -47,7 +38,7 @@ def select_md_sql(
         logger.info("query == ''")
         return {}
     # ---
-    return mdwiki_sql(
+    return _mdwiki_sql(
         query,
         *args,
         **kwargs,
@@ -74,7 +65,7 @@ def add_qid(title, qid):
     # ---
     values = [title, qid, title, qid, title, qid]
     # ---
-    return mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def set_qid_where_qid(new_qid, old_qid):
@@ -83,7 +74,7 @@ def set_qid_where_qid(new_qid, old_qid):
     qua = "UPDATE qids_others set qid = %s where qid = %s;"
     values = [new_qid, old_qid]
     # ---
-    return mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def set_qid_where_title(title, qid):
@@ -92,7 +83,7 @@ def set_qid_where_title(title, qid):
     qua = "UPDATE qids_others set qid = %s where title = %s;"
     values = [qid, title]
     # ---
-    return mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def delete_title_from_db(title, pr=""):
@@ -100,7 +91,7 @@ def delete_title_from_db(title, pr=""):
     # ---
     logger.info(f"<<yellow>> {pr} (qids_others) title:{title}")
     # ---
-    return mdwiki_sql(qua, return_dict=True, values=[title])
+    return _mdwiki_sql(qua, return_dict=True, values=[title])
 
 
 def set_title_where_qid(new_title, qid):
@@ -110,7 +101,7 @@ def set_title_where_qid(new_title, qid):
     qua = "UPDATE qids_others set title = %s where qid = %s;"
     values = [new_title, qid]
     # ---
-    return mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
@@ -124,7 +115,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do=False):
     # ---
     logger.info(f"<<yellow>> () {new_title=}, {qid=}, {old_title=}")
     # ---
-    return mdwiki_sql(qua, return_dict=True, values=values)
+    return _mdwiki_sql(qua, return_dict=True, values=values)
 
 
 def add_titles_to_qids(tab0, add_empty_qid=False):
