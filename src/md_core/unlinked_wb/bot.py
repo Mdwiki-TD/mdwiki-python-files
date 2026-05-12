@@ -15,8 +15,8 @@ import re
 import sys
 
 from md_core.mdpy.bots.check_title import valid_title
-from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 from md_core.unlinked_wb.hlps import get_pages_in_use, get_qids
+from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)
 

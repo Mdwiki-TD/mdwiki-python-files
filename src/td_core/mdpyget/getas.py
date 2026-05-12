@@ -19,11 +19,11 @@ import os
 import re
 import sys
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 from md_core.mdpy.bots.en_to_md import enwiki_to_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
+from mdwiki_api.wiki_page import NewApi
 from td_core.mdpyget.bots.to_sql import to_sql
 from td_core.mdpyget.pages_list import get_links_from_cats
-from mdwiki_api.wiki_page import NewApi
 
 logger = logging.getLogger(__name__)
 

@@ -2,10 +2,11 @@ import logging
 import re
 import sys
 
+from md_core.mdpy.bots.check_title import valid_title
+
 # ---
 from md_core_helps.apis import mdwiki_api_call
 from md_core_helps.mdapi_sql import sql_for_mdwiki
-from md_core.mdpy.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)

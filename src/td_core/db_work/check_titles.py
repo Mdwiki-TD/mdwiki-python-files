@@ -13,11 +13,11 @@ import sys
 import time
 
 import tqdm
-from td_core.db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 # ---
 from mdwiki_api.mdwiki_page import md_MainPage
+from td_core.db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
 
 logger = logging.getLogger(__name__)
 

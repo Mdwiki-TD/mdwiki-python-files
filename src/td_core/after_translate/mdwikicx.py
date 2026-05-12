@@ -18,9 +18,9 @@ import sys
 from pathlib import Path
 
 import requests
-from td_core.after_translate.bots import add_to_wd
 from md_core.mdpy.bots import en_to_md
 from mdwiki_api.wiki_page import MainPage
+from td_core.after_translate.bots import add_to_wd
 
 logger = logging.getLogger(__name__)
 

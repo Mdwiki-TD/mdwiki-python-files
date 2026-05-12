@@ -17,8 +17,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 from md_core.mdpy.bots.check_title import valid_title
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)

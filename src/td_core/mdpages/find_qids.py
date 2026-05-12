@@ -13,11 +13,11 @@ python3 core8/pwb.py mdpages/find_qids
 import logging
 import sys
 
+from md_core.mdpy.bots.check_title import valid_title
+from md_core.unlinked_wb.bot import work_un
 from md_core_helps.apis import wiki_api
 from md_core_helps.mdapi_sql import sql_qids
 from td_core.mdpages.create_qids import create_qids
-from md_core.mdpy.bots.check_title import valid_title
-from md_core.unlinked_wb.bot import work_un
 
 logger = logging.getLogger(__name__)
 

@@ -15,8 +15,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from mdwiki_api.mdwiki_page import md_MainPage
 from md_core.stats.editors import get_editors, validate_ip
+from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
 

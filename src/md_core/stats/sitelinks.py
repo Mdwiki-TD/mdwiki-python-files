@@ -16,8 +16,8 @@ import os
 # import sys
 from pathlib import Path
 
-from md_core_helps.apis import wikidataapi
 from md_core.stats.qids import qids_list
+from md_core_helps.apis import wikidataapi
 
 logger = logging.getLogger(__name__)
 

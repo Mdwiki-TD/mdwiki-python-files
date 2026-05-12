@@ -4,8 +4,8 @@ from td_core.fix_user_pages.user_bot import get_new_user
 """
 import logging
 
-from td_core.db_work.check_titles_helps import WikiPage, users_infos
 from md_core_helps.mdapi_sql import sql_for_mdwiki
+from td_core.db_work.check_titles_helps import WikiPage, users_infos
 
 logger = logging.getLogger(__name__)
 

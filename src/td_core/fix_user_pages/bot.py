@@ -15,12 +15,12 @@ import logging
 import sys
 
 import tqdm
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
 
 # from td_core.fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 from td_core.fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 from td_core.fix_user_pages.user_bot import get_new_user
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 

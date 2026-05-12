@@ -13,9 +13,9 @@ from datetime import datetime
 from pathlib import Path
 
 import tqdm
+from md_core.stats.ar import get_ar_results
 from md_core_helps.mdapi_sql import wiki_sql
 from pymysql.converters import escape_string
-from md_core.stats.ar import get_ar_results
 
 logger = logging.getLogger(__name__)
 

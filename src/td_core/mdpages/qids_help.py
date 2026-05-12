@@ -14,8 +14,8 @@ import os
 import re
 import sys
 
-from md_core_helps.apis import cat_cach, mdwiki_api_call, wiki_api
 from md_core.mdpy.bots.check_title import valid_title
+from md_core_helps.apis import cat_cach, mdwiki_api_call, wiki_api
 
 logger = logging.getLogger(__name__)
 
