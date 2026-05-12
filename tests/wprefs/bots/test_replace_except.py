@@ -1,7 +1,7 @@
 import re
 
 import pytest
-from wprefs.bots.replace_except import replaceExcept
+from src.wprefs.bots.replace_except import replaceExcept
 
 
 class TestBasicReplacement:
