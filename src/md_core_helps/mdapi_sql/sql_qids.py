@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-python3 core8/pwb.py mdpy/sql_qids
+python3 core8/pwb.py md_core/mdpy/sql_qids
 """
 import logging
 

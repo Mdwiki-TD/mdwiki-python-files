@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py updates/Medicine_articles
+python3 core8/pwb.py md_core/updates/Medicine_articles
 
 """
 import datetime

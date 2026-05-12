@@ -2,7 +2,7 @@
 """
 بوت قواعد البيانات
 
-python3 core8/pwb.py mdpy/wddone
+python3 core8/pwb.py md_core/mdpy/wddone
 
 """
 import logging

@@ -3,7 +3,7 @@
 
 نسخ التاريخ من الإنجليزية إلى mdwiki
 
-python3 core8/pwb.py mdpy/imp -page:Infertility
+python3 core8/pwb.py md_core/mdpy/imp -page:Infertility
 
 """
 

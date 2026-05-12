@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Change refs to newlines
-python3 core8/pwb.py mdpy/fixref
+python3 core8/pwb.py md_core/mdpy/fixref
 """
 
 import logging
@@ -64,11 +64,11 @@ def main():
         if arg == "allpages":
             List = mdwiki_api_call.Get_All_pages("")
         # ---
-        # python pwb.py mdpy/fixref/start -cat:CS1_errors:_deprecated_parameters ask
+        # python pwb.py md_core/mdpy/fixref/start -cat:CS1_errors:_deprecated_parameters ask
         if arg == "-cat":
             List = CatDepth(f"Category:{value}", sitecode="www", family="mdwiki", depth=0, ns="0")
         # ---
-        # python pwb.py mdpy/fixref/start -page:Histrelin ask
+        # python pwb.py md_core/mdpy/fixref/start -page:Histrelin ask
         if arg in ["-page", "-title"]:
             List = [value]
             # ---

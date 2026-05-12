@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py add_rtt/tests/add_r_col_to_file
+python3 core8/pwb.py md_core/add_rtt/tests/add_r_col_to_file
 
 """
 import logging

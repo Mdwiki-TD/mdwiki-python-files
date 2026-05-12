@@ -13,9 +13,9 @@ $HOME/local/bin/python3 core8/pwb.py db_work/get_red
 $HOME/local/bin/python3 core8/pwb.py td_other_qids/fix_qids fix all
 
 # p11143 all
-$HOME/local/bin/python3 core8/pwb.py p11143_bot/bot all add addq
+$HOME/local/bin/python3 core8/pwb.py md_core/p11143_bot/bot all add addq
 
 # unlinked_wb all
-$HOME/local/bin/python3 core8/pwb.py unlinked_wb/bot
+$HOME/local/bin/python3 core8/pwb.py md_core/unlinked_wb/bot
 
 

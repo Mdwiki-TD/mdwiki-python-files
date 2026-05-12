@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py stats/qids ask
+python3 core8/pwb.py md_core/stats/qids ask
 
 from md_core.stats.qids import qids_list
 

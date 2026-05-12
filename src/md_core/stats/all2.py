@@ -2,7 +2,7 @@
 
 tfj run stats --image python3.9 --command "$HOME/jobs/stats.sh"
 
-python3 core8/pwb.py stats/all2 ask
+python3 core8/pwb.py md_core/stats/all2 ask
 
 """
 

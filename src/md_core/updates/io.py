@@ -4,7 +4,7 @@
 إيجاد الصفحات القديمة
 تحديث صفحة User:Mr. Ibrahem/pages
 
-python3 c8/pwb.py updates/io
+python3 c8/pwb.py md_core/updates/io
 
 """
 

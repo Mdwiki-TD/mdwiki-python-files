@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py mdpy/our
+python3 core8/pwb.py md_core/mdpy/our
 
 """
 import json

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-python3 core8/pwb.py mdpy/sql_for_mdwiki
+python3 core8/pwb.py md_core/mdpy/sql_for_mdwiki
 
 # ---
 from md_core_helps.mdapi_sql import sql_for_mdwiki

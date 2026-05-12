@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py add_rtt/pup
+python3 core8/pwb.py md_core/add_rtt/pup
 from md_core.add_rtt.bot import add_rtt_to_text
 # add_rtt_to_text(text, title)
 
 
-tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py add_rtt/pup"
+tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py md_core/add_rtt/pup"
 
 https://github.com/wikimedia/popularpages
 

@@ -1,7 +1,7 @@
 """
 
-python3 core8/pwb.py stats/by_site
-tfj run stats2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py stats/by_site"
+python3 core8/pwb.py md_core/stats/by_site
+tfj run stats2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py md_core/stats/by_site"
 
 """
 

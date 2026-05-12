@@ -2,7 +2,7 @@
 """
 page views_new bot
 
-python3 core8/pwb.py mdpyget/sqlviews_new -lang:ga
+python3 core8/pwb.py md_core/mdpyget/sqlviews_new -lang:ga
 
 """
 

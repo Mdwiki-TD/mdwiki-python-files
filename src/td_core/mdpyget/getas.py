@@ -6,11 +6,11 @@
 وحفظها في Dashboard_path
 +
 قاعدة البيانات
-python3 core8/pwb.py mdpyget/getas merge
-python3 core8/pwb.py mdpyget/getas newpages nodump
-python3 core8/pwb.py mdpyget/getas from_cats newpages nowork
-python3 core8/pwb.py mdpyget/getas newpages nowork
-python3 core8/pwb.py mdpyget/getas video
+python3 core8/pwb.py md_core/mdpyget/getas merge
+python3 core8/pwb.py md_core/mdpyget/getas newpages nodump
+python3 core8/pwb.py md_core/mdpyget/getas from_cats newpages nowork
+python3 core8/pwb.py md_core/mdpyget/getas newpages nowork
+python3 core8/pwb.py md_core/mdpyget/getas video
 
 """
 import json
@@ -220,7 +220,7 @@ def main():
 
 
 def test():
-    # python3 core8/pwb.py mdpyget/getas test
+    # python3 core8/pwb.py md_core/mdpyget/getas test
     # ---
     data_tab[1]["Yemen1"] = "Top"
     # ---

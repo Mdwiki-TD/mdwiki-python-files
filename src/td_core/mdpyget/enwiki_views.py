@@ -7,10 +7,10 @@
 +
 قاعدة البيانات
 
-python3 core8/pwb.py mdpyget/enwiki_views merge
-python3 core8/pwb.py mdpyget/enwiki_views from_cats newpages nodump
-python3 core8/pwb.py mdpyget/enwiki_views newpages nodump
-python3 core8/pwb.py mdpyget/enwiki_views newpages nowork
+python3 core8/pwb.py md_core/mdpyget/enwiki_views merge
+python3 core8/pwb.py md_core/mdpyget/enwiki_views from_cats newpages nodump
+python3 core8/pwb.py md_core/mdpyget/enwiki_views newpages nodump
+python3 core8/pwb.py md_core/mdpyget/enwiki_views newpages nowork
 
 """
 import json
@@ -171,7 +171,7 @@ def main():
 
 
 def test():
-    # python3 core8/pwb.py mdpyget/getas test
+    # python3 core8/pwb.py md_core/mdpyget/getas test
     # ---
     data_tab[1]["Yemen1"] = "Top"
     # ---

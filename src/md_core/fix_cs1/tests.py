@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py fix_cs1/tests
+python3 core8/pwb.py md_core/fix_cs1/tests
 
 """
 

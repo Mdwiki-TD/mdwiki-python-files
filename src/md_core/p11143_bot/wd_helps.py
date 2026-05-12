@@ -154,7 +154,7 @@ def fix_in_wd(merge_qids, qids):
 
 
 if __name__ == "__main__":
-    # python3 core8/pwb.py p11143_bot/wd_helps
+    # python3 core8/pwb.py md_core/p11143_bot/wd_helps
 
     op = make_in_wd_tab(limit=10)
     logger.info("<<blue>>\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))

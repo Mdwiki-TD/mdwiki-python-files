@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py add_rtt/tests/test
+python3 core8/pwb.py md_core/add_rtt/tests/test
 
 """
 import logging

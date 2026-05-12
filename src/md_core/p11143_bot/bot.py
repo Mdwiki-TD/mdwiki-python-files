@@ -1,8 +1,8 @@
 """
 Usage:
 
-python3 core8/pwb.py p11143_bot/bot -others
-python3 core8/pwb.py p11143_bot/bot -td
+python3 core8/pwb.py md_core/p11143_bot/bot -others
+python3 core8/pwb.py md_core/p11143_bot/bot -td
 
 """
 
