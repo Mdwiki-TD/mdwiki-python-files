@@ -20,8 +20,10 @@ from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-cash_exists = paths.json_tables_path / "cash_exists"
-json_files = [f for f in os.listdir(str(cash_exists)) if f.endswith(".json")]
+json_files = [
+    f for f in os.listdir(str(paths.cash_exists_path))
+    if f.endswith(".json")
+]
 
 que = """select DISTINCT article_id, code from all_exists;"""
 # ---
@@ -83,7 +85,7 @@ def main():
     # ---
     for lang_code in tqdm.tqdm(langs):
         # ---
-        file_name = cash_exists + "/" + lang_code + ".json"
+        file_name = paths.cash_exists_path / f"{lang_code}.json"
         # ---
         data = []
         with open(file_name, "r", encoding="utf-8") as f:

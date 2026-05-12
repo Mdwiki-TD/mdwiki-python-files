@@ -3,7 +3,7 @@
 
 إنشاء قائمة بعدد المراجع
 
-وحفظها في TABLES_PATH
+وحفظها في paths.json_tables_path
 +
 قاعدة البيانات
 
@@ -26,7 +26,6 @@ from td_core.mdcount.bots.links import get_links_from_cats
 from td_core.mdcount.ref_words_bot import do_to_sql, get_jsons_new, logaa, make_old_values
 from td_core.td_dirs import paths
 
-TABLES_PATH = paths.tables_path
 logger = logging.getLogger(__name__)
 
 

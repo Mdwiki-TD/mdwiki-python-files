@@ -3,7 +3,7 @@
 
 إنشاء قائمة بعدد الكلمات
 
-وحفظها في TABLES_PATH
+وحفظها في paths.json_tables_path
 +
 قاعدة البيانات
 
@@ -31,7 +31,6 @@ from td_core.mdcount.ref_words_bot import do_to_sql, get_jsons_new, logaa, make_
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
-TABLES_PATH = paths.tables_path
 
 tab_data = {"all": {}, "lead": {}}
 # ---

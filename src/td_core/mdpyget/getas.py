@@ -3,7 +3,7 @@
 
 إنشاء قائمة بالاهمية من الانجليزية
 
-وحفظها في TABLES_PATH
+وحفظها في paths.json_tables_path
 +
 قاعدة البيانات
 python3 core8/pwb.py md_core/mdpyget/getas merge
@@ -26,7 +26,6 @@ from td_core.mdpyget.pages_list import get_links_from_cats
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
-TABLES_PATH = paths.tables_path
 
 api_new = NewApi("en", family="wikipedia")
 
