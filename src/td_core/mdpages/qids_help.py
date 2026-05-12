@@ -18,10 +18,6 @@ from md_core_helps.apis import cat_cach, mdwiki_api_call, wiki_api
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
-TABLES_PATH = paths.tables_path
-
-# ---
-dir2 = TABLES_PATH + "/jsons"
 
 logger.info("Get_All_pages:")
 # ---
@@ -60,13 +56,13 @@ def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
     # ---
     json_ext = "_other.json" if "other" == ty else ".json"
     # ---
-    with open(f"{dir2}/medwiki_to_enwiki{json_ext}", "w", encoding="utf-8") as aa:
+    with open(paths.json_tables_path / f"medwiki_to_enwiki{json_ext}", "w", encoding="utf-8") as aa:
         json.dump(medwiki_to_enwiki, aa)
     # ---
-    with open(f"{dir2}/missing_in_enwiki{json_ext}", "w", encoding="utf-8") as bb:
+    with open(paths.json_tables_path / f"missing_in_enwiki{json_ext}", "w", encoding="utf-8") as bb:
         json.dump(missing_in_enwiki, bb)
     # ---
-    with open(f"{dir2}/sames{json_ext}", "w", encoding="utf-8") as cc:
+    with open(paths.json_tables_path / f"sames{json_ext}", "w", encoding="utf-8") as cc:
         json.dump(sames, cc)
 
 

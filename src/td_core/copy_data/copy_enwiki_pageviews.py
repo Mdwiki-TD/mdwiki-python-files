@@ -14,15 +14,15 @@ from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-TABLES_PATH = paths.tables_path
+
 Dir = str(Path(__file__).parents[0])
 
-project_tables = Path(TABLES_PATH) / "jsons"
+
 # ---
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(project_tables / "enwiki_pageviews.json", "r", encoding="utf-8") as f:
+with open(paths.json_tables_path / "enwiki_pageviews.json", "r", encoding="utf-8") as f:
     data_in_json = json.load(f)
 # ---
 data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}

@@ -18,13 +18,11 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdpyget.bots.to_sql import insert_dict
 from td_core.td_dirs import paths
 
-TABLES_PATH = paths.tables_path
 
 logger = logging.getLogger(__name__)
 
-
-cash_exists = TABLES_PATH + "/jsons/cash_exists"
-json_files = [f for f in os.listdir(cash_exists) if f.endswith(".json")]
+cash_exists = paths.json_tables_path / "cash_exists"
+json_files = [f for f in os.listdir(str(cash_exists)) if f.endswith(".json")]
 
 que = """select DISTINCT article_id, code from all_exists;"""
 # ---

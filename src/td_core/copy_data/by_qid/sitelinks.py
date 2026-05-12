@@ -21,9 +21,7 @@ from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-TABLES_PATH = paths.tables_path
-
-json_file = TABLES_PATH / "jsons/sitelinks.json"
+json_file = paths.json_tables_path / "sitelinks.json"
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---

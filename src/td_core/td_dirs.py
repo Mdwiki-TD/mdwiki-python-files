@@ -7,6 +7,7 @@ TABLES_PATH = paths.tables_path
 import logging
 import os
 from dataclasses import dataclass
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -18,9 +19,11 @@ if not TABLES_PATH:
 
 @dataclass(frozen=True)
 class Paths:
-    tables_path: str
+    tables_path: Path
+    json_tables_path: Path
 
 
 paths = Paths(
-    tables_path=TABLES_PATH,
+    tables_path=Path(TABLES_PATH),
+    json_tables_path=Path(TABLES_PATH) / "jsons",
 )
