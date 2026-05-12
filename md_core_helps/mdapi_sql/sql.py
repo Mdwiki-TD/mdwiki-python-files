@@ -194,7 +194,7 @@ def Make_sql(queries, wiki="", printqua=False):
         logger.info(queries)
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    logger.info(f'<<red>> API/sql_py db:"{dbs_p}", db_username:"{db_username}" {TTime}')
+    logger.info(f'<<red>> db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, _return=[])
     final = tttime.time()
@@ -206,7 +206,7 @@ def Make_sql(queries, wiki="", printqua=False):
     # ---
     delta = int(final - start)
     # ---
-    logger.info(f'API/sql_py Make_sql len(encats) = "{len(encats)}", in {delta} seconds')
+    logger.info(f'Make_sql len(encats) = "{len(encats)}", in {delta} seconds')
     # ---
     encats.sort()
     # ---
@@ -220,7 +220,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
-    logger.info(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
+    logger.info(f"Make_sql_many_rows wiki '{dbs_p}'")
     # ---
     if not GET_SQL():
         return rows
@@ -232,7 +232,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
     final = tttime.time()
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    logger.info(f'<<red>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
+    logger.info(f'<<red>> Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, _return={})
     # ---
@@ -248,7 +248,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
         rows.append(raw)
     # ---
     delta = int(final - start)
-    logger.info(f'API/sql_py Make_sql_many_rows len(encats) = "{len(rows)}", in {delta} seconds')
+    logger.info(f'Make_sql_many_rows len(encats) = "{len(rows)}", in {delta} seconds')
     # ---
     return rows
 
@@ -260,7 +260,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
-    logger.info(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
+    logger.info(f"Make_sql_many_rows wiki '{dbs_p}'")
     # ---
     if printqua:
         logger.info(queries)
@@ -272,7 +272,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
     final = tttime.time()
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    logger.info(f'<<red>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
+    logger.info(f'<<red>> Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, _return={})
     # ---
@@ -285,7 +285,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
         encats[key] = value
     # ---
     delta = int(final - start)
-    logger.info(f'API/sql_py Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
+    logger.info(f'Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
     # ---
     return encats
 
@@ -297,7 +297,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
         wiki = "enwiki"
     host, dbs_p = make_labsdb_dbs_p(wiki)
     # ---
-    logger.info(f"API/sql_py Make_sql_many_rows wiki '{dbs_p}'")
+    logger.info(f"Make_sql_many_rows wiki '{dbs_p}'")
     # ---
     if printqua:
         logger.info(queries)
@@ -309,7 +309,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
     final = tttime.time()
     # ---
     TTime = datetime.now().strftime("%Y-%b-%d  %H:%M:%S")
-    logger.info(f'<<red>> API/sql_py Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
+    logger.info(f'<<red>> Make_sql db:"{dbs_p}", db_username:"{db_username}" {TTime}')
     # ---
     en_results = make_sql_connect(queries, host=host, db=dbs_p, _return=[])
     # ---
@@ -320,7 +320,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
         encats.append(en)
     # ---
     delta = int(final - start)
-    logger.info(f'API/sql_py Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
+    logger.info(f'Make_sql_2_rows len(results) = "{len(encats)}", in {delta} seconds')
     # ---
     return encats
 
@@ -382,13 +382,13 @@ def MySQLdb_finder_N_New(encat_title, arcat_title):
     final_cat = [str(cat) for cat in encats if cat not in arcats]
     # ---
     delta = int(final - start)
-    logger.info(f'API/sql_py MySQLdb_finder_N_New len(final_cat) = "{len(final_cat)}", in {delta} seconds')
+    logger.info(f'MySQLdb_finder_N_New len(final_cat) = "{len(final_cat)}", in {delta} seconds')
     # ---
     return final_cat if final_cat != [] else False
 
 
 def get_exclusive_category_titles(encat_title, arcat_title):
-    logger.error(f"<<red>> API/sql_py {encat_title}: ")
+    logger.error(f"<<red>> {encat_title}: ")
     # ---
     return MySQLdb_finder_N_New(encat_title, arcat_title)
 
