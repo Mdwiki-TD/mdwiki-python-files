@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 from td_core.td_dirs import paths
-TABLES_PATH  =  paths.tables_path
+paths.json_files.medwiki_to_enwiki
 """
 
 import logging
@@ -30,6 +30,7 @@ class PathsFiles:
     enwiki_pageviews: Path
     missing: Path
     sitelinks: Path
+    medwiki_to_enwiki: Path
 
 
 @dataclass(frozen=True)
@@ -52,6 +53,7 @@ _json_files = PathsFiles(
     enwiki_pageviews=_jsons_path / "enwiki_pageviews.json",
     missing=_jsons_path / "missing.json",
     sitelinks=_jsons_path / "sitelinks.json",
+    medwiki_to_enwiki=_jsons_path / "medwiki_to_enwiki.json",
 )
 
 paths = Paths(
