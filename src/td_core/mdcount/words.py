@@ -7,15 +7,15 @@
 +
 قاعدة البيانات
 
-python3 core8/pwb.py mdcount/words merge
-python3 core8/pwb.py mdcount/words newpages
-python3 core8/pwb.py mdcount/words
-python3 core8/pwb.py mdcount/words listnew
+python3 core8/pwb.py td_core/mdcount/words merge
+python3 core8/pwb.py td_core/mdcount/words newpages
+python3 core8/pwb.py td_core/mdcount/words
+python3 core8/pwb.py td_core/mdcount/words listnew
 
-python3 core8/pwb.py mdcount/words more400
+python3 core8/pwb.py td_core/mdcount/words more400
 
-python3 core8/pwb.py mdcount/words less100
-python3 core8/pwb.py mdcount/words sql
+python3 core8/pwb.py td_core/mdcount/words less100
+python3 core8/pwb.py td_core/mdcount/words sql
 
 """
 
@@ -112,7 +112,7 @@ def main():
     # ---
     limit = 100 if "limit100" in sys.argv else 10000
     # ---
-    # python3 core8/pwb.py mdcount/countref -title:Testosterone_\(medication\)
+    # python3 core8/pwb.py td_core/mdcount/countref -title:Testosterone_\(medication\)
     # ---
     vaild_links = []
     # ---
@@ -148,7 +148,7 @@ def main():
 
 
 def test():
-    # python3 core8/pwb.py mdcount/words test
+    # python3 core8/pwb.py td_core/mdcount/words test
     # ---
     tab_data["lead"]["Yemen1"] = 50
     tab_data["all"]["Yemen1"] = 50

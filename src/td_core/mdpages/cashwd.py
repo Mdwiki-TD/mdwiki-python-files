@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py mdpages/cashwd
+python3 core8/pwb.py td_core/mdpages/cashwd
 
 """
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py db_work/days_7
+python3 core8/pwb.py td_core/db_work/days_7
 
 """
 import logging

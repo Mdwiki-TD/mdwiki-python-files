@@ -122,7 +122,7 @@ def add_to_mdwiki_sql_users(lista):
 
 
 if __name__ == "__main__":
-    # python3 core8/pwb.py after_translate/bots/add_to_pages_users_db pages_users
+    # python3 core8/pwb.py td_core/after_translate/bots/add_to_pages_users_db pages_users
     taba = [
         {
             "mdtitle": "Pem'irolast",

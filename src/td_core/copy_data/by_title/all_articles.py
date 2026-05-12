@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_data/by_title/all_articles
-python3 core8/pwb.py copy_data/by_title/exists_db
+python3 core8/pwb.py td_core/copy_data/by_title/all_articles
+python3 core8/pwb.py td_core/copy_data/by_title/exists_db
 
 """
 import logging
@@ -62,7 +62,7 @@ def start_to_sql(data):
 
 
 def test():
-    # python3 core8/pwb.py copy_data/all_articles test
+    # python3 core8/pwb.py td_core/copy_data/all_articles test
     # ---
     data = {"Asbestosis": "RTT", "Zoster vaccine": "RTT"}
     # ---

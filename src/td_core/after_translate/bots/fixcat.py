@@ -2,7 +2,7 @@
 """
 بوت إضافة التصنيف للمقالات بدون تصنيف في قواعد البيانات
 
-python3 core8/pwb.py after_translate/bots/fixcat
+python3 core8/pwb.py td_core/after_translate/bots/fixcat
 
 """
 

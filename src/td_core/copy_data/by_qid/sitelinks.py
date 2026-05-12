@@ -2,9 +2,9 @@
 #   himo
 """
 
-python3 core8/pwb.py copy_data/sitelinks
+python3 core8/pwb.py td_core/copy_data/sitelinks
 
-tfj run sitelinks --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_data/sitelinks"
+tfj run sitelinks --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py td_core/copy_data/sitelinks"
 
 """
 

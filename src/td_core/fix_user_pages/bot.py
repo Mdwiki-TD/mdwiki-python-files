@@ -6,8 +6,8 @@
 1. ربطها بويكي بيانات
 2. تحديث بيانات الترجمة في قاعدة البيانات
 
-python3 core8/pwb.py fix_user_pages/bot test -lang:ar
-python3 core8/pwb.py fix_user_pages/bot addall
+python3 core8/pwb.py td_core/fix_user_pages/bot test -lang:ar
+python3 core8/pwb.py td_core/fix_user_pages/bot addall
 
 """
 import copy

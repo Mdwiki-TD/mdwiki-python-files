@@ -2,9 +2,9 @@
 """
 
 Usage:
-# python3 core8/pwb.py td_other_qids/make_list -td add
-# python3 core8/pwb.py td_other_qids/make_list -others add
-# python3 core8/pwb.py td_other_qids/make_list add
+# python3 core8/pwb.py td_core/td_other_qids/make_list -td add
+# python3 core8/pwb.py td_core/td_other_qids/make_list -others add
+# python3 core8/pwb.py td_core/td_other_qids/make_list add
 
 """
 import logging

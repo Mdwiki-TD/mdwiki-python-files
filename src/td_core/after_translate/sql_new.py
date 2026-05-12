@@ -4,11 +4,11 @@ https://hashtags.wmcloud.org/json/?query=mdwikicx
 
 بوت قواعد البيانات
 
-python3 core8/pwb.py after_translate/sql_new
-python3 core8/pwb.py after_translate/sql_new pages_users
-python3 core8/pwb.py after_translate/sql_new justsql break
-python3 core8/pwb.py after_translate/sql_new justsql
-python3 core8/pwb.py after_translate/sql_new -lang:ur
+python3 core8/pwb.py td_core/after_translate/sql_new
+python3 core8/pwb.py td_core/after_translate/sql_new pages_users
+python3 core8/pwb.py td_core/after_translate/sql_new justsql break
+python3 core8/pwb.py td_core/after_translate/sql_new justsql
+python3 core8/pwb.py td_core/after_translate/sql_new -lang:ur
 
 """
 

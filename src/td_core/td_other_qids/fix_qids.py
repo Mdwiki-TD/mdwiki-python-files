@@ -1,8 +1,8 @@
 """
-python3 core8/pwb.py td_other_qids/fix_qids all
-python3 core8/pwb.py td_other_qids/fix_qids -others
-python3 core8/pwb.py td_other_qids/fix_qids td
-python3 core8/pwb.py td_other_qids/fix_qids redirects
+python3 core8/pwb.py td_core/td_other_qids/fix_qids all
+python3 core8/pwb.py td_core/td_other_qids/fix_qids -others
+python3 core8/pwb.py td_core/td_other_qids/fix_qids td
+python3 core8/pwb.py td_core/td_other_qids/fix_qids redirects
 
 """
 

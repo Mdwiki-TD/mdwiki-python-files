@@ -7,7 +7,7 @@ The script checks if the project directory exists and changes the path if it doe
 The script retrieves all Wikidata identifiers (QIDs) and filters them based on whether they are empty or not.
 
 Usage:
-python3 core8/pwb.py mdpages/find_qids
+python3 core8/pwb.py td_core/mdpages/find_qids
 
 """
 import logging

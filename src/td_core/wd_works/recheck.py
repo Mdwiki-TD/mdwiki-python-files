@@ -2,7 +2,7 @@
 """
 التحقق من ربط المقالات بالعنصر المناسب في ويكي بيانات
 
-xpython3 core8/pwb.py wd_works/recheck
+xpython3 core8/pwb.py td_core/wd_works/recheck
 
 """
 

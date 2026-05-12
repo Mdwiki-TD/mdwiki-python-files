@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py mdcount/bots/copy_word_table
+python3 core8/pwb.py td_core/mdcount/bots/copy_word_table
 
 """
 import json

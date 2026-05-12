@@ -1,7 +1,7 @@
 """
 
 Usage:
-python3 core8/pwb.py mdpages/find_mt
+python3 core8/pwb.py td_core/mdpages/find_mt
 
 ايحاد العناوين المكررة بين قاعدتي البيانات
 sql_qids

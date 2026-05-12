@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_data/copy_assessments
+python3 core8/pwb.py td_core/copy_data/copy_assessments
 
 """
 import json

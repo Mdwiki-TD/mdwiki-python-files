@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_data/by_title/exists_db
+python3 core8/pwb.py td_core/copy_data/by_title/exists_db
 
 
 """
@@ -102,7 +102,7 @@ def main():
 
 
 def test():
-    # python3 core8/pwb.py copy_data/exists_db test
+    # python3 core8/pwb.py td_core/copy_data/exists_db test
     # ---
     data = {"ar": ["Asbestosis", "RTT", "Zoster vaccine"]}
     # ---

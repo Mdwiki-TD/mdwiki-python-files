@@ -11,7 +11,7 @@ WHERE id IN (
     and p.target != ""
 )
 
-python3 core8/pwb.py fix_user_pages/del
+python3 core8/pwb.py td_core/fix_user_pages/del
 
 """
 import logging

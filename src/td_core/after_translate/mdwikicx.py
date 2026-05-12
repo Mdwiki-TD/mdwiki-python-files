@@ -4,10 +4,10 @@ https://hashtags.wmcloud.org/json/?query=mdwikicx
 
 بوت قواعد البيانات
 
-python3 core8/pwb.py after_translate/mdwikicx
-python3 core8/pwb.py after_translate/mdwikicx pages_users
-python3 core8/pwb.py after_translate/mdwikicx justsql
-python3 core8/pwb.py after_translate/mdwikicx -lang:ur
+python3 core8/pwb.py td_core/after_translate/mdwikicx
+python3 core8/pwb.py td_core/after_translate/mdwikicx pages_users
+python3 core8/pwb.py td_core/after_translate/mdwikicx justsql
+python3 core8/pwb.py td_core/after_translate/mdwikicx -lang:ur
 
 """
 
