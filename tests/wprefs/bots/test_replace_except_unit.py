@@ -50,9 +50,7 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         # test regex with lookbehind.
         assert self.wrap_replaceExcept("A behindB C", r"(?<=behind)\w", r"Z", []) == "A behindZ C"
         # test regex with lookbehind and groups.
-        assert self.wrap_replaceExcept(
-            replaceExcept("A behindB C D", r"(?<=behind)\w( )", r"\g<1>Z", []), "A behind ZC D"
-        )
+        assert self.wrap_replaceExcept(replaceExcept("A behindB C D", r"(?<=behind)\w( )", r"\g<1>Z", []), "A behind ZC D")
         # test regex with lookahead.
         assert self.wrap_replaceExcept("A Bahead C", r"\w(?=ahead)", r"Z", []) == "A Zahead C"
         # test regex with lookahead and groups.
@@ -76,81 +74,43 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         """Test replacing with and without overlap."""
         assert self.wrap_replaceExcept("1111", "11", "21", [], allowoverlap=False) == "2121"
         assert self.wrap_replaceExcept("1111", "11", "21", [], allowoverlap=True) == "2221"
-        self.assertEqual(
-            replaceExcept("1\n= 1 =\n", "1", " \n= 1 =\n", ["header"], allowoverlap=True),
-            " \n= 1 =\n\n= 1 =\n",
-        )
+        self.assertEqual(replaceExcept("1\n= 1 =\n", "1", " \n= 1 =\n", ["header"], allowoverlap=True), " \n= 1 =\n\n= 1 =\n", )
 
     def test_replace_exception(self):
         """Test replacing not inside a specific regex."""
         assert self.wrap_replaceExcept("123x123", "123", "000", []) == "000x000"
         assert self.wrap_replaceExcept("123x123", "123", "000", [re.compile(r"\w123")]) == "000x123"
-        self.assertEqual(
-            replaceExcept("1\n= 1 =\n", "1", "verylongreplacement", ["header"]),
-            "verylongreplacement\n= 1 =\n",
-        )
+        self.assertEqual(replaceExcept("1\n= 1 =\n", "1", "verylongreplacement", ["header"]), "verylongreplacement\n= 1 =\n", )
 
     def test_replace_tags(self):
         """Test replacing not inside various tags."""
         assert self.wrap_replaceExcept("A <!-- x --> B", "x", "y", ["comment"]) == "A <!-- x --> B"
         assert self.wrap_replaceExcept("\n==x==\n", "x", "y", ["header"]) == "\n==x==\n"
-        self.assertEqual(
-            replaceExcept("\n<!--\ncomment-->==x==<!--comment\n-->\n", "x", "y", ["header"]),
-            "\n<!--\ncomment-->==x==<!--comment\n-->\n",
-        )
+        self.assertEqual(replaceExcept("\n<!--\ncomment-->==x==<!--comment\n-->\n", "x", "y", ["header"]), "\n<!--\ncomment-->==x==<!--comment\n-->\n", )
         assert self.wrap_replaceExcept("<pre>x</pre>", "x", "y", ["pre"]) == "<pre>x</pre>"
-        self.assertEqual(
-            replaceExcept("<nowiki   >x</nowiki    >x", "x", "y", ["nowiki"]),
-            "<nowiki   >x</nowiki    >y",
-        )  # T191559
-        self.assertEqual(
-            replaceExcept('<source lang="xml">x</source>', "x", "y", ["source"]),
-            '<source lang="xml">x</source>',
-        )
+
+        # T191559
+        self.assertEqual(replaceExcept("<nowiki   >x</nowiki    >x", "x", "y", ["nowiki"]), "<nowiki   >x</nowiki    >y", )
+        self.assertEqual(replaceExcept('<source lang="xml">x</source>', "x", "y", ["source"]), '<source lang="xml">x</source>', )
         self.assertEqual(
             replaceExcept("<syntaxhighlight>x</syntaxhighlight>", "x", "y", ["source"]),
             "<syntaxhighlight>x</syntaxhighlight>",
         )
-        self.assertEqual(
-            replaceExcept('<syntaxhighlight lang="xml">x</syntaxhighlight>', "x", "y", ["source"]),
-            '<syntaxhighlight lang="xml">x</syntaxhighlight>',
-        )
-        self.assertEqual(
-            replaceExcept("<source>x</source>", "x", "y", ["syntaxhighlight"]), "<source>x</source>"
-        )
-        self.assertEqual(
-            replaceExcept("<includeonly>x</includeonly>", "x", "y", ["includeonly"]),
-            "<includeonly>x</includeonly>",
-        )
+        self.assertEqual(replaceExcept('<syntaxhighlight lang="xml">x</syntaxhighlight>', "x", "y", ["source"]), '<syntaxhighlight lang="xml">x</syntaxhighlight>', )
+        self.assertEqual(replaceExcept("<source>x</source>", "x", "y", ["syntaxhighlight"]), "<source>x</source>")
+        self.assertEqual(replaceExcept("<includeonly>x</includeonly>", "x", "y", ["includeonly"]), "<includeonly>x</includeonly>", )
         assert self.wrap_replaceExcept("<ref>x</ref>", "x", "y", ["ref"]) == "<ref>x</ref>"
-        self.assertEqual(
-            replaceExcept('<ref name="x">A</ref>', "x", "y", ["ref"]), '<ref name="x">A</ref>'
-        )
+        self.assertEqual(replaceExcept('<ref name="x">A</ref>', "x", "y", ["ref"]), '<ref name="x">A</ref>')
         assert self.wrap_replaceExcept(" xA ", "x", "y", ["startspace"]) == " xA "
         assert self.wrap_replaceExcept(":xA ", "x", "y", ["startcolon"]) == ":xA "
         assert self.wrap_replaceExcept("<table>x</table>", "x", "y", ["table"]) == "<table>x</table>"
-        self.assertEqual(
-            replaceExcept("x [http://www.sample.com x]", "x", "y", ["hyperlink"]),
-            "y [http://www.sample.com y]",
-        )
-        self.assertEqual(
-            replaceExcept("x http://www.sample.com/x.html", "x", "y", ["hyperlink"]),
-            "y http://www.sample.com/x.html",
-        )
-        self.assertEqual(
-            replaceExcept("<gallery>x</gallery>", "x", "y", ["gallery"]), "<gallery>x</gallery>"
-        )
+        self.assertEqual(replaceExcept("x [http://www.sample.com x]", "x", "y", ["hyperlink"]), "y [http://www.sample.com y]", )
+        self.assertEqual(replaceExcept("x http://www.sample.com/x.html", "x", "y", ["hyperlink"]), "y http://www.sample.com/x.html", )
+        self.assertEqual(replaceExcept("<gallery>x</gallery>", "x", "y", ["gallery"]), "<gallery>x</gallery>")
         assert self.wrap_replaceExcept("[[x]]", "x", "y", ["link"]) == "[[x]]"
-        self.assertEqual(
-            replaceExcept("{{#property:p171}}", "1", "2", ["property"]), "{{#property:p171}}"
-        )
+        self.assertEqual(replaceExcept("{{#property:p171}}", "1", "2", ["property"]), "{{#property:p171}}")
         assert self.wrap_replaceExcept("{{#invoke:x}}", "x", "y", ["invoke"]) == "{{#invoke:x}}"
-        self.assertEqual(
-            replaceExcept(
-                "<ref name=etwa /> not_in_ref <ref> in_ref </ref>", "not_in_ref", "text", ["ref"]
-            ),
-            "<ref name=etwa /> text <ref> in_ref </ref>",
-        )
+        self.assertEqual(replaceExcept("<ref name=etwa /> not_in_ref <ref> in_ref </ref>", "not_in_ref", "text", ["ref"]), "<ref name=etwa /> text <ref> in_ref </ref>", )
         assert self.wrap_replaceExcept("<ab> content </a>", "content", "text", ["a"]) == "<ab> text </a>"
 
     def test_replace_with_count(self):
@@ -281,5 +241,5 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         """Test replacing in text which contains back references."""
         # Don't use a valid reference number in the original string,
         # in case it tries to apply that as a reference.
-        self.assertEqual(replaceExcept(r"\42", r"^(.*)$", r"X\1X", []), r"X\42X")
-        self.assertEqual(replaceExcept(r"\g<bar>", r"^(?P<foo>.*)$", r"X\g<foo>X", []), r"X\g<bar>X")
+        assert replaceExcept(r"\42", r"^(.*)$", r"X\1X", []) == r"X\42X"
+        assert replaceExcept(r"\g<bar>", r"^(?P<foo>.*)$", r"X\g<foo>X", []) == r"X\g<bar>X"
