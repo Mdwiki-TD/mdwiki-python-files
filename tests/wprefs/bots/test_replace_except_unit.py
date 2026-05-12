@@ -8,7 +8,7 @@ from wprefs.bots.replace_except import replaceExcept
 class DefaultDrySiteTestCase(unittest.TestCase):
     """A base test case with a default dry site."""
 
-    def setUp(self):
+    def setup_method(self):
         """Set up a default dry site for testing."""
         self.site = pywikibot.Site("en", "wikipedia")
 
@@ -90,7 +90,7 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         self.assertEqual(replaceExcept("A <!-- x --> B", "x", "y", ["comment"], site=self.site), "A <!-- x --> B")
         self.assertEqual(replaceExcept("\n==x==\n", "x", "y", ["header"], site=self.site), "\n==x==\n")
         self.assertEqual(
-            replaceExcept("\n<!--" "\ncomment-->==x==<!--comment" "\n-->\n", "x", "y", ["header"], site=self.site),
+            replaceExcept("\n<!--\ncomment-->==x==<!--comment\n-->\n", "x", "y", ["header"], site=self.site),
             "\n<!--\ncomment-->==x==<!--comment\n-->\n",
         )
         self.assertEqual(replaceExcept("<pre>x</pre>", "x", "y", ["pre"], site=self.site), "<pre>x</pre>")
@@ -251,17 +251,17 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
 
     def test_replace_template(self):
         """Test replacing not inside templates."""
-        template_sample = r"a {{templatename " r"    | accessdate={{Fecha|1993}} " r"    |atitle=The [[real title]] }}"
+        template_sample = r"a {{templatename     | accessdate={{Fecha|1993}}     |atitle=The [[real title]] }}"
         self.assertEqual(
             replaceExcept(template_sample, "a", "X", ["template"], site=self.site), "X" + template_sample[1:]
         )
 
-        template_sample = r"a {{templatename " r"    | 1={{a}}2{{a}} " r"    | 2={{a}}1{{a}} }}"
+        template_sample = r"a {{templatename     | 1={{a}}2{{a}}     | 2={{a}}1{{a}} }}"
         self.assertEqual(
             replaceExcept(template_sample, "a", "X", ["template"], site=self.site), "X" + template_sample[1:]
         )
 
-        template_sample = r"a {{templatename " r"    | 1={{{a}}}2{{{a}}} " r"    | 2={{{a}}}1{{{a}}} }}"
+        template_sample = r"a {{templatename     | 1={{{a}}}2{{{a}}}     | 2={{{a}}}1{{{a}}} }}"
         self.assertEqual(
             replaceExcept(template_sample, "a", "X", ["template"], site=self.site), "X" + template_sample[1:]
         )
