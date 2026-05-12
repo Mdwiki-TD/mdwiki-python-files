@@ -70,6 +70,7 @@ def load_main_api() -> AllAPIS:
         family="mdwiki",
         username=username,
         password=password,
+        use_cookies=False,
     )
 
 

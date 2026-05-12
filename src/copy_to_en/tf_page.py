@@ -21,6 +21,7 @@ def get_cx():
         family="toolforge",
         username=username_cx,
         password=password_cx,
+        use_cookies=False,
     )
     # ---
     CatDepth = api.CatDepth
@@ -39,6 +40,7 @@ def get_md():
         family="toolforge",
         username=username,
         password=password,
+        use_cookies=False,
     )
     # ---
     CatDepth = api.CatDepth
