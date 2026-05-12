@@ -7,12 +7,6 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
-"""
-
-python3 core8/pwb.py wprefs/todb
-
-"""
-
 
 Dir = Path(__file__).parents[0]
 # ---
@@ -20,8 +14,6 @@ dir2 = os.getenv("HOME")
 # ---
 if not dir2:
     dir2 = "I:/MD_TOOLS/MDWIKI_MAIN_REPO"
-# ---
-public_html_dir = dir2 + "/public_html"
 # ---
 fixwikirefs = dir2 + "/confs/fixwikirefs.json"
 # ---

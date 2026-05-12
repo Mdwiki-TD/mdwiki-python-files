@@ -4,7 +4,7 @@
 python3 core8/pwb.py apis/cat_cach
 
 from md_core_helps.apis import cat_cach
-from md_core_helps.apis/cat_cach import Cat_Depth
+from md_core_helps.apis.cat_cach import Cat_Depth
 all_pages = cat_cach.from_cache()
 
 """
