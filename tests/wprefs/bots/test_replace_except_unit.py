@@ -5,7 +5,7 @@ import pywikibot
 from wprefs.bots.replace_except import replaceExcept
 
 
-class DefaultDrySiteTestCase(unittest.TestCase):
+class DefaultDrySiteTestCase:
     """A base test case with a default dry site."""
 
     def setup_method(self):
