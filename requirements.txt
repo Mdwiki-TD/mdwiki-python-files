@@ -1,0 +1,11 @@
+
+beautifulsoup4
+mwclient
+mwparserfromhell
+pymysql
+python-dotenv
+pywikibot
+Requests
+SPARQLWrapper
+tqdm
+wikitextparser

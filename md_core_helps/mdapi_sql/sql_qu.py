@@ -7,59 +7,70 @@ from mdapi_sql import sql_qu
 can_use_sql_db = sql_qu.can_use_sql_db
 results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=[], return_dict=False)
 """
+import functools
 import logging
 import os
+from dataclasses import dataclass
 
 import pymysql
 import pymysql.cursors
-from pywikibot import config
 
 logger = logging.getLogger(__name__)
 
-db_username = config.db_username
-db_password = config.db_password
-# ---
-if config.db_connect_file is None:
-    credentials = {"user": db_username, "password": db_password}
-else:
-    credentials = {"read_default_file": config.db_connect_file}
-# ---
-can_use_sql_db = {1: True}
-# ---
-dir1 = "/mnt/nfs/labstore-secondary-tools-project/"
-dir2 = "/data/project/"
-# ---
-if not os.path.isdir(dir1) and not os.path.isdir(dir2):
-    can_use_sql_db[1] = False
+can_use_sql_db = os.getenv("APP_ENV", "").lower() == "production"
 
 
-def sql_connect_pymysql(
+@dataclass(frozen=True)
+class WikiDbConfig:
+    db_user: str | None
+    db_password: str | None
+
+    def to_dict(self) -> dict:
+        return {
+            "user": self.db_user,
+            "password": self.db_password,
+            "charset": "utf8mb4",
+            "use_unicode": True,
+            "autocommit": True,
+        }
+
+
+@functools.lru_cache(maxsize=1)
+def _load_db_config() -> WikiDbConfig:
+    db_user: str = os.getenv("TOOL_TOOLSDB_USER")
+    db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD")
+
+    return WikiDbConfig(
+        db_user=db_user,
+        db_password=db_password,
+    )
+
+
+def wiki_sql_connect(
     query,
     db="",
     host="",
     update=False,
-    _return=[],
+    _return=None,
     return_dict=False,
     values=None,
 ):
     # ---
-    Typee = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
-    # ---
-    args2 = {
-        "host": host,
-        "db": db,
-        "charset": "utf8mb4",
-        "cursorclass": Typee,
-        "use_unicode": True,
-        "autocommit": True,
-    }
+    _return = _return or []
     # ---
     params = values if values else None
+
+    db_args = _load_db_config().to_dict()
+
+    db_args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
+    db_args["conv"] = pymysql.converters.conversions.copy()
+    db_args["conv"][pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
     # ---
-    # connect to the database server without error
+    db_args["host"] = host
+    db_args["db"] = db
     # ---
     try:
-        connection = pymysql.connect(**args2, **credentials)
+        connection = pymysql.connect(**db_args)
     except Exception as e:
         logger.warning(e)
         return _return
@@ -87,7 +98,7 @@ def sql_connect_pymysql(
         return results
 
 
-def decode_value(value):
+def _decode_value(value):
     try:
         value = value.decode("utf-8")  # Assuming UTF-8 encoding
     except BaseException:
@@ -98,14 +109,14 @@ def decode_value(value):
     return value
 
 
-def resolve_bytes(rows):
+def _resolve_bytes(rows):
     decoded_rows = []
     # ---
     for row in rows:
         decoded_row = {}
         for key, value in row.items():
             if isinstance(value, bytes):
-                value = decode_value(value)
+                value = _decode_value(value)
             decoded_row[key] = value
         decoded_rows.append(decoded_row)
     # ---
@@ -117,11 +128,13 @@ def make_sql_connect(
     db="",
     host="",
     update=False,
-    _return=[],
+    _return=None,
     return_dict=False,
     values=None,
     u_print=True,
 ):
+    # ---
+    _return = _return or []
     # ---
     if not query:
         logger.info("query == ''")
@@ -130,11 +143,17 @@ def make_sql_connect(
     if u_print:
         logger.info("<<yellow>> newsql::")
     # ---
-    rows = sql_connect_pymysql(
-        query, db=db, host=host, update=update, _return=_return, return_dict=return_dict, values=values
+    rows = wiki_sql_connect(
+        query,
+        db=db,
+        host=host,
+        update=update,
+        _return=_return,
+        return_dict=return_dict,
+        values=values,
     )
     # ---
     if return_dict:
-        rows = resolve_bytes(rows)
+        rows = _resolve_bytes(rows)
     # ---
     return rows

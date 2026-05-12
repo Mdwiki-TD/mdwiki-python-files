@@ -82,12 +82,18 @@ def _sql_connect_pymysql(
     return results
 
 
-def sql_connect_pymysql(query, return_dict=False, values=None, many=False, **kwargs):
+def toolforge_tools_sql_connect(
+    query,
+    return_dict=False,
+    values=None,
+    many=False,
+    **kwargs,
+):
 
     db_args = _load_db_config().to_dict()
 
     db_args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
-    db_args["conv"] = pymysql.converters.conversions
+    db_args["conv"] = pymysql.converters.conversions.copy()
     db_args["conv"][pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
 
     results = _sql_connect_pymysql(

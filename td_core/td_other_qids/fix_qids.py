@@ -10,7 +10,7 @@ import logging
 import sys
 
 from apis import cat_cach, wikidataapi
-from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdapi_sql import sql_qids, sql_qids_others
 from mdpy.bots.check_title import valid_title
 from unlinked_wb.bot import work_un
 
@@ -35,7 +35,7 @@ def replace_in_sql(reds, ty):
             if table_name == "qids_others":
                 sql_qids_others.set_qid_where_qid(new_q, old_q)
             else:
-                sql_for_mdwiki.set_qid_where_qid(new_q, old_q)
+                sql_qids.set_qid_where_qid(new_q, old_q)
         else:
             logger.info(qua)
             logger.info('<<green>> add "fix" to sys.argv to fix them..')
@@ -54,11 +54,11 @@ def get_redirects(to_work):
     return reds
 
 
-def add_to_qids(sql_qids, ty):
+def add_to_qids(sql_results_qids, ty):
     # ---
     logger.info(f"<<yellow>> start ({ty=})")
     # ---
-    all_in = list(sql_qids)
+    all_in = list(sql_results_qids)
     # ---
     new_list = {title: "" for title in all_pages if title not in all_in}
     # ---
@@ -68,17 +68,17 @@ def add_to_qids(sql_qids, ty):
         logger.info("<<red>> new_list empty.. exit()..")
         return
     # ---
-    sql_for_mdwiki.add_titles_to_qids(new_list, add_empty_qid=True)
+    sql_qids.add_titles_to_qids(new_list, add_empty_qid=True)
 
 
 def do(ty):
     # ---
     if ty == "other":
-        sql_qids = sql_qids_others.get_others_qids()
+        sql_results_qids = sql_qids_others.get_others_qids()
     else:
-        sql_qids = sql_for_mdwiki.get_all_qids()
+        sql_results_qids = sql_qids.get_all_qids()
     # ---
-    to_work = {q: t for t, q in sql_qids.items() if q != ""}
+    to_work = {q: t for t, q in sql_results_qids.items() if q != ""}
     # ---
     p_reds = get_redirects(to_work)
     # ---
@@ -96,7 +96,7 @@ def do(ty):
     # ---
     logger.info("_______________")
     # ---
-    add_to_qids(sql_qids, ty)
+    add_to_qids(sql_results_qids, ty)
 
 
 def start():

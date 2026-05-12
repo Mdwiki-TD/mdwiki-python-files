@@ -10,7 +10,7 @@ Usage:
 import logging
 import sys
 
-from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdapi_sql import sql_qids, sql_qids_others
 from mdpages import qids_help
 from p11143_bot.filter_helps import remove_in_db_elements
 from unlinked_wb.bot import work_un
@@ -37,7 +37,7 @@ def add_q(new_qids, ty):
     if ty == "other":
         sql_qids_others.add_titles_to_qids(new_qids, add_empty_qid=True)
     else:
-        sql_for_mdwiki.add_titles_to_qids(new_qids, add_empty_qid=True)
+        sql_qids.add_titles_to_qids(new_qids, add_empty_qid=True)
 
 
 def work_qids(ty):
@@ -63,7 +63,7 @@ def work_qids(ty):
 def start():
     # ---
     ALL_QIDS["other"] = sql_qids_others.get_others_qids()
-    ALL_QIDS["td"] = sql_for_mdwiki.get_all_qids()
+    ALL_QIDS["td"] = sql_qids.get_all_qids()
     # ---
     tab = ["td"]
     # ---

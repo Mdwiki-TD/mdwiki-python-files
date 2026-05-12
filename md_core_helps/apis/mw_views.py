@@ -245,11 +245,20 @@ class PageviewsClient:
         # ---
         return new_data
 
-    def article_views_new(self, project, articles, **kwargs):
+    def article_views_new(
+        self,
+        project,
+        articles,
+        **kwargs,
+    ):
         # ---
         time_start = time.time()
         # ---
-        dd = self.article_views(project, articles, **kwargs)
+        dd = self.article_views(
+            project,
+            articles,
+            **kwargs,
+        )
         # ---
         new_data = {}
         # ---

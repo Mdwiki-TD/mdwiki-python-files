@@ -44,7 +44,14 @@ def post_s(params, addtoken=False, files=None):
     return json1
 
 
-def page_put(newtext="", summary="", title="", minor="", nocreate=1, **kwargs):
+def page_put(
+    newtext="",
+    summary="",
+    title="",
+    minor="",
+    nocreate=1,
+    **kwargs,
+):
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
     exists = page.exists()
@@ -54,11 +61,22 @@ def page_put(newtext="", summary="", title="", minor="", nocreate=1, **kwargs):
     return save_page
 
 
-def Add_To_Bottom(appendtext, summary, title, **kwargs):
+def Add_To_Bottom(
+    appendtext,
+    summary,
+    title,
+    **kwargs,
+):
     return api_new.Add_To_Bottom(appendtext, summary, title, poss="Bottom")
 
 
-def create_Page(text, summary, title, ask, **kwargs):
+def create_Page(
+    text,
+    summary,
+    title,
+    ask,
+    **kwargs,
+):
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
     # ---

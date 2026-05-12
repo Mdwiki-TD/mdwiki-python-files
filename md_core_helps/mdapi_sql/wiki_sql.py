@@ -18,9 +18,7 @@ from mdapi_sql import sql_qu
 
 logger = logging.getLogger(__name__)
 
-# ---
 can_use_sql_db = sql_qu.can_use_sql_db
-# results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=[], return_dict=False)
 
 
 def GET_SQL():
@@ -60,9 +58,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
         host = f"{sub_host}.analytics.db.svc.wikimedia.cloud"
         return host, dbs_p
     # ---
-    if wiki.endswith("wiki"):
-        wiki = wiki[:-4]
-    # ---
+    wiki = wiki.removesuffix("wiki")
     wiki = wiki.replace("-", "_")
     # ---
     databases = {
@@ -83,7 +79,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     return host, dbs_p
 
 
-def sql_new(queries, wiki="", printqua=False, values=[], u_print=True):
+def sql_new(queries, wiki="", printqua=False, values=None, u_print=True):
     # ---
     if u_print:
         logger.info(f"wiki_sql.py wiki '{wiki}'")
@@ -141,8 +137,7 @@ def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
     # ---
     lang = wiki
     # ---
-    if lang.endswith("wiki"):
-        lang = lang[:-4]
+    lang = lang.removesuffix("wiki")
     # ---
     rows = sql_new(queries, wiki=wiki)
     # ---

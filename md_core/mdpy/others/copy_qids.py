@@ -8,16 +8,15 @@ delete from qids q1 WHERE (q1.qid = '' OR q1.qid IS NULL) and EXISTS (SELECT 1 F
 """
 
 import logging
-import sys
 from pathlib import Path
 
-from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_for_mdwiki, sql_qids
 from mdpy.bots import en_to_md
 
 logger = logging.getLogger(__name__)
 
 
-in_qids = sql_for_mdwiki.get_all_qids()
+in_qids = sql_qids.get_all_qids()
 # ---
 len_qids_empty = len([x for x in in_qids if in_qids[x].find("Q") == -1])
 len_qids_not_empty = len([x for x in in_qids if in_qids[x] != ""])

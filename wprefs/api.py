@@ -69,8 +69,6 @@ def log(lang):
     # ---
     session[1] = requests.Session()
     # ---
-    # if api_urle != session["url"]: print_s( "himoBOT3.py: login to %s. user:%s" % (api_urle , username)  )
-    # ---
     family = "wikipedia"
     # ---
     session["url"] = api_urle

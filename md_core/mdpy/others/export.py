@@ -4,35 +4,21 @@
 import logging
 import sys
 
-# ---
 import requests
-from API import himoBOT3
 
 logger = logging.getLogger(__name__)
 
-# ---
-
-
-# ---
-
-
 Session = requests.Session()
-# ---
+
 La_si = {1: 2500000}
-# ---
+
 for arg in sys.argv:
     arg, _, value = arg.partition(":")
     # ---
     if arg == "-lasi" or arg == "lasi" and value.isdigit():
-        logger.info('<<yellow>> change La_si[1] from "%d" to %s' % (La_si[1], value))
+        logger.info(f'<<yellow>> change La_si[1] from "{La_si[1]}" to {value}')
         # ---
         La_si[1] = int(value)
-        # ---
-    # ---
-# start of himoBOT3.py file
-himoBOT3.log(f"https://en.wikipedia.org/w/api.php")
-# ---
-# himoBOT3.get_Export_xml( title )
 
 
 def export_en_history(title):
@@ -50,10 +36,8 @@ def export_en_history(title):
             xmldata = f.read(f)
     else:
         # ---
-        # gg = Session.post( url= "https://" + 'en.wikipedia.org/w/index.php?' , data = paramse )
-        # xmldata = gg.text
-        # ---
-        xmldata = himoBOT3.get_Export_xml(title)
+        gg = Session.post(url="https://en.wikipedia.org/w/index.php", data=paramse)
+        xmldata = gg.text
         # ---
     # ---
     logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
@@ -81,13 +65,9 @@ def export_en_history(title):
     # ---
     title2 = title.replace(":", "-").replace("/", "-")
     num = 1
-    Lasa = [1, 2, 3, 4, 5]
     FILE_PATHS = []
-    done = False
     # ---
     numbdone = []
-    # ---
-
     # ---
     if len(xmldata) > La_si[1] and "nosplit" not in sys.argv:
         # while done == False :
@@ -158,7 +138,7 @@ def export(title):
     # ---
     logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
     # ---
-    revisions = xmldata.split("</revision>")
+    _revisions = xmldata.split("</revision>")
     # ---
     logger.info(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
     # ---

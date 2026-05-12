@@ -1,0 +1,4 @@
+pywikibot
+pytest
+pytest-cov
+pytest-mock

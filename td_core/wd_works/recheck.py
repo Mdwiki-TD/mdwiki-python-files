@@ -12,7 +12,7 @@ import sys
 from apis import wikidataapi
 
 # ---
-from mdapi_sql import sql_for_mdwiki, wiki_sql
+from mdapi_sql import sql_for_mdwiki, sql_qids, wiki_sql
 from mdpy.bots import en_to_md, py_tools
 from pymysql.converters import escape_string
 
@@ -115,7 +115,7 @@ def do_it_sql(lange, targets):
                 # ---
                 md_title = targets.get(target, {}).get("mdtitle", "")
                 # ---
-                target_tab = {"mdtitle": md_title, "lang": lange, "qid": pp_value}
+                _target_tab = {"mdtitle": md_title, "lang": lange, "qid": pp_value}
         # ---
         if res_len < len(group):
             diff = len(group) - res_len
@@ -232,7 +232,7 @@ def start():
         # ---
         work_with_2_qids(oldq, new_q)
     # ---
-    quary = """
+    _quary = """
         SELECT ?q ?qlabel
             WHERE {
             ?pid rdfs:label ?qlabel. FILTER((LANG(?qlabel)) = "en").
@@ -268,7 +268,7 @@ def start():
             logger.info("no qid for en page.")
             continue
         # ---
-        remove = wikidataapi.Labels_API(oldqid, "", "en", remove=True)
+        _remove = wikidataapi.Labels_API(oldqid, "", "en", remove=True)
         # ---
         work_with_2_qids(oldqid, qid2)
     # ---
@@ -285,7 +285,7 @@ def start():
         logger.error(f"<<red>> qid_target is empty> target:{lal}")
     # ---
     if "add" in sys.argv:
-        sql_for_mdwiki.add_titles_to_qids(to_add)
+        sql_qids.add_titles_to_qids(to_add)
 
 
 if __name__ == "__main__":

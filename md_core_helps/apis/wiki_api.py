@@ -25,8 +25,7 @@ def submitAPI(params, site="", returnjson=False):
 
 def Get_page_qid(sitecode, title):
     # ---
-    if sitecode.endswith("wiki"):
-        sitecode = sitecode[:-4]
+    sitecode = sitecode.removesuffix("wiki")
     # ---
     params = {
         "action": "query",
@@ -50,7 +49,7 @@ def Get_page_qid(sitecode, title):
     # ---
     qid = ""
     # ---
-    for id, tab in pages.items():
+    for _id, tab in pages.items():
         qid = tab.get("pageprops", {}).get("wikibase_item", "")
         break
     # ---

@@ -10,7 +10,7 @@ from mdpages.create_qids import create_qids
 import logging
 
 from apis import wikidataapi
-from mdapi_sql import sql_for_mdwiki
+from mdapi_sql import sql_qids
 from unlinked_wb.bot import add_un_linked_wb
 
 logger = logging.getLogger(__name__)
@@ -39,4 +39,4 @@ def create_qids(no_qids):
             add_un_linked_wb(x, new_qid)
             # ---
             # add new qid to db
-            sql_for_mdwiki.add_titles_to_qids({x: new_qid})
+            sql_qids.add_titles_to_qids({x: new_qid})

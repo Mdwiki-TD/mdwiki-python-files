@@ -7,7 +7,7 @@ from unlinked_wb.hlps import get_pages_in_use, get_qids
 # ---
 import logging
 
-from mdapi_sql import sql_for_mdwiki, sql_qids_others
+from mdapi_sql import sql_qids, sql_qids_others
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ def get_pages_in_use(all_pages):
 
 
 def get_qids():
-    qids1 = sql_for_mdwiki.get_all_qids()
+    qids1 = sql_qids.get_all_qids()
     qids2 = sql_qids_others.get_others_qids()
     # ---
     qids1 = {x: v for x, v in qids1.items() if v != ""}
