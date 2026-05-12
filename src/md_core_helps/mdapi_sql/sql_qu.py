@@ -17,7 +17,7 @@ import pymysql.cursors
 
 logger = logging.getLogger(__name__)
 
-can_use_sql_db = os.getenv("APP_ENV", "").lower() == "production"
+can_use_sql_db = {1: os.getenv("APP_ENV", "").lower() == "production"}
 
 
 @dataclass(frozen=True)
