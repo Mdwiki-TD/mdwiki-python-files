@@ -3,13 +3,13 @@
 
 python3 core8/pwb.py apis/wd_bots/wd_post_new
 
-from apis.wd_bots.wd_post_new import post_it
+from md_core_helps.apis.wd_bots.wd_post_new import post_it
 
 """
 import logging
 
-from apis.sup.su_login import Get_MwClient_Site
-from apis.user_accounts import password, username
+from md_core_helps.apis.sup.su_login import Get_MwClient_Site
+from md_core_helps.apis.user_accounts import password, username
 
 logger = logging.getLogger(__name__)
 

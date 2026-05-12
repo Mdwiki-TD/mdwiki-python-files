@@ -6,7 +6,7 @@ python3 core8/pwb.py updates/Medicine_articles
 """
 import datetime
 
-from mdapi_sql import wiki_sql
+from md_core_helps.mdapi_sql import wiki_sql
 from mdwiki_api.mdwiki_page import md_MainPage
 
 

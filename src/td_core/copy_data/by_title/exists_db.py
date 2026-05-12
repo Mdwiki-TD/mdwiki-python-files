@@ -14,7 +14,7 @@ import sys
 import tqdm
 
 # ---
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdpyget.bots.to_sql import insert_dict
 
 logger = logging.getLogger(__name__)

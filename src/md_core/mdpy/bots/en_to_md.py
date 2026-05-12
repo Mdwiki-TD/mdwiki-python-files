@@ -25,7 +25,7 @@ import json
 import logging
 import os
 
-from mdapi_sql import sql_qids
+from md_core_helps.mdapi_sql import sql_qids
 
 logger = logging.getLogger(__name__)
 

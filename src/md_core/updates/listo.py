@@ -16,7 +16,7 @@ import logging
 import re
 import sys
 
-from apis import mdwiki_api_call
+from md_core_helps.apis import mdwiki_api_call
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)

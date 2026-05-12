@@ -9,7 +9,7 @@ import logging
 import sys
 
 import requests
-from apis import mdwiki_api_call
+from md_core_helps.apis import mdwiki_api_call
 from mdpy.bots import py_tools
 from mdpy.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import MainPage, NewApi

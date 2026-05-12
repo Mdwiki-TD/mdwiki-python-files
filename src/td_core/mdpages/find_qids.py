@@ -13,8 +13,8 @@ python3 core8/pwb.py mdpages/find_qids
 import logging
 import sys
 
-from apis import wiki_api
-from mdapi_sql import sql_qids
+from md_core_helps.apis import wiki_api
+from md_core_helps.mdapi_sql import sql_qids
 from mdpages.create_qids import create_qids
 from mdpy.bots.check_title import valid_title
 from unlinked_wb.bot import work_un

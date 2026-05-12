@@ -1,5 +1,5 @@
 """
-from apis.sup.su_login import Get_MwClient_Site
+from md_core_helps.apis.sup.su_login import Get_MwClient_Site
 """
 
 import logging
@@ -9,7 +9,7 @@ from http.cookiejar import MozillaCookieJar
 
 import mwclient
 import requests
-from apis.sup.cookies_bot import get_file_name
+from md_core_helps.apis.sup.cookies_bot import get_file_name
 from mwclient.client import Site
 
 logger = logging.getLogger(__name__)

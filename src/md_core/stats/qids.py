@@ -11,7 +11,7 @@ import os
 import sys
 from pathlib import Path
 
-from mdapi_sql import wiki_sql
+from md_core_helps.mdapi_sql import wiki_sql
 
 logger = logging.getLogger(__name__)
 

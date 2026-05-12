@@ -6,7 +6,7 @@ python3 core8/pwb.py db_work/days_7
 """
 import logging
 
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 

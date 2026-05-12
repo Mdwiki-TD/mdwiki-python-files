@@ -2,7 +2,7 @@
 """
 بوت قواعد البيانات
 # ---
-from mdapi_sql import wiki_sql
+from md_core_helps.mdapi_sql import wiki_sql
 # ---
 # if wiki_sql.GET_SQL():
 # result = wiki_sql.sql_new(qua, wiki="", printqua=False)
@@ -14,7 +14,7 @@ import logging
 import sys
 import time as tttime
 
-from mdapi_sql import sql_qu
+from md_core_helps.mdapi_sql import sql_qu
 
 logger = logging.getLogger(__name__)
 

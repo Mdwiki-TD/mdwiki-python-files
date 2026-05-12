@@ -12,7 +12,7 @@ import os
 import sys
 from pathlib import Path
 
-from apis.mw_views import PageviewsClient
+from md_core_helps.apis.mw_views import PageviewsClient
 
 logger = logging.getLogger(__name__)
 

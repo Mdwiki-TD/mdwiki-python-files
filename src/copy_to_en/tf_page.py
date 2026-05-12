@@ -5,18 +5,20 @@ from copy_to_en.tf_page import get_cx, get_md
 # CatDepth, MainPage = get_md()
 
 """
-
-from copy_to_en.bots import medwiki_account
+import os
 from newapi import AllAPIS
 
 
 def get_cx():
     # ---
+    username_cx: str = os.getenv("MDWIKI_CX_USERNAME")
+    password_cx: str = os.getenv("MDWIKI_CX_PASSWORD")
+    # ---
     api = AllAPIS(
         lang="mdwikicx",
         family="toolforge",
-        username=medwiki_account.username_cx,
-        password=medwiki_account.password_cx,
+        username=username_cx,
+        password=password_cx,
     )
     # ---
     CatDepth = api.CatDepth
@@ -27,11 +29,14 @@ def get_cx():
 
 def get_md():
     # ---
+    username: str = os.getenv("MDWIKI_USERNAME")
+    password: str = os.getenv("MDWIKI_PASSWORD")
+    # ---
     api = AllAPIS(
         lang="medwiki",
         family="toolforge",
-        username=medwiki_account.username,
-        password=medwiki_account.password,
+        username=username,
+        password=password,
     )
     # ---
     CatDepth = api.CatDepth

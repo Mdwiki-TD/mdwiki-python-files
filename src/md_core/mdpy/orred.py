@@ -10,7 +10,7 @@ python3 core8/pwb.py mdpy/orred
 """
 import logging
 
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.wiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)

@@ -15,8 +15,8 @@ import sys
 from collections import defaultdict
 
 import tqdm
-from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
-from mdapi_sql import sql_for_mdwiki, sql_qids
+from md_core_helps.apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
+from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids
 
 # from mdpyget.bots.to_sql import insert_dict, to_sql
 from mdpyget.bots.to_sql import new_to_sql

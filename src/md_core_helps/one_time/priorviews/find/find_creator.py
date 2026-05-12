@@ -13,7 +13,7 @@ import os
 import sys
 from pathlib import Path
 
-from mdapi_sql import wiki_sql
+from md_core_helps.mdapi_sql import wiki_sql
 from priorviews.bots import helps
 from priorviews.lists.links_by_section import links_by_lang
 from pymysql.converters import escape_string

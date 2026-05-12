@@ -20,8 +20,8 @@ import logging
 import os
 import sys
 
-from apis import mdwiki_api_call
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.apis import mdwiki_api_call
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdcount.bots.countref_bots import count_ref_from_text
 from mdcount.bots.links import get_links_from_cats
 from mdcount.ref_words_bot import do_to_sql, get_jsons_new, logaa, make_old_values

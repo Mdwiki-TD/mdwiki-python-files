@@ -12,7 +12,7 @@ import logging
 import sys
 from pathlib import Path
 
-from apis import mdwiki_api_call
+from md_core_helps.apis import mdwiki_api_call
 
 logger = logging.getLogger(__name__)
 

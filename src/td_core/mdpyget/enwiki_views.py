@@ -19,8 +19,8 @@ import os
 import re
 import sys
 
-from apis.mw_views import PageviewsClient
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.apis.mw_views import PageviewsClient
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats

@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 
 import tqdm
-from mdapi_sql import wiki_sql
+from md_core_helps.mdapi_sql import wiki_sql
 from pymysql.converters import escape_string
 from stats.ar import get_ar_results
 

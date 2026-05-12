@@ -9,7 +9,7 @@ import logging
 import os
 from pathlib import Path
 
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)

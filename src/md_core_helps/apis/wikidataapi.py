@@ -3,7 +3,7 @@
 
 بوت للعمل على ويكيبيانات أو ويكيبيديا
 
-from apis import wikidataapi
+from md_core_helps.apis import wikidataapi
 # q = wikidataapi.new_item(label="", lang="", returnid=True)
 
 python3 core8/pwb.py apis/wikidataapi
@@ -16,10 +16,10 @@ import logging
 import re
 import sys
 
-from apis.wd_bots import wd_rest_new
+from md_core_helps.apis.wd_bots import wd_rest_new
 
-# from apis.wd_bots.wd_post_new import post_it
-from apis.wd_bots.wikidataapi_post import post_it
+# from md_core_helps.apis.wd_bots.wd_post_new import post_it
+from md_core_helps.apis.wd_bots.wikidataapi_post import post_it
 
 logger = logging.getLogger(__name__)
 

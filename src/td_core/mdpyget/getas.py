@@ -19,7 +19,7 @@ import os
 import re
 import sys
 
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdpy.bots.en_to_md import enwiki_to_mdwiki
 from mdpyget.bots.to_sql import to_sql
 from mdpyget.pages_list import get_links_from_cats

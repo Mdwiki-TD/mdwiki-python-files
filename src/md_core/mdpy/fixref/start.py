@@ -11,7 +11,7 @@ import sys
 # result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
 from pathlib import Path
 
-from apis import mdwiki_api_call
+from md_core_helps.apis import mdwiki_api_call
 from mdpy.fixref.fixref_text_new import fix_ref_template
 from mdwiki_api.mdwiki_page import CatDepth
 

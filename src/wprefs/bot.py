@@ -16,7 +16,7 @@ python3 core8/pwb.py wprefs/bot ask
 import logging
 import sys
 
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page

@@ -3,7 +3,7 @@
 python3 core8/pwb.py mdpy/sql_for_mdwiki
 
 # ---
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 # sql_for_mdwiki. select_md_sql(query, return_dict=False, values=None)
 # sql_for_mdwiki. mdwiki_sql(query, return_dict=False, values=None, many=False)
 # sql_for_mdwiki. set_target_where_id(new_target, iid)
@@ -21,7 +21,7 @@ from mdapi_sql import sql_for_mdwiki
 import logging
 import time
 
-from mdapi_sql import sql_td_bot
+from md_core_helps.mdapi_sql import sql_td_bot
 
 logger = logging.getLogger(__name__)
 

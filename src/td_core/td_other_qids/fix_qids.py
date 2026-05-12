@@ -9,8 +9,8 @@ python3 core8/pwb.py td_other_qids/fix_qids redirects
 import logging
 import sys
 
-from apis import cat_cach, wikidataapi
-from mdapi_sql import sql_qids, sql_qids_others
+from md_core_helps.apis import cat_cach, wikidataapi
+from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
 from mdpy.bots.check_title import valid_title
 from unlinked_wb.bot import work_un
 

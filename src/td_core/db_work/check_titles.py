@@ -14,7 +14,7 @@ import time
 
 import tqdm
 from db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 # ---
 from mdwiki_api.mdwiki_page import md_MainPage

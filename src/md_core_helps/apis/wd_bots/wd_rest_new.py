@@ -3,7 +3,7 @@
 
 python3 core8/pwb.py apis/wd_rest_new
 
-from apis.wd_bots import wd_rest_new
+from md_core_helps.apis.wd_bots import wd_rest_new
 # wd_rest_new.Get_Claims_API(q="", p="")
 # wd_rest_new.Get_one_qid_info(qid, only="labels")
 

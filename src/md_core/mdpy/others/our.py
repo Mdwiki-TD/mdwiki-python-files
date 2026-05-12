@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 import requests
-from apis import mdwiki_api_call, txtlib2
+from md_core_helps.apis import mdwiki_api_call, txtlib2
 
 logger = logging.getLogger(__name__)
 

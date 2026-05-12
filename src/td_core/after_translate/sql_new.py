@@ -22,7 +22,7 @@ from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 from after_translate.bots.get_pages import get_pages_from_db
 
 # ---
-from mdapi_sql import wiki_sql
+from md_core_helps.mdapi_sql import wiki_sql
 
 logger = logging.getLogger(__name__)
 

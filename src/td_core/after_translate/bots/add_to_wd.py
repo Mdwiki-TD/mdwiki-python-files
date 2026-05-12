@@ -14,8 +14,8 @@ import logging
 import re
 
 # ---
-from apis import mdwiki_api_call, wiki_api, wikidataapi
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.apis import mdwiki_api_call, wiki_api, wikidataapi
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdpy import orred
 from mdpy.bots import en_to_md
 from pymysql.converters import escape_string

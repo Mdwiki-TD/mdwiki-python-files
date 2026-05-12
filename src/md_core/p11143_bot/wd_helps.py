@@ -11,7 +11,7 @@ import sys
 import time
 from urllib.error import HTTPError, URLError
 
-from apis import wikidataapi
+from md_core_helps.apis import wikidataapi
 from SPARQLWrapper import JSON, SPARQLWrapper
 
 logger = logging.getLogger(__name__)

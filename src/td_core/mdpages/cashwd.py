@@ -12,8 +12,8 @@ import logging
 import os
 from datetime import datetime
 
-from apis import wikidataapi
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.apis import wikidataapi
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
 from mdpy.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth

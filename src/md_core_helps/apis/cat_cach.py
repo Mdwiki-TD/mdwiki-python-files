@@ -3,8 +3,8 @@
 
 python3 core8/pwb.py apis/cat_cach
 
-from apis import cat_cach
-from apis/cat_cach import Cat_Depth
+from md_core_helps.apis import cat_cach
+from md_core_helps.apis/cat_cach import Cat_Depth
 all_pages = cat_cach.from_cache()
 
 """
@@ -17,7 +17,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdpy.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
 

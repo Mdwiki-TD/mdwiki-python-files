@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
+from md_core_helps.apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 
 """
 import logging
@@ -9,7 +9,7 @@ import sys
 from urllib.parse import urlencode
 
 import requests
-from apis.user_accounts import password, username
+from md_core_helps.apis.user_accounts import password, username
 
 logger = logging.getLogger(__name__)
 

@@ -2,7 +2,7 @@
 """
 
 بوت قواعد البيانات
-from mdapi_sql import sql
+from md_core_helps.mdapi_sql import sql
 
 """
 import logging
@@ -11,7 +11,7 @@ import sys
 import time as tttime
 from datetime import datetime
 
-from mdapi_sql import sql_qu
+from md_core_helps.mdapi_sql import sql_qu
 from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)

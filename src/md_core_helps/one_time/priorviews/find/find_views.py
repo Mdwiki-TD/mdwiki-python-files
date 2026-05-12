@@ -14,7 +14,7 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from apis.mw_views import PageviewsClient
+from md_core_helps.apis.mw_views import PageviewsClient
 from priorviews.bots import helps
 from priorviews.lists.links_by_section import sects_links_langlinks
 

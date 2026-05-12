@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 # ---
-from apis import wiki_api
+from md_core_helps.apis import wiki_api
 # wiki_api.submitAPI( params, site="en", returnjson = False )
 # ---
 """

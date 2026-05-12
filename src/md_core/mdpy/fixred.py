@@ -10,7 +10,7 @@ import logging
 import re
 import sys
 
-from apis import mdwiki_api_call
+from md_core_helps.apis import mdwiki_api_call
 from mdpy.bots import py_tools
 from mdwiki_api.mdwiki_page import md_MainPage
 

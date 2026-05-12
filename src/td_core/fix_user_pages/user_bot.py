@@ -5,7 +5,7 @@ from fix_user_pages.user_bot import get_new_user
 import logging
 
 from db_work.check_titles_helps import WikiPage, users_infos
-from mdapi_sql import sql_for_mdwiki
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
