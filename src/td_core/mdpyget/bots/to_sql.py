@@ -30,9 +30,12 @@ def mdwiki_sql_one_table(
     return in_sql_list
 
 
-def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", IGNORE=False):
+def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", ignore=False) -> None:
     # ---
     logger.info(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
+    # ---
+    if not list_of_lines:
+        return
     # ---
     done = 0
     # ---
@@ -67,7 +70,7 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
             values ({values_line})
             """
         # ---
-        if IGNORE:
+        if ignore:
             qua = f"""
                 INSERT IGNORE INTO {table_name} ({co_line})
                 values ({values_line})
@@ -86,6 +89,9 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
 def update_table(list_of_lines, table_name, columns, lento=10, title_column="title", update_columns=None):
     # ---
     logger.info(f"update_table({table_name}): list_of_lines: {len(list_of_lines)}")
+    # ---
+    if not list_of_lines:
+        return
     # ---
     done = 0
     # ---
@@ -142,7 +148,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
         logger.info(f"to_sql.py update_table_2({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def to_sql(data, table_name, columns, title_column="title", update_columns=None, IGNORE=False):
+def to_sql(data, table_name, columns, title_column="title", update_columns=None, ignore=False):
     # ---
     que = f"""select DISTINCT * from {table_name};"""
     # ---
@@ -183,11 +189,11 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
     if "nodump" in sys.argv:
         logger.info('"nodump" in sys.argv - no dump')
     else:
-        insert_dict(new_data_insert, table_name, columns, title_column=title_column, IGNORE=IGNORE)
+        insert_dict(new_data_insert, table_name, columns, title_column=title_column, ignore=ignore)
         update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
 
 
-def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["title"], update_columns=None, IGNORE=False):
+def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["title"], update_columns=None, ignore=False):
     # ---
     if not data:
         return
@@ -232,7 +238,7 @@ def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["titl
     if "nodump" in sys.argv:
         logger.info('"nodump" in sys.argv - no dump')
     else:
-        insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], IGNORE=IGNORE)
+        insert_dict(new_data_insert, table_name, columns, title_column=title_columns[0], ignore=ignore)
         # ---
         update_table_2(
             new_data_update, table_name, columns_to_set=update_columns, lento=100, columns_where=title_columns

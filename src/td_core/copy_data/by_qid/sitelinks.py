@@ -98,7 +98,7 @@ def start_to_sql(data):
     logger.info(f"<<yellow>> new_data_all: {len(new_data_all)}.")
     # ---
     if new_data_all:
-        # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", IGNORE=True)
+        # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", ignore=True)
         new_to_sql(
             new_data_all,
             "all_qids_exists",
@@ -106,7 +106,7 @@ def start_to_sql(data):
             in_sql_list=db_data_main,
             title_columns=["qid", "code"],
             update_columns=["target"],
-            IGNORE=True,
+            ignore=True,
         )
 
 

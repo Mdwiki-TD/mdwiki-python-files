@@ -67,7 +67,7 @@ def update_in_sql(lang, table):
     update_table_2(new_data, "views_new", columns_to_set=["views"], columns_where=["target", "lang", "year"])
     # ---
     insert_dict(
-        to_insert, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", IGNORE=True
+        to_insert, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", ignore=True
     )
 
 
@@ -84,7 +84,7 @@ def insert_to_sql(lang, table):
         data_list = [{"target": target, "lang": lang, "year": x, "views": views} for x, views in years.items()]
         # ---
         insert_dict(
-            data_list, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", IGNORE=True
+            data_list, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", ignore=True
         )
 
 
