@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py WHOem/lists/lang_links new
+python3 c9/pwb.py md_core_helps/one_time/WHOem/bot.py new
 #---
 """
 

@@ -1,6 +1,6 @@
 """
 # ---
-from priorviews.lists import views
+from md_core_helps.one_time.priorviews.lists import views
 # ---
 # views.views_by_mdtitle_langs
 # views.count_views_by_mdtitle
@@ -17,7 +17,7 @@ import logging
 import os
 from pathlib import Path
 
-from priorviews.bots import helps
+from md_core_helps.one_time.priorviews.bots import helps
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
 """
 # ---
-from priorviews.lists import words
+from md_core_helps.one_time.priorviews.lists import words
 # words.words_by_lang
 # words.count_words_by_lang
 # ---

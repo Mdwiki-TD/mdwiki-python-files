@@ -7,7 +7,7 @@ import logging
 import sys
 from pathlib import Path
 
-from priorviews.lists import translators
+from md_core_helps.one_time.priorviews.lists import translators
 
 logger = logging.getLogger(__name__)
 

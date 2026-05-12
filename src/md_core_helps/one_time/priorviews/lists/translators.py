@@ -1,6 +1,6 @@
 """
 # ---
-from priorviews.lists import translators
+from md_core_helps.one_time.priorviews.lists import translators
 # translators.tra_by_lang
 # translators.counts_by_translator
 # translators.counts_by_lang
@@ -14,7 +14,7 @@ import logging
 import os
 from pathlib import Path
 
-from priorviews.bots import helps
+from md_core_helps.one_time.priorviews.bots import helps
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
 """
 
-from priorviews.bots import sections_text #make_text(section, links)
+from md_core_helps.one_time.priorviews.bots import sections_text #make_text(section, links)
 
 python3 core8/pwb.py priorviews/sections_text
 
@@ -10,8 +10,8 @@ import logging
 import sys
 from pathlib import Path
 
-from priorviews.bots import helps  # views_url(title, lang, view)
-from priorviews.lists import views
+from md_core_helps.one_time.priorviews.bots import helps  # views_url(title, lang, view)
+from md_core_helps.one_time.priorviews.lists import views
 
 logger = logging.getLogger(__name__)
 

@@ -15,8 +15,8 @@ from datetime import timedelta
 from pathlib import Path
 
 from md_core_helps.apis.mw_views import PageviewsClient
-from priorviews.bots import helps
-from priorviews.lists.links_by_section import sects_links_langlinks
+from md_core_helps.one_time.priorviews.bots import helps
+from md_core_helps.one_time.priorviews.lists.links_by_section import sects_links_langlinks
 
 logger = logging.getLogger(__name__)
 

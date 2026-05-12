@@ -11,9 +11,9 @@ import logging
 import sys
 from pathlib import Path
 
-from priorviews.bots import helps
-from priorviews.find.find_blame import new_data
-from priorviews.lists.translators import tra_by_lang
+from md_core_helps.one_time.priorviews.bots import helps
+from md_core_helps.one_time.priorviews.find.find_blame import new_data
+from md_core_helps.one_time.priorviews.lists.translators import tra_by_lang
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
 """
 # ---
-from prior.json_langs.lists import json_langs_by_langs
+from md_core_helps.one_time.prior.json_langs.lists import json_langs_by_langs
 # tab = json_langs_by_langs.get(lang, {}).get(title, {})# {'extlinks': extlinks, 'refsname': refsname}
 # ---
 """

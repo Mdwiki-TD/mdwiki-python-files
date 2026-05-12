@@ -2,7 +2,7 @@
 
 python3 core8/pwb.py priorviews/lists/creators_to_translators
 # ---
-from priorviews.lists.creators_to_translators import creators_as_translators
+from md_core_helps.one_time.priorviews.lists.creators_to_translators import creators_as_translators
 # ---
 """
 
@@ -14,10 +14,10 @@ import logging
 import os
 from pathlib import Path
 
-from priorviews.bots import helps
-from priorviews.lists import creators  # creators.Creators_by_lang_title
-from priorviews.lists import translators
-from priorviews.lists.links_by_section import links_by_lang
+from md_core_helps.one_time.priorviews.bots import helps
+from md_core_helps.one_time.priorviews.lists import creators  # creators.Creators_by_lang_title
+from md_core_helps.one_time.priorviews.lists import translators
+from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_lang
 
 logger = logging.getLogger(__name__)
 

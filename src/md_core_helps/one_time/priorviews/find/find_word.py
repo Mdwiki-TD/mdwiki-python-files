@@ -13,8 +13,8 @@ import os
 import sys
 from pathlib import Path
 
-from priorviews.bots import count_words, helps
-from priorviews.lists.links_by_section import links_by_lang
+from md_core_helps.one_time.priorviews.bots import count_words, helps
+from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_lang
 
 logger = logging.getLogger(__name__)
 

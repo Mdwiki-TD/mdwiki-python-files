@@ -31,7 +31,7 @@ import os
 import sys
 from pathlib import Path
 
-from prior import get_them
+from md_core_helps.one_time.prior import get_them
 
 logger = logging.getLogger(__name__)
 

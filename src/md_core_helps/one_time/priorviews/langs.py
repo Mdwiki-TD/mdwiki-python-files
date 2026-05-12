@@ -13,10 +13,10 @@ import sys
 from pathlib import Path
 
 from mdwiki_api.mdwiki_page import md_MainPage
-from priorviews.bots import helps, w_all
-from priorviews.lists import creators, translators, views, words
-from priorviews.lists.creators_to_translators import creators_as_translators
-from priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
+from md_core_helps.one_time.priorviews.bots import helps, w_all
+from md_core_helps.one_time.priorviews.lists import creators, translators, views, words
+from md_core_helps.one_time.priorviews.lists.creators_to_translators import creators_as_translators
+from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_lang, sects_links_langlinks
 
 logger = logging.getLogger(__name__)
 

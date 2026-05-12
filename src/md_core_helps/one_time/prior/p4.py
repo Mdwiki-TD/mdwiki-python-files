@@ -19,7 +19,7 @@ from pathlib import Path
 
 from mdwiki_api.mdwiki_page import md_MainPage
 from mdwiki_api.wiki_page import MainPage, change_codes
-from prior import get_them
+from md_core_helps.one_time.prior import get_them
 
 logger = logging.getLogger(__name__)
 

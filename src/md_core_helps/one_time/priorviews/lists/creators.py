@@ -1,6 +1,6 @@
 """
 # ---
-from priorviews.lists import creators
+from md_core_helps.one_time.priorviews.lists import creators
 # creators.Creators_by_lang_title
 # creators.counts_creators_by_lang
 # ---
@@ -15,7 +15,7 @@ import re
 import sys
 from pathlib import Path
 
-from priorviews.bots import helps
+from md_core_helps.one_time.priorviews.bots import helps
 
 logger = logging.getLogger(__name__)
 

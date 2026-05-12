@@ -9,14 +9,14 @@ import sys
 from urllib.parse import urlencode
 
 import requests
-from priorviews.bots import helps
+from md_core_helps.one_time.priorviews.bots import helps
 
 logger = logging.getLogger(__name__)
 
 # ---
 """
 # ---
-from priorviews.bots import get_translator
+from md_core_helps.one_time.priorviews.bots import get_translator
 # tt = get_translator.get_au(title, lang)
 # ---
 """

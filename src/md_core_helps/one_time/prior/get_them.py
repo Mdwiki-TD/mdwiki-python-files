@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 # ---
 """
 # ---
-from prior import get_them
+from md_core_helps.one_time.prior import get_them
 tt = get_them.work_in_one_lang_link()
 # ---
 """

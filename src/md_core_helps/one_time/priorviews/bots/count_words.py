@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 # ---
 """
 # ---
-from priorviews.bots import count_words
+from md_core_helps.one_time.priorviews.bots import count_words
 tt = count_words.get_words(title, lang)
 # ---
 """

@@ -12,12 +12,12 @@ import os
 import sys
 from pathlib import Path
 
-from prior.json_langs.lists import json_langs_by_langs
-from priorviews.bots import gt_blame, helps
-from priorviews.lists import creators
-from priorviews.lists.links_by_section import links_by_lang
-from priorviews.lists.translators import tra_by_lang
-from wikiblame.bot import (  # first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
+from md_core_helps.one_time.prior.json_langs.lists import json_langs_by_langs
+from md_core_helps.one_time.priorviews.bots import gt_blame, helps
+from md_core_helps.one_time.priorviews.lists import creators
+from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_lang
+from md_core_helps.one_time.priorviews.lists.translators import tra_by_lang
+from md_core_helps.one_time.wikiblame.bot import (  # first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
     get_blame,
 )
 

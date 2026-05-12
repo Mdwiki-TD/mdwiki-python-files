@@ -8,7 +8,7 @@ python3 core8/pwb.py priorviews/langs -lang:ar ask
 from pathlib import Path
 
 from mdwiki_api.mdwiki_page import md_MainPage
-from priorviews.bots import helps
+from md_core_helps.one_time.priorviews.bots import helps
 
 # ---
 Dir = Path(__file__).parent

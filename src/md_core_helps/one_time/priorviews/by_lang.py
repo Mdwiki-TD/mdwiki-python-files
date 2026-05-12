@@ -9,8 +9,8 @@ from pathlib import Path
 from mdwiki_api.mdwiki_page import md_MainPage
 
 # ---
-from priorviews.lists import translators, views, words
-from priorviews.lists.creators_to_translators import creators_as_translators
+from md_core_helps.one_time.priorviews.lists import translators, views, words
+from md_core_helps.one_time.priorviews.lists.creators_to_translators import creators_as_translators
 
 # ---
 Dir = Path(__file__).parent

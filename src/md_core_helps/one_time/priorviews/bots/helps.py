@@ -1,6 +1,6 @@
 """
 # ---
-from priorviews.bots import helps
+from md_core_helps.one_time.priorviews.bots import helps
 # v_comm = helps.isv(comment)
 # _views = helps.views_url(title, lang, view)
 # helps.is_ip(user)

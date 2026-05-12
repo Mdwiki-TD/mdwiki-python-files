@@ -1,7 +1,7 @@
 """
 
 
-from priorviews.lists.links_by_section import sects_links_langlinks
+from md_core_helps.one_time.priorviews.lists.links_by_section import sects_links_langlinks
 
 python3 core8/pwb.py priorviews/lists/links_by_section
 
@@ -16,7 +16,7 @@ import os
 import sys
 from pathlib import Path
 
-from priorviews.bots.sections_links import get_section_links
+from md_core_helps.one_time.priorviews.bots.sections_links import get_section_links
 
 logger = logging.getLogger(__name__)
 
