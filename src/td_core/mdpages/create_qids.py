@@ -1,0 +1,42 @@
+#!/usr/bin/python3
+"""
+Usage:
+
+python3 core8/pwb.py td_core/mdpages/create_qids
+
+from td_core.mdpages.create_qids import create_qids
+
+"""
+import logging
+
+from md_core.unlinked_wb.bot import add_un_linked_wb
+from md_core_helps.apis import wikidataapi
+from md_core_helps.mdapi_sql import sql_qids
+
+logger = logging.getLogger(__name__)
+
+
+def create_qids(no_qids):
+    """
+    create wikidata item for qids
+    creates new Wikidata items for those without QIDs. It uses a for loop to iterate over the list of items without QIDs and makes a POST request to the Wikidata API for each item. The function also prints the response from the API, which can be useful for debugging.
+    """
+    # ---
+    for x in no_qids:
+        # ---
+        new_qid = wikidataapi.new_item(label="", lang="", returnid=True)
+        # ---
+        if not new_qid or not str(new_qid).startswith("Q"):
+            logger.info(f"Skip.. {new_qid=}")
+            continue
+        # ---
+        new_qid = new_qid.strip()
+        # ---
+        if new_qid:
+            # wikidataapi.Claim_API_str(new_qid, "P11143", x)
+            # ---
+            # add new qid to article
+            add_un_linked_wb(x, new_qid)
+            # ---
+            # add new qid to db
+            sql_qids.add_titles_to_qids({x: new_qid})

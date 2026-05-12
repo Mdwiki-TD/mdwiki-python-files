@@ -1,0 +1,160 @@
+"""
+Usage:
+from md_core.p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_tab
+
+"""
+
+import copy
+import json
+import logging
+import sys
+import time
+from urllib.error import HTTPError, URLError
+
+from md_core_helps.apis import wikidataapi
+from SPARQLWrapper import JSON, SPARQLWrapper
+
+logger = logging.getLogger(__name__)
+
+sys.argv.append("workhimo")
+# wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
+
+
+def get_query_data(query):
+    """Retrieve query data from the Wikidata SPARQL endpoint.
+
+    This function sends a SPARQL query to the Wikidata endpoint and
+    retrieves the results in JSON format. It constructs a user agent string
+    based on the Python version and uses the SPARQLWrapper library to handle
+    the query execution. If an error occurs during the query process, it
+    logs the exception for debugging purposes.
+
+    Args:
+        query (str): A SPARQL query string to be executed against the
+            Wikidata database.
+
+    Returns:
+        dict: The data retrieved from the SPARQL query, formatted as a
+            dictionary.
+    """
+    # TODO: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_graph_split/Rules#Scholarly_Articles
+
+    # endpoint_url = "https://query-main.wikidata.org/sparql"
+    endpoint_url = "https://query.wikidata.org/sparql"
+    # ---
+    user_agent = f"WDQS-example Python/{sys.version_info[0]}.{sys.version_info[1]}"
+    # ---
+    sparql = SPARQLWrapper(endpoint_url, agent=user_agent)
+    # ---
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    sparql.setTimeout(30)
+    # ---
+    data = {}
+    # ---
+    try:
+        data = sparql.query().convert()
+    except (HTTPError, URLError, TimeoutError, ValueError, json.JSONDecodeError):
+        logger.exception("wd_helps.get_query_data failed")
+    # ---
+    return data
+
+
+def get_query_result(query):
+    # ---
+    data = get_query_data(query)
+    # ---
+    lista = list(data.get("results", {}).get("bindings", []))
+    # ---
+    return lista
+
+
+def make_in_wd_tab(limit=None):
+    # ---
+    query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
+    # ---
+    if limit:
+        query += f" limit {limit}"
+    # ---
+    wdlist = get_query_result(query)
+    # ---
+    in_wd = {}
+    # ---
+    for wd in wdlist:
+        # ---
+        prop = wd.get("prop", {}).get("value", "")
+        # ---
+        qid = wd.get("item", {}).get("value", "")
+        if qid:
+            qid = qid.split("/entity/")[1]
+        # ---
+        in_wd[qid] = prop
+    # ---
+    return in_wd
+
+
+def add_P11143_to_qids_in_wd(newlist):
+    # ---
+    logger.info(f"len of newlist: {len(newlist)}")
+    # ---
+    if len(newlist) > 0:
+        # ---
+        logger.info(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
+        if len(newlist.items()) < 100:
+            logger.info("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
+        # ---
+        if "add" not in sys.argv:
+            logger.info('<<puruple>> add "add" to sys.argv to add them?')
+            return
+        # ---
+        for n, (q, _) in enumerate(newlist.items(), start=1):
+            logger.info(f"<<yellow>> q {n} from {len(newlist)}")
+            if q:
+                q = q.strip()
+                # wikidataapi.Claim_API_str(q, "P11143", value)
+                if n % 30 == 0:
+                    logger.info(f"<<yellow>> n: {n}")
+                    time.sleep(5)
+
+
+def fix_in_wd(merge_qids, qids):
+    # mdwiki != P11143
+    # تصحيح قيم الخاصية التي لا تساوي اسم المقالة
+    # ---
+    for q, wd_value in copy.deepcopy(merge_qids).items():
+        md_title = qids.get(q)
+        if md_title == wd_value:
+            continue
+        # ---
+        logger.info(f"wd_value:{wd_value} != md_title:{md_title}, qid:{q}")
+        # ---
+        merge_qids[q] = md_title
+        # ---
+        # delete the old
+        ae = wikidataapi.Get_claim(q, "P11143", get_claim_id=True)
+        if ae:
+            for x in ae:
+                value = x["value"]
+                claimid = x["id"]
+                if value == wd_value:
+                    uxx = wikidataapi.Delete_claim(claimid)
+                    if uxx:
+                        logger.info(f"True.. Deleted {claimid}")
+                    else:
+                        logger.info(f"Failed to delete {claimid}")
+        # ---
+
+        # add the correct claim
+        ase = False
+        # ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
+        if ase:
+            logger.info(f"True.. Added P11143:{md_title}")
+        else:
+            logger.info(f"Failed to add P11143:{md_title}")
+
+
+if __name__ == "__main__":
+    # python3 core8/pwb.py md_core/p11143_bot/wd_helps
+
+    op = make_in_wd_tab(limit=10)
+    logger.info("<<blue>>\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))
