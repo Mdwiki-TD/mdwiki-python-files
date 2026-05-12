@@ -3,7 +3,7 @@
 
 إنشاء قائمة بمشاهدات المقالات من الانجليزية
 
-وحفظها في Dashboard_path
+وحفظها في TABLES_PATH
 +
 قاعدة البيانات
 
@@ -15,7 +15,6 @@ python3 core8/pwb.py md_core/mdpyget/enwiki_views newpages nowork
 """
 import json
 import logging
-import os
 import re
 import sys
 
@@ -24,16 +23,13 @@ from md_core_helps.apis.mw_views import PageviewsClient
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdpyget.bots.to_sql import to_sql
 from td_core.mdpyget.pages_list import get_links_from_cats
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
+TABLES_PATH = paths.tables_path
 
 view_bot = PageviewsClient()
 
-if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/td"
-else:
-    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
-# ---
 data_tab = {1: {}}
 
 
@@ -124,7 +120,7 @@ def main():
     # ---
     cat_get = "RTTVideo" if "video" in sys.argv else ""
     # ---
-    json_file = f"{Dashboard_path}/Tables/jsons/enwiki_pageviews.json"
+    json_file = f"{TABLES_PATH}/jsons/enwiki_pageviews.json"
     # ---
     old_values = get_old_values(json_file)
     vaild_links = list(old_values.keys())

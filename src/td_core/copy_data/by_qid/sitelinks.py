@@ -10,27 +10,21 @@ tfj run sitelinks --image python3.9 --command "$HOME/local/bin/python3 core8/pwb
 
 import json
 import logging
-import os
 import sys
 from collections import defaultdict
 
 import tqdm
 from md_core_helps.apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids
-
-# from td_core.mdpyget.bots.to_sql import insert_dict, to_sql
 from td_core.mdpyget.bots.to_sql import new_to_sql
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
+TABLES_PATH = paths.tables_path
 # ---
-if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/td"
-else:
-    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
-# ---
-# json_file = f"{Dashboard_path}/Tables/jsons/sitelinks1.json"
-json_file = f"{Dashboard_path}/Tables/jsons/sitelinks.json"
+# json_file = f"{TABLES_PATH}/jsons/sitelinks1.json"
+json_file = f"{TABLES_PATH}/jsons/sitelinks.json"
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---

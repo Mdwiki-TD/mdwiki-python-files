@@ -10,21 +10,18 @@ from td_core.mdpages import qids_help
 import copy
 import json
 import logging
-import os
 import re
 import sys
 
 from md_core.mdpy.bots.check_title import valid_title
 from md_core_helps.apis import cat_cach, mdwiki_api_call, wiki_api
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
+TABLES_PATH = paths.tables_path
 
-if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/td"
-else:
-    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
 # ---
-dir2 = Dashboard_path + "/Tables/jsons"
+dir2 = TABLES_PATH + "/jsons"
 
 logger.info("Get_All_pages:")
 # ---
