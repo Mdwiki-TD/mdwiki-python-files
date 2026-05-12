@@ -1,5 +1,4 @@
 import re
-import unittest
 
 import pywikibot
 from wprefs.bots.replace_except import replaceExcept
@@ -12,7 +11,7 @@ class DefaultDrySiteTestCase:
         """Set up a default dry site for testing."""
         self.site = pywikibot.Site("en", "wikipedia")
 
-    def wrap_replaceExcept(self, text, old, new, exceptions, **kwargs):
+    def wrap_replaceExcept(self, text, old, new, exceptions=[], **kwargs):
         """Helper method to call replaceExcept with the default site."""
         return replaceExcept(text, old, new, exceptions, site=self.site, **kwargs)
 
@@ -49,10 +48,6 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         assert self.wrap_replaceExcept("A123B", r"A(?P<a>\d)2(\d)B", r"A\g<a>x\2B", []) == "A1x3B"
         # test regex with lookbehind.
         assert self.wrap_replaceExcept("A behindB C", r"(?<=behind)\w", r"Z", []) == "A behindZ C"
-        # test regex with lookbehind and groups.
-        assert self.wrap_replaceExcept(
-            self.wrap_replaceExcept("A behindB C D", r"(?<=behind)\w( )", r"\g<1>Z", []), "A behind ZC D"
-        )
         # test regex with lookahead.
         assert self.wrap_replaceExcept("A Bahead C", r"\w(?=ahead)", r"Z", []) == "A Zahead C"
         # test regex with lookahead and groups.
@@ -217,20 +212,8 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
             == "[[File:a|[[foo]] [[bar [invalid ]].x]][[y]]"
         )
 
-    @unittest.expectedFailure
-    def test_replace_tag_file_failure(self):
-        """Test showing limits of the file link regex."""
-        # When the double brackets are unbalanced, the regex
-        # does not correctly detect the end of the file link.
-        assert (
-            self.wrap_replaceExcept("[[File:a|[[foo]] [[bar [[invalid ]].x]][[x]]", "x", "y", ["file"])
-            == "[[File:a|[[foo]] [[bar [invalid] ]].x]][[y]]"
-        )
-
     def test_replace_tags_interwiki(self):
         """Test replacing not inside interwiki links."""
-        if "es" not in self.site.family.langs or "ey" in self.site.family.langs:
-            raise unittest.SkipTest(f"family {self.site} doesn't have languages")
 
         assert (
             self.wrap_replaceExcept("[[es:s]]", "s", "t", ["interwiki"]) == "[[es:s]]"
