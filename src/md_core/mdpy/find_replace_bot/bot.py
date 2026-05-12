@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py mdpy/find_replace_bot/bot
+python3 core8/pwb.py md_core/mdpy/find_replace_bot/bot
 
 """
 import logging

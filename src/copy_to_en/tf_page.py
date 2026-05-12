@@ -32,7 +32,7 @@ def get_cx():
 def get_md():
     # ---
     username: str = os.getenv("MDWIKI_USERNAME")
-    password: str = os.getenv("MDWIKI_PASSWORD")
+    password: str = os.getenv("MDWIKI_HIMO_PASSWORD")
     # ---
     api = AllAPIS(
         lang="medwiki",
