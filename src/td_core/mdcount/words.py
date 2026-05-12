@@ -28,7 +28,6 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdcount.bots import lead
 from td_core.mdcount.bots.links import get_links_from_cats
 from td_core.mdcount.ref_words_bot import do_to_sql, get_jsons_new, logaa, make_old_values
-
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
@@ -36,8 +35,8 @@ TABLES_PATH = paths.tables_path
 
 tab_data = {"all": {}, "lead": {}}
 # ---
-file_all = f"{TABLES_PATH}/jsons/allwords.json"
-file_lead = f"{TABLES_PATH}/jsons/words.json"
+file_all = TABLES_PATH / "jsons/allwords.json"
+file_lead = TABLES_PATH / "jsons/words.json"
 
 
 def start_to_sql():

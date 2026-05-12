@@ -8,11 +8,11 @@ import logging
 import sys
 from pathlib import Path
 
-from mdwiki_api.mdwiki_page import md_MainPage
 from md_core_helps.one_time.priorviews import by_lang
 from md_core_helps.one_time.priorviews.bots import sections_text
 from md_core_helps.one_time.priorviews.lists import views
 from md_core_helps.one_time.priorviews.lists.links_by_section import sects_links_langlinks
+from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
 

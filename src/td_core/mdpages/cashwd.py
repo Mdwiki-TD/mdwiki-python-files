@@ -11,12 +11,12 @@ import json
 import logging
 import os
 from datetime import datetime
+
 from md_core.mdpy.bots import en_to_md
 from md_core.mdpy.bots.check_title import valid_title
 from md_core_helps.apis import wikidataapi
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
-
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
@@ -185,7 +185,7 @@ def dump_all(main_table_sites, len_titles):
         leeen = len_titles - len(miss_list)
         missing_langs[site] = {"missing": leeen, "exists": len(miss_list)}
         # ---
-        json_file = f"{TABLES_PATH}/jsons/cash_exists/{site}.json"
+        json_file = TABLES_PATH / f"jsons/cash_exists/{site}.json"
         # ---
         if not os.path.exists(json_file):
             logger.info(f'.... <<red>> file:"{site}.json not exists ....')
@@ -232,7 +232,7 @@ def cash_wd():
     lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
     if lists:
-        with open(f"{TABLES_PATH}/jsons/sitelinks.json", "w", encoding="utf-8") as aa:
+        with open(TABLES_PATH / "jsons/sitelinks.json", "w", encoding="utf-8") as aa:
             json.dump(lists, aa)
     # ---
     missing_langs = dump_all(main_table_sites, len(titles))
@@ -241,7 +241,7 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    with open(f"{TABLES_PATH}/jsons/noqids.json", "w", encoding="utf-8") as dd:
+    with open(TABLES_PATH / "jsons/noqids.json", "w", encoding="utf-8") as dd:
         json.dump(noqids, dd)
     # ---
     # redirects_qids
@@ -257,7 +257,7 @@ def cash_wd():
     logger.info(f" len of missing qids: {len(mis_qids)}")
     # ---
     if missing["all"] > 0:
-        with open(f"{TABLES_PATH}/jsons/missing.json", "w", encoding="utf-8") as xx:
+        with open(TABLES_PATH / "jsons/missing.json", "w", encoding="utf-8") as xx:
             json.dump(missing, xx)
         # ---
         logger.info(" log to missing.json true.... ")

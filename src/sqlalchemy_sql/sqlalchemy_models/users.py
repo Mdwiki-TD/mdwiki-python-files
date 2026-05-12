@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+
 from sqlalchemy import Column, DateTime, Integer, String, func, text
 
 from ..shared.engine import BaseDb
@@ -39,6 +40,7 @@ class UserRecord(BaseDb):
         if "user_group" not in kwargs:
             kwargs["user_group"] = "Uncategorized"
         super().__init__(**kwargs)
+
 
 __all__ = [
     "UserRecord",

@@ -8,7 +8,6 @@ import logging
 import os
 from dataclasses import dataclass
 
-
 logger = logging.getLogger(__name__)
 
 TABLES_PATH = os.getenv("TABLES_PATH")  # /data/project/mdwiki/public_html/td/Tables
