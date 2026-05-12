@@ -50,7 +50,7 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         # test regex with lookbehind.
         assert self.wrap_replaceExcept("A behindB C", r"(?<=behind)\w", r"Z", []) == "A behindZ C"
         # test regex with lookbehind and groups.
-        assert self.wrap_replaceExcept(replaceExcept("A behindB C D", r"(?<=behind)\w( )", r"\g<1>Z", []), "A behind ZC D")
+        assert self.wrap_replaceExcept(self.wrap_replaceExcept("A behindB C D", r"(?<=behind)\w( )", r"\g<1>Z", []), "A behind ZC D")
         # test regex with lookahead.
         assert self.wrap_replaceExcept("A Bahead C", r"\w(?=ahead)", r"Z", []) == "A Zahead C"
         # test regex with lookahead and groups.
@@ -74,43 +74,43 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         """Test replacing with and without overlap."""
         assert self.wrap_replaceExcept("1111", "11", "21", [], allowoverlap=False) == "2121"
         assert self.wrap_replaceExcept("1111", "11", "21", [], allowoverlap=True) == "2221"
-        assert replaceExcept("1\n= 1 =\n", "1", " \n= 1 =\n", ["header"], allowoverlap=True) == " \n= 1 =\n\n= 1 =\n"
+        assert self.wrap_replaceExcept("1\n= 1 =\n", "1", " \n= 1 =\n", ["header"], allowoverlap=True) == " \n= 1 =\n\n= 1 =\n"
 
     def test_replace_exception(self):
         """Test replacing not inside a specific regex."""
         assert self.wrap_replaceExcept("123x123", "123", "000", []) == "000x000"
         assert self.wrap_replaceExcept("123x123", "123", "000", [re.compile(r"\w123")]) == "000x123"
-        assert replaceExcept("1\n= 1 =\n", "1", "verylongreplacement", ["header"]) == "verylongreplacement\n= 1 =\n"
+        assert self.wrap_replaceExcept("1\n= 1 =\n", "1", "verylongreplacement", ["header"]) == "verylongreplacement\n= 1 =\n"
 
     def test_replace_tags(self):
         """Test replacing not inside various tags."""
         assert self.wrap_replaceExcept("A <!-- x --> B", "x", "y", ["comment"]) == "A <!-- x --> B"
         assert self.wrap_replaceExcept("\n==x==\n", "x", "y", ["header"]) == "\n==x==\n"
-        assert replaceExcept("\n<!--\ncomment-->==x==<!--comment\n-->\n", "x", "y", ["header"]) == "\n<!--\ncomment-->==x==<!--comment\n-->\n"
+        assert self.wrap_replaceExcept("\n<!--\ncomment-->==x==<!--comment\n-->\n", "x", "y", ["header"]) == "\n<!--\ncomment-->==x==<!--comment\n-->\n"
         assert self.wrap_replaceExcept("<pre>x</pre>", "x", "y", ["pre"]) == "<pre>x</pre>"
 
         # T191559
-        assert replaceExcept("<nowiki   >x</nowiki    >x", "x", "y", ["nowiki"]) == "<nowiki   >x</nowiki    >y"
-        self.assertEqual(replaceExcept('<source lang="xml">x</source>', "x", "y", ["source"]), '<source lang="xml">x</source>', )
+        assert self.wrap_replaceExcept("<nowiki   >x</nowiki    >x", "x", "y", ["nowiki"]) == "<nowiki   >x</nowiki    >y"
+        self.assertEqual(self.wrap_replaceExcept('<source lang="xml">x</source>', "x", "y", ["source"]), '<source lang="xml">x</source>', )
         self.assertEqual(
-            replaceExcept("<syntaxhighlight>x</syntaxhighlight>", "x", "y", ["source"]),
+            self.wrap_replaceExcept("<syntaxhighlight>x</syntaxhighlight>", "x", "y", ["source"]),
             "<syntaxhighlight>x</syntaxhighlight>",
         )
-        self.assertEqual(replaceExcept('<syntaxhighlight lang="xml">x</syntaxhighlight>', "x", "y", ["source"]), '<syntaxhighlight lang="xml">x</syntaxhighlight>', )
-        self.assertEqual(replaceExcept("<source>x</source>", "x", "y", ["syntaxhighlight"]), "<source>x</source>")
-        assert replaceExcept("<includeonly>x</includeonly>", "x", "y", ["includeonly"]) == "<includeonly>x</includeonly>"
+        self.assertEqual(self.wrap_replaceExcept('<syntaxhighlight lang="xml">x</syntaxhighlight>', "x", "y", ["source"]), '<syntaxhighlight lang="xml">x</syntaxhighlight>', )
+        self.assertEqual(self.wrap_replaceExcept("<source>x</source>", "x", "y", ["syntaxhighlight"]), "<source>x</source>")
+        assert self.wrap_replaceExcept("<includeonly>x</includeonly>", "x", "y", ["includeonly"]) == "<includeonly>x</includeonly>"
         assert self.wrap_replaceExcept("<ref>x</ref>", "x", "y", ["ref"]) == "<ref>x</ref>"
-        self.assertEqual(replaceExcept('<ref name="x">A</ref>', "x", "y", ["ref"]), '<ref name="x">A</ref>')
+        self.assertEqual(self.wrap_replaceExcept('<ref name="x">A</ref>', "x", "y", ["ref"]), '<ref name="x">A</ref>')
         assert self.wrap_replaceExcept(" xA ", "x", "y", ["startspace"]) == " xA "
         assert self.wrap_replaceExcept(":xA ", "x", "y", ["startcolon"]) == ":xA "
         assert self.wrap_replaceExcept("<table>x</table>", "x", "y", ["table"]) == "<table>x</table>"
-        assert replaceExcept("x [http://www.sample.com x]", "x", "y", ["hyperlink"]) == "y [http://www.sample.com y]"
-        assert replaceExcept("x http://www.sample.com/x.html", "x", "y", ["hyperlink"]) == "y http://www.sample.com/x.html"
-        self.assertEqual(replaceExcept("<gallery>x</gallery>", "x", "y", ["gallery"]), "<gallery>x</gallery>")
+        assert self.wrap_replaceExcept("x [http://www.sample.com x]", "x", "y", ["hyperlink"]) == "y [http://www.sample.com y]"
+        assert self.wrap_replaceExcept("x http://www.sample.com/x.html", "x", "y", ["hyperlink"]) == "y http://www.sample.com/x.html"
+        self.assertEqual(self.wrap_replaceExcept("<gallery>x</gallery>", "x", "y", ["gallery"]), "<gallery>x</gallery>")
         assert self.wrap_replaceExcept("[[x]]", "x", "y", ["link"]) == "[[x]]"
-        self.assertEqual(replaceExcept("{{#property:p171}}", "1", "2", ["property"]), "{{#property:p171}}")
+        self.assertEqual(self.wrap_replaceExcept("{{#property:p171}}", "1", "2", ["property"]), "{{#property:p171}}")
         assert self.wrap_replaceExcept("{{#invoke:x}}", "x", "y", ["invoke"]) == "{{#invoke:x}}"
-        assert replaceExcept("<ref name=etwa /> not_in_ref <ref> in_ref </ref>", "not_in_ref", "text", ["ref"]) == "<ref name=etwa /> text <ref> in_ref </ref>"
+        assert self.wrap_replaceExcept("<ref name=etwa /> not_in_ref <ref> in_ref </ref>", "not_in_ref", "text", ["ref"]) == "<ref name=etwa /> text <ref> in_ref </ref>"
         assert self.wrap_replaceExcept("<ab> content </a>", "content", "text", ["a"]) == "<ab> text </a>"
 
     def test_replace_with_count(self):
@@ -124,24 +124,24 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         """Test replacing not inside category links."""
         for ns_name in self.site.namespaces[14]:
             self.assertEqual(
-                replaceExcept(f"[[{ns_name}:x]]", "x", "y", ["category"]), f"[[{ns_name}:x]]"
+                self.wrap_replaceExcept(f"[[{ns_name}:x]]", "x", "y", ["category"]), f"[[{ns_name}:x]]"
             )
 
     def test_replace_tag_file(self):
         """Test replacing not inside file links."""
         for ns_name in self.site.namespaces[6]:
-            self.assertEqual(replaceExcept(f"[[{ns_name}:x]]", "x", "y", ["file"]), f"[[{ns_name}:x]]")
+            self.assertEqual(self.wrap_replaceExcept(f"[[{ns_name}:x]]", "x", "y", ["file"]), f"[[{ns_name}:x]]")
 
         assert self.wrap_replaceExcept("[[File:x|foo]]", "x", "y", ["file"]) == "[[File:x|foo]]"
 
         assert self.wrap_replaceExcept("[[File:x|]]", "x", "y", ["file"]) == "[[File:x|]]"
 
         self.assertEqual(
-            replaceExcept("[[File:x|foo|bar x]] x", "x", "y", ["file"]), "[[File:x|foo|bar x]] y"
+            self.wrap_replaceExcept("[[File:x|foo|bar x]] x", "x", "y", ["file"]), "[[File:x|foo|bar x]] y"
         )
 
         self.assertEqual(
-            replaceExcept("[[File:x|]][[File:x|foo]]", "x", "y", ["file"]), "[[File:x|]][[File:x|foo]]"
+            self.wrap_replaceExcept("[[File:x|]][[File:x|foo]]", "x", "y", ["file"]), "[[File:x|]][[File:x|foo]]"
         )
 
         assert self.wrap_replaceExcept("[[NonFile:x]]", "x", "y", ["file"]) == "[[NonFile:y]]"
@@ -149,32 +149,32 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         assert self.wrap_replaceExcept("[[File:]]", "File:", "NonFile:", ["file"]) == "[[File:]]"
 
         self.assertEqual(
-            replaceExcept("[[File:x|[[foo]].]]", "x", "y", ["file"]), "[[File:x|[[foo]].]]"
+            self.wrap_replaceExcept("[[File:x|[[foo]].]]", "x", "y", ["file"]), "[[File:x|[[foo]].]]"
         )
 
         # ensure only links inside file are captured
         self.assertEqual(
-            replaceExcept("[[File:a|[[foo]].x]][[x]]", "x", "y", ["file"]), "[[File:a|[[foo]].x]][[y]]"
+            self.wrap_replaceExcept("[[File:a|[[foo]].x]][[x]]", "x", "y", ["file"]), "[[File:a|[[foo]].x]][[y]]"
         )
 
         self.assertEqual(
-            replaceExcept("[[File:a|[[foo]][[bar]].x]][[x]]", "x", "y", ["file"]),
+            self.wrap_replaceExcept("[[File:a|[[foo]][[bar]].x]][[x]]", "x", "y", ["file"]),
             "[[File:a|[[foo]][[bar]].x]][[y]]",
         )
 
         self.assertEqual(
-            replaceExcept("[[File:a|[[foo]][[bar]].x]][[x]]", "x", "y", ["file"]),
+            self.wrap_replaceExcept("[[File:a|[[foo]][[bar]].x]][[x]]", "x", "y", ["file"]),
             "[[File:a|[[foo]][[bar]].x]][[y]]",
         )
 
         # Correctly handle single brackets in the text.
         self.assertEqual(
-            replaceExcept("[[File:a|[[foo]] [bar].x]][[x]]", "x", "y", ["file"]),
+            self.wrap_replaceExcept("[[File:a|[[foo]] [bar].x]][[x]]", "x", "y", ["file"]),
             "[[File:a|[[foo]] [bar].x]][[y]]",
         )
 
         self.assertEqual(
-            replaceExcept("[[File:a|[bar] [[foo]] .x]][[x]]", "x", "y", ["file"]),
+            self.wrap_replaceExcept("[[File:a|[bar] [[foo]] .x]][[x]]", "x", "y", ["file"]),
             "[[File:a|[bar] [[foo]] .x]][[y]]",
         )
 
@@ -183,12 +183,12 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         # Correctly handle [ and ] inside wikilinks inside file link
         # even though these are an invalid title.
         self.assertEqual(
-            replaceExcept("[[File:a|[[foo]] [[bar [invalid] ]].x]][[x]]", "x", "y", ["file"]),
+            self.wrap_replaceExcept("[[File:a|[[foo]] [[bar [invalid] ]].x]][[x]]", "x", "y", ["file"]),
             "[[File:a|[[foo]] [[bar [invalid] ]].x]][[y]]",
         )
 
         self.assertEqual(
-            replaceExcept("[[File:a|[[foo]] [[bar [invalid ]].x]][[x]]", "x", "y", ["file"]),
+            self.wrap_replaceExcept("[[File:a|[[foo]] [[bar [invalid ]].x]][[x]]", "x", "y", ["file"]),
             "[[File:a|[[foo]] [[bar [invalid ]].x]][[y]]",
         )
 
@@ -198,7 +198,7 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         # When the double brackets are unbalanced, the regex
         # does not correctly detect the end of the file link.
         self.assertEqual(
-            replaceExcept("[[File:a|[[foo]] [[bar [[invalid ]].x]][[x]]", "x", "y", ["file"]),
+            self.wrap_replaceExcept("[[File:a|[[foo]] [[bar [[invalid ]].x]][[x]]", "x", "y", ["file"]),
             "[[File:a|[[foo]] [[bar [invalid] ]].x]][[y]]",
         )
 
@@ -208,38 +208,30 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
             raise unittest.SkipTest(f"family {self.site} doesn't have languages")
 
         self.assertEqual(
-            replaceExcept("[[es:s]]", "s", "t", ["interwiki"]), "[[es:s]]"
+            self.wrap_replaceExcept("[[es:s]]", "s", "t", ["interwiki"]), "[[es:s]]"
         )  # "es" is a valid interwiki code
         self.assertEqual(
-            replaceExcept("[[ex:x]]", "x", "y", ["interwiki"]), "[[ey:y]]"
+            self.wrap_replaceExcept("[[ex:x]]", "x", "y", ["interwiki"]), "[[ey:y]]"
         )  # "ex" is not a valid interwiki code
 
     def test_replace_template(self):
         """Test replacing not inside templates."""
         template_sample = r"a {{templatename     | accessdate={{Fecha|1993}}     |atitle=The [[real title]] }}"
-        self.assertEqual(
-            replaceExcept(template_sample, "a", "X", ["template"]), "X" + template_sample[1:]
-        )
+        assert self.wrap_replaceExcept(template_sample, "a", "X", ["template"]) == "X" + template_sample[1:]
 
         template_sample = r"a {{templatename     | 1={{a}}2{{a}}     | 2={{a}}1{{a}} }}"
-        self.assertEqual(
-            replaceExcept(template_sample, "a", "X", ["template"]), "X" + template_sample[1:]
-        )
+        assert self.wrap_replaceExcept(template_sample, "a", "X", ["template"]) == "X" + template_sample[1:]
 
         template_sample = r"a {{templatename     | 1={{{a}}}2{{{a}}}     | 2={{{a}}}1{{{a}}} }}"
-        self.assertEqual(
-            replaceExcept(template_sample, "a", "X", ["template"]), "X" + template_sample[1:]
-        )
+        assert self.wrap_replaceExcept(template_sample, "a", "X", ["template"]) == "X" + template_sample[1:]
 
         # sf.net bug 1575: unclosed template
         template_sample = template_sample[:-2]
-        self.assertEqual(
-            replaceExcept(template_sample, "a", "X", ["template"]), "X" + template_sample[1:]
-        )
+        assert self.wrap_replaceExcept(template_sample, "a", "X", ["template"]) == "X" + template_sample[1:]
 
     def test_replace_source_reference(self):
         """Test replacing in text which contains back references."""
         # Don't use a valid reference number in the original string,
         # in case it tries to apply that as a reference.
-        assert replaceExcept(r"\42", r"^(.*)$", r"X\1X", []) == r"X\42X"
-        assert replaceExcept(r"\g<bar>", r"^(?P<foo>.*)$", r"X\g<foo>X", []) == r"X\g<bar>X"
+        assert self.wrap_replaceExcept(r"\42", r"^(.*)$", r"X\1X", []) == r"X\42X"
+        assert self.wrap_replaceExcept(r"\g<bar>", r"^(?P<foo>.*)$", r"X\g<foo>X", []) == r"X\g<bar>X"
