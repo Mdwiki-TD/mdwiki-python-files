@@ -6,33 +6,23 @@ python3 core8/pwb.py td_core/copy_data/copy_enwiki_pageviews
 """
 import json
 import logging
-import os
 from pathlib import Path
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from pymysql.converters import escape_string
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-
-# ---
-
-# ---
-
-# ---
+TABLES_PATH = paths.tables_path
 Dir = str(Path(__file__).parents[0])
-# ---
-if os.getenv("HOME"):
-    public_html_dir = os.getenv("HOME") + "/public_html"
-else:
-    public_html_dir = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
-# ---
-project_tables = Path(public_html_dir) / "td/Tables/jsons"
+
+project_tables = Path(TABLES_PATH) / "jsons"
 # ---
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(f"{project_tables}/enwiki_pageviews.json", "r", encoding="utf-8") as f:
+with open(project_tables / "enwiki_pageviews.json", "r", encoding="utf-8") as f:
     data_in_json = json.load(f)
 # ---
 data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}
@@ -82,7 +72,7 @@ n = 0
 lines = []
 # ---
 # sort NEW_DATA by keys
-NEW_DATA = {k: v for k, v in sorted(NEW_DATA.items(), key=lambda item: item[0])}
+NEW_DATA = dict(sorted(NEW_DATA.items(), key=lambda item: item[0]))
 # ---
 len_empty = len([x for x in NEW_DATA.values() if x == 0])
 # ---

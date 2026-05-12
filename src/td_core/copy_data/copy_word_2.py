@@ -6,37 +6,27 @@ python3 core8/pwb.py td_core/mdcount/bots/copy_word_2
 """
 import json
 import logging
-
-# ---
-import os
-import sys
 from pathlib import Path
-
-# ---
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from pymysql.converters import escape_string
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-# ---
+TABLES_PATH = paths.tables_path
 Dir = str(Path(__file__).parents[0])
-# ---
-if os.getenv("HOME"):
-    public_html_dir = os.getenv("HOME") + "/public_html"
-else:
-    public_html_dir = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
-# ---
-project_tables = Path(public_html_dir) / "td/Tables/jsons"
+
+project_tables = Path(TABLES_PATH) / "jsons"
 # ---
 que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
 # ---
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(f"{project_tables}/words.json", "r", encoding="utf-8") as f:
+with open(project_tables / "words.json", "r", encoding="utf-8") as f:
     lead_words = json.load(f)
 
-with open(f"{project_tables}/allwords.json", "r", encoding="utf-8") as f:
+with open(project_tables / "allwords.json", "r", encoding="utf-8") as f:
     all_words = json.load(f)
 # ---
 lead_words = {x.strip(): lead_words[x] for x in lead_words}
