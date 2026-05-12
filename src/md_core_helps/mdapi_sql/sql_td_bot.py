@@ -101,7 +101,6 @@ def toolforge_tools_sql_connect(
         values=values,
         db_args=db_args,
         many=many,
-        **kwargs,
     )
 
     return results
