@@ -11,7 +11,7 @@ from src.copy_to_en.bots import alltext_changes
 
 class TestAllTextChanges:
     def setup_method(self):
-        self.test_file = Path(__file__).parent / "sample_text.txt"
+        self.test_file = Path(__file__).parent / "sample_text.wiki"
         with open(self.test_file, "r", encoding="utf-8") as f:
             self.test_text = f.read()
 
