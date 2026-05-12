@@ -18,59 +18,60 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
 
     def test_no_replace(self):
         """Test replacing when the old text does not match."""
-        self.assertEqual(replaceExcept("12345678", "x", "y", [], site=self.site), "12345678")
+        assert replaceExcept("12345678", "x", "y", [], site=self.site) == "12345678"
 
     def test_simple_replace(self):
         """Test replacing without regex."""
-        self.assertEqual(replaceExcept("AxB", "x", "y", [], site=self.site), "AyB")
-        self.assertEqual(replaceExcept("AxxB", "x", "y", [], site=self.site), "AyyB")
-        self.assertEqual(replaceExcept("AxyxB", "x", "y", [], site=self.site), "AyyyB")
+        assert replaceExcept("AxB", "x", "y", [], site=self.site) == "AyB"
+        assert replaceExcept("AxxB", "x", "y", [], site=self.site) == "AyyB"
+        assert replaceExcept("AxyxB", "x", "y", [], site=self.site) == "AyyyB"
 
     def test_regex_replace(self):
         """Test replacing with a regex."""
-        self.assertEqual(replaceExcept("A123B", r"\d", r"x", [], site=self.site), "AxxxB")
-        self.assertEqual(replaceExcept("A123B", r"\d+", r"x", [], site=self.site), "AxB")
-        self.assertEqual(replaceExcept("A123B", r"A(\d)2(\d)B", r"A\1x\2B", [], site=self.site), "A1x3B")
-        self.assertEqual(replaceExcept("", r"(a?)", r"\1B", [], site=self.site), "B")
-        self.assertEqual(replaceExcept("abc", r"x*", r"-", [], site=self.site), "-a-b-c-")
+        assert replaceExcept("A123B", r"\d", r"x", [], site=self.site) == "AxxxB"
+        assert replaceExcept("A123B", r"\d+", r"x", [], site=self.site) == "AxB"
+        assert replaceExcept("A123B", r"A(\d)2(\d)B", r"A\1x\2B", [], site=self.site) == "A1x3B"
+        assert replaceExcept("", r"(a?)", r"\1B", [], site=self.site) == "B"
+        assert replaceExcept("abc", r"x*", r"-", [], site=self.site) == "-a-b-c-"
+
         # This is different from re.sub() as re.sub() doesn't
         # allow None groups
-        self.assertEqual(replaceExcept("", r"(a)?", r"\1\1", [], site=self.site), "")
-        self.assertEqual(replaceExcept("A123B", r"A(\d)2(\d)B", r"A\g<1>x\g<2>B", [], site=self.site), "A1x3B")
-        self.assertEqual(
-            replaceExcept("A123B", r"A(?P<a>\d)2(?P<b>\d)B", r"A\g<a>x\g<b>B", [], site=self.site), "A1x3B"
-        )
-        self.assertEqual(replaceExcept("A123B", r"A(?P<a>\d)2(\d)B", r"A\g<a>x\g<2>B", [], site=self.site), "A1x3B")
-        self.assertEqual(replaceExcept("A123B", r"A(?P<a>\d)2(\d)B", r"A\g<a>x\2B", [], site=self.site), "A1x3B")
+
+        assert replaceExcept("", r"(a)?", r"\1\1", [], site=self.site) == ""
+
+        assert replaceExcept("A123B", r"A(\d)2(\d)B", r"A\g<1>x\g<2>B", [], site=self.site) == "A1x3B"
+        assert replaceExcept("A123B", r"A(?P<a>\d)2(?P<b>\d)B", r"A\g<a>x\g<b>B", [], site=self.site) == "A1x3B"
+        assert replaceExcept("A123B", r"A(?P<a>\d)2(\d)B", r"A\g<a>x\g<2>B", [], site=self.site) == "A1x3B"
+        assert replaceExcept("A123B", r"A(?P<a>\d)2(\d)B", r"A\g<a>x\2B", [], site=self.site) == "A1x3B"
         # test regex with lookbehind.
-        self.assertEqual(replaceExcept("A behindB C", r"(?<=behind)\w", r"Z", [], site=self.site), "A behindZ C")
+        assert replaceExcept("A behindB C", r"(?<=behind)\w", r"Z", [], site=self.site) == "A behindZ C"
         # test regex with lookbehind and groups.
-        self.assertEqual(
+        assert replaceExcept(
             replaceExcept("A behindB C D", r"(?<=behind)\w( )", r"\g<1>Z", [], site=self.site), "A behind ZC D"
         )
         # test regex with lookahead.
-        self.assertEqual(replaceExcept("A Bahead C", r"\w(?=ahead)", r"Z", [], site=self.site), "A Zahead C")
+        assert replaceExcept("A Bahead C", r"\w(?=ahead)", r"Z", [], site=self.site) == "A Zahead C"
         # test regex with lookahead and groups.
-        self.assertEqual(
-            replaceExcept("A Bahead C D", r"( )\w(?=ahead)", r"Z\g<1>", [], site=self.site), "AZ ahead C D"
-        )
+        assert replaceExcept(
+            "A Bahead C D", r"( )\w(?=ahead)", r"Z\g<1>", [], site=self.site
+        ) == "AZ ahead C D"
 
     def test_case_sensitive(self):
         """Test replacing with different case sensitivity."""
-        self.assertEqual(replaceExcept("AxB", "x", "y", [], caseInsensitive=False, site=self.site), "AyB")
-        self.assertEqual(replaceExcept("AxB", "X", "y", [], caseInsensitive=False, site=self.site), "AxB")
-        self.assertEqual(replaceExcept("AxB", "x", "y", [], caseInsensitive=True, site=self.site), "AyB")
-        self.assertEqual(replaceExcept("AxB", "X", "y", [], caseInsensitive=True, site=self.site), "AyB")
+        assert replaceExcept("AxB", "x", "y", [], caseInsensitive=False, site=self.site) == "AyB"
+        assert replaceExcept("AxB", "X", "y", [], caseInsensitive=False, site=self.site) == "AxB"
+        assert replaceExcept("AxB", "x", "y", [], caseInsensitive=True, site=self.site) == "AyB"
+        assert replaceExcept("AxB", "X", "y", [], caseInsensitive=True, site=self.site) == "AyB"
 
     def test_replace_with_marker(self):
         """Test replacing with a marker."""
-        self.assertEqual(replaceExcept("AxyxB", "x", "y", [], marker=".", site=self.site), "Ayyy.B")
-        self.assertEqual(replaceExcept("AxyxB", "1", "y", [], marker=".", site=self.site), "AxyxB.")
+        assert replaceExcept("AxyxB", "x", "y", [], marker=".", site=self.site) == "Ayyy.B"
+        assert replaceExcept("AxyxB", "1", "y", [], marker=".", site=self.site) == "AxyxB."
 
     def test_overlapping_replace(self):
         """Test replacing with and without overlap."""
-        self.assertEqual(replaceExcept("1111", "11", "21", [], allowoverlap=False, site=self.site), "2121")
-        self.assertEqual(replaceExcept("1111", "11", "21", [], allowoverlap=True, site=self.site), "2221")
+        assert replaceExcept("1111", "11", "21", [], allowoverlap=False, site=self.site) == "2121"
+        assert replaceExcept("1111", "11", "21", [], allowoverlap=True, site=self.site) == "2221"
         self.assertEqual(
             replaceExcept("1\n= 1 =\n", "1", " \n= 1 =\n", ["header"], allowoverlap=True, site=self.site),
             " \n= 1 =\n\n= 1 =\n",
@@ -78,8 +79,8 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
 
     def test_replace_exception(self):
         """Test replacing not inside a specific regex."""
-        self.assertEqual(replaceExcept("123x123", "123", "000", [], site=self.site), "000x000")
-        self.assertEqual(replaceExcept("123x123", "123", "000", [re.compile(r"\w123")], site=self.site), "000x123")
+        assert replaceExcept("123x123", "123", "000", [], site=self.site) == "000x000"
+        assert replaceExcept("123x123", "123", "000", [re.compile(r"\w123")], site=self.site) == "000x123"
         self.assertEqual(
             replaceExcept("1\n= 1 =\n", "1", "verylongreplacement", ["header"], site=self.site),
             "verylongreplacement\n= 1 =\n",
@@ -87,13 +88,13 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
 
     def test_replace_tags(self):
         """Test replacing not inside various tags."""
-        self.assertEqual(replaceExcept("A <!-- x --> B", "x", "y", ["comment"], site=self.site), "A <!-- x --> B")
-        self.assertEqual(replaceExcept("\n==x==\n", "x", "y", ["header"], site=self.site), "\n==x==\n")
+        assert replaceExcept("A <!-- x --> B", "x", "y", ["comment"], site=self.site) == "A <!-- x --> B"
+        assert replaceExcept("\n==x==\n", "x", "y", ["header"], site=self.site) == "\n==x==\n"
         self.assertEqual(
             replaceExcept("\n<!--\ncomment-->==x==<!--comment\n-->\n", "x", "y", ["header"], site=self.site),
             "\n<!--\ncomment-->==x==<!--comment\n-->\n",
         )
-        self.assertEqual(replaceExcept("<pre>x</pre>", "x", "y", ["pre"], site=self.site), "<pre>x</pre>")
+        assert replaceExcept("<pre>x</pre>", "x", "y", ["pre"], site=self.site) == "<pre>x</pre>"
         self.assertEqual(
             replaceExcept("<nowiki   >x</nowiki    >x", "x", "y", ["nowiki"], site=self.site),
             "<nowiki   >x</nowiki    >y",
@@ -117,13 +118,13 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
             replaceExcept("<includeonly>x</includeonly>", "x", "y", ["includeonly"], site=self.site),
             "<includeonly>x</includeonly>",
         )
-        self.assertEqual(replaceExcept("<ref>x</ref>", "x", "y", ["ref"], site=self.site), "<ref>x</ref>")
+        assert replaceExcept("<ref>x</ref>", "x", "y", ["ref"], site=self.site) == "<ref>x</ref>"
         self.assertEqual(
             replaceExcept('<ref name="x">A</ref>', "x", "y", ["ref"], site=self.site), '<ref name="x">A</ref>'
         )
-        self.assertEqual(replaceExcept(" xA ", "x", "y", ["startspace"], site=self.site), " xA ")
-        self.assertEqual(replaceExcept(":xA ", "x", "y", ["startcolon"], site=self.site), ":xA ")
-        self.assertEqual(replaceExcept("<table>x</table>", "x", "y", ["table"], site=self.site), "<table>x</table>")
+        assert replaceExcept(" xA ", "x", "y", ["startspace"], site=self.site) == " xA "
+        assert replaceExcept(":xA ", "x", "y", ["startcolon"], site=self.site) == ":xA "
+        assert replaceExcept("<table>x</table>", "x", "y", ["table"], site=self.site) == "<table>x</table>"
         self.assertEqual(
             replaceExcept("x [http://www.sample.com x]", "x", "y", ["hyperlink"], site=self.site),
             "y [http://www.sample.com y]",
@@ -135,25 +136,25 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         self.assertEqual(
             replaceExcept("<gallery>x</gallery>", "x", "y", ["gallery"], site=self.site), "<gallery>x</gallery>"
         )
-        self.assertEqual(replaceExcept("[[x]]", "x", "y", ["link"], site=self.site), "[[x]]")
+        assert replaceExcept("[[x]]", "x", "y", ["link"], site=self.site) == "[[x]]"
         self.assertEqual(
             replaceExcept("{{#property:p171}}", "1", "2", ["property"], site=self.site), "{{#property:p171}}"
         )
-        self.assertEqual(replaceExcept("{{#invoke:x}}", "x", "y", ["invoke"], site=self.site), "{{#invoke:x}}")
+        assert replaceExcept("{{#invoke:x}}", "x", "y", ["invoke"], site=self.site) == "{{#invoke:x}}"
         self.assertEqual(
             replaceExcept(
                 "<ref name=etwa /> not_in_ref <ref> in_ref </ref>", "not_in_ref", "text", ["ref"], site=self.site
             ),
             "<ref name=etwa /> text <ref> in_ref </ref>",
         )
-        self.assertEqual(replaceExcept("<ab> content </a>", "content", "text", ["a"], site=self.site), "<ab> text </a>")
+        assert replaceExcept("<ab> content </a>", "content", "text", ["a"], site=self.site) == "<ab> text </a>"
 
     def test_replace_with_count(self):
         """Test replacing with count argument."""
-        self.assertEqual(replaceExcept("x [[x]] x x", "x", "y", [], site=self.site), "y [[y]] y y")
-        self.assertEqual(replaceExcept("x [[x]] x x", "x", "y", [], site=self.site, count=5), "y [[y]] y y")
-        self.assertEqual(replaceExcept("x [[x]] x x", "x", "y", [], site=self.site, count=2), "y [[y]] x x")
-        self.assertEqual(replaceExcept("x [[x]] x x", "x", "y", ["link"], site=self.site, count=2), "y [[x]] y x")
+        assert replaceExcept("x [[x]] x x", "x", "y", [], site=self.site) == "y [[y]] y y"
+        assert replaceExcept("x [[x]] x x", "x", "y", [], site=self.site, count=5) == "y [[y]] y y"
+        assert replaceExcept("x [[x]] x x", "x", "y", [], site=self.site, count=2) == "y [[y]] x x"
+        assert replaceExcept("x [[x]] x x", "x", "y", ["link"], site=self.site, count=2) == "y [[x]] y x"
 
     def test_replace_tag_category(self):
         """Test replacing not inside category links."""
@@ -167,9 +168,9 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         for ns_name in self.site.namespaces[6]:
             self.assertEqual(replaceExcept(f"[[{ns_name}:x]]", "x", "y", ["file"], site=self.site), f"[[{ns_name}:x]]")
 
-        self.assertEqual(replaceExcept("[[File:x|foo]]", "x", "y", ["file"], site=self.site), "[[File:x|foo]]")
+        assert replaceExcept("[[File:x|foo]]", "x", "y", ["file"], site=self.site) == "[[File:x|foo]]"
 
-        self.assertEqual(replaceExcept("[[File:x|]]", "x", "y", ["file"], site=self.site), "[[File:x|]]")
+        assert replaceExcept("[[File:x|]]", "x", "y", ["file"], site=self.site) == "[[File:x|]]"
 
         self.assertEqual(
             replaceExcept("[[File:x|foo|bar x]] x", "x", "y", ["file"], site=self.site), "[[File:x|foo|bar x]] y"
@@ -179,9 +180,9 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
             replaceExcept("[[File:x|]][[File:x|foo]]", "x", "y", ["file"], site=self.site), "[[File:x|]][[File:x|foo]]"
         )
 
-        self.assertEqual(replaceExcept("[[NonFile:x]]", "x", "y", ["file"], site=self.site), "[[NonFile:y]]")
+        assert replaceExcept("[[NonFile:x]]", "x", "y", ["file"], site=self.site) == "[[NonFile:y]]"
 
-        self.assertEqual(replaceExcept("[[File:]]", "File:", "NonFile:", ["file"], site=self.site), "[[File:]]")
+        assert replaceExcept("[[File:]]", "File:", "NonFile:", ["file"], site=self.site) == "[[File:]]"
 
         self.assertEqual(
             replaceExcept("[[File:x|[[foo]].]]", "x", "y", ["file"], site=self.site), "[[File:x|[[foo]].]]"
