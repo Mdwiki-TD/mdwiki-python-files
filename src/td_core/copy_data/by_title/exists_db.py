@@ -18,7 +18,6 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdpyget.bots.to_sql import insert_dict
 from td_core.td_dirs import paths
 
-
 logger = logging.getLogger(__name__)
 
 cash_exists = paths.json_tables_path / "cash_exists"
@@ -58,7 +57,7 @@ def to_sql_d(titles_data):
                 else:
                     to_add.append(title)
         # ---
-        in_sql_not_in_new = [x for x in is_in if x not in titles]
+        _in_sql_not_in_new = [x for x in is_in if x not in titles]
         # ---
         # logger.error(f"<<red>> {lang_code}: {same=}, {len(to_add)=}), {len(in_sql_not_in_new)=}")
         # ---

@@ -35,8 +35,8 @@ TABLES_PATH = paths.tables_path
 
 tab_data = {"all": {}, "lead": {}}
 # ---
-file_all = TABLES_PATH / "jsons/allwords.json"
-file_lead = TABLES_PATH / "jsons/words.json"
+file_all = paths.json_tables_path / "allwords.json"
+file_lead = paths.json_tables_path / "words.json"
 
 
 def start_to_sql():

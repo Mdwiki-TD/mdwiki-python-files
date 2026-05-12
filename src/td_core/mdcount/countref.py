@@ -33,8 +33,8 @@ logger = logging.getLogger(__name__)
 # ---
 tab_data = {"all": {}, "lead": {}}
 # ---
-file_all = TABLES_PATH / "jsons/all_refcount.json"
-file_lead = TABLES_PATH / "jsons/lead_refcount.json"
+file_all = paths.json_tables_path / "all_refcount.json"
+file_lead = paths.json_tables_path / "lead_refcount.json"
 
 
 def start_to_sql():

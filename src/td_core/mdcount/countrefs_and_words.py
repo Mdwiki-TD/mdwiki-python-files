@@ -33,11 +33,11 @@ TABLES_PATH = paths.tables_path
 refs_tab_data = {"all": {}, "lead": {}}
 words_tab_data = {"all": {}, "lead": {}}
 # ---
-file_all_refs = TABLES_PATH / "jsons/all_refcount.json"
-file_lead_refs = TABLES_PATH / "jsons/lead_refcount.json"
+file_all_refs = paths.json_tables_path / "all_refcount.json"
+file_lead_refs = paths.json_tables_path / "lead_refcount.json"
 # ---
-file_all_words = TABLES_PATH / "jsons/allwords.json"
-file_lead_words = TABLES_PATH / "jsons/words.json"
+file_all_words = paths.json_tables_path / "allwords.json"
+file_lead_words = paths.json_tables_path / "words.json"
 
 
 def start_to_sql():
