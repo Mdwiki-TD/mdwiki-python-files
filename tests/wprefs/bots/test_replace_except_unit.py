@@ -91,24 +91,24 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
 
         # T191559
         assert self.wrap_replaceExcept("<nowiki   >x</nowiki    >x", "x", "y", ["nowiki"]) == "<nowiki   >x</nowiki    >y"
-        self.assertEqual(self.wrap_replaceExcept('<source lang="xml">x</source>', "x", "y", ["source"]), '<source lang="xml">x</source>', )
+        assert self.wrap_replaceExcept('<source lang="xml">x</source>', "x", "y", ["source"]) == '<source lang="xml">x</source>'
         self.assertEqual(
             self.wrap_replaceExcept("<syntaxhighlight>x</syntaxhighlight>", "x", "y", ["source"]),
             "<syntaxhighlight>x</syntaxhighlight>",
         )
-        self.assertEqual(self.wrap_replaceExcept('<syntaxhighlight lang="xml">x</syntaxhighlight>', "x", "y", ["source"]), '<syntaxhighlight lang="xml">x</syntaxhighlight>', )
-        self.assertEqual(self.wrap_replaceExcept("<source>x</source>", "x", "y", ["syntaxhighlight"]), "<source>x</source>")
+        assert self.wrap_replaceExcept('<syntaxhighlight lang="xml">x</syntaxhighlight>', "x", "y", ["source"]) == '<syntaxhighlight lang="xml">x</syntaxhighlight>'
+        assert self.wrap_replaceExcept("<source>x</source>", "x", "y", ["syntaxhighlight"]) == "<source>x</source>"
         assert self.wrap_replaceExcept("<includeonly>x</includeonly>", "x", "y", ["includeonly"]) == "<includeonly>x</includeonly>"
         assert self.wrap_replaceExcept("<ref>x</ref>", "x", "y", ["ref"]) == "<ref>x</ref>"
-        self.assertEqual(self.wrap_replaceExcept('<ref name="x">A</ref>', "x", "y", ["ref"]), '<ref name="x">A</ref>')
+        assert self.wrap_replaceExcept('<ref name="x">A</ref>', "x", "y", ["ref"]) == '<ref name="x">A</ref>'
         assert self.wrap_replaceExcept(" xA ", "x", "y", ["startspace"]) == " xA "
         assert self.wrap_replaceExcept(":xA ", "x", "y", ["startcolon"]) == ":xA "
         assert self.wrap_replaceExcept("<table>x</table>", "x", "y", ["table"]) == "<table>x</table>"
         assert self.wrap_replaceExcept("x [http://www.sample.com x]", "x", "y", ["hyperlink"]) == "y [http://www.sample.com y]"
         assert self.wrap_replaceExcept("x http://www.sample.com/x.html", "x", "y", ["hyperlink"]) == "y http://www.sample.com/x.html"
-        self.assertEqual(self.wrap_replaceExcept("<gallery>x</gallery>", "x", "y", ["gallery"]), "<gallery>x</gallery>")
+        assert self.wrap_replaceExcept("<gallery>x</gallery>", "x", "y", ["gallery"]) == "<gallery>x</gallery>"
         assert self.wrap_replaceExcept("[[x]]", "x", "y", ["link"]) == "[[x]]"
-        self.assertEqual(self.wrap_replaceExcept("{{#property:p171}}", "1", "2", ["property"]), "{{#property:p171}}")
+        assert self.wrap_replaceExcept("{{#property:p171}}", "1", "2", ["property"]) == "{{#property:p171}}"
         assert self.wrap_replaceExcept("{{#invoke:x}}", "x", "y", ["invoke"]) == "{{#invoke:x}}"
         assert self.wrap_replaceExcept("<ref name=etwa /> not_in_ref <ref> in_ref </ref>", "not_in_ref", "text", ["ref"]) == "<ref name=etwa /> text <ref> in_ref </ref>"
         assert self.wrap_replaceExcept("<ab> content </a>", "content", "text", ["a"]) == "<ab> text </a>"
