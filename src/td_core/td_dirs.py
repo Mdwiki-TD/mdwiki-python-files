@@ -58,5 +58,5 @@ paths = Paths(
     tables_path=_TABLES_PATH,
     json_tables_path=_jsons_path,
     cash_exists_path=_jsons_path / "cash_exists",
-    json_files=_json_files
+    json_files=_json_files,
 )

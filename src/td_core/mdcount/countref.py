@@ -91,7 +91,9 @@ def get_links(ty="ref"):
 
 def main():
     # ---
-    tab_data["all"], tab_data["lead"] = get_jsons_new(paths.json_files.all_refcount, paths.json_files.lead_refcount, "ref")
+    tab_data["all"], tab_data["lead"] = get_jsons_new(
+        paths.json_files.all_refcount, paths.json_files.lead_refcount, "ref"
+    )
     # ---
     if "merge" in sys.argv:
         # ---

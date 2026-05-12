@@ -20,10 +20,7 @@ from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-json_files = [
-    f for f in os.listdir(str(paths.cash_exists_path))
-    if f.endswith(".json")
-]
+json_files = [f for f in os.listdir(str(paths.cash_exists_path)) if f.endswith(".json")]
 
 que = """select DISTINCT article_id, code from all_exists;"""
 # ---
