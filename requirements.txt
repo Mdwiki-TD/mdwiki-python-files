@@ -9,3 +9,5 @@ Requests
 SPARQLWrapper
 tqdm
 wikitextparser
+marshmallow
+SQLAlchemy
