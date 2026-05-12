@@ -16,15 +16,14 @@ import tqdm
 # ---
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdpyget.bots.to_sql import insert_dict
+from td_core.td_dirs import paths
+
+TABLES_PATH = paths.tables_path
 
 logger = logging.getLogger(__name__)
 
-if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/td"
-else:
-    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
-# ---
-cash_exists = Dashboard_path + "/Tables/cash_exists"
+
+cash_exists = TABLES_PATH + "/jsons/cash_exists"
 json_files = [f for f in os.listdir(cash_exists) if f.endswith(".json")]
 
 que = """select DISTINCT article_id, code from all_exists;"""
@@ -81,7 +80,7 @@ def to_sql_d(titles_data):
 
 def main():
     # ---
-    langs = list(set([x.replace(".json", "") for x in json_files]))
+    langs = list({x.replace(".json", "") for x in json_files})
     # ---
     data_all = {}
     # ---

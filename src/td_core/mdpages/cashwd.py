@@ -11,23 +11,18 @@ import json
 import logging
 import os
 from datetime import datetime
-
-from md_core.mdpy.bots import en_to_md  # en_to_md.mdtitle_to_qid #en_to_md.enwiki_to_mdwiki # en_to_md.mdwiki_to_enwiki
+from md_core.mdpy.bots import en_to_md
 from md_core.mdpy.bots.check_title import valid_title
 from md_core_helps.apis import wikidataapi
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
 
+from td_core.td_dirs import paths
+
 logger = logging.getLogger(__name__)
 
-# result_table = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=0, ns="0")
+TABLES_PATH = paths.tables_path
 
-# ---
-if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/td"
-else:
-    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
-# ---
 Day_History = datetime.now().strftime("%Y-%m-%d")
 # ---
 redirects_qids = {}
@@ -190,7 +185,7 @@ def dump_all(main_table_sites, len_titles):
         leeen = len_titles - len(miss_list)
         missing_langs[site] = {"missing": leeen, "exists": len(miss_list)}
         # ---
-        json_file = f"{Dashboard_path}/Tables/cash_exists/{site}.json"
+        json_file = f"{TABLES_PATH}/jsons/cash_exists/{site}.json"
         # ---
         if not os.path.exists(json_file):
             logger.info(f'.... <<red>> file:"{site}.json not exists ....')
@@ -200,7 +195,7 @@ def dump_all(main_table_sites, len_titles):
             with open(json_file, "w", encoding="utf-8") as aa:
                 json.dump(miss_list, aa, ensure_ascii=False, indent=2)
             logger.info(f"<<greenn>>dump to cash_exists/{site}.json done..")
-        except Exception as e:
+        except Exception:
             logger.exception("Exception:", exc_info=True)
             continue
     # ---
@@ -226,7 +221,7 @@ def cash_wd():
     qids_list = {}
     # ---
     missing["all"] = len(titles)
-    # ---
+    # ---s
     for x in titles:
         # ---
         qid = en_to_md.mdtitle_to_qid.get(x, "")
@@ -237,7 +232,7 @@ def cash_wd():
     lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
     if lists:
-        with open(f"{Dashboard_path}/Tables/jsons/sitelinks.json", "w", encoding="utf-8") as aa:
+        with open(f"{TABLES_PATH}/jsons/sitelinks.json", "w", encoding="utf-8") as aa:
             json.dump(lists, aa)
     # ---
     missing_langs = dump_all(main_table_sites, len(titles))
@@ -246,7 +241,7 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    with open(f"{Dashboard_path}/Tables/jsons/noqids.json", "w", encoding="utf-8") as dd:
+    with open(f"{TABLES_PATH}/jsons/noqids.json", "w", encoding="utf-8") as dd:
         json.dump(noqids, dd)
     # ---
     # redirects_qids
@@ -262,7 +257,7 @@ def cash_wd():
     logger.info(f" len of missing qids: {len(mis_qids)}")
     # ---
     if missing["all"] > 0:
-        with open(f"{Dashboard_path}/Tables/jsons/missing.json", "w", encoding="utf-8") as xx:
+        with open(f"{TABLES_PATH}/jsons/missing.json", "w", encoding="utf-8") as xx:
             json.dump(missing, xx)
         # ---
         logger.info(" log to missing.json true.... ")
