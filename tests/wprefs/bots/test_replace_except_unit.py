@@ -136,26 +136,18 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
 
         assert self.wrap_replaceExcept("[[File:x|]]", "x", "y", ["file"]) == "[[File:x|]]"
 
-        self.assertEqual(
-            self.wrap_replaceExcept("[[File:x|foo|bar x]] x", "x", "y", ["file"]), "[[File:x|foo|bar x]] y"
-        )
+        assert self.wrap_replaceExcept("[[File:x|foo|bar x]] x", "x", "y", ["file"]) == "[[File:x|foo|bar x]] y"
 
-        self.assertEqual(
-            self.wrap_replaceExcept("[[File:x|]][[File:x|foo]]", "x", "y", ["file"]), "[[File:x|]][[File:x|foo]]"
-        )
+        assert self.wrap_replaceExcept("[[File:x|]][[File:x|foo]]", "x", "y", ["file"]) == "[[File:x|]][[File:x|foo]]"
 
         assert self.wrap_replaceExcept("[[NonFile:x]]", "x", "y", ["file"]) == "[[NonFile:y]]"
 
         assert self.wrap_replaceExcept("[[File:]]", "File:", "NonFile:", ["file"]) == "[[File:]]"
 
-        self.assertEqual(
-            self.wrap_replaceExcept("[[File:x|[[foo]].]]", "x", "y", ["file"]), "[[File:x|[[foo]].]]"
-        )
+        assert self.wrap_replaceExcept("[[File:x|[[foo]].]]", "x", "y", ["file"]) == "[[File:x|[[foo]].]]"
 
         # ensure only links inside file are captured
-        self.assertEqual(
-            self.wrap_replaceExcept("[[File:a|[[foo]].x]][[x]]", "x", "y", ["file"]), "[[File:a|[[foo]].x]][[y]]"
-        )
+        assert self.wrap_replaceExcept("[[File:a|[[foo]].x]][[x]]", "x", "y", ["file"]) == "[[File:a|[[foo]].x]][[y]]"
 
         self.assertEqual(
             self.wrap_replaceExcept("[[File:a|[[foo]][[bar]].x]][[x]]", "x", "y", ["file"]),
@@ -207,12 +199,8 @@ class TestReplaceExcept(DefaultDrySiteTestCase):
         if "es" not in self.site.family.langs or "ey" in self.site.family.langs:
             raise unittest.SkipTest(f"family {self.site} doesn't have languages")
 
-        self.assertEqual(
-            self.wrap_replaceExcept("[[es:s]]", "s", "t", ["interwiki"]), "[[es:s]]"
-        )  # "es" is a valid interwiki code
-        self.assertEqual(
-            self.wrap_replaceExcept("[[ex:x]]", "x", "y", ["interwiki"]), "[[ey:y]]"
-        )  # "ex" is not a valid interwiki code
+        assert self.wrap_replaceExcept("[[es:s]]", "s", "t", ["interwiki"]) == "[[es:s]]"  # "es" is a valid interwiki code
+        assert self.wrap_replaceExcept("[[ex:x]]", "x", "y", ["interwiki"]) == "[[ey:y]]"  # "ex" is not a valid interwiki code
 
     def test_replace_template(self):
         """Test replacing not inside templates."""
