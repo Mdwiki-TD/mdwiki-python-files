@@ -24,10 +24,10 @@ que = """select DISTINCT r_title, r_lead_refs, r_all_refs from refs_counts;"""
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(paths.json_tables_path / "lead_refcount.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.lead_refcount, "r", encoding="utf-8") as f:
     lead_refs = json.load(f)
 
-with open(paths.json_tables_path / "all_refcount.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.all_refcount, "r", encoding="utf-8") as f:
     all_refs = json.load(f)
 # ---
 lead_refs = {x.strip(): lead_refs[x] for x in lead_refs}

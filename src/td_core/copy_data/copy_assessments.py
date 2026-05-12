@@ -23,7 +23,7 @@ que = """select DISTINCT title, importance from assessments;"""
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(paths.json_tables_path / "assessments.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.assessments, "r", encoding="utf-8") as f:
     data_in_json = json.load(f)
 # ---
 data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}

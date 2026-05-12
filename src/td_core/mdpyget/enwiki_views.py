@@ -119,7 +119,7 @@ def main():
     # ---
     cat_get = "RTTVideo" if "video" in sys.argv else ""
     # ---
-    json_file = paths.json_tables_path / "enwiki_pageviews.json"
+    json_file = paths.json_files.enwiki_pageviews
     # ---
     old_values = get_old_values(json_file)
     vaild_links = list(old_values.keys())

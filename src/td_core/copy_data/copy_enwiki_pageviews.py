@@ -22,7 +22,7 @@ Dir = str(Path(__file__).parents[0])
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(paths.json_tables_path / "enwiki_pageviews.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.enwiki_pageviews, "r", encoding="utf-8") as f:
     data_in_json = json.load(f)
 # ---
 data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}

@@ -21,7 +21,6 @@ from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-json_file = paths.json_tables_path / "sitelinks.json"
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---
@@ -103,7 +102,7 @@ def start_to_sql(data):
 
 def dump_sitelinks(lists):
     logger.info(f"<<green>> , len of qids: {len(lists.get('qids', {}))}.")
-    with open(json_file, "w", encoding="utf-8") as aa:
+    with open(paths.json_files.sitelinks, "w", encoding="utf-8") as aa:
         json.dump(lists, aa)
 
 
@@ -223,7 +222,7 @@ def main():
     lists = {}
     # ---
     if "json" in sys.argv:
-        with open(json_file, "r", encoding="utf-8") as aa:
+        with open(paths.json_files.sitelinks, "r", encoding="utf-8") as aa:
             lists = json.load(aa)
         # ---
         logger.info(f"len of qids in json file: {len(lists.get('qids', {}))}.")

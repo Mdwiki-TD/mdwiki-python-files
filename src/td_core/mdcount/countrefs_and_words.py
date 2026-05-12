@@ -32,11 +32,11 @@ logger = logging.getLogger(__name__)
 refs_tab_data = {"all": {}, "lead": {}}
 words_tab_data = {"all": {}, "lead": {}}
 # ---
-file_all_refs = paths.json_tables_path / "all_refcount.json"
-file_lead_refs = paths.json_tables_path / "lead_refcount.json"
+file_all_refs = paths.json_files.all_refcount
+file_lead_refs = paths.json_files.lead_refcount
 # ---
-file_all_words = paths.json_tables_path / "allwords.json"
-file_lead_words = paths.json_tables_path / "words.json"
+file_all_words = paths.json_files.allwords
+file_lead_words = paths.json_files.words
 
 
 def start_to_sql():

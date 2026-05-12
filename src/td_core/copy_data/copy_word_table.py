@@ -33,10 +33,10 @@ for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     in_sql_lead[w_title] = w_lead_words
     in_sql_all[w_title] = w_all_words
 # ---
-with open(paths.json_tables_path / "words.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.words, "r", encoding="utf-8") as f:
     lead_words = json.load(f)
 
-with open(paths.json_tables_path / "allwords.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.allwords, "r", encoding="utf-8") as f:
     all_words = json.load(f)
 # ---
 new_words = {}

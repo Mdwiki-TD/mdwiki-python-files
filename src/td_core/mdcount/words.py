@@ -34,8 +34,8 @@ logger = logging.getLogger(__name__)
 
 tab_data = {"all": {}, "lead": {}}
 # ---
-file_all = paths.json_tables_path / "allwords.json"
-file_lead = paths.json_tables_path / "words.json"
+file_all = paths.json_files.allwords
+file_lead = paths.json_files.words
 
 
 def start_to_sql():

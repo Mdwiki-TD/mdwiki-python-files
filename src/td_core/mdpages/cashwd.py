@@ -233,7 +233,7 @@ def cash_wd():
     lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
     if lists:
-        with open(paths.json_tables_path / "sitelinks.json", "w", encoding="utf-8") as aa:
+        with open(paths.json_files.sitelinks, "w", encoding="utf-8") as aa:
             json.dump(lists, aa)
     # ---
     missing_langs = dump_all(main_table_sites, len(titles))
@@ -242,7 +242,7 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    with open(paths.json_tables_path / "noqids.json", "w", encoding="utf-8") as dd:
+    with open(paths.json_files.noqids, "w", encoding="utf-8") as dd:
         json.dump(noqids, dd)
     # ---
     # redirects_qids
@@ -258,7 +258,7 @@ def cash_wd():
     logger.info(f" len of missing qids: {len(mis_qids)}")
     # ---
     if missing["all"] > 0:
-        with open(paths.json_tables_path / "missing.json", "w", encoding="utf-8") as xx:
+        with open(paths.json_files.missing, "w", encoding="utf-8") as xx:
             json.dump(missing, xx)
         # ---
         logger.info(" log to missing.json true.... ")

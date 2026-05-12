@@ -160,7 +160,7 @@ def main():
     # ---
     cat_get = "RTTVideo" if "video" in sys.argv else ""
     # ---
-    json_file = paths.json_tables_path / "assessments.json"
+    json_file = paths.json_files.assessments
     # ---
     old_values = get_old_values(json_file)
     vaild_links = list(old_values.keys())

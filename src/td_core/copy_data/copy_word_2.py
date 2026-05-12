@@ -24,10 +24,10 @@ que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(paths.json_tables_path / "words.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.words, "r", encoding="utf-8") as f:
     lead_words = json.load(f)
 
-with open(paths.json_tables_path / "allwords.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.allwords, "r", encoding="utf-8") as f:
     all_words = json.load(f)
 # ---
 lead_words = {x.strip(): lead_words[x] for x in lead_words}
