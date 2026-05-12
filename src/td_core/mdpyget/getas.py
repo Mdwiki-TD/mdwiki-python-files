@@ -21,8 +21,8 @@ import sys
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from md_core.mdpy.bots.en_to_md import enwiki_to_mdwiki
-from md_core.mdpyget.bots.to_sql import to_sql
-from md_core.mdpyget.pages_list import get_links_from_cats
+from td_core.mdpyget.bots.to_sql import to_sql
+from td_core.mdpyget.pages_list import get_links_from_cats
 from mdwiki_api.wiki_page import NewApi
 
 logger = logging.getLogger(__name__)
@@ -135,7 +135,7 @@ def get_old_values(json_file):
     # ---
     old_dict = {}
     # ---
-    for x, y in old_values.items():
+    for _, y in old_values.items():
         # ---
         old_dict.setdefault(y, 0)
         # ---

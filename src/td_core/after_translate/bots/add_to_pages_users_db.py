@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
+from td_core.after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
 
 
 """
@@ -21,7 +21,7 @@ from pymysql.converters import escape_string
 logger = logging.getLogger(__name__)
 
 cat_for_pages = {}
-# from after_translate.bots.fixcat import cat_for_pages
+# from td_core.after_translate.bots.fixcat import cat_for_pages
 
 
 pages_users = sql_for_mdwiki.get_all_pages_all_keys(table="pages_users")

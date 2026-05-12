@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from after_translate import start_work
+from td_core.after_translate import start_work
 # start_work.start(result, lange, tgd, tgd_by_md, tit_user_lang)
 # start_work.work_not_pages()
 
@@ -11,8 +11,8 @@ import logging
 import re
 import sys
 
-from after_translate.bots.fixcat import cat_for_pages
-from after_translate.bots.users_pages import not_pages
+from td_core.after_translate.bots.fixcat import cat_for_pages
+from td_core.after_translate.bots.users_pages import not_pages
 from md_core.mdpy.bots import py_tools
 
 logger = logging.getLogger(__name__)

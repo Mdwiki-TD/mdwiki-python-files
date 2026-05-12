@@ -1,6 +1,6 @@
 """
 
-from mdpages import qids_help
+from td_core.mdpages import qids_help
 # qids_help.get_o_qids_new(o_qids, t_qids_in)
 # qids_help.get_pages_to_work(ty="td|other")
 # qids_help.check(work_list, all_pages)

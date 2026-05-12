@@ -4,7 +4,7 @@ Usage:
 
 python3 core8/pwb.py mdpages/create_qids
 
-from mdpages.create_qids import create_qids
+from td_core.mdpages.create_qids import create_qids
 
 """
 import logging

@@ -2,7 +2,7 @@
 """
 
 Usage:
-from after_translate.bots.users_pages import not_pages
+from td_core.after_translate.bots.users_pages import not_pages
 
 """
 

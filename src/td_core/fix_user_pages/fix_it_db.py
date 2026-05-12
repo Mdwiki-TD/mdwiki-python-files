@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from fix_user_pages.fix_it_db import work_in_new_tabs_to_db
+from td_core.fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 
 """
 # ---

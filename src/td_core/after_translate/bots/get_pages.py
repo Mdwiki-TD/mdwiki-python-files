@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-from after_translate.bots.get_pages import get_pages_from_db
+from td_core.after_translate.bots.get_pages import get_pages_from_db
 """
 import logging
 

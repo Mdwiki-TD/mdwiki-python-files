@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """
-from fix_user_pages.user_bot import get_new_user
+from td_core.fix_user_pages.user_bot import get_new_user
 """
 import logging
 
-from db_work.check_titles_helps import WikiPage, users_infos
+from td_core.db_work.check_titles_helps import WikiPage, users_infos
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)

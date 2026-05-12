@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """
 
-from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
+from td_core.after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 
 """
 import logging
 import sys
 import time
 
-from after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
-from after_translate.bots.fixcat import cat_for_pages
+from td_core.after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
+from td_core.after_translate.bots.fixcat import cat_for_pages
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 # ---

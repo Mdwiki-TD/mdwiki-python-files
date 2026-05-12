@@ -16,10 +16,10 @@ import logging
 import sys
 import time
 
-from after_translate import start_work
-from after_translate.bots import add_to_wd
-from after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
-from after_translate.bots.get_pages import get_pages_from_db
+from td_core.after_translate import start_work
+from td_core.after_translate.bots import add_to_wd
+from td_core.after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
+from td_core.after_translate.bots.get_pages import get_pages_from_db
 
 # ---
 from md_core_helps.mdapi_sql import wiki_sql

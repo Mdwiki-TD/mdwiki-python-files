@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-from md_core.mdpyget.pages_list import get_links_from_cats
+from td_core.mdpyget.pages_list import get_links_from_cats
 """
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from md_core.mdpy.bots.check_title import valid_title

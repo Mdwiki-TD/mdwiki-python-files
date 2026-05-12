@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from mdcount.ref_words_bot import get_jsons, logaa, make_old_values, do_to_sql
+from td_core.mdcount.ref_words_bot import get_jsons, logaa, make_old_values, do_to_sql
 
 """
 
@@ -9,7 +9,7 @@ import json
 import logging
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
-from md_core.mdpyget.bots.to_sql import to_sql
+from td_core.mdpyget.bots.to_sql import to_sql
 
 logger = logging.getLogger(__name__)
 

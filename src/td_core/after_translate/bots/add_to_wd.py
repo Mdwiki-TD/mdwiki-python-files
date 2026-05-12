@@ -4,7 +4,7 @@
 after_translate/sql.py
 
 # ---
-from after_translate.bots import add_to_wd
+from td_core.after_translate.bots import add_to_wd
 # add_to_wd.add_tab_to_wd(New_Table_by_lang)
 # ---
 

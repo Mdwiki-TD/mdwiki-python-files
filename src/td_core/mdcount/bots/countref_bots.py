@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
 
-from mdcount.bots.countref_bots import count_ref_from_text
+from td_core.mdcount.bots.countref_bots import count_ref_from_text
 
 """
 
 import logging
 
-from mdcount.bots.regex_scanner import RegexScanner
+from td_core.mdcount.bots.regex_scanner import RegexScanner
 
 logger = logging.getLogger(__name__)
 
