@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
+from md_core.add_rtt.r_column_bots.add_r_column import add_header_R, header_has_R
 
 
 """

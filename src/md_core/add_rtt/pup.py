@@ -2,7 +2,7 @@
 """
 
 python3 core8/pwb.py add_rtt/pup
-from add_rtt.bot import add_rtt_to_text
+from md_core.add_rtt.bot import add_rtt_to_text
 # add_rtt_to_text(text, title)
 
 
@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 import wikitextparser as wtp
-from add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
+from md_core.add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage  # , CatDepth
 
 logger = logging.getLogger(__name__)

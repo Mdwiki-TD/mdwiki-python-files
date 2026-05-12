@@ -21,9 +21,9 @@ import sys
 
 from md_core_helps.apis.mw_views import PageviewsClient
 from md_core_helps.mdapi_sql import sql_for_mdwiki
-from mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
-from mdpyget.bots.to_sql import to_sql
-from mdpyget.pages_list import get_links_from_cats
+from md_core.mdpy.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
+from md_core.mdpyget.bots.to_sql import to_sql
+from md_core.mdpyget.pages_list import get_links_from_cats
 
 logger = logging.getLogger(__name__)
 

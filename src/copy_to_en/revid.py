@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
-from mdpy.bots.check_title import valid_title
+from md_core.mdpy.bots.check_title import valid_title
 from mdpyget.bots.to_sql import to_sql
 from mdwiki_api.mdwiki_page import CatDepth
 

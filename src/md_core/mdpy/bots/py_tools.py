@@ -1,6 +1,6 @@
 """
 # ---
-from mdpy.bots import py_tools
+from md_core.mdpy.bots import py_tools
 # py_tools.ec_de_code( tt , type )
 # py_tools.Decode_bytes(x)
 # py_tools.quoteurl(fao)

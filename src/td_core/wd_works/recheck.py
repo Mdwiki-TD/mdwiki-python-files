@@ -13,7 +13,7 @@ from md_core_helps.apis import wikidataapi
 
 # ---
 from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids, wiki_sql
-from mdpy.bots import en_to_md, py_tools
+from md_core.mdpy.bots import en_to_md, py_tools
 from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)

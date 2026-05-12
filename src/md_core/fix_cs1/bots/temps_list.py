@@ -1,6 +1,6 @@
 # ---
-# from fix_cs1.bots.temps_list import ref_temps
-# from fix_cs1.bots.temps_list import in_params_en, in_params_ar
+# from md_core.fix_cs1.bots.temps_list import ref_temps
+# from md_core.fix_cs1.bots.temps_list import in_params_en, in_params_ar
 # ---
 in_params_en = [
     "journal",

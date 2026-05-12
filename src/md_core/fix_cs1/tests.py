@@ -5,7 +5,7 @@ python3 core8/pwb.py fix_cs1/tests
 
 import logging
 
-from fix_cs1.fix_p import fix_it
+from md_core.fix_cs1.fix_p import fix_it
 
 logger = logging.getLogger(__name__)
 

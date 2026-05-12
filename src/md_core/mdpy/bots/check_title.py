@@ -1,5 +1,5 @@
 """
-from mdpy.bots.check_title import valid_title #valid_title(title)
+from md_core.mdpy.bots.check_title import valid_title #valid_title(title)
 """
 
 falses = [

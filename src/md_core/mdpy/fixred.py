@@ -11,7 +11,7 @@ import re
 import sys
 
 from md_core_helps.apis import mdwiki_api_call
-from mdpy.bots import py_tools
+from md_core.mdpy.bots import py_tools
 from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)

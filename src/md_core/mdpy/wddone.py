@@ -8,7 +8,7 @@ python3 core8/pwb.py mdpy/wddone
 import logging
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
-from mdpy.bots import py_tools
+from md_core.mdpy.bots import py_tools
 
 logger = logging.getLogger(__name__)
 

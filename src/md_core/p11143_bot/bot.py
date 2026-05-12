@@ -11,8 +11,8 @@ import sys
 
 from md_core_helps.apis import cat_cach
 from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
-from p11143_bot.filter_helps import remove_in_db_elements
-from p11143_bot.wd_helps import add_P11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
+from md_core.p11143_bot.filter_helps import remove_in_db_elements
+from md_core.p11143_bot.wd_helps import add_P11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
 
 logger = logging.getLogger(__name__)
 

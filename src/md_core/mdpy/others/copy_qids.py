@@ -11,7 +11,7 @@ import logging
 from pathlib import Path
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids
-from mdpy.bots import en_to_md
+from md_core.mdpy.bots import en_to_md
 
 logger = logging.getLogger(__name__)
 

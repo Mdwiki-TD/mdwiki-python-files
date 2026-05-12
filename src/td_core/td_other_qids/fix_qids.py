@@ -11,8 +11,8 @@ import sys
 
 from md_core_helps.apis import cat_cach, wikidataapi
 from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
-from mdpy.bots.check_title import valid_title
-from unlinked_wb.bot import work_un
+from md_core.mdpy.bots.check_title import valid_title
+from md_core.unlinked_wb.bot import work_un
 
 logger = logging.getLogger(__name__)
 

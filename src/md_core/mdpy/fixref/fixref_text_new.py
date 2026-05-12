@@ -2,7 +2,7 @@ import re
 import sys
 
 import wikitextparser as wtp
-from mdpy.bots import make_title_bot
+from md_core.mdpy.bots import make_title_bot
 
 # _title1_ = make_title_bot.make_title(url)
 

@@ -14,7 +14,7 @@ Verifies that it is StatPearls and if so adds "|journal=StatPearls" to the templ
 # import wikitextparser as wtp
 import logging
 
-from fix_cs1.bots.pmid import pmid_journal
+from md_core.fix_cs1.bots.pmid import pmid_journal
 
 logger = logging.getLogger(__name__)
 

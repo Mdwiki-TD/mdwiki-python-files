@@ -8,8 +8,8 @@ import re
 import sys
 
 import wikitextparser as wtp
-from fix_cs1.bots.find_journal import get_journal_value, get_param
-from fix_cs1.bots.temps_list import in_params_ar, in_params_en
+from md_core.fix_cs1.bots.find_journal import get_journal_value, get_param
+from md_core.fix_cs1.bots.temps_list import in_params_ar, in_params_en
 
 logger = logging.getLogger(__name__)
 

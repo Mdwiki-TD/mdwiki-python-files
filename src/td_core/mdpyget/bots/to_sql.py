@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from mdpyget.bots.to_sql import to_sql
+from md_core.mdpyget.bots.to_sql import to_sql
 # data2 = [{"title": x, "importance": v} for x, v in assessments_tab[1].items()]
 # to_sql(data2, table_name, columns, title_column="title")
 

@@ -19,7 +19,7 @@ from pathlib import Path
 
 import requests
 from after_translate.bots import add_to_wd
-from mdpy.bots import en_to_md
+from md_core.mdpy.bots import en_to_md
 from mdwiki_api.wiki_page import MainPage
 
 logger = logging.getLogger(__name__)

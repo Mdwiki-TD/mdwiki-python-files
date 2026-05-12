@@ -9,7 +9,7 @@ import logging
 import sys
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
-from mdpyget.bots.to_sql import to_sql
+from md_core.mdpyget.bots.to_sql import to_sql
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)

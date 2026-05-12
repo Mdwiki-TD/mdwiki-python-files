@@ -3,7 +3,7 @@
 
 python3 core8/pwb.py add_rtt/named_param
 
-from add_rtt.named_param import add_param_named
+from md_core.add_rtt.named_param import add_param_named
 # add_param_named(text, title)
 
 

@@ -1,6 +1,6 @@
 """
 
-from stats.ar import get_ar_results
+from md_core.stats.ar import get_ar_results
 
 """
 

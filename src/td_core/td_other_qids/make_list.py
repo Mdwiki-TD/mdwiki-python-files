@@ -12,8 +12,8 @@ import sys
 
 from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
 from mdpages import qids_help
-from p11143_bot.filter_helps import remove_in_db_elements
-from unlinked_wb.bot import work_un
+from md_core.p11143_bot.filter_helps import remove_in_db_elements
+from md_core.unlinked_wb.bot import work_un
 
 logger = logging.getLogger(__name__)
 

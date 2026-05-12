@@ -2,7 +2,7 @@
 """
 
 python3 core8/pwb.py add_rtt/bot
-from add_rtt.bot import add_rtt_to_text
+from md_core.add_rtt.bot import add_rtt_to_text
 # add_rtt_to_text(text, title)
 
 
@@ -16,7 +16,7 @@ import re
 import sys
 
 import wikitextparser as wtp
-from add_rtt.named_param import add_param_named
+from md_core.add_rtt.named_param import add_param_named
 from mdwiki_api.mdwiki_page import CatDepth, NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)

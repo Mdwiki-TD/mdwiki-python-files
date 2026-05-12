@@ -13,7 +13,7 @@ import sys
 
 from after_translate.bots.fixcat import cat_for_pages
 from after_translate.bots.users_pages import not_pages
-from mdpy.bots import py_tools
+from md_core.mdpy.bots import py_tools
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,5 @@
 """
-from fix_cs1.bots.pmid import pmid_journal
+from md_core.fix_cs1.bots.pmid import pmid_journal
 
 https://pubmed.ncbi.nlm.nih.gov/29083719/
 

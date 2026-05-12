@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from mdpy.find_replace_bot.one_job import do_one_job
+from md_core.mdpy.find_replace_bot.one_job import do_one_job
 """
 import json
 import logging

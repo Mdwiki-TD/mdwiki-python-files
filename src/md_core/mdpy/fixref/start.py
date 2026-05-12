@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 from md_core_helps.apis import mdwiki_api_call
-from mdpy.fixref.fixref_text_new import fix_ref_template
+from md_core.mdpy.fixref.fixref_text_new import fix_ref_template
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
