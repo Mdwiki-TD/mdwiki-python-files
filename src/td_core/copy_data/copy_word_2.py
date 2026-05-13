@@ -52,7 +52,6 @@ for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
         in_sql[w_title] = {"lead": q["w_lead_words"], "all": q["w_all_words"]}
 # ---
 logger.info(f"{len(in_sql)=}")
-logger.info(in_sql)
 # ---
 NEW_DATA.update(in_sql)
 # ---

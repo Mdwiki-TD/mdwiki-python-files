@@ -42,7 +42,6 @@ for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
         in_sql[title] = q["en_views"]
 # ---
 logger.info(f"{len(in_sql)=}")
-logger.info(in_sql)
 # ---
 NEW_DATA.update(in_sql)
 # ---
