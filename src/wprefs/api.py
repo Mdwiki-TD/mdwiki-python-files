@@ -40,9 +40,6 @@ Dir = str(Path(__file__).parents[0])
 # logger.info(f'Dir : {Dir}')
 # ---
 SS = {"token": ""}
-session = {}
-session[1] = requests.Session()
-session["url"] = ""
 # ---
 Url_To_login = {1: "", "not": True}
 # ---
@@ -54,6 +51,11 @@ ask_a = {1: False}
 # ---
 missingtitles = {}
 
+
+session = {}
+session[1] = requests.Session()
+session[1].headers.update({"User-Agent": user_agent})
+session["url"] = ""
 session["url"] = "https://mdwiki.org/w/api.php"
 session["family"] = "mdwiki"
 
