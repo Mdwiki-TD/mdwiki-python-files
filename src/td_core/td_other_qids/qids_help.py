@@ -1,10 +1,5 @@
 """
 
-from td_core.mdpages import qids_help
-# qids_help.get_o_qids_new(o_qids, t_qids_in)
-# qids_help.get_pages_to_work(ty="td|other")
-# qids_help.check(work_list, all_pages)
-
 """
 
 import copy
@@ -14,19 +9,21 @@ import re
 import sys
 
 from md_core.mdpy.bots.check_title import valid_title
-from md_core_helps.apis import cat_cach, mdwiki_api_call, wiki_api
+from md_core_helps.apis.mdwiki_api_call import Get_All_pages
+from md_core_helps.apis.cat_cach import from_cache
+from md_core_helps.apis.wiki_api import submitAPI
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
 logger.info("Get_All_pages:")
 # ---
-all_pages = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
+all_pages = Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
 all_pages = [x for x in all_pages if valid_title(x)]
 # ---
 logger.info("make_cash_to_cats:")
 # ---
-td_list = cat_cach.from_cache()
+td_list = from_cache()
 td_list = [x for x in td_list if valid_title(x)]
 # ---
 
@@ -48,7 +45,7 @@ def get_pages_to_work(ty="td|other"):
     return tds_list, all_pages
 
 
-def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
+def dump_jsons(ty, medwiki_to_en, missing_in_en, sames):
     # ---
     if "nodump" in sys.argv:
         logger.info("Skipping dump of JSON files")
@@ -64,25 +61,25 @@ def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
         sames_file = "sames_other.json"
     # ---
     with open(paths.json_tables_path / mdwiki_to_enwiki_file, "w", encoding="utf-8") as aa:
-        json.dump(medwiki_to_enwiki, aa)
+        json.dump(medwiki_to_en, aa)
     # ---
     with open(paths.json_tables_path / missing_in_en_file, "w", encoding="utf-8") as bb:
-        json.dump(missing_in_enwiki, bb)
+        json.dump(missing_in_en, bb)
     # ---
     with open(paths.json_tables_path / sames_file, encoding="utf-8") as cc:
         json.dump(sames, cc)
 
 
-def check(work_list, all_xpages, ty):
+def check_qids(work_list, all_xpages, ty):
     """
     function retrieves QIDs for a list of items. It uses the MediaWiki API to query for page properties and extracts the Wikidata item property. The function handles redirects and normalizes the titles. It also groups the items into batches of 50 to avoid exceeding the API's limit for the number of titles in a single request. This is a good practice for working with APIs.
     """
     # ---
     sames = []
-    medwiki_to_enwiki = {}
+    medwiki_to_en = {}
     medwiki_to_enwiki_conflic = {}
     # ---
-    missing_in_enwiki = []
+    missing_in_en = []
     # ---
     o_qids = {}
     # ---
@@ -111,7 +108,7 @@ def check(work_list, all_xpages, ty):
         # ---
         # { "error": { "code": "toomanyvalues", "info": "Too many values supplied for parameter \"titles\". The limit is 50.",
         # ---
-        jsone = wiki_api.submitAPI(params, site="en", returnjson=False)
+        jsone = submitAPI(params, site="en", returnjson=False)
         # ---
         if jsone and "batchcomplete" in jsone:
             # ---
@@ -123,7 +120,7 @@ def check(work_list, all_xpages, ty):
             Redirects = query.get("redirects", [])
             for red in Redirects:
                 if red["to"] not in all_xpages:
-                    medwiki_to_enwiki[red["from"]] = red["to"]
+                    medwiki_to_en[red["from"]] = red["to"]
                 else:
                     medwiki_to_enwiki_conflic[red["from"]] = red["to"]
             # ---
@@ -143,20 +140,20 @@ def check(work_list, all_xpages, ty):
                 title = title.replace("Wikipedia:VideoWiki/", "Video:")
                 # ---
                 if "missing" in tab:
-                    missing_in_enwiki.append(title)
+                    missing_in_en.append(title)
                 else:
                     o_qids[title] = qid
                     sames.append(title)
     # ---
-    if medwiki_to_enwiki:
+    if medwiki_to_en:
         logger.info("<<yellow>> en titles medwiki_to_enwiki:")
-        for numb, (fromm, to) in enumerate(medwiki_to_enwiki.items(), start=1):
+        for numb, (fromm, to) in enumerate(medwiki_to_en.items(), start=1):
             faf = f'["{fromm}"]'
             logger.info(f'\t {numb} from_to{faf.ljust(30)} = "{to}"')
     # ---
-    if missing_in_enwiki:
+    if missing_in_en:
         logger.info("<<yellow>> titles missing_in_enwiki:")
-        for numb, mis in enumerate(missing_in_enwiki, start=1):
+        for numb, mis in enumerate(missing_in_en, start=1):
             logger.info(f"\t <<yellow>>{numb}\t{mis.ljust(25)}")
     # ---
     if medwiki_to_enwiki_conflic:
@@ -167,22 +164,22 @@ def check(work_list, all_xpages, ty):
             logger.info(f"\t <<red>> {numb} page{faf.ljust(40)} to enwiki{fen}")
     # ---
     sames = list(set(sames))
-    missing_in_enwiki = list(set(missing_in_enwiki))
+    missing_in_en = list(set(missing_in_en))
     # ---
     o_qids_n = {x: q for x, q in o_qids.items() if q != ""}
     # ---
-    for x in missing_in_enwiki:
+    for x in missing_in_en:
         if x not in o_qids:
             o_qids[x] = ""
     # ---
-    logger.info(f"<<green>> len of medwiki_to_enwiki: {len(medwiki_to_enwiki):,}")
-    logger.info(f"<<green>> len of missing_in_enwiki: {len(missing_in_enwiki):,}")
+    logger.info(f"<<green>> len of medwiki_to_enwiki: {len(medwiki_to_en):,}")
+    logger.info(f"<<green>> len of missing_in_enwiki: {len(missing_in_en):,}")
     logger.info(f"<<green>> len of medwiki_to_enwiki_conflic: {len(medwiki_to_enwiki_conflic):,}")
     logger.info(f"<<green>> len of sames: {len(sames):,}")
     logger.info(f"<<green>> len of o_qids: {len(o_qids):,}")
     logger.info(f'<<green>> len of o_qids (qid != ""): {len(o_qids_n):,}')
     # ---
-    dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames)
+    dump_jsons(ty, medwiki_to_en, missing_in_en, sames)
     # ---
     return o_qids
 

@@ -13,7 +13,11 @@ import sys
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
 from md_core.unlinked_wb.bot import work_un
 from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
-from td_core.mdpages import qids_help
+from td_core.td_other_qids.qids_help import (
+    get_pages_to_work,
+    check_qids,
+    get_o_qids_new
+)
 
 logger = logging.getLogger(__name__)
 
@@ -46,12 +50,12 @@ def work_qids(ty):
     # ---
     # qids_list = { x: y for x, y in qids_list.items() if y != ''}
     # ---
-    work_list, all_pages = qids_help.get_pages_to_work(ty)
+    work_list, all_pages = get_pages_to_work(ty)
     # ---
-    o_qids = qids_help.check(work_list, all_pages, ty)
+    o_qids = check_qids(work_list, all_pages, ty)
     o_qids = {x: v for x, v in o_qids.items() if x in work_list}
     # ---
-    new_qids = qids_help.get_o_qids_new(o_qids, qids_list)
+    new_qids = get_o_qids_new(o_qids, qids_list)
     # ---
     logger.info(f"<<green>> new len of new_qids:{len(new_qids)}")
     # ---
