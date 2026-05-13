@@ -4,7 +4,7 @@
 إيجاد الصفحات القديمة
 تحديث صفحة User:Mr. Ibrahem/pages
 
-python3 c8/pwb.py md_core/updates/io
+python3 c9/pwb.py md_core/updates/io
 
 """
 
@@ -59,7 +59,7 @@ def get_timestamp(titles):
         # { "action": "query", "format": "json", "prop": "revisions", "titles": "Etizolam", "utf8": 1, "rvprop": "timestamp", "rvlimit": "1", "rvdir": "newer" }
         # ---
         kk = hh.get("query", {}).get("pages", {})
-        for key, vav in kk.items():
+        for _, vav in kk.items():
             timestamp = vav.get("revisions", [{"timestamp": ""}])[0].get("timestamp", "")
             NewList[page] = timestamp
         # ---

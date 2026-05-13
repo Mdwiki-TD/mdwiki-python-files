@@ -18,13 +18,9 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdpyget.bots.to_sql import insert_dict
 from td_core.td_dirs import paths
 
-TABLES_PATH = paths.tables_path
-
 logger = logging.getLogger(__name__)
 
-
-cash_exists = TABLES_PATH + "/jsons/cash_exists"
-json_files = [f for f in os.listdir(cash_exists) if f.endswith(".json")]
+json_files = [f for f in os.listdir(str(paths.cash_exists_path)) if f.endswith(".json")]
 
 que = """select DISTINCT article_id, code from all_exists;"""
 # ---
@@ -60,7 +56,7 @@ def to_sql_d(titles_data):
                 else:
                     to_add.append(title)
         # ---
-        in_sql_not_in_new = [x for x in is_in if x not in titles]
+        _in_sql_not_in_new = [x for x in is_in if x not in titles]
         # ---
         # logger.error(f"<<red>> {lang_code}: {same=}, {len(to_add)=}), {len(in_sql_not_in_new)=}")
         # ---
@@ -86,7 +82,7 @@ def main():
     # ---
     for lang_code in tqdm.tqdm(langs):
         # ---
-        file_name = cash_exists + "/" + lang_code + ".json"
+        file_name = paths.cash_exists_path / f"{lang_code}.json"
         # ---
         data = []
         with open(file_name, "r", encoding="utf-8") as f:

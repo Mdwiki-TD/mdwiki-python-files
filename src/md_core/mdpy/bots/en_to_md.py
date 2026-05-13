@@ -23,19 +23,12 @@ from md_core.mdpy.bots import en_to_md
 
 import json
 import logging
-import os
 
 from md_core_helps.mdapi_sql import sql_qids
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-
-# ---
-if os.getenv("HOME"):
-    public_html_dir = os.getenv("HOME") + "/public_html"
-else:
-    public_html_dir = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
-# ---
 enwiki_to_mdwiki = {}
 mdwiki_to_enwiki = {}
 # ---
@@ -46,7 +39,7 @@ lala = ""
 
 def make_mdwiki_list():
     # ---
-    ffile = f"{public_html_dir}/td/Tables/jsons/medwiki_to_enwiki.json"
+    ffile = paths.json_files.medwiki_to_enwiki
     # ---
     From_json = {}
     # ---

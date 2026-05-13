@@ -3,7 +3,7 @@
 
 إنشاء قائمة بعدد المراجع
 
-وحفظها في Dashboard_path
+وحفظها في paths.json_tables_path
 +
 قاعدة البيانات
 
@@ -17,7 +17,6 @@ python3 core8/pwb.py td_core/mdcount/countref -title:Esophageal_rupture
 
 import json
 import logging
-import os
 import sys
 
 from md_core_helps.apis import mdwiki_api_call
@@ -25,19 +24,14 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdcount.bots.countref_bots import count_ref_from_text
 from td_core.mdcount.bots.links import get_links_from_cats
 from td_core.mdcount.ref_words_bot import do_to_sql, get_jsons_new, logaa, make_old_values
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-# ---
-if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/td"
-else:
-    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
+
 # ---
 tab_data = {"all": {}, "lead": {}}
-# ---
-file_all = f"{Dashboard_path}/Tables/jsons/all_refcount.json"
-file_lead = f"{Dashboard_path}/Tables/jsons/lead_refcount.json"
+# ---s
 
 
 def start_to_sql():
@@ -97,16 +91,18 @@ def get_links(ty="ref"):
 
 def main():
     # ---
-    tab_data["all"], tab_data["lead"] = get_jsons_new(file_all, file_lead, "ref")
+    tab_data["all"], tab_data["lead"] = get_jsons_new(
+        paths.json_files.all_refcount, paths.json_files.lead_refcount, "ref"
+    )
     # ---
     if "merge" in sys.argv:
         # ---
-        with open(file_all, "w", encoding="utf-8") as outfile:
-            logger.info(f"<<green>> {len(tab_data['all'])} lines to {file_all}")
+        with open(paths.json_files.all_refcount, "w", encoding="utf-8") as outfile:
+            logger.info(f"<<green>> {len(tab_data['all'])} lines to {paths.json_files.all_refcount}")
             json.dump(tab_data["all"], outfile, sort_keys=True, indent=2)
         # ---
-        with open(file_lead, "w", encoding="utf-8") as outfile:
-            logger.info(f"<<green>> {len(tab_data['lead'])} lines to {file_lead}")
+        with open(paths.json_files.lead_refcount, "w", encoding="utf-8") as outfile:
+            logger.info(f"<<green>> {len(tab_data['lead'])} lines to {paths.json_files.lead_refcount}")
             json.dump(tab_data["lead"], outfile, sort_keys=True, indent=2)
         # ---
         start_to_sql()
@@ -141,11 +137,11 @@ def main():
         count_refs(x)
         # ---
         # if numb == 10 or str(numb).endswith("00"):
-        #     logaa(file_lead, tab_data["lead"])
-        #     logaa(file_all, tab_data["all"])
+        #     logaa(paths.json_files.lead_refcount, tab_data["lead"])
+        #     logaa(paths.json_files.all_refcount, tab_data["all"])
     # ---
-    logaa(file_lead, tab_data["lead"])
-    logaa(file_all, tab_data["all"])
+    logaa(paths.json_files.lead_refcount, tab_data["lead"])
+    logaa(paths.json_files.all_refcount, tab_data["all"])
     # ---
     start_to_sql()
 

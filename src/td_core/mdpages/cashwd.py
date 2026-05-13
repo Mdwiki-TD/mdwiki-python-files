@@ -11,26 +11,22 @@ import json
 import logging
 import os
 from datetime import datetime
+
 from md_core.mdpy.bots import en_to_md
 from md_core.mdpy.bots.check_title import valid_title
 from md_core_helps.apis import wikidataapi
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
-
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-TABLES_PATH = paths.tables_path
-
-Day_History = datetime.now().strftime("%Y-%m-%d")
-# ---
 redirects_qids = {}
 mis_qids = []
 # ---
 main_table_sites = {}
 # ---
-missing = {"all": 0, "date": Day_History, "langs": {}}
+missing = {"all": 0, "date": datetime.now().strftime("%Y-%m-%d"), "langs": {}}
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---
@@ -58,13 +54,16 @@ def get_qids_sitelinks(qidslist):
         qidslist (dict): A dictionary containing QIDs as keys and mdwiki titles as values.
 
     Returns:
-        dict, dict: Two dictionaries representing the sitelinks for each QID, one using mdtitle as keys and the other using sitelinks as keys.
+        dict, dict: Two dictionaries representing the sitelinks for each QID,
+        one using mdtitle as keys and the other using sitelinks as keys.
 
     Raises:
         No explicit exceptions are raised.
 
     Details:
-        This function retrieves sitelinks from Wikidata for a list of QIDs. It processes the QIDs in batches of 100 and organizes the results into two dictionaries, one using mdtitle as keys and the other using sitelinks as keys.
+        This function retrieves sitelinks from Wikidata for a list of QIDs.
+        It processes the QIDs in batches of 100 and organizes the results into two dictionaries,
+        one using mdtitle as keys and the other using sitelinks as keys.
     """
     # ---
     qs_list = list(qidslist.keys())
@@ -185,7 +184,7 @@ def dump_all(main_table_sites, len_titles):
         leeen = len_titles - len(miss_list)
         missing_langs[site] = {"missing": leeen, "exists": len(miss_list)}
         # ---
-        json_file = f"{TABLES_PATH}/jsons/cash_exists/{site}.json"
+        json_file = paths.cash_exists_path / f"{site}.json"
         # ---
         if not os.path.exists(json_file):
             logger.info(f'.... <<red>> file:"{site}.json not exists ....')
@@ -232,7 +231,7 @@ def cash_wd():
     lists, _table_l = get_qids_sitelinks(qids_list)
     # ---
     if lists:
-        with open(f"{TABLES_PATH}/jsons/sitelinks.json", "w", encoding="utf-8") as aa:
+        with open(paths.json_files.sitelinks, "w", encoding="utf-8") as aa:
             json.dump(lists, aa)
     # ---
     missing_langs = dump_all(main_table_sites, len(titles))
@@ -241,7 +240,7 @@ def cash_wd():
     # ---
     noqids = sorted([x for x in titles if x not in en_to_md.mdtitle_to_qid])
     # ---
-    with open(f"{TABLES_PATH}/jsons/noqids.json", "w", encoding="utf-8") as dd:
+    with open(paths.json_files.noqids, "w", encoding="utf-8") as dd:
         json.dump(noqids, dd)
     # ---
     # redirects_qids
@@ -257,7 +256,7 @@ def cash_wd():
     logger.info(f" len of missing qids: {len(mis_qids)}")
     # ---
     if missing["all"] > 0:
-        with open(f"{TABLES_PATH}/jsons/missing.json", "w", encoding="utf-8") as xx:
+        with open(paths.json_files.missing, "w", encoding="utf-8") as xx:
             json.dump(missing, xx)
         # ---
         logger.info(" log to missing.json true.... ")

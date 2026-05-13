@@ -3,7 +3,7 @@
 
 إنشاء قائمة بعدد المراجع والكلمات
 
-وحفظها في Dashboard_path
+وحفظها في paths.json_tables_path
 +
 قاعدة البيانات
 
@@ -17,7 +17,6 @@ python3 core8/pwb.py td_core/mdcount/countrefs_and_words -title:Esophageal_ruptu
 
 import json
 import logging
-import os
 import sys
 
 from md_core_helps.apis import mdwiki_api_call
@@ -26,23 +25,18 @@ from td_core.mdcount.bots import lead
 from td_core.mdcount.bots.countref_bots import count_ref_from_text
 from td_core.mdcount.bots.links import get_links_from_cats
 from td_core.mdcount.ref_words_bot import do_to_sql, get_jsons_new, logaa, make_old_values
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-# ---
-if os.getenv("HOME"):
-    Dashboard_path = os.getenv("HOME") + "/public_html/td"
-else:
-    Dashboard_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td"
-# ---
 refs_tab_data = {"all": {}, "lead": {}}
 words_tab_data = {"all": {}, "lead": {}}
 # ---
-file_all_refs = f"{Dashboard_path}/Tables/jsons/all_refcount.json"
-file_lead_refs = f"{Dashboard_path}/Tables/jsons/lead_refcount.json"
+file_all_refs = paths.json_files.all_refcount
+file_lead_refs = paths.json_files.lead_refcount
 # ---
-file_all_words = f"{Dashboard_path}/Tables/jsons/allwords.json"
-file_lead_words = f"{Dashboard_path}/Tables/jsons/words.json"
+file_all_words = paths.json_files.allwords
+file_lead_words = paths.json_files.words
 
 
 def start_to_sql():

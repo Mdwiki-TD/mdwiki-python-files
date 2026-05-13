@@ -6,38 +6,28 @@ python3 core8/pwb.py td_core/mdcount/bots/copy_refs_2
 """
 import json
 import logging
-import os
 from pathlib import Path
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from pymysql.converters import escape_string
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
 
-# ---
-
-# ---
-
-# ---
 Dir = str(Path(__file__).parents[0])
-# ---
-if os.getenv("HOME"):
-    public_html_dir = os.getenv("HOME") + "/public_html"
-else:
-    public_html_dir = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
-# ---
-project_tables = Path(public_html_dir) / "td/Tables/jsons"
+
+
 # ---
 que = """select DISTINCT r_title, r_lead_refs, r_all_refs from refs_counts;"""
 # ---
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
 # ---
-with open(f"{project_tables}/lead_refcount.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.lead_refcount, "r", encoding="utf-8") as f:
     lead_refs = json.load(f)
 
-with open(f"{project_tables}/all_refcount.json", "r", encoding="utf-8") as f:
+with open(paths.json_files.all_refcount, "r", encoding="utf-8") as f:
     all_refs = json.load(f)
 # ---
 lead_refs = {x.strip(): lead_refs[x] for x in lead_refs}
@@ -62,7 +52,6 @@ for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
         in_sql[r_title] = {"lead": q["r_lead_refs"], "all": q["r_all_refs"]}
 # ---
 logger.info(f"{len(in_sql)=}")
-logger.info(in_sql)
 # ---
 NEW_DATA.update(in_sql)
 # ---

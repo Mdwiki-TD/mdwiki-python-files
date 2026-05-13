@@ -5,6 +5,7 @@ Admin domain models.
 from __future__ import annotations
 
 import logging
+
 from sqlalchemy import Column, Integer, String, text
 
 # from sqlalchemy.dialects.mysql import LONGTEXT

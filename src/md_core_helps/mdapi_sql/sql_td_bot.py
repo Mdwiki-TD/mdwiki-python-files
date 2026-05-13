@@ -58,6 +58,15 @@ def _sql_connect_pymysql(
         connection = pymysql.connect(**db_args)
     except Exception as e:
         logger.exception(e)
+        db_args.update(
+            {
+                "cursorclass": [],
+                "conv": [],
+                "password": "*****",
+            }
+        )
+        logger.warning(db_args)
+        logger.warning(query)
         return []
 
     with connection as conn, conn.cursor() as cursor:
