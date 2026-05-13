@@ -63,9 +63,7 @@ _json_files = PathsFiles(
 paths = Paths(
     tables_path=_TABLES_PATH,
     json_tables_path=_jsons_path,
-
     cats_cash_path=_TABLES_PATH / "cats_cash",
     cash_exists_path=_TABLES_PATH / "cash_exists",
-
     json_files=_json_files,
 )

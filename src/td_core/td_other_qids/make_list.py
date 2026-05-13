@@ -16,7 +16,7 @@ from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
 from td_core.td_other_qids.qids_help import (
     get_pages_to_work,
     check_qids,
-    get_o_qids_new
+    get_o_qids_new,
 )
 
 logger = logging.getLogger(__name__)
