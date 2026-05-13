@@ -80,7 +80,7 @@ def get_red(title):
     return lista
 
 
-def work(title, num, length, From=""):
+def work(title, num, length, from_title=""):
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
@@ -126,7 +126,7 @@ def main():
     # python red.py -newpages:20000
     # ---
     page2 = ""
-    From = "0"
+    from_title = "0"
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
@@ -134,13 +134,13 @@ def main():
         arg = arg.lower()
         # ---
         if arg == "-from":
-            From = py_tools.ec_de_code(value, "decode")
+            from_title = py_tools.ec_de_code(value, "decode")
         # ---
         if arg in ["-page2", "page2"]:
             page2 = py_tools.ec_de_code(value, "decode")
     # ---
-    if page2 != "" and From != "":
-        work(page2, 0, 1, From=From)
+    if page2 != "" and from_title != "":
+        work(page2, 0, 1, from_title=from_title)
     # ---
     user = ""
     user_limit = "3000"

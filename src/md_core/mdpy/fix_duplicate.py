@@ -25,9 +25,6 @@ for arg in sys.argv:
 # ---
 from_to = {}
 
-my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
-mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
-
 
 @functools.lru_cache(maxsize=1)
 def load_main_api() -> AllAPIS:
@@ -46,77 +43,6 @@ def load_main_api() -> AllAPIS:
     )
 
 
-def page_put(
-    newtext="",
-    summary="",
-    title="",
-    minor="",
-    nocreate=1,
-    **kwargs,
-):
-    # ---
-    main_api = load_main_api()
-    # ---
-    page = main_api.MainPage(title, "www", family="mdwiki")
-    exists = page.exists()
-    # ---
-    save_page = page.save(newtext=newtext, summary=summary, nocreate=nocreate, minor=minor)
-    # ---
-    return save_page
-
-
-def GetPageText(title, redirects=False, get_revid=False):
-    """Retrieve the wikitext of a specified page from a wiki.
-
-    This function sends a request to a wiki API to retrieve the wikitext of
-    a page identified by its title. It can handle redirects and can
-    optionally return the revision ID of the page. If the page does not
-    exist or cannot be parsed, appropriate messages are logged.
-
-    Args:
-        title (str): The title of the page to retrieve.
-        redirects (bool?): Whether to follow redirects. Defaults to False.
-        get_revid (bool?): Whether to return the revision ID along with the wikitext.
-            Defaults to False.
-
-    Returns:
-        str: The wikitext of the specified page.
-        tuple: A tuple containing the wikitext and the revision ID if get_revid is
-            True.
-    """
-
-    # logger.info( '**GetarPageText: ')
-    # ---
-    params = {
-        "action": "parse",
-        # "prop": "wikitext|sections",
-        "prop": "wikitext|revid",
-        "page": title,
-        # "redirects": 1,
-        # "normalize": 1,
-    }
-    # ---
-    if redirects:
-        params["redirects"] = 1
-    # ---
-    text = ""
-    # ---
-    json1 = post_s(params)
-    if json1:
-        text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
-    else:
-        logger.info("no parse in json1:")
-        logger.info(json1)
-    # ---
-    if not text:
-        logger.info(f'page {title} text == "".')
-    # ---
-    if get_revid:
-        return text, json1.get("parse", {}).get("revid", 0)
-    # ---
-    return text
-
-
 def post_s(params, addtoken=False, files=None):
     # ---
     main_api = load_main_api()
@@ -131,23 +57,28 @@ def post_s(params, addtoken=False, files=None):
     return json1
 
 
-def fix_dup(From, To):
+def fix_dup(from_title, to_title):
     """Treat one double redirect."""
     # ---
-    if To in from_to:
-        To = from_to[To]
+    if to_title in from_to:
+        to_title = from_to[to_title]
     # ---
-    newtext = f"#REDIRECT [[{To}]]"
+    newtext = f"#REDIRECT [[{to_title}]]"
     # ---
-    oldtext = GetPageText(From)
+    main_api = load_main_api()
     # ---
-    sus = f"fix duplicate redirect to [[{To}]]"
+    page = main_api.MainPage(from_title, "www", family="mdwiki")
+    _exists = page.exists()
+    # ---
+    oldtext = page.get_text()
+    # ---
+    sus = f"fix duplicate redirect to [[{to_title}]]"
     # ---
     if oldtext == newtext:
         logger.info("no changes.")
-        return
+        return False
     # ---
-    page_put(oldtext=oldtext, newtext=newtext, summary=sus, title=From, returntrue=False, diff=True)
+    return page.save(newtext=newtext, summary=sus)
 
 
 def main():
@@ -175,16 +106,16 @@ def main():
     redirects = lista.get("query", {}).get("redirects", [])
     # ---
     for gg in redirects:
-        From = gg["from"]
-        To = gg["to"]
-        from_to[From] = To
+        from_title = gg["from"]
+        to_title = gg["to"]
+        from_to[from_title] = to_title
     # ---
     for nu, title in enumerate(redirects, start=1):
-        From = title["from"]
-        logger.info(f'-------\n*<<yellow>> >{nu}/{len(redirects)} From:"{From}".')
-        To = title["to"]
-        if To in from_to:
-            fix_dup(From, To)
+        from_title = title["from"]
+        logger.info(f'-------\n*<<yellow>> >{nu}/{len(redirects)} from_title:"{from_title}".')
+        to_title = title["to"]
+        if to_title in from_to:
+            fix_dup(from_title, to_title)
 
 
 if __name__ == "__main__":

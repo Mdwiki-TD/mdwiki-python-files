@@ -60,21 +60,21 @@ def WD_Merge(q1, q2):
     if q11.isdigit() and q22.isdigit():
         # ---
         if int(q11) > int(q22):
-            From = q1
-            To = q2
+            from_title = q1
+            to_title = q2
         else:
-            From = q2
-            To = q1
+            from_title = q2
+            to_title = q1
     else:
-        From = q2
-        To = q1
+        from_title = q2
+        to_title = q1
     # ---
-    logger.info(f"from {From} to {To} ")
+    logger.info(f"from {from_title} to {to_title} ")
     # ---
     params = {
         "action": "wbmergeitems",
-        "fromid": From,
-        "toid": To,
+        "fromid": from_title,
+        "toid": to_title,
         "ignoreconflicts": "description",
         "summary": "",
     }
@@ -93,8 +93,8 @@ def WD_Merge(q1, q2):
             # ---
             pams2 = {
                 "action": "wbcreateredirect",
-                "from": From,
-                "to": To,
+                "from": from_title,
+                "to": to_title,
                 "ignoreconflicts": "description",
                 "summary": "",
             }

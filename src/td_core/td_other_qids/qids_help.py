@@ -75,7 +75,7 @@ def dump_jsons(ty, medwiki_to_en, missing_in_en, sames):
     with open(paths.json_tables_path / missing_in_en_file, "w", encoding="utf-8") as bb:
         json.dump(missing_in_en, bb)
     # ---
-    with open(paths.json_tables_path / sames_file, encoding="utf-8") as cc:
+    with open(paths.json_tables_path / sames_file, "w", encoding="utf-8") as cc:
         json.dump(sames, cc)
 
 
