@@ -38,7 +38,7 @@ def dump_it(file, data):
     return False
 
 
-def from_cache():
+def from_cache() -> list[str]:
     file = Path(__file__).parent / "all_pages.json"
     # ----
     if file.exists() and "nodone" not in sys.argv:
@@ -88,7 +88,7 @@ def dump_to_cache(cat, data):
         logger.info(f"<<green>> {cat}.json is updated ({len_data})")
 
 
-def Cat_Depth(title, depth=0, ns="all", print_s=True):
+def Cat_Depth(title, depth=0, ns="all", print_s=True) -> list[str]:
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
@@ -113,7 +113,7 @@ def Cat_Depth(title, depth=0, ns="all", print_s=True):
     return list(result_table.keys())
 
 
-def make_cash_to_cats(dump_data=False):
+def make_cash_to_cats(dump_data=False) -> list[str]:
     # ---
     all_pages = []
     # ---

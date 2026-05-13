@@ -1,5 +1,6 @@
 """ """
 
+import functools
 import copy
 import json
 import logging
@@ -14,16 +15,25 @@ from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-logger.info("Get_All_pages:")
-# ---
-all_pages = Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
-all_pages = [x for x in all_pages if valid_title(x)]
-# ---
-logger.info("make_cash_to_cats:")
-# ---
-td_list = from_cache()
-td_list = [x for x in td_list if valid_title(x)]
-# ---
+
+@functools.lru_cache(maxsize=1)
+def load_td_list() -> list[str]:
+    logger.info("make_cash_to_cats:")
+    # ---
+    td_list: list[str] = from_cache()
+    td_list = [x for x in td_list if valid_title(x)]
+    # ---
+    return td_list
+
+
+@functools.lru_cache(maxsize=1)
+def load_all_pages() -> list[str]:
+    logger.info("Get_All_pages:")
+    # ---
+    all_pages: list[str] = Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
+    all_pages = [x for x in all_pages if valid_title(x)]
+    # ---
+    return all_pages
 
 
 def get_pages_to_work(ty="td|other"):
@@ -31,9 +41,10 @@ def get_pages_to_work(ty="td|other"):
     get pages to work
     """
     # ---
-    global td_list
+    td_list = load_td_list()
+    all_pages = load_all_pages()
     # ---
-    tds_list = td_list
+    tds_list = td_list[:]
     # ---
     if ty == "other":
         tds_list = [x for x in all_pages if x not in tds_list]
