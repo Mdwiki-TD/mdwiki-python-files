@@ -20,19 +20,9 @@ from pathlib import Path
 from md_core.mdpy.bots.check_title import valid_title
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
+from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
-
-# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="all")
-
-Day_History = datetime.now().strftime("%Y-%m-%d")
-
-if os.getenv("HOME"):
-    dump_path = os.getenv("HOME") + "/public_html/td/Tables/cats_cash"
-else:
-    dump_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td/Tables/cats_cash"
-
-dump_path = Path(dump_path)
 
 today = datetime.today().strftime("%Y-%m-%d")
 
@@ -75,7 +65,7 @@ def dump_to_cache(cat, data):
     if cat.lower().startswith("category:"):
         cat = cat[9:]
     # ---
-    filename = dump_path / f"{cat}.json"
+    filename = paths.cats_cash_path / f"{cat}.json"
     # ---
     if not filename.exists():
         filename.touch(mode=stat.S_IRWXU | stat.S_IRWXG)

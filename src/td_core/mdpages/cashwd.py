@@ -21,14 +21,12 @@ from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
-Day_History = datetime.now().strftime("%Y-%m-%d")
-# ---
 redirects_qids = {}
 mis_qids = []
 # ---
 main_table_sites = {}
 # ---
-missing = {"all": 0, "date": Day_History, "langs": {}}
+missing = {"all": 0, "date": datetime.now().strftime("%Y-%m-%d"), "langs": {}}
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---

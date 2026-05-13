@@ -39,6 +39,7 @@ class PathsFiles:
 @dataclass(frozen=True)
 class Paths:
     tables_path: Path
+    cats_cash_path: Path
     json_tables_path: Path
     cash_exists_path: Path
     json_files: PathsFiles
@@ -62,6 +63,9 @@ _json_files = PathsFiles(
 paths = Paths(
     tables_path=_TABLES_PATH,
     json_tables_path=_jsons_path,
-    cash_exists_path=_jsons_path / "cash_exists",
+
+    cats_cash_path=_TABLES_PATH / "cats_cash",
+    cash_exists_path=_TABLES_PATH / "cash_exists",
+
     json_files=_json_files,
 )
