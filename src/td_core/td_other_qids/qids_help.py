@@ -1,7 +1,7 @@
 """ """
 
-import functools
 import copy
+import functools
 import json
 import logging
 import re
