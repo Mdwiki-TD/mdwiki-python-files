@@ -6,6 +6,7 @@
 python3 core8/pwb.py md_core/mdpy/fixred
 
 """
+import functools
 import logging
 import re
 import sys
@@ -16,23 +17,20 @@ from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
 
-NewList = {}
-
-redirects_pages = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="redirects")
-logger.info(f"len of redirects_pages {len(redirects_pages)} ")
-# ---
-nonredirects = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
-
-logger.info(f"len of nonredirects {len(nonredirects)} ")
-
 from_to = {}
 normalized = {}
-# ---
 
 
 def printtest(s):
     if "test" in sys.argv:
         logger.info(s)
+
+
+@functools.lru_cache(maxsize=1)
+def load_nonredirects() -> list[str]:
+    nonredirects = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
+    logger.info(f"len of nonredirects {len(nonredirects)} ")
+    return nonredirects
 
 
 def find_redirects(links):
@@ -154,6 +152,8 @@ def treat_page(title):
     # ---
     find_redirects(links["links"])
     # ---
+    nonredirects = load_nonredirects()
+    # ---
     for tt in links["links"]:
         # ---
         page = links["links"][tt]
@@ -189,15 +189,12 @@ def main():
             ttab.append(value)
     # ---
     if ttab in [[], ["all"]]:
+        nonredirects = load_nonredirects()
         ttab = nonredirects
     # ---
     for title in ttab:
         treat_page(title)
 
-    # ---
 
-
-# ---
 if __name__ == "__main__":
     main()
-# ---
