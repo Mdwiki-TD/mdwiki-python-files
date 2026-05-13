@@ -21,8 +21,6 @@ from td_core.td_other_qids.qids_help import (
 
 logger = logging.getLogger(__name__)
 
-ALL_QIDS = {}
-
 
 def add_q(new_qids, ty):
     # ---
@@ -30,8 +28,6 @@ def add_q(new_qids, ty):
     # ---
     if len(new_qids) == 0:
         return
-    # ---
-    new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
     # ---
     if len(new_qids) < 10:
         logger.info("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
@@ -44,9 +40,7 @@ def add_q(new_qids, ty):
         sql_qids.add_titles_to_qids(new_qids, add_empty_qid=True)
 
 
-def work_qids(ty):
-    # ---
-    qids_list = ALL_QIDS[ty]
+def work_qids(ty, qids_list):
     # ---
     # qids_list = { x: y for x, y in qids_list.items() if y != ''}
     # ---
@@ -59,12 +53,12 @@ def work_qids(ty):
     # ---
     logger.info(f"<<green>> new len of new_qids:{len(new_qids)}")
     # ---
-    work_un(new_qids)
-    # ---
-    add_q(new_qids, ty)
+    return new_qids
 
 
 def start():
+    # ---
+    ALL_QIDS = {}
     # ---
     ALL_QIDS["other"] = sql_qids_others.get_others_qids()
     ALL_QIDS["td"] = sql_qids.get_all_qids()
@@ -78,7 +72,13 @@ def start():
         tab = ["td", "other"]
     # ---
     for ty in tab:
-        work_qids(ty)
+        qids_list = ALL_QIDS[ty]
+        new_qids = work_qids(ty, qids_list)
+        work_un(new_qids)
+        # ---
+        new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
+        # ---
+        add_q(new_qids, ty)
 
 
 if __name__ == "__main__":
