@@ -45,7 +45,7 @@ def get_adds_lines(text):
         # ---
         for func in functions:
             # ---
-            r"use function Actions\HtmlSide\create_side;",
+            # r"use function Actions\HtmlSide\create_side;",
             # ---
             Add = f"use function {ns}\\{func};"
             # ---
@@ -103,7 +103,7 @@ def start():
     # ---
     pathss = []
     # ---
-    for root, dirs, files in os.walk(path, topdown=True):
+    for root, _dirs, files in os.walk(path, topdown=True):
         # ---
         scanroot = scan_root(root)
         # ---
