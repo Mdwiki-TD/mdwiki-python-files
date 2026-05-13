@@ -56,7 +56,11 @@ def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
         group = dict(list(links.items())[i : i + 50])
         # ---
         new_data = view_bot.article_views_new(
-            f"{lang}.wikipedia", group.keys(), granularity="monthly", start="20150701", end="20300101",
+            f"{lang}.wikipedia",
+            group.keys(),
+            granularity="monthly",
+            start="20150701",
+            end="20300101",
         )
         # ---
         # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
