@@ -63,7 +63,6 @@ def _sql_connect_pymysql(
                 "cursorclass": [],
                 "conv": [],
                 "password": "*****",
-
             }
         )
         logger.warning(db_args)
