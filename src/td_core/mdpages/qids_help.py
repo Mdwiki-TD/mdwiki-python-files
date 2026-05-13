@@ -54,15 +54,22 @@ def dump_jsons(ty, medwiki_to_enwiki, missing_in_enwiki, sames):
         logger.info("Skipping dump of JSON files")
         return
     # ---
-    json_ext = "_other.json" if "other" == ty else ".json"
+    mdwiki_to_enwiki_file = "medwiki_to_enwiki.json"
+    missing_in_en_file = "missing_in_enwiki.json"
+    sames_file = "sames.json"
     # ---
-    with open(paths.json_tables_path / f"medwiki_to_enwiki{json_ext}", "w", encoding="utf-8") as aa:
+    if ty == "other":
+        mdwiki_to_enwiki_file = "medwiki_to_enwiki_other.json"
+        missing_in_en_file = "missing_in_enwiki_other.json"
+        sames_file = "sames_other.json"
+    # ---
+    with open(paths.json_tables_path / mdwiki_to_enwiki_file, "w", encoding="utf-8") as aa:
         json.dump(medwiki_to_enwiki, aa)
     # ---
-    with open(paths.json_tables_path / f"missing_in_enwiki{json_ext}", "w", encoding="utf-8") as bb:
+    with open(paths.json_tables_path / missing_in_en_file, "w", encoding="utf-8") as bb:
         json.dump(missing_in_enwiki, bb)
     # ---
-    with open(paths.json_tables_path / f"sames{json_ext}", "w", encoding="utf-8") as cc:
+    with open(paths.json_tables_path / sames_file, encoding="utf-8") as cc:
         json.dump(sames, cc)
 
 
