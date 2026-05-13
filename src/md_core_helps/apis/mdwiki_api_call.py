@@ -149,7 +149,7 @@ def GetPageText(title, redirects=False, get_revid=False):
     # ---
     text = ""
     # ---
-    json1 = post_s(params)
+    json1 = post_s(params) or {}
     if json1:
         text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
     else:
@@ -185,7 +185,7 @@ def GetRevid(title):
     # ---
     params = {"action": "parse", "prop": "revid", "page": title}
     # ---
-    json1 = post_s(params)
+    json1 = post_s(params) or {}
     if json1:
         revid = json1.get("parse", {}).get("revid", 0)
         return revid
@@ -206,7 +206,7 @@ def Get_page_links(title, namespace="0", limit="max"):
         "converttitles": 1,
     }
     # ---
-    json1 = post_s(params)
+    json1 = post_s(params) or {}
     # ---
     Main_table = {
         "links": {},
@@ -238,9 +238,13 @@ def Get_template_pages(title, namespace="*", limit="max"):
     return api_new.Get_template_pages(title, namespace=namespace)
 
 
-def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all=0):
+def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all=0) -> list[str]:
     return api_new.Get_All_pages(
-        start=start, namespace=namespace, limit=limit, apfilterredir=apfilterredir, limit_all=limit_all
+        start=start,
+        namespace=namespace,
+        limit=limit,
+        apfilterredir=apfilterredir,
+        limit_all=limit_all,
     )
 
 

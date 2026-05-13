@@ -18,52 +18,34 @@ from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_la
 
 logger = logging.getLogger(__name__)
 
-# ---
-
-# ---
 TEST = False
-# ---
+
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
-# ---
-file = f"{Dir2}/lists/words_mdwiki_langs.json"
-# ---
-if not os.path.exists(file):
-    with open(file, "w", encoding="utf-8") as f:
-        json.dump({}, f)
-# ---
-# ---
-words_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
 
-def log_words():
-    logger.info(f"<<yellow>> {len(words_by_lang)} words")
-    helps.dump_data(file, words_by_lang)
+def log_words(file_path, data):
+    logger.info(f"<<yellow>> {len(data)} words")
+    helps.dump_data(file_path, data)
 
 
-# ---
-N_g = 0
+def valid(x, tab, empty=""):
+    i = tab.get(x) or tab.get(x.lower())
+    if not i or i == empty:
+        return True
+    return False
 
 
-def get_w(links, lang):
+def get_w(links, lang, _words_by_lang):
     # ---
-    global words_by_lang, N_g
-    # ---
-    if lang not in words_by_lang:
-        words_by_lang[lang] = {}
+    if lang not in _words_by_lang:
+        _words_by_lang[lang] = {}
     # ---
     m = 0
-
-    def valid(x, tab, empty=""):
-        i = tab.get(x) or tab.get(x.lower())
-        if not i or i == empty:
-            return True
-        return False
-
     # ---
     if "onlynew" in sys.argv:
-        # links = [ x for x in links if not x in words_by_lang[lang] or words_by_lang[lang][x] == 0]
-        links = [x for x in links if valid(x, words_by_lang[lang], empty=0)]
+        # links = [ x for x in links if not x in _words_by_lang[lang] or _words_by_lang[lang][x] == 0]
+        links = [x for x in links if valid(x, _words_by_lang[lang], empty=0)]
     # ---
     lena = len(links)
     # ---
@@ -73,7 +55,7 @@ def get_w(links, lang):
         # ---
         m += 1
         # ---
-        words_in = words_by_lang[lang].get(title_lower, 0)
+        words_in = _words_by_lang[lang].get(title_lower, 0)
         # ---
         if "new" in sys.argv and words_in > 40:
             continue
@@ -88,12 +70,10 @@ def get_w(links, lang):
         if words_in != 0 and _words == 0:
             continue
         # ---
-        words_by_lang[lang][title_lower] = _words
+        _words_by_lang[lang][title_lower] = _words
         # ---
-        N_g += 1
-        # ---
-        if N_g % 100 == 0:
-            log_words()
+    # ---
+    return _words_by_lang
 
 
 def start():
@@ -107,6 +87,14 @@ def start():
     # ---
     n = 0
     # ---
+    file = f"{Dir2}/lists/words_mdwiki_langs.json"
+    # ---
+    if not os.path.exists(file):
+        with open(file, "w", encoding="utf-8") as f:
+            json.dump({}, f)
+    # ---
+    words_by_lang = json.load(open(file, "r", encoding="utf-8"))
+    # ---
     for lang in langkeys:
         # ---
         links = links_by_lang[lang]
@@ -116,27 +104,13 @@ def start():
         # ---
         n += 1
         # ---
-        get_w(links, lang)
+        words_by_lang = get_w(links, lang, words_by_lang)
+        # ---
+        log_words(file, words_by_lang)
         # ---
     # ---
-    log_words()
+    log_words(file, words_by_lang)
 
 
-def test():
-    # ---
-    da = ["مرحاض ذو حفرة"]
-    # ---
-    get_w(da, "ar")
-
-    # ---
-    # log_words()
-    # ---
-
-
-# ---
 if __name__ == "__main__":
-    if "test1" in sys.argv:
-        TEST = True
-        test()
-    else:
-        start()
+    start()

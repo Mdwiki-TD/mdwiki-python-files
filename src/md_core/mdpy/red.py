@@ -5,6 +5,7 @@
 
 """
 
+import functools
 import logging
 import sys
 
@@ -19,10 +20,6 @@ logger = logging.getLogger(__name__)
 user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 # ---
-
-# ---
-Session = requests.Session()
-# ---
 offset = {1: 0}
 # ---
 to_make = {}
@@ -32,13 +29,15 @@ for arg in sys.argv:
     # ---
     if arg.lower() in ["offset", "-offset"] and value.isdigit():
         offset[1] = int(value)
-# ---
-# from export import * # export_en_history( title )
-# ---
+
 api_new = NewApi("www", family="mdwiki")
 
-# pages   = api_new.Find_pages_exists_or_not(liste)
-# pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
+
+@functools.lru_cache(maxsize=1)
+def _load_session() -> requests.Session:
+    Session = requests.Session()
+    Session.headers.update({"User-Agent": user_agent})
+    return Session
 
 
 def get_red(title):
@@ -55,11 +54,12 @@ def get_red(title):
     # ---
     lista = []
     # ---
+    Session = _load_session()
+    # ---
     r22 = Session.post(
         "https://en.wikipedia.org/w/api.php",
         data=params,
         timeout=10,
-        headers={"User-Agent": user_agent},
     )
     json1 = r22.json()
     # ---
@@ -80,7 +80,7 @@ def get_red(title):
     return lista
 
 
-def work(title, num, length, From=""):
+def work(title, num, length, from_title=""):
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
@@ -126,7 +126,7 @@ def main():
     # python red.py -newpages:20000
     # ---
     page2 = ""
-    From = "0"
+    from_title = "0"
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
@@ -134,13 +134,13 @@ def main():
         arg = arg.lower()
         # ---
         if arg == "-from":
-            From = py_tools.ec_de_code(value, "decode")
+            from_title = py_tools.ec_de_code(value, "decode")
         # ---
         if arg in ["-page2", "page2"]:
             page2 = py_tools.ec_de_code(value, "decode")
     # ---
-    if page2 != "" and From != "":
-        work(page2, 0, 1, From=From)
+    if page2 != "" and from_title != "":
+        work(page2, 0, 1, from_title=from_title)
     # ---
     user = ""
     user_limit = "3000"

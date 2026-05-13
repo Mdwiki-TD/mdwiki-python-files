@@ -18,33 +18,22 @@ logger = logging.getLogger(__name__)
 
 view_bot = PageviewsClient()
 
-# ---
 TEST = False
-# ---
 Dir = Path(__file__).parent
-# ---
-file = f"{Dir}/lists/views.json"
-# ---
-if not os.path.exists(file):
-    with open(file, "w", encoding="utf-8") as f:
-        json.dump({}, f)
-# ---
-with open(file, "r", encoding="utf-8") as f:
-    ViewsData = json.load(f)
-# ---
+
 N_g = {1: 0}
 
 
-def dump_data(file, data):
-    logger.info(f"<<green>> () file:{file}.")
+def dump_data(file_path, data):
+    logger.info(f"<<green>> () file:{file_path}.")
     logger.info(f"<<yellow>> {len(data)} views")
     try:
-        with open(file, "w", encoding="utf-8") as f:
+        with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
         logger.error("<<red>> keyboard interrupt sys.exit()")
         # ---
-        with open(f"{file}_1", "w", encoding="utf-8") as f:
+        with open(f"{file_path}_1", "w", encoding="utf-8") as f:
             json.dump(data, f)
         # ---
         sys.exit()
@@ -52,14 +41,12 @@ def dump_data(file, data):
         logger.error(f"<<red>> dump Error: {e}")
 
 
-def get_v(lang, links, lang_links_mdtitle_s):
-    # ---
-    global ViewsData
+def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
     # ---
     len_p = len(links)
     # -- -
     if "new" in sys.argv:
-        links = {x: t for x, t in links.items() if ViewsData[t].get(lang, {}).get("views", 0) == 0}
+        links = {x: t for x, t in links.items() if views_data[t].get(lang, {}).get("views", 0) == 0}
         de = len_p - len(links)
         logger.info(f"de: {de}")
     # ---
@@ -69,7 +56,11 @@ def get_v(lang, links, lang_links_mdtitle_s):
         group = dict(list(links.items())[i : i + 50])
         # ---
         new_data = view_bot.article_views_new(
-            f"{lang}.wikipedia", group.keys(), granularity="monthly", start="20150701", end="20300101"
+            f"{lang}.wikipedia",
+            group.keys(),
+            granularity="monthly",
+            start="20150701",
+            end="20300101",
         )
         # ---
         # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
@@ -83,29 +74,31 @@ def get_v(lang, links, lang_links_mdtitle_s):
             # ---
             all_views = tabe["all"]
             # ---
-            viws_in = ViewsData[mdtitle].get(lang, {}).get("views", 0)
+            viws_in = views_data[mdtitle].get(lang, {}).get("views", 0)
             # ---
             logger.info(f"t: {title} - {lang} - views: {all_views}")
             # ---
             # ViewsData.setdefault(mdtitle, {})[lang] = ViewsData[mdtitle].setdefault(lang, {})
             # ---
             # ViewsData.setdefault(mdtitle, {})
-            if mdtitle not in ViewsData.keys():
-                ViewsData[mdtitle] = {}
+            if mdtitle not in views_data.keys():
+                views_data[mdtitle] = {}
             # ---
             # ViewsData[mdtitle].setdefault(lang, {})
-            if lang not in ViewsData[mdtitle].keys():
-                ViewsData[mdtitle][lang] = {}
+            if lang not in views_data[mdtitle].keys():
+                views_data[mdtitle][lang] = {}
             # ---
             if viws_in > 0 and all_views == 0:
                 continue
             # ---
-            ViewsData[mdtitle][lang] = {"title": title, "views": all_views}
+            views_data[mdtitle][lang] = {"title": title, "views": all_views}
             # ---
             N_g[1] += 1
             # ---
             if N_g[1] % 100 == 0:
-                dump_data(file, ViewsData)
+                dump_data(file_path, views_data)
+
+    return views_data
 
 
 def get_lang_links_mdtitles(lang_links):
@@ -143,6 +136,15 @@ def start():
     to_work = lang_links_mdtitles
     # ---
     n = 0
+    # ---# ---
+    file_path = f"{Dir}/lists/views.json"
+    # ---
+    if not os.path.exists(file_path):
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump({}, f)
+    # ---
+    with open(file_path, "r", encoding="utf-8") as f:
+        ViewsData = json.load(f)
     # ---
     for lang, tab in to_work.items():
         # ---
@@ -152,10 +154,9 @@ def start():
         # ---
         logger.info(f"<<blue>> p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
         # ---
-        get_v(lang, tab, lang_links_mdtitles)
-        # ---
+        ViewsData = get_v(lang, tab, lang_links_mdtitles, file_path, ViewsData)
     # ---
-    dump_data(file, ViewsData)
+    dump_data(file_path, ViewsData)
 
 
 if __name__ == "__main__":

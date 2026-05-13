@@ -105,13 +105,14 @@ def get_all_pages_all_keys(lang=False, table="pages"):
     return list(select_md_sql(qua, return_dict=True))
 
 
-def get_db_categories():
+def get_db_categories() -> dict:
     return {
-        c["category"]: c["depth"] for c in select_md_sql("select category, depth from categories;", return_dict=True)
+        c["category"]: c["depth"] for c in
+        select_md_sql("select category, depth from categories;", return_dict=True)
     }
 
 
-def get_db_users():
+def get_db_users() -> list:
     return [c["username"] for c in select_md_sql("select username from users;", return_dict=True)]
 
 

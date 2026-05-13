@@ -5,7 +5,7 @@ python3 core8/pwb.py copy_to_en/tests/test_alltext_changes
 
 from pathlib import Path
 
-from src.copy_to_en.bots import alltext_changes
+from src1.copy_to_en.bots import alltext_changes
 
 
 class TestAllTextChanges:

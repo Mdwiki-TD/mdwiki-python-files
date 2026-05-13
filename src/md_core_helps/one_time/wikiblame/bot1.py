@@ -15,13 +15,9 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-# ---
-session = requests.Session()
-
-
 def get_url(url):
     try:
-        html = session.get(url)
+        html = requests.get(url)
         return html.text
     except Exception as e:
         logger.info(f"except: {e}")
@@ -52,6 +48,3 @@ def wikiblame(table):
     url = f"{endpoint}?{urllib.parse.urlencode(params)}"
     # ---
     html = get_url(url)
-    # ---
-    #
-    # ---

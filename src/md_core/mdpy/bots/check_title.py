@@ -12,7 +12,7 @@ falses = [
 ]
 
 
-def valid_title(title):
+def valid_title(title: str) -> bool:
     # ---
     title = title.lower().strip()
     # ---

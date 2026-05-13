@@ -31,15 +31,14 @@ file = f"{Dir2}/lists/views_mdwiki_langs.json"
 if not os.path.exists(file):
     with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
-# ---
-# ---
-ViewsData = json.load(open(file, "r", encoding="utf-8"))
+
+N_g = 0
 
 
-def log_views():
-    logger.info(f"<<yellow>> {len(ViewsData)} views")
-    # dump ViewsData
-    helps.dump_data(file, ViewsData)
+def log_views(file_path, data):
+    logger.info(f"<<yellow>> {len(data)} views")
+    # dump data
+    helps.dump_data(file_path, data)
 
 
 def api_views(title, lang):
@@ -61,13 +60,9 @@ def api_views(title, lang):
     return vs
 
 
-# ---
-N_g = 0
-
-
-def get_v(links):
+def get_v(links, views_data, file_path):
     # ---
-    global ViewsData, N_g
+    global N_g
     # ---
     m = 0
     # ---
@@ -77,8 +72,8 @@ def get_v(links):
         # ---
         m += 1
         # ---
-        if mdtitle not in ViewsData:
-            ViewsData[mdtitle] = {}
+        if mdtitle not in views_data:
+            views_data[mdtitle] = {}
         # ---
         logger.info(f"<<yellow>> title: {m}/{lena} {mdtitle}")
         # ---
@@ -92,7 +87,7 @@ def get_v(links):
             if lang != "en" and "en" in sys.argv:
                 continue
             # ---
-            viws_in = ViewsData[mdtitle].get(lang, {}).get("views", 0)
+            viws_in = views_data[mdtitle].get(lang, {}).get("views", 0)
             # ---
             if "new" in sys.argv and viws_in != 0:
                 continue
@@ -106,16 +101,19 @@ def get_v(links):
             if viws_in != 0 and viws == 0:
                 continue
             # ---
-            ViewsData[mdtitle][lang] = {"title": title, "views": viws}
+            views_data[mdtitle][lang] = {"title": title, "views": viws}
             # ---
             N_g += 1
             # ---
             if N_g % 100 == 0:
-                log_views()
+                log_views(file_path, views_data)
+    return views_data
 
 
 def start():
     n = 0
+    # ---
+    ViewsData = json.load(open(file, "r", encoding="utf-8"))
     # ---
     # make text for each section
     for section, links in sects_links_langlinks.items():
@@ -125,10 +123,10 @@ def start():
         # ---
         n += 1
         # ---
-        get_v(links)
+        get_v(links, ViewsData, file)
         # ---
     # ---
-    log_views()
+    log_views(file, ViewsData)
 
 
 def test():
@@ -162,14 +160,13 @@ def test():
         }
     }
     # ---
-    get_v(da)
+    ViewsData = json.load(open(file, "r", encoding="utf-8"))
     # ---
-    log_views()
-
+    get_v(da, ViewsData, file)
     # ---
+    log_views(file, ViewsData)
 
 
-# ---
 if __name__ == "__main__":
     if "test1" in sys.argv:
         TEST = True

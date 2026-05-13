@@ -240,7 +240,7 @@ def start():
             }
             LIMIT 100
     """
-    newtabs = wikidataapi.wbsearchentities("User:Mr. Ibrahem", "en")
+    newtabs = wikidataapi.wbsearchentities("User:Mr. Ibrahem", "en") or {}
     # ---
     numb = 0
     # ---

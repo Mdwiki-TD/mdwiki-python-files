@@ -7,7 +7,7 @@ from md_core.mdpy.fixref.fixref_text_new import fix_ref_template
 # ---
 text = """
     <!-- Definition and symptoms -->
-    '''Hypoprolactinemia''' is a [[medical condition]] characterized by a lack of [[prolactin]], a [[hypothalamic-pituitary hormone]].<ref name=Tri2019>{{cite book |last1=Tritos |first1=Nicholas A. |last2=Klibanski |first2=Anne |title=Prolactin Disorders: From Basic Science to Clinical Management |date=2019 |publisher=Springer |isbn=978-3-030-11836-5 |page=104 |url=https://books.google.ca/books?id=J6SWDwAAQBAJ&pg=PA104 |language=en}}</ref> Symptoms include the inability to produce milk after [[childbirth]].<ref name=Yen2013/> Usually it occurs together with [[hypopituitarism]].<ref name=Yen2013/> Other complications may include [[infertility]] and [[sexual dysfunction]].<ref name=Tri2019/>
+    '''Hypoprolactinemia''' is a [[medical condition]] characterized by a lack of [[prolactin]], a [[hypothalamic-pituitary hormone]].<ref name=Tri2019>{{cite book |last1=Tritos |first1=Nicholas A. |last2=Klibanski |first2=Anne |title=Prolactin Disorders: from_title Basic Science to Clinical Management |date=2019 |publisher=Springer |isbn=978-3-030-11836-5 |page=104 |url=https://books.google.ca/books?id=J6SWDwAAQBAJ&pg=PA104 |language=en}}</ref> Symptoms include the inability to produce milk after [[childbirth]].<ref name=Yen2013/> Usually it occurs together with [[hypopituitarism]].<ref name=Yen2013/> Other complications may include [[infertility]] and [[sexual dysfunction]].<ref name=Tri2019/>
 
     <!-- Cause and diagnosis -->
     Causes include [[Sheehan's syndrome|Sheehan syndrome]], [[pituitary surgery]], [[traumatic brain injury]], and certain [[genetic mutations]].<ref name=Yen2013>{{cite book

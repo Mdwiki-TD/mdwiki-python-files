@@ -6,19 +6,27 @@ python3 core8/pwb.py md_core/p11143_bot/bot -td
 
 """
 
+import functools
 import logging
 import sys
 
+from md_core.mdpy.bots.check_title import valid_title
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
 from md_core.p11143_bot.wd_helps import add_P11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
-from md_core_helps.apis import cat_cach
+from md_core_helps.apis.cat_cach import from_cache
 from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
 
 logger = logging.getLogger(__name__)
 
-TD_list = cat_cach.from_cache()
 
-ALL_QIDS = {}
+@functools.lru_cache(maxsize=1)
+def load_td_list() -> list[str]:
+    logger.info("make_cash_to_cats:")
+    # ---
+    td_list: list[str] = from_cache()
+    td_list = [x for x in td_list if valid_title(x)]
+    # ---
+    return td_list
 
 
 def duplicate(merge_qids):
@@ -51,13 +59,13 @@ def add_q(new_qids, ty):
     if len(new_qids) == 0:
         return
     # ---
-    new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
-    # ---
     if len(new_qids) < 10:
         logger.info("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
     # ---
-    newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in TD_list}
-    newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in TD_list}
+    td_list = load_td_list()
+    # ---
+    newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in td_list}
+    newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in td_list}
     # ---
     logger.info(f"<<yellow>> : {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
     # ---
@@ -85,16 +93,14 @@ def add_q(new_qids, ty):
         sql_qids_others.add_titles_to_qids(newtitles_not_td)
 
 
-def work_qids(ty):
-    # ---
-    qids_list = ALL_QIDS[ty]
+def work_qids(ty, qids_list) -> dict:
     # ---
     in_wd = make_in_wd_tab()
     # ---
     logger.info(f"len of in_wd: {len(in_wd)}")
     # ---
     if not in_wd:
-        return
+        return {}
     # ---
     qids = {q: title for title, q in qids_list.items() if q != ""}
     # ---
@@ -111,10 +117,12 @@ def work_qids(ty):
     # ---
     duplicate(merge_qids)
     # ---
-    add_q(new_qids, ty)
+    return new_qids
 
 
 def start():
+    # ---
+    ALL_QIDS = {}
     # ---
     ALL_QIDS["other"] = sql_qids_others.get_others_qids()
     ALL_QIDS["td"] = sql_qids.get_all_qids()
@@ -128,7 +136,12 @@ def start():
         tab = ["td", "other"]
     # ---
     for ty in tab:
-        work_qids(ty)
+        qids_list = ALL_QIDS[ty]
+        # ---
+        new_qids = work_qids(ty, qids_list)
+        new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
+        # ---
+        add_q(new_qids, ty)
 
 
 if __name__ == "__main__":

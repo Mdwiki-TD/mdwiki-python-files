@@ -6,8 +6,6 @@ python3 core8/pwb.py priorviews/find/find_translators removeip
 """
 
 import json
-
-# ---
 import logging
 import os
 import sys
@@ -18,14 +16,6 @@ from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_la
 
 logger = logging.getLogger(__name__)
 
-# ---
-# ---
-
-# v_comm = helps.isv(comment)
-# _views = helps.views_url(title, lang, view)
-# helps.is_ip(user)
-# helps.dump_data(file, data)
-# ---
 TEST = False
 # ---
 Dir = Path(__file__).parent
@@ -36,38 +26,35 @@ file = f"{Dir2}/lists/translators_mdwiki_langs.json"
 if not os.path.exists(file):
     with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
-# ---
-tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
-
-def logem():
-    logger.info(f"<<yellow>> {len(tra_by_lang)} words")
-    # dump tra_by_lang
-    helps.dump_data(file, tra_by_lang)
-
-
-# ---
 N_g = 0
 
 
-def get_t(links, lang):
+def logem(file, data):
+    logger.info(f"<<yellow>> {len(data)} words")
+    # dump tra_by_lang
+    helps.dump_data(file, data)
+
+
+def valid(x, tab, empty=""):
+    i = tab.get(x) or tab.get(x.lower())
+    if not i or i == empty:
+        return True
+    return False
+
+
+def get_t(links, lang, data):
     # ---
-    global tra_by_lang, N_g
+    global N_g
     # ---
-    if lang not in tra_by_lang:
-        tra_by_lang[lang] = {}
+    if lang not in data:
+        data[lang] = {}
     # ---
     m = 0
 
-    def valid(x, tab, empty=""):
-        i = tab.get(x) or tab.get(x.lower())
-        if not i or i == empty:
-            return True
-        return False
-
     # ---
     if "onlynew" in sys.argv:
-        links = [x for x in links if valid(x, tra_by_lang[lang])]
+        links = [x for x in links if valid(x, data[lang])]
     # ---
     lena = len(links)
     # ---
@@ -77,7 +64,7 @@ def get_t(links, lang):
         # ---
         m += 1
         # ---
-        value_in = tra_by_lang[lang].get(title_lower) or tra_by_lang[lang].get(title) or ""
+        value_in = data[lang].get(title_lower) or data[lang].get(title) or ""
         # ---
         if "new" in sys.argv and value_in != "":
             continue
@@ -95,12 +82,14 @@ def get_t(links, lang):
         if helps.is_ip(_value):
             continue
         # ---
-        tra_by_lang[lang][title_lower] = _value
+        data[lang][title_lower] = _value
         # ---
         N_g += 1
         # ---
         if N_g % 100 == 0:
-            logem()
+            logem(file, data)
+
+    return data
 
 
 def start():
@@ -114,6 +103,8 @@ def start():
     # ---
     n = 0
     # ---
+    tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
+    # ---
     for lang in langkeys:
         # ---
         links = links_by_lang[lang]
@@ -123,19 +114,21 @@ def start():
         # ---
         n += 1
         # ---
-        get_t(links, lang)
+        tra_by_lang = get_t(links, lang, tra_by_lang)
         # ---
     # ---
-    logem()
+    logem(file, tra_by_lang)
 
 
 def test():
     # ---
     da = ["مرحاض ذو حفرة"]
     # ---
-    get_t(da, "ar")
+    tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
     # ---
-    logem()
+    tra_by_lang = get_t(da, "ar", tra_by_lang)
+    # ---
+    logem(file, tra_by_lang)
     # ---
     n = 0
     # ---
@@ -149,6 +142,8 @@ def test():
 
 def removeip():
     # ---
+    tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
+    # ---
     for lang in list(tra_by_lang):
         titles = tra_by_lang[lang]
         for title, user in titles.items():
@@ -161,12 +156,9 @@ def removeip():
                 logger.info(f" <<yellow>> skip user match ip address: {user}")
                 continue
     # ---
-    logem()
-
-    # ---
+    logem(file, tra_by_lang)
 
 
-# ---
 if __name__ == "__main__":
     if "removeip" in sys.argv:
         removeip()

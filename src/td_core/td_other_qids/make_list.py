@@ -13,11 +13,13 @@ import sys
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
 from md_core.unlinked_wb.bot import work_un
 from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
-from td_core.mdpages import qids_help
+from td_core.td_other_qids.qids_help import (
+    check_qids,
+    get_o_qids_new,
+    get_pages_to_work,
+)
 
 logger = logging.getLogger(__name__)
-
-ALL_QIDS = {}
 
 
 def add_q(new_qids, ty):
@@ -26,8 +28,6 @@ def add_q(new_qids, ty):
     # ---
     if len(new_qids) == 0:
         return
-    # ---
-    new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
     # ---
     if len(new_qids) < 10:
         logger.info("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
@@ -40,27 +40,25 @@ def add_q(new_qids, ty):
         sql_qids.add_titles_to_qids(new_qids, add_empty_qid=True)
 
 
-def work_qids(ty):
-    # ---
-    qids_list = ALL_QIDS[ty]
+def work_qids(ty, qids_list):
     # ---
     # qids_list = { x: y for x, y in qids_list.items() if y != ''}
     # ---
-    work_list, all_pages = qids_help.get_pages_to_work(ty)
+    work_list, all_pages = get_pages_to_work(ty)
     # ---
-    o_qids = qids_help.check(work_list, all_pages, ty)
+    o_qids = check_qids(work_list, all_pages, ty)
     o_qids = {x: v for x, v in o_qids.items() if x in work_list}
     # ---
-    new_qids = qids_help.get_o_qids_new(o_qids, qids_list)
+    new_qids = get_o_qids_new(o_qids, qids_list)
     # ---
     logger.info(f"<<green>> new len of new_qids:{len(new_qids)}")
     # ---
-    work_un(new_qids)
-    # ---
-    add_q(new_qids, ty)
+    return new_qids
 
 
 def start():
+    # ---
+    ALL_QIDS = {}
     # ---
     ALL_QIDS["other"] = sql_qids_others.get_others_qids()
     ALL_QIDS["td"] = sql_qids.get_all_qids()
@@ -74,7 +72,13 @@ def start():
         tab = ["td", "other"]
     # ---
     for ty in tab:
-        work_qids(ty)
+        qids_list = ALL_QIDS[ty]
+        new_qids = work_qids(ty, qids_list)
+        work_un(new_qids)
+        # ---
+        new_qids = remove_in_db_elements(new_qids, ALL_QIDS["other"], ALL_QIDS["td"])
+        # ---
+        add_q(new_qids, ty)
 
 
 if __name__ == "__main__":
