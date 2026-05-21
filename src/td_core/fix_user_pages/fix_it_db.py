@@ -12,8 +12,8 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
-all_infos = sql_for_mdwiki.get_all_from_table(table_name="titles_infos")
-all_infos = {x["title"]: x for x in all_infos}
+all_infos = sql_for_mdwiki.get_all_from_table(table_name="all_articles")
+all_infos = {x["article_id"]: x for x in all_infos}
 
 
 def work_in_new_tabs_to_db(new_tabs_to_db):

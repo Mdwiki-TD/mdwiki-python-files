@@ -15,7 +15,7 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 # cats = sql_for_mdwiki.get_db_categories() # title:depth
 # users = sql_for_mdwiki.get_db_users() # list
 # sql_for_mdwiki.get_all_pages_all_keys(lang=False)
-# get_all_from_table(table_name="titles_infos")
+
 # ---
 """
 import logging
