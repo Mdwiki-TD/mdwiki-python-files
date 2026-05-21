@@ -56,11 +56,11 @@ def count_words(title):
 
 def from_sql(old_values):
     # ---
-    que = """select title from titles_infos;"""
+    que = """select article_id from all_articles;"""
     # ---
     sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
-    titles2 = [q["title"] for q in sq]
+    titles2 = [q["article_id"] for q in sq]
     # ---
     titles = [x for x in titles2 if x not in old_values]
     # ---
