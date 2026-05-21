@@ -112,6 +112,18 @@ def get_db_categories() -> dict:
     }
 
 
+def get_db_category_members() -> dict[str, list]:
+    data: dict[str, list] = {}
+    sql_result = select_md_sql("select category, article_id from category_members;", return_dict=True)
+
+    for line in sql_result:
+        if line["category"] not in data:
+            data[line["category"]] = []
+        data[line["category"]].append(line["article_id"])
+
+    return data
+
+
 def get_db_users() -> list:
     return [c["username"] for c in select_md_sql("select username from users;", return_dict=True)]
 
