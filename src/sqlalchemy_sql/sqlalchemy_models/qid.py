@@ -44,24 +44,6 @@ class QidRecord(BaseDb):
             raise ValueError(f"Invalid QID format: {self.qid}. QID should start with 'Q' followed by digits.")
 
 
-class AllQidsRecord(BaseDb):
-    """
-    CREATE TABLE all_qids (
-        qid varchar(255) NOT NULL,
-        category varchar(255) DEFAULT NULL,
-        id int NOT NULL AUTO_INCREMENT,
-        PRIMARY KEY (id),
-        UNIQUE KEY qid (qid)
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-    """
-
-    __tablename__ = "all_qids"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    qid = Column(String(255), unique=True, nullable=False)
-    category = Column(String(255), nullable=True)
-
-
 class AllQidsExistRecord(BaseDb):
     """
     CREATE TABLE all_qids_exists (
@@ -71,7 +53,6 @@ class AllQidsExistRecord(BaseDb):
         target varchar(255) NOT NULL,
         PRIMARY KEY (id),
         UNIQUE KEY qid_code (qid, code),
-        CONSTRAINT all_qids_exists_ibfk_1 FOREIGN KEY (qid) REFERENCES all_qids (qid)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
     """
 
@@ -85,6 +66,5 @@ class AllQidsExistRecord(BaseDb):
 
 __all__ = [
     "QidRecord",
-    "AllQidsRecord",
     "AllQidsExistRecord",
 ]

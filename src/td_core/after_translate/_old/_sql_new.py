@@ -4,11 +4,11 @@ https://hashtags.wmcloud.org/json/?query=mdwikicx
 
 بوت قواعد البيانات
 
-python3 core8/pwb.py td_core/after_translate/sql_new
-python3 core8/pwb.py td_core/after_translate/sql_new pages_users
-python3 core8/pwb.py td_core/after_translate/sql_new justsql break
-python3 core8/pwb.py td_core/after_translate/sql_new justsql
-python3 core8/pwb.py td_core/after_translate/sql_new -lang:ur
+python3 core8/pwb.py td_core/after_translate/sql_new_1
+python3 core8/pwb.py td_core/after_translate/sql_new_1 pages_users
+python3 core8/pwb.py td_core/after_translate/sql_new_1 justsql break
+python3 core8/pwb.py td_core/after_translate/sql_new_1 justsql
+python3 core8/pwb.py td_core/after_translate/sql_new_1 -lang:ur
 
 """
 
@@ -19,7 +19,6 @@ import time
 # ---
 from md_core_helps.mdapi_sql import wiki_sql
 from td_core.after_translate import start_work
-from td_core.after_translate.bots import add_to_wd
 from td_core.after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 from td_core.after_translate.bots.get_pages import get_pages_from_db
 
@@ -112,8 +111,6 @@ def main():
         # ---
         if "only" in sys.argv:
             continue
-        # ---
-        # if "justsql" not in sys.argv: add_to_wd.add_tab_to_wd({lange: lang_tab})
         # ---
         add_to_mdwiki_sql(lange, lang_tab, to_update.get(lange, {}))
     # ---

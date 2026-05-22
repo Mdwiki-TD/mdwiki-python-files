@@ -2,25 +2,16 @@
 """
 https://hashtags.wmcloud.org/json/?query=mdwikicx
 
-بوت قواعد البيانات
-
-python3 core8/pwb.py td_core/after_translate/mdwikicx
-python3 core8/pwb.py td_core/after_translate/mdwikicx pages_users
-python3 core8/pwb.py td_core/after_translate/mdwikicx justsql
-python3 core8/pwb.py td_core/after_translate/mdwikicx -lang:ur
 
 """
 
-import json
 import logging
 import re
 import sys
-from pathlib import Path
 
 import requests
 from md_core_helps.bots import en_to_md
 from mdwiki_api.wiki_page import MainPage
-from td_core.after_translate.bots import add_to_wd
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +83,7 @@ def work_one_page(x):
     qid_in = page.get_qid()
     # ---
     if not qid_in:
-        add_to_wd.add_wd(qid, "", lang, page_title)
+        logger.info(f"no qid.{page_title=}")
         return
     # ---
     logger.info(f"<<blue>> {qid_in=}, {qid=}")
@@ -161,9 +152,6 @@ def main():
         # logger.info(tab)
         # ---
         titles.append(tab)
-    # ---
-    with open(Path(__file__).parent / "titles.json", "w", encoding="utf-8") as f:
-        json.dump(titles, f, ensure_ascii=False)
     # ---
     for x in titles:
         # ---

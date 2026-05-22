@@ -24,11 +24,6 @@ logger = logging.getLogger(__name__)
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---
-qua_1 = """
-INSERT IGNORE INTO all_qids (qid)
-SELECT qid FROM qids where qid != "" and qid is not null
-"""
-# ---
 mis_qids = []
 in_sql_qid_targets = defaultdict(dict)
 # ---
@@ -53,17 +48,6 @@ def start_to_sql(data):
     # ---
     # data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
     data = {q: v["sitelinks"] for q, v in data.items()}
-    # ---
-    # logger.info(data)
-    # ---
-    qids_list = list(data.keys())
-    # ---
-    if qids_list:
-        qua = """
-            INSERT IGNORE INTO all_qids (qid)
-            values (%s)"""
-        # ---
-        sql_for_mdwiki.mdwiki_sql(qua, values=qids_list, many=True)
     # ---
     new_data_all = []
     # ---

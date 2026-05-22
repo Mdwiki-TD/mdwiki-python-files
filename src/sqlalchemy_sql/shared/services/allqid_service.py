@@ -7,10 +7,7 @@ from __future__ import annotations
 import logging
 from typing import List
 
-from sqlalchemy import func, text
-from sqlalchemy.exc import IntegrityError
-
-from ...sqlalchemy_models import AllQidsRecord, QidRecord
+from sqlalchemy import text
 from ..engine import get_session
 
 logger = logging.getLogger(__name__)
@@ -22,20 +19,19 @@ def list_targets_by_lang(lang: str) -> List[dict]:
     sql = text(
         """
             SELECT
-                qq.qid AS qid,
+                t.qid AS qid,
                 q.title AS title,
                 aa.category AS category,
                 t.code AS code,
                 t.target AS target
             FROM
-                all_qids qq
-                LEFT JOIN qids q ON qq.qid = q.qid
+                qids q
+                JOIN all_qids_exists t ON t.qid = q.qid
                 LEFT JOIN all_articles aa ON aa.article_id = q.title
-                JOIN all_qids_exists t ON t.qid = qq.qid
             WHERE
                 t.code = :lang
-                AND t.target != ''
-                AND t.target IS NOT NULL
+            AND
+                t.target != '' AND t.target IS NOT NULL
     """
     )
     with get_session() as session:
