@@ -12,8 +12,16 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
-all_infos = sql_for_mdwiki.get_all_from_table(table_name="all_articles")
-all_infos = {x["article_id"]: x for x in all_infos}
+all_infos = sql_for_mdwiki.select_md_sql(
+    "SELECT w_title, w_lead_words, w_all_words FROM words;",
+    return_dict=True,
+)
+# Index by title for O(1) lookup downstream. Previously this was loaded from
+# `all_articles`, which never carried the `w_lead_words` / `w_all_words`
+# columns, so `data.get("w_lead_words")` always returned None and the `word`
+# field on new pages was silently never populated. Pointing at `words`
+# (the actual source of those columns) restores the intended behaviour.
+all_infos = {x["w_title"]: x for x in all_infos}
 
 
 def work_in_new_tabs_to_db(new_tabs_to_db):
