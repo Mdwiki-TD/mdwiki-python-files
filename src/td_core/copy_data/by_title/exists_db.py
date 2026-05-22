@@ -3,17 +3,12 @@
 
 python3 core8/pwb.py td_core/copy_data/by_title/exists_db
 
-
 """
 
 import json
 import logging
 import os
-import sys
-
 import tqdm
-
-# ---
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.mdpyget.bots.to_sql import insert_dict
 from td_core.td_dirs import paths
@@ -56,10 +51,6 @@ def to_sql_d(titles_data):
                 else:
                     to_add.append(title)
         # ---
-        _in_sql_not_in_new = [x for x in is_in if x not in titles]
-        # ---
-        # logger.error(f"<<red>> {lang_code}: {same=}, {len(to_add)=}), {len(in_sql_not_in_new)=}")
-        # ---
         if to_add:
             new_all[lang_code] = to_add
     # ---
@@ -93,21 +84,7 @@ def main():
         data_all[lang_code] = data
     # ---
     to_sql_d(data_all)
-    # break
-
-
-def test():
-    # python3 core8/pwb.py td_core/copy_data/exists_db test
-    # ---
-    data = {"ar": ["Asbestosis", "RTT", "Zoster vaccine"]}
-    # ---
-    to_sql_d(data)
 
 
 if __name__ == "__main__":
-    # ---
-    if "test" in sys.argv:
-        test()
-        exit()
-    # ---
     main()

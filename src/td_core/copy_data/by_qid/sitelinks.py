@@ -72,7 +72,6 @@ def start_to_sql(data):
     logger.info(f"<<yellow>> new_data_all: {len(new_data_all)}.")
     # ---
     if new_data_all:
-        # insert_dict(new_data, "all_qids_exists", columns, lento=1000, title_column="qid", ignore=True)
         new_to_sql(
             new_data_all,
             "all_qids_exists",
