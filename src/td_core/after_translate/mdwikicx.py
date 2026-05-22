@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 import requests
-from md_core.mdpy.bots import en_to_md
+from md_core_helps.bots import en_to_md
 from mdwiki_api.wiki_page import MainPage
 from td_core.after_translate.bots import add_to_wd
 

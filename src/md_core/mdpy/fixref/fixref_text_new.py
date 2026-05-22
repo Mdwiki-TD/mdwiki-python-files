@@ -4,7 +4,6 @@ import sys
 import wikitextparser as wtp
 from md_core.mdpy.fixref import make_title_bot
 
-
 def change_lay_source(temp):
     # ---
     temp_name = "cite press release"

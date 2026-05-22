@@ -12,7 +12,7 @@ import logging
 import os
 from datetime import datetime
 
-from md_core.mdpy.bots import en_to_md
+from md_core_helps.bots import en_to_md
 from md_core_helps.bots.check_title import valid_title
 from md_core_helps.apis import wikidataapi
 from md_core_helps.mdapi_sql import sql_for_mdwiki

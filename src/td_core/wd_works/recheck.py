@@ -9,7 +9,7 @@ xpython3 core8/pwb.py td_core/wd_works/recheck
 import logging
 import sys
 
-from md_core.mdpy.bots import en_to_md
+from md_core_helps.bots import en_to_md
 from md_core_helps.apis import wikidataapi
 
 # ---

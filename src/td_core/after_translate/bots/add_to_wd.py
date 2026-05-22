@@ -14,7 +14,7 @@ import logging
 import re
 
 from md_core.mdpy import orred
-from md_core.mdpy.bots import en_to_md
+from md_core_helps.bots import en_to_md
 
 # ---
 from md_core_helps.apis import mdwiki_api_call, wiki_api, wikidataapi
