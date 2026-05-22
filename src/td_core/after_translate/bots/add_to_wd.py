@@ -1,12 +1,5 @@
 #!/usr/bin/python3
 """
-بوت فرعي من
-after_translate/sql.py
-
-# ---
-from td_core.after_translate.bots import add_to_wd
-# add_to_wd.add_tab_to_wd(New_Table_by_lang)
-# ---
 
 """
 
@@ -23,17 +16,6 @@ from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 
-# ---
-
-# ---
-wddone_table = """CREATE TABLE wddone (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    mdtitle VARCHAR(120) NOT NULL,
-    target VARCHAR(120) NOT NULL,
-    lang VARCHAR(30) NOT NULL,
-    user VARCHAR(120) NOT NULL
-    )"""
-# ---
 que_wddone = """
 select mdtitle,target,lang,user
 from wddone
@@ -234,6 +216,3 @@ def add_tab_to_wd(table):
             logger.info(f"<<green>>p {number}/{len(tab)}: mdtitle:{mdtitle},lang:{lang},target:{target}")
             # ---
             Add_to_wikidata(mdtitle, lang, target, user)
-
-
-# ---

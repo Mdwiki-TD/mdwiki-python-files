@@ -113,10 +113,8 @@ def main():
         if "only" in sys.argv:
             continue
         # ---
-        if "justsql" not in sys.argv:
-            add_to_wd.add_tab_to_wd({lange: lang_tab})
+        # if "justsql" not in sys.argv: add_to_wd.add_tab_to_wd({lange: lang_tab})
         # ---
-        # add_to_mdwiki_sql({lange: lang_tab}, to_update.get(lange, {}))
         add_to_mdwiki_sql(lange, lang_tab, to_update.get(lange, {}))
     # ---
     start_work.work_not_pages()
