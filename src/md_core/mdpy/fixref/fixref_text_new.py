@@ -2,9 +2,7 @@ import re
 import sys
 
 import wikitextparser as wtp
-from md_core.mdpy.bots import make_title_bot
-
-# _title1_ = make_title_bot.make_title(url)
+from md_core.mdpy.fixref import make_title_bot
 
 
 def change_lay_source(temp):
