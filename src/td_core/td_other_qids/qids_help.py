@@ -7,7 +7,7 @@ import logging
 import re
 import sys
 
-from md_core.mdpy.bots.check_title import valid_title
+from md_core_helps.bots.check_title import valid_title
 from md_core_helps.apis.cat_cach import from_cache
 from md_core_helps.apis.mdwiki_api_call import Get_All_pages
 from md_core_helps.apis.wiki_api import submitAPI

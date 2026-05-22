@@ -15,7 +15,7 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 # cats = sql_for_mdwiki.get_db_categories() # title:depth
 # users = sql_for_mdwiki.get_db_users() # list
 # sql_for_mdwiki.get_all_pages_all_keys(lang=False)
-# get_all_from_table(table_name="titles_infos")
+
 # ---
 """
 import logging
@@ -110,6 +110,18 @@ def get_db_categories() -> dict:
         c["category"]: c["depth"] for c in
         select_md_sql("select category, depth from categories;", return_dict=True)
     }
+
+
+def get_db_category_members() -> dict[str, list]:
+    data: dict[str, list] = {}
+    sql_result = select_md_sql("select category, article_id from category_members;", return_dict=True)
+
+    for line in sql_result:
+        if line["category"] not in data:
+            data[line["category"]] = []
+        data[line["category"]].append(line["article_id"])
+
+    return data
 
 
 def get_db_users() -> list:

@@ -5,7 +5,7 @@ from td_core.after_translate.bots.get_pages import get_pages_from_db
 import logging
 
 # ---
-from md_core.mdpy.bots import py_tools
+from md_core_helps.bots import py_tools
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)

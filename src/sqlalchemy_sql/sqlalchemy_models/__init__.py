@@ -22,7 +22,6 @@ from .public import (
 from .publish import ReportRecord
 from .qid import (
     AllQidsExistRecord,
-    AllQidsRecord,
     QidRecord,
 )
 from .setting import (
@@ -40,7 +39,6 @@ from .views import (
 __all__ = [
     "AllArticlesRecord",
     "AllQidsExistRecord",
-    "AllQidsRecord",
     "AssessmentRecord",
     "CategoryRecord",
     "EnwikiPageviewRecord",
