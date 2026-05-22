@@ -10,7 +10,7 @@ import sys
 
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
-from td_core.mdpyget.bots.to_sql import to_sql, insert_dict
+from td_core.mdpyget.bots.to_sql import insert_dict
 
 logger = logging.getLogger(__name__)
 
@@ -58,8 +58,10 @@ def main():
     for cat, len_titles in length.items():
         logger.info(f"Category:{cat}: {len_titles=}")
     # ---
-    start_to_sql(data)
-    # ---
+    # NOTE: previously this script also wrote a single-category-per-article
+    # snapshot to `all_articles` via `start_to_sql(data)`. That table is being
+    # retired in favour of the many-to-many `category_members` table populated
+    # below, so the redundant write has been removed.
     add_category_members_to_sql(to_add_category_members)
 
 
@@ -81,18 +83,12 @@ def add_category_members_to_sql(to_add_category_members):
     insert_dict(data2, "category_members", ["article_id", "category"])
 
 
-def start_to_sql(data):
-    data2 = [{"article_id": title, "category": category} for title, category in data.items()]
-    # ---
-    to_sql(data2, "all_articles", ["article_id", "category"], title_column="article_id")
-
-
 def test():
     # python3 core8/pwb.py td_core/copy_data/all_articles test
     # ---
-    data = {"Asbestosis": "RTT", "Zoster vaccine": "RTT"}
+    to_add_category_members = {"RTT": ["Asbestosis", "Zoster vaccine"]}
     # ---
-    start_to_sql(data)
+    add_category_members_to_sql(to_add_category_members)
 
 
 if __name__ == "__main__":

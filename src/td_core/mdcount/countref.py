@@ -59,7 +59,10 @@ def count_refs(title):
 
 def from_sql(old_values):
     # ---
-    que = """select article_id from all_articles;"""
+    # Migrated from `all_articles` (single-category-per-article) to
+    # `category_members` (many-to-many). DISTINCT collapses the duplicates
+    # introduced when an article belongs to multiple categories.
+    que = """select DISTINCT article_id from category_members;"""
     # ---
     sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
     # ---
