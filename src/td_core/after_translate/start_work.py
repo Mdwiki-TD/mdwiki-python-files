@@ -11,7 +11,7 @@ import logging
 import re
 import sys
 
-from md_core.mdpy.bots import py_tools
+from md_core_helps.bots import py_tools
 from td_core.after_translate.bots.fixcat import cat_for_pages
 from td_core.after_translate.bots.users_pages import not_pages
 
