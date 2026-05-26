@@ -2,11 +2,6 @@
 """
 
 python3 core8/pwb.py md_core/add_rtt/bot
-from md_core.add_rtt.bot import add_rtt_to_text
-# add_rtt_to_text(text, title)
-
-
-tfj run addrtt1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py md_core/add_rtt/bot list"
 
 """
 import logging
@@ -16,13 +11,10 @@ import re
 import sys
 
 import wikitextparser as wtp
-from md_core.add_rtt.named_param import add_param_named
+from md_core.named_param.named_param import add_param_named
 from mdwiki_api.mdwiki_page import CatDepth, NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)
-
-# add_param_named(text, title)
-
 api_new = NewApi("www", family="mdwiki")
 
 

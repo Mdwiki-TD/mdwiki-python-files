@@ -25,7 +25,6 @@ from mdwiki_api.mdwiki_page import NewApi, md_MainPage  # , CatDepth
 logger = logging.getLogger(__name__)
 
 Dir = Path(__file__).parent
-# add_param_named(text, title)
 
 api_new = NewApi("www", family="mdwiki")
 
@@ -57,7 +56,7 @@ def find_redirects(pages, text):
     return redirects
 
 
-def work_page():
+def work_page() -> None:
     title = "WikiProjectMed:WikiProject Medicine/Popular pages"
     page = md_MainPage(title, "www", family="mdwiki")
 
@@ -73,7 +72,7 @@ def work_page():
         text = new_text
     # ---
     if "only_column" in sys.argv:
-        return
+        return None
     # ---
     old_counts = text.count(R_NEW_ROW.strip())
     # ---
@@ -89,7 +88,7 @@ def work_page():
 
     if newtext == text:
         logger.info("no changes")
-        return False
+        return None
 
     # count R_NEW_ROW in newtext
     counts = newtext.count(R_NEW_ROW.strip())
@@ -99,7 +98,7 @@ def work_page():
     summary = f"Added R column to {counts} titles."
 
     page.save(newtext=newtext, summary=summary, nocreate=1, minor="")
-
+    return None
 
 def main():
 
