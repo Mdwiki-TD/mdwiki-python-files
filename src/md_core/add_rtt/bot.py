@@ -139,18 +139,11 @@ def get_titles():
 
 
 def main():
-
     mdwiki_pages = get_titles()
-
     temp_pages = api_new.Get_template_pages("Template:RTT", namespace=0)
-
     logger.info(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
-
-    # pages in mdwiki_pages but not in temp_pages
     pages_to_add = [x for x in mdwiki_pages if x not in temp_pages]
-
     logger.info(f"len of pages_to_add: {len(pages_to_add)}")
-
     for x in pages_to_add:
         work_page(x)
 
