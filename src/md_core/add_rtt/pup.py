@@ -56,7 +56,7 @@ def find_redirects(pages, text):
     return redirects
 
 
-def work_page() -> None:
+def work_page() -> bool | None:
     title = "WikiProjectMed:WikiProject Medicine/Popular pages"
     page = md_MainPage(title, "www", family="mdwiki")
 
