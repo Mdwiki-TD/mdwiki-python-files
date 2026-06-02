@@ -143,7 +143,6 @@ These files execute their entire logic on import because there's no `__main__` g
 | #   | File                                    | Line | Notes                                                                  |
 | --- | --------------------------------------- | ---- | ---------------------------------------------------------------------- |
 | 1   | `src/md_core_helps/mdapi_sql/sql_qu.py` | 20   | `os.getenv()` only — cheap, optional to refactor                       |
-| 2   | `src/sqlalchemy_sql/config.py`          | 39   | `os.getenv()` ×4 — cheap, optional                                     |
 | 3   | `src/td_core/mdpyget/sqlviews_new.py`   | 20   | `PageviewsClient()` — lightweight client init, no network until called |
 
 These are low priority and can stay as-is.
