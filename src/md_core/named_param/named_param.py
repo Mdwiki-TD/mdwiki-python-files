@@ -12,10 +12,8 @@ tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 """
 import logging
 
-# ---
 import wikitextparser as wtp
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
-from newupdater import expend_infoboxs_and_fix
 
 logger = logging.getLogger(__name__)
 
@@ -76,7 +74,6 @@ def add_param_named(text, title):
             temp.set_arg(f" {param} ", f" {t_value}\n")
 
     newtext = parsed.string
-    newtext = expend_infoboxs_and_fix(newtext)
 
     return newtext
 
