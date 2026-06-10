@@ -6,12 +6,7 @@ python3 core8/pwb.py md_core/add_rtt/bot
 """
 import logging
 
-# ---
-import re
-import sys
-
 import wikitextparser as wtp
-from md_core.named_param.named_param import add_param_named
 from mdwiki_api.mdwiki_page import CatDepth, NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)
@@ -75,67 +70,22 @@ def work_page(title):
     if newtext != text:
         summary = "Added {{RTT}}"
 
-    newtext2 = add_param_named(newtext, title)
+        save = page.save(newtext=newtext, summary=summary, nocreate=1, minor="")
 
-    if newtext2 != newtext:
-        summary += ", (|named after=) to Infobox medical condition"
-        newtext = newtext2
+        return save
 
-    save = page.save(newtext=newtext, summary=summary, nocreate=1, minor="")
-
-    return save
-
-
-def get_list():
-    mdwiki_pages = []
-    # ---
-    title = "WikiProjectMed:WikiProject Medicine/Popular pages"
-    page = md_MainPage(title, "www", family="mdwiki")
-    # ---
-    if not page.exists():
-        return []
-    # ---
-    text = page.get_text()
-    # ---
-    to_f = "== List =="
-    # ---
-    if text.find(to_f) != -1:
-        text = text.split(to_f)[1]
-        # match all links like [[.*?]]
-        pattern = r"\[\[(.*?)\]\]"
-        links = re.findall(pattern, text)
-        mdwiki_pages = links
-    # ---
-    mdwiki_pages = list(set(mdwiki_pages))
-    # ---
-    mdwiki_pages = [x.strip() for x in mdwiki_pages if x.find("|") == -1]
-    # ---
-    mdwiki_pages.sort()
-    # ---
-    logger.info(f"len of mdwiki_pages: {len(mdwiki_pages)}")
-    # ---
-    return mdwiki_pages
-
-
-def get_titles():
-    # ---
-    mdwiki_pages = []
-    # ---
-    if "list" in sys.argv:
-        mdwiki_pages = get_list()
-        # ---
-    else:
-        mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
-    # ---
-    return mdwiki_pages
-
+    return False
 
 def main():
-    mdwiki_pages = get_titles()
+    mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
     temp_pages = api_new.Get_template_pages("Template:RTT", namespace=0)
+
     logger.info(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
+
     pages_to_add = [x for x in mdwiki_pages if x not in temp_pages]
+
     logger.info(f"len of pages_to_add: {len(pages_to_add)}")
+
     for x in pages_to_add:
         work_page(x)
 

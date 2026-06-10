@@ -40,7 +40,7 @@ def add_param_named(text, title):
 
     param = "named after"
 
-    false_params1 = [
+    _false_params = [
         "named after",
         "eponym",
     ]
