@@ -234,7 +234,7 @@ def Get_page_links(title, namespace: str = "0", limit: Union[int, str] = "max"):
     return Main_table
 
 
-def Get_template_pages(title, namespace: str="*", limit: int="max"):
+def Get_template_pages(title, namespace: str = "*", limit: Union[int, str] = "max"):
     return api_new.Get_template_pages(title, namespace=namespace)
 
 
