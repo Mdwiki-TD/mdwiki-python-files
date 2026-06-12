@@ -25,7 +25,7 @@ or
         ) from None
 
 
-def extract_templates_and_params(text):
+def extract_templates_and_params(text: str):
     # ---
     result = []
     # ---

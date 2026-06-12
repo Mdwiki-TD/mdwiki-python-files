@@ -31,7 +31,7 @@ if not ta_dir.exists():
 ta_tab = {}
 
 
-def del_cookies_file(file_path):
+def del_cookies_file(file_path) -> None:
     # ---
     file = Path(str(file_path))
     # ---
@@ -43,7 +43,7 @@ def del_cookies_file(file_path):
             logger.error(f"<<red>> unlink: Exception:{e}")
 
 
-def get_file_name(lang, family, username):
+def get_file_name(lang, family, username: str):
     # ---
     lang = lang.lower()
     family = family.lower()
@@ -55,7 +55,7 @@ def get_file_name(lang, family, username):
     return file
 
 
-def from_folder(lang, family, username):
+def from_folder(lang, family, username: str):
     # ---
     file = get_file_name(lang, family, username)
     # ---
@@ -71,7 +71,7 @@ def from_folder(lang, family, username):
     return cookies
 
 
-def get_cookies(lang, family, username):
+def get_cookies(lang, family, username: str):
     # ---
     cookies = ta_tab.get(family, {}).get(lang, {}).get(username, "")
     # ---

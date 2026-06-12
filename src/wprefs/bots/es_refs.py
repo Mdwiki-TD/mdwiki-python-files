@@ -27,7 +27,7 @@ def make_line(refs):
     return line
 
 
-def get_refs(text):
+def get_refs(text: str):
     # ---
     parsed = wtp.parse(text)
     tags = parsed.get_tags()
@@ -108,7 +108,7 @@ def add_line_to_temp(line, new_text):
     return new_text
 
 
-def mv_es_refs(text):
+def mv_es_refs(text: str):
     # ---
     refs, new_text = get_refs(text)
     # ---

@@ -11,7 +11,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def not_pages(lista):
+def not_pages(lista) -> None:
     # ---
     logger.info("<<green>> start bot users_pages:")
     # ---

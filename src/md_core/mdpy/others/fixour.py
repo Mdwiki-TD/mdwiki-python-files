@@ -26,7 +26,7 @@ save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
 """
 
 
-def work(title):
+def work(title) -> None:
     # ---
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
@@ -64,7 +64,7 @@ def work(title):
         save_page = page.save(newtext=newtext, summary=sus)
 
 
-def main():
+def main() -> None:
     nn = ""
     # ---
     list = api_new.Get_All_pages(start="COVID", namespace="0", limit="max", apfilterredir="", limit_all=0)

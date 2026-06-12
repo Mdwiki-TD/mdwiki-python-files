@@ -107,7 +107,7 @@ def work_all(editors):
     return editors
 
 
-def start():
+def start() -> None:
     # ---
     # read json files in editors_dir
     files = os.listdir(editors_dir)

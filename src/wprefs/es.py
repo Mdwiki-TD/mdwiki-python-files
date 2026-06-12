@@ -134,7 +134,7 @@ for _new, _lal in params.items():
         args_to[_old] = _new
 
 
-def fix_temps(text):
+def fix_temps(text: str):
     # ---
     parsed = wtp.parse(text)
     # ---
@@ -180,7 +180,7 @@ def fix_temps(text):
     return new_text
 
 
-def add_lang_en(text, lang=""):
+def add_lang_en(text: str, lang: str=""):
     # ---
     print_s("add_lang_en:")
     # ---
@@ -208,7 +208,7 @@ def add_lang_en(text, lang=""):
     return text
 
 
-def fix_es(text, title):
+def fix_es(text: str, title):
     # ---
     if text.find("#REDIRECCIÓN") != -1:
         return text

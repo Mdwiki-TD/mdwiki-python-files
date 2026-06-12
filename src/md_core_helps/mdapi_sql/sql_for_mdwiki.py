@@ -28,9 +28,9 @@ logger = logging.getLogger(__name__)
 
 def mdwiki_sql(
     query,
-    return_dict=False,
+    return_dict: bool=False,
     values=None,
-    many=False,
+    many: bool=False,
     **kwargs,
 ):
     # ---
@@ -50,7 +50,7 @@ def mdwiki_sql(
 def mdwiki_sql_dict(
     query,
     values=None,
-    many=False,
+    many: bool=False,
     **kwargs,
 ):
     # ---
@@ -88,11 +88,11 @@ def get_all_pages():
     return [ta["title"] for ta in select_md_sql("select DISTINCT title from pages;", return_dict=True)]
 
 
-def get_all_from_table(table_name="enwiki_pageviews"):
+def get_all_from_table(table_name: str="enwiki_pageviews"):
     return select_md_sql(f"select DISTINCT * from {table_name};", return_dict=True)
 
 
-def get_all_pages_all_keys(lang=False, table="pages"):
+def get_all_pages_all_keys(lang: bool=False, table: str="pages"):
     lang_line = ""
     # ---
     if lang:
@@ -153,7 +153,7 @@ def set_deleted_where_id(iid):
     return mdwiki_sql(query, return_dict=True, values=[iid])
 
 
-def insert_to_pages_users_to_main(id, target, user, qid):
+def insert_to_pages_users_to_main(id, target, user, qid) -> bool:
     # ---
     logger.info(f"<<yellow>> : {id}, {target=}, {user=}, {qid=}")
     # ---
@@ -175,7 +175,7 @@ def insert_to_pages_users_to_main(id, target, user, qid):
         return False
 
 
-def add_new_to_pages(tab):
+def add_new_to_pages(tab) -> None:
     # ---
     date = time.strftime("%Y-%m-%d")
     # ---

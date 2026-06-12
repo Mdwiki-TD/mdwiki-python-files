@@ -33,7 +33,7 @@ if not os.path.exists(Dir / "editors"):
     os.mkdir(Dir / "editors")
 
 
-def validate_ip(ip_address):
+def validate_ip(ip_address) -> bool:
     if ip_address == "CommonsDelinker":
         return True
     # IPv4 pattern
@@ -48,7 +48,7 @@ def validate_ip(ip_address):
     return False
 
 
-def get_editors_sql(links, site, split_by=100):
+def get_editors_sql(links, site, split_by: int=100):
     # ---
     qua = f"""
         SELECT actor_name, count(*) as count from revision
@@ -100,12 +100,12 @@ def get_editors_sql(links, site, split_by=100):
     return editors
 
 
-def dumpit(editors, site):
+def dumpit(editors, site) -> None:
     with open(editors_dir / f"{site}.json", "w", encoding="utf-8") as f:
         json.dump(editors, f, sort_keys=True)
 
 
-def get_editors(links, site, do_dump=True):
+def get_editors(links, site, do_dump: bool=True):
     editors = {}
     # ---
     if os.path.exists(editors_dir / f"{site}.json"):

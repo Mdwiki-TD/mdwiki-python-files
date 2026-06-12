@@ -15,7 +15,7 @@ from td_core.mdpyget.bots.to_sql import insert_dict
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main() -> None:
     # ---
     data = {}
     # ---
@@ -65,7 +65,7 @@ def main():
     add_category_members_to_sql(to_add_category_members)
 
 
-def add_category_members_to_sql(to_add_category_members):
+def add_category_members_to_sql(to_add_category_members) -> None:
     # ---
     data2 = []
     # ---
@@ -83,7 +83,7 @@ def add_category_members_to_sql(to_add_category_members):
     insert_dict(data2, "category_members", ["article_id", "category"])
 
 
-def test():
+def test() -> None:
     # python3 core8/pwb.py td_core/copy_data/all_articles test
     # ---
     to_add_category_members = {"RTT": ["Asbestosis", "Zoster vaccine"]}

@@ -13,7 +13,7 @@ import sys
 logger = logging.getLogger(__name__)
 
 
-def outputnew(s):
+def outputnew(s) -> None:
     if "test" in sys.argv:
         logger.info(s)
 

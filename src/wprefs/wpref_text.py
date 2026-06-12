@@ -19,7 +19,7 @@ from wprefs.helps import print_s
 from wprefs.infobox import Expend_Infobox
 
 
-def add_lang_en(text, lang=""):
+def add_lang_en(text: str, lang: str=""):
     # ---
     print_s("add_lang_en:")
     # ---
@@ -47,7 +47,7 @@ def add_lang_en(text, lang=""):
     return text
 
 
-def remove_False_code(text):
+def remove_False_code(text: str):
     # ---
     if "newcite" not in sys.argv:
         return text
@@ -82,7 +82,7 @@ def remove_False_code(text):
     return text
 
 
-def move_dots_text(newtext, lang=""):
+def move_dots_text(newtext, lang: str=""):
     # ---
     dot = r"(\.|\,)"
     # ---
@@ -96,7 +96,7 @@ def move_dots_text(newtext, lang=""):
     return newtext
 
 
-def fix_page(newtext, title, move_dots=False, infobox=False, section_0="", lang="", add_en_lang=False):
+def fix_page(newtext, title, move_dots: bool=False, infobox: bool=False, section_0: str="", lang: str="", add_en_lang: bool=False):
     # ---
     print_s(f"fix page: {title}, move_dots:{move_dots}, expend_infobox:{infobox}")
     # ---

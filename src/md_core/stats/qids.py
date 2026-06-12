@@ -49,7 +49,7 @@ def get_en_articles():
     return {x["page_title"]: x["pp_value"] for x in result}
 
 
-def start():
+def start() -> None:
     # ---
     articles = get_en_articles()
     # ---

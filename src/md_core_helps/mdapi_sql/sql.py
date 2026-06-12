@@ -116,7 +116,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     return host, dbs_p
 
 
-def make_sql_connect(query, db="", host="", update=False, _return=False, return_dict=False):
+def make_sql_connect(query, db: str="", host: str="", update: bool=False, _return: bool=False, return_dict: bool=False):
     return sql_qu.make_sql_connect(
         query,
         db=db,
@@ -176,7 +176,7 @@ def fetch_arcat_titles(arcat_title):
     return arcats
 
 
-def Make_sql(queries, wiki="", printqua=False):
+def Make_sql(queries, wiki: str="", printqua: bool=False):
     encats = []
     # ---
     start = tttime.time()
@@ -213,7 +213,7 @@ def Make_sql(queries, wiki="", printqua=False):
     return encats
 
 
-def Make_sql_many_rows(queries, wiki="", printqua=False):
+def Make_sql_many_rows(queries, wiki: str="", printqua: bool=False):
     rows = []
     # ---
     if not wiki:
@@ -253,7 +253,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False):
     return rows
 
 
-def Make_sql_2_rows(queries, wiki="", printqua=False):
+def Make_sql_2_rows(queries, wiki: str="", printqua: bool=False):
     # ---
     encats = {}
     if not wiki:
@@ -290,7 +290,7 @@ def Make_sql_2_rows(queries, wiki="", printqua=False):
     return encats
 
 
-def Make_sql_1_rows(queries, wiki="", printqua=False):
+def Make_sql_1_rows(queries, wiki: str="", printqua: bool=False):
     encats = []
     # ---
     if not wiki:
@@ -325,7 +325,7 @@ def Make_sql_1_rows(queries, wiki="", printqua=False):
     return encats
 
 
-def Make_sql_1_row(queries, wiki="", printqua=False):
+def Make_sql_1_row(queries, wiki: str="", printqua: bool=False):
     return Make_sql_1_rows(queries, wiki=wiki, printqua=printqua)
 
 

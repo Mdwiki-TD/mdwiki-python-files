@@ -65,7 +65,7 @@ for new, old in dup_args.items():
         old_to_new_params[x] = new
 
 
-def gt_arg(temp, name):
+def gt_arg(temp, name: str):
     if temp.has_arg(name):
         va = temp.get_arg(name)
         if va and va.value and va.value.strip():
@@ -74,11 +74,11 @@ def gt_arg(temp, name):
 
 
 class AddArchiveDate:
-    def __init__(self):
+    def __init__(self) -> None:
         self.text = ""
         pass
 
-    def run_archive(self):
+    def run_archive(self) -> None:
         # ---
         newtext = self.fix_it(self.text)
         # ---
@@ -96,7 +96,7 @@ class AddArchiveDate:
         # ---
         self.save_page(newtext, summary)
 
-    def param_added_plus(self, param):
+    def param_added_plus(self, param) -> None:
         self.added.setdefault(param, 0)
         self.added[param] += 1
 
@@ -134,7 +134,7 @@ class AddArchiveDate:
         # ---
         return temp
 
-    def fix_it(self, text):
+    def fix_it(self, text: str):
         # ---
         parser = wtp.parse(text)
         # ---
@@ -155,7 +155,7 @@ class AddArchiveDate:
 
 
 class one_page(AddArchiveDate):
-    def __init__(self, title):
+    def __init__(self, title) -> None:
         # ---
         super().__init__()
         # ---
@@ -181,7 +181,7 @@ class one_page(AddArchiveDate):
         #     self.run()
         #     self.run_archive()
 
-    def run(self):
+    def run(self) -> None:
         if not hasattr(self, "text"):
             logger.info(f" page:{self.title} text not initialized.")
             return
@@ -208,7 +208,7 @@ class one_page(AddArchiveDate):
         # ---
         self.save_page(newtext, summary)
 
-    def save_page(self, newtext, summary):
+    def save_page(self, newtext, summary) -> None:
         # ---
         if self.text == newtext:
             return
@@ -220,7 +220,7 @@ class one_page(AddArchiveDate):
         if save:
             self.text = newtext
 
-    def one_fix(self, temp, old_p, new_p):
+    def one_fix(self, temp, old_p, new_p) -> None:
         if temp.has_arg(old_p) and temp.has_arg(new_p):
             # ---
             p1_value = gt_arg(temp, old_p)
@@ -241,12 +241,12 @@ class one_page(AddArchiveDate):
             # ---
             temp.del_arg(old_p)
 
-    def fix_dupls(self, temp):
+    def fix_dupls(self, temp) -> None:
         for new, old in dup_args.items():
             for x in old:
                 self.one_fix(temp, x, new)
 
-    def fix_text_2(self, text):
+    def fix_text_2(self, text: str):
         # ---
         parser = wtp.parse(text)
         # ---
@@ -297,7 +297,7 @@ class one_page(AddArchiveDate):
         return text
 
 
-def one_title(title):
+def one_title(title) -> None:
     bot = one_page(title)
     # ---
     if "archive" in sys.argv:
@@ -307,7 +307,7 @@ def one_title(title):
         bot.run_archive()
 
 
-def main():
+def main() -> None:
     logger.info("*<<red>> > :")
     # ---
     cat = "Category:CS1 errors: redundant parameter"

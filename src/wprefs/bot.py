@@ -30,7 +30,7 @@ move_dot = {1: False}
 expend_infobox = {1: False}
 
 
-def fix_page_here(text, title, langcode):
+def fix_page_here(text: str, title, langcode):
     newtext = text
     # ---
     section_0_text = ""
@@ -56,7 +56,7 @@ def fix_page_here(text, title, langcode):
     return newtext
 
 
-def work_one_lang(list_, lang):
+def work_one_lang(list_, lang) -> None:
     """Process a list of titles for a specified language on Wikipedia.
 
     This function iterates through a list of titles and performs various
@@ -132,7 +132,7 @@ def work_one_lang(list_, lang):
         append_reffixed_file(lang, "", dns)
 
 
-def work_sql_result(lange, nolange, year=2024):
+def work_sql_result(lange, nolange, year: int=2024):
     newtable = {}
     que = f"""
         select lang, target from pages
@@ -163,7 +163,7 @@ def work_sql_result(lange, nolange, year=2024):
     return newtable
 
 
-def maine():
+def maine() -> None:
     # ---
     lange = ""
     nolange = ""

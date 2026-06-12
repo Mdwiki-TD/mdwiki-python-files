@@ -70,7 +70,7 @@ text = """
 """
 
 
-def test():
+def test() -> None:
     newtext = fix_ref_template(text)
 
 

@@ -61,7 +61,7 @@ def make_new_val(val):
     return newval
 
 
-def fix_es_months(text):
+def fix_es_months(text: str):
     parsed = wtp.parse(text)
     tags = parsed.get_tags()
     # ---

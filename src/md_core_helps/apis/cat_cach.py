@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 today = datetime.today().strftime("%Y-%m-%d")
 
 
-def dump_it(file, data):
+def dump_it(file, data) -> bool:
     try:
         with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
@@ -60,7 +60,7 @@ def from_cache() -> list[str]:
     return all_pages
 
 
-def dump_to_cache(cat, data):
+def dump_to_cache(cat, data) -> None:
     # ---
     if cat.lower().startswith("category:"):
         cat = cat[9:]
@@ -88,7 +88,7 @@ def dump_to_cache(cat, data):
         logger.info(f"<<green>> {cat}.json is updated ({len_data})")
 
 
-def Cat_Depth(title, depth=0, ns="all", print_s=True) -> list[str]:
+def Cat_Depth(title, depth: int=0, ns: str="all", print_s: bool=True) -> list[str]:
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
@@ -113,7 +113,7 @@ def Cat_Depth(title, depth=0, ns="all", print_s=True) -> list[str]:
     return list(result_table.keys())
 
 
-def make_cash_to_cats(dump_data=False) -> list[str]:
+def make_cash_to_cats(dump_data: bool=False) -> list[str]:
     # ---
     all_pages = []
     # ---

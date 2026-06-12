@@ -73,7 +73,7 @@ def make_archive_date_and_url(archiveurl):
     return found_it, archivedate, url, archiveurl
 
 
-def test():
+def test() -> None:
     urls = [
         "https://archive.ph/2001-05-03-232323/https://axaaa.com/news/liveblog",
         "https://archive.ph/2021-03-03/https://axaaa.com/news/liveblog",

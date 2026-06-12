@@ -71,7 +71,7 @@ def sql_results(lang):
     return result
 
 
-def main():
+def main() -> None:
     # ---
     lang_o = ""
     # ---

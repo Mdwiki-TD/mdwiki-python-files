@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 # ---
 
 
-def get_html_attributes_value(text, param):
+def get_html_attributes_value(text: str, param):
     # rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
     rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
     if not text:
@@ -32,7 +32,7 @@ def get_html_attributes_value(text, param):
     return ""
 
 
-def merge_references(text):
+def merge_references(text: str):
     # ---
     # Match references
     REFS = re.compile(r"(?is)<ref(?P<params>[^>\/]*)>(?P<content>.*?)<\/ref>")
@@ -91,7 +91,7 @@ def merge_references(text):
     return text
 
 
-def DuplicateReferences(text):
+def DuplicateReferences(text: str):
     # ---
     text = merge_references(text)
     # ---

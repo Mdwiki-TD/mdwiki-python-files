@@ -14,7 +14,7 @@ from td_core.mdpyget.bots.to_sql import to_sql
 logger = logging.getLogger(__name__)
 
 
-def do_to_sql(data_all, data_lead, ty="ref"):
+def do_to_sql(data_all, data_lead, ty: str="ref") -> None:
     if ty == "ref":
         table = "refs_counts"
         title_c = "r_title"
@@ -46,14 +46,14 @@ def make_old_values(all_data, lead_data):
     return list_ma
 
 
-def logaa(file, table):
+def logaa(file, table) -> None:
     with open(file, "w", encoding="utf-8") as outfile:
         json.dump(table, outfile, sort_keys=True, indent=2)
     # ---
     logger.info(f"<<green>> {len(table)} lines to {file}")
 
 
-def check_it(x, y, old_values):
+def check_it(x, y, old_values) -> bool:
     # ---
     if not old_values.get(x):
         return True

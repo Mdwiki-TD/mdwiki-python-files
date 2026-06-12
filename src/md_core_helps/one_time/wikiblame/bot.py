@@ -30,7 +30,7 @@ class WikiBlame:
         The content of the web page.
     """
 
-    def __init__(self, params):
+    def __init__(self, params) -> None:
         self.base_url = "http://wikipedia.ramselehof.de/wikiblame.php"
         self.in_first = False
         self.oldids = []

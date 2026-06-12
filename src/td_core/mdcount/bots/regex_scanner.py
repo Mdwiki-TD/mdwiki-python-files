@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 
 class RegexScanner:
-    def __init__(self, pattern, text):
+    def __init__(self, pattern: str, text: str) -> None:
         self._requests = []
         self._text = text
         self._pattern = re.compile(pattern, re.IGNORECASE | re.DOTALL)
@@ -15,7 +15,7 @@ class RegexScanner:
     def requests(self):
         return self._requests
 
-    def scan(self):
+    def scan(self) -> None:
         matches = self._pattern.finditer(self._text)
         for match in matches:
             request = match.groupdict()

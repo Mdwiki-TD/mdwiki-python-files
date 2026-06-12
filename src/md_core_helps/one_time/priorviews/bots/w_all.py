@@ -64,7 +64,7 @@ def sect_text(lang, userstable):
     return seec
 
 
-def work_all(translators_all):
+def work_all(translators_all) -> None:
     alllll = 0
     # ---
     # sort translators_all by count

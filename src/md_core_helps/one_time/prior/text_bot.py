@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from md_core_helps.one_time.priorviews.lists import translators
+from typing import Sequence
 
 logger = logging.getLogger(__name__)
 
@@ -139,7 +140,7 @@ def get_t_sections():
     return text
 
 
-def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_refsname):
+def make_color(en_extlinks, en_refsname, p_ext, p_names: Sequence[str], lead_extlinks, lead_refsname):
     # ---
     _sa_11 = False
     _sa_22 = False
@@ -181,7 +182,7 @@ def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_ref
 all_pages_states = {}
 
 
-def log_all_pages_states():
+def log_all_pages_states() -> None:
     Dir = Path(__file__).parent
     file = f"{Dir}/all_pages_states.json"
     # ---
@@ -196,7 +197,7 @@ def log_all_pages_states():
 log_all_pages_states()
 
 
-def make_text(allo, ttt=""):
+def make_text(allo, ttt: str=""):
     # create wikitable from json
     # ---
     t_sections[ttt] = {}

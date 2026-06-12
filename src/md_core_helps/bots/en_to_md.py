@@ -30,7 +30,7 @@ mdtitle_to_qid = sql_qids.get_all_qids()
 lala = ""
 
 
-def make_mdwiki_list():
+def make_mdwiki_list() -> None:
     # ---
     ffile = paths.json_files.medwiki_to_enwiki
     # ---

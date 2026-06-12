@@ -45,7 +45,7 @@ count_views_by_lang = {}
 views_by_lang = {}
 
 
-def makeviews():
+def makeviews() -> None:
     # ---
     """
     This function iterates through the `_data_` dictionary and updates the

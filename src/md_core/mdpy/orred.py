@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 api_new = NewApi("or", family="wikipedia")
 
 
-def create_redirect(target, mdtitle):
+def create_redirect(target, mdtitle) -> None:
     # ---
     if not target or not mdtitle:
         logger.error(f"<<red>>** false .. {mdtitle=} | {target=} ")
@@ -47,7 +47,7 @@ def check_all(links):
     return exists, not_exists
 
 
-def start():
+def start() -> None:
     # ---
     que = """select title, target from pages where target != "" and lang = "or";"""
     # ---

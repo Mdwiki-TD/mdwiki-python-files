@@ -45,7 +45,7 @@ def views_url(title, lang, view):
     return view
 
 
-def isv(comment):
+def isv(comment: str) -> bool:
     # ---
     comment = comment.lower()
     # ---
@@ -63,7 +63,7 @@ def isv(comment):
     return False
 
 
-def is_ip(user):
+def is_ip(user) -> bool:
     # skip user match ip address
     if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", user):
         logger.info(f" <<yellow>> skip user match ip address: {user}")
@@ -80,7 +80,7 @@ def is_ip(user):
     return False
 
 
-def talk_url(lang, user, labl):
+def talk_url(lang, user, labl) -> str:
     old = f"[[w:{lang}:User talk:{user}|{user}]]"
     # --
     pas = {"title": f"User_talk:{user}", "action": "edit", "section": "new"}
@@ -89,7 +89,7 @@ def talk_url(lang, user, labl):
     return f"[{url} {labl}]"
 
 
-def dump_data(file, data):
+def dump_data(file, data) -> None:
     logger.info(f"<<green>> () file:{file}.")
     try:
         with open(file, "w", encoding="utf-8") as f:

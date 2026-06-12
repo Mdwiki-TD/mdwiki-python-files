@@ -224,7 +224,7 @@ def make_lang_textso(lang):
     return newtext
 
 
-def work(lang):
+def work(lang) -> None:
     # ---
     newtext = make_lang_textso(lang)
     # ---

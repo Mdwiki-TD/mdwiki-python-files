@@ -38,7 +38,7 @@ def start_to_sql():
     return do_to_sql(tab_data["all"], tab_data["lead"], ty="ref")
 
 
-def count_refs(title):
+def count_refs(title) -> None:
     # ---
     text = mdwiki_api_call.GetPageText(title)
     # ---
@@ -75,7 +75,7 @@ def from_sql(old_values):
     return titles
 
 
-def get_links(ty="ref"):
+def get_links(ty: str="ref"):
     # ---
     titles = []
     # ---
@@ -92,7 +92,7 @@ def get_links(ty="ref"):
     return titles
 
 
-def main():
+def main() -> None:
     # ---
     tab_data["all"], tab_data["lead"] = get_jsons_new(
         paths.json_files.all_refcount, paths.json_files.lead_refcount, "ref"
@@ -149,7 +149,7 @@ def main():
     start_to_sql()
 
 
-def test():
+def test() -> None:
     # python3 core8/pwb.py td_core/mdcount/countref test
     # ---
     tab_data["lead"]["Yemen1"] = 50

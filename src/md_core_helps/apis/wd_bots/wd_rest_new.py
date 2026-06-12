@@ -85,7 +85,7 @@ def Get_sitelinks_From_Qid(q):
     return sitelinks
 
 
-def Get_Claims_API(q="", p=""):
+def Get_Claims_API(q: str="", p: str=""):
     # ---
     statements = Get_one_qid_info(q, only="statements").get("statements", {})
     # ---

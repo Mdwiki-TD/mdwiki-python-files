@@ -39,7 +39,7 @@ already_in_db = sql_for_mdwiki.get_all_from_table(table_name="pages_users_to_mai
 already_in_db = [x["id"] for x in already_in_db]
 
 
-def get_titles(lang=""):
+def get_titles(lang: str=""):
     # ---
     if "test" in sys.argv and not lang:
         return {
@@ -133,7 +133,7 @@ def work_one_tab(tab, missing, redirects):
     return {}
 
 
-def work_in_titles(lang, tabs):
+def work_in_titles(lang, tabs) -> None:
     # ---
     qids_all.setdefault(lang, {})
     # ---
@@ -206,7 +206,7 @@ def work_in_to_set(new_target, tab):
     return {"old": tab, "new": new_tab}
 
 
-def start():
+def start() -> None:
     # ---
     lang = ""
     # ---

@@ -14,11 +14,12 @@ import wikitextparser
 from md_core_helps.one_time.prior.json_en.lists import json_en_all
 from md_core_helps.one_time.prior.json_langs.lists import json_langs_by_langs
 from md_core_helps.one_time.priorviews.bots import helps
+from typing import Optional, Sequence
 
 logger = logging.getLogger(__name__)
 
 
-def match_ref_names(r, refnames, lang):
+def match_ref_names(r, refnames: Sequence[str], lang):
     # dict_keys(['revid', 'parentid', 'user', 'timestamp', 'contentformat', 'contentmodel', 'content', 'comment'])
     text_pp = r.get("content")
     user = r.get("user")
@@ -67,7 +68,7 @@ def match_ref_names(r, refnames, lang):
 
 
 class FindInHistory:
-    def __init__(self, title, lang="en", refname=[], extlinks=[]):
+    def __init__(self, title, lang: str="en", refname: str=[], extlinks=[]) -> None:
         # ---
         self.lang = lang
         self.title = title
@@ -153,7 +154,7 @@ class FindInHistory:
         # ---
         return pages
 
-    def start(self):
+    def start(self) -> None:
         pages = self.get_revisions(self.title)
         for p in pages:
             for r in p.get("revisions", []):
@@ -162,7 +163,7 @@ class FindInHistory:
                 self.revisions.append(r)
 
 
-def search_history(title, lang, en="", refname=None, extlinks=None):
+def search_history(title, lang, en: str="", refname: Optional[str]=None, extlinks=None):
     if refname is None:
         refname = []
     if extlinks is None:

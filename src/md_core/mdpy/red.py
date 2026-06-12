@@ -80,7 +80,7 @@ def get_red(title):
     return lista
 
 
-def work(title, num, length, from_title=""):
+def work(title, num: int, length: int, from_title: str="") -> str:
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
@@ -116,7 +116,7 @@ def work(title, num, length, from_title=""):
         mdwiki_api_call.create_Page(text, sus, tit, False, family="mdwiki", sleep=1)
 
 
-def main():
+def main() -> None:
     logger.info("*<<red>> > :")
     # ---
     # python3 red.py -page:Allopurinol

@@ -44,7 +44,7 @@ def expend_new(main_temp):
     return new_temp
 
 
-def Expend_Infobox(text, title, section_0):
+def Expend_Infobox(text: str, title, section_0):
     """Expand the infobox in the provided text.
 
     This function processes the input text to expand an infobox based on the

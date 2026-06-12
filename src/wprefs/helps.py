@@ -10,7 +10,7 @@ import urllib.parse
 logger = logging.getLogger(__name__)
 
 
-def print_s(s):
+def print_s(s) -> None:
     if "returnfile" not in sys.argv:
         logger.info(s)
 
@@ -25,7 +25,7 @@ def ec_de_code(tt, type1):
     return fao
 
 
-def exepts():
+def exepts() -> None:
     if "returnfile" not in sys.argv:
         logger.error("Traceback (most recent call last):")
         logger.error(traceback.format_exc())

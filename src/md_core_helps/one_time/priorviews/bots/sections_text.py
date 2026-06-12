@@ -135,7 +135,7 @@ def make_text(section, links):
         # ---
         return "{{abbr|" + f"{x2}|{x}" + "}}"
 
-    def fo_n(x):
+    def fo_n(x) -> str:
         return f"{x:,}"
 
     langs_keys_text = " !! ".join([format_x(x) for x in langs_keys])

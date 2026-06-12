@@ -23,7 +23,7 @@ targets_done = {}
 wd_tt = {}
 
 
-def dodo_sql():
+def dodo_sql() -> None:
     # ---
     lang_o = ""
     # ---
@@ -71,7 +71,7 @@ def dodo_sql():
     logger.info(f"<<yellow>> find {len_done_target} with target, and {len_no_target} without ")
 
 
-def do_it_sql(lange, targets):
+def do_it_sql(lange, targets) -> None:
     # ---
     titles = list(targets.keys())
     # ---
@@ -128,7 +128,7 @@ def do_it_sql(lange, targets):
                 logger.info(f"recheck.py missing:({len_missing}):{','.join(itemdiff)}")
 
 
-def work_with_2_qids(oldq, new_q):
+def work_with_2_qids(oldq, new_q) -> None:
     # ---
     logger.info("=============================")
     logger.info(f"start:: oldq:{oldq}, new_q:{new_q}")
@@ -172,7 +172,7 @@ def work_with_2_qids(oldq, new_q):
     logger.info("=============================")
 
 
-def start():
+def start() -> None:
     # ---
     dodo_sql()
     # ---

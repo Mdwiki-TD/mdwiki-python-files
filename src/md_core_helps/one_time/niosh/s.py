@@ -30,7 +30,7 @@ nas_rep = {
 cite_all_links = {}
 
 
-def work_in_file(filename):
+def work_in_file(filename) -> None:
     filename2 = os.path.join(Dird_js, filename)
     # ---
     text = {}

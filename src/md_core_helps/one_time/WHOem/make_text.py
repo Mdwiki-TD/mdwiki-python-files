@@ -72,7 +72,7 @@ def format_x(x):
     return "{{abbr|" + f"{x2}|{x}" + "}}"
 
 
-def fo_n(x):
+def fo_n(x) -> str:
     return f"{x:,}"
 
 
@@ -152,7 +152,7 @@ def make_text(ViewsData):
     return faf
 
 
-def start():
+def start() -> None:
     # ---
     with open(f"{Dir}/lists/views.json", "r", encoding="utf-8") as f:
         Views_Data = json.load(f)

@@ -114,7 +114,7 @@ def get_lang_links(md_links):
     return lang_links
 
 
-def sts():
+def sts() -> None:
     md_links = get_md_links()
     # ---
     lang_links = get_lang_links(md_links)

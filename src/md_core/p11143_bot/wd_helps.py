@@ -13,6 +13,7 @@ from urllib.error import HTTPError, URLError
 
 from md_core_helps.apis import wikidataapi
 from SPARQLWrapper import JSON, SPARQLWrapper
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +70,7 @@ def get_query_result(query):
     return lista
 
 
-def make_in_wd_tab(limit=None):
+def make_in_wd_tab(limit: Optional[int]=None):
     # ---
     query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
     # ---
@@ -93,7 +94,7 @@ def make_in_wd_tab(limit=None):
     return in_wd
 
 
-def add_P11143_to_qids_in_wd(newlist):
+def add_P11143_to_qids_in_wd(newlist) -> None:
     # ---
     logger.info(f"len of newlist: {len(newlist)}")
     # ---
@@ -117,7 +118,7 @@ def add_P11143_to_qids_in_wd(newlist):
                     time.sleep(5)
 
 
-def fix_in_wd(merge_qids, qids):
+def fix_in_wd(merge_qids, qids) -> None:
     # mdwiki != P11143
     # تصحيح قيم الخاصية التي لا تساوي اسم المقالة
     # ---

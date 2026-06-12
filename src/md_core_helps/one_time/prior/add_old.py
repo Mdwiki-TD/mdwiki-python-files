@@ -46,10 +46,10 @@ project_js_new = f"{Dir}/json_en/"
 
 
 class PriorAddOld:
-    def __init__(self):
+    def __init__(self) -> None:
         self.all_file = []
 
-    def run(self):
+    def run(self) -> None:
         p = 0
         for filename in os.listdir(project_js_new):
             if filename.endswith(".json"):

@@ -13,7 +13,7 @@ from md_core_helps.mdapi_sql import sql_for_mdwiki
 logger = logging.getLogger(__name__)
 
 
-def work_in_new_tabs_to_db_new(new_tabs_to_db):
+def work_in_new_tabs_to_db_new(new_tabs_to_db) -> None:
     logger.info(f"len of new_tabs_to_db {len(new_tabs_to_db)}")
     # ---
     for tab in new_tabs_to_db:

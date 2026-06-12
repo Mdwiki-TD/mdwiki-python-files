@@ -125,7 +125,7 @@ def filter_urls(links):
 
 
 class work_in_one_lang_link:
-    def __init__(self, lang, title):
+    def __init__(self, lang, title) -> None:
         self.lang = change_codes.get(lang) or lang
         # ---
         self.title = title
@@ -141,7 +141,7 @@ class work_in_one_lang_link:
         # ---
         self.start()
 
-    def start(self):
+    def start(self) -> None:
         self.get_text()
         # ---
         self.get_extlinks()
@@ -167,7 +167,7 @@ class work_in_one_lang_link:
         # ---
         return json1
 
-    def expandtemplates(self, text):
+    def expandtemplates(self, text: str):
         # ---
         params = {"action": "expandtemplates", "format": "json", "text": text, "prop": "wikitext", "formatversion": "2"}
         # ---
@@ -177,7 +177,7 @@ class work_in_one_lang_link:
         # ---
         return newtext
 
-    def get_expended(self):
+    def get_expended(self) -> None:
         # ---
         text_pp = self.expandtemplates(self.text)
         parsed = wikitextparser.parse(text_pp)
@@ -224,14 +224,14 @@ class work_in_one_lang_link:
         # ---
         return _tags_
 
-    def get_text(self):
+    def get_text(self) -> None:
         params = {"action": "parse", "format": "json", "prop": "wikitext", "page": self.title, "utf8": 1}
         # ---
         json1 = self.post_to_json(params)
         # ---
         self.text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
 
-    def get_extlinks(self):
+    def get_extlinks(self) -> None:
         params = {
             "action": "query",
             "format": "json",
@@ -270,7 +270,7 @@ class work_in_one_lang_link:
         # ---
         self.extlinks = liste1
 
-    def get_lead(self):
+    def get_lead(self) -> None:
         # ---
         parsed = wikitextparser.parse(self.text)
         # ---
@@ -312,7 +312,7 @@ class work_in_one_lang_link:
         # ---
         return liste1
 
-    def make_new_text(self, tags):
+    def make_new_text(self, tags) -> None:
         # ---
         for x in tags:
             if not x or not x.name:
@@ -337,7 +337,7 @@ class work_in_one_lang_link:
 
 
 class get_old:
-    def __init__(self, title, lang="en"):
+    def __init__(self, title, lang: str="en") -> None:
         # ---
         self.lang = lang
         self.title = title
@@ -354,7 +354,7 @@ class get_old:
         # ---
         self.start()
 
-    def start(self):
+    def start(self) -> None:
         self.get_oldtext()
         # ---
         parsed = wikitextparser.parse(self.oldtext)
@@ -384,7 +384,7 @@ class get_old:
         # ---
         return json1
 
-    def expandtemplates(self, text):
+    def expandtemplates(self, text: str):
         # ---
         params = {"action": "expandtemplates", "format": "json", "text": text, "prop": "wikitext", "formatversion": "2"}
         # ---
@@ -394,7 +394,7 @@ class get_old:
         # ---
         return newtext
 
-    def get_expended(self):
+    def get_expended(self) -> None:
         # ---
         text_pp = self.expandtemplates(self.oldtext)
         parsed = wikitextparser.parse(text_pp)
@@ -441,7 +441,7 @@ class get_old:
         # ---
         return _tags_
 
-    def get_oldtext(self):
+    def get_oldtext(self) -> None:
         params = {"action": "parse", "format": "json", "prop": "wikitext", "page": self.title, "utf8": 1}
         # ---
         params = {
@@ -465,7 +465,7 @@ class get_old:
         logger.info(f"timestamp: {self.timestamp}")
         self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
-    def get_lead(self):
+    def get_lead(self) -> None:
         # ---
         parsed = wikitextparser.parse(self.oldtext)
         # ---
@@ -481,7 +481,7 @@ class get_old:
         self.lead["refsname"] = self.get_ref_names(tags0)
         self.lead["extlinks"] = self.get_extlinks_from_text(self.section0)
 
-    def get_extlinks_from_text(self, text):
+    def get_extlinks_from_text(self, text: str):
         params = {
             "action": "parse",
             "format": "json",
@@ -507,7 +507,7 @@ class get_old:
         # ---
         return liste1
 
-    def make_new_text(self, tags):
+    def make_new_text(self, tags) -> None:
         # ---
         for x in tags:
             if not x or not x.name:

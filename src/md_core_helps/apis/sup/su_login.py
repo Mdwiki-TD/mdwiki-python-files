@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 
-def Get_MwClient_Site(lang, family, username, password):
+def Get_MwClient_Site(lang, family, username: str, password: str):
     cookies_file = get_file_name(lang, family, username)
 
     domain = f"{lang}.{family}.org"

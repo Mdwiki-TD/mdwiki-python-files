@@ -31,7 +31,7 @@ for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
         in_sql[code] = [title]
 
 
-def to_sql_d(titles_data):
+def to_sql_d(titles_data) -> None:
     # ---
     new_all = {}
     # ---
@@ -65,7 +65,7 @@ def to_sql_d(titles_data):
         insert_dict(new_data, "all_exists", ["article_id", "code"], lento=1000, title_column="article_id")
 
 
-def main():
+def main() -> None:
     # ---
     langs = list({x.replace(".json", "") for x in json_files})
     # ---
