@@ -25,7 +25,7 @@ default_user_agent = (
 )
 
 
-def fix_p(title, text, param):
+def fix_p(title, text: str, param):
     uu = "{{ourworldindatamirror|%s}}" % param
     nn = f'<templatestyles src="Owid/styles.css"/><ourworldindatamirror>{param}</ourworldindatamirror>'
     newtext = text
@@ -36,7 +36,7 @@ def fix_p(title, text, param):
     return newtext
 
 
-def work(title):
+def work(title) -> None:
     # ---
     # global values
     # ---
@@ -81,7 +81,7 @@ def work(title):
     logger.info(pas)
 
 
-def check_urls(urls):
+def check_urls(urls) -> None:
     # global errors
     # ---
     for u in urls:
@@ -109,7 +109,7 @@ def check_urls(urls):
             errors[u] = True
 
 
-def make_log(dad):
+def make_log(dad) -> None:
     lists = {x: len(z) for x, z in dad.items()}
     # ---
     global errors
@@ -145,7 +145,7 @@ def make_log(dad):
     mdwiki_api_call.page_put(newtext=te, summary="update", title="User:Mr. Ibrahem/Ourworldindatamirror", diff=False)
 
 
-def main():
+def main() -> None:
     # ---
     global values
     # ---

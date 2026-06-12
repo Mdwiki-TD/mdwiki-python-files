@@ -29,7 +29,7 @@ def load_td_list() -> list[str]:
     return td_list
 
 
-def duplicate(merge_qids):
+def duplicate(merge_qids) -> None:
     # ايجاد عناصر ويكي بيانات بها قيمة الخاصية في أكثر من عنصر
     va_tab = {}
     # ---
@@ -52,7 +52,7 @@ def duplicate(merge_qids):
     logger.info("<<yellow>> () end...")
 
 
-def add_q(new_qids, ty):
+def add_q(new_qids, ty) -> None:
     # ---
     logger.info(f"len of new_qids: {len(new_qids)}")
     # ---
@@ -120,7 +120,7 @@ def work_qids(ty, qids_list) -> dict:
     return new_qids
 
 
-def start():
+def start() -> None:
     # ---
     ALL_QIDS = {}
     # ---

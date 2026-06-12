@@ -42,7 +42,7 @@ def start_to_sql():
     return do_to_sql(tab_data["all"], tab_data["lead"], ty="word")
 
 
-def count_words(title):
+def count_words(title) -> None:
     # ---
     text = mdwiki_api_call.GetPageText(title)
     # ---
@@ -72,7 +72,7 @@ def from_sql(old_values):
     return titles
 
 
-def get_links(ty="ref"):
+def get_links(ty: str="ref"):
     # ---
     titles = []
     # ---
@@ -89,7 +89,7 @@ def get_links(ty="ref"):
     return titles
 
 
-def main():
+def main() -> None:
     # ---
     tab_data["all"], tab_data["lead"] = get_jsons_new(file_all, file_lead, "word")
     # ---
@@ -144,7 +144,7 @@ def main():
     start_to_sql()
 
 
-def test():
+def test() -> None:
     # python3 core8/pwb.py td_core/mdcount/words test
     # ---
     tab_data["lead"]["Yemen1"] = 50

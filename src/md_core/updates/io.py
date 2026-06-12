@@ -40,7 +40,7 @@ if "200" in sys.argv:
 logger.info(f"len of listo: {len(listo)}")
 
 
-def get_timestamp(titles):
+def get_timestamp(titles) -> None:
     # ---
     global NewList
     # ---

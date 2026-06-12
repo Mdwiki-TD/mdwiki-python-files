@@ -20,7 +20,7 @@ all_pages = cat_cach.from_cache()
 all_pages = [x for x in all_pages[:] if valid_title(x)]
 
 
-def replace_in_sql(reds, ty):
+def replace_in_sql(reds, ty) -> None:
     # ---
     table_name = "qids_others" if ty == "other" else "qids"
     # ---
@@ -54,7 +54,7 @@ def get_redirects(to_work):
     return reds
 
 
-def add_to_qids(sql_results_qids, ty):
+def add_to_qids(sql_results_qids, ty) -> None:
     # ---
     logger.info(f"<<yellow>> start ({ty=})")
     # ---
@@ -71,7 +71,7 @@ def add_to_qids(sql_results_qids, ty):
     sql_qids.add_titles_to_qids(new_list, add_empty_qid=True)
 
 
-def do(ty):
+def do(ty) -> None:
     # ---
     if ty == "other":
         sql_results_qids = sql_qids_others.get_others_qids()
@@ -99,7 +99,7 @@ def do(ty):
     add_to_qids(sql_results_qids, ty)
 
 
-def start():
+def start() -> None:
     # ---
     tys = ["td"]
     # ---

@@ -87,7 +87,7 @@ def get_qids(noqids_list):
     return new_title_qids
 
 
-def to_add_wrk(to_add, noqids):
+def to_add_wrk(to_add, noqids) -> None:
     logger.info("===================")
     logger.info(f"find qid to {len(to_add)} from {len(noqids)} pages.")
     # ---
@@ -102,7 +102,7 @@ def to_add_wrk(to_add, noqids):
         work_un(to_add)
 
 
-def empty_qids_wrk(empty_qids):
+def empty_qids_wrk(empty_qids) -> None:
     logger.info("===================")
     # ---
     logger.error(f"<<red>>no qids: {len(empty_qids)}")
@@ -118,7 +118,7 @@ def empty_qids_wrk(empty_qids):
             create_qids(empty_qids)
 
 
-def false_qids_wrk(false_qids):
+def false_qids_wrk(false_qids) -> None:
     logger.info("===================")
     if false_qids:
         logger.info("<<red>> flase qids:")
@@ -128,7 +128,7 @@ def false_qids_wrk(false_qids):
             logger.info(f"q: {q}\t new title: ({xz})\t: title_in: ({title_in})..")
 
 
-def start():
+def start() -> None:
     # ---
     if len(noqids) == 0:
         logger.info('<<green>> noqids list is empty. return "".')

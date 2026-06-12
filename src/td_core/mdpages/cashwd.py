@@ -201,7 +201,7 @@ def dump_all(main_table_sites, len_titles):
     return missing_langs
 
 
-def cash_wd():
+def cash_wd() -> None:
     # ---
     logger.info("<<green>> ")
     # ---

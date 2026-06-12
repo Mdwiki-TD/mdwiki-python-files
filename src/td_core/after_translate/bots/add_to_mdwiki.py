@@ -18,7 +18,7 @@ from td_core.after_translate.bots.fixcat import cat_for_pages
 logger = logging.getLogger(__name__)
 
 
-def add_new_row(mdtitle, lang, user, pupdate, target, word, cat):
+def add_new_row(mdtitle, lang, user, pupdate, target, word: str, cat) -> None:
     # ---
     mdtit = escape_string(mdtitle)
     user2 = escape_string(user)
@@ -46,7 +46,7 @@ def add_new_row(mdtitle, lang, user, pupdate, target, word, cat):
     sql_for_mdwiki.mdwiki_sql(insert_qua, values=values)
 
 
-def update_row_new(mdtitle, lang, user, pupdate, target):
+def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
     # ---
     mdtit = escape_string(mdtitle)
     user2 = escape_string(user)
@@ -70,7 +70,7 @@ def update_row_new(mdtitle, lang, user, pupdate, target):
     sql_for_mdwiki.mdwiki_sql(update_qua, values=values)
 
 
-def add_to_pages_db(lange, tab, to_updatex):
+def add_to_pages_db(lange, tab, to_updatex) -> None:
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
     for _, tabe in tab.items():
@@ -102,7 +102,7 @@ def add_to_pages_db(lange, tab, to_updatex):
             add_new_row(mdtitle, lang, user, pupdate, target, word, cat)
 
 
-def add_to_mdwiki_sql(lange, tab, to_updatex):
+def add_to_mdwiki_sql(lange, tab, to_updatex) -> None:
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
     logger.info("<<red>> :: ")

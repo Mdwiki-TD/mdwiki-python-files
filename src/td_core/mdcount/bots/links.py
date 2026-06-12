@@ -18,7 +18,7 @@ reg_full_links = re.compile(r"(\[\[(?:[^][|]+)\|*(?:[^][]*(?:\[\[[^][]+\]\][^][]
 reg_templates = re.compile(r"{{(?:msg:)?(?P<name>[^{\|]+?)" r"(?:\|(?P<params>[^{]+?(?:{[^{]+?}[^{]*?)?)?)?}}")
 
 
-def get_links_from_cats(getcat=""):
+def get_links_from_cats(getcat: str=""):
     # ---
     titles = []
     # ---

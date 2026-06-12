@@ -9,7 +9,7 @@ from mdwiki_api.mdwiki_page import CatDepth
 videos_cats = ["Videowiki scripts", "RTTVideo"]
 
 
-def get_links_from_cats(getcat=""):
+def get_links_from_cats(getcat: str=""):
     # ---
     titles = []
     # ---

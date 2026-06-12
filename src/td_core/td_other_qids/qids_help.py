@@ -36,7 +36,7 @@ def load_all_pages() -> list[str]:
     return all_pages
 
 
-def get_pages_to_work(ty="td|other"):
+def get_pages_to_work(ty: str="td|other"):
     """
     get pages to work
     """
@@ -54,7 +54,7 @@ def get_pages_to_work(ty="td|other"):
     return tds_list, all_pages
 
 
-def dump_jsons(ty, medwiki_to_en, missing_in_en, sames):
+def dump_jsons(ty, medwiki_to_en, missing_in_en, sames) -> None:
     # ---
     if "nodump" in sys.argv:
         logger.info("Skipping dump of JSON files")

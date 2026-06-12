@@ -22,7 +22,7 @@ from td_core.td_other_qids.qids_help import (
 logger = logging.getLogger(__name__)
 
 
-def add_q(new_qids, ty):
+def add_q(new_qids, ty) -> None:
     # ---
     logger.info(f"len of new_qids: {len(new_qids)}")
     # ---
@@ -56,7 +56,7 @@ def work_qids(ty, qids_list):
     return new_qids
 
 
-def start():
+def start() -> None:
     # ---
     ALL_QIDS = {}
     # ---

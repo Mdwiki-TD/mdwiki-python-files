@@ -34,7 +34,7 @@ api_new = NewApi("www", family="mdwiki")
 # titles   = api_new.get_titles_redirects(titles)
 
 
-def post_s(params, addtoken=False, files=None):
+def post_s(params, addtoken: bool=False, files=None):
     # ---
     params["format"] = "json"
     params["utf8"] = 1
@@ -45,11 +45,11 @@ def post_s(params, addtoken=False, files=None):
 
 
 def page_put(
-    newtext="",
-    summary="",
-    title="",
-    minor="",
-    nocreate=1,
+    newtext: str="",
+    summary: str="",
+    title: str="",
+    minor: str="",
+    nocreate: int=1,
     **kwargs,
 ):
     # ---
@@ -71,7 +71,7 @@ def Add_To_Bottom(
 
 
 def create_Page(
-    text,
+    text: str,
     summary,
     title,
     ask,
@@ -85,7 +85,7 @@ def create_Page(
     return create
 
 
-def wordcount(title, srlimit="30"):
+def wordcount(title, srlimit: str="30"):
     # srlimit = "30"
     params = {
         "action": "query",
@@ -113,7 +113,7 @@ def wordcount(title, srlimit="30"):
     return words
 
 
-def GetPageText(title, redirects=False, get_revid=False):
+def GetPageText(title, redirects: bool=False, get_revid: bool=False):
     """Retrieve the wikitext of a specified page from a wiki.
 
     This function sends a request to a wiki API to retrieve the wikitext of
@@ -193,7 +193,7 @@ def GetRevid(title):
     return ""
 
 
-def Get_page_links(title, namespace="0", limit="max"):
+def Get_page_links(title, namespace: str = "0", limit: Union[int, str] = "max"):
     # ---
     logger.info(f' for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
@@ -234,11 +234,11 @@ def Get_page_links(title, namespace="0", limit="max"):
     return Main_table
 
 
-def Get_template_pages(title, namespace="*", limit="max"):
+def Get_template_pages(title, namespace: str = "*", limit: Union[int, str] = "max"):
     return api_new.Get_template_pages(title, namespace=namespace)
 
 
-def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all=0) -> list[str]:
+def Get_All_pages(start, namespace: str = "0", limit: Union[int, str] = "max", apfilterredir: str = "", limit_all: int = 0) -> list[str]:
     return api_new.Get_All_pages(
         start=start,
         namespace=namespace,
@@ -248,7 +248,7 @@ def Get_All_pages(start, namespace="0", limit="max", apfilterredir="", limit_all
     )
 
 
-def Get_UserContribs(user, limit="max", namespace="*", ucshow=""):
+def Get_UserContribs(user, limit: Union[int, str] = "max", namespace: str = "*", ucshow: str = ""):
     return api_new.UserContribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
 
 

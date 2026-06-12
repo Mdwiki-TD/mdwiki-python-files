@@ -44,7 +44,7 @@ def get_result():
     return []
 
 
-def work_one_page(x):
+def work_one_page(x) -> None:
     """Process a single page based on the provided metadata.
 
     This function retrieves the QID associated with a given markdown title
@@ -89,7 +89,7 @@ def work_one_page(x):
     logger.info(f"<<blue>> {qid_in=}, {qid=}")
 
 
-def main():
+def main() -> None:
     """Main function to process command-line arguments and extract specific
     information
     from a predefined result list.  This function iterates through command-

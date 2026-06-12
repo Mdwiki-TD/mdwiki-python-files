@@ -107,7 +107,7 @@ def work_in_one_site(site, links):
     return editors
 
 
-def start():
+def start() -> None:
     # ---
     p_site = ""
     for arg in sys.argv:

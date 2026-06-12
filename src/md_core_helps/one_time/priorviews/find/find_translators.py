@@ -30,13 +30,13 @@ if not os.path.exists(file):
 N_g = 0
 
 
-def logem(file, data):
+def logem(file, data) -> None:
     logger.info(f"<<yellow>> {len(data)} words")
     # dump tra_by_lang
     helps.dump_data(file, data)
 
 
-def valid(x, tab, empty=""):
+def valid(x, tab, empty: str="") -> bool:
     i = tab.get(x) or tab.get(x.lower())
     if not i or i == empty:
         return True
@@ -92,7 +92,7 @@ def get_t(links, lang, data):
     return data
 
 
-def start():
+def start() -> None:
     # ---
     langkeys = links_by_lang.keys()
     # ---
@@ -120,7 +120,7 @@ def start():
     logem(file, tra_by_lang)
 
 
-def test():
+def test() -> None:
     # ---
     da = ["مرحاض ذو حفرة"]
     # ---
@@ -140,7 +140,7 @@ def test():
                     print(n, lang, title, tra)
 
 
-def removeip():
+def removeip() -> None:
     # ---
     tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
     # ---

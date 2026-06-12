@@ -19,7 +19,7 @@ from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
 logger = logging.getLogger(__name__)
 
 
-def remove_from_others(qids_othrs, qids_td):
+def remove_from_others(qids_othrs, qids_td) -> None:
     # ---
     TD_list = cat_cach.from_cache()
     # ---
@@ -53,7 +53,7 @@ def remove_from_others(qids_othrs, qids_td):
             sql_qids_others.delete_title_from_db(title, pr=f"{n}/{len(same_q_in_td)}")
 
 
-def doo():
+def doo() -> None:
     # ---
     qids_othrs = sql_qids_others.get_others_qids()
     logger.info(f"len of qids_othrs: {len(qids_othrs):,}")

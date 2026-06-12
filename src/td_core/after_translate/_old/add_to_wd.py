@@ -144,7 +144,7 @@ def add_wd(qid, enlink, lang, target):
     return False
 
 
-def Add_to_wikidata(mdtitle, lang, target, user):
+def Add_to_wikidata(mdtitle, lang, target, user) -> None:
     # ---
     qid = en_to_md.mdtitle_to_qid.get(mdtitle, "")
     enlink = en_to_md.mdwiki_to_enwiki.get(mdtitle, mdtitle)
@@ -184,7 +184,7 @@ def Add_to_wikidata(mdtitle, lang, target, user):
         orred.create_redirect(target, mdtitle)
 
 
-def add_tab_to_wd(table):
+def add_tab_to_wd(table) -> None:
     # ---
     for _, tab in table.items():
         # ---

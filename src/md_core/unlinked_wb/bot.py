@@ -60,7 +60,7 @@ def add_un_linked_wb(title, qid):
     return save
 
 
-def work_un(tab):
+def work_un(tab) -> None:
     for numb, (title, new_q) in enumerate(tab.items(), start=1):
         # ---
         logger.info(f"-----------------\n<<yellow>> : {numb}, {title=}, {new_q=}")
@@ -69,7 +69,7 @@ def work_un(tab):
             add_un_linked_wb(title, new_q)
 
 
-def add_to_pages(pages_to_add):
+def add_to_pages(pages_to_add) -> None:
     # ---
     if "noadd" in sys.argv:
         return
@@ -84,7 +84,7 @@ def add_to_pages(pages_to_add):
         add_un_linked_wb(x, qid)
 
 
-def pages_has_to_work(qids, pages_has):
+def pages_has_to_work(qids, pages_has) -> None:
     # ---
     f_to_work = {page: qids[page] for page in pages_has if page in qids and qids[page] != pages_has[page]}
     # ---
@@ -102,7 +102,7 @@ def pages_has_to_work(qids, pages_has):
         add_un_linked_wb(x, qid)
 
 
-def add_tag():
+def add_tag() -> None:
     # ---
     logger.info("Get all pages...")
     # ---

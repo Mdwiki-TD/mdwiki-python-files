@@ -34,7 +34,7 @@ api_new = NewApi("www", family="mdwiki")
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 
 
-def work(title, num, length, from_title=""):
+def work(title, num: int, length: int, from_title: str="") -> str:
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
@@ -72,7 +72,7 @@ def work(title, num, length, from_title=""):
             save = page2.save(newtext=text, summary="Returns the article text after importing the history", nocreate=0)
 
 
-def main():
+def main() -> None:
     logger.info("*<<red>> > :")
     # ---
     # python3 imp.py -page:Crohn's_disease

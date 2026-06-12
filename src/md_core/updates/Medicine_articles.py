@@ -63,7 +63,7 @@ def get_articles():
     return 0
 
 
-def start():
+def start() -> None:
     """
     This function generates a statistical report of the number of articles by language for the WikiProject Medicine. It retrieves the current year using the `datetime` module and constructs a title for the report. It then fetches the result of an SQL query using the `sql_result` function and obtains a list of articles using the `get_articles` function. If the language 'en' is not present in the `languages` dictionary, it adds the 'en' key with the corresponding number of articles.
 

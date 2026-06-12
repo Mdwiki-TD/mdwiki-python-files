@@ -24,7 +24,7 @@ def get_url(url):
     return ""
 
 
-def wikiblame(table):
+def wikiblame(table) -> None:
     exampl_url = "http://wikipedia.ramselehof.de/wikiblame.php?user_lang=en&lang=es&project=wikipedia&tld=org&article=Letrina+de+hoyo&needle=Till2014&skipversions=0&ignorefirst=0&limit=1500&offtag=22&offmon=7&offjahr=2023&searchmethod=int&order=desc&force_wikitags=on&user="
     endpoint = "http://wikipedia.ramselehof.de/wikiblame.php"
     params = {

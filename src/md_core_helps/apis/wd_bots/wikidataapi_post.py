@@ -20,7 +20,7 @@ SS = {"ss": requests.Session(), "r3_token": ""}
 login_not_done = {1: True}
 
 
-def do_request(params=None, method="POST"):
+def do_request(params=None, method: str="POST"):
     # ---
     url = "https://www.wikidata.org/w/api.php"
     # ---
@@ -54,7 +54,7 @@ def do_request(params=None, method="POST"):
         return {}
 
 
-def get_token(mk_new=False):
+def get_token(mk_new: bool=False):
     # get edit token
     # ---
     if SS["r3_token"] and not mk_new:
@@ -71,7 +71,7 @@ def get_token(mk_new=False):
     return r3_token
 
 
-def Log_to_wiki(url=""):
+def Log_to_wiki(url: str=""):
     # ---
     if not login_not_done[1]:
         return ""
@@ -110,7 +110,7 @@ def Log_to_wiki(url=""):
     login_not_done[1] = False
 
 
-def post_it(params=None, url=None, token=True, method="POST"):
+def post_it(params=None, url=None, token: bool=True, method: str="POST"):
     # ---
     Log_to_wiki()
     # ---

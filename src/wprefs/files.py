@@ -50,7 +50,7 @@ def make_ref_done_list():
 reffixed_list = make_ref_done_list()
 
 
-def append_reffixed_file(lang, title, titles=None):
+def append_reffixed_file(lang, title, titles=None) -> None:
     if titles is None:
         titles = []
     lio = f"{lang}:{title}"

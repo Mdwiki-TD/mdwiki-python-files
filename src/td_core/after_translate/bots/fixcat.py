@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 cat_for_pages = {}
 
 
-def get_cats_and_pages():
+def get_cats_and_pages() -> None:
     # ---
     sq = sql_for_mdwiki.select_md_sql("select category, depth from categories;", return_dict=True)
     # ---
@@ -57,7 +57,7 @@ def get_cats_and_pages():
 get_cats_and_pages()
 
 
-def get_pages_with_no_cat_old():
+def get_pages_with_no_cat_old() -> None:
     # ---
     add_cat = {}
     # ---
@@ -85,7 +85,7 @@ def get_pages_with_no_cat_old():
             logger.info(qu)
 
 
-def get_pages_with_no_cat():
+def get_pages_with_no_cat() -> None:
     # ---
     add_cat = {}
     cat_to_titles = {}

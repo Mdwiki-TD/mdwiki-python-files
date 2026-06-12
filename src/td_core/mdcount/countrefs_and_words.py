@@ -39,12 +39,12 @@ file_all_words = paths.json_files.allwords
 file_lead_words = paths.json_files.words
 
 
-def start_to_sql():
+def start_to_sql() -> None:
     do_to_sql(words_tab_data["all"], words_tab_data["lead"], ty="word")
     do_to_sql(refs_tab_data["all"], refs_tab_data["lead"], ty="ref")
 
 
-def count_words(title, text):
+def count_words(title, text: str) -> None:
     # ---
     lead_c, all_c = lead.count_all(title="", text=text)
     # ---
@@ -54,7 +54,7 @@ def count_words(title, text):
     logger.info(f"<<green>> all:{all_c} \t lead:{lead_c}")
 
 
-def count_refs(title, text):
+def count_refs(title, text: str) -> None:
     # ---
     # extend short refs
     text2 = text
@@ -89,7 +89,7 @@ def from_sql(old_values):
     return titles
 
 
-def get_links(ty="ref"):
+def get_links(ty: str="ref"):
     # ---
     titles = []
     # ---
@@ -109,7 +109,7 @@ def get_links(ty="ref"):
     return titles
 
 
-def main():
+def main() -> None:
     # ---
     words_tab_data["all"], words_tab_data["lead"] = get_jsons_new(file_all_words, file_lead_words, "word")
     # ---
@@ -182,7 +182,7 @@ def main():
     start_to_sql()
 
 
-def test():
+def test() -> None:
     # python3 core8/pwb.py td_core/mdcount/countref test
     # ---
     refs_tab_data["lead"]["Yemen1"] = 50

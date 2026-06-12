@@ -29,7 +29,7 @@ file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
 file4 = Path(dir2) / "data" / "all_pages_revids.json"
 
 
-def dump_data(revids):
+def dump_data(revids) -> None:
     logger.info(f"len(revids): {len(revids)}")
     # ---
     if not revids:
@@ -62,7 +62,7 @@ def dump_data(revids):
         logger.error(f"<<red>> dump to {file4} error: {e}")
 
 
-def Cat_Depth(title, depth=0):
+def Cat_Depth(title, depth: int=0):
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
@@ -77,7 +77,7 @@ def Cat_Depth(title, depth=0):
     return result_table
 
 
-def get_all_revids():
+def get_all_revids() -> None:
     # ---
     revids = {}
     # ---

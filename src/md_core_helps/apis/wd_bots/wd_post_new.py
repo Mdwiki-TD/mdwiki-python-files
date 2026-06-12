@@ -20,7 +20,7 @@ SS = {"csrftoken": ""}
 wd_site = Get_MwClient_Site("www", "wikidata", username, password)
 
 
-def do_request(params=None, method="POST"):
+def do_request(params=None, method: str="POST"):
     # ---
     if not wd_site:
         logger.info("no wd_site")
@@ -42,7 +42,7 @@ def do_request(params=None, method="POST"):
     return {}
 
 
-def get_token(mk_new=False):
+def get_token(mk_new: bool=False):
     # get edit token
     # ---
     if SS["csrftoken"] and not mk_new:
@@ -59,7 +59,7 @@ def get_token(mk_new=False):
     return csrftoken
 
 
-def post_it(params=None, url=None, token=True, method="POST"):
+def post_it(params=None, url=None, token: bool=True, method: str="POST"):
     # ---
     if not url:
         url = "https://www.wikidata.org/w/api.php"

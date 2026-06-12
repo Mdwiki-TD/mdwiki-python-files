@@ -55,7 +55,7 @@ def main_links():
     return links
 
 
-def log_all(main_File):
+def log_all(main_File) -> None:
     # ---
     if "enonly" in sys.argv or "newenonly" in sys.argv:
         return
@@ -64,12 +64,12 @@ def log_all(main_File):
         file.write(json.dumps(All))
 
 
-def log_allen(main_File):
+def log_allen(main_File) -> None:
     with open(main_File, "w", encoding="utf-8") as file:
         file.write(json.dumps(allen))
 
 
-def advance_work_en(title, title2, page):
+def advance_work_en(title, title2, page) -> None:
     # ---
     tat = get_them.work_in_one_lang_link("en", title2)
     # ---
@@ -108,7 +108,7 @@ def advance_work_en(title, title2, page):
     logger.info(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
 
 
-def work_in_en_page(title):
+def work_in_en_page(title) -> None:
     # ---
     if title not in All:
         All[title] = {"langs": {}}
@@ -171,7 +171,7 @@ def work_in_en_page(title):
     # ---
 
 
-def work_in_links(links, main_File, main_File_en, Log=True):
+def work_in_links(links, main_File, main_File_en, Log: bool=True) -> None:
     # ---
     global n_al
     global allen, All
@@ -221,7 +221,7 @@ def work_in_links(links, main_File, main_File_en, Log=True):
         log_allen(main_File_en)
 
 
-def start_all():
+def start_all() -> None:
     # ---
     links = sorted(main_links())
     # start work in All links

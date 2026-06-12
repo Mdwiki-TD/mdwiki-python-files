@@ -22,7 +22,7 @@ else:
 thenumbers = {1: 20000, "done": 0}
 
 
-def work(title):
+def work(title) -> None:
     Ask = "ask" in sys.argv
     # ---
     text = mdwiki_api_call.GetPageText(title)
@@ -41,7 +41,7 @@ def work(title):
         logger.info("no changes.")
 
 
-def main():
+def main() -> None:
     # ---
     List = []
     # ---

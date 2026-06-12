@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 # ---
 
 
-def count_text(text):
+def count_text(text: str):
     # ---
     text = text.replace("'''", "").replace("''", "")
     # ---
@@ -46,7 +46,7 @@ def count_text(text):
     return tem_text, length
 
 
-def count_all(title="", text=""):
+def count_all(title: str="", text: str=""):
     # ---
     if text == "" and title != "":
         text = mdwiki_api_call.GetPageText(title)

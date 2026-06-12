@@ -24,7 +24,7 @@ all_infos = sql_for_mdwiki.select_md_sql(
 all_infos = {x["w_title"]: x for x in all_infos}
 
 
-def work_in_new_tabs_to_db(new_tabs_to_db):
+def work_in_new_tabs_to_db(new_tabs_to_db) -> None:
     logger.info(f"len of new_tabs_to_db {len(new_tabs_to_db)}")
     # ---
     for tab in new_tabs_to_db:

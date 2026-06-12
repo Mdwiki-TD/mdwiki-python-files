@@ -38,7 +38,7 @@ replaces = {
 
 
 class Sectios_links:
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initializes an instance of the class.
         """
@@ -62,7 +62,7 @@ class Sectios_links:
 
         self.titles_done = []
 
-    def run(self):
+    def run(self) -> None:
         """
         Generate links for each section in the given wiki page.
         """
@@ -101,7 +101,7 @@ class Sectios_links:
             self.SectionsToLinks[t] = wikilinks
 
 
-def dump_secs_links(d_links):
+def dump_secs_links(d_links) -> None:
     # ---
     global sect_file
     # ---
@@ -110,7 +110,7 @@ def dump_secs_links(d_links):
         json.dump(d_links, open(sect_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
-def get_section_links(new=False):
+def get_section_links(new: bool=False):
     """
     Retrieves the links to the sections from the Sectios_links bot.
     """

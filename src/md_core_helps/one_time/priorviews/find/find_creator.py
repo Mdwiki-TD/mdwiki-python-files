@@ -35,19 +35,19 @@ if not os.path.exists(file):
 CreatorsData = json.load(open(file, "r", encoding="utf-8"))
 
 
-def log_Data():
+def log_Data() -> None:
     logger.info(f"<<yellow>> {len(CreatorsData)} CreatorsData")
     # dump CreatorsData
     helps.dump_data(file, CreatorsData)
 
 
-def get_creator(links, lang):
+def get_creator(links, lang) -> None:
     global ADDED
     # ---
     if lang not in CreatorsData:
         CreatorsData[lang] = {}
 
-    def valid(x, tab, empty=""):
+    def valid(x, tab, empty: str="") -> bool:
         i = tab.get(x) or tab.get(x.lower())
         if not i or i == empty:
             return True
@@ -109,7 +109,7 @@ def get_creator(links, lang):
             break
 
 
-def start():
+def start() -> None:
     # ---
     langkeys = links_by_lang.keys()
     # ---

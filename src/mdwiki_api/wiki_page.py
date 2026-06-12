@@ -37,7 +37,7 @@ change_codes = {
 
 
 @functools.lru_cache(maxsize=1024)
-def load_main_api(lang="www", family="wikipedia") -> AllAPIS:
+def load_main_api(lang: str="www", family: str="wikipedia") -> AllAPIS:
     return AllAPIS(
         lang=lang,
         family=family,
@@ -46,15 +46,15 @@ def load_main_api(lang="www", family="wikipedia") -> AllAPIS:
     )
 
 
-def MainPage(title, lang, family="wikipedia"):
+def MainPage(title, lang, family: str="wikipedia"):
     main_api = load_main_api(lang, family)
     return main_api.MainPage(title)
 
 
 def CatDepth(
     title,
-    sitecode="",
-    family="wikipedia",
+    sitecode: str="",
+    family: str="wikipedia",
     **kwargs,
 ) -> dict:
     sitecode = sitecode or "www"
@@ -67,7 +67,7 @@ def CatDepth(
     )
 
 
-def NewApi(lang="", family="wikipedia"):
+def NewApi(lang: str="", family: str="wikipedia"):
     lang = lang or "www"
     main_api = load_main_api(lang, family)
     return main_api.NewApi()

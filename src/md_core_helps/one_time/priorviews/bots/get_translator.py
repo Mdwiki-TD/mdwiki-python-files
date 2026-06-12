@@ -28,7 +28,7 @@ from md_core_helps.one_time.priorviews.bots import get_translator
 
 
 class FindTranslator:
-    def __init__(self, title, lang="en"):
+    def __init__(self, title, lang: str="en") -> None:
         # ---
         self.lang = lang
         self.title = title
@@ -55,7 +55,7 @@ class FindTranslator:
         # ---
         return json1
 
-    def start(self):
+    def start(self) -> None:
         params = {
             "action": "query",
             "format": "json",

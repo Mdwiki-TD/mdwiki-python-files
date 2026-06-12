@@ -43,7 +43,7 @@ def load_main_api() -> AllAPIS:
     )
 
 
-def post_s(params, addtoken=False, files=None):
+def post_s(params, addtoken: bool=False, files=None):
     # ---
     main_api = load_main_api()
     # ---
@@ -81,7 +81,7 @@ def fix_dup(from_title, to_title):
     return page.save(newtext=newtext, summary=sus)
 
 
-def main():
+def main() -> None:
     logger.info("*<<red>> > :")
     # ---
     # python3 dup.py -page:Allopurinol

@@ -11,7 +11,7 @@ class Database:
         result (list): The result of the last executed query.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initializes the Database with the connection and query attributes set to None, and result set to an empty list."""
         super().__init__()
         self._connection = None
@@ -51,14 +51,14 @@ class Database:
         return self._query
 
     @query.setter
-    def query(self, value):
+    def query(self, value) -> None:
         """Sets the current SQL query and replaces placeholders with the appropriate values.
         Args:
             value (str): The new SQL query.
         """
         self._query = value
 
-    def get_content_from_database(self):
+    def get_content_from_database(self) -> None:
         """Executes the current SQL query and stores the result in the `result` attribute.
         Raises:
             pymysql.err.OperationalError: If a connection to the database cannot be established.
@@ -75,7 +75,7 @@ class Database:
             self.connection.close()
 
     @connection.setter
-    def connection(self, value):
+    def connection(self, value) -> None:
         """Sets the current connection to the database.
         Args:
             value (pymysql.connections.Connection): The new connection to the database.

@@ -85,20 +85,20 @@ def gtblame_value(title, lang):
     return ""
 
 
-def logem():
+def logem() -> None:
     logger.info(f"<<yellow>> {len(new_data)} words")
     # dump new_data
     helps.dump_data(file, new_data)
 
 
-def get_b(links, lang):
+def get_b(links, lang) -> None:
     # ---
     global new_data, COUNTS_ALL
     # ---
     if lang not in new_data:
         new_data[lang] = {}
 
-    def valid(x, tab, empty=""):
+    def valid(x, tab, empty: str="") -> bool:
         i = tab.get(x) or tab.get(x.lower())
         if not i or i == empty:
             return True
@@ -164,7 +164,7 @@ def get_b(links, lang):
     # logem()
 
 
-def start():
+def start() -> None:
     # ---
     langkeys = links_without_translator.keys()
     # ---

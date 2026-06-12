@@ -36,7 +36,7 @@ move_dot = {1: False}
 expend_infobox = {1: False}
 
 
-def fix_page_here(text, title, langcode):
+def fix_page_here(text: str, title, langcode):
     newtext = text
     # ---
     section_0_text = ""
@@ -62,7 +62,7 @@ def fix_page_here(text, title, langcode):
     return newtext
 
 
-def one_page(page, lang):
+def one_page(page, lang) -> str:
     """Process a page and update its content based on specified language.
 
     This function takes a page identifier and a language code, retrieves the
@@ -109,7 +109,7 @@ def one_page(page, lang):
     return ""
 
 
-def one_file(file, lang):
+def one_file(file, lang) -> str:
     """Process a file and apply transformations based on its content.
 
     This function reads the content of a specified file, applies a
@@ -166,7 +166,7 @@ def one_file(file, lang):
     return ""
 
 
-def maine():
+def maine() -> str:
     """Process command-line arguments and execute corresponding actions.
 
     This function parses command-line arguments to determine the desired

@@ -12,7 +12,7 @@ from td_core.mdcount.bots.regex_scanner import RegexScanner
 logger = logging.getLogger(__name__)
 
 
-def get_refs_new(text):
+def get_refs_new(text: str):
     ref_list = []
     # ---
     scanner = RegexScanner(r"(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>", text)
@@ -34,7 +34,7 @@ def get_refs_new(text):
     return ref_list
 
 
-def get_short_refs(text):
+def get_short_refs(text: str):
     # ---
     scanner = RegexScanner(r"<ref\s*name\s*=\s*[\"\']*(?P<name>[^>]*)[\"\']*\s*\/\s*>", text)
     # ---
@@ -45,7 +45,7 @@ def get_short_refs(text):
     return ref_list
 
 
-def count_ref_from_text(text, get_short=False):
+def count_ref_from_text(text: str, get_short: bool=False):
     # ---
     ref_list = []
     # ---

@@ -66,13 +66,13 @@ def make_n_views(en_keys, old_values):
     return old_values
 
 
-def start_to_sql(tab):
+def start_to_sql(tab) -> None:
     tab = [{"title": x, "en_views": v} for x, v in tab.items()]
     # ---
     to_sql(tab, "enwiki_pageviews", columns=["title", "en_views"], title_column="title")
 
 
-def check_it(x, y, old_values):
+def check_it(x, y, old_values) -> bool:
     # ---
     if not old_values.get(x):
         return True
@@ -115,7 +115,7 @@ def get_old_values(json_file):
     return old_values
 
 
-def main():
+def main() -> None:
     # ---
     cat_get = "RTTVideo" if "video" in sys.argv else ""
     # ---
@@ -165,7 +165,7 @@ def main():
     start_to_sql(data_tab[1])
 
 
-def test():
+def test() -> None:
     # python3 core8/pwb.py md_core/mdpyget/getas test
     # ---
     data_tab[1]["Yemen1"] = "Top"

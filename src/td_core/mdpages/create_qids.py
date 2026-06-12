@@ -16,7 +16,7 @@ from md_core_helps.mdapi_sql import sql_qids
 logger = logging.getLogger(__name__)
 
 
-def create_qids(no_qids):
+def create_qids(no_qids) -> None:
     """
     create wikidata item for qids
     creates new Wikidata items for those without QIDs. It uses a for loop to iterate over the list of items without QIDs and makes a POST request to the Wikidata API for each item. The function also prints the response from the API, which can be useful for debugging.

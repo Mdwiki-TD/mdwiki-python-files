@@ -40,7 +40,7 @@ def ask_put(s):
     return True
 
 
-def post(params, token=True):
+def post(params, token: bool=True):
     return post_it(params=params, token=token)
 
 
@@ -48,11 +48,11 @@ def Get_sitelinks_From_Qid(q):
     return wd_rest_new.Get_sitelinks_From_Qid(q)
 
 
-def Get_claim(q, pid, get_claim_id=False):
+def Get_claim(q, pid: int, get_claim_id: bool=False):
     return wd_rest_new.Get_Claims_API(q=q, p=pid)
 
 
-def WD_Merge(q1, q2):
+def WD_Merge(q1, q2) -> bool:
     # ---
     q11 = re.sub(r"Q", "", q1)
     q22 = re.sub(r"Q", "", q2)
@@ -111,7 +111,7 @@ def WD_Merge(q1, q2):
         return False
 
 
-def Labels_API(qid, label, lang, remove=False, summary=""):
+def Labels_API(qid, label: str, lang, remove: bool=False, summary: str="") -> bool:
     # ---
     if not qid:
         logger.info(" Qid == '' ")
@@ -207,7 +207,7 @@ def get_redirects(liste):
     return redirects
 
 
-def new_item(label="", lang="", summary="", returnid=False):
+def new_item(label: str="", lang: str="", summary: str="", returnid: bool=False):
     # ---
     data = {"labels": {lang: {"language": lang, "value": label}}}
     # ---
@@ -244,7 +244,7 @@ def new_item(label="", lang="", summary="", returnid=False):
     return True
 
 
-def Claim_API_str(qid, property, string):
+def Claim_API_str(qid, property, string: str):
     """Add a claim to a specified QID in the API.
 
     This function constructs a request to add a claim to a given QID using
@@ -298,7 +298,7 @@ def Claim_API_str(qid, property, string):
     return False
 
 
-def Delete_claim(claimid):
+def Delete_claim(claimid) -> bool:
     # ---
     params = {"action": "wbremoveclaims", "claim": claimid}
     # ---
@@ -317,7 +317,7 @@ def Delete_claim(claimid):
     return False
 
 
-def wbsearchentities(search, language, match_alias=False):
+def wbsearchentities(search, language, match_alias: bool=False):
     params = {
         "action": "wbsearchentities",
         "format": "json",

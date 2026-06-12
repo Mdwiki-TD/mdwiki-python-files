@@ -24,7 +24,7 @@ Dir = Path(__file__).parent
 N_g = {1: 0}
 
 
-def dump_data(file_path, data):
+def dump_data(file_path, data) -> None:
     logger.info(f"<<green>> () file:{file_path}.")
     logger.info(f"<<yellow>> {len(data)} views")
     try:
@@ -123,7 +123,7 @@ def get_lang_links_mdtitles(lang_links):
     return lang_links_mdtitles
 
 
-def start():
+def start() -> None:
     # ---
     with open(f"{Dir}/lists/lang_links.json", "r", encoding="utf-8") as f:
         lang_links = json.load(f)  # {'en': 'enwiki', 'redirect_to': '', 'langs': {'ar': 'arwiki'}}

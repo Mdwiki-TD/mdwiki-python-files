@@ -35,7 +35,7 @@ if not os.path.exists(file):
 N_g = 0
 
 
-def log_views(file_path, data):
+def log_views(file_path, data) -> None:
     logger.info(f"<<yellow>> {len(data)} views")
     # dump data
     helps.dump_data(file_path, data)
@@ -110,7 +110,7 @@ def get_v(links, views_data, file_path):
     return views_data
 
 
-def start():
+def start() -> None:
     n = 0
     # ---
     ViewsData = json.load(open(file, "r", encoding="utf-8"))
@@ -129,7 +129,7 @@ def start():
     log_views(file, ViewsData)
 
 
-def test():
+def test() -> None:
     # ---
     da = {
         "Pit latrine": {

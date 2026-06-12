@@ -25,7 +25,7 @@ tt = count_words.get_words(title, lang)
 
 
 class InOldText:
-    def __init__(self, title, lang="en"):
+    def __init__(self, title, lang: str="en") -> None:
         # ---
         self.lang = lang
         self.title = title
@@ -38,7 +38,7 @@ class InOldText:
         # ---
         self.start()
 
-    def start(self):
+    def start(self) -> None:
         self.get_oldtext()
         self.count(self.oldtext)
         # ---
@@ -54,7 +54,7 @@ class InOldText:
         # ---
         text = self.oldtext
 
-    def count(self, text):
+    def count(self, text: str) -> None:
         text = text.replace("'''", "").replace("''", "")
         # ---
         tem_text = text
@@ -103,7 +103,7 @@ class InOldText:
         # ---
         return json1
 
-    def get_oldtext(self):
+    def get_oldtext(self) -> None:
         params = {"action": "parse", "format": "json", "prop": "wikitext", "page": self.title, "utf8": 1}
         # ---
         params = {
@@ -127,7 +127,7 @@ class InOldText:
         # logger.info(f'timestamp: {self.timestamp}')
         self.oldtext = revisions.get("slots", {}).get("main", {}).get("content", "")
 
-    def get_newtext(self):
+    def get_newtext(self) -> None:
         params = {
             "action": "parse",
             "format": "json",

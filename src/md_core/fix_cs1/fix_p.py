@@ -56,7 +56,7 @@ def get_temps(parsed, valid_list):
     return Template_list
 
 
-def fix_it(text, site=""):
+def fix_it(text: str, site: str=""):
     # ---
     ref_temps_n = ["cite journal", "cite magazine", "استشهاد بمجلة", "استشهاد بدورية محكمة"]
     # ---

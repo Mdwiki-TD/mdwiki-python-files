@@ -43,7 +43,7 @@ def get_table(titles):
     return table
 
 
-def get_pages(tab):
+def get_pages(tab) -> None:
     # ---
     titles = list(tab.keys())
     # ---
@@ -102,7 +102,7 @@ def get_pages(tab):
                 sql_qids.add_titles_to_qids(set_new_title)
 
 
-def start():
+def start() -> None:
     get_pages(qids_title_to_qid)
 
     if "nothers" not in sys.argv:

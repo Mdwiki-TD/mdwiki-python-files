@@ -24,12 +24,12 @@ Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 
 
-def log_words(file_path, data):
+def log_words(file_path, data) -> None:
     logger.info(f"<<yellow>> {len(data)} words")
     helps.dump_data(file_path, data)
 
 
-def valid(x, tab, empty=""):
+def valid(x, tab, empty: str="") -> bool:
     i = tab.get(x) or tab.get(x.lower())
     if not i or i == empty:
         return True
@@ -76,7 +76,7 @@ def get_w(links, lang, _words_by_lang):
     return _words_by_lang
 
 
-def start():
+def start() -> None:
     # ---
     langkeys = links_by_lang.keys()
     # ---

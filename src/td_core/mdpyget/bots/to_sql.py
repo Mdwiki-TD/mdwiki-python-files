@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 def mdwiki_sql_one_table(
-    table_name,
+    table_name: str,
     query,
     **kwargs,
 ):
@@ -30,7 +30,7 @@ def mdwiki_sql_one_table(
     return in_sql_list
 
 
-def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="title", ignore=False) -> None:
+def insert_dict(list_of_lines, table_name: str, columns, lento: int=10, title_column: str="title", ignore: bool=False) -> None:
     # ---
     logger.info(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
     # ---
@@ -86,7 +86,7 @@ def insert_dict(list_of_lines, table_name, columns, lento=10, title_column="titl
         logger.info(f"to_sql.py insert_dict({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def update_table(list_of_lines, table_name, columns, lento=10, title_column="title", update_columns=None):
+def update_table(list_of_lines, table_name: str, columns, lento: int=10, title_column: str="title", update_columns=None) -> None:
     # ---
     logger.info(f"update_table({table_name}): list_of_lines: {len(list_of_lines)}")
     # ---
@@ -118,7 +118,7 @@ def update_table(list_of_lines, table_name, columns, lento=10, title_column="tit
         logger.info(f"to_sql.py update_table({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, columns_where=None):
+def update_table_2(list_of_lines, table_name: str, columns_to_set=None, lento: int=10, columns_where=None) -> None:
     # ---
     columns_to_set = columns_to_set or []
     columns_where = columns_where or []
@@ -148,7 +148,7 @@ def update_table_2(list_of_lines, table_name, columns_to_set=None, lento=10, col
         logger.info(f"to_sql.py update_table_2({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def to_sql(data, table_name, columns, title_column="title", update_columns=None, ignore=False):
+def to_sql(data, table_name: str, columns, title_column: str="title", update_columns=None, ignore: bool=False) -> None:
     # ---
     que = f"""select DISTINCT * from {table_name};"""
     # ---
@@ -193,7 +193,7 @@ def to_sql(data, table_name, columns, title_column="title", update_columns=None,
         update_table(new_data_update, table_name, columns, title_column=title_column, update_columns=update_columns)
 
 
-def new_to_sql(data, table_name, columns, in_sql_list=None, title_columns=["title"], update_columns=None, ignore=False):
+def new_to_sql(data, table_name: str, columns, in_sql_list=None, title_columns=["title"], update_columns=None, ignore: bool=False) -> None:
     # ---
     if not data:
         return

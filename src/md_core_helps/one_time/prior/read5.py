@@ -125,7 +125,7 @@ def get_all_json():
 
 
 class WorkAll:
-    def __init__(self):
+    def __init__(self) -> None:
         self.title = "WikiProjectMed:List/Prior"
         # ---
         self.All = get_all_json()
@@ -141,7 +141,7 @@ class WorkAll:
         # ---
         self.all_sections = {}
 
-    def get_sectios_links(self):
+    def get_sectios_links(self) -> None:
         for s in self.sections:
             # ---
             t = s.title
@@ -191,7 +191,7 @@ class WorkAll:
                 # ---
                 n += 1
 
-    def run(self):
+    def run(self) -> None:
         # ---
         self.get_sectios_links()
         # ---
@@ -221,7 +221,7 @@ class WorkAll:
                     page_x.save(newtext=text, summary="update", nocreate=0)
 
 
-def work_all():
+def work_all() -> None:
     # ---
     bot = WorkAll()
     bot.run()

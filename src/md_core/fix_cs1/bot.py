@@ -19,7 +19,7 @@ from mdwiki_api.mdwiki_page import CatDepth, md_MainPage
 logger = logging.getLogger(__name__)
 
 
-def one_page(title):
+def one_page(title) -> None:
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
     # ---
@@ -33,7 +33,7 @@ def one_page(title):
     page.save(newtext=newtext, summary="Fix missing periodical")
 
 
-def main():
+def main() -> None:
 
     # ---
     cat = "Category:CS1 errors: missing periodical"

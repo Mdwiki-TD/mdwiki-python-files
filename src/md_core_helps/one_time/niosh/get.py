@@ -36,7 +36,7 @@ by_title_all = {}
 all_pages = {}
 
 
-def write_main():
+def write_main() -> None:
     title = "User:Mr. Ibrahem/niosh"
     text = ""
     # ---
@@ -57,7 +57,7 @@ def write_main():
         page.save(newtext=text, summary="update", nocreate=0, minor="")
 
 
-def write_to_mdwiki(data, x):
+def write_to_mdwiki(data, x) -> None:
     if "write" not in sys.argv:
         return
     wikitext = """{| class="wikitable sortable"\n|-\n"""
@@ -85,7 +85,7 @@ def write_to_mdwiki(data, x):
         page.save(newtext=wikitext, summary="update", nocreate=0, minor="")
 
 
-def run(x, urls):
+def run(x, urls) -> None:
     by_title = {}
     by_url = {}
     # ---

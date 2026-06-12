@@ -30,7 +30,7 @@ logger.info(f"all pages:{len(both.keys())}")
 # sort both keys by length of it list
 
 
-def do_all():
+def do_all() -> None:
     # ---
     all_links = []
 

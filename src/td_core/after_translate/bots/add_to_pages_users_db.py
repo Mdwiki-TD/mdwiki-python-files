@@ -40,7 +40,7 @@ for tab in pages_users:
     pages_users_tab[user][lang][title] = tab
 
 
-def add_new_row(mdtitle, lang, user, pupdate, target):
+def add_new_row(mdtitle, lang, user, pupdate, target) -> None:
     mdtit = escape_string(mdtitle)
     user2 = escape_string(user)
     tar = escape_string(target)
@@ -67,7 +67,7 @@ def add_new_row(mdtitle, lang, user, pupdate, target):
     sql_for_mdwiki.mdwiki_sql(insert_qua, values=values)
 
 
-def update_row_new(mdtitle, lang, user, pupdate, target):
+def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
     # ---
     add_date = time.strftime("%Y-%m-%d")
     # ---
@@ -87,7 +87,7 @@ def update_row_new(mdtitle, lang, user, pupdate, target):
     sql_for_mdwiki.mdwiki_sql(update_qua, values=values)
 
 
-def add_to_mdwiki_sql_users(lista):
+def add_to_mdwiki_sql_users(lista) -> None:
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
     # ---
     if "pages_users" not in sys.argv:

@@ -24,7 +24,7 @@ file_name = {}
 numbers = {1: 20000, "done": 0}
 
 
-def work(title, Find, Replace, nn):
+def work(title, Find, Replace, nn) -> None:
     # ---
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
@@ -79,7 +79,7 @@ def work(title, Find, Replace, nn):
         file.write(line)
 
 
-def main():
+def main() -> None:
     # ---
     nn = ""
     # ---

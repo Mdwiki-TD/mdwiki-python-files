@@ -42,7 +42,7 @@ for q in db_data_main:
 logger.info(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
 
 
-def start_to_sql(data):
+def start_to_sql(data) -> None:
     # ---
     logger.info(f"<<green>> {len(data)=}")
     # ---
@@ -83,7 +83,7 @@ def start_to_sql(data):
         )
 
 
-def dump_sitelinks(lists):
+def dump_sitelinks(lists) -> None:
     logger.info(f"<<green>> , len of qids: {len(lists.get('qids', {}))}.")
     with open(paths.json_files.sitelinks, "w", encoding="utf-8") as aa:
         json.dump(lists, aa)
@@ -189,7 +189,7 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
     return table_d
 
 
-def main():
+def main() -> None:
     # ---
     logger.info("<<green>> ")
     # ---
@@ -227,7 +227,7 @@ def main():
         start_to_sql(lists.get("qids", {}))
 
 
-def test():
+def test() -> None:
     qids = ["Q192309"]
     lists = get_qids_sitelinks(qids)
     logger.info(f"len of lists: {len(lists)}.")

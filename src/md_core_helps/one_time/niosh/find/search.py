@@ -43,7 +43,7 @@ with open(file_json2, "r", encoding="utf-8") as cc:
     new = json.load(cc)
 
 
-def new_search():
+def new_search() -> None:
     global toto
     toto = {}
     # ---
@@ -66,7 +66,7 @@ def new_search():
         json.dump(toto, dd)
 
 
-def new_vals():
+def new_vals() -> None:
     # ---
     global new
     new = {}
@@ -102,7 +102,7 @@ def new_vals():
         json.dump(new, ee, ensure_ascii=False, indent=2)
 
 
-def start():
+def start() -> None:
     # ---
     if "new" in sys.argv:
         new_search()

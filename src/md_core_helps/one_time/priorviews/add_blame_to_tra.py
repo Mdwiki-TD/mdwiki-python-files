@@ -25,7 +25,7 @@ Dir = Path(__file__).parent
 skip_users = ["doc james"]
 
 
-def add_to_translators():
+def add_to_translators() -> None:
     sk = 0
     new = 1
     dd = 1
@@ -76,7 +76,7 @@ def add_to_translators():
     # with open(file, "w", encoding="utf-8") as zf: json.dump(tra_by_lang, zf, ensure_ascii=False)
 
 
-def sea55():
+def sea55() -> None:
     data = json.load(open(f"{Dir}/sea55.json", encoding="utf-8"))
     # ---
     n = 0

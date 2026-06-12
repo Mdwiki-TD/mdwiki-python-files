@@ -78,7 +78,7 @@ def make_new_val(val):
     return newval
 
 
-def pt_months(text):
+def pt_months(text: str):
     parsed = wtp.parse(text)
     tags = parsed.get_tags()
     # ---

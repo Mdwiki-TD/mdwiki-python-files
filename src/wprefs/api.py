@@ -150,7 +150,7 @@ def Gettoken():
     return session["token"]
 
 
-def submitAPI(params, lang="", _type="post", add_token=False):
+def submitAPI(params, lang: str="", _type: str="post", add_token: bool=False):
     # ---
     log(lang)
     # ---
@@ -176,7 +176,7 @@ def submitAPI(params, lang="", _type="post", add_token=False):
     return json1
 
 
-def get_revisions(title, lang=""):
+def get_revisions(title, lang: str=""):
     params = {
         "action": "query",
         "format": "json",
@@ -213,7 +213,7 @@ def get_revisions(title, lang=""):
     return revisions
 
 
-def GetPageText(title, lang="", print_text=True):
+def GetPageText(title, lang: str="", print_text: bool=True):
     # ---
     params = {
         "action": "parse",
@@ -261,7 +261,7 @@ def GetPageText(title, lang="", print_text=True):
     return text
 
 
-def GetPageText_raw(title, lang="", print_text=True):
+def GetPageText_raw(title, lang: str="", print_text: bool=True):
     # ---
     # parse.quote
     title2 = urllib.parse.quote(title)

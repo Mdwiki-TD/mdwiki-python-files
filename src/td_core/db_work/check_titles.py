@@ -52,7 +52,7 @@ def get_langs_tabs():
     return langs
 
 
-def add_text(tab):
+def add_text(tab) -> None:
     # ---
     if not tab:
         return
@@ -78,7 +78,7 @@ def add_text(tab):
     page.save(newtext=newtext, summary="update", nocreate=0)
 
 
-def start():
+def start() -> None:
     # ---
     deleted_pages = []
     to_set = {}

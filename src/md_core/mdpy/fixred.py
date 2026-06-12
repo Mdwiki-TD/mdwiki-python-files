@@ -21,7 +21,7 @@ from_to = {}
 normalized = {}
 
 
-def printtest(s):
+def printtest(s) -> None:
     if "test" in sys.argv:
         logger.info(s)
 
@@ -33,7 +33,7 @@ def load_nonredirects() -> list[str]:
     return nonredirects
 
 
-def find_redirects(links):
+def find_redirects(links) -> None:
     # ---
     # titles = [ x for x in links if links[x].get('ns','') == '0' ]
     titles = []
@@ -102,7 +102,7 @@ def find_redirects(links):
     # logger.info( "def find_redirects: find %d for normalized" % normalized_numb )
 
 
-def replace_links2(text, oldlink, newlink):
+def replace_links2(text: str, oldlink, newlink):
     # ---
     oldlink2 = normalized.get(oldlink, oldlink)
     # ---
@@ -128,7 +128,7 @@ def replace_links2(text, oldlink, newlink):
     return text
 
 
-def treat_page(title):
+def treat_page(title) -> None:
     """
     Change all redirects from the current page to actual links.
     """
@@ -169,7 +169,7 @@ def treat_page(title):
     save_page = page.save(newtext=newtext, summary="Fix redirects")
 
 
-def main():
+def main() -> None:
     # ---
     ttab = []
     # ---

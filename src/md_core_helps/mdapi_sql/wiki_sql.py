@@ -79,7 +79,7 @@ def make_labsdb_dbs_p(wiki):  # host, dbs_p = make_labsdb_dbs_p('ar')
     return host, dbs_p
 
 
-def sql_new(queries, wiki="", printqua=False, values=None, u_print=True):
+def sql_new(queries, wiki: str="", printqua: bool=False, values=None, u_print: bool=True):
     # ---
     if u_print:
         logger.info(f"wiki_sql.py wiki '{wiki}'")
@@ -107,7 +107,7 @@ def sql_new(queries, wiki="", printqua=False, values=None, u_print=True):
     return rows
 
 
-def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
+def Make_sql_many_rows(queries, wiki: str="", printqua: bool=False, return_dict: bool=False):
     # ---
     logger.info(f"wiki_sql.py wiki '{wiki}'")
     # ---
@@ -133,7 +133,7 @@ def Make_sql_many_rows(queries, wiki="", printqua=False, return_dict=False):
     return rows2
 
 
-def sql_new_title_ns(queries, wiki="", t1="page_title", t2="page_namespace"):
+def sql_new_title_ns(queries, wiki: str="", t1: str="page_title", t2: str="page_namespace"):
     # ---
     lang = wiki
     # ---

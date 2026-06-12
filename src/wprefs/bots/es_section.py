@@ -120,7 +120,7 @@ def make_template(title):
     return section
 
 
-def add_section(text, title):
+def add_section(text: str, title):
     """Add a section to the provided text.
 
     This function checks if the text already contains a specific section

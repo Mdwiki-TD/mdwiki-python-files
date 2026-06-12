@@ -25,12 +25,12 @@ already_in_sql = {}
 Lang_to_targets = {}
 
 
-def print_test(strr):
+def print_test(strr) -> None:
     if "print" in sys.argv or "nosql" in sys.argv:
         logger.info(strr)
 
 
-def update_in_sql(lang, table):
+def update_in_sql(lang, table) -> None:
     # ---
     logger.info("update_in_sql:")
     # ---
@@ -71,7 +71,7 @@ def update_in_sql(lang, table):
     )
 
 
-def insert_to_sql(lang, table):
+def insert_to_sql(lang, table) -> None:
     # ---
     for target, tab in table.items():
         # ---
@@ -88,7 +88,7 @@ def insert_to_sql(lang, table):
         )
 
 
-def get_targets(lang_o):
+def get_targets(lang_o) -> None:
     uu = f'and lang = "{lang_o}"' if lang_o != "" else ""
     # ---
     que = f"""select DISTINCT lang, target, pupdate from pages where target != "" {uu}"""
@@ -108,7 +108,7 @@ def get_targets(lang_o):
     logger.info(f"<<yellow>> find {len(sq)} to work. ")
 
 
-def get_views_sql(lang_o):
+def get_views_sql(lang_o) -> None:
     # ---
     uu = f'where lang = "{lang_o}"' if lang_o != "" else ""
     # ---
@@ -132,7 +132,7 @@ def get_views_sql(lang_o):
         already_in_sql[lang][target][str(year)] = views
 
 
-def main():
+def main() -> None:
     # ---
     logger.info(" _finder: ")
     # ---
