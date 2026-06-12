@@ -248,7 +248,7 @@ def Get_All_pages(start, namespace: str = "0", limit: Union[int, str] = "max", a
     )
 
 
-def Get_UserContribs(user, limit: int="max", namespace: str="*", ucshow: str=""):
+def Get_UserContribs(user, limit: Union[int, str] = "max", namespace: str = "*", ucshow: str = ""):
     return api_new.UserContribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
 
 
