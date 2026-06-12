@@ -238,7 +238,7 @@ def Get_template_pages(title, namespace: str = "*", limit: Union[int, str] = "ma
     return api_new.Get_template_pages(title, namespace=namespace)
 
 
-def Get_All_pages(start, namespace: str="0", limit: int="max", apfilterredir: str="", limit_all: int=0) -> list[str]:
+def Get_All_pages(start, namespace: str = "0", limit: Union[int, str] = "max", apfilterredir: str = "", limit_all: int = 0) -> list[str]:
     return api_new.Get_All_pages(
         start=start,
         namespace=namespace,
