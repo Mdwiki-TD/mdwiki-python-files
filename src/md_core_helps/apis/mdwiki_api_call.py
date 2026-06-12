@@ -193,7 +193,7 @@ def GetRevid(title):
     return ""
 
 
-def Get_page_links(title, namespace: str="0", limit: int="max"):
+def Get_page_links(title, namespace: str = "0", limit: Union[int, str] = "max"):
     # ---
     logger.info(f' for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
