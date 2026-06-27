@@ -2,7 +2,6 @@
 """
 
 python3 core8/pwb.py td_core/copy_data/by_title/all_articles
-python3 core8/pwb.py td_core/copy_data/by_title/exists_db
 
 """
 import logging
