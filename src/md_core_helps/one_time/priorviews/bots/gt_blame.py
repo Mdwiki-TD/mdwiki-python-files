@@ -7,7 +7,6 @@ python3 core8/pwb.py priorviews/bots/gt_blame
 import logging
 import re
 import sys
-from typing import Optional, Sequence
 from urllib.parse import urlencode
 
 import requests
@@ -20,7 +19,7 @@ from md_core_helps.one_time.priorviews.bots import helps
 logger = logging.getLogger(__name__)
 
 
-def match_ref_names(r, refnames: Sequence[str], lang):
+def match_ref_names(r, refnames: list[str], lang):
     # dict_keys(['revid', 'parentid', 'user', 'timestamp', 'contentformat', 'contentmodel', 'content', 'comment'])
     text_pp = r.get("content")
     user = r.get("user")
@@ -166,7 +165,7 @@ class FindInHistory:
                 self.revisions.append(r)
 
 
-def search_history(title, lang, en: str = "", refname: Optional[str] = None, extlinks=None):
+def search_history(title, lang, en: str = "", refname: list[str] | None = None, extlinks: list[str] | None=None,):
     if refname is None:
         refname = []
     if extlinks is None:

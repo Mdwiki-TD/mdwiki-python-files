@@ -83,7 +83,7 @@ def fix_ref_template(text: str, returnsummary: bool = False):
         # ---
         content = tag.contents
         # ---
-        if not content.strip():
+        if not content or not content.strip():
             continue
         # ---
         templates = tag.templates

@@ -12,7 +12,7 @@ from db.mdapi_sql.services import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
-all_infos = sql_for_mdwiki.select_md_sql(
+all_infos_data = sql_for_mdwiki.select_md_sql(
     "SELECT w_title, w_lead_words, w_all_words FROM words;",
     return_dict=True,
 )
@@ -21,7 +21,7 @@ all_infos = sql_for_mdwiki.select_md_sql(
 # columns, so `data.get("w_lead_words")` always returned None and the `word`
 # field on new pages was silently never populated. Pointing at `words`
 # (the actual source of those columns) restores the intended behaviour.
-all_infos = {x["w_title"]: x for x in all_infos}
+all_infos = {x["w_title"]: x for x in all_infos_data}
 
 
 def work_in_new_tabs_to_db(new_tabs_to_db) -> None:

@@ -9,7 +9,7 @@ import json
 import logging
 import sys
 import time
-from typing import Optional
+from typing import Any, Optional
 from urllib.error import HTTPError, URLError
 
 from SPARQLWrapper import JSON, SPARQLWrapper
@@ -62,7 +62,7 @@ def get_query_data(query):
     return data
 
 
-def get_query_result(query):
+def get_query_result(query) -> list[Any]:
     # ---
     data = get_query_data(query)
     # ---
