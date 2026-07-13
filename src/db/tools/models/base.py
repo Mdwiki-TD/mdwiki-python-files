@@ -1,8 +1,7 @@
-
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Text
 from sqlalchemy.dialects.mysql import LONGTEXT as LONGTEXTSQLALCHEMY
 from sqlalchemy.engine import Dialect
+from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.types import TypeDecorator, TypeEngine
 
 
@@ -16,6 +15,7 @@ class LONGTEXT(TypeDecorator):
         if dialect.name == "mysql":
             return dialect.type_descriptor(LONGTEXTSQLALCHEMY())
         return dialect.type_descriptor(Text())
+
 
 class Base(DeclarativeBase):
     pass

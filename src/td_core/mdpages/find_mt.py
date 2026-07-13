@@ -12,8 +12,7 @@ sql_qids_others
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_qids
-from db.mdapi_sql.services import sql_qids_others
+from db.mdapi_sql.services import sql_qids, sql_qids_others
 from md_core_helps.apis import cat_cach
 from md_core_helps.bots.check_title import valid_title
 

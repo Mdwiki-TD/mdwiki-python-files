@@ -7,7 +7,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from typing import Any
 
-from sqlalchemy import ForeignKey, String, text, func
+from sqlalchemy import ForeignKey, String, func, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import Base
