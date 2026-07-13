@@ -3,6 +3,7 @@ from .dashboard import (
     CategoryRecord,
     ProjectRecord,
 )
+from .users import UserRecord
 from .metrics import (
     AssessmentRecord,
     RefsCountRecord,
@@ -31,6 +32,7 @@ from .views import (
 )
 
 __all__ = [
+    "UserRecord",
     "AllQidsExistRecord",
     "AssessmentRecord",
     "CategoryMemberRecord",

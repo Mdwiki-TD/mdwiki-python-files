@@ -64,7 +64,7 @@ class WikiBlame:
             logger.info(url)
         # ---
         response = requests.get(url)
-        self.content = response.text
+        self.content: str = response.text
 
     def parse_content(self):
         """Parse the content of the web page."""

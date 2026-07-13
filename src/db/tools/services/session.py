@@ -8,9 +8,9 @@ from sqlalchemy.orm import Session, sessionmaker
 
 def get_tools_db_url() -> str:
     user = os.getenv("TOOL_TOOLSDB_USER", "root")
-    password = os.getenv("TOOL_TOOLSDB_PASSWORD", "root")
+    password = os.getenv("TOOL_TOOLSDB_PASSWORD", "root11")
     host = os.getenv("TOOL_TOOLSDB_HOST", "127.0.0.1")
-    dbname = os.getenv("TOOL_TOOLSDB_DBNAME", "s57081__svgdb")
+    dbname = os.getenv("TOOL_TOOLSDB_DBNAME", f"{user}__mdwiki")
 
     # Toolforge usually uses MySQL/MariaDB
     return f"mysql+pymysql://{user}:{password}@{host}/{dbname}?charset=utf8mb4"

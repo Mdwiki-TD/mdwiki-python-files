@@ -58,4 +58,3 @@ z/jsons/pages.json
 throttle.ctrl
 scan.py
 .env
-/src/db/tools/services

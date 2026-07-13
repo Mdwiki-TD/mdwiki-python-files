@@ -35,8 +35,8 @@ def _load_db_config() -> DbConfig:
     db_user: str = os.getenv("TOOL_TOOLSDB_USER") or "root"
     db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD") or "root11"
 
-    db_name: str = os.getenv("DB_NAME") or f"{db_user}__mdwiki"
-    db_host: str = os.getenv("DB_HOST_TOOLS") or "127.0.0.1"
+    db_name: str = os.getenv("TOOL_TOOLSDB_DBNAME") or f"{db_user}__mdwiki"
+    db_host: str = os.getenv("TOOL_TOOLSDB_HOST") or "127.0.0.1"
 
     return DbConfig(
         db_name=db_name,
