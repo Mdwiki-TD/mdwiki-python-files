@@ -37,7 +37,7 @@ def work_page(title):
     if match:
         filename = match.group(1).strip()
         svg_languages[title] = filename
-        return
+        return None
 
     # 2. Missing, extract from Translate line
     trans_match = RE_TRANSLATE.search(text)

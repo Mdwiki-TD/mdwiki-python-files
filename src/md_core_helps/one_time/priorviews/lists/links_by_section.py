@@ -71,7 +71,7 @@ if "small" in sys.argv:
 # make text for each section
 for section, links in sects_links_langlinks.items():
     # ---
-    for md, langs in links.items():
+    for _md, langs in links.items():
         for lang, title in langs.items():
             if lang not in links_by_lang:
                 links_by_lang[lang] = []

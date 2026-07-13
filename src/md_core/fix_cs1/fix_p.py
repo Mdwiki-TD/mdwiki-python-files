@@ -4,8 +4,6 @@ python3 core8/pwb.py md_core/fix_cs1/bot
 """
 
 import logging
-import re
-import sys
 
 import wikitextparser as wtp
 

@@ -186,7 +186,7 @@ def maine() -> str:
     # ---
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
-        arg = arg[1:] if arg.startswith("-") else arg
+        arg = arg.removeprefix("-")
         # ---
         if arg == "infobox":
             expend_infobox[1] = True

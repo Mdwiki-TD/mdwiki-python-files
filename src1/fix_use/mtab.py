@@ -127,7 +127,7 @@ def one_file(file):
     # ---
     for line in lines:
         # ---
-        if line.startswith(" ") or line.startswith("\t") or line.startswith("//") or not line.strip():
+        if line.startswith((" ", "\t", "//")) or not line.strip():
             continue
         # ---
         if not line.startswith("namespace ") and not line.startswith("function "):
@@ -175,7 +175,7 @@ def start():
     # ---
     tab2 = {}
     # ---
-    for root, dirs, files in os.walk(path, topdown=True):
+    for root, _dirs, files in os.walk(path, topdown=True):
         # ---
         for file in files:
             # ---

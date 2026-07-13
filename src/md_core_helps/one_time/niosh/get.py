@@ -5,7 +5,6 @@ python3 core8/pwb.py niosh/get write ask
 
 """
 
-import codecs
 import json
 
 # ---
@@ -41,9 +40,9 @@ def write_main() -> None:
     text = ""
     # ---
     # sort all_pages
-    all_pa = {x: v for x, v in sorted(all_pages.items(), key=lambda item: item[0].lower(), reverse=False)}
+    all_pa = dict(sorted(all_pages.items(), key=lambda item: item[0].lower(), reverse=False))
     # ---
-    for x, tt in all_pa.items():
+    for _x, tt in all_pa.items():
         text += f"* [[{tt}]]\n"
 
     page = md_MainPage(title, "www", family="mdwiki")
@@ -119,7 +118,7 @@ def run(x, urls) -> None:
             by_url[_u] = []
     # ---
     # sort by_url keys
-    by_url = {k: v for k, v in sorted(by_url.items(), key=lambda item: item[0].lower(), reverse=False)}
+    by_url = dict(sorted(by_url.items(), key=lambda item: item[0].lower(), reverse=False))
     # ---
     file1 = f"{Dir}/by_title/{x}.json"
     # ---

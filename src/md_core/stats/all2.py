@@ -56,7 +56,7 @@ def work_all(editors):
     # ---
     if not editors:
         logger.info("<<red>> no editors")
-        return
+        return None
     # ---
     title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{last_year}_(all)"
     # ---
@@ -81,7 +81,7 @@ def work_all(editors):
         # #{{#target:User:{User}|{wiki}.wikipedia.org}}
         targets += f"#{{{{#target:User:{user}|{wiki}.wikipedia.org}}}}\n"
         # ---
-        txt_table += f"|-\n" f"!{i}\n" f"|[[:w:{wiki}:user:{user}|{user}]]\n" f"|{count:,}\n" f"|{wiki}\n"
+        txt_table += f"|-\n!{i}\n|[[:w:{wiki}:user:{user}|{user}]]\n|{count:,}\n|{wiki}\n"
         # ---
         # if i == 1000: break
         # ---

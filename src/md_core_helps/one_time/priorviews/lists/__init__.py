@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 
 python3 core8/pwb.py priorviews/bot

@@ -54,9 +54,9 @@ def compileLinkR(withoutBracketed: bool = False, onlyBracketed: bool = False):
     notAtEnd = r'\]\s\.:;,<>"\|\)'
     notInside = r'\]\s<>"'
     regex = (
-        r"(?P<url>http[s]?://[^{notInside}]*?[^{notAtEnd}]"
-        r"(?=[{notAtEnd}]*\'\')|http[s]?://[^{notInside}]*"
-        r"[^{notAtEnd}])".format(notInside=notInside, notAtEnd=notAtEnd)
+        rf"(?P<url>http[s]?://[^{notInside}]*?[^{notAtEnd}]"
+        rf"(?=[{notAtEnd}]*\'\')|http[s]?://[^{notInside}]*"
+        rf"[^{notAtEnd}])"
     )
 
     if withoutBracketed:
@@ -73,13 +73,13 @@ def ignore_case(string: str) -> str:
     .. versionchanged:: 7.2
        `_ignore_case` becomes a public method
     """
-    return "".join(f"[{c}{s}]" if c != s else c for s, c in zip(string, string.swapcase()))
+    return "".join(f"[{c}{s}]" if c != s else c for s, c in zip(string, string.swapcase(), strict=False))
 
 
 def _tag_pattern(tag_name: str) -> str:
     """Return a tag pattern for the given tag name."""
-    return (
-        r"<{0}(?:>|\s+[^>]*(?<!/)>)" r"[\s\S]*?" r"</{0}\s*>".format(ignore_case(tag_name))
+    return r"<{0}(?:>|\s+[^>]*(?<!/)>)[\s\S]*?</{0}\s*>".format(
+        ignore_case(tag_name)
     )  # start tag  # contents  # end tag
 
 
@@ -87,7 +87,7 @@ def _tag_pattern(tag_name: str) -> str:
 _DEFAULT_REGEXES = {
     "comment": re.compile(r"<!--[\s\S]*?-->"),
     "header": re.compile(
-        r"(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*" r"=(?:[^\n]|<!--[\s\S]*?-->)+=" r" *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)"
+        r"(?:(?<=\n)|\A)(?:<!--[\s\S]*?-->)*=(?:[^\n]|<!--[\s\S]*?-->)+= *(?:<!--[\s\S]*?--> *)*(?=\n|\Z)"
     ),
     "hyperlink": compileLinkR(),
     "link": re.compile(r"\[\[[^\]|]*(\|[^\]]*)?\]\]"),

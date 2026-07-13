@@ -72,7 +72,7 @@ class move_External_links_section:
         # ---
         last = ""
         # ---
-        for n, s in enumerate(self.sections, start=-1):
+        for _n, s in enumerate(self.sections, start=-1):
             # ---
             t = s.title
             c = s.contents

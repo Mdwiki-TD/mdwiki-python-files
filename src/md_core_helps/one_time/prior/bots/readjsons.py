@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 folder_path = Path(__file__).parent
 
 # قم بعمل سكان للمجلد ومجلداته الفرعية
-for root, dirs, files in os.walk(folder_path):
+for root, _dirs, files in os.walk(folder_path):
     for file_name in files:
         if file_name.endswith(".json"):  # فقط الملفات بامتداد .json
             file_path = os.path.join(root, file_name)

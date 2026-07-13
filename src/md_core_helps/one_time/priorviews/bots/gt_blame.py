@@ -57,7 +57,7 @@ def match_ref_names(r, refnames: Sequence[str], lang):
         _tags_[name] += 1
     # ---
     # sort by count
-    _tags_ = {k: v for k, v in sorted(_tags_.items(), key=lambda item: item[1], reverse=True)}
+    _tags_ = dict(sorted(_tags_.items(), key=lambda item: item[1], reverse=True))
     for k, v in _tags_.items():
         if k in refnames:
             logger.info(f"<<green>> find: {k=} count: {v=}| main: {refnames[k]=}")
@@ -69,8 +69,10 @@ def match_ref_names(r, refnames: Sequence[str], lang):
 
 
 class FindInHistory:
-    def __init__(self, title, lang: str = "en", refname: str = [], extlinks=[]) -> None:
+    def __init__(self, title, lang: str = "en", refname: str = [], extlinks=None) -> None:
         # ---
+        if extlinks is None:
+            extlinks = []
         self.lang = lang
         self.title = title
         self.url = f"https://{self.lang}.wikipedia.org/w/api.php"

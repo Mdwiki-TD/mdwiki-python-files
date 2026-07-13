@@ -25,7 +25,7 @@ class RegexScanner:
         attrs = []
         for request in self._requests:
             attrs.append(request.get(attr, ""))
-        return set(list(attrs))
+        return set(attrs)
 
 
 if __name__ == "__main__":

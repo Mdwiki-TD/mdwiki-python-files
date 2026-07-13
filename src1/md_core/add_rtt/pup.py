@@ -18,7 +18,6 @@ import re
 import sys
 from pathlib import Path
 
-import wikitextparser as wtp
 
 from md_core.add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage  # , CatDepth
@@ -52,7 +51,7 @@ def find_redirects(pages, text):
     titles = api_new.get_titles_redirects(mdwiki_pages)
     # ---
     # titles = api_new.get_titles_redirects(["Ehlers–Danlos syndrome"]) # {'Ehlers–Danlos syndrome': 'Ehlers–Danlos syndromes'}
-    redirects = {x: y for x, y in titles.items()}
+    redirects = dict(titles.items())
     # ---
     return redirects
 

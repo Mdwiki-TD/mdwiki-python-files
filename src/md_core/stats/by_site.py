@@ -68,11 +68,11 @@ def work_in_one_site(site, links):
     # ---
     if not editors:
         logger.info("<<red>> no editors")
-        return
+        return None
     # ---
     if "dump" in sys.argv:
         logger.info("json.dumps(editors, indent=2)")
-        return
+        return None
     # ---
     title = f"WikiProjectMed:WikiProject_Medicine/Stats/Top_medical_editors_{last_year}/{site}"
     # ---

@@ -17,7 +17,7 @@ import logging
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
+from wprefs.api import GetPageText_raw, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
 
@@ -171,7 +171,7 @@ def maine() -> None:
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
         # ---
-        arg = arg[1:] if arg.startswith("-") else arg
+        arg = arg.removeprefix("-")
         # ---
         if arg == "infobox":
             expend_infobox[1] = True

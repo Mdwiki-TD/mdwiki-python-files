@@ -5,7 +5,6 @@ from td_core.after_translate.bots.add_to_mdwiki import add_to_mdwiki_sql
 
 """
 import logging
-import sys
 import time
 
 # ---

@@ -34,7 +34,7 @@ def open_url_get(url):
 
 def Get_one_qid_info(qid, only=None):
     # ---
-    key_c = tuple([qid, only])
+    key_c = (qid, only)
     # ---
     if key_c in wd_cach:
         return wd_cach[key_c]

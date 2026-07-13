@@ -83,7 +83,7 @@ len_all_links = len(all_links)
 logger.info(f"all pages:{len(new.keys())}, {len_all_links=}")
 # ---
 # sort dict keys
-new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
+new = dict(sorted(new.items(), key=lambda item: item[0].lower(), reverse=False))
 # ---
 with open(f"{Dir2}/jsons/both.json", "w", encoding="utf-8") as ii:
     json.dump(new, ii, ensure_ascii=False, indent=2)

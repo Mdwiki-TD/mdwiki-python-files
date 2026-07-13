@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 import json
 import logging
 import re
 from pathlib import Path
 
 import mwclient
-import wikitextparser as wtp
 
 logger = logging.getLogger(__name__)
 

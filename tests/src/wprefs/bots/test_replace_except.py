@@ -277,7 +277,7 @@ class TestMultipleExceptions:
 
     def test_all_common_exceptions(self):
         """Test with all common exception types."""
-        text = "foo " "<!-- foo --> " "{{foo}} " "[[foo]] " "http://foo.com " "foo"
+        text = "foo <!-- foo --> {{foo}} [[foo]] http://foo.com foo"
         exceptions = ["comment", "template", "link", "hyperlink"]
         result = replaceExcept(text, "foo", "bar", exceptions)
         # First and last foo should be replaced

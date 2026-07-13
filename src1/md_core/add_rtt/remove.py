@@ -31,7 +31,7 @@ def work_page(title):
     text = page.get_text()
     summary = ""
     if text.find("[[Category:RTT") != -1:
-        return
+        return None
 
     newtext = text.replace("{{RTT}}", "")
 

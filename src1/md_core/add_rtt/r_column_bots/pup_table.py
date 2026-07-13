@@ -27,7 +27,7 @@ def fix_title(title):
 
 
 def one_cell(cell_values):
-    text = "".join([x for x in cell_values])
+    text = "".join(list(cell_values))
     # ---
     text = f"{text}\n|-"
     # ---
@@ -175,8 +175,12 @@ def work_one_table(table_text, redirects, pages):
     return table.string
 
 
-def add_rtt_to_tables(text, redirects={}, pages=[], table=False):
+def add_rtt_to_tables(text, redirects=None, pages=None, table=False):
     # ---
+    if pages is None:
+        pages = []
+    if redirects is None:
+        redirects = {}
     new_text = text
     # ---
     if not header_has_R(text, table):
@@ -192,8 +196,12 @@ def add_rtt_to_tables(text, redirects={}, pages=[], table=False):
     return new_text
 
 
-def add_to_tables(text, redirects={}, pages=[]):
+def add_to_tables(text, redirects=None, pages=None):
     # ---
+    if pages is None:
+        pages = []
+    if redirects is None:
+        redirects = {}
     parsed = wtp.parse(text)
     # ---
     table = parsed.tables[0]

@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 def get_html_attributes_value(text: str, param):
     # rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
-    rar = r'(?i){0}\s*=\s*[\'"]?(?P<{0}>[^\'" >]+)[\'"]?'.format(param)
+    rar = rf'(?i){param}\s*=\s*[\'"]?(?P<{param}>[^\'" >]+)[\'"]?'
     if not text:
         return ""
     m = re.search(rar, text)
@@ -81,7 +81,7 @@ def merge_references(text: str):
                 ref_tab_new[Group][name]["others"].append(Match.group())
     # ---
     # Fix references
-    for groupname, tab in ref_tab_new.items():
+    for _groupname, tab in ref_tab_new.items():
         for name, tab2 in tab.items():
             if name.find("autogen") == -1:
                 org = tab2["org"]
@@ -224,9 +224,7 @@ def DuplicateReferences(text: str):
         if v[1]:
             name = f'"{name}"'
         # ---
-        text = re.sub(
-            r'<ref name\s*=\s*(?P<quote>["\']?)\s*{}\s*(?P=quote)\s*/>'.format(ref), f"<ref name={name} />", text
-        )
+        text = re.sub(rf'<ref name\s*=\s*(?P<quote>["\']?)\s*{ref}\s*(?P=quote)\s*/>', f"<ref name={name} />", text)
     # ---
     # iui_to_named = {}
     for iui, named in iui_to_named.items():

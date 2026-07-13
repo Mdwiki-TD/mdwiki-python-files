@@ -10,7 +10,7 @@ from wprefs.helps import print_s
 
 n = 0
 m_keys = {}
-for k, v in es_months_tab.items():
+for _k, v in es_months_tab.items():
     n += 1
     m_keys[n] = v
 

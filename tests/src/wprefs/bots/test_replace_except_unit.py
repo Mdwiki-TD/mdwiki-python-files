@@ -12,8 +12,10 @@ class DefaultDrySiteTestCase:
         """Set up a default dry site for testing."""
         self.site = pywikibot.Site("en", "wikipedia")
 
-    def wrap_replaceExcept(self, text, old, new, exceptions=[], **kwargs):
+    def wrap_replaceExcept(self, text, old, new, exceptions=None, **kwargs):
         """Helper method to call replaceExcept with the default site."""
+        if exceptions is None:
+            exceptions = []
         return replaceExcept(text, old, new, exceptions, site=self.site, **kwargs)
 
 

@@ -118,7 +118,7 @@ def start():
     # ---
     pathss = []
     # ---
-    for root, dirs, files in os.walk(path, topdown=True):
+    for root, _dirs, files in os.walk(path, topdown=True):
         # ---
         scanroot = scan_root(root)
         # ---

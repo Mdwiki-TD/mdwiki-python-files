@@ -96,7 +96,7 @@ def new_vals() -> None:
         if tat:
             new[title] = tat
     # ---
-    new = {k: v for k, v in sorted(new.items(), key=lambda item: item[0].lower(), reverse=False)}
+    new = dict(sorted(new.items(), key=lambda item: item[0].lower(), reverse=False))
     # ---
     with open(file_json2, "w", encoding="utf-8") as ee:
         json.dump(new, ee, ensure_ascii=False, indent=2)
@@ -115,7 +115,7 @@ def start() -> None:
     # ---
     all_links = []
     # ---
-    for x, exts in new.items():
+    for _x, exts in new.items():
         n += 1
         all_links.extend(exts)
         # logger.info(f'n:{n}/{ns}, title:{x} length:{len(exts)}')

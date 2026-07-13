@@ -48,7 +48,7 @@ def sect_text(lang, userstable):
     # ---
     for cunts, users in userstable.items():
         # ---
-        for u in users:
+        for _u in users:
             lang_cunt += cunts
         # ---
         users.sort()
@@ -68,7 +68,7 @@ def work_all(translators_all) -> None:
     alllll = 0
     # ---
     # sort translators_all by count
-    translators_a = {x: v for x, v in sorted(translators_all.items(), key=lambda item: item[1]["all"], reverse=True)}
+    translators_a = dict(sorted(translators_all.items(), key=lambda item: item[1]["all"], reverse=True))
     # ---
     all_usrs = len(translators_a.keys())
     # ---
@@ -92,7 +92,7 @@ def work_all(translators_all) -> None:
         text += f"\n# [[w:en:User talk:{x}|User:{x}]]: {v['all']}\n#*"
         bylang = v["by_lang"]
         # sort by lang
-        bylang = {o: v for o, v in sorted(bylang.items(), key=lambda item: item[1], reverse=True)}
+        bylang = dict(sorted(bylang.items(), key=lambda item: item[1], reverse=True))
         text += ", ".join([helps.talk_url(langg, x, langg) + f": {v}" for langg, v in bylang.items()])
         # ---
     # ---
@@ -101,7 +101,7 @@ def work_all(translators_all) -> None:
     langs_a = make_by_lang(one_langs_only)
     # ---
     # sort langs_a by count
-    langs_a = {x: v for x, v in sorted(langs_a.items(), key=lambda item: item[1]["all"], reverse=True)}
+    langs_a = dict(sorted(langs_a.items(), key=lambda item: item[1]["all"], reverse=True))
     # ---
     for lang, users in langs_a.items():
         # ---

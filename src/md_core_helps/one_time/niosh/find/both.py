@@ -3,7 +3,6 @@ python pwb.py niosh/bot
 python3 core8/pwb.py niosh/bot
 """
 
-import codecs
 import json
 import logging
 import os
@@ -40,7 +39,7 @@ def do_all() -> None:
         return x
 
     # ---
-    for x, le in both.items():
+    for _x, le in both.items():
         all_links.extend(le)
     # ---
     all_links = list(set(all_links))
@@ -59,7 +58,7 @@ def do_all() -> None:
     logger.info(f"{len_all_links=}")
 
 
-aa = {k: v for k, v in sorted(both.items(), key=lambda item: len(item[1]), reverse=True)}
+aa = dict(sorted(both.items(), key=lambda item: len(item[1]), reverse=True))
 
 n = 0
 

@@ -48,8 +48,7 @@ def get_refs(alltext):
         # ---
         if ref_name:
             ref_name = ref_name.strip()
-            if ref_name.endswith("/"):
-                ref_name = ref_name[:-1]
+            ref_name = ref_name.removesuffix("/")
         # ---
         if not tag.contents:
             if ref_name:

@@ -332,7 +332,7 @@ class CategoryDepth:
             new_list = new_tab2
 
         if not self.no_gcm_sort:
-            soro = sorted(self.result_table.items(), key=lambda item: self.timestamps.get(item[0], ""), reverse=True)
+            soro = sorted(self.result_table.items(), key=lambda item: self.timestamps.get(item[0], 0), reverse=True)
             self.result_table = dict(soro)
 
         logger.info(f"{self.title=}, {self.depth}, {len(self.result_table)} total results")

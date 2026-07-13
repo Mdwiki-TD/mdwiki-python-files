@@ -10,6 +10,7 @@ import sys
 import urllib
 import urllib.parse
 from pathlib import Path
+from typing import Any
 
 import requests
 
@@ -177,7 +178,7 @@ def submitAPI(params, lang: str = "", _type: str = "post", add_token: bool = Fal
     return json1
 
 
-def get_revisions(title, lang: str = ""):
+def get_revisions(title, lang: str = "") -> list[Any]:
     params = {
         "action": "query",
         "format": "json",
@@ -201,7 +202,7 @@ def get_revisions(title, lang: str = ""):
         json1 = submitAPI(params, lang=lang)
         # ---
         if not json1 or not isinstance(json1, dict):
-            return ""
+            return []
         # ---
         rvcontinue = json1.get("continue", {}).get("rvcontinue", "")
         # ---

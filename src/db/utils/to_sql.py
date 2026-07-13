@@ -220,11 +220,13 @@ def new_to_sql(
     table_name: str,
     columns,
     in_sql_list=None,
-    title_columns=["title"],
+    title_columns=None,
     update_columns=None,
     ignore: bool = False,
 ) -> None:
     # ---
+    if title_columns is None:
+        title_columns = ["title"]
     if not data:
         return
     # ---

@@ -71,7 +71,7 @@ def get_lang_links(md_links):
         if not page.exists():
             logger.error(f"<<red>> page: {title} not found in enwiki.")
             links_not_found.append(title)
-            return
+            return None
         # ---
         if title not in lang_links:
             lang_links[title] = {"en": title, "redirect_to": "", "langs": {}}

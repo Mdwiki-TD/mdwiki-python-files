@@ -63,7 +63,7 @@ def authors_table(authors, lang):
     # ---
     for cunts, users in tab2.items():
         # ---
-        for u in users:
+        for _u in users:
             lang_cunt += cunts
         # ---
         users.sort()
@@ -212,7 +212,7 @@ def make_lang_textso(lang):
     logger.info(newtext)
     # ----
     # authors = sorted(authors.items(), key=lambda x: x[1])
-    authors_2 = {x: v for x, v in sorted(authors_2.items(), key=lambda item: item[1], reverse=True)}
+    authors_2 = dict(sorted(authors_2.items(), key=lambda item: item[1], reverse=True))
     authors_text = "\n==Translators==\n"
     # ----
     authors_text += authors_table(authors_2, lang)

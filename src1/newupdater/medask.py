@@ -52,11 +52,11 @@ def work_on_title(title, returntext=False):
     # ---
     if text == "" or new_text == "":
         logger.info("<<red>> notext")
-        return
+        return None
     # ---
     if text == new_text:
         logger.info("no changes")
-        return
+        return None
     # ---
     ask = input(f"<<yellow>> save title:{title}? ")
     # ---
@@ -64,7 +64,7 @@ def work_on_title(title, returntext=False):
         return mdapi.page_put(new_text, "mdwiki changes.", title)
     # ---
     print("not saved")
-    return
+    return None
 
 
 def main1():

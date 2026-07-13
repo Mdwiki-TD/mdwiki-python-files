@@ -15,9 +15,6 @@ python3 core8/pwb.py td_core/fix_user_pages/del
 
 """
 import logging
-import sys
-
-import tqdm
 
 from db.mdapi_sql.services import sql_for_mdwiki
 
