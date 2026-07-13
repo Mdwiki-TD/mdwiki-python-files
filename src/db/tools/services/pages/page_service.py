@@ -55,6 +55,16 @@ def list_pages() -> List[PageRecord]:
         return orm_objs
 
 
+def list_page_titles() -> list[str]:
+    """Return distinct page titles.
+
+    Mirrors old ``sql_for_mdwiki.get_all_pages()``.
+    """
+    with get_session() as session:
+        rows = session.query(PageRecord.title).distinct().all()
+        return [row.title for row in rows]
+
+
 def list_pages_by_lang_cat(lang: str, cat: str) -> List[PageRecord]:
     """Return pages filtered by language and category."""
     with get_session() as session:
@@ -164,16 +174,15 @@ def set_page_target(
 ) -> bool:
     """ """
     with get_session() as session:
-        record.target = target
-        record.pupdate = datetime.now().strftime("%Y-%m-%d")
-
         try:
+            attached_record = session.merge(record)
+            attached_record.target = target
+            attached_record.pupdate = datetime.now().strftime("%Y-%m-%d")
             session.commit()
         except Exception:
             logger.exception("Failed to update page target")
             session.rollback()
             return False
-
         return True
 
 
@@ -289,6 +298,7 @@ __all__ = [
     "set_page_target",
     "find_page_record",
     "list_pages",
+    "list_page_titles",
     "list_pages_by_lang_cat",
     "add_page",
     "update_page",
