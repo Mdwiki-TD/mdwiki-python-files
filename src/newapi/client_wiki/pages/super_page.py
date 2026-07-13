@@ -322,7 +322,7 @@ class MainPage:
             if cat.get("hidden") is True:
                 self.categories_data.hidden_categories[category_title] = cat
             else:
-                del cat["hidden"]
+                cat.pop("hidden", None)
                 self.categories_data.categories[category_title] = cat
 
         if ta.get("langlinks", []) != []:
@@ -1029,7 +1029,7 @@ class MainPage:
         if key == "q":
             return self.get_qid()
         else:
-            raise  # noqa: PLE0704
+            raise KeyError(key)
 
 
 __all__ = [
