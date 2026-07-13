@@ -252,6 +252,7 @@ def add_translate_row_to_db(
                 {PageRecord.target: target, PageRecord.pupdate: pupdate, "word": word},
                 synchronize_session=False,
             )
+            session.commit()
         except Exception:
             logger.exception("Failed to update existing page target")
             session.rollback()
