@@ -8,6 +8,7 @@ from wprefs.wpref_text import fix_page
 import re
 
 import wikitextparser as wtp
+
 from wprefs.bots import txtlib2
 from wprefs.helps import print_s
 

@@ -7,9 +7,10 @@ python3 core8/pwb.py md_core/mdpy/fix_duplicate ask
 
 """
 import functools
-import os
 import logging
+import os
 import sys
+
 from newapi import AllAPIS
 
 logger = logging.getLogger(__name__)
@@ -43,7 +44,7 @@ def load_main_api() -> AllAPIS:
     )
 
 
-def post_s(params, addtoken: bool=False, files=None):
+def post_s(params, addtoken: bool = False, files=None):
     # ---
     main_api = load_main_api()
     # ---

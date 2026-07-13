@@ -88,7 +88,7 @@ def dump_to_cache(cat, data) -> None:
         logger.info(f"<<green>> {cat}.json is updated ({len_data})")
 
 
-def Cat_Depth(title, depth: int=0, ns: str="all", print_s: bool=True) -> list[str]:
+def Cat_Depth(title, depth: int = 0, ns: str = "all", print_s: bool = True) -> list[str]:
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
@@ -113,7 +113,7 @@ def Cat_Depth(title, depth: int=0, ns: str="all", print_s: bool=True) -> list[st
     return list(result_table.keys())
 
 
-def make_cash_to_cats(dump_data: bool=False) -> list[str]:
+def make_cash_to_cats(dump_data: bool = False) -> list[str]:
     # ---
     all_pages = []
     # ---

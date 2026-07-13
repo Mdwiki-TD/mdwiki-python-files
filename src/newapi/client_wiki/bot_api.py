@@ -8,9 +8,9 @@ from datetime import timedelta
 from typing import Any
 
 from ..api_client import WikiLoginClient
+from .api_utils import change_codes
 from .api_utils.ask_bot import AskBot
 from .api_utils.handel_errors import HandleErrors
-from .api_utils import change_codes
 
 logger = logging.getLogger(__name__)
 
@@ -225,7 +225,7 @@ class NewApi(NewApiHelpers):
         self,
         start: str = "",
         namespace: str = "0",
-        limit: int = "max",
+        limit: int | str = "max",
         apfilterredir: str = "",
         ppprop: str = "",
         limit_all: int = 100000,
@@ -279,7 +279,7 @@ class NewApi(NewApiHelpers):
         self,
         start: str = "",
         namespace: str = "0",
-        limit: int = "max",
+        limit: int | str = "max",
         filterredir: str = "",
         ppprop: str = "",
         limit_all: int = 100000,
@@ -470,7 +470,7 @@ class NewApi(NewApiHelpers):
 
     def Get_Newpages(
         self,
-        limit: int = 5000,
+        limit: int | str = 5000,
         namespace: str = "0",
         rcstart: str = "",
         user: str = "",
@@ -527,7 +527,7 @@ class NewApi(NewApiHelpers):
     def UserContribs(
         self,
         user,
-        limit: int = 5000,
+        limit: int | str = 5000,
         namespace: str = "*",
         ucshow: str = "",
     ):

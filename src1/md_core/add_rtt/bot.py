@@ -7,6 +7,7 @@ python3 core8/pwb.py md_core/add_rtt/bot
 import logging
 
 import wikitextparser as wtp
+
 from mdwiki_api.mdwiki_page import CatDepth, NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)
@@ -75,6 +76,7 @@ def work_page(title):
         return save
 
     return False
+
 
 def main():
     mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)

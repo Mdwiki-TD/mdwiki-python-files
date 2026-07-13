@@ -60,7 +60,7 @@ def month_from_day(dt):
 
 
 class PageviewsClient:
-    def __init__(self, user_agent: str="", parallelism: int=10) -> None:
+    def __init__(self, user_agent: str = "", parallelism: int = 10) -> None:
         """
         Create a PageviewsClient
 
@@ -78,7 +78,14 @@ class PageviewsClient:
         self.parallelism = parallelism or 10
 
     def article_views(
-        self, project, articles, access: str="all-access", agent: str="all-agents", granularity: str="daily", start=None, end=None
+        self,
+        project,
+        articles,
+        access: str = "all-access",
+        agent: str = "all-agents",
+        granularity: str = "daily",
+        start=None,
+        end=None,
     ):
         """
         Get pageview counts for one or more articles

@@ -337,7 +337,7 @@ class work_in_one_lang_link:
 
 
 class get_old:
-    def __init__(self, title, lang: str="en") -> None:
+    def __init__(self, title, lang: str = "en") -> None:
         # ---
         self.lang = lang
         self.title = title

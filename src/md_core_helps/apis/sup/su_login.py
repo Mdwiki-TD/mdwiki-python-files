@@ -9,8 +9,9 @@ from http.cookiejar import MozillaCookieJar
 
 import mwclient
 import requests
-from md_core_helps.apis.sup.cookies_bot import get_file_name
 from mwclient.client import Site
+
+from md_core_helps.apis.sup.cookies_bot import get_file_name
 
 logger = logging.getLogger(__name__)
 

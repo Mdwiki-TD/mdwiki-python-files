@@ -18,6 +18,7 @@ import sys
 from pathlib import Path
 
 import wikitextparser
+
 from md_core_helps.one_time.prior import text_bot
 from mdwiki_api.mdwiki_page import md_MainPage
 
@@ -213,7 +214,7 @@ class WorkAll:
                 # ---
                 exists = page_x.exists()
                 if not exists:
-                    page_x.Create(text=text, summary="update")
+                    page_x.create(text=text, summary="update")
                 # ---
                 else:
                     page_x_text = page_x.get_text()

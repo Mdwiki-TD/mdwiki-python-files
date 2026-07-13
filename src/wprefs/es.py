@@ -3,6 +3,7 @@
 import re
 
 import wikitextparser as wtp
+
 from wprefs.bots.es_months import fix_es_months
 from wprefs.bots.es_refs import mv_es_refs
 from wprefs.bots.es_section import add_section
@@ -180,7 +181,7 @@ def fix_temps(text: str):
     return new_text
 
 
-def add_lang_en(text: str, lang: str=""):
+def add_lang_en(text: str, lang: str = ""):
     # ---
     print_s("add_lang_en:")
     # ---

@@ -10,9 +10,10 @@ import logging
 import sys
 
 import tqdm
+from pymysql.converters import escape_string
+
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
-from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

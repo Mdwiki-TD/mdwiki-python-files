@@ -18,6 +18,7 @@ from multiprocessing import Pool
 from pathlib import Path
 
 import requests
+
 from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext_changes(text)
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
@@ -251,7 +252,7 @@ def one_page(x):
             page.save(text2, summary=summary, nocreate=0)
         else:
             logger.info("page not found: " + title)
-            page.Create(text=text2, summary=summary)
+            page.create(text=text2, summary=summary)
 
 
 def get_all():

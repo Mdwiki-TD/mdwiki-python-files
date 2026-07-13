@@ -50,7 +50,7 @@ for section, links in sects_links_langlinks.items():
         page = md_MainPage(title, "www", family="mdwiki")
         exists = page.exists()
         if not exists:
-            create = page.Create(text=ntext, summary="update")
+            create = page.create(text=ntext, summary="update")
         else:
             # ---
             text = page.get_text()
@@ -85,7 +85,7 @@ newtext += "\n".join([f"** [[User:Mr. Ibrahem/priorviews/{t}|{t}]]" for t in tit
 page = md_MainPage("User:Mr. Ibrahem/priorviews", "www", family="mdwiki")
 exists = page.exists()
 if not exists:
-    create = page.Create(text=newtext, summary="update")
+    create = page.create(text=newtext, summary="update")
 else:
     # ---
     text = page.get_text()

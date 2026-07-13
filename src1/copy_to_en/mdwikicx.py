@@ -195,7 +195,7 @@ def one_page(x):
             page.save(text2, summary=summary, nocreate=0)
         else:
             logger.info("page not found: " + title)
-            page.Create(text=text2, summary=summary)
+            page.create(text=text2, summary=summary)
 
 
 def get_all():

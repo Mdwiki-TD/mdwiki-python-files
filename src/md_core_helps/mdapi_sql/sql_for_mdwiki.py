@@ -28,9 +28,9 @@ logger = logging.getLogger(__name__)
 
 def mdwiki_sql(
     query,
-    return_dict: bool=False,
+    return_dict: bool = False,
     values=None,
-    many: bool=False,
+    many: bool = False,
     **kwargs,
 ):
     # ---
@@ -50,7 +50,7 @@ def mdwiki_sql(
 def mdwiki_sql_dict(
     query,
     values=None,
-    many: bool=False,
+    many: bool = False,
     **kwargs,
 ):
     # ---
@@ -88,11 +88,11 @@ def get_all_pages():
     return [ta["title"] for ta in select_md_sql("select DISTINCT title from pages;", return_dict=True)]
 
 
-def get_all_from_table(table_name: str="enwiki_pageviews"):
+def get_all_from_table(table_name: str = "enwiki_pageviews"):
     return select_md_sql(f"select DISTINCT * from {table_name};", return_dict=True)
 
 
-def get_all_pages_all_keys(lang: bool=False, table: str="pages"):
+def get_all_pages_all_keys(lang: bool = False, table: str = "pages"):
     lang_line = ""
     # ---
     if lang:
@@ -107,8 +107,7 @@ def get_all_pages_all_keys(lang: bool=False, table: str="pages"):
 
 def get_db_categories() -> dict:
     return {
-        c["category"]: c["depth"] for c in
-        select_md_sql("select category, depth from categories;", return_dict=True)
+        c["category"]: c["depth"] for c in select_md_sql("select category, depth from categories;", return_dict=True)
     }
 
 

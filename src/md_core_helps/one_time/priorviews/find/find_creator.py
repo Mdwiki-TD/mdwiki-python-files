@@ -13,10 +13,11 @@ import os
 import sys
 from pathlib import Path
 
+from pymysql.converters import escape_string
+
 from md_core_helps.mdapi_sql import wiki_sql
 from md_core_helps.one_time.priorviews.bots import helps
 from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_lang
-from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +48,7 @@ def get_creator(links, lang) -> None:
     if lang not in CreatorsData:
         CreatorsData[lang] = {}
 
-    def valid(x, tab, empty: str="") -> bool:
+    def valid(x, tab, empty: str = "") -> bool:
         i = tab.get(x) or tab.get(x.lower())
         if not i or i == empty:
             return True

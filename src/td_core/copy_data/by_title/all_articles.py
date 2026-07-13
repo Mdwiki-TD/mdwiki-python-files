@@ -74,7 +74,9 @@ def add_category_members_to_sql(to_add_category_members) -> None:
         # ---
         cats_in_db = db_category_members.get(category, [])
         # ---
-        not_in = [{"category": category, "article_id": title} for title in titles_from_mdwiki if title not in cats_in_db]
+        not_in = [
+            {"category": category, "article_id": title} for title in titles_from_mdwiki if title not in cats_in_db
+        ]
         # ---
         logger.info(f"Category:{category}: {len(titles_from_mdwiki)=}, {len(cats_in_db)=}")
         data2.extend(not_in)

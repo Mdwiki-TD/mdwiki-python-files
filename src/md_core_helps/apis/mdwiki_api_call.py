@@ -3,6 +3,7 @@
 # revid    = mdwiki_api.GetRevid(title)
 """
 import logging
+from typing import Union
 
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
@@ -10,7 +11,8 @@ logger = logging.getLogger(__name__)
 
 api_new = NewApi("www", family="mdwiki")
 
-def post_s(params, addtoken: bool=False, files=None):
+
+def post_s(params, addtoken: bool = False, files=None):
     # ---
     params["format"] = "json"
     params["utf8"] = 1
@@ -21,11 +23,11 @@ def post_s(params, addtoken: bool=False, files=None):
 
 
 def page_put(
-    newtext: str="",
-    summary: str="",
-    title: str="",
-    minor: str="",
-    nocreate: int=1,
+    newtext: str = "",
+    summary: str = "",
+    title: str = "",
+    minor: str = "",
+    nocreate: int = 1,
     **kwargs,
 ):
     # ---
@@ -35,6 +37,7 @@ def page_put(
     save_page = page.save(newtext=newtext, summary=summary, nocreate=nocreate, minor=minor)
     # ---
     return save_page
+
 
 def create_Page(
     text: str,
@@ -46,12 +49,12 @@ def create_Page(
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
     # ---
-    create = page.Create(text=text, summary=summary)
+    create = page.create(text=text, summary=summary)
     # ---
     return create
 
 
-def wordcount(title, srlimit: str="30"):
+def wordcount(title, srlimit: str = "30"):
     # srlimit = "30"
     params = {
         "action": "query",
@@ -79,7 +82,7 @@ def wordcount(title, srlimit: str="30"):
     return words
 
 
-def GetPageText(title, redirects: bool=False, get_revid: bool=False):
+def GetPageText(title, redirects: bool = False, get_revid: bool = False):
     """Retrieve the wikitext of a specified page from a wiki.
 
     This function sends a request to a wiki API to retrieve the wikitext of
@@ -204,7 +207,9 @@ def Get_template_pages(title, namespace: str = "*", limit: Union[int, str] = "ma
     return api_new.Get_template_pages(title, namespace=namespace)
 
 
-def Get_All_pages(start, namespace: str = "0", limit: Union[int, str] = "max", apfilterredir: str = "", limit_all: int = 0) -> list[str]:
+def Get_All_pages(
+    start, namespace: str = "0", limit: Union[int, str] = "max", apfilterredir: str = "", limit_all: int = 0
+) -> list[str]:
     return api_new.Get_All_pages(
         start=start,
         namespace=namespace,

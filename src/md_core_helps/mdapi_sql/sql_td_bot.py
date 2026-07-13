@@ -50,7 +50,7 @@ def _sql_connect_pymysql(
     query,
     values=None,
     db_args: dict = None,
-    many: bool=False,
+    many: bool = False,
 ):
     params = values or None  # Simplify condition
 
@@ -93,9 +93,9 @@ def _sql_connect_pymysql(
 
 def toolforge_tools_sql_connect(
     query,
-    return_dict: bool=False,
+    return_dict: bool = False,
     values=None,
-    many: bool=False,
+    many: bool = False,
     **kwargs,
 ):
 

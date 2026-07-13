@@ -48,11 +48,11 @@ def _load_db_config() -> WikiDbConfig:
 
 def wiki_sql_connect(
     query,
-    db: str="",
-    host: str="",
-    update: bool=False,
+    db: str = "",
+    host: str = "",
+    update: bool = False,
     _return=None,
-    return_dict: bool=False,
+    return_dict: bool = False,
     values=None,
 ):
     # ---
@@ -125,13 +125,13 @@ def _resolve_bytes(rows):
 
 def make_sql_connect(
     query,
-    db: str="",
-    host: str="",
-    update: bool=False,
+    db: str = "",
+    host: str = "",
+    update: bool = False,
     _return=None,
-    return_dict: bool=False,
+    return_dict: bool = False,
     values=None,
-    u_print: bool=True,
+    u_print: bool = True,
 ):
     # ---
     _return = _return or []

@@ -171,7 +171,7 @@ def work_in_en_page(title) -> None:
     # ---
 
 
-def work_in_links(links, main_File, main_File_en, Log: bool=True) -> None:
+def work_in_links(links, main_File, main_File_en, Log: bool = True) -> None:
     # ---
     global n_al
     global allen, All

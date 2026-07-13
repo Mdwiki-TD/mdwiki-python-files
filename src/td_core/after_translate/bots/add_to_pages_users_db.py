@@ -13,10 +13,10 @@ import logging
 import sys
 import time
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
-
 # ---
 from pymysql.converters import escape_string
+
+from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 

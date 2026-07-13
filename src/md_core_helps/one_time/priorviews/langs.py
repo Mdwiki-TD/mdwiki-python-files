@@ -235,7 +235,7 @@ def work(lang) -> None:
     exists = page.exists()
     text = page.get_text()
     if not exists:
-        create = page.Create(text=newtext, summary="update")
+        create = page.create(text=newtext, summary="update")
     elif text != newtext:
         # ---
         save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")

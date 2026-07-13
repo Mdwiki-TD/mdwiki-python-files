@@ -10,7 +10,7 @@ from mdwiki_api.wiki_page import NewApi
 api_news = {}
 
 
-def submitAPI(params, site: str="", returnjson: bool=False):
+def submitAPI(params, site: str = "", returnjson: bool = False):
     # ---
     params["format"] = "json"
     # ---

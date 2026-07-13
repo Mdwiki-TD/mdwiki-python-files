@@ -64,7 +64,7 @@ def set_qid_where_title(title, qid):
     return _mdwiki_sql(qua, values=values)
 
 
-def delete_title_from_db(title, pr: str=""):
+def delete_title_from_db(title, pr: str = ""):
     qua = "DELETE FROM qids where title = %s;"
     # ---
     logger.info(f"<<yellow>> {pr} (qids) title:{title}")
@@ -82,7 +82,7 @@ def set_title_where_qid(new_title, qid):
     return _mdwiki_sql(qua, values=values)
 
 
-def qids_set_title_where_title_qid(old_title, new_title, qid, no_do: bool=False):
+def qids_set_title_where_title_qid(old_title, new_title, qid, no_do: bool = False):
     # ---
     qua = "UPDATE qids set title = %s where qid = %s and title = %s;"
     values = [new_title, qid, old_title]
@@ -96,7 +96,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do: bool=False)
     return _mdwiki_sql(qua, values=values)
 
 
-def add_titles_to_qids(tab0, add_empty_qid: bool=False) -> None:
+def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:
     # ---
     logger.info(f"<<green>> start {add_empty_qid=}:")
     # ---

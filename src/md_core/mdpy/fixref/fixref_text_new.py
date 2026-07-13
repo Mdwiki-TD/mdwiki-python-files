@@ -2,7 +2,9 @@ import re
 import sys
 
 import wikitextparser as wtp
+
 from md_core.mdpy.fixref import make_title_bot
+
 
 def change_lay_source(temp):
     # ---
@@ -69,7 +71,7 @@ def add_title(temp):
     return temp
 
 
-def fix_ref_template(text: str, returnsummary: bool=False):
+def fix_ref_template(text: str, returnsummary: bool = False):
     # ---
     summary = "Normalize references"
     # ---

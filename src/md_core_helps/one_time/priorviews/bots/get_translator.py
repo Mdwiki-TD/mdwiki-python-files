@@ -9,6 +9,7 @@ import sys
 from urllib.parse import urlencode
 
 import requests
+
 from md_core_helps.one_time.priorviews.bots import helps
 
 logger = logging.getLogger(__name__)
@@ -28,7 +29,7 @@ from md_core_helps.one_time.priorviews.bots import get_translator
 
 
 class FindTranslator:
-    def __init__(self, title, lang: str="en") -> None:
+    def __init__(self, title, lang: str = "en") -> None:
         # ---
         self.lang = lang
         self.title = title

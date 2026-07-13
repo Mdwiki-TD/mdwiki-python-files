@@ -7,10 +7,10 @@ import logging
 import re
 import sys
 
-from md_core_helps.bots.check_title import valid_title
 from md_core_helps.apis.cat_cach import from_cache
 from md_core_helps.apis.mdwiki_api_call import Get_All_pages
 from md_core_helps.apis.wiki_api import submitAPI
+from md_core_helps.bots.check_title import valid_title
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ def load_all_pages() -> list[str]:
     return all_pages
 
 
-def get_pages_to_work(ty: str="td|other"):
+def get_pages_to_work(ty: str = "td|other"):
     """
     get pages to work
     """

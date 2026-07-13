@@ -36,7 +36,7 @@ class CategoryDepth:
 
         self.gcmlimit: int = 1000
         self.no_props: bool = False
-        self.limit: int = 0
+        self.limit: int | str = 0
         self.no_gcm_sort: bool = False
         self.only_titles: bool = False
         self.onlyns: bool = False

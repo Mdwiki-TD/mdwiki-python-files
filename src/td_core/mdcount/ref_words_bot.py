@@ -14,7 +14,7 @@ from td_core.mdpyget.bots.to_sql import to_sql
 logger = logging.getLogger(__name__)
 
 
-def do_to_sql(data_all, data_lead, ty: str="ref") -> None:
+def do_to_sql(data_all, data_lead, ty: str = "ref") -> None:
     if ty == "ref":
         table = "refs_counts"
         title_c = "r_title"

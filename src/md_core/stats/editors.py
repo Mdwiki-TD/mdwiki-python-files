@@ -13,9 +13,10 @@ from datetime import datetime
 from pathlib import Path
 
 import tqdm
+from pymysql.converters import escape_string
+
 from md_core.stats.ar import get_ar_results
 from md_core_helps.mdapi_sql import wiki_sql
-from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +49,7 @@ def validate_ip(ip_address) -> bool:
     return False
 
 
-def get_editors_sql(links, site, split_by: int=100):
+def get_editors_sql(links, site, split_by: int = 100):
     # ---
     qua = f"""
         SELECT actor_name, count(*) as count from revision
@@ -105,7 +106,7 @@ def dumpit(editors, site) -> None:
         json.dump(editors, f, sort_keys=True)
 
 
-def get_editors(links, site, do_dump: bool=True):
+def get_editors(links, site, do_dump: bool = True):
     editors = {}
     # ---
     if os.path.exists(editors_dir / f"{site}.json"):

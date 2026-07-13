@@ -15,6 +15,7 @@ import logging
 import sys
 
 import tqdm
+
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from td_core.db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
 
@@ -39,7 +40,7 @@ already_in_db = sql_for_mdwiki.get_all_from_table(table_name="pages_users_to_mai
 already_in_db = [x["id"] for x in already_in_db]
 
 
-def get_titles(lang: str=""):
+def get_titles(lang: str = ""):
     # ---
     if "test" in sys.argv and not lang:
         return {

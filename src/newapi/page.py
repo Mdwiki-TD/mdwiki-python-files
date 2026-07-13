@@ -3,9 +3,9 @@
 import functools
 import os
 
+from .client_wiki import bot_api
 from .client_wiki.all_apis import AllAPIS
 from .config import settings
-from .client_wiki import bot_api
 
 
 @functools.lru_cache(maxsize=1)

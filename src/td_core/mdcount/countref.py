@@ -75,7 +75,7 @@ def from_sql(old_values):
     return titles
 
 
-def get_links(ty: str="ref"):
+def get_links(ty: str = "ref"):
     # ---
     titles = []
     # ---

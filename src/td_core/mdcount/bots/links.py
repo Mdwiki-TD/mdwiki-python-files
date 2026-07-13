@@ -2,10 +2,9 @@ import logging
 import re
 import sys
 
-from md_core_helps.bots.check_title import valid_title
-
 # ---
 from md_core_helps.apis import mdwiki_api_call
+from md_core_helps.bots.check_title import valid_title
 from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
 
@@ -18,7 +17,7 @@ reg_full_links = re.compile(r"(\[\[(?:[^][|]+)\|*(?:[^][]*(?:\[\[[^][]+\]\][^][]
 reg_templates = re.compile(r"{{(?:msg:)?(?P<name>[^{\|]+?)" r"(?:\|(?P<params>[^{]+?(?:{[^{]+?}[^{]*?)?)?)?}}")
 
 
-def get_links_from_cats(getcat: str=""):
+def get_links_from_cats(getcat: str = ""):
     # ---
     titles = []
     # ---

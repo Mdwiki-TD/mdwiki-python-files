@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-
-"""
+""" """
 import json
 import logging
 import os
@@ -9,6 +7,7 @@ import sys
 from pathlib import Path
 
 import tqdm
+
 from mdwiki_api.mdwiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)

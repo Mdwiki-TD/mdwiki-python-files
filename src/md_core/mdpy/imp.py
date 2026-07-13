@@ -34,7 +34,7 @@ api_new = NewApi("www", family="mdwiki")
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 
 
-def work(title, num: int, length: int, from_title: str="") -> str:
+def work(title, num: int, length: int, from_title: str = "") -> str:
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---

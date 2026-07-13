@@ -17,6 +17,7 @@ if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
 from dotenv import load_dotenv
+
 from wprefs.helps import print_s
 
 try:
@@ -150,7 +151,7 @@ def Gettoken():
     return session["token"]
 
 
-def submitAPI(params, lang: str="", _type: str="post", add_token: bool=False):
+def submitAPI(params, lang: str = "", _type: str = "post", add_token: bool = False):
     # ---
     log(lang)
     # ---
@@ -176,7 +177,7 @@ def submitAPI(params, lang: str="", _type: str="post", add_token: bool=False):
     return json1
 
 
-def get_revisions(title, lang: str=""):
+def get_revisions(title, lang: str = ""):
     params = {
         "action": "query",
         "format": "json",
@@ -213,7 +214,7 @@ def get_revisions(title, lang: str=""):
     return revisions
 
 
-def GetPageText(title, lang: str="", print_text: bool=True):
+def GetPageText(title, lang: str = "", print_text: bool = True):
     # ---
     params = {
         "action": "parse",
@@ -261,7 +262,7 @@ def GetPageText(title, lang: str="", print_text: bool=True):
     return text
 
 
-def GetPageText_raw(title, lang: str="", print_text: bool=True):
+def GetPageText_raw(title, lang: str = "", print_text: bool = True):
     # ---
     # parse.quote
     title2 = urllib.parse.quote(title)

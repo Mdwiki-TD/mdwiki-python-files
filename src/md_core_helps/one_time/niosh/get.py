@@ -52,7 +52,7 @@ def write_main() -> None:
     oldtext = page.get_text()
     exists = page.exists()
     if not exists:
-        page.Create(text=text, summary="update")
+        page.create(text=text, summary="update")
     elif oldtext != text:
         page.save(newtext=text, summary="update", nocreate=0, minor="")
 
@@ -80,7 +80,7 @@ def write_to_mdwiki(data, x) -> None:
     oldtext = page.get_text()
     exists = page.exists()
     if not exists:
-        page.Create(text=wikitext, summary="update")
+        page.create(text=wikitext, summary="update")
     elif oldtext != wikitext:
         page.save(newtext=wikitext, summary="update", nocreate=0, minor="")
 

@@ -9,13 +9,13 @@ xpython3 core8/pwb.py td_core/wd_works/recheck
 import logging
 import sys
 
-from md_core_helps.bots import en_to_md
+from pymysql.converters import escape_string
+
 from md_core_helps.apis import wikidataapi
 
 # ---
-from md_core_helps.bots import py_tools
+from md_core_helps.bots import en_to_md, py_tools
 from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids, wiki_sql
-from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

@@ -75,5 +75,5 @@ def users_infos(lang, users):
     return result
 
 
-def WikiPage(title, lang, family: str="wikipedia"):
+def WikiPage(title, lang, family: str = "wikipedia"):
     return MainPage(title, lang, family=family)

@@ -114,7 +114,7 @@ def work_all(translators_all) -> None:
     exists = page.exists()
     oldtext = page.get_text()
     if not exists:
-        page.Create(text=text, summary="update")
+        page.create(text=text, summary="update")
     elif oldtext != text:
         # ---
         page.save(newtext=text, summary="update", nocreate=1, minor="")

@@ -132,7 +132,7 @@ def work_one_lang(list_, lang) -> None:
         append_reffixed_file(lang, "", dns)
 
 
-def work_sql_result(lange, nolange, year: int=2024):
+def work_sql_result(lange, nolange, year: int = 2024):
     newtable = {}
     que = f"""
         select lang, target from pages

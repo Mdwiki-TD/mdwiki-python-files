@@ -29,7 +29,7 @@ if not os.path.exists(Dir / "sites"):
     os.mkdir(Dir / "sites")
 
 
-def get_sitelinks(qs_list, lena: int=300):
+def get_sitelinks(qs_list, lena: int = 300):
     # ---
     qs_list = list(qs_list)
     # ---

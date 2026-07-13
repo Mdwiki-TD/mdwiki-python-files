@@ -40,7 +40,7 @@ def ask_put(s):
     return True
 
 
-def post(params, token: bool=True):
+def post(params, token: bool = True):
     return post_it(params=params, token=token)
 
 
@@ -48,7 +48,7 @@ def Get_sitelinks_From_Qid(q):
     return wd_rest_new.Get_sitelinks_From_Qid(q)
 
 
-def Get_claim(q, pid: int, get_claim_id: bool=False):
+def Get_claim(q, pid: int, get_claim_id: bool = False):
     return wd_rest_new.Get_Claims_API(q=q, p=pid)
 
 
@@ -111,7 +111,7 @@ def WD_Merge(q1, q2) -> bool:
         return False
 
 
-def Labels_API(qid, label: str, lang, remove: bool=False, summary: str="") -> bool:
+def Labels_API(qid, label: str, lang, remove: bool = False, summary: str = "") -> bool:
     # ---
     if not qid:
         logger.info(" Qid == '' ")
@@ -207,7 +207,7 @@ def get_redirects(liste):
     return redirects
 
 
-def new_item(label: str="", lang: str="", summary: str="", returnid: bool=False):
+def new_item(label: str = "", lang: str = "", summary: str = "", returnid: bool = False):
     # ---
     data = {"labels": {lang: {"language": lang, "value": label}}}
     # ---
@@ -317,7 +317,7 @@ def Delete_claim(claimid) -> bool:
     return False
 
 
-def wbsearchentities(search, language, match_alias: bool=False):
+def wbsearchentities(search, language, match_alias: bool = False):
     params = {
         "action": "wbsearchentities",
         "format": "json",

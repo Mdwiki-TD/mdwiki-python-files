@@ -6,9 +6,9 @@ import json
 import logging
 import sys
 from pathlib import Path
+from typing import Sequence
 
 from md_core_helps.one_time.priorviews.lists import translators
-from typing import Sequence
 
 logger = logging.getLogger(__name__)
 
@@ -197,7 +197,7 @@ def log_all_pages_states() -> None:
 log_all_pages_states()
 
 
-def make_text(allo, ttt: str=""):
+def make_text(allo, ttt: str = ""):
     # create wikitable from json
     # ---
     t_sections[ttt] = {}

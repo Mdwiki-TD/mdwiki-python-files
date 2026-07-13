@@ -30,7 +30,7 @@ def create_redirect(target, mdtitle) -> None:
     page = MainPage(mdtitle, "or", family="wikipedia")
     # ---
     if not page.exists():
-        create = page.Create(text=text, summary=sus)
+        create = page.create(text=text, summary=sus)
         # ---
         if create:
             logger.info(f"<<green>>** true .. [[or:{mdtitle}]] ")

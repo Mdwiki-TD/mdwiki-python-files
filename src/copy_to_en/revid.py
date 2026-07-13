@@ -62,7 +62,7 @@ def dump_data(revids) -> None:
         logger.error(f"<<red>> dump to {file4} error: {e}")
 
 
-def Cat_Depth(title, depth: int=0):
+def Cat_Depth(title, depth: int = 0):
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
