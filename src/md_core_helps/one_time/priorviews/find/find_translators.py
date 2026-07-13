@@ -36,7 +36,7 @@ def logem(file, data) -> None:
     helps.dump_data(file, data)
 
 
-def valid(x, tab, empty: str="") -> bool:
+def valid(x, tab, empty: str = "") -> bool:
     i = tab.get(x) or tab.get(x.lower())
     if not i or i == empty:
         return True

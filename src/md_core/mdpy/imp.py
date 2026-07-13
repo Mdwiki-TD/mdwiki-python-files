@@ -34,18 +34,18 @@ api_new = NewApi("www", family="mdwiki")
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 
 
-def work(title, num: int, length: int, from_title: str="") -> str:
+def work(title, num: int, length: int, from_title: str = "") -> None:
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
-        return ""
+        return
     # ---
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         logger.info(f" page:{title} not exists in mdwiki.")
-        return ""
+        return
     # ---
     # if page.isRedirect() :  return
     # target = page.get_redirect_target()
@@ -70,6 +70,7 @@ def work(title, num: int, length: int, from_title: str="") -> str:
             # ---
             page2 = MainPage(title2, "www", family="mdwiki")
             save = page2.save(newtext=text, summary="Returns the article text after importing the history", nocreate=0)
+    return
 
 
 def main() -> None:
@@ -150,8 +151,8 @@ def main() -> None:
             # ---
             # if value == 'redirectlist.txt' :
             # ---
-            text2 = open(value, "r", "utf8")
-            text = text2.read()
+            with open(value, "r", encoding="utf8") as file:
+                text = file.read()
             pages.extend(x.strip() for x in text.split("\n"))
         # ---
         # python imp.py -ns:0 search:drug

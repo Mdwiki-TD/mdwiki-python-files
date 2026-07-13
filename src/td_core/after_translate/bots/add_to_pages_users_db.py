@@ -13,10 +13,10 @@ import logging
 import sys
 import time
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
-
 # ---
 from pymysql.converters import escape_string
+
+from db.mdapi_sql.services import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
@@ -115,7 +115,6 @@ def add_to_mdwiki_sql_users(lista) -> None:
         # ---
         #  "pupdate", "target"
         if pupdate == is_in["pupdate"] and target == is_in["target"]:
-            # logger.info(f"skip {mdtitle} {user} same result in sql..")
             continue
         # ---
         update_row_new(mdtitle, lang, user, pupdate, target)

@@ -20,8 +20,8 @@ from copy_to_en.bots import alltext_changes  # text = alltext_changes.do_alltext
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
 from copy_to_en.tf_page import get_cx
+from db.mdapi_sql import sql_for_mdwiki
 from md_core_helps.apis import cat_cach, mdwiki_api_call
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,7 @@ def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
 
 
 def get_text_revid(x):
-    alltext, revid = mdwiki_api_call.GetPageText(x, get_revid=True)
+    alltext, revid = mdwiki_api_call.gettext_and_revid(x)
     # ---
     text_cache[x] = alltext
     revid_cache[x] = revid
@@ -195,7 +195,7 @@ def one_page(x):
             page.save(text2, summary=summary, nocreate=0)
         else:
             logger.info("page not found: " + title)
-            page.Create(text=text2, summary=summary)
+            page.create(text=text2, summary=summary)
 
 
 def get_all():

@@ -12,6 +12,7 @@ import logging
 import sys
 
 import wikitextparser as wtp
+
 from md_core.fix_cs1.archive_date_maker import make_archive_date, make_archive_date_and_url
 from mdwiki_api.mdwiki_page import CatDepth, NewApi, md_MainPage
 
@@ -73,10 +74,24 @@ def gt_arg(temp, name: str):
     return ""
 
 
-class AddArchiveDate:
-    def __init__(self) -> None:
-        self.text = ""
-        pass
+class OnePage:
+    def __init__(self, title) -> None:
+        # ---
+        self.title = title
+        """Treat one double redirect."""
+        # ---
+        self.added = {}
+        self.replaced = {}
+        # ---
+        self.removed = {}
+        # ---
+        self.page = md_MainPage(self.title, "www", family="mdwiki")
+        # ---
+        if not self.page.exists():
+            logger.info(f" page:{self.title} not exists in mdwiki.")
+            return
+        # ---
+        self.text = self.page.get_text()
 
     def run_archive(self) -> None:
         # ---
@@ -152,34 +167,6 @@ class AddArchiveDate:
         text = parser.string
         # ---
         return text
-
-
-class one_page(AddArchiveDate):
-    def __init__(self, title) -> None:
-        # ---
-        super().__init__()
-        # ---
-        self.title = title
-        """Treat one double redirect."""
-        # ---
-        self.added = {}
-        self.replaced = {}
-        # ---
-        self.removed = {}
-        # ---
-        self.page = md_MainPage(self.title, "www", family="mdwiki")
-        # ---
-        if not self.page.exists():
-            logger.info(f" page:{self.title} not exists in mdwiki.")
-            return
-        # ---
-        self.text = self.page.get_text()
-        # ---
-        # if "archive" in sys.argv:
-        #     self.run_archive()
-        # else:
-        #     self.run()
-        #     self.run_archive()
 
     def run(self) -> None:
         if not hasattr(self, "text"):
@@ -298,7 +285,7 @@ class one_page(AddArchiveDate):
 
 
 def one_title(title) -> None:
-    bot = one_page(title)
+    bot = OnePage(title)
     # ---
     if "archive" in sys.argv:
         bot.run_archive()

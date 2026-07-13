@@ -50,7 +50,7 @@ def main():
             page.save(newtext, summary=summary, nocreate=0)
         else:
             logger.info("page not found: " + new_title)
-            page.Create(text=newtext, summary=summary)
+            page.create(text=newtext, summary=summary)
 
 
 if __name__ == "__main__":

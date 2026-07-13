@@ -10,7 +10,7 @@ python3 core8/pwb.py md_core/mdpy/orred
 """
 import logging
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql.services import sql_for_mdwiki
 from mdwiki_api.wiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ def create_redirect(target, mdtitle) -> None:
     page = MainPage(mdtitle, "or", family="wikipedia")
     # ---
     if not page.exists():
-        create = page.Create(text=text, summary=sus)
+        create = page.create(text=text, summary=sus)
         # ---
         if create:
             logger.info(f"<<green>>** true .. [[or:{mdtitle}]] ")

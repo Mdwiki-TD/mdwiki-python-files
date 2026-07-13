@@ -46,8 +46,7 @@ def make_date(timestamp):
     y = sas.group("y")
     # ---
     m = sas.group("m")
-    if m.startswith("0"):
-        m = m[1:]
+    m = m.removeprefix("0")
     # ---
     m_ky = int(m)
     m_ky = m_keys.get(m_ky, "").strip()

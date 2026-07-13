@@ -18,7 +18,8 @@ import logging
 import sys
 
 import tqdm
-from md_core_helps.mdapi_sql import sql_for_mdwiki
+
+from db.mdapi_sql.services import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 

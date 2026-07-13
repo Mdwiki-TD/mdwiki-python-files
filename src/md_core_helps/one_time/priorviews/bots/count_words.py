@@ -25,7 +25,7 @@ tt = count_words.get_words(title, lang)
 
 
 class InOldText:
-    def __init__(self, title, lang: str="en") -> None:
+    def __init__(self, title, lang: str = "en") -> None:
         # ---
         self.lang = lang
         self.title = title

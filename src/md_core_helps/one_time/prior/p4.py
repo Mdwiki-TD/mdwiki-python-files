@@ -19,15 +19,12 @@ from pathlib import Path
 
 from md_core_helps.one_time.prior import get_them
 from mdwiki_api.mdwiki_page import md_MainPage
-from mdwiki_api.wiki_page import MainPage, change_codes
+from mdwiki_api.wiki_page import MainPage
+from newapi import change_codes
 
 logger = logging.getLogger(__name__)
 
-# ---
-
 Dir = str(Path(__file__).parents[0])
-# logger.info(f'Dir : {Dir}')
-# ---
 All = {}
 allen = {}
 n_al = 0
@@ -71,7 +68,7 @@ def log_allen(main_File) -> None:
 
 def advance_work_en(title, title2, page) -> None:
     # ---
-    tat = get_them.work_in_one_lang_link("en", title2)
+    tat = get_them.WorkOneLang("en", title2)
     # ---
     text = tat.text
     # ---
@@ -92,7 +89,7 @@ def advance_work_en(title, title2, page) -> None:
     logger.info(f"p0/\ten\t\t{lenex} extlinks, {lenre} refsname")
     logger.info(f"p0/\ten\t\t{lenex_lead} lead_extlinks, {lenre_lead} lead_refsname")
     # ---
-    old = get_them.get_old(title)
+    old = get_them.GetOld(title)
     allen[title]["old"] = {}
     allen[title]["old"]["extlinks"] = old.extlinks
     allen[title]["old"]["refsname"] = old.refsname
@@ -151,7 +148,7 @@ def work_in_en_page(title) -> None:
         # ---
         tata = {"title": tit, "extlinks": [], "refsname": []}
         # ---
-        tatnn = get_them.work_in_one_lang_link(lang, tit)
+        tatnn = get_them.WorkOneLang(lang, tit)
         # ---
         text1 = tatnn.text
         extlinks1 = tatnn.extlinks
@@ -171,7 +168,7 @@ def work_in_en_page(title) -> None:
     # ---
 
 
-def work_in_links(links, main_File, main_File_en, Log: bool=True) -> None:
+def work_in_links(links, main_File, main_File_en, Log: bool = True) -> None:
     # ---
     global n_al
     global allen, All

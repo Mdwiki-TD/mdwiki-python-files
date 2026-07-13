@@ -1,14 +1,5 @@
 #!/usr/bin/python3
-"""
-
-بوت للعمل على ويكيبيانات أو ويكيبيديا
-
-from md_core_helps.apis import wikidataapi
-# q = wikidataapi.new_item(label="", lang="", returnid=True)
-
-python3 core8/pwb.py apis/wikidataapi
-
-"""
+""" """
 import json
 
 # ---
@@ -40,7 +31,7 @@ def ask_put(s):
     return True
 
 
-def post(params, token: bool=True):
+def post(params, token: bool = True):
     return post_it(params=params, token=token)
 
 
@@ -48,7 +39,7 @@ def Get_sitelinks_From_Qid(q):
     return wd_rest_new.Get_sitelinks_From_Qid(q)
 
 
-def Get_claim(q, pid: int, get_claim_id: bool=False):
+def Get_claim(q, pid: int, get_claim_id: bool = False):
     return wd_rest_new.Get_Claims_API(q=q, p=pid)
 
 
@@ -108,10 +99,10 @@ def WD_Merge(q1, q2) -> bool:
                 logger.error(f"<<red>> r5{str(r5)}")
     else:
         logger.error(f"<<red>> r4{str(r4)}")
-        return False
+    return False
 
 
-def Labels_API(qid, label: str, lang, remove: bool=False, summary: str="") -> bool:
+def Labels_API(qid, label: str, lang, remove: bool = False, summary: str = "") -> bool:
     # ---
     if not qid:
         logger.info(" Qid == '' ")
@@ -207,7 +198,7 @@ def get_redirects(liste):
     return redirects
 
 
-def new_item(label: str="", lang: str="", summary: str="", returnid: bool=False):
+def new_item(label: str = "", lang: str = "", summary: str = "", returnid: bool = False) -> str | None:
     # ---
     data = {"labels": {lang: {"language": lang, "value": label}}}
     # ---
@@ -223,25 +214,25 @@ def new_item(label: str="", lang: str="", summary: str="", returnid: bool=False)
     # ---
     if not req:
         logger.info(f"req:str({req})")
-        return False
+        return None
     # ---
     if "success" not in req:
         logger.error(f"<<red>> req{str(req)}")
-        return False
+        return None
     # ---
     logger.info("<<green>> **Claim_API true.")
     # ---
     if returnid:
         # ---
-        Qid = False
+        qid = None
         # ---
         if "entity" in req and "id" in req["entity"]:
-            Qid = req["entity"]["id"]
-            logger.info(f'<<green>> returnid:"{Qid}" ')
+            qid = req["entity"]["id"]
+            logger.info(f'<<green>> returnid:"{qid}" ')
         # ---
-        return Qid
+        return qid
     # ---
-    return True
+    return None
 
 
 def Claim_API_str(qid, property, string: str):
@@ -317,7 +308,7 @@ def Delete_claim(claimid) -> bool:
     return False
 
 
-def wbsearchentities(search, language, match_alias: bool=False):
+def wbsearchentities(search, language, match_alias: bool = False):
     params = {
         "action": "wbsearchentities",
         "format": "json",
@@ -378,26 +369,3 @@ def wbsearchentities(search, language, match_alias: bool=False):
         table[s["id"]] = table_x or s
     # ---
     return table
-
-
-if __name__ == "__main__":
-    qids = ["Q4115189"]
-    # ---
-    for q in qids:
-        logger.info(f"<<blue>>_______\n{q} :")
-        # ---
-        q = q.strip()
-        # ---
-        j = wd_rest_new.Get_Claims_API(q=q, p="P11143")
-        # ---
-        logger.info(json.dumps(j, indent=4))
-        # ---
-        uu = Claim_API_str(qid=q, property="P11143", string="test")
-        # ---
-        logger.info(uu)
-        # ---
-        oo = Labels_API(q, "tesst!", "en")
-        # ---
-        oo = Labels_API(q, "تجربة!", "ar")
-        # ---
-        oo = Labels_API(q, "تجربة!", "axxr")

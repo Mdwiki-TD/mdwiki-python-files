@@ -10,6 +10,7 @@ import logging
 import re
 
 import wikitextparser as wtp
+
 from copy_to_en.bots.fix_refs_names import fix_ref_names
 
 logger = logging.getLogger(__name__)

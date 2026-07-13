@@ -10,16 +10,12 @@ import sys
 from pathlib import Path
 
 from mdwiki_api.mdwiki_page import CatDepth
-from mdwiki_api.wiki_page import MainPage, change_codes
+from mdwiki_api.wiki_page import MainPage
+from newapi import change_codes
 
 logger = logging.getLogger(__name__)
 
-# ---
-
-# result_table = CatDepth(title, sitecode="www", family="mdwiki", depth=0, ns="0")
-# ---
 Dir = Path(__file__).parent
-# ---
 
 
 def get_md_links():

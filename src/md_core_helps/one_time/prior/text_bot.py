@@ -8,15 +8,9 @@ import sys
 from pathlib import Path
 
 from md_core_helps.one_time.priorviews.lists import translators
-from typing import Sequence
 
 logger = logging.getLogger(__name__)
 
-# ---
-
-# translators.tra_by_lang
-# translators.counts_by_translator
-# ---
 text_main = """
 <div style="height:580px;width:100%;overflow-x:auto; overflow-y:auto">
 
@@ -116,7 +110,7 @@ def get_t_sections():
     green_line = ""
     red_line = ""
     # ---
-    for l, ta in all_langs_states.items():
+    for _, ta in all_langs_states.items():
         # ---
         all_o = ta["green"] + ta["red"]
         # ---
@@ -140,7 +134,7 @@ def get_t_sections():
     return text
 
 
-def make_color(en_extlinks, en_refsname, p_ext, p_names: Sequence[str], lead_extlinks, lead_refsname):
+def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_refsname):
     # ---
     _sa_11 = False
     _sa_22 = False
@@ -197,7 +191,7 @@ def log_all_pages_states() -> None:
 log_all_pages_states()
 
 
-def make_text(allo, ttt: str=""):
+def make_text(allo, ttt: str = ""):
     # create wikitable from json
     # ---
     t_sections[ttt] = {}
@@ -218,7 +212,7 @@ def make_text(allo, ttt: str=""):
     # ---
     langs_keys_2 = {}
     # ---
-    for en, ta in allo.items():
+    for _, ta in allo.items():
         for la in ta["langs"]:
             la = la.strip()
             if la in ["en", ""]:
@@ -285,25 +279,25 @@ def make_text(allo, ttt: str=""):
         # ---
         lang_text = ""
         # ---
-        for l in langs_keys:
+        for z in langs_keys:
             # ---
-            if l not in all_langs_states:
-                all_langs_states[l] = {"red": 0, "green": 0}
-            if l not in langs_green_red:
-                langs_green_red[l] = {"red": 0, "green": 0}
+            if z not in all_langs_states:
+                all_langs_states[z] = {"red": 0, "green": 0}
+            if z not in langs_green_red:
+                langs_green_red[z] = {"red": 0, "green": 0}
             # ---
-            tit = langs.get(l, {}).get("title", "")
+            tit = langs.get(z, {}).get("title", "")
             # ---
-            all_pages_states[en][l] = {"color": "", "title": tit}
+            all_pages_states[en][z] = {"color": "", "title": tit}
             # ---
-            p_ext = langs.get(l, {}).get("extlinks", [])
+            p_ext = langs.get(z, {}).get("extlinks", [])
             p_ext = [x.lower() for x in p_ext]
             # ---
-            p_names = langs.get(l, {}).get("refsname", {})
+            p_names = langs.get(z, {}).get("refsname", {})
             # ---
             tito = "|"
             # ---
-            if l in langs:
+            if z in langs:
                 # ---
                 all_langlinks += 1
                 # ---
@@ -348,31 +342,31 @@ def make_text(allo, ttt: str=""):
                         # ---
                 # ---
                 if color == "red":
-                    translator = translators.tra_by_lang.get(l, {}).get(tit.lower(), "")
+                    translator = translators.tra_by_lang.get(z, {}).get(tit.lower(), "")
                     if translator != "":
                         color = "green"
-                        logger.info(f"<<purple>> change color for [[{l}:{tit}]] to green: {translator=}")
+                        logger.info(f"<<purple>> change color for [[{z}:{tit}]] to green: {translator=}")
                 # ---
                 same1 = color_tab["same1"]
                 same2 = color_tab["same2"]
                 # ---
-                all_pages_states[en][l]["color"] = color
+                all_pages_states[en][z]["color"] = color
                 # ---
                 if color == "green":
                     color = "#c0fcc0"  # green
-                    langs_green_red[l]["green"] += 1
-                    all_langs_states[l]["green"] += 1
+                    langs_green_red[z]["green"] += 1
+                    all_langs_states[z]["green"] += 1
                     all_green += 1
                 else:
-                    langs_green_red[l]["red"] += 1
-                    all_langs_states[l]["red"] += 1
+                    langs_green_red[z]["red"] += 1
+                    all_langs_states[z]["red"] += 1
                     all_red += 1
                     color = "#fcc0c0"  # red
                     # ---
                 # ---
                 same = f"{same1}/{same2}"
                 # ---
-                tito = f"[[:w:{l}:{tit}|{same}]]"
+                tito = f"[[:w:{z}:{tit}|{same}]]"
                 # ---
                 tito = f'| style="background-color:{color}" | {tito}'
             # ---
@@ -405,7 +399,7 @@ def make_text(allo, ttt: str=""):
     green_line = ""
     red_line = ""
     # ---
-    for l, ta in langs_green_red.items():
+    for _, ta in langs_green_red.items():
         # ---
         green_line += f'{ta["green"]} || '
         # ---

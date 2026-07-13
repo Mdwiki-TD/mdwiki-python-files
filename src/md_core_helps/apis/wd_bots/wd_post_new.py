@@ -20,46 +20,52 @@ SS = {"csrftoken": ""}
 wd_site = Get_MwClient_Site("www", "wikidata", username, password)
 
 
-def do_request(params=None, method: str="POST"):
+def do_request(params=None, method: str = "POST"):
     # ---
     if not wd_site:
         logger.info("no wd_site")
         return {}
     # ---
-    params = params.copy()
+    params = (params or {}).copy()
     # ---
     action = params["action"]
     # ---
     del params["action"]
     # ---
-    try:
-        r4 = wd_site.api(action, http_method=method, **params)
-        return r4
+    if wd_site:
+        try:
+            r4 = wd_site.api(action, http_method=method, **params)
+            return r4
 
-    except Exception:
-        logger.exception("Exception:", exc_info=True)
+        except Exception:
+            logger.exception("Exception:", exc_info=True)
     # ---
     return {}
 
 
-def get_token(mk_new: bool=False):
+def get_token(mk_new: bool = False) -> str | None:
     # get edit token
     # ---
     if SS["csrftoken"] and not mk_new:
         return SS["csrftoken"]
     # ---
-    try:
-        csrftoken = wd_site.get_token("csrf")
-    except Exception as e:
-        logger.error(f"Could not get token: {e}")
-        return False
+    csrftoken = None
     # ---
-    SS["csrftoken"] = csrftoken
+    if wd_site:
+        try:
+            csrftoken = wd_site.get_token("csrf")
+        except Exception as e:
+            logger.error(f"Could not get token: {e}")
+            return None
+        # ---
+        SS["csrftoken"] = csrftoken
     # ---
     return csrftoken
 
 
-def post_it(params=None, url=None, token: bool=True, method: str="POST"):
+def post_it(params=None, url=None, token: bool = True, method: str = "POST"):
+    # ---
+    params = params or {}
     # ---
     if not url:
         url = "https://www.wikidata.org/w/api.php"

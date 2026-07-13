@@ -14,9 +14,10 @@ import sys
 from collections import defaultdict
 
 import tqdm
+
+from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
+from db.utils.to_sql import new_to_sql
 from md_core_helps.apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
-from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids
-from td_core.mdpyget.bots.to_sql import new_to_sql
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)

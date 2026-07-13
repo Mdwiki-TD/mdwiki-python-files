@@ -17,8 +17,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from db.mdapi_sql.services import sql_for_mdwiki
 from md_core_helps.bots.check_title import valid_title
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
 from td_core.td_dirs import paths
 
@@ -88,7 +88,7 @@ def dump_to_cache(cat, data) -> None:
         logger.info(f"<<green>> {cat}.json is updated ({len_data})")
 
 
-def Cat_Depth(title, depth: int=0, ns: str="all", print_s: bool=True) -> list[str]:
+def Cat_Depth(title, depth: int = 0, ns: str = "all", print_s: bool = True) -> list[str]:
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
@@ -113,7 +113,7 @@ def Cat_Depth(title, depth: int=0, ns: str="all", print_s: bool=True) -> list[st
     return list(result_table.keys())
 
 
-def make_cash_to_cats(dump_data: bool=False) -> list[str]:
+def make_cash_to_cats(dump_data: bool = False) -> list[str]:
     # ---
     all_pages = []
     # ---

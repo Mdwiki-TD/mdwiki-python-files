@@ -20,9 +20,10 @@ if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
 import mdapi
+from new_updater import work_on_text
+
 from md_core_helps.apis import mdwiki_api_call
 from mdwiki_api.mdwiki_page import NewApi
-from new_updater import work_on_text
 
 logger = logging.getLogger(__name__)
 

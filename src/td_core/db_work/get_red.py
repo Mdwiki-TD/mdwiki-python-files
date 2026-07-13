@@ -9,8 +9,8 @@ python3 core8/pwb.py td_core/db_work/get_red
 import logging
 import sys
 
+from db.mdapi_sql.services import sql_for_mdwiki, sql_qids, sql_qids_others
 from md_core_helps.apis import mdwiki_api_call
-from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids, sql_qids_others
 
 logger = logging.getLogger(__name__)
 

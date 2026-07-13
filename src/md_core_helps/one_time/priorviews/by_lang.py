@@ -83,7 +83,7 @@ if __name__ == "__main__":
     page = md_MainPage("User:Mr. Ibrahem/priorviews/bylang", "www", family="mdwiki")
     exists = page.exists()
     if not exists:
-        create = page.Create(text=newtext, summary="update")
+        create = page.create(text=newtext, summary="update")
     else:
         # ---
         text = page.get_text()

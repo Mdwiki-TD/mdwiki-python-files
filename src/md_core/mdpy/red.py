@@ -10,9 +10,10 @@ import logging
 import sys
 
 import requests
+
+from md_core_helps.apis import mdwiki_api_call
 from md_core_helps.bots import py_tools
 from md_core_helps.bots.check_title import valid_title
-from md_core_helps.apis import mdwiki_api_call
 from mdwiki_api.mdwiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)
@@ -80,18 +81,18 @@ def get_red(title):
     return lista
 
 
-def work(title, num: int, length: int, from_title: str="") -> str:
+def work(title, num: int, length: int, from_title: str = "") -> None:
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
-        return ""
+        return
     # ---
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         logger.info(f" page:{title} not exists in mdwiki.")
-        return ""
+        return
     # ---
     redirects = get_red(title)
     # ---

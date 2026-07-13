@@ -6,12 +6,13 @@ python3 core8/pwb.py md_core/mdpy/our
 """
 import json
 import logging
-import os
 import sys
 from pathlib import Path
 
 import requests
-from md_core_helps.apis import mdwiki_api_call, txtlib2
+
+from md_core_helps.apis import mdwiki_api_call
+from newapi import txtlib
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +43,7 @@ def work(title) -> None:
     # ---
     text = mdwiki_api_call.GetPageText(title)
     # ---
-    ingr = txtlib2.extract_templates_and_params(text)
+    ingr = txtlib.extract_templates_and_params(text)
     # ---
     pas = ""
     # ---

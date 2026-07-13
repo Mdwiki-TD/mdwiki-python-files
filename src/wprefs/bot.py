@@ -16,7 +16,7 @@ python3 core8/pwb.py wprefs/bot ask
 import logging
 import sys
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql.services import sql_for_mdwiki
 from wprefs.api import GetPageText, GetPageText_raw, log, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
@@ -132,7 +132,7 @@ def work_one_lang(list_, lang) -> None:
         append_reffixed_file(lang, "", dns)
 
 
-def work_sql_result(lange, nolange, year: int=2024):
+def work_sql_result(lange, nolange, year: int = 2024):
     newtable = {}
     que = f"""
         select lang, target from pages

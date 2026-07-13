@@ -9,30 +9,9 @@ from urllib.parse import urlencode, urlparse
 import requests
 import wikitextparser
 
-logger = logging.getLogger(__name__)
+from newapi import change_codes
 
-# ---
-"""
-# ---
-from md_core_helps.one_time.prior import get_them
-tt = get_them.work_in_one_lang_link()
-# ---
-"""
-# ---
-change_codes = {
-    "bat_smg": "bat-smg",
-    "be-x-old": "be-tarask",
-    "be_x_old": "be-tarask",
-    "cbk_zam": "cbk-zam",
-    "fiu_vro": "fiu-vro",
-    "map_bms": "map-bms",
-    "nb": "no",
-    "nds_nl": "nds-nl",
-    "roa_rup": "roa-rup",
-    "zh_classical": "zh-classical",
-    "zh_min_nan": "zh-min-nan",
-    "zh_yue": "zh-yue",
-}
+logger = logging.getLogger(__name__)
 
 
 def url_parser(url):
@@ -124,7 +103,7 @@ def filter_urls(links):
 # ---
 
 
-class work_in_one_lang_link:
+class WorkOneLang:
     def __init__(self, lang, title) -> None:
         self.lang = change_codes.get(lang) or lang
         # ---
@@ -330,14 +309,10 @@ class work_in_one_lang_link:
             # ---
             if contents == "" and new_co != "":
                 self.section0 = self.section0.replace(str(x), new_co)
-        # ---
 
 
-# ---
-
-
-class get_old:
-    def __init__(self, title, lang: str="en") -> None:
+class GetOld:
+    def __init__(self, title, lang: str = "en") -> None:
         # ---
         self.lang = lang
         self.title = title
@@ -525,38 +500,3 @@ class get_old:
             # ---
             if contents == "" and new_co != "":
                 self.section0 = self.section0.replace(str(x), new_co)
-
-        # ---
-
-
-# ---
-if __name__ == "__main__":
-    # ---
-    t = work_in_one_lang_link("he", "עששת")
-    sys.exit()
-    # ---
-    t = work_in_one_lang_link("en", "Deep_vein_thrombosis")
-    old = get_old("Deep_vein_thrombosis")
-    # print
-    orex = t.extlinks
-    oldex = old.extlinks
-    logger.info(f"orex: {len(orex)}")
-    logger.info(f"oldex: {len(oldex)}")
-    # ---
-    logger.info("=============")
-    # ---
-    refsname = t.refsname
-    oldrefsname = old.refsname
-    logger.info(f"refsname: {len(refsname)}")
-    logger.info(f"oldrefsname: {len(oldrefsname)}")
-    # ---
-    logger.info("=============")
-    # ---
-    lead = t.lead
-    oldlead = old.lead
-    for x in ["extlinks", "refsname"]:
-        logger.info("=============")
-        # ---
-        logger.info(f"{x}: {len(lead[x])}")
-        logger.info(f"old{x}: {len(oldlead[x])}")
-    # ---

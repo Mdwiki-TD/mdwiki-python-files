@@ -9,15 +9,16 @@ from http.cookiejar import MozillaCookieJar
 
 import mwclient
 import requests
-from md_core_helps.apis.sup.cookies_bot import get_file_name
 from mwclient.client import Site
+
+from md_core_helps.apis.sup.cookies_bot import get_file_name
 
 logger = logging.getLogger(__name__)
 
 user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 
-def Get_MwClient_Site(lang, family, username: str, password: str):
+def Get_MwClient_Site(lang, family, username: str, password: str) -> None | Site:
     cookies_file = get_file_name(lang, family, username)
 
     domain = f"{lang}.{family}.org"
@@ -32,7 +33,7 @@ def Get_MwClient_Site(lang, family, username: str, password: str):
         try:
             # Load cookies from file, including session cookies
             cookie_jar.load(ignore_discard=True, ignore_expires=True)
-            connection.cookies = cookie_jar  # Tell Requests session to use the cookiejar.
+            connection.cookies = cookie_jar  # type: ignore # Tell Requests session to use the cookiejar.
         except Exception as e:
             logger.error("Could not load cookies: %s" % e)
 
@@ -43,7 +44,7 @@ def Get_MwClient_Site(lang, family, username: str, password: str):
             site = Site(domain, clients_useragent=user_agent, pool=connection)
         except Exception as e:
             logger.error(f"Could not connect to ({domain}): %s" % e)
-            return False
+            return None
 
     if not site.logged_in:
         logger.info(f"<<yellow>>logging in to ({domain}), username: {username}")

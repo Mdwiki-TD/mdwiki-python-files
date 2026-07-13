@@ -6,7 +6,7 @@ from md_core.stats.ar import get_ar_results
 
 from datetime import datetime
 
-from md_core_helps.mdapi_sql import wiki_sql
+from db import WikiReplicaDB
 
 last_year = datetime.now().year - 1
 
@@ -30,7 +30,8 @@ def get_ar_results():
     # ---
     editors = {}
     # ---
-    result = wiki_sql.sql_new(qua, "arwiki")
+    lang_db = WikiReplicaDB("arwiki")
+    result = lang_db.select_safe(qua)
     # ---
     for x in result:
         # ---

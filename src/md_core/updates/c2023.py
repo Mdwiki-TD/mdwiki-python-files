@@ -105,7 +105,7 @@ for year, usersx in usersbyyear.items():
 page = md_MainPage(title, "www", family="mdwiki")
 # ---
 if not page.exists():
-    page.Create(text=text, summary="update")
+    page.create(text=text, summary="update")
 else:
     page.save(newtext=text, summary="update")
 # ---

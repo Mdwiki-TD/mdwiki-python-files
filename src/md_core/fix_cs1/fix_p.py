@@ -8,6 +8,7 @@ import re
 import sys
 
 import wikitextparser as wtp
+
 from md_core.fix_cs1.bots.find_journal import get_journal_value, get_param
 from md_core.fix_cs1.bots.temps_list import in_params_ar, in_params_en
 
@@ -56,7 +57,7 @@ def get_temps(parsed, valid_list):
     return Template_list
 
 
-def fix_it(text: str, site: str=""):
+def fix_it(text: str, site: str = ""):
     # ---
     ref_temps_n = ["cite journal", "cite magazine", "استشهاد بمجلة", "استشهاد بدورية محكمة"]
     # ---

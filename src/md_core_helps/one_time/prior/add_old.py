@@ -104,7 +104,7 @@ class PriorAddOld:
                         # ---
                         continue
                 # ---
-                old = get_them.get_old(title2)
+                old = get_them.GetOld(title2)
                 # ---
                 tab["old"] = {}
                 tab["old"]["extlinks"] = old.extlinks

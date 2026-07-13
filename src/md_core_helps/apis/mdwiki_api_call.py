@@ -3,6 +3,7 @@
 # revid    = mdwiki_api.GetRevid(title)
 """
 import logging
+from typing import Union
 
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
@@ -11,30 +12,7 @@ logger = logging.getLogger(__name__)
 api_new = NewApi("www", family="mdwiki")
 
 
-# json1    = api_new.post_params(params, addtoken=False)
-# login    = api_new.Login_to_wiki()
-# move_it  = api_new.move(old_title, to, reason="", noredirect=False, movesubpages=False)
-# pages    = api_new.Find_pages_exists_or_not(liste, get_redirect=False)
-# pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
-# all_pages= api_new.Get_All_pages_generator(start="", namespace="0", limit="max", filterredir="", ppprop="", limit_all=100000)
-# search   = api_new.Search(value='', ns="", offset='', srlimit="max", return_dict=False, addparams={})
-# newpages = api_new.Get_Newpages(limit="max", namespace="0", rcstart="", user='')
-# usercont = api_new.UserContribs(user, limit=5000, namespace="*", ucshow="")
-# l_links  = api_new.Get_langlinks_for_list(titles, targtsitecode="", numbes=50)
-# text_w   = api_new.expandtemplates(text)
-# subst    = api_new.Parse_Text('{{subst:page_name}}', title)
-# extlinks = api_new.get_extlinks(title)
-# revisions= api_new.get_revisions(title)
-# logs     = api_new.get_logs(title)
-# wantedcategories  = api_new.querypage_list(qppage='Wantedcategories|Wantedfiles', qplimit="max", max=5000)
-# pages  = api_new.Get_template_pages(title, namespace="*", max=10000)
-# pages_props  = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", max=None)
-# img_url  = api_new.Get_image_url(title)
-# added    = api_new.Add_To_Bottom(text, summary, title, poss="Head|Bottom")
-# titles   = api_new.get_titles_redirects(titles)
-
-
-def post_s(params, addtoken: bool=False, files=None):
+def post_s(params, addtoken: bool = False, files=None):
     # ---
     params["format"] = "json"
     params["utf8"] = 1
@@ -45,11 +23,11 @@ def post_s(params, addtoken: bool=False, files=None):
 
 
 def page_put(
-    newtext: str="",
-    summary: str="",
-    title: str="",
-    minor: str="",
-    nocreate: int=1,
+    newtext: str = "",
+    summary: str = "",
+    title: str = "",
+    minor: str = "",
+    nocreate: int = 1,
     **kwargs,
 ):
     # ---
@@ -59,15 +37,6 @@ def page_put(
     save_page = page.save(newtext=newtext, summary=summary, nocreate=nocreate, minor=minor)
     # ---
     return save_page
-
-
-def Add_To_Bottom(
-    appendtext,
-    summary,
-    title,
-    **kwargs,
-):
-    return api_new.Add_To_Bottom(appendtext, summary, title, poss="Bottom")
 
 
 def create_Page(
@@ -80,12 +49,12 @@ def create_Page(
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
     # ---
-    create = page.Create(text=text, summary=summary)
+    create = page.create(text=text, summary=summary)
     # ---
     return create
 
 
-def wordcount(title, srlimit: str="30"):
+def wordcount(title, srlimit: str = "30"):
     # srlimit = "30"
     params = {
         "action": "query",
@@ -113,24 +82,9 @@ def wordcount(title, srlimit: str="30"):
     return words
 
 
-def GetPageText(title, redirects: bool=False, get_revid: bool=False):
-    """Retrieve the wikitext of a specified page from a wiki.
-
-    This function sends a request to a wiki API to retrieve the wikitext of
-    a page identified by its title. It can handle redirects and can
-    optionally return the revision ID of the page. If the page does not
-    exist or cannot be parsed, appropriate messages are logged.
-
-    Args:
-        title (str): The title of the page to retrieve.
-        redirects (bool?): Whether to follow redirects. Defaults to False.
-        get_revid (bool?): Whether to return the revision ID along with the wikitext.
-            Defaults to False.
-
-    Returns:
-        str: The wikitext of the specified page.
-        tuple: A tuple containing the wikitext and the revision ID if get_revid is
-            True.
+def gettext_and_revid(title, redirects: bool = False):
+    """
+    Retrieve the wikitext of a specified page from a wiki.
     """
 
     # logger.info( '**GetarPageText: ')
@@ -159,8 +113,39 @@ def GetPageText(title, redirects: bool=False, get_revid: bool=False):
     if not text:
         logger.info(f'page {title} text == "".')
     # ---
-    if get_revid:
-        return text, json1.get("parse", {}).get("revid", 0)
+    return text, json1.get("parse", {}).get("revid", 0)
+
+
+def GetPageText(title, redirects: bool = False) -> str:
+    """
+    Retrieve the wikitext of a specified page from a wiki.
+    """
+
+    # logger.info( '**GetarPageText: ')
+    # ---
+    params = {
+        "action": "parse",
+        # "prop": "wikitext|sections",
+        "prop": "wikitext|revid",
+        "page": title,
+        # "redirects": 1,
+        # "normalize": 1,
+    }
+    # ---
+    if redirects:
+        params["redirects"] = 1
+    # ---
+    text = ""
+    # ---
+    json1 = post_s(params) or {}
+    if json1:
+        text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
+    else:
+        logger.info("no parse in json1:")
+        logger.info(json1)
+    # ---
+    if not text:
+        logger.info(f'page {title} text == "".')
     # ---
     return text
 
@@ -238,7 +223,9 @@ def Get_template_pages(title, namespace: str = "*", limit: Union[int, str] = "ma
     return api_new.Get_template_pages(title, namespace=namespace)
 
 
-def Get_All_pages(start, namespace: str = "0", limit: Union[int, str] = "max", apfilterredir: str = "", limit_all: int = 0) -> list[str]:
+def Get_All_pages(
+    start, namespace: str = "0", limit: Union[int, str] = "max", apfilterredir: str = "", limit_all: int = 0
+) -> list[str]:
     return api_new.Get_All_pages(
         start=start,
         namespace=namespace,

@@ -1,6 +1,7 @@
 import re
 
 import pywikibot
+
 from src.wprefs.bots.replace_except import replaceExcept
 
 

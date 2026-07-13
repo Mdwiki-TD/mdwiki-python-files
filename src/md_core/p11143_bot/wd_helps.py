@@ -9,11 +9,12 @@ import json
 import logging
 import sys
 import time
+from typing import Optional
 from urllib.error import HTTPError, URLError
 
-from md_core_helps.apis import wikidataapi
 from SPARQLWrapper import JSON, SPARQLWrapper
-from typing import Optional
+
+from md_core_helps.apis import wikidataapi
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +71,7 @@ def get_query_result(query):
     return lista
 
 
-def make_in_wd_tab(limit: Optional[int]=None):
+def make_in_wd_tab(limit: Optional[int] = None):
     # ---
     query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
     # ---

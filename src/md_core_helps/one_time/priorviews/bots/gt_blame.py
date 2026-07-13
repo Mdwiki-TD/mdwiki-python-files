@@ -7,14 +7,15 @@ python3 core8/pwb.py priorviews/bots/gt_blame
 import logging
 import re
 import sys
+from typing import Optional, Sequence
 from urllib.parse import urlencode
 
 import requests
 import wikitextparser
+
 from md_core_helps.one_time.prior.json_en.lists import json_en_all
 from md_core_helps.one_time.prior.json_langs.lists import json_langs_by_langs
 from md_core_helps.one_time.priorviews.bots import helps
-from typing import Optional, Sequence
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +69,7 @@ def match_ref_names(r, refnames: Sequence[str], lang):
 
 
 class FindInHistory:
-    def __init__(self, title, lang: str="en", refname: str=[], extlinks=[]) -> None:
+    def __init__(self, title, lang: str = "en", refname: str = [], extlinks=[]) -> None:
         # ---
         self.lang = lang
         self.title = title
@@ -163,7 +164,7 @@ class FindInHistory:
                 self.revisions.append(r)
 
 
-def search_history(title, lang, en: str="", refname: Optional[str]=None, extlinks=None):
+def search_history(title, lang, en: str = "", refname: Optional[str] = None, extlinks=None):
     if refname is None:
         refname = []
     if extlinks is None:

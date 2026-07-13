@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 import wikitextparser
+
 from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
@@ -110,7 +111,7 @@ def dump_secs_links(d_links) -> None:
         json.dump(d_links, open(sect_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
-def get_section_links(new: bool=False):
+def get_section_links(new: bool = False):
     """
     Retrieves the links to the sections from the Sectios_links bot.
     """

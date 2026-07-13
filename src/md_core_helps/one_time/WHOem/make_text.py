@@ -172,7 +172,7 @@ def start() -> None:
     page = md_MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
-        create = page.Create(text=ntext, summary="update")
+        create = page.create(text=ntext, summary="update")
     else:
         # ---
         text = page.get_text()

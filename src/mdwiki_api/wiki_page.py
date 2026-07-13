@@ -5,6 +5,7 @@ import logging
 import os
 
 from dotenv import load_dotenv
+
 from newapi import AllAPIS
 
 try:
@@ -20,24 +21,9 @@ logger = logging.getLogger(__name__)
 
 logger.info(f"wiki_page.py use {username} account.")
 
-change_codes = {
-    "bat_smg": "bat-smg",
-    "be-x-old": "be-tarask",
-    "be_x_old": "be-tarask",
-    "cbk_zam": "cbk-zam",
-    "fiu_vro": "fiu-vro",
-    "map_bms": "map-bms",
-    "nb": "no",
-    "nds_nl": "nds-nl",
-    "roa_rup": "roa-rup",
-    "zh_classical": "zh-classical",
-    "zh_min_nan": "zh-min-nan",
-    "zh_yue": "zh-yue",
-}
-
 
 @functools.lru_cache(maxsize=1024)
-def load_main_api(lang: str="www", family: str="wikipedia") -> AllAPIS:
+def load_main_api(lang: str = "www", family: str = "wikipedia") -> AllAPIS:
     return AllAPIS(
         lang=lang,
         family=family,
@@ -46,15 +32,15 @@ def load_main_api(lang: str="www", family: str="wikipedia") -> AllAPIS:
     )
 
 
-def MainPage(title, lang, family: str="wikipedia"):
+def MainPage(title, lang, family: str = "wikipedia"):
     main_api = load_main_api(lang, family)
     return main_api.MainPage(title)
 
 
 def CatDepth(
     title,
-    sitecode: str="",
-    family: str="wikipedia",
+    sitecode: str = "",
+    family: str = "wikipedia",
     **kwargs,
 ) -> dict:
     sitecode = sitecode or "www"
@@ -67,7 +53,7 @@ def CatDepth(
     )
 
 
-def NewApi(lang: str="", family: str="wikipedia"):
+def NewApi(lang: str = "", family: str = "wikipedia"):
     lang = lang or "www"
     main_api = load_main_api(lang, family)
     return main_api.NewApi()
@@ -78,5 +64,4 @@ __all__ = [
     "MainPage",
     "NewApi",
     "CatDepth",
-    "change_codes",
 ]

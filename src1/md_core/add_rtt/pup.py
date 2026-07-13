@@ -19,6 +19,7 @@ import sys
 from pathlib import Path
 
 import wikitextparser as wtp
+
 from md_core.add_rtt.r_column_bots.pup_table import R_NEW_ROW, add_to_tables, fix_title
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage  # , CatDepth
 
@@ -99,6 +100,7 @@ def work_page() -> bool | None:
 
     page.save(newtext=newtext, summary=summary, nocreate=1, minor="")
     return None
+
 
 def main():
 

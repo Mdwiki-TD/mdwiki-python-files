@@ -6,7 +6,7 @@ python3 core8/pwb.py md_core/updates/Medicine_articles
 """
 import datetime
 
-from md_core_helps.mdapi_sql import wiki_sql
+from db import WikiReplicaDB
 from mdwiki_api.mdwiki_page import md_MainPage
 
 
@@ -28,7 +28,8 @@ def sql_result() -> dict:
         #limit 10
     """
     # ---
-    result = wiki_sql.sql_new(query, "enwiki")
+    lang_db = WikiReplicaDB("enwiki")
+    result = lang_db.select_safe(query)
     # ---
     languages = {x["ll_lang"]: x["counts"] for x in result}
     # ---
@@ -53,7 +54,8 @@ def get_articles():
         and page_namespace = 0
     """
     # ---
-    result = wiki_sql.sql_new(query, "enwiki")
+    lang_db = WikiReplicaDB("enwiki")
+    result = lang_db.select_safe(query)
     # ---
     articles = [x["articles"] for x in result]
     # ---

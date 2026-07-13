@@ -9,6 +9,7 @@ import sys
 from urllib.parse import urlencode
 
 import requests
+
 from md_core_helps.apis.user_accounts import password, username
 
 logger = logging.getLogger(__name__)
@@ -20,7 +21,7 @@ SS = {"ss": requests.Session(), "r3_token": ""}
 login_not_done = {1: True}
 
 
-def do_request(params=None, method: str="POST"):
+def do_request(params=None, method: str = "POST"):
     # ---
     url = "https://www.wikidata.org/w/api.php"
     # ---
@@ -54,7 +55,7 @@ def do_request(params=None, method: str="POST"):
         return {}
 
 
-def get_token(mk_new: bool=False):
+def get_token(mk_new: bool = False):
     # get edit token
     # ---
     if SS["r3_token"] and not mk_new:
@@ -71,7 +72,7 @@ def get_token(mk_new: bool=False):
     return r3_token
 
 
-def Log_to_wiki(url: str=""):
+def Log_to_wiki(url: str = ""):
     # ---
     if not login_not_done[1]:
         return ""
@@ -110,7 +111,9 @@ def Log_to_wiki(url: str=""):
     login_not_done[1] = False
 
 
-def post_it(params=None, url=None, token: bool=True, method: str="POST"):
+def post_it(params=None, url=None, token: bool = True, method: str = "POST"):
+    # ---
+    params = params or {}
     # ---
     Log_to_wiki()
     # ---

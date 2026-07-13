@@ -18,6 +18,7 @@ import sys
 from pathlib import Path
 
 import wikitextparser
+
 from md_core_helps.one_time.prior import text_bot
 from mdwiki_api.mdwiki_page import md_MainPage
 
@@ -44,48 +45,6 @@ save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
 replaces = {
     "Syncope": "Syncope (medicine)",
 }
-
-
-def work_test(All, allen):
-    # This function takes in two dictionaries as input, 'All' and 'allen'.
-
-    # Loop through each key-value pair in 'allen' dictionary.
-    for a, tab in allen.items():
-        # If the current key in 'allen' dictionary also exists in 'All' dictionary,
-        # then update some specific values with the corresponding values in 'allen' dictionary.
-        if a in All:
-            All[a]["extlinks"] = tab["extlinks"]
-            All[a]["refsname"] = tab["refsname"]
-            All[a]["lead"] = tab["lead"]
-            All[a]["old"] = tab.get("old", {})
-
-    # Create a file title for the log file
-    filetitle = f"{Dir}/log_test.txt"
-
-    # Call a function 'make_text' with 'All' dictionary as input and store the output in 'text' variable.
-    text = text_bot.make_text(All)
-
-    # Remove a specific string from 'text' variable.
-    text = text.replace("height:580px;", "")
-
-    # print_text the number of links found in 'All' dictionary.
-    logger.info(f"{len(All)} links found")
-
-    # print_text a message stating where the log file was saved.
-    logger.info(f"<<yellow>> text loged to {filetitle}")
-
-    # Define a page title and create an object of 'md_MainPage' class with some arguments.
-    title = "User:Mr. Ibrahem/prior/test"
-    page = md_MainPage(title, "www", family="mdwiki")
-
-    # Get the current text of the page.
-    oldtext = page.get_text()
-
-    # Save the updated 'text' to the page with some additional parameters.
-    page.save(newtext=text, summary="update", nocreate=0, minor="")
-
-    # Return the updated 'text' variable.
-    return text
 
 
 def get_all_json():
@@ -213,7 +172,7 @@ class WorkAll:
                 # ---
                 exists = page_x.exists()
                 if not exists:
-                    page_x.Create(text=text, summary="update")
+                    page_x.create(text=text, summary="update")
                 # ---
                 else:
                     page_x_text = page_x.get_text()
@@ -238,12 +197,6 @@ def work_all() -> None:
     else:
         logger.info('<<yellow>> add "logall" to args to log All pages links green/red..')
 
-    # ---
 
-
-# ---
 if __name__ == "__main__":
-    if "test" in sys.argv:
-        work_test()
-    else:
-        work_all()
+    work_all()

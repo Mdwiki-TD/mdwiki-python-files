@@ -7,7 +7,7 @@ from md_core.unlinked_wb.hlps import get_pages_in_use, get_qids
 # ---
 import logging
 
-from md_core_helps.mdapi_sql import sql_qids, sql_qids_others
+from db.mdapi_sql.services import sql_qids, sql_qids_others
 
 logger = logging.getLogger(__name__)
 

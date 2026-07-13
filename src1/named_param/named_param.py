@@ -13,6 +13,7 @@ tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.p
 import logging
 
 import wikitextparser as wtp
+
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
 logger = logging.getLogger(__name__)

@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 # ---
 if os.getenv("HOME"):
-    dir2 = os.getenv("HOME") + "/public_html"
+    dir2 = os.environ["HOME"] + "/public_html"
 else:
     dir2 = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
 # ---
@@ -24,7 +24,7 @@ file_name = {}
 numbers = {1: 20000, "done": 0}
 
 
-def work(title, Find, Replace, nn) -> None:
+def work(title, find_str, replace_str, nn) -> None:
     # ---
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
@@ -46,9 +46,9 @@ def work(title, Find, Replace, nn) -> None:
     new_text = text
     # ---
     if "testtest" in sys.argv:
-        new_text = new_text.replace(Find, Replace, 1)
+        new_text = new_text.replace(find_str, replace_str, 1)
     else:
-        new_text = new_text.replace(Find, Replace)
+        new_text = new_text.replace(find_str, replace_str)
     # ---
     if new_text == text:
         line = '"%s":"no changes",\n' % title.replace('"', '\\"')
