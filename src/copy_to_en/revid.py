@@ -9,7 +9,7 @@ import logging
 import os
 from pathlib import Path
 
-from db.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql.services import sql_for_mdwiki
 from db.utils.to_sql import to_sql
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth

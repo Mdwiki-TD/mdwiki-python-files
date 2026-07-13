@@ -11,7 +11,7 @@ import logging
 import re
 import sys
 
-from db.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql.services import sql_for_mdwiki
 from db.utils.to_sql import insert_dict, update_table_2
 from md_core_helps.apis.mw_views import PageviewsClient
 

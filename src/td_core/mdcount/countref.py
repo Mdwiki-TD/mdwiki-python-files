@@ -19,7 +19,7 @@ import json
 import logging
 import sys
 
-from db.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql.services import sql_for_mdwiki
 from md_core_helps.apis import mdwiki_api_call
 from td_core.mdcount.bots.countref_bots import count_ref_from_text
 from td_core.mdcount.bots.links import get_links_from_cats

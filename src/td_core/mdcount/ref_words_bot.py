@@ -8,7 +8,7 @@ from td_core.mdcount.ref_words_bot import get_jsons, logaa, make_old_values, do_
 import json
 import logging
 
-from db.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql.services import sql_for_mdwiki
 from db.utils.to_sql import to_sql
 
 logger = logging.getLogger(__name__)

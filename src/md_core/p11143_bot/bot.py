@@ -10,7 +10,8 @@ import functools
 import logging
 import sys
 
-from db.mdapi_sql import sql_qids, sql_qids_others
+from db.mdapi_sql.services import sql_qids
+from db.mdapi_sql.services import sql_qids_others
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
 from md_core.p11143_bot.wd_helps import add_P11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
 from md_core_helps.apis.cat_cach import from_cache

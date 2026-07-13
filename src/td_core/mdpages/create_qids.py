@@ -9,7 +9,7 @@ from td_core.mdpages.create_qids import create_qids
 """
 import logging
 
-from db.mdapi_sql import sql_qids
+from db.mdapi_sql.services import sql_qids
 from md_core.unlinked_wb.bot import add_un_linked_wb
 from md_core_helps.apis import wikidataapi
 

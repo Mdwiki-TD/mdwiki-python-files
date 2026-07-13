@@ -12,7 +12,8 @@ import sys
 from pymysql.converters import escape_string
 
 from db import WikiReplicaDB
-from db.mdapi_sql import sql_for_mdwiki, sql_qids
+from db.mdapi_sql.services import sql_qids
+from db.mdapi_sql.services import sql_for_mdwiki
 from md_core_helps.apis import wikidataapi
 
 # ---

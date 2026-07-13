@@ -46,7 +46,7 @@ def _load_db_config() -> DbConfig:
     )
 
 
-def _sql_connect_pymysql(
+def wiki_sql_connect(
     query,
     values=None,
     db_args: dict = None,
@@ -58,15 +58,6 @@ def _sql_connect_pymysql(
         connection = pymysql.connect(**db_args)
     except Exception as e:
         logger.exception(e)
-        db_args.update(
-            {
-                "cursorclass": [],
-                "conv": [],
-                "password": "*****",
-            }
-        )
-        logger.warning(db_args)
-        logger.warning(query)
         return []
 
     with connection as conn, conn.cursor() as cursor:
@@ -105,7 +96,7 @@ def toolforge_tools_sql_connect(
     db_args["conv"] = pymysql.converters.conversions.copy()
     db_args["conv"][pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
 
-    results = _sql_connect_pymysql(
+    results = wiki_sql_connect(
         query,
         values=values,
         db_args=db_args,

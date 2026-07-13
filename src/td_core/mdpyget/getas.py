@@ -18,7 +18,7 @@ import logging
 import re
 import sys
 
-from db.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql.services import sql_for_mdwiki
 from db.utils.to_sql import to_sql
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki
 from mdwiki_api.wiki_page import NewApi
