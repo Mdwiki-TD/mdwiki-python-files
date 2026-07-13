@@ -1,31 +1,10 @@
 """ """
 
 import logging
-import sys
 import urllib
+import urllib.parse
 
 logger = logging.getLogger(__name__)
-
-# ---
-PYTHON_VERSION = sys.version_info[:3]
-if PYTHON_VERSION >= (3, 9):
-    removeprefix = str.removeprefix  # type: ignore[attr-defined]
-    removesuffix = str.removesuffix  # type: ignore[attr-defined]
-else:
-
-    def removeprefix(string: str, prefix: str) -> str:
-        """Remove prefix from a string or return a copy otherwise.
-
-        .. versionadded:: 5.4
-        """
-        return string[len(prefix) :] if string.startswith(prefix) else string
-
-    def removesuffix(string: str, suffix: str) -> str:
-        """Remove prefix from a string or return a copy otherwise.
-
-        .. versionadded:: 5.4
-        """
-        return string[: -len(suffix)] if string.endswith(suffix) else string
 
 
 def quoteurl(fao):

@@ -9,7 +9,7 @@ import re
 
 import wikitextparser as wtp
 
-from wprefs.bots import txtlib2
+from newapi import txtlib
 from wprefs.helps import print_s
 
 
@@ -88,7 +88,7 @@ def Expend_Infobox(text: str, title, section_0):
     tempse_by_u = {}
     tempse = {}
     # ---
-    ingr = txtlib2.extract_templates_and_params(section_0)
+    ingr = txtlib.extract_templates_and_params(section_0)
     u = 0
     for temp in ingr:
         u += 1

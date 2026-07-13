@@ -12,13 +12,12 @@ import logging
 import os
 import sys
 import time
-import traceback
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta
+from urllib.parse import quote
 
 import requests
-from requests.utils import quote
 from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
@@ -37,8 +36,8 @@ endpoints = {
 }
 
 
-def parse_date(stringDate: str):
-    return datetime.strptime(stringDate.ljust(10, "0"), "%Y%m%d%H")
+def parse_date(stringdate: str):
+    return datetime.strptime(stringdate.ljust(10, "0"), "%Y%m%d%H")
 
 
 def format_date(d):
@@ -295,15 +294,3 @@ class PageviewsClient:
         )
         # ---
         return new_data
-
-
-if __name__ == "__main__":
-    # python3 core8/pwb.py apis/mw_views
-    view_bot = PageviewsClient()
-    data = view_bot.article_views_new(
-        "ar.wikipedia", ["الصفحة الرئيسة"], granularity="monthly", start="20100101", end="20250627"
-    )
-    # ---
-    for title, views in data.items():
-        logger.info(title)
-        logger.info(views)

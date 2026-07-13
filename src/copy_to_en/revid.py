@@ -102,5 +102,3 @@ def get_all_revids() -> None:
 
 if __name__ == "__main__":
     get_all_revids()
-    # d = Cat_Depth("RTTHearing", 0)
-    # logger.info(d)

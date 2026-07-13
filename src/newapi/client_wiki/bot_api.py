@@ -1247,6 +1247,22 @@ class NewApi(NewApiHelpers):
             **kwargs,
         )
 
+    def users_infos(self, ususers: list[str]):
+        params = {
+            "action": "query",
+            "format": "json",
+            "list": "users",
+            "formatversion": "2",
+            "usprop": "groups",
+            "ususers": ususers,
+        }
+
+        data = self.login_bot.client_request_safe(params, method="get")
+
+        data = data.get("query", {}).get("users", [{}])
+
+        return data
+
     def __repr__(self) -> str:
         return f"NewApi(lang={self.lang!r}, username={self.username!r})"
 

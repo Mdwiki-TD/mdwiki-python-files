@@ -15,8 +15,8 @@ from pathlib import Path
 import tqdm
 from pymysql.converters import escape_string
 
+from db import WikiReplicaDB
 from md_core.stats.ar import get_ar_results
-from md_core_helps.mdapi_sql import wiki_sql
 
 logger = logging.getLogger(__name__)
 
@@ -82,9 +82,10 @@ def get_editors_sql(links, site, split_by: int = 100):
         # ---
         # logger.info(qua2)
         # ---
-        edits = wiki_sql.sql_new(qua2, site, u_print=False)
+        lang_db = WikiReplicaDB(site)
+        result = lang_db.select_safe(qua2)
         # ---
-        for x in edits:
+        for x in result:
             # ---
             actor_name = x["actor_name"]
             # ---

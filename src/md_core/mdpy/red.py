@@ -81,18 +81,18 @@ def get_red(title):
     return lista
 
 
-def work(title, num: int, length: int, from_title: str = "") -> str:
+def work(title, num: int, length: int, from_title: str = "") -> None:
     # ---
     logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
     # ---
     if num < offset[1]:
-        return ""
+        return
     # ---
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         logger.info(f" page:{title} not exists in mdwiki.")
-        return ""
+        return
     # ---
     redirects = get_red(title)
     # ---

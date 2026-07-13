@@ -339,7 +339,3 @@ def page_put(oldtext, new_text, summary, title, lang):
             ggg.write(new_text)
     # ---
     return False
-
-
-if __name__ == "__main__":
-    log()

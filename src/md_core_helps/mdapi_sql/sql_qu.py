@@ -37,8 +37,8 @@ class WikiDbConfig:
 
 @functools.lru_cache(maxsize=1)
 def _load_db_config() -> WikiDbConfig:
-    db_user: str = os.getenv("TOOL_TOOLSDB_USER")
-    db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD")
+    db_user: str = os.getenv("TOOL_TOOLSDB_USER")  # type: ignore
+    db_password: str = os.getenv("TOOL_TOOLSDB_PASSWORD")  # type: ignore
 
     return WikiDbConfig(
         db_user=db_user,

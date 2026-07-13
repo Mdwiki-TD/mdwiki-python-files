@@ -113,6 +113,8 @@ def Log_to_wiki(url: str = ""):
 
 def post_it(params=None, url=None, token: bool = True, method: str = "POST"):
     # ---
+    params = params or {}
+    # ---
     Log_to_wiki()
     # ---
     if token:

@@ -8,10 +8,9 @@ from md_core.stats.qids import qids_list
 import json
 import logging
 import os
-import sys
 from pathlib import Path
 
-from md_core_helps.mdapi_sql import wiki_sql
+from db import WikiReplicaDB
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +44,8 @@ def get_en_articles():
         and pp_page = p2.page_id
     """
     # ---
-    result = wiki_sql.sql_new(query, "enwiki")
+    lang_db = WikiReplicaDB("enwiki")
+    result = lang_db.select_safe(query)
     return {x["page_title"]: x["pp_value"] for x in result}
 
 

@@ -236,5 +236,5 @@ reportOptionalSubscript = "warning"
 # reportReturnType = false
 reportArgumentType = false
 
-# reportOperatorIssue = false
+reportOperatorIssue = false
 # reportIndexIssue = false

@@ -115,7 +115,6 @@ def add_to_mdwiki_sql_users(lista) -> None:
         # ---
         #  "pupdate", "target"
         if pupdate == is_in["pupdate"] and target == is_in["target"]:
-            # logger.info(f"skip {mdtitle} {user} same result in sql..")
             continue
         # ---
         update_row_new(mdtitle, lang, user, pupdate, target)

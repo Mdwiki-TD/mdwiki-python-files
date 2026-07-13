@@ -1,23 +1,5 @@
 #!/usr/bin/python3
-"""
-python3 core8/pwb.py md_core/mdpy/sql_for_mdwiki
-
-# ---
-from md_core_helps.mdapi_sql import sql_for_mdwiki
-# sql_for_mdwiki. select_md_sql(query, return_dict=False, values=None)
-# sql_for_mdwiki. mdwiki_sql(query, return_dict=False, values=None, many=False)
-# sql_for_mdwiki. set_target_where_id(new_target, iid)
-# sql_for_mdwiki. set_deleted_where_id(iid)
-# sql_for_mdwiki. insert_to_pages_users_to_main(id, target, user, qid)
-# sql_for_mdwiki. add_new_to_pages(tab)
-
-# pages = sql_for_mdwiki.get_all_pages()
-# cats = sql_for_mdwiki.get_db_categories() # title:depth
-# users = sql_for_mdwiki.get_db_users() # list
-# sql_for_mdwiki.get_all_pages_all_keys(lang=False)
-
-# ---
-"""
+""" """
 import logging
 import time
 

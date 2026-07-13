@@ -15,7 +15,7 @@ from mdwiki_api.mdwiki_page import CatDepth
 logger = logging.getLogger(__name__)
 
 if os.getenv("HOME"):
-    public_html_dir = os.getenv("HOME") + "/public_html"
+    public_html_dir = os.environ["HOME"] + "/public_html"
 else:
     public_html_dir = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html"
 # ---
@@ -52,7 +52,8 @@ def main() -> None:
             thenumbers[1] = int(value)
         # ---
         if arg == "-file":
-            text = open(f"{public_html_dir}/find/{value.strip()}", "r", "utf8").read()
+            with open(f"{public_html_dir}/find/{value.strip()}", "r", encoding="utf8") as f:
+                text = f.read()
             List = [x.strip() for x in text.split("\n") if x.strip() != ""]
         # ---
         if arg == "allpages":

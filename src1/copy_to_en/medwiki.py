@@ -128,7 +128,7 @@ def medwiki_cat_members(cat="Category:Mdwiki Translation Dashboard articles"):
 
 
 def get_text_revid(x):
-    alltext, revid = mdwiki_api_call.GetPageText(x, get_revid=True)
+    alltext, revid = mdwiki_api_call.gettext_and_revid(x)
     # ---
     text_cache[x] = alltext
     revid_cache[x] = revid

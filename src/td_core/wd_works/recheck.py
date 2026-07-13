@@ -11,11 +11,12 @@ import sys
 
 from pymysql.converters import escape_string
 
+from db import WikiReplicaDB
 from md_core_helps.apis import wikidataapi
 
 # ---
 from md_core_helps.bots import en_to_md, py_tools
-from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids, wiki_sql
+from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids
 
 logger = logging.getLogger(__name__)
 
@@ -94,7 +95,8 @@ def do_it_sql(lange, targets) -> None:
             and p.page_title in ('{laly}')
             ;"""
         # ---
-        result = wiki_sql.Make_sql_many_rows(query, wiki=str(lange))
+        lang_db = WikiReplicaDB(str(lange))
+        result = lang_db.select_safe(query)
         # ---
         res_len = len(result)
         # ---
@@ -178,7 +180,6 @@ def start() -> None:
     # ---
     for lange in targets_done:
         # logger.info( ' ================================ ')
-        # logger.info( 'mdwiki/mdpy/sql.py: %d Lang : "%s"' % (numb_lang,lange) )
         # ---
         # if "sql" in sys.argv:
         do_it_sql(lange, targets_done[lange])
