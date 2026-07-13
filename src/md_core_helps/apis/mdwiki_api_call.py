@@ -10,30 +10,6 @@ logger = logging.getLogger(__name__)
 
 api_new = NewApi("www", family="mdwiki")
 
-
-# json1    = api_new.post_params(params, addtoken=False)
-# login    = api_new.Login_to_wiki()
-# move_it  = api_new.move(old_title, to, reason="", noredirect=False, movesubpages=False)
-# pages    = api_new.Find_pages_exists_or_not(liste, get_redirect=False)
-# pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
-# all_pages= api_new.Get_All_pages_generator(start="", namespace="0", limit="max", filterredir="", ppprop="", limit_all=100000)
-# search   = api_new.Search(value='', ns="", offset='', srlimit="max", return_dict=False, addparams={})
-# newpages = api_new.Get_Newpages(limit="max", namespace="0", rcstart="", user='')
-# usercont = api_new.UserContribs(user, limit=5000, namespace="*", ucshow="")
-# l_links  = api_new.Get_langlinks_for_list(titles, targtsitecode="", numbes=50)
-# text_w   = api_new.expandtemplates(text)
-# subst    = api_new.Parse_Text('{{subst:page_name}}', title)
-# extlinks = api_new.get_extlinks(title)
-# revisions= api_new.get_revisions(title)
-# logs     = api_new.get_logs(title)
-# wantedcategories  = api_new.querypage_list(qppage='Wantedcategories|Wantedfiles', qplimit="max", max=5000)
-# pages  = api_new.Get_template_pages(title, namespace="*", max=10000)
-# pages_props  = api_new.pageswithprop(pwppropname="unlinkedwikibase_id", max=None)
-# img_url  = api_new.Get_image_url(title)
-# added    = api_new.Add_To_Bottom(text, summary, title, poss="Head|Bottom")
-# titles   = api_new.get_titles_redirects(titles)
-
-
 def post_s(params, addtoken: bool=False, files=None):
     # ---
     params["format"] = "json"
@@ -59,16 +35,6 @@ def page_put(
     save_page = page.save(newtext=newtext, summary=summary, nocreate=nocreate, minor=minor)
     # ---
     return save_page
-
-
-def Add_To_Bottom(
-    appendtext,
-    summary,
-    title,
-    **kwargs,
-):
-    return api_new.Add_To_Bottom(appendtext, summary, title, poss="Bottom")
-
 
 def create_Page(
     text: str,
