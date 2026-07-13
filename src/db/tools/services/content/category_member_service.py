@@ -91,6 +91,9 @@ def batch_sync_category_members(data: list[dict]) -> None:
 
     Accepts a list of dicts with keys ``category`` and ``article_id``.
     Mirrors the diff-and-insert pattern from ``all_articles.py``.
+    Querying the entire category_members table into memory (existing_rows) is highly inefficient and redundant because INSERT IGNORE is used. As the table grows, this will cause severe performance degradation and potential OOM errors. We can simply deduplicate the input data in memory and let INSERT IGNORE handle skipping existing rows in the database.
+
+
     """
     with get_session() as session:
         try:
