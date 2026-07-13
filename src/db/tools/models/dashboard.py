@@ -52,15 +52,6 @@ class CategoryRecord(Base):
             if hasattr(self, key):
                 setattr(self, key, value)
 
-    def __init__1(self, **kwargs) -> None:
-
-        # Validate that required fields are not empty
-        if not self.category:
-            raise ValueError("Category name cannot be empty")
-
-        if not self.campaign:
-            raise ValueError("Campaign name cannot be empty")
-
     def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
