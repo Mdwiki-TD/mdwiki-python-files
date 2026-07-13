@@ -17,7 +17,7 @@ Prostate abscess
 import json
 import logging
 
-from md_core_helps.mdapi_sql import sql_qids
+from db.mdapi_sql import sql_qids
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)

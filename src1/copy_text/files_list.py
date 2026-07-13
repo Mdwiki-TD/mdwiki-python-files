@@ -9,8 +9,8 @@ import json
 import logging
 from pathlib import Path
 
+from db.mdapi_sql import sql_for_mdwiki
 from md_core_helps.apis.cat_cach import Cat_Depth
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 

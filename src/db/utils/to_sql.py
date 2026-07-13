@@ -1,18 +1,12 @@
 #!/usr/bin/python3
-"""
-
-from td_core.mdpyget.bots.to_sql import to_sql
-# data2 = [{"title": x, "importance": v} for x, v in assessments_tab[1].items()]
-# to_sql(data2, table_name, columns, title_column="title")
-
-"""
+""" """
 
 import logging
 import sys
 
 import tqdm
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +26,12 @@ def mdwiki_sql_one_table(
 
 
 def insert_dict(
-    list_of_lines, table_name: str, columns, lento: int = 10, title_column: str = "title", ignore: bool = False
+    list_of_lines,
+    table_name: str,
+    columns,
+    lento: int = 10,
+    title_column: str = "title",
+    ignore: bool = False,
 ) -> None:
     # ---
     logger.info(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
@@ -90,7 +89,12 @@ def insert_dict(
 
 
 def update_table(
-    list_of_lines, table_name: str, columns, lento: int = 10, title_column: str = "title", update_columns=None
+    list_of_lines,
+    table_name: str,
+    columns,
+    lento: int = 10,
+    title_column: str = "title",
+    update_columns=None,
 ) -> None:
     # ---
     logger.info(f"update_table({table_name}): list_of_lines: {len(list_of_lines)}")
@@ -123,7 +127,13 @@ def update_table(
         logger.info(f"to_sql.py update_table({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
 
 
-def update_table_2(list_of_lines, table_name: str, columns_to_set=None, lento: int = 10, columns_where=None) -> None:
+def update_table_2(
+    list_of_lines,
+    table_name: str,
+    columns_to_set=None,
+    lento: int = 10,
+    columns_where=None,
+) -> None:
     # ---
     columns_to_set = columns_to_set or []
     columns_where = columns_where or []
@@ -154,7 +164,12 @@ def update_table_2(list_of_lines, table_name: str, columns_to_set=None, lento: i
 
 
 def to_sql(
-    data, table_name: str, columns, title_column: str = "title", update_columns=None, ignore: bool = False
+    data,
+    table_name: str,
+    columns,
+    title_column: str = "title",
+    update_columns=None,
+    ignore: bool = False,
 ) -> None:
     # ---
     que = f"""select DISTINCT * from {table_name};"""
@@ -201,7 +216,13 @@ def to_sql(
 
 
 def new_to_sql(
-    data, table_name: str, columns, in_sql_list=None, title_columns=["title"], update_columns=None, ignore: bool = False
+    data,
+    table_name: str,
+    columns,
+    in_sql_list=None,
+    title_columns=["title"],
+    update_columns=None,
+    ignore: bool = False,
 ) -> None:
     # ---
     if not data:

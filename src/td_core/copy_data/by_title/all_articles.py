@@ -7,9 +7,9 @@ python3 core8/pwb.py td_core/copy_data/by_title/all_articles
 import logging
 import sys
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql import sql_for_mdwiki
+from db.utils.to_sql import insert_dict
 from mdwiki_api.mdwiki_page import CatDepth
-from td_core.mdpyget.bots.to_sql import insert_dict
 
 logger = logging.getLogger(__name__)
 

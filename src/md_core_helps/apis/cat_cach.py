@@ -17,8 +17,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from db.mdapi_sql import sql_for_mdwiki
 from md_core_helps.bots.check_title import valid_title
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
 from td_core.td_dirs import paths
 

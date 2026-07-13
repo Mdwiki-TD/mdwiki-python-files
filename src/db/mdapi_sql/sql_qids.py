@@ -4,7 +4,7 @@ python3 core8/pwb.py md_core/mdpy/sql_qids
 """
 import logging
 
-from md_core_helps.mdapi_sql.sql_td_bot import toolforge_tools_sql_connect
+from db.mdapi_sql.sql_td_bot import toolforge_tools_sql_connect
 
 logger = logging.getLogger(__name__)
 

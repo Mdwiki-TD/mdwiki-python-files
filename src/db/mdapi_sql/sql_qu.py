@@ -3,7 +3,7 @@
 
 بوت قواعد البيانات
 
-from md_core_helps.mdapi_sql import sql_qu
+from db.mdapi_sql import sql_qu
 can_use_sql_db = sql_qu.can_use_sql_db
 results = sql_qu.make_sql_connect( query, db='', host='', update=False, _return=[], return_dict=False)
 """

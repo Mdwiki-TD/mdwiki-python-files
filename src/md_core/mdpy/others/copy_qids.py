@@ -10,8 +10,8 @@ delete from qids q1 WHERE (q1.qid = '' OR q1.qid IS NULL) and EXISTS (SELECT 1 F
 import logging
 from pathlib import Path
 
+from db.mdapi_sql import sql_for_mdwiki, sql_qids
 from md_core_helps.bots import en_to_md
-from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids
 
 logger = logging.getLogger(__name__)
 

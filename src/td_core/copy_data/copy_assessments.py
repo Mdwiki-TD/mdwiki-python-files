@@ -10,7 +10,7 @@ from pathlib import Path
 
 from pymysql.converters import escape_string
 
-from md_core_helps.mdapi_sql import sql_for_mdwiki
+from db.mdapi_sql import sql_for_mdwiki
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)

@@ -18,10 +18,10 @@ import logging
 import re
 import sys
 
+from db.mdapi_sql import sql_for_mdwiki
+from db.utils.to_sql import to_sql
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.wiki_page import NewApi
-from td_core.mdpyget.bots.to_sql import to_sql
 from td_core.mdpyget.pages_list import get_links_from_cats
 from td_core.td_dirs import paths
 

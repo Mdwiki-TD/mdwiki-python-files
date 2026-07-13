@@ -3,7 +3,7 @@
 import logging
 import time
 
-from md_core_helps.mdapi_sql import sql_td_bot
+from db.mdapi_sql import sql_td_bot
 
 logger = logging.getLogger(__name__)
 

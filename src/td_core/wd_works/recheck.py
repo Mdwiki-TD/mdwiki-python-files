@@ -12,11 +12,11 @@ import sys
 from pymysql.converters import escape_string
 
 from db import WikiReplicaDB
+from db.mdapi_sql import sql_for_mdwiki, sql_qids
 from md_core_helps.apis import wikidataapi
 
 # ---
 from md_core_helps.bots import en_to_md, py_tools
-from md_core_helps.mdapi_sql import sql_for_mdwiki, sql_qids
 
 logger = logging.getLogger(__name__)
 

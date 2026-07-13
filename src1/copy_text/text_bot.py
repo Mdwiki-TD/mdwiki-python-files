@@ -5,8 +5,8 @@ import re
 
 from copy_to_en.bots import text_changes  # text = text_changes.work(text)
 from copy_to_en.bots.ref import fix_ref  # text = fix_ref(first, alltext)
+from db.mdapi_sql import sql_for_mdwiki
 from md_core_helps.apis import mdwiki_api_call
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 

@@ -12,10 +12,10 @@ import logging
 import os
 from datetime import datetime
 
+from db.mdapi_sql import sql_for_mdwiki
 from md_core_helps.apis import wikidataapi
 from md_core_helps.bots import en_to_md
 from md_core_helps.bots.check_title import valid_title
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
 from newapi import change_codes
 from td_core.td_dirs import paths

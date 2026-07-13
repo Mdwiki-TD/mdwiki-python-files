@@ -9,10 +9,10 @@ import logging
 import os
 from pathlib import Path
 
+from db.mdapi_sql import sql_for_mdwiki
+from db.utils.to_sql import to_sql
 from md_core_helps.bots.check_title import valid_title
-from md_core_helps.mdapi_sql import sql_for_mdwiki
 from mdwiki_api.mdwiki_page import CatDepth
-from td_core.mdpyget.bots.to_sql import to_sql
 
 logger = logging.getLogger(__name__)
 
