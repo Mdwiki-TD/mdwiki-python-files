@@ -145,9 +145,3 @@ def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)
         logger.info(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
-
-
-if __name__ == "__main__":
-    # python3 core8/pwb.py md_core_helps/mdapi_sql/sql_for_mdwiki
-    d = add_qid("Zolpidem", "Q218842")
-    logger.info(f"{len(d)=}")
