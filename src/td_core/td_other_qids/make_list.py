@@ -10,7 +10,8 @@ Usage:
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_qids, sql_qids_others
+from db.tools.services.wikidata.qid_service import get_title_to_qid as get_qids, batch_upsert_qids
+from db.tools.services.wikidata.qid_others_service import get_title_to_qid as get_others_qids, batch_upsert_qids as batch_upsert_others_qids
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
 from md_core.unlinked_wb.bot import work_un
 from td_core.td_other_qids.qids_help import (
@@ -35,9 +36,9 @@ def add_q(new_qids, ty) -> None:
     logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
     # ---
     if ty == "other":
-        sql_qids_others.add_titles_to_qids(new_qids, add_empty_qid=True)
+        batch_upsert_others_qids(new_qids, add_empty_qid=True)
     else:
-        sql_qids.add_titles_to_qids(new_qids, add_empty_qid=True)
+        batch_upsert_qids(new_qids, add_empty_qid=True)
 
 
 def work_qids(ty, qids_list):
@@ -60,8 +61,8 @@ def start() -> None:
     # ---
     ALL_QIDS = {}
     # ---
-    ALL_QIDS["other"] = sql_qids_others.get_others_qids()
-    ALL_QIDS["td"] = sql_qids.get_all_qids()
+    ALL_QIDS["other"] = get_others_qids()
+    ALL_QIDS["td"] = get_qids()
     # ---
     tab = ["td"]
     # ---

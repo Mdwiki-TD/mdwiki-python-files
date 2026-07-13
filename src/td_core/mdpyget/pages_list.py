@@ -2,7 +2,7 @@
 """
 from td_core.mdpyget.pages_list import get_links_from_cats
 """
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.content.category_service import list_categories_as_dict
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
 
@@ -13,7 +13,7 @@ def get_links_from_cats(getcat: str = ""):
     # ---
     titles = []
     # ---
-    cac = sql_for_mdwiki.get_db_categories()
+    cac = list_categories_as_dict()
     # ---
     for cat, dep in cac.items():
         # ---

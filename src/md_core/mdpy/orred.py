@@ -10,7 +10,9 @@ python3 core8/pwb.py md_core/mdpy/orred
 """
 import logging
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from sqlalchemy import text
+
+from db.tools.services.session import get_session
 from mdwiki_api.wiki_page import MainPage, NewApi
 
 logger = logging.getLogger(__name__)
@@ -51,7 +53,9 @@ def start() -> None:
     # ---
     que = """select title, target from pages where target != "" and lang = "or";"""
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    with get_session() as session:
+        result = session.execute(text(que))
+        sq = [dict(row._mapping) for row in result]
     # ---
     targets_to_titles = {}
     # ---

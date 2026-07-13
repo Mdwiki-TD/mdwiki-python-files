@@ -9,7 +9,7 @@ import logging
 import os
 from pathlib import Path
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.content.category_service import list_categories_as_dict
 from db.utils.to_sql import to_sql
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
@@ -81,7 +81,7 @@ def get_all_revids() -> None:
     # ---
     revids = {}
     # ---
-    cats = sql_for_mdwiki.get_db_categories()
+    cats = list_categories_as_dict()
     # ---
     for cat, depth in cats.items():
         # ---

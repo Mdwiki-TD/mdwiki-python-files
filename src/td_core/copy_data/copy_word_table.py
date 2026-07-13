@@ -11,7 +11,8 @@ from pathlib import Path
 
 from pymysql.converters import escape_string
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
@@ -25,14 +26,15 @@ que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
 in_sql_lead = {}
 in_sql_all = {}
 # ---
-for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
-    # ---
-    w_title = q["w_title"]
-    w_lead_words = q["w_lead_words"]
-    w_all_words = q["w_all_words"]
-    # ---
-    in_sql_lead[w_title] = w_lead_words
-    in_sql_all[w_title] = w_all_words
+with get_session() as session:
+    for q in [dict(row._mapping) for row in session.execute(text(que))]:
+        # ---
+        w_title = q["w_title"]
+        w_lead_words = q["w_lead_words"]
+        w_all_words = q["w_all_words"]
+        # ---
+        in_sql_lead[w_title] = w_lead_words
+        in_sql_all[w_title] = w_all_words
 # ---
 with open(paths.json_files.words, "r", encoding="utf-8") as f:
     lead_words = json.load(f)
@@ -119,7 +121,9 @@ if UPDATE:
                 # ---
                 logger.info(tt)
                 # ---
-                vfg = sql_for_mdwiki.mdwiki_sql(tt, values=values)
+                with get_session() as session:
+                    session.execute(text(tt), dict(values))
+                    session.commit()
                 # ---
                 texts = []
                 # ---
@@ -142,7 +146,9 @@ if INSERT != []:
         # ---
         qu = "INSERT INTO words (w_title, w_lead_words, w_all_words) values\n" + insert_line
         logger.info(qu)
-        vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True)
+        with get_session() as session:
+            session.execute(text(qu))
+            session.commit()
     else:
         logger.info('add "insert" to sys.argv to insert new words.')
         logger.info(f"{len(INSERT)=}")

@@ -6,7 +6,8 @@ python3 core8/pwb.py td_core/db_work/days_7
 """
 import logging
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +24,8 @@ for name, qua in queries.items():
     # ---
     qua_select = f"select * from {name} {qua}"
     # ---
-    pages = sql_for_mdwiki.mdwiki_sql_dict(qua_select)
+    with get_session() as session:
+        pages = [dict(row._mapping) for row in session.execute(text(qua_select))]
     # ---
     for n, page in enumerate(pages, start=1):
         print(name, n, page)
@@ -32,6 +34,8 @@ for name, qua in queries.items():
     # ---
     logger.info(qua_del)
     # ---
-    ty = sql_for_mdwiki.mdwiki_sql(qua_del, update=True)
+    with get_session() as session:
+        ty = session.execute(text(qua_del))
+        session.commit()
     # ---
     logger.info(ty)

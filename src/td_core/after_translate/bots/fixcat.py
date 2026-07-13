@@ -12,7 +12,8 @@ import sys
 import tqdm
 from pymysql.converters import escape_string
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
@@ -24,7 +25,8 @@ cat_for_pages = {}
 
 def get_cats_and_pages() -> None:
     # ---
-    sq = sql_for_mdwiki.select_md_sql("select category, depth from categories;", return_dict=True)
+    with get_session() as session:
+        sq = [dict(row._mapping) for row in session.execute(text("select category, depth from categories;"))]
     # ---
     catlen = {}
     # ---
@@ -62,7 +64,8 @@ def get_pages_with_no_cat_old() -> None:
     # ---
     add_cat = {}
     # ---
-    ioi = sql_for_mdwiki.select_md_sql("select title from pages where (cat = '' OR cat IS NULL);", return_dict=True)
+    with get_session() as session:
+        ioi = [dict(row._mapping) for row in session.execute(text("select title from pages where (cat = '' OR cat IS NULL);"))]
     # ---
     for tab in ioi:
         title = tab["title"]
@@ -81,9 +84,9 @@ def get_pages_with_no_cat_old() -> None:
         logger.info(quanew)
         # ---
         if "dont" not in sys.argv:
-            qu = sql_for_mdwiki.mdwiki_sql(quanew, update=True)
-            # ---
-            logger.info(qu)
+            with get_session() as session:
+                session.execute(text(quanew))
+                session.commit()
 
 
 def get_pages_with_no_cat() -> None:
@@ -91,7 +94,8 @@ def get_pages_with_no_cat() -> None:
     add_cat = {}
     cat_to_titles = {}
     # ---
-    ioi = sql_for_mdwiki.select_md_sql("select title, cat from pages where cat in ('RTT', '') ;", return_dict=True)
+    with get_session() as session:
+        ioi = [dict(row._mapping) for row in session.execute(text("select title, cat from pages where cat in ('RTT', '') ;"))]
     # ---
     for tab in tqdm.tqdm(ioi):
         title = tab["title"]
@@ -111,22 +115,19 @@ def get_pages_with_no_cat() -> None:
         # ---
         values = list(set(titles))
         # ---
-        place_holder = ", ".join(["%s"] * len(values))
-        # ---
-        quanew = f"""UPDATE pages SET cat = '{cat}' WHERE title in ({place_holder});"""
-        # ---
-        logger.info("=======================")
-        logger.info(quanew)
-        # ---
         if "dont" not in sys.argv:
-            # qu = sql_for_mdwiki.mdwiki_sql(quanew, update=True)
-            qu = sql_for_mdwiki.mdwiki_sql(quanew, values=values, update=True)
-            # ---
-            logger.info(qu)
+            with get_session() as session:
+                session.execute(
+                    text("UPDATE pages SET cat = :cat WHERE title IN :titles"),
+                    {"cat": cat, "titles": list(values)},
+                )
+                session.commit()
     # ---
     qua2 = "update pages set cat = 'RTT' where (cat = '' OR cat IS NULL); "
     # ---
-    sql_for_mdwiki.mdwiki_sql(qua2, update=True)
+    with get_session() as session:
+        session.execute(text(qua2))
+        session.commit()
 
 
 if __name__ == "__main__":

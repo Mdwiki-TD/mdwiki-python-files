@@ -14,7 +14,8 @@ import time
 
 import tqdm
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 
 # ---
 from mdwiki_api.mdwiki_page import md_MainPage
@@ -41,11 +42,12 @@ def get_langs_tabs():
     # ---
     logger.info(que)
     # ---
-    for tab in sql_for_mdwiki.select_md_sql(que, return_dict=True):
-        lang = tab["lang"]
-        if lang not in langs:
-            langs[lang] = []
-        langs[lang].append(tab)
+    with get_session() as session:
+        for tab in [dict(row._mapping) for row in session.execute(text(que))]:
+            lang = tab["lang"]
+            if lang not in langs:
+                langs[lang] = []
+            langs[lang].append(tab)
     # ---
     if lang_to_get in langs:
         langs = {lang_to_get: langs[lang_to_get]}
@@ -146,14 +148,18 @@ def start() -> None:
     for iid, new_target in to_set.items():
         logger.info(f"<<green>> set_target_where_id() new_target:{new_target}, old iid:{iid}")
         if "test" not in sys.argv:
-            sql_for_mdwiki.set_target_where_id(new_target, iid)
+            with get_session() as session:
+                session.execute(text("UPDATE pages set target = :target where id = :id"), {"target": new_target, "id": iid})
+                session.commit()
     # ---
     logger.info(f"len of deleted_pages {len(deleted_pages)}")
     logger.info(f"len of text {len(text)}")
     # ---
     if "test" not in sys.argv:
         for iid in deleted_pages:
-            sql_for_mdwiki.set_deleted_where_id(iid)
+            with get_session() as session:
+                session.execute(text("UPDATE pages set deleted = 1 where id = :id"), {"id": iid})
+                session.commit()
         # ---
         if text:
             add_text(text)

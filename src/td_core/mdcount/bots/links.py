@@ -2,7 +2,8 @@ import logging
 import re
 import sys
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.content.category_service import list_categories_as_dict
+from db.tools.services.pages.page_service import list_page_titles
 
 # ---
 from md_core_helps.apis import mdwiki_api_call
@@ -24,7 +25,7 @@ def get_links_from_cats(getcat: str = ""):
     # ---
     videos_cats = ["Videowiki scripts", "RTTVideo"]
     # ---
-    cac = sql_for_mdwiki.get_db_categories()
+    cac = list_categories_as_dict()
     # ---
     for cat, dep in cac.items():
         # ---
@@ -53,7 +54,7 @@ def get_valid_Links(words_tab):
         logger.info(f"Category-members:{len(vav2)}, New-members:{len(vav)}")
     # ---
     elif "sql" in sys.argv:
-        vav2 = sql_for_mdwiki.get_all_pages()
+        vav2 = list_page_titles()
         vav = [t for t in vav2 if (t not in words_tab or words_tab[t] < 50)]
         logger.info(f"ALL SQL LINKS:{len(vav2)}, to work:{len(vav)}")
     # ---

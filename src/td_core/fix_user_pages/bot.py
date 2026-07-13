@@ -16,7 +16,9 @@ import sys
 
 import tqdm
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.pages.user_page_service import list_user_pages
+from db.tools.services.session import get_session
+from sqlalchemy import text
 from td_core.db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
 
 # from td_core.fix_user_pages.fix_it_db import work_in_new_tabs_to_db
@@ -28,15 +30,14 @@ logger = logging.getLogger(__name__)
 skip_by_lang = {
     "ar": ["الأنسولين"],
 }
-db_users = sql_for_mdwiki.get_db_users()
-
 deleted_pages = []
 new_tabs_to_db = []
 qids_all = {}
 to_set = {}
-text = []
+text_pages = []
 
-already_in_db = sql_for_mdwiki.get_all_from_table(table_name="pages_users_to_main")
+with get_session() as session:
+    already_in_db = [dict(row._mapping) for row in session.execute(text("select DISTINCT * from pages_users_to_main"))]
 already_in_db = [x["id"] for x in already_in_db]
 
 
@@ -62,7 +63,10 @@ def get_titles(lang: str = ""):
             ]
         }
     # ---
-    pages_users = sql_for_mdwiki.get_all_pages_all_keys(lang=lang, table="pages_users")
+    if lang:
+        pages_users = [r.to_dict() for r in list_user_pages() if r.lang == lang]
+    else:
+        pages_users = [r.to_dict() for r in list_user_pages()]
     pages_users_tab = {}
     # ---
     for tab in pages_users:
@@ -124,7 +128,7 @@ def work_one_tab(tab, missing, redirects):
                 to_set[new_target] = tab
                 # sql_for_mdwiki.set_target_where_id(new_target, iid)
                 # ---
-                text.append([lang, target, new_target])
+                text_pages.append([lang, target, new_target])
                 # ---
                 return {new_target: tab}
         # else:

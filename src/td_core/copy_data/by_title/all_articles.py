@@ -7,7 +7,8 @@ python3 core8/pwb.py td_core/copy_data/by_title/all_articles
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.content.category_member_service import get_all_category_members
+from db.tools.services.content.category_service import list_categories_as_dict
 from db.utils.to_sql import insert_dict
 from mdwiki_api.mdwiki_page import CatDepth
 
@@ -20,7 +21,7 @@ def main() -> None:
     # ---
     length = {}
     # ---
-    cats = sql_for_mdwiki.get_db_categories()
+    cats = list_categories_as_dict()
     # ---
     if "RTT" in cats:
         del cats["RTT"]
@@ -68,7 +69,7 @@ def add_category_members_to_sql(to_add_category_members) -> None:
     # ---
     data2 = []
     # ---
-    db_category_members = sql_for_mdwiki.get_db_category_members()
+    db_category_members = get_all_category_members()
     # ---
     for category, titles_from_mdwiki in to_add_category_members.items():
         # ---

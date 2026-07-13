@@ -11,8 +11,9 @@ import logging
 import re
 import sys
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
 from db.utils.to_sql import insert_dict, update_table_2
+from sqlalchemy import text
 from md_core_helps.apis.mw_views import PageviewsClient
 
 logger = logging.getLogger(__name__)
@@ -93,7 +94,8 @@ def get_targets(lang_o) -> None:
     # ---
     que = f"""select DISTINCT lang, target, pupdate from pages where target != "" {uu}"""
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    with get_session() as session:
+        sq = [dict(row._mapping) for row in session.execute(text(que))]
     # ---
     for tab in sq:
         lang = tab["lang"].lower()
@@ -114,7 +116,8 @@ def get_views_sql(lang_o) -> None:
     # ---
     que11 = f"""select DISTINCT target, lang, year, views from views_new {uu}"""
     # ---
-    dad = sql_for_mdwiki.select_md_sql(que11, return_dict=True)
+    with get_session() as session:
+        dad = [dict(row._mapping) for row in session.execute(text(que11))]
     # ---
     for tab in dad:
         # ---

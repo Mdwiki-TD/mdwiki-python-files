@@ -9,15 +9,16 @@ python3 core8/pwb.py td_core/db_work/get_red
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_qids, sql_qids_others
+from db.tools.services.wikidata import qid_service
+from db.tools.services.wikidata import qid_others_service
 from md_core_helps.apis import mdwiki_api_call
 
 logger = logging.getLogger(__name__)
 
 # mdwiki_api.api_new.Login_to_wiki()
 
-qids_title_to_qid = sql_qids.get_all_qids()
-qids_others_title_to_qid = sql_qids_others.get_others_qids()
+qids_title_to_qid = qid_service.get_title_to_qid()
+qids_others_title_to_qid = qid_others_service.get_title_to_qid()
 
 
 def get_table(titles):
@@ -68,10 +69,10 @@ def get_pages(tab) -> None:
             # استبدال
             # ---
             if qids_title_to_qid.get(old_title):
-                sql_qids.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
+                qid_service.update_title_conditionally(old_title, new_title, old_qid, no_do=just_test)
             # ---
             if qids_others_title_to_qid.get(old_title):
-                sql_qids_others.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
+                qid_others_service.update_title_conditionally(old_title, new_title, old_qid, no_do=just_test)
             # ---
             tat += f'old_title: "{old_title}" to: "{new_title}",\n'
             # ---
@@ -97,9 +98,9 @@ def get_pages(tab) -> None:
             if set_new_title:
                 # ---
                 for new_title, old_qid in set_new_title.items():
-                    sql_qids.set_title_where_qid(new_title, old_qid)
+                    qid_service.update_title_by_qid(old_qid, new_title)
                 # ---
-                sql_qids.add_titles_to_qids(set_new_title)
+                qid_service.batch_upsert_qids(set_new_title)
 
 
 def start() -> None:

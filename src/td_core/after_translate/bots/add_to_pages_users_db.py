@@ -16,7 +16,9 @@ import time
 # ---
 from pymysql.converters import escape_string
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.pages.user_page_service import list_user_pages
+from db.tools.services.session import get_session
+from sqlalchemy import text
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +26,7 @@ cat_for_pages = {}
 # from td_core.after_translate.bots.fixcat import cat_for_pages
 
 
-pages_users = sql_for_mdwiki.get_all_pages_all_keys(table="pages_users")
+pages_users = [r.to_dict() for r in list_user_pages()]
 pages_users_tab = {}
 
 # { "id": 3186, "title": "Pemirolast", "lang": "ar", "user": "Mina karaca", "pupdate": "2024-03-23", "target": "user:Mina karaca/x", "add_date": "2024-04-14" }
@@ -64,7 +66,9 @@ def add_new_row(mdtitle, lang, user, pupdate, target) -> None:
     # ---
     values = [mdtitle, lang, user, pupdate, target, add_date, mdtitle, lang, user]
     # ---
-    sql_for_mdwiki.mdwiki_sql(insert_qua, values=values)
+    with get_session() as session:
+        session.execute(text(insert_qua), values)
+        session.commit()
 
 
 def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
@@ -84,7 +88,9 @@ def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
     # ---
     values = [target, pupdate, add_date, user, mdtitle, lang]
     # ---
-    sql_for_mdwiki.mdwiki_sql(update_qua, values=values)
+    with get_session() as session:
+        session.execute(text(update_qua), values)
+        session.commit()
 
 
 def add_to_mdwiki_sql_users(lista) -> None:

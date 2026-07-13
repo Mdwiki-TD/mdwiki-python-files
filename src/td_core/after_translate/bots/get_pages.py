@@ -4,7 +4,8 @@ from td_core.after_translate.bots.get_pages import get_pages_from_db
 """
 import logging
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 
 # ---
 from md_core_helps.bots import py_tools
@@ -22,7 +23,12 @@ to_update = {}
 
 def get_pages_from_db(lang_o):
     # ---
-    sq = sql_for_mdwiki.get_all_pages_all_keys(lang=lang_o)
+    with get_session() as session:
+        if lang_o:
+            rows = session.execute(text("select DISTINCT * from pages where lang = :lang"), {"lang": lang_o}).fetchall()
+        else:
+            rows = session.execute(text("select DISTINCT * from pages")).fetchall()
+        sq = [dict(row._mapping) for row in rows]
     # ---
     len_no_target = 0
     len_done_target = 0
