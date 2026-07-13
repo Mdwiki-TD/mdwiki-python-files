@@ -160,15 +160,14 @@ def set_user_page_target(
     """ """
     record.target = target
     record.pupdate = datetime.now().strftime("%Y-%m-%d")
-
     with get_session() as session:
         try:
+            session.merge(record)
             session.commit()
         except Exception:
             logger.exception("Failed to update page target")
             session.rollback()
             return False
-
         return True
 
 
