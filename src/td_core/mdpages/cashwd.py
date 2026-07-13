@@ -12,6 +12,7 @@ import logging
 import os
 from datetime import datetime
 
+from newapi import change_codes
 from md_core_helps.bots import en_to_md
 from md_core_helps.bots.check_title import valid_title
 from md_core_helps.apis import wikidataapi
@@ -30,22 +31,6 @@ missing = {"all": 0, "date": datetime.now().strftime("%Y-%m-%d"), "langs": {}}
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
 # ---
-change_codes = {
-    "bat_smg": "bat-smg",
-    "be-x-old": "be-tarask",
-    "be_x_old": "be-tarask",
-    "cbk_zam": "cbk-zam",
-    "fiu_vro": "fiu-vro",
-    "map_bms": "map-bms",
-    "nb": "no",
-    "nds_nl": "nds-nl",
-    "roa_rup": "roa-rup",
-    "zh_classical": "zh-classical",
-    "zh_min_nan": "zh-min-nan",
-    "zh_yue": "zh-yue",
-}
-
-
 def get_qids_sitelinks(qidslist):
     """
     Retrieves sitelinks for a list of Wikidata QIDs.
