@@ -63,7 +63,6 @@ def add_word(
         session.refresh(orm_obj)
         return orm_obj
 
-
 def add_or_update_word(
     w_title: str,
     w_lead_words: int | None = None,
@@ -73,7 +72,6 @@ def add_or_update_word(
     w_title = w_title.strip()
     if not w_title:
         raise ValueError("Title is required")
-
     with get_session() as session:
         orm_obj = session.query(WordRecord).filter(WordRecord.w_title == w_title).first()
         if orm_obj:
@@ -82,11 +80,13 @@ def add_or_update_word(
         else:
             orm_obj = WordRecord(w_title=w_title, w_lead_words=w_lead_words, w_all_words=w_all_words)
             session.add(orm_obj)
-
-        session.commit()
+        try:
+            session.commit()
+        except IntegrityError:
+            session.rollback()
+            raise ValueError(f"Word count for '{w_title}' already exists") from None
         session.refresh(orm_obj)
         return orm_obj
-
 
 def update_word(word_id: int, **kwargs) -> WordRecord:
     """Update a word record."""
