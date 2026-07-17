@@ -17,7 +17,7 @@ Prostate abscess
 import json
 import logging
 
-from db.mdapi_sql.services import sql_qids
+from db.tools.services.wikidata import qid_service
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 enwiki_to_mdwiki = {}
 mdwiki_to_enwiki = {}
 # ---
-mdtitle_to_qid = sql_qids.get_all_qids()
+mdtitle_to_qid = qid_service.get_title_to_qid()
 # ---
 lala = ""
 

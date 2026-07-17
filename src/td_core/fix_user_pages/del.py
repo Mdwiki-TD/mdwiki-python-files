@@ -16,7 +16,8 @@ python3 core8/pwb.py td_core/fix_user_pages/del
 """
 import logging
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 
 logger = logging.getLogger(__name__)
 
@@ -32,20 +33,20 @@ query = """
     #and pu.user = p.user
 """
 
-result = sql_for_mdwiki.mdwiki_sql_dict(query=query)
+with get_session() as session:
+    rows = session.execute(text(query)).fetchall()
+    result = [dict(row._mapping) for row in rows]
 
-for x in result:
-    logger.info(x)
-    # ---
-    query = "DELETE FROM pages_users_to_main WHERE id = %s"
-    sql_for_mdwiki.mdwiki_sql(query=query, values=[x["id"]])
-    # ---
-    query = "DELETE FROM pages_users WHERE id = %s"
-    sql_for_mdwiki.mdwiki_sql(query=query, values=[x["id"]])
-    # ---
-    find_it = sql_for_mdwiki.mdwiki_sql(query="SELECT * FROM pages_users WHERE id = %s", values=[x["id"]])
-    # ---
-    if len(find_it) > 0:
-        logger.info("<<red>> not deleted")
-    else:
-        logger.info("<<green>> deleted.")
+    for x in result:
+        logger.info(x)
+        session.execute(text("DELETE FROM pages_users_to_main WHERE id = :id"), {"id": x["id"]})
+        session.execute(text("DELETE FROM pages_users WHERE id = :id"), {"id": x["id"]})
+    session.commit()
+
+    # Verify deletions
+    for x in result:
+        rows2 = session.execute(text("SELECT * FROM pages_users WHERE id = :id"), {"id": x["id"]}).fetchall()
+        if rows2:
+            logger.info("<<red>> not deleted")
+        else:
+            logger.info("<<green>> deleted.")

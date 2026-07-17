@@ -13,7 +13,7 @@ python3 core8/pwb.py td_core/mdpages/find_qids
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_qids
+from db.tools.services.wikidata.qid_service import get_title_to_qid, batch_upsert_qids
 from md_core.unlinked_wb.bot import work_un
 from md_core_helps.apis import wiki_api
 from md_core_helps.bots.check_title import valid_title
@@ -21,7 +21,7 @@ from td_core.mdpages.create_qids import create_qids
 
 logger = logging.getLogger(__name__)
 
-qids = sql_qids.get_all_qids()
+qids = get_title_to_qid()
 # ---
 qids_already = {q: title for title, q in qids.items() if q != ""}
 # ---
@@ -97,7 +97,7 @@ def to_add_wrk(to_add, noqids) -> None:
         logger.info('<<purple>> add "add" to sys.argv to add them?')
         # ---
         if "add" in sys.argv:
-            sql_qids.add_titles_to_qids(to_add)
+            batch_upsert_qids(to_add)
         # ----
         work_un(to_add)
 

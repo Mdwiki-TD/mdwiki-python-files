@@ -10,7 +10,8 @@ import functools
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_qids, sql_qids_others
+from db.tools.services.wikidata import qid_service
+from db.tools.services.wikidata import qid_others_service
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
 from md_core.p11143_bot.wd_helps import add_P11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
 from md_core_helps.apis.cat_cach import from_cache
@@ -88,9 +89,9 @@ def add_q(new_qids, ty) -> None:
     logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
     # ---
     if "addq" in sys.argv:
-        sql_qids.add_titles_to_qids(newtitles_in_td)
+        qid_service.batch_upsert_qids(newtitles_in_td)
         # ---
-        sql_qids_others.add_titles_to_qids(newtitles_not_td)
+        qid_others_service.batch_upsert_qids(newtitles_not_td)
 
 
 def work_qids(ty, qids_list) -> dict:
@@ -124,8 +125,8 @@ def start() -> None:
     # ---
     ALL_QIDS = {}
     # ---
-    ALL_QIDS["other"] = sql_qids_others.get_others_qids()
-    ALL_QIDS["td"] = sql_qids.get_all_qids()
+    ALL_QIDS["other"] = qid_others_service.get_title_to_qid()
+    ALL_QIDS["td"] = qid_service.get_title_to_qid()
     # ---
     tab = ["td"]
     # ---

@@ -19,7 +19,8 @@ import json
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 from md_core_helps.apis import mdwiki_api_call
 from td_core.mdcount.bots.countref_bots import count_ref_from_text
 from td_core.mdcount.bots.links import get_links_from_cats
@@ -64,7 +65,8 @@ def from_sql(old_values):
     # introduced when an article belongs to multiple categories.
     que = """select DISTINCT article_id from category_members;"""
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    with get_session() as session:
+        sq = [dict(row._mapping) for row in session.execute(text(que))]
     # ---
     titles2 = [q["article_id"] for q in sq]
     # ---

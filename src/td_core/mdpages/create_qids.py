@@ -9,7 +9,7 @@ from td_core.mdpages.create_qids import create_qids
 """
 import logging
 
-from db.mdapi_sql.services import sql_qids
+from db.tools.services.wikidata.qid_service import batch_upsert_qids
 from md_core.unlinked_wb.bot import add_un_linked_wb
 from md_core_helps.apis import wikidataapi
 
@@ -39,4 +39,4 @@ def create_qids(no_qids) -> None:
             add_un_linked_wb(x, new_qid)
             # ---
             # add new qid to db
-            sql_qids.add_titles_to_qids({x: new_qid})
+            batch_upsert_qids({x: new_qid})

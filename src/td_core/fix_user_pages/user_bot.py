@@ -4,12 +4,12 @@ from td_core.fix_user_pages.user_bot import get_new_user
 """
 import logging
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.user_service import list_usernames
 from td_core.db_work.check_titles_helps import WikiPage, users_infos
 
 logger = logging.getLogger(__name__)
 
-db_users = sql_for_mdwiki.get_db_users()
+db_users = list_usernames()
 
 
 def count_users(revisions):

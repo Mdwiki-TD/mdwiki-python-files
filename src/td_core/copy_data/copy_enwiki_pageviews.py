@@ -10,7 +10,8 @@ from pathlib import Path
 
 from pymysql.converters import escape_string
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
@@ -37,11 +38,12 @@ in_sql = {}
 # ---
 que = """select DISTINCT title, en_views from enwiki_pageviews;"""
 # ---
-for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
-    title = q["title"]
-    if not NEW_DATA.get(title):
-        in_sql[title] = q["en_views"]
-# ---
+with get_session() as session:
+    for q in [dict(row._mapping) for row in session.execute(text(que))]:
+        title = q["title"]
+        if not NEW_DATA.get(title):
+            in_sql[title] = q["en_views"]
+    # ---
 logger.info(f"{len(in_sql)=}")
 # ---
 NEW_DATA.update(in_sql)

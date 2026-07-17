@@ -12,7 +12,7 @@ import logging
 import os
 from datetime import datetime
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.content.category_service import list_categories_as_dict
 from md_core_helps.apis import wikidataapi
 from md_core_helps.bots import en_to_md
 from md_core_helps.bots.check_title import valid_title
@@ -194,7 +194,7 @@ def cash_wd() -> None:
     # ---
     titles = []
     # ---
-    cac = sql_for_mdwiki.get_db_categories()
+    cac = list_categories_as_dict()
     # ---
     for cat, dep in cac.items():
         # ---

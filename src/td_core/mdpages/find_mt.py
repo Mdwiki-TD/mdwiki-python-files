@@ -12,7 +12,8 @@ sql_qids_others
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_qids, sql_qids_others
+from db.tools.services.wikidata.qid_service import get_title_to_qid as get_qids_td, batch_upsert_qids
+from db.tools.services.wikidata.qid_others_service import get_title_to_qid as get_others_qids, delete_by_title
 from md_core_helps.apis import cat_cach
 from md_core_helps.bots.check_title import valid_title
 
@@ -50,16 +51,16 @@ def remove_from_others(qids_othrs, qids_td) -> None:
     # ---
     if "delete" in sys.argv:
         for n, title in enumerate(same_q_in_td, start=1):
-            sql_qids_others.delete_title_from_db(title, pr=f"{n}/{len(same_q_in_td)}")
+            delete_by_title(title, pr=f"{n}/{len(same_q_in_td)}")
 
 
 def doo() -> None:
     # ---
-    qids_othrs = sql_qids_others.get_others_qids()
+    qids_othrs = get_others_qids()
     logger.info(f"len of qids_othrs: {len(qids_othrs):,}")
 
     # ---
-    qids_td = sql_qids.get_all_qids()
+    qids_td = get_qids_td()
     logger.info(f"len of qids_td: {len(qids_td):,}")
 
     # ---
@@ -72,7 +73,7 @@ def doo() -> None:
 
     # ---
     if to_work and new_qids:
-        sql_qids.add_titles_to_qids(new_qids)
+        batch_upsert_qids(new_qids)
 
     # ---
     remove_from_others(qids_othrs, qids_td)

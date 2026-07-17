@@ -16,7 +16,8 @@ python3 core8/pwb.py wprefs/bot ask
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 from wprefs.api import GetPageText_raw, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
@@ -150,7 +151,8 @@ def work_sql_result(lange, nolange, year: int = 2024):
     # ---
     logger.info(que)
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    with get_session() as session:
+        sq = [dict(row._mapping) for row in session.execute(text(que))]
     # ---
     for tab in sq:
         lang = tab["lang"]

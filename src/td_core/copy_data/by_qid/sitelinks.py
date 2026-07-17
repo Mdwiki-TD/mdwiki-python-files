@@ -15,8 +15,10 @@ from collections import defaultdict
 
 import tqdm
 
-from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
+from db.tools.services.session import get_session
+from db.tools.services.wikidata.qid_service import get_title_to_qid
 from db.utils.to_sql import new_to_sql
+from sqlalchemy import text
 from md_core_helps.apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
 from td_core.td_dirs import paths
 
@@ -30,7 +32,8 @@ in_sql_qid_targets = defaultdict(dict)
 # ---
 que = """select DISTINCT qid, code, target from all_qids_exists;"""
 # ---
-db_data_main = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+with get_session() as session:
+    db_data_main = [dict(row._mapping) for row in session.execute(text(que))]
 # ---
 for q in db_data_main:
     qid = q["qid"]
@@ -194,7 +197,7 @@ def main() -> None:
     # ---
     logger.info("<<green>> ")
     # ---
-    qids_tab = sql_qids.get_all_qids()
+    qids_tab = get_title_to_qid()
     # ---
     qids = list(qids_tab.values())
     qids = list(set(qids))

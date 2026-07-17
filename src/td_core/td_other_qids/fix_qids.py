@@ -9,7 +9,16 @@ python3 core8/pwb.py td_core/td_other_qids/fix_qids redirects
 import logging
 import sys
 
-from db.mdapi_sql.services import sql_qids, sql_qids_others
+from db.tools.services.wikidata.qid_service import (
+    get_title_to_qid,
+    update_qid_by_value,
+    batch_upsert_qids,
+)
+from db.tools.services.wikidata.qid_others_service import (
+    get_title_to_qid as get_others_qids,
+    update_qid_by_value as update_others_qid_by_value,
+    batch_upsert_qids as batch_upsert_others_qids,
+)
 from md_core.unlinked_wb.bot import work_un
 from md_core_helps.apis import cat_cach, wikidataapi
 from md_core_helps.bots.check_title import valid_title
@@ -33,9 +42,9 @@ def replace_in_sql(reds, ty) -> None:
         if "fix" in sys.argv:
             # python3 core8/pwb.py md_core/mdpy/cashwd redirects fix
             if table_name == "qids_others":
-                sql_qids_others.set_qid_where_qid(new_q, old_q)
+                update_others_qid_by_value(old_q, new_q)
             else:
-                sql_qids.set_qid_where_qid(new_q, old_q)
+                update_qid_by_value(old_q, new_q)
         else:
             logger.info(qua)
             logger.info('<<green>> add "fix" to sys.argv to fix them..')
@@ -68,15 +77,18 @@ def add_to_qids(sql_results_qids, ty) -> None:
         logger.info("<<red>> new_list empty.. exit()..")
         return
     # ---
-    sql_qids.add_titles_to_qids(new_list, add_empty_qid=True)
+    if ty == "other":
+        batch_upsert_others_qids(new_list, add_empty_qid=True)
+    else:
+        batch_upsert_qids(new_list, add_empty_qid=True)
 
 
 def do(ty) -> None:
     # ---
     if ty == "other":
-        sql_results_qids = sql_qids_others.get_others_qids()
+        sql_results_qids = get_others_qids()
     else:
-        sql_results_qids = sql_qids.get_all_qids()
+        sql_results_qids = get_title_to_qid()
     # ---
     to_work = {q: t for t, q in sql_results_qids.items() if q != ""}
     # ---

@@ -12,7 +12,9 @@ import sys
 from pymysql.converters import escape_string
 
 from db import WikiReplicaDB
-from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
+from db.tools.services.session import get_session
+from db.tools.services.wikidata.qid_service import batch_upsert_qids
+from sqlalchemy import text
 from md_core_helps.apis import wikidataapi
 
 # ---
@@ -42,7 +44,8 @@ def dodo_sql() -> None:
     # ---
     logger.info(que)
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    with get_session() as session:
+        sq = [dict(row._mapping) for row in session.execute(text(que))]
     # ---
     len_no_target = 0
     len_done_target = 0
@@ -287,7 +290,7 @@ def start() -> None:
         logger.error(f"<<red>> qid_target is empty> target:{lal}")
     # ---
     if "add" in sys.argv:
-        sql_qids.add_titles_to_qids(to_add)
+        batch_upsert_qids(to_add)
 
 
 if __name__ == "__main__":

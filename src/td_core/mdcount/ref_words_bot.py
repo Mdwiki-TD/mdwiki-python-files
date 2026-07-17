@@ -8,8 +8,9 @@ from td_core.mdcount.ref_words_bot import get_jsons, logaa, make_old_values, do_
 import json
 import logging
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
 from db.utils.to_sql import to_sql
+from sqlalchemy import text
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +93,8 @@ def get_jsons_new(file_all, file_lead, ty):
     # ---
     que = f"select DISTINCT {title_c}, {lead_c}, {all_c} from {table}"
     # ---
-    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    with get_session() as session:
+        in_sql = [dict(row._mapping) for row in session.execute(text(que))]
     # ---
     ty_all_data = {x[title_c]: x[all_c] for x in in_sql}  # if x[all_c] > 0 and x[title_c] not in ty_all_data}
     # ---
@@ -126,7 +128,8 @@ def get_jsons(file_all, file_lead, ty):
     # ---
     que = f"select DISTINCT {title_c}, {lead_c}, {all_c} from {table}"
     # ---
-    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    with get_session() as session:
+        in_sql = [dict(row._mapping) for row in session.execute(text(que))]
     # ---
     all_data = {x[title_c]: x[all_c] for x in in_sql}  # if x[all_c] > 0 and x[title_c] not in all_data}
     # ---

@@ -18,8 +18,9 @@ import logging
 import re
 import sys
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
 from db.utils.to_sql import to_sql
+from sqlalchemy import text
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki
 from mdwiki_api.wiki_page import NewApi
 from td_core.mdpyget.pages_list import get_links_from_cats
@@ -114,7 +115,8 @@ def get_old_values(json_file):
     # ---
     que = "select DISTINCT title, importance from assessments"
     # ---
-    in_sql = sql_for_mdwiki.mdwiki_sql_dict(que)
+    with get_session() as session:
+        in_sql = [dict(row._mapping) for row in session.execute(text(que))]
     # ---
     old_values = {x["title"]: x["importance"] for x in in_sql}
     # ---

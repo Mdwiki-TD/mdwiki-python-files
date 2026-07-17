@@ -10,7 +10,8 @@ import time
 # ---
 from pymysql.converters import escape_string
 
-from db.mdapi_sql.services import sql_for_mdwiki
+from db.tools.services.session import get_session
+from sqlalchemy import text
 from td_core.after_translate.bots.add_to_pages_users_db import add_to_mdwiki_sql_users
 from td_core.after_translate.bots.fixcat import cat_for_pages
 
@@ -42,7 +43,9 @@ def add_new_row(mdtitle, lang, user, pupdate, target, word: str, cat) -> None:
     # ---
     values = [mdtitle, word, cat, lang, add_date, user, pupdate, target, add_date, mdtitle, lang, user]
     # ---
-    sql_for_mdwiki.mdwiki_sql(insert_qua, values=values)
+    with get_session() as session:
+        session.execute(text(insert_qua), values)
+        session.commit()
 
 
 def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
@@ -66,7 +69,9 @@ def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
     # ---
     values = [target, pupdate, add_date, user, mdtitle, lang]
     # ---
-    sql_for_mdwiki.mdwiki_sql(update_qua, values=values)
+    with get_session() as session:
+        session.execute(text(update_qua), values)
+        session.commit()
 
 
 def add_to_pages_db(lange, tab, to_updatex) -> None:
