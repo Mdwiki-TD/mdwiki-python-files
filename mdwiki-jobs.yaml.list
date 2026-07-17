@@ -5,7 +5,6 @@ python3 c9/pwb.py copy_to_en/revid
 python3 c9/pwb.py md_core/fix_cs1/bot
 python3 c9/pwb.py md_core/fix_cs1/fix_cs_params/bot
 
-python3 c9/pwb.py md_core/mdpy/find_replace_bot/bot
 python3 c9/pwb.py md_core/mdpy/fix_duplicate save
 
 python3 c9/pwb.py md_core/p11143_bot/bot all add addq
