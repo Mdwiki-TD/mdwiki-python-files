@@ -33,12 +33,14 @@ def get_pages_users_to_main(record_id: int) -> PagesUsersToMainRecord | None:
 
 
 def add_pages_users_to_main(
-    id: int | None = None,
+    id: int,
     new_target: str = "",
     new_user: str = "",
     new_qid: str = "",
 ) -> PagesUsersToMainRecord:
     """Add a new pages_users_to_main record."""
+    if id is None:
+        raise ValueError("id is required")
     with get_session() as session:
         orm_obj = PagesUsersToMainRecord(id=id, new_target=new_target, new_user=new_user, new_qid=new_qid)
         session.add(orm_obj)
@@ -47,10 +49,8 @@ def add_pages_users_to_main(
         except IntegrityError as e:
             session.rollback()
             raise ValueError(f"Failed to add pages_users_to_main record: {e}") from None
-
         session.refresh(orm_obj)
         return orm_obj
-
 
 def update_pages_users_to_main(record_id: int, **kwargs) -> PagesUsersToMainRecord:
     """Update a pages_users_to_main record."""

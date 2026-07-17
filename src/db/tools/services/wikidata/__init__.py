@@ -14,6 +14,8 @@ from .qid_others_service import (
 )
 from .qid_service import (
     add_qid,
+    batch_upsert_qids,
+    delete_by_title,
     get_by_id,
     get_by_qid,
     get_by_title,
@@ -24,6 +26,10 @@ from .qid_service import (
     list_records,
     update,
     update_qid,
+    update_qid_by_title,
+    update_qid_by_value,
+    update_title_by_qid,
+    update_title_conditionally,
 )
 
 __all__ = [
@@ -44,4 +50,10 @@ __all__ = [
     "update_qid",
     "delete_qid",
     "get_page_qid",
+    "batch_upsert_qids",
+    "delete_by_title",
+    "update_qid_by_title",
+    "update_qid_by_value",
+    "update_title_by_qid",
+    "update_title_conditionally",
 ]

@@ -125,10 +125,20 @@ def get_camp_to_cats() -> dict[str, str]:
     return camp_to_cats
 
 
+def list_categories_as_dict() -> dict[str, int]:
+    """Return {category: depth} mapping.
+
+    Mirrors old ``sql_for_mdwiki.get_db_categories()``.
+    """
+    categories = list_categories()
+    return {record.category: record.depth or 0 for record in categories}
+
+
 __all__ = [
     "add_category",
     "update_category",
     "get_campaign_category",
     "list_categories",
+    "list_categories_as_dict",
     "get_camp_to_cats",
 ]

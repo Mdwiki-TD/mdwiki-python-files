@@ -162,6 +162,16 @@ def user_exists(username: str) -> bool:
     return record is not None
 
 
+def list_usernames() -> list[str]:
+    """Return all usernames from the users table.
+
+    Mirrors old ``sql_for_mdwiki.get_db_users()``.
+    """
+    with get_session() as session:
+        rows = session.query(UserRecord.username).all()
+        return [row.username for row in rows]
+
+
 __all__ = [
     "list_users",
     "list_users_by_group",
@@ -172,4 +182,5 @@ __all__ = [
     "update_user_data",
     "user_exists",
     "users_search",
+    "list_usernames",
 ]

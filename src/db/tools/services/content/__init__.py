@@ -5,11 +5,20 @@ from ..delete_service import (
     delete_lang,
     delete_project,
 )
+from .category_member_service import (
+    add_category_member,
+    batch_sync_category_members,
+    count_by_category as count_category_members,
+    get_all_category_members,
+    get_members_by_category,
+    list_distinct_article_ids,
+)
 from .category_service import (
     add_category,
     get_camp_to_cats,
     get_campaign_category,
     list_categories,
+    list_categories_as_dict,
     update_category,
 )
 from .lang_service import (
@@ -34,7 +43,14 @@ __all__ = [
     "delete_category",
     "get_campaign_category",
     "list_categories",
+    "list_categories_as_dict",
     "get_camp_to_cats",
+    "add_category_member",
+    "batch_sync_category_members",
+    "count_category_members",
+    "get_all_category_members",
+    "get_members_by_category",
+    "list_distinct_article_ids",
     "list_langs",
     "get_lang",
     "get_lang_by_code",
