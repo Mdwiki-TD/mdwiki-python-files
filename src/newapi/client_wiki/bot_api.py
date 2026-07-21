@@ -730,7 +730,7 @@ class NewApi(NewApiHelpers):
         results = self.login_bot.post_continue_list(
             params,
             "query",
-            "pages",
+            _load_data=_load_data,
         )
         # ---
         return results
