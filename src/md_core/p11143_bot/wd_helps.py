@@ -9,7 +9,7 @@ import json
 import logging
 import sys
 import time
-from typing import Any, Optional
+from typing import Any
 from urllib.error import HTTPError, URLError
 
 from SPARQLWrapper import JSON, SPARQLWrapper
@@ -71,7 +71,7 @@ def get_query_result(query) -> list[Any]:
     return lista
 
 
-def make_in_wd_tab(limit: Optional[int] = None):
+def make_in_wd_tab(limit: int | None = None):
     # ---
     query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
     # ---

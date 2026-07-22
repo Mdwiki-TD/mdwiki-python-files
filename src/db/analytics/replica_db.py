@@ -1,7 +1,8 @@
 import logging
 import os
 import sys
-from typing import Any, Sequence, Union
+from typing import Any
+from collections.abc import Sequence
 
 import pymysql
 import pymysql.connections
@@ -86,7 +87,7 @@ class WikiReplicaBaseDB:
     def select(
         self,
         query: str,
-        params: Union[Sequence[Any], dict[str, Any]] | None = None,
+        params: Sequence[Any] | dict[str, Any] | None = None,
     ) -> list[dict[str, Any]]:
         """
         Executes query and returns all results as a list of dictionaries.
@@ -105,7 +106,7 @@ class WikiReplicaBaseDB:
     def select_one(
         self,
         query: str,
-        params: Union[Sequence[Any], dict[str, Any]] | None = None,
+        params: Sequence[Any] | dict[str, Any] | None = None,
     ) -> dict[str, Any] | None:
         """
         Executes query and returns the first result or None.
@@ -116,7 +117,7 @@ class WikiReplicaBaseDB:
     def select_safe(
         self,
         query: str,
-        params: Union[Sequence[Any], dict[str, Any]] | None = None,
+        params: Sequence[Any] | dict[str, Any] | None = None,
     ) -> list[dict[str, Any]]:
         """ """
         try:
