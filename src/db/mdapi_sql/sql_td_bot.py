@@ -90,7 +90,6 @@ def toolforge_tools_sql_connect(
     many: bool = False,
     **kwargs,
 ):
-
     db_args = _load_db_config().to_dict()
 
     db_args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor

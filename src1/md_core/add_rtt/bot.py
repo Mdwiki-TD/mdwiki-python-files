@@ -16,7 +16,6 @@ api_new = NewApi("www", family="mdwiki")
 
 
 def add_rtt_to_text(text, title):
-
     new_line = "{{RTT}}"
 
     if text.find(new_line) != -1:
@@ -28,7 +27,6 @@ def add_rtt_to_text(text, title):
     parsed = wtp.parse(text)
 
     for temp in parsed.templates:
-
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
         if name in target_templates:
             logger.info(f"page already tagged.{title=}")
@@ -54,7 +52,6 @@ def add_rtt_to_text(text, title):
 
 
 def work_page(title):
-
     page = md_MainPage(title, "www", family="mdwiki")
 
     if not page.exists():

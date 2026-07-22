@@ -60,7 +60,7 @@ def export_en_history(title):
     if "teest" in sys.argv:
         logger.info(revisions)
     # ---
-    logger.info(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
+    logger.info(f'<<yellow>> > title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
     # ---
     # ---
     title2 = title.replace(":", "-").replace("/", "-")
@@ -140,7 +140,7 @@ def export(title):
     # ---
     _revisions = xmldata.split("</revision>")
     # ---
-    logger.info(f"<<yellow>> > title:\"{title}\" has {len(xmldata.split('<revision>'))} revisions")
+    logger.info(f'<<yellow>> > title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
     # ---
     title2 = title.replace(":", "-").replace("/", "-")
     # ---

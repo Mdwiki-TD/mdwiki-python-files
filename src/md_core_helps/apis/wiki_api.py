@@ -5,6 +5,7 @@ from md_core_helps.apis import wiki_api
 # wiki_api.submitAPI( params, site="en", returnjson = False )
 # ---
 """
+
 from mdwiki_api.wiki_page import NewApi
 
 api_news = {}

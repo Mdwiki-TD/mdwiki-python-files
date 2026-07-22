@@ -18,7 +18,6 @@ api_new = NewApi("www", family="mdwiki")
 
 
 def work_page(title):
-
     page = md_MainPage(title, "www", family="mdwiki")
 
     if not page.exists():

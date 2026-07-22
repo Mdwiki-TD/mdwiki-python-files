@@ -91,7 +91,7 @@ text = f"* pages: {len(pages):,}"
 # usersbyyear = dict(sorted(usersbyyear.items()))
 # ---
 for year, usersx in usersbyyear.items():
-    text += f"\n== {year} stats ==\n" '{| class="wikitable sortable"\n' "|-\n! #\n! user\n! count\n"
+    text += f'\n== {year} stats ==\n{{| class="wikitable sortable"\n|-\n! #\n! user\n! count\n'
     # ---
     sorted_users = sorted(usersx.items(), key=lambda x: x[1], reverse=True)
     # ---

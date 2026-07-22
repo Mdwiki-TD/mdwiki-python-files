@@ -35,7 +35,6 @@ def template_text_to_params(text: str) -> dict[str, str]:
 
 
 class IsAllowed:
-
     def __init__(
         self,
         bot_username: str,

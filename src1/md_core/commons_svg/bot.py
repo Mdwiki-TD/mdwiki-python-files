@@ -19,7 +19,6 @@ svg_languages = {}
 
 
 def work_page(title):
-
     page = MainPage(title, "commons", family="wikimedia")
 
     if not page.exists():
@@ -51,7 +50,6 @@ def work_page(title):
 
 
 def start():
-
     site = mwclient.Site("commons.wikimedia.org")
     CATEGORY_NAME = "Pages using gadget owidslider"
 

@@ -102,7 +102,6 @@ def work_page() -> bool | None:
 
 
 def main():
-
     work_page()
 
 

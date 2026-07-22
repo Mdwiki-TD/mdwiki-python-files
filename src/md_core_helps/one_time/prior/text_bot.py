@@ -116,9 +116,9 @@ def get_t_sections():
         # ---
         all_line += f"{all_o:,} || "
         # ---
-        green_line += f'{ta["green"]:,} || '
+        green_line += f"{ta['green']:,} || "
         # ---
-        red_line += f'{ta["red"]:,} || '
+        red_line += f"{ta['red']:,} || "
     # ---
     te_langs = f"\n{te_langs}\n\n"
     te_langs += '|- style="position: sticky;top: 0; z-index: 2;"\n! style="position: sticky;top: 0;left: 0;" | All'
@@ -401,9 +401,9 @@ def make_text(allo, ttt: str = ""):
     # ---
     for _, ta in langs_green_red.items():
         # ---
-        green_line += f'{ta["green"]} || '
+        green_line += f"{ta['green']} || "
         # ---
-        red_line += f'{ta["red"]} || '
+        red_line += f"{ta['red']} || "
     # ---
     te_langs = (
         f"""
