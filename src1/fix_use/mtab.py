@@ -107,7 +107,7 @@ def make_find_rep():
         # ---
         for func in functions:
             # ---
-            r"use function Actions\HtmlSide\create_side;",
+            # (r"use function Actions\HtmlSide\create_side;",)
             line = f"use function {file}\\{func};"
             # ---
             new[func] = line
