@@ -25,6 +25,7 @@ python3 core8/pwb.py prior/add_old new  -file:en_13.json
 python3 core8/pwb.py prior/add_old new  -file:en_14.json
 """
 
+import copy
 import json
 import logging
 import os
@@ -81,12 +82,13 @@ class PriorAddOld:
             # ---
             with open(filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
-            data_new = data
+
+            data_new = copy.deepcopy(data)
             # ---
             len_all = len(data)
             n = 0
             # ---
-            for title, tab in data.items():
+            for title, tab in data_new.items():
                 # ---
                 n += 1
                 # ---
