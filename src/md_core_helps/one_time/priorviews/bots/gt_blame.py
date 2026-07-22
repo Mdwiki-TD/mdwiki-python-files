@@ -165,7 +165,13 @@ class FindInHistory:
                 self.revisions.append(r)
 
 
-def search_history(title, lang, en: str = "", refname: list[str] | None = None, extlinks: list[str] | None=None,):
+def search_history(
+    title,
+    lang,
+    en: str = "",
+    refname: list[str] | None = None,
+    extlinks: list[str] | None = None,
+):
     if refname is None:
         refname = []
     if extlinks is None:
