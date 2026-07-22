@@ -83,7 +83,7 @@ class WikiBlame:
         if text and text.find("present in the oldest revision searched") != -1:
             self.in_first = True
         # ---
-        results = results_div.find_all("a")
+        results = text.find_all("a")
         for x in results:
             href = x.get("href")
 

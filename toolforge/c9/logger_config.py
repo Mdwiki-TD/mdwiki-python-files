@@ -2,12 +2,16 @@
 Logging configuration with colored output.
 """
 
-import os
+from __future__ import annotations
+
 import functools
 import logging
+import os
 import re
 import sys
+from logging.handlers import WatchedFileHandler
 from pathlib import Path
+from typing import Any
 
 import colorlog
 
@@ -33,7 +37,7 @@ def get_color_table() -> dict[str, str]:
         "lightblack": 108,
         "bold": 1,
     }
-    data = {x: f"\033[{v}m%s\033[00m" for x, v in color_numbers.items()}
+    data: dict[str, Any] = {x: f"\033[{v}m%s\033[00m" for x, v in color_numbers.items()}
 
     # Add light versions of the colors to the color table
     for color in ["purple", "yellow", "blue", "red", "green", "cyan", "gray"]:
@@ -50,7 +54,7 @@ def get_color_table() -> dict[str, str]:
     return data
 
 
-def format_colored_text(textm: str) -> str:
+def format_colored_text(textm: str | Any) -> str:
     """
     Prints the given text with color formatting.
 
@@ -59,6 +63,10 @@ def format_colored_text(textm: str) -> str:
 
     :param textm: The text to print. Can contain color tags.
     """
+    # If the input is not a string, print it as is and return
+    if not isinstance(textm, str):
+        return textm
+
     color_table = get_color_table()
     # Define a pattern for color tags
     _color_pat = r"((:?\w+|previous);?(:?\w+|previous)?)"
@@ -67,10 +75,6 @@ def format_colored_text(textm: str) -> str:
 
     # Initialize a stack for color tags
     color_stack = ["default"]
-
-    # If the input is not a string, print it as is and return
-    if not isinstance(textm, str):
-        return textm
 
     # If the text does not contain any color tags, print it as is and return
     if "\03" not in textm and "<<" not in textm:
@@ -136,16 +140,36 @@ def prepare_log_file(log_file: str | None, project_logger: logging.Logger) -> Pa
     try:
         log_file_path.parent.mkdir(parents=True, exist_ok=True)
     except Exception as e:
-        project_logger.error(f"Failed to create log directory: {e}")
+        project_logger.error("Failed to create log directory: %s", e)
         log_file_path = None
     return log_file_path
 
 
+def setup_file_handler(
+    project_logger: logging.Logger,
+    log_file: Path | None,
+    level: int,
+) -> None:
+    if not log_file:
+        return
+
+    file_formatter = logging.Formatter(
+        fmt="%(asctime)s - %(name)s - %(levelname)-8s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+    # file_handler = logging.FileHandler(log_file, mode="a", encoding="utf-8")
+    file_handler = WatchedFileHandler(log_file, mode="a", encoding="utf-8")
+    file_handler.setFormatter(file_formatter)
+    file_handler.setLevel(level)
+    project_logger.addHandler(file_handler)
+
+
 def setup_logging(
+    level: str | int = "WARNING",
     name: str = __name__,
-    level: str = "INFO",
     log_file: str | None = None,
-    propagate: bool = False,
+    error_log_file: str | None = None,
+    use_colorlog: bool = False,
 ) -> None:
     """
     Configure logging for the entire project namespace only.
@@ -157,44 +181,50 @@ def setup_logging(
 
     numeric_level = getattr(logging, level.upper(), logging.INFO) if isinstance(level, str) else level
     project_logger.setLevel(numeric_level)
-    project_logger.propagate = propagate
+    project_logger.propagate = False
 
-    formatter = colorlog.ColoredFormatter(
-        fmt="%(name)s:%(lineno)s %(funcName)s() - %(log_color)s%(levelname)-s %(reset)s%(message)s",
-        log_colors={
-            "DEBUG": "cyan",
-            "INFO": "green",
-            "WARNING": "yellow",
-            "ERROR": "red",
-            "CRITICAL": "red,bg_white",
-        },
-    )
+    if use_colorlog:
+        console_formatter = colorlog.ColoredFormatter(
+            # Standard format: Time - Name - Level - [File:Line] - Message
+            fmt="%(asctime)s - %(name)s - %(log_color)s%(levelname)-s %(reset)s- [%(funcName)s:%(lineno)d] - %(message)s",
+            datefmt="%H:%M:%S",
+            log_colors={
+                "DEBUG": "cyan",
+                "INFO": "green",
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "red,bg_white",
+            },
+        )
+        # message colorizer
+        console_formatter.formatMessage = wrap_color_messages(console_formatter.formatMessage)
+    else:
+        console_formatter = logging.Formatter(
+            # Standard format: Time - Name - Level - [File:Line] - Message
+            fmt="%(asctime)s - %(name)s - %(levelname)-s - [%(funcName)s:%(lineno)d] - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
 
     console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setFormatter(formatter)
-    # message colorizer
-    formatter.formatMessage = wrap_color_messages(formatter.formatMessage)
+    console_handler.setFormatter(console_formatter)
 
     console_handler.setLevel(numeric_level)
 
     project_logger.addHandler(console_handler)
 
+    project_logger.debug("Setting up logging for '%s' with level '%s'", name, level)
+
     if log_file:
-        log_file = prepare_log_file(log_file, project_logger)
+        log_file_path = prepare_log_file(log_file, project_logger)
+        if log_file_path:
+            setup_file_handler(project_logger, log_file_path, numeric_level)
 
-        file_logger(log_file, project_logger, numeric_level)
+    if error_log_file:
+        error_log_file_path = prepare_log_file(error_log_file, project_logger)
+        if error_log_file_path:
+            setup_file_handler(project_logger, error_log_file_path, logging.WARNING)
 
-        # Separate error log file
-        log_file_2 = log_file.with_suffix(".err")
-        file_logger(log_file_2, project_logger, logging.WARNING)
 
-
-def file_logger(log_file, project_logger, numeric_level):
-    file_formatter = logging.Formatter(
-        fmt="%(asctime)s - %(name)s - %(levelname)-8s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-    file_handler = logging.FileHandler(log_file, mode="a", encoding="utf-8")
-    file_handler.setFormatter(file_formatter)
-    file_handler.setLevel(numeric_level)
-    project_logger.addHandler(file_handler)
+__all__ = [
+    "setup_logging",
+]

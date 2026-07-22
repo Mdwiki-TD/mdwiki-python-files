@@ -1,23 +1,23 @@
-
-import sys
 import os
-from logger_config import setup_logging as _setup_logging  # type: ignore
+import sys
 
 from dotenv import load_dotenv
+from logger_config import setup_logging as _setup_logging  # type: ignore
+
 try:
     load_dotenv()
 except Exception as e:
     print(e)
 
 user_script_paths = [
-    'I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/',
-    'I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/pybot/src/',
+    "I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/",
+    "I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/pybot/src/",
 ]
 
 if os.getenv("APP_ENV") == "production":
     user_script_paths = [
-        '/data/project/mdwiki',
-        '/data/project/mdwiki/pybot',
+        "/data/project/mdwiki",
+        "/data/project/mdwiki/pybot",
     ]
 
 _ver = sys.version_info[:3]
@@ -26,7 +26,7 @@ _python_v = str(_ver[0]) + str(_ver[1]) + str(_ver[2])
 _red_ = "\033[91m%s\033[00m"
 _blue_ = "\033[94m%s\033[00m"
 
-print(_blue_ % 'PYTHON VERSION' + ': ' + _red_ % _python_v)
+print(_blue_ % "PYTHON VERSION" + ": " + _red_ % _python_v)
 
 for _u_path in user_script_paths.copy():
     if os.path.exists(_u_path):

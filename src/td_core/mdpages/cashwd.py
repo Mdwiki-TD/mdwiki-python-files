@@ -107,14 +107,13 @@ def get_qids_sitelinks(qidslist):
             # ---
             qid = kk.get("id", "")
             # ---
-            if qid != "" and qid not in table_d["qids"]:
-                table_d["qids"][qid] = {"mdtitle": "", "sitelinks": {}}
-                table_l["qids"][qid] = {"mdtitle": "", "sitelinks": []}
+            table_d_qid = {"mdtitle": "", "sitelinks": {}}
+            table_l_qid = {"mdtitle": "", "sitelinks": []}
             # ---
             mdwiki_title = qidslist.get(qid, "")
             if mdwiki_title != "":
-                table_d["qids"][qid]["mdtitle"] = mdwiki_title
-                table_l["qids"][qid]["mdtitle"] = mdwiki_title
+                table_d_qid["mdtitle"] = mdwiki_title
+                table_l_qid["mdtitle"] = mdwiki_title
             # ---
             sitelinks = {}
             # ---
@@ -148,9 +147,12 @@ def get_qids_sitelinks(qidslist):
                 # ---
                 sitelinks[site] = title
             # ---
-            table_d["qids"][qid]["sitelinks"] = sitelinks
-            table_l["qids"][qid]["sitelinks"] = list(sitelinks.keys())
+            table_d_qid["sitelinks"] = sitelinks
+            table_l_qid["sitelinks"] = list(sitelinks.keys())
             # ---
+            if qid != "" and qid not in table_d["qids"]:
+                table_d["qids"][qid] = table_d_qid
+                table_l["qids"][qid] = table_l_qid
     # ---
     table_d["heads"] = heads
     table_l["heads"] = heads
