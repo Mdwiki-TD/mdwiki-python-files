@@ -1,5 +1,4 @@
-"""
-"""
+""" """
 
 import copy
 import json
@@ -16,6 +15,7 @@ from md_core_helps.apis import wikidataapi
 logger = logging.getLogger(__name__)
 
 sys.argv.append("workhimo")
+
 
 def get_query_data(query):
     """Retrieve query data from the Wikidata SPARQL endpoint.
@@ -54,7 +54,7 @@ def get_query_data(query):
     except (HTTPError, URLError, TimeoutError, ValueError, json.JSONDecodeError):
         logger.exception("wd_helps.get_query_data failed")
     # ---
-    result = dict(data) # type: ignore
+    result = dict(data)  # type: ignore
     # ---
     return result
 

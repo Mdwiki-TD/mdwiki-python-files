@@ -26,6 +26,7 @@ login_not_done = {1: True}
 def get_session() -> requests.Session:
     return requests.Session()
 
+
 def do_request(params=None, method: str = "POST"):
     # ---
     url = "https://www.wikidata.org/w/api.php"
@@ -66,7 +67,7 @@ def get_token(mk_new: bool = False) -> str:
     # get edit token
     # ---
     if SS["r3_token"] and not mk_new:
-        return SS["r3_token"] # type: ignore
+        return SS["r3_token"]  # type: ignore
     # ---
     params = {"format": "json", "action": "query", "meta": "tokens"}
     # ---

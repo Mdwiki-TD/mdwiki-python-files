@@ -31,6 +31,7 @@ def get_table_and_columns(ty):
 
     return table, title_c, all_c, lead_c
 
+
 def do_to_sql(data_all, data_lead, ty: str = "ref") -> None:
     table, title_c, all_c, lead_c = get_table_and_columns(ty)
     # ---
