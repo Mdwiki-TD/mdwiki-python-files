@@ -36,13 +36,16 @@ for _u_path in user_script_paths.copy():
 
 _bots = [
     "__main__",
-    "newapi",
     "copy_text",
     "copy_to_en",
+    "db",
+    "find_replace_bot",
     "fix_use",
     "md_core",
     "md_core_helps",
     "mdwiki_api",
+    "named_param",
+    "newapi",
     "newupdater",
     "td_core",
     "wprefs",
