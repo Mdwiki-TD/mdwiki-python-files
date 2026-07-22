@@ -1,8 +1,8 @@
 import logging
 import os
 import sys
-from typing import Any
 from collections.abc import Sequence
+from typing import Any
 
 import pymysql
 import pymysql.connections
