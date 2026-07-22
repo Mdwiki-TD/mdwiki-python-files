@@ -20,9 +20,6 @@ from md_core_helps.one_time.priorviews.lists.links_by_section import sects_links
 
 logger = logging.getLogger(__name__)
 
-# ---
-TEST = False
-# ---
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 # ---
@@ -169,7 +166,6 @@ def test() -> None:
 
 if __name__ == "__main__":
     if "test1" in sys.argv:
-        TEST = True
         test()
     else:
         start()

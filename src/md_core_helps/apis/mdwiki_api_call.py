@@ -2,8 +2,9 @@
 """
 # revid    = mdwiki_api.GetRevid(title)
 """
+
 import logging
-from typing import Union
+from typing import Any
 
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
@@ -178,7 +179,11 @@ def GetRevid(title):
     return ""
 
 
-def Get_page_links(title, namespace: str = "0", limit: Union[int, str] = "max"):
+def Get_page_links(
+    title,
+    namespace: str = "0",
+    limit: int | str = "max",
+) -> dict[str, Any]:
     # ---
     logger.info(f' for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
@@ -219,12 +224,12 @@ def Get_page_links(title, namespace: str = "0", limit: Union[int, str] = "max"):
     return Main_table
 
 
-def Get_template_pages(title, namespace: str = "*", limit: Union[int, str] = "max"):
+def Get_template_pages(title, namespace: str = "*", limit: int | str = "max"):
     return api_new.Get_template_pages(title, namespace=namespace)
 
 
 def Get_All_pages(
-    start, namespace: str = "0", limit: Union[int, str] = "max", apfilterredir: str = "", limit_all: int = 0
+    start, namespace: str = "0", limit: int | str = "max", apfilterredir: str = "", limit_all: int = 0
 ) -> list[str]:
     return api_new.Get_All_pages(
         start=start,
@@ -235,7 +240,7 @@ def Get_All_pages(
     )
 
 
-def Get_UserContribs(user, limit: Union[int, str] = "max", namespace: str = "*", ucshow: str = ""):
+def Get_UserContribs(user, limit: int | str = "max", namespace: str = "*", ucshow: str = ""):
     return api_new.UserContribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
 
 

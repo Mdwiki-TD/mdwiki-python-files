@@ -5,6 +5,7 @@ from wprefs.wpref_text import fix_page
 # fix_page(text, title)
 
 """
+
 import re
 
 import wikitextparser as wtp
@@ -39,13 +40,12 @@ def expend_new(main_temp):
             arg.name = newparam
             arg.value = f"{value}\n"
         # ---
-        new_temp = template.string
-        break
+        return template.string
     # ---
-    return new_temp
+    return ""
 
 
-def Expend_Infobox(text: str, title, section_0):
+def expend_infobox(text: str, title, section_0) -> str:
     """Expand the infobox in the provided text.
 
     This function processes the input text to expand an infobox based on the

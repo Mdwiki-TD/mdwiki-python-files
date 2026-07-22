@@ -70,11 +70,11 @@ class Sectios_links:
         # Loop through each section in the wiki page
         for s in self.sections:
             # Get the title and contents of the section
-            t = s.title
-            c = s.contents
+            title = s.title
+            contents = s.contents
 
             # If either the contents or title are None, skip the section
-            if c is None or t is None:
+            if not contents or title is None:
                 continue
 
             # Get the wikilinks for the section and convert them to strings
@@ -96,10 +96,10 @@ class Sectios_links:
                 continue
 
             # Replace any forward slashes in the section title with hyphens
-            t = t.replace("/", "-")
+            title = title.replace("/", "-")
 
             # Add the section and its links to the all_sections dict
-            self.SectionsToLinks[t] = wikilinks
+            self.SectionsToLinks[title] = wikilinks
 
 
 def dump_secs_links(d_links) -> None:

@@ -14,6 +14,7 @@ WHERE id IN (
 python3 core8/pwb.py td_core/fix_user_pages/del
 
 """
+
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki

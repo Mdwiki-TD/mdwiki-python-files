@@ -2,6 +2,7 @@
 """
 from td_core.fix_user_pages.user_bot import get_new_user
 """
+
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki

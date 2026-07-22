@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """
 
-from md_core_helps.apis.wd_bots.wikidataapi_post import Log_to_wiki, post_it
+from md_core_helps.apis.wd_bots.wikidataapi_post import log_to_wiki, post_it
 
 """
+
+import functools
 import logging
 import sys
 from urllib.parse import urlencode
@@ -19,6 +21,11 @@ user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge
 SS = {"ss": requests.Session(), "r3_token": ""}
 
 login_not_done = {1: True}
+
+
+@functools.lru_cache(maxsize=1000)
+def get_session() -> requests.Session:
+    return requests.Session()
 
 
 def do_request(params=None, method: str = "POST"):
@@ -40,8 +47,10 @@ def do_request(params=None, method: str = "POST"):
     if "printurl" in sys.argv:
         logger.info(f":\t\t{unurl}")
     # ---
+    session = get_session()
+    # ---
     try:
-        r4 = SS["ss"].request(method, url, **args)
+        r4 = session.request(method, url, **args)
         status = r4.status_code
         # ---
         if status != 200:
@@ -55,11 +64,11 @@ def do_request(params=None, method: str = "POST"):
         return {}
 
 
-def get_token(mk_new: bool = False):
+def get_token(mk_new: bool = False) -> str:
     # get edit token
     # ---
     if SS["r3_token"] and not mk_new:
-        return SS["r3_token"]
+        return SS["r3_token"]  # type: ignore
     # ---
     params = {"format": "json", "action": "query", "meta": "tokens"}
     # ---
@@ -72,7 +81,7 @@ def get_token(mk_new: bool = False):
     return r3_token
 
 
-def Log_to_wiki(url: str = ""):
+def log_to_wiki(url: str = ""):
     # ---
     if not login_not_done[1]:
         return ""
@@ -86,15 +95,14 @@ def Log_to_wiki(url: str = ""):
     # ---
     logger.info(f"wikidataapi.py: log to {url} user:{r2_params['lgname']}")
     # ---
-    SS["url"] = url
-    SS["ss"] = requests.Session()
+    session = get_session()
     # ---
     try:
-        r11 = SS["ss"].get(SS["url"], params=r1_params, headers={"User-Agent": user_agent}, timeout=10)
+        r11 = session.get(url, params=r1_params, headers={"User-Agent": user_agent}, timeout=10)
         # ---
         r11.raise_for_status()
         r2_params["lgtoken"] = r11.json()["query"]["tokens"]["logintoken"]
-        r22 = SS["ss"].post(SS["url"], data=r2_params, headers={"User-Agent": user_agent}, timeout=10)
+        r22 = session.post(url, data=r2_params, headers={"User-Agent": user_agent}, timeout=10)
     except Exception:
         logger.exception("wikidataapi.py: Can't log in . ")
         return False
@@ -103,8 +111,6 @@ def Log_to_wiki(url: str = ""):
         logger.info(r22.json()["login"]["reason"])
     else:
         logger.info("wikidataapi.py login Success")
-    # ---
-    SS["url"] = url
     # ---
     get_token(mk_new=True)
     # ---
@@ -115,7 +121,7 @@ def post_it(params=None, url=None, token: bool = True, method: str = "POST"):
     # ---
     params = params or {}
     # ---
-    Log_to_wiki()
+    log_to_wiki()
     # ---
     if token:
         params["token"] = get_token()

@@ -2,7 +2,7 @@
 
 import logging
 import sys
-from typing import Any, Union
+from typing import Any
 
 import wikitextparser as wtp
 
@@ -61,7 +61,7 @@ class MainPage:
 
         self.text: str = ""
         self.newtext: str = ""
-        self.ns: Union[bool, int] = False
+        self.ns: bool | int = False
         self.langlinks: dict[str, str] = {}
 
         self.meta = Meta()

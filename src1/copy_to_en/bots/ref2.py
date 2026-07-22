@@ -3,6 +3,7 @@
 Usage:
 from copy_to_en.bots.ref2 import fix_ref# text = fix_ref(first, alltext)
 """
+
 import re
 
 ref_complite = re.compile(r"(<ref\s*name\s*\=*\s*[\"\']*([^>]*)[\"\']*\s*>[^<>]+</ref>)")

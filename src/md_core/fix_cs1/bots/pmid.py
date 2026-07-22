@@ -90,17 +90,18 @@ def pmid_journal(pmid, param):
         # ---
         if id_in == pmid:
             da_true = da
+            # ---
+            journal = da_true.get("bookOrReportDetails", {}).get("comprisingTitle", "")
+            # ---
+            if not journal:
+                journal = da_true.get("journalInfo", {}).get("journal", {}).get("title", "")
+            # ---
+            if journal:
+                logger.info(f"{n}/{len(hit)}: <<green>> id_in: {id_in} - journal: {journal}")
+                journal_cach[param][pmid] = journal
+            else:
+                logger.info(f"{n}/{len(hit)}: <<red>> |{param}={pmid} - journal: {journal}")
+
             break
-    # ---
-    journal = da_true.get("bookOrReportDetails", {}).get("comprisingTitle", "")
-    # ---
-    if not journal:
-        journal = da_true.get("journalInfo", {}).get("journal", {}).get("title", "")
-    # ---
-    if journal:
-        logger.info(f"{n}/{len(hit)}: <<green>> id_in: {id_in} - journal: {journal}")
-        journal_cach[param][pmid] = journal
-    else:
-        logger.info(f"{n}/{len(hit)}: <<red>> |{param}={pmid} - journal: {journal}")
     # ---
     return journal

@@ -60,7 +60,7 @@ def match_ref_names(r, refnames: list[str], lang):
     for k, v in _tags_.items():
         if k in refnames:
             logger.info(f"<<green>> find: {k=} count: {v=}| main: {refnames[k]=}")
-            logger.info(f'https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r["revid"]}')
+            logger.info(f"https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r['revid']}")
             logger.info(f"new user: {user}")
             return user
     # ---
@@ -165,7 +165,13 @@ class FindInHistory:
                 self.revisions.append(r)
 
 
-def search_history(title, lang, en: str = "", refname: list[str] | None = None, extlinks: list[str] | None=None,):
+def search_history(
+    title,
+    lang,
+    en: str = "",
+    refname: list[str] | None = None,
+    extlinks: list[str] | None = None,
+):
     if refname is None:
         refname = []
     if extlinks is None:

@@ -10,6 +10,7 @@ from md_core.add_rtt.named_param import add_param_named
 tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py md_core/add_rtt/named_param"
 
 """
+
 import logging
 
 import wikitextparser as wtp
@@ -36,7 +37,6 @@ def gt_arg(temp, name):
 
 
 def add_param_named(text, title):
-
     parsed = wtp.parse(text)
 
     param = "named after"
@@ -49,7 +49,6 @@ def add_param_named(text, title):
     false_params = []
 
     for temp in parsed.templates:
-
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
         if name in target_infoboxs:
             # ---
@@ -80,7 +79,6 @@ def add_param_named(text, title):
 
 
 def work_page(title):
-
     page = md_MainPage(title, "www", family="mdwiki")
 
     if not page.exists():
@@ -95,7 +93,6 @@ def work_page(title):
 
 
 def main():
-
     temps = "|".join(f"Template:{x}" for x in target_infoboxs)
 
     temp_pages = api_new.Get_template_pages(temps, namespace=0)

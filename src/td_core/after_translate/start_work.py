@@ -52,7 +52,7 @@ Skip_titles_global = [
 
 
 def start(result, lange, tgd, tgd_by_md, tit_user_lang):
-    logger.info(f'len(result) = "{len( result )}"')
+    logger.info(f'len(result) = "{len(result)}"')
     # ---
     tab_lang = {}
     # ---

@@ -13,6 +13,7 @@ python3 core8/pwb.py wprefs/bot -lang:ro ask
 python3 core8/pwb.py wprefs/bot ask
 
 """
+
 import logging
 import sys
 

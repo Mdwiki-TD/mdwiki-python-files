@@ -54,7 +54,7 @@ class WikiBlame:
         }  # desc
         if params is not None:
             self.params.update({x: v for x, v in params.items() if v and v != ""})
-        self.content = None
+        self.content: str | None = None
 
     def fetch_content(self) -> None:
         """Fetch the content of the web page."""
@@ -64,11 +64,11 @@ class WikiBlame:
             logger.info(url)
         # ---
         response = requests.get(url)
-        self.content: str = response.text
+        self.content = response.text
 
     def parse_content(self):
         """Parse the content of the web page."""
-        if self.content is None:
+        if not self.content:
             logger.info("No content fetched yet. Run fetch_content() first.")
             return None
 

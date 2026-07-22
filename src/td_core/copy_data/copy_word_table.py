@@ -4,6 +4,7 @@
 python3 core8/pwb.py td_core/mdcount/bots/copy_word_table
 
 """
+
 import json
 import logging
 import sys

@@ -34,7 +34,6 @@ def one_page(title) -> None:
 
 
 def main() -> None:
-
     # ---
     cat = "Category:CS1 errors: missing periodical"
 

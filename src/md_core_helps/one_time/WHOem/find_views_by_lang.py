@@ -18,7 +18,6 @@ logger = logging.getLogger(__name__)
 
 view_bot = PageviewsClient()
 
-TEST = False
 Dir = Path(__file__).parent
 
 N_g = {1: 0}

@@ -1,22 +1,24 @@
 #!/usr/bin/python3
 """
+
 import logging
 logger = logging.getLogger(__name__)
 
 from wprefs.wpref_text import fix_page
 # fix_page(text, title)
 """
+
 import re
 import sys
 
 # ---
-from wprefs.bots.Duplicatenew2 import DuplicateReferences
+from wprefs.bots.duplicate import duplicate_references
 from wprefs.bots.fix_pt_months import pt_months
 from wprefs.es import fix_es
 
 # ---
 from wprefs.helps import print_s
-from wprefs.infobox import Expend_Infobox
+from wprefs.infobox import expend_infobox
 
 
 def add_lang_en(text: str, lang: str = ""):
@@ -109,14 +111,14 @@ def fix_page(
     print_s(f"fix page: {title}, move_dots:{move_dots}, expend_infobox:{infobox}")
     # ---
     if infobox:
-        newtext = Expend_Infobox(newtext, title, section_0)
+        newtext = expend_infobox(newtext, title, section_0)
     # ---
     newtext = remove_False_code(newtext)
     # ---
     # match and delete any text like {{mdwiki revid|555}}
     newtext = re.sub(r"\{\{mdwiki[ _]revid\s*\|\s*(\d+)\s*\}\}", "", newtext, flags=re.IGNORECASE)
     # ---
-    newtext = DuplicateReferences(newtext)
+    newtext = duplicate_references(newtext)
     # ---
     if move_dots:
         newtext = move_dots_text(newtext, lang=lang)

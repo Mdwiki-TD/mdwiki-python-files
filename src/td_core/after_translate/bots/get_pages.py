@@ -2,6 +2,7 @@
 """
 from td_core.after_translate.bots.get_pages import get_pages_from_db
 """
+
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki

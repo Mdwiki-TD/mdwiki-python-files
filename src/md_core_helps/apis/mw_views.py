@@ -8,6 +8,7 @@ from md_core_helps.apis.mw_views import PageviewsClient
 # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 """
+
 import logging
 import os
 import sys
@@ -176,11 +177,9 @@ class PageviewsClient:
             if "items" in result:
                 some_data_returned = True
             else:
-
                 detail = result.get("detail")  # or result.get('error')
                 # detail = str(result)
                 if detail:
-
                     details.setdefault(detail, 0)
                     details[detail] += 1
 
@@ -210,7 +209,6 @@ class PageviewsClient:
         return {}
 
     def get_concurrent(self, urls):
-
         def fetch(url):
             try:
                 resp = requests.get(url, headers=self.headers, timeout=10)

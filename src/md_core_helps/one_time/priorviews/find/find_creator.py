@@ -22,7 +22,7 @@ from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_la
 logger = logging.getLogger(__name__)
 
 
-ADDED = 0
+added = 0
 
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
@@ -36,14 +36,14 @@ if not os.path.exists(file):
 CreatorsData = json.load(open(file, "r", encoding="utf-8"))
 
 
-def log_Data() -> None:
+def log_data() -> None:
     logger.info(f"<<yellow>> {len(CreatorsData)} CreatorsData")
     # dump CreatorsData
     helps.dump_data(file, CreatorsData)
 
 
 def get_creator(links, lang) -> None:
-    global ADDED
+    global added
     # ---
     if lang not in CreatorsData:
         CreatorsData[lang] = {}
@@ -89,21 +89,21 @@ def get_creator(links, lang) -> None:
             actor_name = x["actor_name"].replace("_", " ")
             comment_text = x["comment_text"]
             # ---
-            TD = False
+            z_id = False
             # ---
             if comment_text.find("|User:Mr. Ibrahem/") != -1:
-                TD = True
+                z_id = True
             # ---
             logger.info(f"time:{time_stamp} title:{page_title} actor:{actor_name}")
             # ---
-            tab = {"time": time_stamp, "actor": actor_name, "comment": comment_text, "TD": TD}
+            tab = {"time": time_stamp, "actor": actor_name, "comment": comment_text, "TD": z_id}
             # ---
-            ADDED += 1
+            added += 1
             # ---
             CreatorsData[lang][page_title] = tab
             # ---
-            if ADDED % 50 == 0:
-                log_Data()
+            if added % 50 == 0:
+                log_data()
             # ---
         # ---
         if "testt" in sys.argv:
@@ -131,7 +131,7 @@ def start() -> None:
         get_creator(links, lang)
         # ---
     # ---
-    log_Data()
+    log_data()
 
     # ---
 

@@ -4,6 +4,7 @@
 from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
 
 """
+
 import logging
 import os
 import sys
@@ -40,9 +41,7 @@ user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge
 # ---
 Dir = str(Path(__file__).parents[0])
 # logger.info(f'Dir : {Dir}')
-# ---
-SS = {"token": ""}
-# ---
+
 Url_To_login = {1: "", "not": True}
 # ---
 login_done = {1: False}

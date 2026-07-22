@@ -6,6 +6,7 @@
 python3 core8/pwb.py md_core/mdpy/fixred
 
 """
+
 import functools
 import logging
 import re
@@ -146,7 +147,7 @@ def treat_page(title) -> None:
     # ---
     for nor in normal:
         normalized[nor["to"]] = nor["from"]
-        logger.info(f"normalized[\"{nor['to']}\"] = \"{nor['from']}\"")
+        logger.info(f'normalized["{nor["to"]}"] = "{nor["from"]}"')
     # ---
     newtext = text
     # ---

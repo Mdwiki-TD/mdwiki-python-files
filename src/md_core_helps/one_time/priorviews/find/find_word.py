@@ -18,8 +18,6 @@ from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_la
 
 logger = logging.getLogger(__name__)
 
-TEST = False
-
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 
@@ -63,9 +61,6 @@ def get_w(links, lang, _words_by_lang):
         logger.info(f"<<yellow>> title: {m}/{lena} {title}, words_in:{words_in}")
         # ---
         _words = count_words.get_words(title, lang)
-        # ---
-        if _words is None:
-            _words = 0
         # ---
         if words_in != 0 and _words == 0:
             continue

@@ -4,6 +4,7 @@
 python3 core8/pwb.py md_core/add_rtt/tests/add_r_col
 
 """
+
 import logging
 
 from src.md_core.add_rtt.r_column_bots.pup_table import add_to_tables

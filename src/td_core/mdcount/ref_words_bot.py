@@ -14,7 +14,7 @@ from db.utils.to_sql import to_sql
 logger = logging.getLogger(__name__)
 
 
-def do_to_sql(data_all, data_lead, ty: str = "ref") -> None:
+def get_table_and_columns(ty):
     if ty == "ref":
         table = "refs_counts"
         title_c = "r_title"
@@ -25,6 +25,15 @@ def do_to_sql(data_all, data_lead, ty: str = "ref") -> None:
         title_c = "w_title"
         all_c = "w_all_words"
         lead_c = "w_lead_words"
+    else:
+        logger.exception("Unknown type %s", ty)
+        raise ValueError(f"Unknown type {ty}")
+
+    return table, title_c, all_c, lead_c
+
+
+def do_to_sql(data_all, data_lead, ty: str = "ref") -> None:
+    table, title_c, all_c, lead_c = get_table_and_columns(ty)
     # ---
     data2 = [{title_c: x, lead_c: v, all_c: data_all.get(x, 0)} for x, v in data_lead.items()]
     # ---
@@ -79,16 +88,7 @@ def get_data(file, ty_data):
 
 def get_jsons_new(file_all, file_lead, ty):
     # ---
-    if ty == "ref":
-        table = "refs_counts"
-        title_c = "r_title"
-        all_c = "r_all_refs"
-        lead_c = "r_lead_refs"
-    elif ty == "word":
-        table = "words"
-        title_c = "w_title"
-        all_c = "w_all_words"
-        lead_c = "w_lead_words"
+    table, title_c, all_c, lead_c = get_table_and_columns(ty)
     # ---
     que = f"select DISTINCT {title_c}, {lead_c}, {all_c} from {table}"
     # ---
@@ -113,16 +113,7 @@ def get_jsons_new(file_all, file_lead, ty):
 
 def get_jsons(file_all, file_lead, ty):
     # ---
-    if ty == "ref":
-        table = "refs_counts"
-        title_c = "r_title"
-        all_c = "r_all_refs"
-        lead_c = "r_lead_refs"
-    elif ty == "word":
-        table = "words"
-        title_c = "w_title"
-        all_c = "w_all_words"
-        lead_c = "w_lead_words"
+    table, title_c, all_c, lead_c = get_table_and_columns(ty)
     # ---
     que = f"select DISTINCT {title_c}, {lead_c}, {all_c} from {table}"
     # ---

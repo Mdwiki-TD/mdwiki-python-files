@@ -6,6 +6,7 @@ from copy_to_en.bots.fix_refs_names import fix_ref_names
 python3 core8/pwb.py copy_to_en/bots/fix_refs_names
 
 """
+
 import logging
 
 import wikitextparser as wtp

@@ -8,6 +8,7 @@ python3 core8/pwb.py md_core/fix_cs1/fix_cs_params/bot
 tfj run fixrefs1 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py md_core/fix_cs1/fix_cs_params/bot all"
 
 """
+
 import logging
 import sys
 
@@ -181,7 +182,7 @@ class OnePage:
         summary = "Fix reference parameters "
         # ---
         if self.replaced:
-            replace_str = ", ".join([f"{k}>{old_to_new_params.get(k,k)}({v})" for k, v in self.replaced.items()])
+            replace_str = ", ".join([f"{k}>{old_to_new_params.get(k, k)}({v})" for k, v in self.replaced.items()])
             # ---
             logger.info(f" >> {self.title} {replace_str}")
             # ---

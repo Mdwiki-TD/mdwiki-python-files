@@ -6,6 +6,7 @@ python3 core8/pwb.py copy_text/bot
 tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/bot"
 
 """
+
 import json
 import logging
 import random

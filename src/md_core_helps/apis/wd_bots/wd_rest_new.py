@@ -1,16 +1,10 @@
 #!/usr/bin/python3
-"""
+""" """
 
-python3 core8/pwb.py apis/wd_rest_new
-
-from md_core_helps.apis.wd_bots import wd_rest_new
-# wd_rest_new.Get_Claims_API(q="", p="")
-# wd_rest_new.Get_one_qid_info(qid, only="labels")
-
-"""
 import json
 import logging
 import sys
+from typing import Any
 
 import requests
 
@@ -32,7 +26,7 @@ def open_url_get(url):
     return result
 
 
-def Get_one_qid_info(qid, only=None):
+def get_one_qid_info(qid, only=None) -> dict[str, Any]:
     # ---
     key_c = (qid, only)
     # ---
@@ -80,14 +74,14 @@ def Get_one_qid_info(qid, only=None):
 
 def Get_sitelinks_From_Qid(q):
     # ---
-    sitelinks = Get_one_qid_info(q, only="sitelinks")
+    sitelinks = get_one_qid_info(q, only="sitelinks")
     # ---
     return sitelinks
 
 
 def Get_Claims_API(q: str = "", p: str = ""):
     # ---
-    statements = Get_one_qid_info(q, only="statements").get("statements", {})
+    statements = get_one_qid_info(q, only="statements").get("statements", {})
     # ---
     logger.info(f": {len(statements)=}")
     # ---
@@ -114,6 +108,6 @@ if __name__ == "__main__":
     for q in qids:
         logger.info(f"<<blue>>_______\n{q} :")
         # ---
-        j = Get_one_qid_info(q)
+        j = get_one_qid_info(q)
         # ---
         logger.info(json.dumps(j, indent=4, ensure_ascii=False))
