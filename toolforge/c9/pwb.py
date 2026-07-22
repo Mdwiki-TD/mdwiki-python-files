@@ -29,7 +29,7 @@ def run_python_file(filename: str, args: list[str], package=None):
     main_mod = types.ModuleType("__main__")
     sys.modules["__main__"] = main_mod
     main_mod.__file__ = filename
-    main_mod.__builtins__ = sys.modules["builtins"]
+    main_mod.__builtins__ = sys.modules["builtins"] # pyright: ignore[reportAttributeAccessIssue]
     if package:
         main_mod.__package__ = package.__name__
 
@@ -56,7 +56,7 @@ def run_python_file(filename: str, args: list[str], package=None):
 def handle_args(
     _,
     *args: str,
-) -> tuple[str, list[str], list[str], list[str]]:
+) -> tuple[str | None, list[str]]:
     """Handle args and get filename.
 
     .. versionchanged:: 7.7
@@ -65,7 +65,9 @@ def handle_args(
     :return: filename, script args, local pwb args, environment variables
     """
     fname = None
-    for index, arg in enumerate(args, start=1):
+    index = 0
+    for i, arg in enumerate(args, start=1):
+        index = i
         if arg in ("-version", "--version"):
             fname = "version.py"
         elif arg in ("pwb", "pwb.py", "wrapper", "wrapper.py"):
