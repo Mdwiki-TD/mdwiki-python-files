@@ -1,6 +1,7 @@
 import logging
 import re
 import sys
+from typing import Any
 
 from db.mdapi_sql.services import sql_for_mdwiki
 
@@ -42,7 +43,7 @@ def get_links_from_cats(getcat: str = ""):
     return titles
 
 
-def get_valid_links(words_tab):
+def get_valid_links(words_tab) -> list[Any]:
     # ---
     vav = get_links_from_cats()
     # ---
@@ -82,13 +83,12 @@ def get_valid_links(words_tab):
     else:
         logger.info("Get vaild_links from cat : RTT")
     # ---
-    for x in vav[:]:
+    vav_list = list(vav)
+    # ---
+    for x in vav_list[:]:
         if x.startswith("Category:"):
-            vav.remove(x)
+            vav_list.remove(x)
     # ---
-    logger.info(f"len of vaild_links: {len(vav)}")
+    logger.info(f"len of vaild_links: {len(vav_list)}")
     # ---
-    return vav
-
-
-# ---
+    return vav_list

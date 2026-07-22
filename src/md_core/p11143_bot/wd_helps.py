@@ -1,7 +1,4 @@
 """
-Usage:
-from md_core.p11143_bot.wd_helps import fix_in_wd, add_P11143_to_qids_in_wd, make_in_wd_tab
-
 """
 
 import copy
@@ -19,8 +16,6 @@ from md_core_helps.apis import wikidataapi
 logger = logging.getLogger(__name__)
 
 sys.argv.append("workhimo")
-# wikidataapi.Log_to_wiki(url="https://www.wikidata.org/w/api.php")
-
 
 def get_query_data(query):
     """Retrieve query data from the Wikidata SPARQL endpoint.
@@ -59,7 +54,9 @@ def get_query_data(query):
     except (HTTPError, URLError, TimeoutError, ValueError, json.JSONDecodeError):
         logger.exception("wd_helps.get_query_data failed")
     # ---
-    return data
+    result = dict(data) # type: ignore
+    # ---
+    return result
 
 
 def get_query_result(query) -> list[Any]:
@@ -95,7 +92,7 @@ def make_in_wd_tab(limit: int | None = None):
     return in_wd
 
 
-def add_P11143_to_qids_in_wd(newlist) -> None:
+def add_p11143_to_qids_in_wd(newlist) -> None:
     # ---
     logger.info(f"len of newlist: {len(newlist)}")
     # ---

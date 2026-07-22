@@ -182,7 +182,7 @@ def Get_page_links(
     title,
     namespace: str = "0",
     limit: int | str = "max",
-) -> dict[str, dict[Any, Any] | list[Any]]:
+) -> dict[str, Any]:
     # ---
     logger.info(f' for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
