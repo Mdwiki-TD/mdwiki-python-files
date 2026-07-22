@@ -157,8 +157,7 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
         # ---
         qid = tab.get("id", "")
         # ---
-        if qid != "" and qid not in table_d["qids"]:
-            table_d["qids"][qid] = {"mdtitle": qids_to_mdtitle.get(qid, ""), "sitelinks": {}}
+        qid_data = {"mdtitle": qids_to_mdtitle.get(qid, ""), "sitelinks": {}}
         # ---
         sitelinks = {}
         # ---
@@ -181,7 +180,10 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
         # ---
         heads.extend(sitelinks.keys())
         # ---
-        table_d["qids"][qid]["sitelinks"] = sitelinks
+        qid_data["sitelinks"] = sitelinks
+        # ---
+        if qid != "" and qid not in table_d["qids"]:
+            table_d["qids"][qid] = qid_data
     # ---
     table_d["heads"] = list(set(heads))
     # ---

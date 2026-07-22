@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 sys.argv.append("workhimo")
 
 
-def get_query_data(query):
+def get_query_data(query) -> dict[Any, Any]:
     """Retrieve query data from the Wikidata SPARQL endpoint.
 
     This function sends a SPARQL query to the Wikidata endpoint and

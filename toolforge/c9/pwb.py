@@ -1,5 +1,4 @@
-"""
-"""
+""" """
 
 from __future__ import annotations
 
@@ -9,6 +8,7 @@ import types
 from importlib import import_module
 from pathlib import Path
 from warnings import warn
+
 from user_conf import user_script_paths
 
 
@@ -25,11 +25,11 @@ def run_python_file(filename: str, args: list[str], package=None):
     :type package: Optional[module]
     """
     # Create a module to serve as __main__
-    old_main_mod = sys.modules['__main__']
-    main_mod = types.ModuleType('__main__')
-    sys.modules['__main__'] = main_mod
+    old_main_mod = sys.modules["__main__"]
+    main_mod = types.ModuleType("__main__")
+    sys.modules["__main__"] = main_mod
     main_mod.__file__ = filename
-    main_mod.__builtins__ = sys.modules['builtins']
+    main_mod.__builtins__ = sys.modules["builtins"]
     if package:
         main_mod.__package__ = package.__name__
 
@@ -41,13 +41,12 @@ def run_python_file(filename: str, args: list[str], package=None):
     sys.path.insert(0, os.path.dirname(filename))
 
     try:
-        with open(filename, 'rb') as f:
+        with open(filename, "rb") as f:
             source = f.read()
-        exec(compile(source, filename, 'exec', dont_inherit=True),
-             main_mod.__dict__)
+        exec(compile(source, filename, "exec", dont_inherit=True), main_mod.__dict__)
     finally:
         # Restore the old __main__
-        sys.modules['__main__'] = old_main_mod
+        sys.modules["__main__"] = old_main_mod
 
         # Restore the old argv and path
         sys.argv = old_argv
@@ -67,14 +66,14 @@ def handle_args(
     """
     fname = None
     for index, arg in enumerate(args, start=1):
-        if arg in ('-version', '--version'):
-            fname = 'version.py'
-        elif arg in ('pwb', 'pwb.py', 'wrapper', 'wrapper.py'):
+        if arg in ("-version", "--version"):
+            fname = "version.py"
+        elif arg in ("pwb", "pwb.py", "wrapper", "wrapper.py"):
             pass
         else:
             fname = arg
-            if not fname.endswith('.py'):
-                fname += '.py'
+            if not fname.endswith(".py"):
+                fname += ".py"
         if fname:
             break
     else:
@@ -152,7 +151,7 @@ def execute():
     if absolute_path == cwd and cwd in file_path.parents:
         relative_filename = file_path.relative_to(absolute_path)
         # remove the filename, and use '.' instead of path separator.
-        file_package = str(relative_filename.parent).replace(os.sep, '.')
+        file_package = str(relative_filename.parent).replace(os.sep, ".")
         filename = os.path.join(os.curdir, str(relative_filename))
 
     module = None
@@ -164,13 +163,12 @@ def execute():
             try:
                 module = import_module(file_package)
             except ImportError as e:
-                warn(f'Parent module {file_package} not found: {e}',
-                     ImportWarning)
+                warn(f"Parent module {file_package} not found: {e}", ImportWarning)
 
     run_python_file(filename, script_args, module)
 
     return True
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     execute()

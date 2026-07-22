@@ -2,9 +2,9 @@
 Logging configuration with colored output.
 """
 
-import os
 import functools
 import logging
+import os
 import re
 import sys
 from pathlib import Path
