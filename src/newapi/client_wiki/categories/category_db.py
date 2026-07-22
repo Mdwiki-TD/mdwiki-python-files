@@ -135,7 +135,7 @@ class CategoryDepth:
 
         if self.ns in ["0", "10"]:
             params["gcmtype"] = "page"
-        elif int(self.ns) in [14]:
+        elif str(self.ns) == "14":
             params["gcmtype"] = "subcat"
 
         if self.nslist == [14]:
@@ -199,10 +199,10 @@ class CategoryDepth:
             else:
                 tablese["categories"] = categories
 
-    def pages_table_work(self, results: dict, pages: list[dict[str, Any]]) -> dict:
-        self.len_pages += len(pages)
+    def pages_table_work(self, results: dict, pages_list: list[dict[str, Any]]) -> dict:
+        self.len_pages += len(pages_list)
 
-        for item_data in pages:
+        for item_data in pages_list:
             # item_data exampe: { "pageid": 350939, "ns": 0, "title": "Yemen", "langlinks": [ { "lang": "ar", "title": "اليمن" } ] }
             cate_title = item_data["title"]
 
@@ -217,7 +217,7 @@ class CategoryDepth:
                 tablese["revid"] = revid
 
             if p_ns:
-                tablese["ns"] = item_data["ns"]
+                tablese["ns"] = item_data.get("ns", 0)
                 if not self._filter_by_namespace(p_ns):
                     continue
 
@@ -265,8 +265,18 @@ class CategoryDepth:
                 break
 
             continue_params = api_data.get("continue", {})
-            pages: list[dict[str, Any]] = api_data.get("query", {}).get("pages") or []
-            results = self.pages_table_work(results, pages)
+
+            pages = api_data.get("query", {}).get("pages") or []
+
+            pages_list = []
+            if isinstance(pages, list):
+                # {"pages": [{ "pageid": 3648118, "ns": 10, "title": "قالب:Ill-WD2/test", "revisions": [] }, ...
+                pages_list = pages
+            elif isinstance(pages, dict):
+                # {"pages": { "3648118": { "pageid": 3648118, "ns": 10, "title": "قالب:Ill-WD2/test", "revisions": [] }, ...
+                pages_list = list(pages.values())
+
+            results = self.pages_table_work(results, pages_list)
 
             if not continue_params:
                 break
@@ -335,8 +345,8 @@ class CategoryDepth:
 
         if not self.no_gcm_sort:
 
-            def _get_timestamps(item) -> int:
-                return self.timestamps.get(item[0], 0)
+            def _get_timestamps(item) -> str:
+                return self.timestamps.get(item[0], "")
 
             soro = sorted(self.result_table.items(), key=_get_timestamps, reverse=True)
             self.result_table = dict(soro)
