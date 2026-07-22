@@ -8,6 +8,7 @@ from md_core_helps.apis.mw_views import PageviewsClient
 # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
 """
+
 import logging
 import os
 import sys

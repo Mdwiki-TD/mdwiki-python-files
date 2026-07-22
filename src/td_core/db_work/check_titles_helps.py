@@ -2,6 +2,7 @@
 """
 from td_core.db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage, users_infos
 """
+
 import logging
 
 from mdwiki_api.wiki_page import MainPage, NewApi

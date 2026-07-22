@@ -2,6 +2,7 @@
 """
 python3 core8/pwb.py md_core/mdpy/sql_qids_others
 """
+
 import logging
 
 from db.mdapi_sql.sql_td_bot import toolforge_tools_sql_connect

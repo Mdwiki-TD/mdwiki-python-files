@@ -2,6 +2,7 @@
 """
 # revid    = mdwiki_api.GetRevid(title)
 """
+
 import logging
 from typing import Any
 

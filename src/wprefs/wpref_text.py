@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """
+
 import logging
 logger = logging.getLogger(__name__)
 
 from wprefs.wpref_text import fix_page
 # fix_page(text, title)
 """
+
 import re
 import sys
 

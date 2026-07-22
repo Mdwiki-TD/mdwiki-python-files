@@ -7,6 +7,7 @@ python3 core8/pwb.py td_core/mdpages/create_qids
 from td_core.mdpages.create_qids import create_qids
 
 """
+
 import logging
 
 from db.mdapi_sql.services import sql_qids

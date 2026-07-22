@@ -4,6 +4,7 @@
 python3 core8/pwb.py md_core/add_rtt/bot
 
 """
+
 import logging
 
 import wikitextparser as wtp

@@ -4,6 +4,7 @@
 from md_core_helps.apis.wd_bots.wikidataapi_post import log_to_wiki, post_it
 
 """
+
 import functools
 import logging
 import sys

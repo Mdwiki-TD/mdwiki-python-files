@@ -4,6 +4,7 @@
 python3 core8/pwb.py td_core/db_work/days_7
 
 """
+
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki

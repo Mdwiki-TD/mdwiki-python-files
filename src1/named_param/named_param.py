@@ -10,6 +10,7 @@ from md_core.add_rtt.named_param import add_param_named
 tfj run renamep --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py md_core/add_rtt/named_param"
 
 """
+
 import logging
 
 import wikitextparser as wtp
