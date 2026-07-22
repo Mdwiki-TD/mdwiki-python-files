@@ -125,7 +125,7 @@ def execute():
     filename, script_args = handle_args(*sys.argv)
 
     if not filename:
-        warn("No filename given")
+        warn("No filename given", stacklevel=2)
         return False
 
     file_package = None
@@ -163,7 +163,7 @@ def execute():
             try:
                 module = import_module(file_package)
             except ImportError as e:
-                warn(f"Parent module {file_package} not found: {e}", ImportWarning)
+                warn(f"Parent module {file_package} not found: {e}", ImportWarning, stacklevel=2)
 
     run_python_file(filename, script_args, module)
 
