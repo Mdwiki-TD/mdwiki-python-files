@@ -103,10 +103,10 @@ class WorkAll:
     def get_sectios_links(self) -> None:
         for s in self.sections:
             # ---
-            t = s.title
-            c = s.contents
+            title = s.title
+            contents = s.contents
             # ---
-            if c is None or t is None:
+            if not contents or title is None:
                 continue
             # ---
             # parser2 = wikitextparser.parse(c)
@@ -120,17 +120,17 @@ class WorkAll:
             if len(wikilinks) == 0:
                 continue
             # ---
-            t = t.replace("/", "-")
+            title = title.replace("/", "-")
             # ---
             _all_ = {a: self.All[a] for a in wikilinks if a in self.All}
             # ---
             if len(_all_) < 150 or "split" not in sys.argv:
-                self.all_sections[t] = _all_
+                self.all_sections[title] = _all_
                 continue
             # ---
             numb = 150
             # ---
-            if t == "Other drugs - procedures":
+            if title == "Other drugs - procedures":
                 numb = 103
             # ---
             elif len(_all_) < 300:
@@ -144,7 +144,7 @@ class WorkAll:
                 # ---
                 las = dict(list(_all_.items())[i : i + numb])
                 # ---
-                ta = f"{t}_{n}"
+                ta = f"{title}_{n}"
                 # ---
                 self.all_sections[ta] = las
                 # ---

@@ -42,7 +42,7 @@ def get_links_from_cats(getcat: str = ""):
     return titles
 
 
-def get_valid_Links(words_tab):
+def get_valid_links(words_tab):
     # ---
     vav = get_links_from_cats()
     # ---
@@ -75,8 +75,8 @@ def get_valid_Links(words_tab):
         vav = [x.strip() for x in ttt.split("\n") if x.strip() != ""]
     # ---
     elif "fromlist" in sys.argv:
-        vav = mdwiki_api_call.Get_page_links("WikiProjectMed:List")
-        vav = vav.get("links", {}).keys()
+        result = mdwiki_api_call.Get_page_links("WikiProjectMed:List")
+        vav = result.get("links", {}).keys()
         logger.info("Get vaild_links fromlist : WikiProjectMed:List")
     # ---
     else:

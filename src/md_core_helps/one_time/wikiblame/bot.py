@@ -68,7 +68,7 @@ class WikiBlame:
 
     def parse_content(self):
         """Parse the content of the web page."""
-        if self.content is None:
+        if not self.content:
             logger.info("No content fetched yet. Run fetch_content() first.")
             return None
 

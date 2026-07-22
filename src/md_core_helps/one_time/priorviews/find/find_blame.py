@@ -38,7 +38,7 @@ for lla, titles in links_by_lang.items():
         if tra_by_lang.get(lla, {}).get(x, "") == "" and tra_by_lang.get(lla, {}).get(x.lower(), "") == ""
     ]
 # ---
-COUNTS_ALL = 0
+counts_all = 0
 # ---
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
@@ -93,7 +93,7 @@ def logem() -> None:
 
 def get_b(links, lang) -> None:
     # ---
-    global new_data, COUNTS_ALL
+    global new_data, counts_all
     # ---
     if lang not in new_data:
         new_data[lang] = {}
@@ -121,9 +121,9 @@ def get_b(links, lang) -> None:
         # ---
         m += 1
         # ---
-        COUNTS_ALL += 1
+        counts_all += 1
         # ---
-        if COUNTS_ALL % 200 == 0:
+        if counts_all % 200 == 0:
             logem()
         # ---
         value_in = new_data[lang].get(title_lower) or new_data[lang].get(title) or ""

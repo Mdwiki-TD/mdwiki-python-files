@@ -22,7 +22,7 @@ Dir = str(Path(__file__).parents[0])
 que = """select DISTINCT title, importance from assessments;"""
 # ---
 NEW_DATA_duplicate = {}
-NEW_DATA = {}
+new_data = {}
 # ---
 with open(paths.json_files.assessments, "r", encoding="utf-8") as f:
     data_in_json = json.load(f)
@@ -30,20 +30,20 @@ with open(paths.json_files.assessments, "r", encoding="utf-8") as f:
 data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}
 # ---
 for x, numb in data_in_json.items():
-    NEW_DATA[x] = numb
+    new_data[x] = numb
 # ---
-logger.info(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
+logger.info(f"{len(new_data)=}, {len(NEW_DATA_duplicate)=}")
 # ---
 in_sql = {}
 # ---
 for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
     title = q["title"]
-    if not NEW_DATA.get(title):
+    if not new_data.get(title):
         in_sql[title] = q["importance"]
 # ---
 logger.info(f"{len(in_sql)=}")
 # ---
-NEW_DATA.update(in_sql)
+new_data.update(in_sql)
 # ---
 text = """
 -- Adminer 4.8.1 MySQL 5.5.5-10.6.20-MariaDB-log dump
@@ -70,8 +70,8 @@ n = 0
 # ---
 lines = []
 # ---
-# sort NEW_DATA by importance
-NEW_DATA = dict(sorted(NEW_DATA.items(), key=lambda item: item[1]))
+# sort new_data by importance
+NEW_DATA = dict(sorted(new_data.items(), key=lambda item: item[1]))
 # ---
 len_empty = len([x for x in NEW_DATA.values() if not x])
 # ---

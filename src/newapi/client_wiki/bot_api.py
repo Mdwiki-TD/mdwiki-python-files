@@ -475,15 +475,9 @@ class NewApi(NewApiHelpers):
         rcstart: str = "",
         user: str = "",
         three_houers: bool = False,
-        offset_minutes: bool = False,
-        offset_hours: bool = False,
     ) -> list[str]:
         if three_houers:
             dd = datetime.datetime.now(datetime.UTC) - timedelta(hours=3)
-            rcstart = dd.strftime("%Y-%m-%dT%H:%M:00.000Z")
-
-        elif offset_minutes and isinstance(offset_minutes, int):
-            dd = datetime.datetime.now(datetime.UTC) - timedelta(minutes=offset_minutes)
             rcstart = dd.strftime("%Y-%m-%dT%H:%M:00.000Z")
 
         params = {

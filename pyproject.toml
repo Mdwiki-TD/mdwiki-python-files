@@ -248,11 +248,23 @@ exclude = [
 ]
 
 # Diagnostic modes: "basic" or "standard" or "strict"
-typeCheckingMode = "standard"
+typeCheckingMode = "strict"
 
 # Automatically find virtual environments
 venvPath = "."
 venv = ".venv"
+
+reportUnknownLambdaType = false
+reportPrivateUsage = false
+reportMissingTypeArgument = false
+reportUnknownMemberType = false
+reportUnknownVariableType = false
+
+reportUnusedVariable = false
+reportMissingParameterType = false
+reportUnknownParameterType = false
+reportMissingTypeStubs = false
+reportUnknownArgumentType = false
 
 # Fine-tune specific warning rules
 reportPossiblyUnboundVariable = true
@@ -262,7 +274,7 @@ strictParameterNoneValue = true
 enableTypeIgnoreComments = true
 reportMissingModuleSource = "warning"
 reportInvalidTypeForm = "warning"
-reportMissingImports = "warning"
+reportMissingImports = "error"
 reportUndefinedVariable = "warning"
 
 reportAttributeAccessIssue = "warning"

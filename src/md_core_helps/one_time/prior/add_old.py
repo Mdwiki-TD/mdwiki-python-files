@@ -121,13 +121,13 @@ class PriorAddOld:
                 logger.info(f"p0/\told\t\t{lenex_lead1} lead_extlinks, {lenre_lead1} lead_refsname")
                 # ---
                 data_new[title] = tab
-        # ---
-        if data_new == data:
-            logger.info(f"no change: {filename}")
-        else:
             # ---
-            with open(filename, "w", encoding="utf-8") as file:
-                json.dump(data_new, file)
+            if data_new == data:
+                logger.info(f"no change: {filename}")
+            else:
+                # ---
+                with open(filename, "w", encoding="utf-8") as file:
+                    json.dump(data_new, file)
 
 
 # ---

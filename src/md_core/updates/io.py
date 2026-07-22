@@ -64,9 +64,7 @@ def get_timestamp(titles) -> None:
             NewList[page] = timestamp
         # ---
         if str(num).endswith("00"):
-            logger.info("page:%d:%s,timestamp:%s" % (num, page, timestamp))
-
-        # ---
+            logger.info("page:%d:%s", num, page)
 
 
 # ---

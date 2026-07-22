@@ -142,16 +142,16 @@ class InOldText:
         # ---
         self.newtext = json1.get("parse", {}).get("wikitext", "")
 
-    def Words(self):
+    def count_words(self) -> int:
         logger.info(f"\t\twords: {self.words}")
         return self.words
 
 
-def get_words(title, lang):
+def get_words(title, lang) -> int:
     # ---
     bot = InOldText(title, lang=lang)
     # ---
-    words = bot.Words()
+    words = bot.count_words()
     # ---
     return words
 

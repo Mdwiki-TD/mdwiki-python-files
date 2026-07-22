@@ -3,7 +3,7 @@
 # revid    = mdwiki_api.GetRevid(title)
 """
 import logging
-from typing import Union
+from typing import Any, Union
 
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
 
@@ -178,7 +178,7 @@ def GetRevid(title):
     return ""
 
 
-def Get_page_links(title, namespace: str = "0", limit: Union[int, str] = "max"):
+def Get_page_links(title, namespace: str = "0", limit: Union[int, str] = "max",) -> dict[str, dict[Any, Any] | list[Any]]:
     # ---
     logger.info(f' for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
     # ---
