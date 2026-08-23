@@ -50,7 +50,7 @@ def count_text(text: str):
 def count_all(title: str = "", text: str = ""):
     # ---
     if text == "" and title != "":
-        text = mdwiki_api_call.GetPageText(title)
+        text = mdwiki_api_call.get_page_text(title)
     # ---
     parsed = wtp.parse(text)
     # ---

@@ -49,7 +49,7 @@ def add_lang_en(text: str, lang: str = ""):
     return text
 
 
-def remove_False_code(text: str):
+def remove_false_code(text: str):
     # ---
     if "newcite" not in sys.argv:
         return text
@@ -113,7 +113,7 @@ def fix_page(
     if infobox:
         newtext = expend_infobox(newtext, title, section_0)
     # ---
-    newtext = remove_False_code(newtext)
+    newtext = remove_false_code(newtext)
     # ---
     # match and delete any text like {{mdwiki revid|555}}
     newtext = re.sub(r"\{\{mdwiki[ _]revid\s*\|\s*(\d+)\s*\}\}", "", newtext, flags=re.IGNORECASE)

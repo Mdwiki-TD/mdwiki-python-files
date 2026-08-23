@@ -1,5 +1,7 @@
 """Timing decorator for profiling function execution."""
 
+from __future__ import annotations
+
 import functools
 import logging
 import time

@@ -8,7 +8,7 @@ import re
 import sys
 
 from md_core_helps.apis.cat_cach import from_cache
-from md_core_helps.apis.mdwiki_api_call import Get_All_pages
+from md_core_helps.apis.mdwiki_api_call import get_all_pages
 from md_core_helps.apis.wiki_api import submitAPI
 from md_core_helps.bots.check_title import valid_title
 from td_core.td_dirs import paths
@@ -30,7 +30,7 @@ def load_td_list() -> list[str]:
 def load_all_pages() -> list[str]:
     logger.info("Get_All_pages:")
     # ---
-    all_pages: list[str] = Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
+    all_pages: list[str] = get_all_pages("!", namespace="0", apfilterredir="nonredirects")
     all_pages = [x for x in all_pages if valid_title(x)]
     # ---
     return all_pages

@@ -42,7 +42,7 @@ def work(title) -> None:
     # ---
     # global values
     # ---
-    text = mdwiki_api_call.GetPageText(title)
+    text = mdwiki_api_call.get_page_text(title)
     # ---
     ingr = txtlib.extract_templates_and_params(text)
     # ---
@@ -152,7 +152,7 @@ def main() -> None:
     global values
     # ---
     if "read" in sys.argv:
-        listas = mdwiki_api_call.Get_template_pages("Template:Ourworldindatamirror", namespace="0", limit="max")
+        listas = mdwiki_api_call.get_template_pages("Template:Ourworldindatamirror", namespace="0", limit="max")
         # ---
         num = 0
         # ---

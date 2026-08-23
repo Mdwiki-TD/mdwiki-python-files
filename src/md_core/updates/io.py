@@ -29,7 +29,7 @@ if date_before_20200701.exists():
     fska = date_before_20200701.read_text()
     fakalist = [x.strip().split("]]")[0].replace("[[", "").strip() for x in fska.split("\n")]
 # ---
-listo = mdwiki_api_call.Get_All_pages("!", namespace="0")
+listo = mdwiki_api_call.get_all_pages("!", namespace="0")
 listo = [x for x in listo if x not in fakalist]
 if "test" in sys.argv:
     listo = listo[:100]

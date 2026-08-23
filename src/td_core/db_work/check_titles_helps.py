@@ -5,7 +5,7 @@ from td_core.db_work.check_titles_helps import get_new_target_log, Find_pages_ex
 
 import logging
 
-from mdwiki_api.wiki_page import MainPage, NewApi
+from mdwiki_api.wiki_page import mainpage, newapi
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ def get_new_target_log(lang, target):
     # ---
     to_check = target
     # ---
-    api_new1 = NewApi(lang, family="wikipedia")
+    api_new1 = newapi(lang, family="wikipedia")
     # ---
     logger.info(f"() lang:{lang}, target:{target}")
     # ---
@@ -63,18 +63,18 @@ def get_new_target_log(lang, target):
 
 
 def Find_pages_exists(lang, titles):
-    api_newx = NewApi(lang, family="wikipedia")
-    pages = api_newx.Find_pages_exists_or_not(titles, get_redirect=True)
+    api_newx = newapi(lang, family="wikipedia")
+    pages = api_newx.find_pages_exists_or_not(titles, get_redirect=True)
     # ---
     return pages
 
 
 def users_infos(lang, users):
-    api_newx = NewApi(lang, family="wikipedia")
+    api_newx = newapi(lang, family="wikipedia")
     result = api_newx.users_infos(ususers=users)
     # ---
     return result
 
 
 def WikiPage(title, lang, family: str = "wikipedia"):
-    return MainPage(title, lang, family=family)
+    return mainpage(title, lang, family=family)

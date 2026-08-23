@@ -19,7 +19,7 @@ import random
 import sys
 from pathlib import Path
 
-from wprefs.api import GetPageText  # , page_put
+from wprefs.api import get_page_text  # , page_put
 from wprefs.files import save_wprefcash, setting
 from wprefs.helps import ec_de_code
 
@@ -82,7 +82,7 @@ def one_page(page, lang) -> str:
 
     title = ec_de_code(page, "decode")
     # ---
-    text = GetPageText(title, lang=lang, print_text=False)
+    text = get_page_text(title, lang=lang, print_text=False)
     # ---
     if not text:
         logger.info("notext")

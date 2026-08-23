@@ -110,7 +110,7 @@ def add_tag() -> None:
     qids, vals_d = get_qids()
     # ---
     # all_pages = api_new.Get_All_pages(start="", namespace="0", apfilterredir="nonredirects", ppprop="")
-    all_pages_tab = api_new.Get_All_pages_generator(
+    all_pages_tab = api_new.get_all_pages_generator(
         start="",
         namespace="0",
         limit="max",

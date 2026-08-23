@@ -6,7 +6,7 @@ from md_core_helps.apis import wiki_api
 # ---
 """
 
-from mdwiki_api.wiki_page import NewApi
+from mdwiki_api.wiki_page import newapi
 
 api_news = {}
 
@@ -16,7 +16,7 @@ def submitAPI(params, site: str = "", returnjson: bool = False):
     params["format"] = "json"
     # ---
     if site not in api_news:
-        api_news[site] = NewApi(site, family="wikipedia")
+        api_news[site] = newapi(site, family="wikipedia")
         # api_news[site].Login_to_wiki()
     # ---
     json1 = api_news[site].post_params(params, addtoken=True)

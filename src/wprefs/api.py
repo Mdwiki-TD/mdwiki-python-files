@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from wprefs.api import log, submitAPI, GetPageText, missingtitles, page_put
+from wprefs.api import log, submitAPI, get_page_text, missingtitles, page_put
 
 """
 
@@ -214,7 +214,7 @@ def get_revisions(title, lang: str = "") -> list[Any]:
     return revisions
 
 
-def GetPageText(title, lang: str = "", print_text: bool = True):
+def get_page_text(title, lang: str = "", print_text: bool = True):
     # ---
     params = {
         "action": "parse",

@@ -25,7 +25,7 @@ thenumbers = {1: 20000, "done": 0}
 def work(title) -> None:
     Ask = "ask" in sys.argv
     # ---
-    text = mdwiki_api_call.GetPageText(title)
+    text = mdwiki_api_call.get_page_text(title)
     # ---
     summary = "Normalize references"
     # ---
@@ -57,7 +57,7 @@ def main() -> None:
             List = [x.strip() for x in text.split("\n") if x.strip() != ""]
         # ---
         if arg == "allpages":
-            List = mdwiki_api_call.Get_All_pages("")
+            List = mdwiki_api_call.get_all_pages("")
         # ---
         # python pwb.py md_core/mdpy/fixref/start -cat:CS1_errors:_deprecated_parameters ask
         if arg == "-cat":

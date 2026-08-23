@@ -10,7 +10,7 @@ import re
 import sys
 from pathlib import Path
 
-from mdwiki_api.wiki_page import MainPage, NewApi
+from mdwiki_api.wiki_page import mainpage, newapi
 
 logger = logging.getLogger(__name__)
 
@@ -47,17 +47,17 @@ def new_search() -> None:
     global toto
     toto = {}
     # ---
-    api_new = NewApi("en", family="wikipedia")
+    api_new = newapi("en", family="wikipedia")
     # ---
     vv = 'insource:"cdc.gov/niosh/"'
-    search = api_new.Search(value=vv, ns="0", offset="", srlimit="", return_dict=False, addparams={})
+    search = api_new.search(value=vv, ns="0", offset="", srlimit="", return_dict=False, addparams={})
     # ---
     na = 0
     nn = len(search)
     # ---
     for x in search:
         na += 1
-        page = MainPage(x, "en", family="wikipedia")
+        page = mainpage(x, "en", family="wikipedia")
         logger.info(f"p:{na}/{nn}, title:{x}, get_extlinks:")
         extlinks = page.get_extlinks()
         toto[x] = extlinks

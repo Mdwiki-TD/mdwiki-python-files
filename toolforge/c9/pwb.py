@@ -29,7 +29,7 @@ def run_python_file(filename: str, args: list[str], package=None):
     main_mod = types.ModuleType("__main__")
     sys.modules["__main__"] = main_mod
     main_mod.__file__ = filename
-    main_mod.__builtins__ = sys.modules["builtins"] # pyright: ignore[reportAttributeAccessIssue]
+    main_mod.__builtins__ = sys.modules["builtins"]  # pyright: ignore[reportAttributeAccessIssue]
     if package:
         main_mod.__package__ = package.__name__
 
