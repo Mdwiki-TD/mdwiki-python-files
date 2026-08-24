@@ -5,37 +5,25 @@ python3 core8/pwb.py md_core/mdpy/sql_qids_others
 
 import logging
 
-from db.mdapi_sql.sql_td_bot import toolforge_tools_sql_connect
+from db.mdapi_sql.sql_td_bot import tf_sql_connect_dict
 
 logger = logging.getLogger(__name__)
 
-
-def _mdwiki_sql(query, values=None):
-    # ---
-    if not query:
-        logger.info("query == ''")
-        return {}
-    # ---
-    return toolforge_tools_sql_connect(
-        query,
-        return_dict=True,
-        values=values,
-        many=False,
-    )
+TABLE_NAME = "qids_others"
 
 
-def get_others_qids():
+def get_others_qids() -> dict[str, str]:
     # ---
     # xxxx iiii oooo gggg
     # ---
-    sq = _mdwiki_sql("select DISTINCT title, qid from qids_others;")
+    sq = tf_sql_connect_dict(f"select DISTINCT title, qid from {TABLE_NAME};")
     return {ta["title"]: ta["qid"] for ta in sq}
 
 
 def add_qid(title, qid):
     logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
-    qua = """
-        INSERT INTO qids_others (title, qid)
+    qua = f"""
+        INSERT INTO {TABLE_NAME} (title, qid)
         SELECT %s, %s
         WHERE NOT EXISTS ( SELECT 1 FROM qids WHERE title = %s and qid = %s)
         AND NOT EXISTS   (SELECT 1 FROM qids_others WHERE title = %s and qid = %s)
@@ -44,48 +32,48 @@ def add_qid(title, qid):
     # ---
     values = [title, qid, title, qid, title, qid]
     # ---
-    return _mdwiki_sql(qua, values=values)
+    return tf_sql_connect_dict(qua, values=values)
 
 
 def set_qid_where_qid(new_qid, old_qid):
     logger.info(f"<<yellow>> () new_qid:{new_qid}, old_qid:{old_qid}")
     # ---
-    qua = "UPDATE qids_others set qid = %s where qid = %s;"
+    qua = f"UPDATE {TABLE_NAME} set qid = %s where qid = %s;"
     values = [new_qid, old_qid]
     # ---
-    return _mdwiki_sql(qua, values=values)
+    return tf_sql_connect_dict(qua, values=values)
 
 
 def set_qid_where_title(title, qid):
     logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
     # ---
-    qua = "UPDATE qids_others set qid = %s where title = %s;"
+    qua = f"UPDATE {TABLE_NAME} set qid = %s where title = %s;"
     values = [qid, title]
     # ---
-    return _mdwiki_sql(qua, values=values)
+    return tf_sql_connect_dict(qua, values=values)
 
 
 def delete_title_from_db(title, pr: str = ""):
-    qua = "DELETE FROM qids_others where title = %s;"
+    qua = f"DELETE FROM {TABLE_NAME} where title = %s;"
     # ---
-    logger.info(f"<<yellow>> {pr} (qids_others) title:{title}")
+    logger.info(f"<<yellow>> {pr} ({TABLE_NAME}) title:{title}")
     # ---
-    return _mdwiki_sql(qua, values=[title])
+    return tf_sql_connect_dict(qua, values=[title])
 
 
 def set_title_where_qid(new_title, qid):
     # ---
     logger.info(f"<<yellow>> () new_title:{new_title}, qid:{qid}")
     # ---
-    qua = "UPDATE qids_others set title = %s where qid = %s;"
+    qua = f"UPDATE {TABLE_NAME} set title = %s where qid = %s;"
     values = [new_title, qid]
     # ---
-    return _mdwiki_sql(qua, values=values)
+    return tf_sql_connect_dict(qua, values=values)
 
 
 def qids_set_title_where_title_qid(old_title, new_title, qid, no_do: bool = False):
     # ---
-    qua = "UPDATE qids_others set title = %s where qid = %s and title = %s;"
+    qua = f"UPDATE {TABLE_NAME} set title = %s where qid = %s and title = %s;"
     values = [new_title, qid, old_title]
     # ---
     if no_do:
@@ -94,7 +82,7 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do: bool = Fals
     # ---
     logger.info(f"<<yellow>> () {new_title=}, {qid=}, {old_title=}")
     # ---
-    return _mdwiki_sql(qua, values=values)
+    return tf_sql_connect_dict(qua, values=values)
 
 
 def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:

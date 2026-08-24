@@ -76,7 +76,7 @@ def get_lang_links(md_links):
         if title not in lang_links:
             lang_links[title] = {"en": title, "redirect_to": "", "langs": {}}
         # ---
-        if page.isRedirect():
+        if page.isredirect():
             target = page.get_redirect_target()
             if target != "":
                 page = mainpage(target, "en")

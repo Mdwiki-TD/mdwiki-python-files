@@ -126,7 +126,7 @@ def main() -> None:
         # ---
         titles = api_new.Search(value=find, ns="0", srlimit="max", return_dict=False, addparams=Add_pa)
     else:
-        titles = api_new.Get_All_pages()
+        titles = api_new.get_all_pages()
     # ---
     text = f"start work in {len(titles)} pages."
     line = f"<span style='font-size:12px'>{text}</span>"

@@ -42,7 +42,7 @@ def dodo_sql() -> None:
     # ---
     logger.info(que)
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
     len_no_target = 0
     len_done_target = 0

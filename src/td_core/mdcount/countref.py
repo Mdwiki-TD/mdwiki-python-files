@@ -64,7 +64,7 @@ def from_sql(old_values):
     # introduced when an article belongs to multiple categories.
     que = """select DISTINCT article_id from category_members;"""
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
     titles2 = [q["article_id"] for q in sq]
     # ---

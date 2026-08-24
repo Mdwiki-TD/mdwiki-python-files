@@ -50,7 +50,7 @@ def new_search() -> None:
     api_new = newapi("en", family="wikipedia")
     # ---
     vv = 'insource:"cdc.gov/niosh/"'
-    search = api_new.search(value=vv, ns="0", offset="", srlimit="", return_dict=False, addparams={})
+    search = api_new.api_search(value=vv, ns="0", offset="", srlimit="", return_dict=False, addparams={})
     # ---
     na = 0
     nn = len(search)

@@ -28,7 +28,7 @@ def load_td_list() -> list[str]:
 
 @functools.lru_cache(maxsize=1)
 def load_all_pages() -> list[str]:
-    logger.info("Get_All_pages:")
+    logger.info("get_all_pages:")
     # ---
     all_pages: list[str] = get_all_pages("!", namespace="0", apfilterredir="nonredirects")
     all_pages = [x for x in all_pages if valid_title(x)]

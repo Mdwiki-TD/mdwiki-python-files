@@ -67,6 +67,7 @@ class MainPage:
         self.langlinks: dict[str, str] = {}
 
         self.meta = Meta()
+        self.meta.username = self.login_bot.username
         self.content = Content()
         self.revisions_data = RevisionsData()
         self.links_data = LinksData()
@@ -94,6 +95,20 @@ class MainPage:
             files=files,
             **kwargs,
         )
+
+    def is_bot_edit_invalid(self, summary: str | None = None):
+        """
+        Ensures that MediaWiki page edits are blocked and aborted with error code empty_summary
+        if the logged-in user is a bot
+        """
+        actual_summary = summary or self.content.summary
+        if self.login_bot.is_bot:
+            if not actual_summary or not actual_summary.strip():
+                logger.warning(
+                    f"Aborting edit for {self.title} because the user is a bot and the summary is empty or only whitespace."
+                )
+                return True
+        return False
 
     def false_edit(self) -> bool:
         # self.newtext
@@ -125,33 +140,6 @@ class MainPage:
 
         return False
 
-    def import_page(self, family: str = "wikipedia"):
-        """
-        Imports the page from another wiki family using the MediaWiki API.
-
-        Args:
-            family: The source wiki family from which to import the page (default is "wikipedia").
-
-        Returns:
-            The API response data from the import operation.
-        """
-        params = {
-            "action": "import",
-            "format": "json",
-            "interwikisource": family,
-            "interwikipage": self.title,
-            "fullhistory": 1,
-            "assignknownusers": 1,
-        }
-
-        data = self.login_bot.client_request_safe(params)
-
-        done = data.get("import", [{}])[0].get("revisions", 0)
-
-        logger.info(f"<<lightgreen>> imported {done} revisions")
-
-        return data
-
     def find_create_data(self):
         """
         Retrieves and stores the creation metadata of the page's first revision.
@@ -161,7 +149,7 @@ class MainPage:
         Returns:
             dict: A dictionary containing 'timestamp', 'user', and 'anon' keys for the page's creation.
         """
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "revisions",
@@ -190,7 +178,7 @@ class MainPage:
 
         return self.meta.create_data
 
-    def get_text(self, redirects: bool = False):
+    def get_text(self, redirects: bool = False) -> str:
         """
         Retrieves the current wikitext content and metadata for the page.
 
@@ -202,7 +190,7 @@ class MainPage:
         Returns:
             The wikitext content of the page.
         """
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "prop": "revisions|pageprops|flagged",
             "titles": self.title,
@@ -256,7 +244,7 @@ class MainPage:
 
         return self.text
 
-    def get_qid(self):
+    def get_qid(self) -> str:
         """Retrieve the QID from the wikibase item.
 
         This function checks if the `wikibase_item` attribute is set. If it is
@@ -277,7 +265,7 @@ class MainPage:
 
         Retrieves and stores categories (including hidden), language links, templates, backlinks, interwiki links, and page information such as namespace, page ID, length, last revision ID, and last touched timestamp. Updates instance attributes with the fetched data for later access.
         """
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "titles": self.title,
             "prop": "categories|langlinks|templates|linkshere|iwlinks|info",
@@ -327,12 +315,12 @@ class MainPage:
                 del cat["hidden"]
                 self.categories_data.categories[category_title] = cat
 
-        if ta.get("langlinks", []) != []:
+        if ta.get("langlinks", []):
             # {"lang": "ca", "*": "UCI World Tour 2023"} or {'lang': 'bh', 'title': 'टेम्पलेट:AWB'}
 
             self.langlinks = {ta["lang"]: ta.get("*") or ta.get("title") for ta in ta.get("langlinks", [])}
 
-        if ta.get("templates", []) != []:
+        if ta.get("templates", []):
             # 'templates': [{'ns': 10, 'title': 'قالب:No redirect'}],
 
             self.template_data.templates_api = [ta["title"] for ta in ta.get("templates", [])]
@@ -344,24 +332,8 @@ class MainPage:
 
         self.meta.info["done"] = True
 
-    def get_text_html(self):
-        params = {
-            "action": "parse",
-            "page": self.title,
-            "formatversion": "2",
-            "prop": "text",
-        }
-
-        data = self.login_bot.client_request_safe(params)
-
-        # _data_ = { 'warnings': { 'main': { 'warnings': 'Unrecognized parameter: bot.' } }, 'parse': { 'title': 'ويكيبيديا:ملعب', 'pageid': 361534, 'text': '' } }
-
-        self.content.text_html = data.get("parse", {}).get("text", "")
-
-        return self.content.text_html
-
     def get_redirect_target(self):
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "titles": self.title,
             "prop": "info",
@@ -379,36 +351,12 @@ class MainPage:
         to = redirects.get("to", "")
 
         if to:
-            logger.debug(f"<<lightyellow>>Page:({self.title}) redirect to ({to})")
+            logger.debug(f"Page:({self.title}) redirect to ({to})")
 
         return to
 
-    def get_words(self):
-        srlimit = "30"
-        params = {
-            "action": "query",
-            "list": "search",
-            "srsearch": self.title,
-            "srlimit": srlimit,
-        }
-        data = self.login_bot.client_request_safe(params)
-
-        if not data:
-            return 0
-
-        search = data.get("query", {}).get("search", [])
-
-        for pag in search:
-            tit = pag["title"]
-            if tit == self.title:
-                count = pag["wordcount"]
-                self.content.words = count
-                break
-
-        return self.content.words
-
     def get_extlinks(self):
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "extlinks",
@@ -423,7 +371,7 @@ class MainPage:
         continue_params = {}
         while True:
             if continue_params:
-                # params = {**params, **continue_params}
+                # params: dict[str, Any] = {**params, **continue_params}
                 params.update(continue_params)
 
             json1 = self.login_bot.client_request_safe(params, method="get")
@@ -447,7 +395,7 @@ class MainPage:
 
     def get_userinfo(self):
         if len(self.meta.userinfo) == 0:
-            params = {
+            params: dict[str, Any] = {
                 "action": "query",
                 "format": "json",
                 "list": "users",
@@ -467,18 +415,18 @@ class MainPage:
 
         return self.meta.userinfo
 
-    def isRedirect(self):
+    def isredirect(self):
         if not self.meta.is_redirect:
             self.get_infos()
 
         return self.meta.is_redirect
 
-    def isDisambiguation(self):
+    def isdisambiguation(self):
         # if the title ends with '(توضيح)' or '(disambiguation)'
         self.meta.is_disambig = self.title.endswith("(توضيح)") or self.title.endswith("(disambiguation)")
 
         if self.meta.is_disambig:
-            logger.debug(f'<<lightred>> page "{self.title}" is Disambiguation / توضيح')
+            logger.debug(f'page "{self.title}" is Disambiguation / توضيح')
 
         return self.meta.is_disambig
 
@@ -498,63 +446,13 @@ class MainPage:
 
         return self.categories_data.hidden_categories
 
-    def get_langlinks(self):
+    def get_langlinks(self) -> dict[str, str]:
         if not self.meta.info["done"]:
             self.get_infos()
 
         return self.langlinks
 
-    def get_templates_API(self):
-        if not self.meta.info["done"]:
-            self.get_infos()
-
-        return self.template_data.templates_api
-
-    def get_links_here(self):
-        if not self.meta.info["done"]:
-            self.get_infos()
-
-        return self.links_data.links_here
-
-    def get_wiki_links_from_text(self):
-        if not self.text:
-            self.text = self.get_text()
-
-        parsed = wtp.parse(self.text)
-        wikilinks = parsed.wikilinks
-
-        # logger.info(f'wikilinks:{str(wikilinks)}')
-
-        # for x in wikilinks:
-        #     print(x.title)
-
-        return wikilinks
-
-    def Get_tags(self, tag: str = ""):
-        if not self.text:
-            self.text = self.get_text()
-
-        self.text = self.text.replace("<ref>", '<ref name="ss">', 1)
-
-        parsed = wtp.parse(self.text)
-        tags = parsed.get_tags()
-
-        # logger.info(f'tags:{str(tags)}')
-
-        if not tag:
-            return tags
-
-        new_tags: list = []
-
-        for x in tags:
-            if x.name == tag:
-                new_tags.append(x)
-
-        # return tags if tag == '' else [x for x in tags if x.name == tag]
-
-        return new_tags
-
-    def can_edit(self, script: str = "", delay: int = 0):
+    def can_edit(self, script: str = "", delay: int = 0) -> bool:
         if self.family != "wikipedia":
             return True
 
@@ -577,20 +475,6 @@ class MainPage:
 
         return self.meta.can_be_edit
 
-    def is_flagged(self):
-        """
-        Returns whether the page is flagged for review or quality control.
-
-        If the page text has not been loaded, it is retrieved before checking the flagged status.
-
-        Returns:
-            bool: True if the page is flagged, False otherwise.
-        """
-        if not self.text:
-            self.text = self.get_text()
-
-        return self.meta.flagged
-
     def get_create_data(self):
         """
         Returns the page creation metadata, fetching it if not already loaded.
@@ -611,21 +495,7 @@ class MainPage:
             self.get_text()
         return self.revisions_data.timestamp
 
-    def get_newrevid(self):
-        # newrevid is only populated on successful edit/create responses.
-        if not self.revisions_data.newrevid:
-            # Ensure we at least have the current revid loaded.
-            if not self.revisions_data.revid:
-                self.get_text()
-        # Fallback to current revid if no newrevid exists.
-        return self.revisions_data.newrevid or self.revisions_data.revid
-
-    def get_revid(self):
-        if not self.revisions_data.revid:
-            self.get_text()
-        return self.revisions_data.revid
-
-    def exists(self):
+    def exists(self) -> bool:
         if not self.meta.Exists:
             self.get_text()
 
@@ -633,22 +503,11 @@ class MainPage:
             logger.info(f'page "{self.title}" not exists in {self.lang}:{self.family}')
         return self.meta.Exists
 
-    def namespace(self):
+    def namespace(self) -> bool | int:
         if self.ns is False:
             self.get_text()
         logger.debug(f"namespace: {self.ns}")
         return self.ns
-
-    def get_user(self):
-        if not self.user:
-            self.get_text()
-        return self.user
-
-    def get_templates(self) -> list[dict[str, Any]]:
-        if not self.text:
-            self.text = self.get_text()
-        self.template_data.templates = txtlib.extract_templates_and_params(self.text)
-        return self.template_data.templates
 
     def edit(
         self,
@@ -666,6 +525,9 @@ class MainPage:
         self.newtext = newtext
         if summary:
             self.content.summary = summary
+
+        if self.is_bot_edit_invalid(summary):
+            return {"success": False, "error_code": "empty_summary"}
 
         if self.false_edit():
             return {"success": False, "error_code": "false_edit"}
@@ -687,7 +549,7 @@ class MainPage:
         ):
             return {"success": False, "error_code": "user_abort"}
 
-        params = {
+        params: dict[str, Any] = {
             "action": "edit",
             "title": self.title,
             "text": newtext,
@@ -721,10 +583,10 @@ class MainPage:
         if result.lower() == "success":
             self.text = newtext
             self.user = ""
-            logger.warning(f"<<lightgreen>> ** true .. [[{self.lang}:{self.family}:{self.title}]] ")
+            logger.warning(f"** true .. [[{self.lang}:{self.family}:{self.title}]] ")
             logger.debug(f"save success for {self.title}")
 
-            self._update_revisions_data(edit)
+            self.revisions_data.update_from_edit(edit)
 
             return {"success": True}
 
@@ -764,45 +626,11 @@ class MainPage:
 
         return False
 
-    def purge(self):
-        params = {
-            "action": "purge",
-            "forcelinkupdate": 1,
-            "forcerecursivelinkupdate": 1,
-            "titles": self.title,
-        }
-
-        data = self.login_bot.client_request_safe(params)
-
-        if not data:
-            logger.info("<<lightred>> ** purge error. ")
-            return False
-
-        title2 = self.title
-
-        #  'normalized': [{'from': 'وب:ملعب', 'to': 'ويكيبيديا:ملعب'}]}
-
-        for x in data.get("normalized", []):
-            # logger.info(f"normalized from {x['from']} to {x['to']}")
-            if x["from"] == self.title:
-                title2 = x["to"]
-                break
-
-        for t in data.get("purge", []):
-            # t = [{'ns': 4, 'title': 'ويكيبيديا:ملعب', 'purged': '', 'linkupdate': ''}]
-            ti = t["title"]
-            if title2 == ti and "purged" in t:
-                return True
-            if "missing" in t:
-                logger.info(f'page "{ti}" missing')
-                return "missing"
-        return False
-
     def create(
         self,
         text: str = "",
         summary: str = "",
-    ) -> dict:
+    ) -> dict[str, Any]:
         """
         Creates a new page with the specified text and summary.
 
@@ -821,6 +649,9 @@ class MainPage:
 
         user = self.meta.username
 
+        if self.is_bot_edit_invalid(summary):
+            return {"success": False, "error_code": "empty_summary"}
+
         if (
             self.ask_bot.ask_user(
                 newtext=text,
@@ -833,7 +664,7 @@ class MainPage:
         ):
             return {"success": False, "error_code": "user_abort"}
 
-        params = {
+        params: dict[str, Any] = {
             "action": "edit",
             "title": self.title,
             "text": text,
@@ -851,15 +682,14 @@ class MainPage:
         edit = pop.get("edit", {})
         result = edit.get("result", "")
 
+        # {'edit': {'new': '', 'result': 'Success', 'pageid': 9090918, 'title': 'مستخدم:Mr. Ibrahem/test2024', 'contentmodel': 'wikitext', 'oldrevid': 0, 'newrevid': 61016221, 'newtimestamp': '2023-02-01T21:52:42Z'}}
         if result.lower() == "success":
-            # {'edit': {'new': '', 'result': 'Success', 'pageid': 9090918, 'title': 'مستخدم:Mr. Ibrahem/test2024', 'contentmodel': 'wikitext', 'oldrevid': 0, 'newrevid': 61016221, 'newtimestamp': '2023-02-01T21:52:42Z'}}
-
             self.text = text
 
-            logger.warning(f"<<lightgreen>> ** true .. [[{self.lang}:{self.family}:{self.title}]] ")
+            logger.warning(f"** true .. [[{self.lang}:{self.family}:{self.title}]] ")
             logger.debug(f"create success for {self.title}")
 
-            self._update_revisions_data(edit)
+            self.revisions_data.update_from_edit(edit)
 
             return {"success": True}
 
@@ -873,49 +703,6 @@ class MainPage:
 
         return {"success": False, "error_code": "unknown"}
 
-    def _update_revisions_data(self, edit):
-        self.revisions_data.pageid = edit.get("pageid") or self.revisions_data.pageid
-        self.revisions_data.revid = edit.get("newrevid") or self.revisions_data.revid
-        self.revisions_data.newrevid = edit.get("newrevid") or self.revisions_data.newrevid
-        self.revisions_data.touched = edit.get("touched") or self.revisions_data.touched
-        self.revisions_data.timestamp = edit.get("newtimestamp") or self.revisions_data.timestamp
-
-    def page_backlinks(self, ns: int = 0):
-        params = {
-            "action": "query",
-            "maxlag": "3",
-            # "prop": "info",
-            "generator": "backlinks",
-            # "redirects": 1,
-            # 'gblfilterredir': 'redirects',
-            "gbltitle": self.title,
-            "gblnamespace": ns,
-            "gbllimit": "max",
-            "formatversion": "2",
-            "gblredirect": 1,
-        }
-
-        # x = { 'batchcomplete': True, 'limits': { 'backlinks': 2500 }, 'query': { 'redirects': [{ 'from': 'فريدريش زيمرمان', 'to': 'فريدريش تسيمرمان' }], 'pages': [{ 'pageid': 2941285, 'ns': 0, 'title': 'فولفغانغ شويبله' }, { 'pageid': 4783977, 'ns': 0, 'title': 'وزارة الشؤون الرقمية والنقل' }, { 'pageid': 5218323, 'ns': 0, 'title': 'فريدريش تسيمرمان' }, { 'pageid': 6662649, 'ns': 0, 'title': 'غونتر كراوزه' }] } }
-
-        # data = self.client_request_safe(params)
-        # pages = data.get("query", {}).get("pages", [])
-
-        def _load_data(body):
-            return body.get("query", {}).get("pages") or []
-
-        # ---
-        pages = self.login_bot.post_continue_list(
-            params=params,
-            action="query",
-            _load_data=_load_data,
-        )
-
-        back_links = [x for x in pages if x["title"] != self.title]
-
-        self.links_data.back_links = back_links
-
-        return self.links_data.back_links
-
     def page_links(self) -> list:
         """
         Get the links on the page.
@@ -927,7 +714,7 @@ class MainPage:
                 {'ns': 14, 'title': 'تصنيف:مقالات بحاجة لصندوق معلومات', 'exists': False}
             ]
         """
-        params = {
+        params: dict[str, Any] = {
             "action": "parse",
             "prop": "links",
             "formatversion": "2",
@@ -953,7 +740,7 @@ class MainPage:
         return self.links_data.links2
 
     def page_links_query(self, plnamespace: str = "*"):
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "prop": "links",
             "formatversion": "2",
@@ -994,7 +781,7 @@ class MainPage:
                 if x not in rvprop:
                     rvprop.append(x)
 
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "revisions",
@@ -1026,6 +813,228 @@ class MainPage:
         self.revisions_data.revisions = revisions
 
         return revisions
+
+    def import_page(self, family: str = "wikipedia"):
+        """
+        Imports the page from another wiki family using the MediaWiki API.
+
+        Args:
+            family: The source wiki family from which to import the page (default is "wikipedia").
+
+        Returns:
+            The API response data from the import operation.
+        """
+        params: dict[str, Any] = {
+            "action": "import",
+            "format": "json",
+            "interwikisource": family,
+            "interwikipage": self.title,
+            "fullhistory": 1,
+            "assignknownusers": 1,
+        }
+
+        data = self.login_bot.client_request_safe(params)
+
+        done = data.get("import", [{}])[0].get("revisions", 0)
+
+        logger.info(f"imported {done} revisions")
+
+        return data
+
+    def get_text_html(self):
+        params: dict[str, Any] = {
+            "action": "parse",
+            "page": self.title,
+            "formatversion": "2",
+            "prop": "text",
+        }
+
+        data = self.login_bot.client_request_safe(params)
+
+        # _data_ = { 'warnings': { 'main': { 'warnings': 'Unrecognized parameter: bot.' } }, 'parse': { 'title': 'ويكيبيديا:ملعب', 'pageid': 361534, 'text': '' } }
+
+        self.content.text_html = data.get("parse", {}).get("text", "")
+
+        return self.content.text_html
+
+    def get_words(self) -> int:
+        srlimit = "30"
+        params: dict[str, Any] = {
+            "action": "query",
+            "list": "search",
+            "srsearch": self.title,
+            "srlimit": srlimit,
+        }
+        data = self.login_bot.client_request_safe(params)
+
+        if not data:
+            return 0
+
+        search = data.get("query", {}).get("search", [])
+
+        for pag in search:
+            tit = pag["title"]
+            if tit == self.title:
+                count = pag["wordcount"]
+                self.content.words = count
+                break
+
+        return self.content.words
+
+    def get_templates_api(self):
+        if not self.meta.info["done"]:
+            self.get_infos()
+
+        return self.template_data.templates_api
+
+    def get_links_here(self):
+        if not self.meta.info["done"]:
+            self.get_infos()
+
+        return self.links_data.links_here
+
+    def get_tags(self, tag: str = "") -> list:
+        if not self.text:
+            self.text = self.get_text()
+
+        self.text = self.text.replace("<ref>", '<ref name="ss">', 1)
+
+        parsed = wtp.parse(self.text)
+        tags = parsed.get_tags()
+
+        if not tag:
+            return tags
+
+        new_tags: list = []
+
+        for x in tags:
+            if x.name == tag:
+                new_tags.append(x)
+
+        return new_tags
+
+    def is_flagged(self) -> bool:
+        """
+        Returns whether the page is flagged for review or quality control.
+
+        If the page text has not been loaded, it is retrieved before checking the flagged status.
+
+        Returns:
+            bool: True if the page is flagged, False otherwise.
+        """
+        if not self.text:
+            self.text = self.get_text()
+
+        return self.meta.flagged
+
+    def get_newrevid(self):
+        # newrevid is only populated on successful edit/create responses.
+        if not self.revisions_data.newrevid:
+            # Ensure we at least have the current revid loaded.
+            if not self.revisions_data.revid:
+                self.get_text()
+        # Fallback to current revid if no newrevid exists.
+        return self.revisions_data.newrevid or self.revisions_data.revid
+
+    def get_revid(self):
+        if not self.revisions_data.revid:
+            self.get_text()
+        return self.revisions_data.revid
+
+    def get_user(self) -> str:
+        if not self.user:
+            self.get_text()
+        return self.user
+
+    def purge(self) -> bool | str:
+        params: dict[str, Any] = {
+            "action": "purge",
+            "forcelinkupdate": 1,
+            "forcerecursivelinkupdate": 1,
+            "titles": self.title,
+        }
+
+        data = self.login_bot.client_request_safe(params)
+
+        if not data:
+            logger.info("** purge error. ")
+            return False
+
+        title2 = self.title
+
+        #  'normalized': [{'from': 'وب:ملعب', 'to': 'ويكيبيديا:ملعب'}]}
+
+        for x in data.get("normalized", []):
+            # logger.info(f"normalized from {x['from']} to {x['to']}")
+            if x["from"] == self.title:
+                title2 = x["to"]
+                break
+
+        for t in data.get("purge", []):
+            # t = [{'ns': 4, 'title': 'ويكيبيديا:ملعب', 'purged': '', 'linkupdate': ''}]
+            ti = t["title"]
+            if title2 == ti and "purged" in t:
+                return True
+            if "missing" in t:
+                logger.info(f'page "{ti}" missing')
+                return "missing"
+        return False
+
+    def page_backlinks(self, ns: int = 0):
+        params: dict[str, Any] = {
+            "action": "query",
+            "maxlag": "3",
+            # "prop": "info",
+            "generator": "backlinks",
+            # "redirects": 1,
+            # 'gblfilterredir': 'redirects',
+            "gbltitle": self.title,
+            "gblnamespace": ns,
+            "gbllimit": "max",
+            "formatversion": "2",
+            "gblredirect": 1,
+        }
+
+        # x = { 'batchcomplete': True, 'limits': { 'backlinks': 2500 }, 'query': { 'redirects': [{ 'from': 'فريدريش زيمرمان', 'to': 'فريدريش تسيمرمان' }], 'pages': [{ 'pageid': 2941285, 'ns': 0, 'title': 'فولفغانغ شويبله' }, { 'pageid': 4783977, 'ns': 0, 'title': 'وزارة الشؤون الرقمية والنقل' }, { 'pageid': 5218323, 'ns': 0, 'title': 'فريدريش تسيمرمان' }, { 'pageid': 6662649, 'ns': 0, 'title': 'غونتر كراوزه' }] } }
+
+        # data = self.client_request_safe(params)
+        # pages = data.get("query", {}).get("pages", [])
+
+        def _load_data(body):
+            return body.get("query", {}).get("pages") or []
+
+        # ---
+        pages = self.login_bot.post_continue_list(
+            params=params,
+            action="query",
+            _load_data=_load_data,
+        )
+
+        back_links = [x for x in pages if x["title"] != self.title]
+
+        self.links_data.back_links = back_links
+
+        return self.links_data.back_links
+
+    def get_templates(self) -> list[dict[str, Any]]:
+        if not self.text:
+            self.text = self.get_text()
+        self.template_data.templates = txtlib.extract_templates_and_params(self.text)
+        return self.template_data.templates
+
+    def get_wiki_links_from_text(self):
+        if not self.text:
+            self.text = self.get_text()
+
+        parsed = wtp.parse(self.text)
+        wikilinks = parsed.wikilinks
+
+        # logger.info(f'wikilinks:{str(wikilinks)}')
+
+        # for x in wikilinks:
+        #     print(x.title)
+
+        return wikilinks
 
     def __getitem__(self, key):
         if key == "q":

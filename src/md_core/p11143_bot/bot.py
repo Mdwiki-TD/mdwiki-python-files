@@ -93,7 +93,7 @@ def add_q(new_qids, ty) -> None:
         sql_qids_others.add_titles_to_qids(newtitles_not_td)
 
 
-def work_qids(ty, qids_list) -> dict:
+def work_qids(ty, qids_list) -> dict[str, Any]:
     # ---
     in_wd = make_in_wd_tab()
     # ---

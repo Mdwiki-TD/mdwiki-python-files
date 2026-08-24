@@ -98,7 +98,7 @@ class CategoryDepth:
         self.ns = str(kwargs.get("ns") or "all")
         self.nslist = kwargs.get("nslist") or []
 
-    def _determine_gcmtype(self, params: dict) -> dict:
+    def _determine_gcmtype(self, params: dict) -> dict[str, Any]:
         if self.no_gcm_sort:
             del params["gcmsort"]
             del params["gcmdir"]
@@ -118,7 +118,7 @@ class CategoryDepth:
 
         return t_props
 
-    def params_work(self, params: dict) -> dict:
+    def params_work(self, params: dict) -> dict[str, Any]:
         t_props = self._build_prop_list()
 
         params = self._determine_gcmtype(params)
@@ -199,7 +199,7 @@ class CategoryDepth:
             else:
                 tablese["categories"] = categories
 
-    def pages_table_work(self, results: dict, pages_list: list[dict[str, Any]]) -> dict:
+    def pages_table_work(self, results: dict, pages_list: list[dict[str, Any]]) -> dict[str, Any]:
         self.len_pages += len(pages_list)
 
         for item_data in pages_list:
@@ -229,7 +229,7 @@ class CategoryDepth:
 
         return results
 
-    def get_cat_new(self, cac: str) -> dict:
+    def get_cat_new(self, cac: str) -> dict[str, Any]:
         params: dict[str, Any] = {
             "action": "query",
             "format": "json",

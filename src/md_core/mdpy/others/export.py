@@ -33,7 +33,7 @@ def export_en_history(title):
         xmldata = {}
         # ---
         with open("mdwiki/xml/w.xml", "r", encoding="utf-8") as f:
-            xmldata = f.read(f)
+            xmldata = f.read()
     else:
         # ---
         gg = Session.post(url="https://en.wikipedia.org/w/index.php", data=paramse)

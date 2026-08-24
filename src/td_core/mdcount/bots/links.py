@@ -1,7 +1,6 @@
 import logging
 import re
 import sys
-from typing import Any
 
 from db.mdapi_sql.services import sql_for_mdwiki
 
@@ -43,7 +42,7 @@ def get_links_from_cats(getcat: str = ""):
     return titles
 
 
-def get_valid_links(words_tab) -> list[Any]:
+def get_valid_links(words_tab) -> list[str]:
     # ---
     vav = get_links_from_cats()
     # ---

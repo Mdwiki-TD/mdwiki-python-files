@@ -59,7 +59,7 @@ def get_query_data(query) -> dict[Any, Any]:
     return result
 
 
-def get_query_result(query) -> list[Any]:
+def get_query_result(query) -> list[str]:
     # ---
     data = get_query_data(query)
     # ---

@@ -30,7 +30,7 @@ in_sql_qid_targets = defaultdict(dict)
 # ---
 que = """select DISTINCT qid, code, target from all_qids_exists;"""
 # ---
-db_data_main = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+db_data_main = sql_for_mdwiki.mdwiki_sql_dict(que)
 # ---
 for q in db_data_main:
     qid = q["qid"]

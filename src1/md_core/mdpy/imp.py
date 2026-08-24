@@ -31,7 +31,7 @@ for arg in sys.argv:
 api_new = NewApi("www", family="mdwiki")
 
 # pages   = api_new.Find_pages_exists_or_not(liste)
-# pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
+# pages   = api_new.get_all_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 
 
 def work(title, num: int, length: int, from_title: str = "") -> None:
@@ -177,7 +177,7 @@ def main() -> None:
             # python imp.py -start:all
             #
             # ---
-            lista = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
+            lista = api_new.get_all_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))
@@ -185,7 +185,7 @@ def main() -> None:
                 starts = page
     # ---
     if starts != "":
-        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+        listen = api_new.get_all_pages(start=starts, namespace=namespaces, limit=limite)
         for num, page in enumerate(listen, start=1):
             work(page, num, len(listen))
             # ---
@@ -211,7 +211,7 @@ def main() -> None:
             # python imp.py -start:all
             #
             # ---
-            lista = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
+            lista = api_new.get_all_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))
@@ -227,7 +227,7 @@ def main() -> None:
             # python3 imp.py -start:! -limit:3
             #
             # ---
-            lista = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+            lista = api_new.get_all_pages(start=starts, namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(lista, start=1):
                 work(page, num, len(lista))

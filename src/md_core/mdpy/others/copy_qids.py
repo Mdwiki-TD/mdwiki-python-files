@@ -56,7 +56,7 @@ for title, qid in qids_list.items():
         all_texts += f"\n{qua}"
         texts += f"\n{qua}"
         # ---
-        vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True, values=values)
+        sql_for_mdwiki.mdwiki_sql_update(texts, values=values)
     # ---
     if num % 300 == 0:
         if texts != "":
@@ -65,7 +65,7 @@ for title, qid in qids_list.items():
 # ---
 if texts != "":
     logger.info(texts)
-    vfg = sql_for_mdwiki.mdwiki_sql(texts, update=True)
+    sql_for_mdwiki.mdwiki_sql_update(texts)
 # ---
 # log all_texts
 with open(f"{Dir}/copy_qids.txt", "w", encoding="utf-8") as f:

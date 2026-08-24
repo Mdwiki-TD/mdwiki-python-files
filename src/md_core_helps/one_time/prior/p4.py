@@ -33,7 +33,7 @@ project_js_new = f"{Dir}/md_core/prior/json_langs/"
 project_js_newen = f"{Dir}/md_core/prior/json_en/"
 
 
-def main_links():
+def main_links() -> list[str | None]:
     title = "WikiProjectMed:List/Prior"
     # ---
     page = md_MainPage(title, "www", family="mdwiki")
@@ -117,7 +117,7 @@ def work_in_en_page(title) -> None:
     # ---
     title2 = title
     # ---
-    if page.isRedirect():
+    if page.isredirect():
         target = page.get_redirect_target()
         if target != "":
             page = mainpage(target, "en")

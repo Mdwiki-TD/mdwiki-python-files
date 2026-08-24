@@ -42,7 +42,7 @@ def get_langs_tabs():
     # ---
     logger.info(que)
     # ---
-    for tab in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+    for tab in sql_for_mdwiki.mdwiki_sql_dict(que):
         lang = tab["lang"]
         if lang not in langs:
             langs[lang] = []
@@ -131,7 +131,7 @@ def start() -> None:
                 page2 = WikiPage(new_target, lang, family="wikipedia")
                 # ---
                 if page2.exists():
-                    if page2.isRedirect():
+                    if page2.isredirect():
                         logger.info(f"<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}")
                         # ---
                         to_set[iid] = new_target

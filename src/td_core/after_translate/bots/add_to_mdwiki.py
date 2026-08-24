@@ -43,7 +43,7 @@ def add_new_row(mdtitle, lang, user, pupdate, target, word: str, cat) -> None:
     # ---
     values = [mdtitle, word, cat, lang, add_date, user, pupdate, target, add_date, mdtitle, lang, user]
     # ---
-    sql_for_mdwiki.mdwiki_sql(insert_qua, values=values)
+    sql_for_mdwiki.mdwiki_sql_update(insert_qua, values=values)
 
 
 def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
@@ -67,7 +67,7 @@ def update_row_new(mdtitle, lang, user, pupdate, target) -> None:
     # ---
     values = [target, pupdate, add_date, user, mdtitle, lang]
     # ---
-    sql_for_mdwiki.mdwiki_sql(update_qua, values=values)
+    sql_for_mdwiki.mdwiki_sql_update(update_qua, values=values)
 
 
 def add_to_pages_db(lange, tab, to_updatex) -> None:

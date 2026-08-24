@@ -11,7 +11,7 @@ from db import WikiReplicaDB
 from mdwiki_api.mdwiki_page import md_MainPage
 
 
-def sql_result() -> dict:
+def sql_result() -> dict[str, Any]:
     """
     Executes an SQL query to retrieve the count of page titles for each language in the 'Medicine' project. The function connects to the 'enwiki' database and returns a dictionary with language codes as keys and the corresponding counts as values.
     """

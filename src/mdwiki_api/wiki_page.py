@@ -3,6 +3,7 @@
 import functools
 import logging
 import os
+from typing import Any
 
 from dotenv import load_dotenv
 
@@ -14,8 +15,8 @@ except Exception:
     pass
 
 user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
-username = os.getenv("WIKIPEDIA_BOT_USERNAME")
-password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
+username = os.getenv("WIKIPEDIA_BOT_USERNAME") or ""
+password = os.getenv("WIKIPEDIA_BOT_PASSWORD") or ""
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +43,7 @@ def catdepth(
     sitecode: str = "",
     family: str = "wikipedia",
     **kwargs,
-) -> dict:
+) -> dict[str, Any]:
     sitecode = sitecode or "www"
     main_api = load_main_api(sitecode, family)
     return main_api.catdepth(

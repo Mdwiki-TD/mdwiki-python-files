@@ -31,11 +31,11 @@ def add_un_linked_wb(title, qid):
     if not page.exists():
         return False
     # ---
-    # if page.isRedirect() :  return
+    # if page.isredirect() :  return
     # target = page.get_redirect_target()
     # ---
     text = page.get_text()
-    # refs        = page.Get_tags(tag='ref')# for x in ref: name, contents = x.name, x.contents
+    # refs        = page.get_tags(tag='ref')# for x in ref: name, contents = x.name, x.contents
     # templates = page.get_templates()
     # ---
     # get qid
@@ -109,7 +109,7 @@ def add_tag() -> None:
     # ---
     qids, vals_d = get_qids()
     # ---
-    # all_pages = api_new.Get_All_pages(start="", namespace="0", apfilterredir="nonredirects", ppprop="")
+    # all_pages = api_new.get_all_pages(start="", namespace="0", apfilterredir="nonredirects", ppprop="")
     all_pages_tab = api_new.get_all_pages_generator(
         start="",
         namespace="0",

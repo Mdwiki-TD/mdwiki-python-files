@@ -21,7 +21,7 @@ to_update = {}
 # ---
 
 
-def get_pages_from_db(lang_o):
+def get_pages_from_db(lang_o: str):
     # ---
     sq = sql_for_mdwiki.get_all_pages_all_keys(lang=lang_o)
     # ---

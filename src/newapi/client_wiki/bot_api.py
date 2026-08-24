@@ -136,13 +136,13 @@ class NewApi(NewApiHelpers):
         return_all_jsons: bool = False,
         use_user_input_title: bool = False,
         chunk_size: int = 50,
-    ):
+    ) -> dict | tuple[dict, dict]:
         # ---
         done = 0
         # ---
         pages_table: list = []
-        normalized_table: list = []
-        redirects_table: list = []
+        normalized_table: list[dict[str, dict]] = []
+        redirects_table: list[dict[str, dict]] = []
         # ---
         all_jsons = {}
         # ---
@@ -150,7 +150,7 @@ class NewApi(NewApiHelpers):
             # ---
             done += len(titles)
             # ---
-            params = {
+            params: dict[str, Any] = {
                 "action": "query",
                 "titles": "|".join(titles),
                 "prop": "info|pageprops",
@@ -192,7 +192,7 @@ class NewApi(NewApiHelpers):
             if not title_x:
                 continue
             # ---
-            title_tab = self.get_title_redirect_normalize(title_x, redirects_table, normalized_table)
+            title_tab = self._get_title_redirect_normalize(title_x, redirects_table, normalized_table)
             # ---
             if use_user_input_title and title_tab.get("user_input"):
                 title_x = title_tab["user_input"]
@@ -234,10 +234,10 @@ class NewApi(NewApiHelpers):
     ) -> list[str]:
         # ---
         logger.debug(
-            f"Get_All_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}"
+            f"get_all_pages for start:{start}, limit:{limit},namespace:{namespace},apfilterredir:{apfilterredir}"
         )
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "pageprops",
@@ -249,7 +249,7 @@ class NewApi(NewApiHelpers):
         }
         # ---
         if str(namespace) in ["*", "", "all"]:
-            del params["apnamespace"]
+            params.pop("apnamespace", None)
         # ---
         if ppprop:
             params["ppprop"] = ppprop
@@ -264,8 +264,12 @@ class NewApi(NewApiHelpers):
         def _load_data(body):
             return body.get("query", {}).get("allpages") or []
 
-        # ---
-        newp = self.login_bot.post_continue_list(params=params, action="query", max=limit_all, _load_data=_load_data)
+        newp = self.login_bot.post_continue_list(
+            params=params,
+            action="query",
+            max=limit_all,
+            _load_data=_load_data,
+        )
         # ---
         logger.debug(f"<<lightpurple>> --- : find {len(newp)} pages.")
         # ---
@@ -291,7 +295,7 @@ class NewApi(NewApiHelpers):
             f"get_all_pages_generator for start:{start}, limit:{limit},namespace:{namespace},filterredir:{filterredir}"
         )
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "pageprops",
@@ -343,7 +347,7 @@ class NewApi(NewApiHelpers):
         ns: str = "0",
         pslimit: str = "max",
         limit_all: int = 100000,
-    ):
+    ) -> list:
         """Perform a prefix search for titles in a specified namespace.
 
         This function constructs a query to search for titles that start with a
@@ -371,7 +375,7 @@ class NewApi(NewApiHelpers):
         if not pssearch:
             return []
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "list": "prefixsearch",
             "pssearch": pssearch,
@@ -384,10 +388,10 @@ class NewApi(NewApiHelpers):
         if str(ns) in ["*", "", "all"]:
             del params["apnamespace"]
         # ---
-        if ns.isdigit():
+        if str(ns).isdigit():
             params["psnamespace"] = ns
         # ---
-        if pslimit.isdigit():
+        if str(pslimit).isdigit():
             params["pslimit"] = pslimit
 
         # ---
@@ -412,11 +416,11 @@ class NewApi(NewApiHelpers):
         # ---
         return Main_table
 
-    def search(
+    def api_search(
         self,
         value: str = "",
         ns: str = "*",
-        offset: int = "",
+        offset: int | str = "",
         srlimit: str = "max",
         return_dict: bool = False,
         addparams=None,
@@ -426,8 +430,7 @@ class NewApi(NewApiHelpers):
         # ---
         if not srlimit:
             srlimit = "max"
-        # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "list": "search",
@@ -436,30 +439,26 @@ class NewApi(NewApiHelpers):
             "srlimit": srlimit,
             "formatversion": 1,
         }
-        # ---
+
         if ns:
             params["srnamespace"] = ns
-        # ---
+
         if offset:
             params["sroffset"] = offset
-        # ---
+
         if addparams:
             addparams = {x: v for x, v in addparams.items() if v and x not in params}
-            params = {**params, **addparams}
+            params: dict[str, Any] = {**params, **addparams}
 
-        # ---
         def _load_data(body):
             return body.get("query", {}).get("search") or []
 
-        # ---
         search = self.login_bot.post_continue_list(
             params=params,
             action="query",
             _load_data=_load_data,
         )
-        # ---
         results: list = []
-        # ---
         for pag in search:
             if return_dict:
                 results.append(pag)
@@ -477,12 +476,18 @@ class NewApi(NewApiHelpers):
         rcstart: str = "",
         user: str = "",
         three_houers: bool = False,
+        offset_minutes: int | str | None = None,
+        offset_hours: bool = False,
     ) -> list[str]:
         if three_houers:
             dd = datetime.datetime.now(datetime.UTC) - timedelta(hours=3)
             rcstart = dd.strftime("%Y-%m-%dT%H:%M:00.000Z")
 
-        params = {
+        elif offset_minutes and isinstance(offset_minutes, int):
+            dd = datetime.datetime.now(datetime.UTC) - timedelta(minutes=offset_minutes or 0)
+            rcstart = dd.strftime("%Y-%m-%dT%H:%M:00.000Z")
+
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "list": "recentchanges",
@@ -520,15 +525,18 @@ class NewApi(NewApiHelpers):
 
         return Main_table
 
-    def usercontribs(
+    def user_contribs(
         self,
         user,
         limit: int | str = 5000,
         namespace: str = "*",
         ucshow: str = "",
-    ):
+    ) -> list[Any]:
         # ---
-        params = {
+        if not limit or limit == 0:
+            limit = 5000
+        # ---
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "list": "usercontribs",
@@ -550,18 +558,23 @@ class NewApi(NewApiHelpers):
             return body.get("query", {}).get("usercontribs") or []
 
         # ---
-        results = self.login_bot.post_continue_list(
+        results_data = self.login_bot.post_continue_list(
             params=params,
             action="query",
             _load_data=_load_data,
             max=limit,
         )
         # ---
-        results = [x["title"] for x in results]
+        results = [x["title"] for x in results_data]
         # ---
         return results
 
-    def get_langlinks_for_list(self, titles, targtsitecode: str = "", numbes: int = 40):
+    def get_langlinks_for_list(
+        self,
+        titles: list[str],
+        targtsitecode: str = "",
+        numbes: int = 40,
+    ) -> dict[str, Any]:
         """Retrieve language links for a list of titles from a specified target
         site.
 
@@ -584,7 +597,7 @@ class NewApi(NewApiHelpers):
         """
 
         # ---
-        logger.debug(f'bot_api.Get_langlinks_for_list for "{len(titles)} pages". in wiki:{self.lang}')
+        logger.debug(f'bot_api.get_langlinks_for_list for "{len(titles)} pages". in wiki:{self.lang}')
         # ---
         targtsitecode = targtsitecode.removesuffix("wiki")
         # ---
@@ -593,7 +606,7 @@ class NewApi(NewApiHelpers):
         # ---
         numbes = 50
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "langlinks",
@@ -649,14 +662,14 @@ class NewApi(NewApiHelpers):
                         find_targtsitecode += 1
         # ---
         logger.info(
-            f'bot_api.Get_langlinks_for_list find "{len(table)}" in table,find_targtsitecode:{targtsitecode}:{find_targtsitecode}'
+            f'bot_api.get_langlinks_for_list find "{len(table)}" in table,find_targtsitecode:{targtsitecode}:{find_targtsitecode}'
         )
         # ---
         return table
 
-    def get_logs(self, title: str):
+    def get_logs(self, title: str) -> list:
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "list": "logevents",
@@ -675,7 +688,7 @@ class NewApi(NewApiHelpers):
         return logevents
 
     def get_extlinks(self, title: str):
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "extlinks",
@@ -704,11 +717,11 @@ class NewApi(NewApiHelpers):
         # ---
         return sorted(set(links))
 
-    def get_pageassessments(self, titles):
-        if isinstance(titles, list):
-            titles = "|".join(titles)
+    def get_page_assessments(self, titles_list: str | list[str]) -> list[Any]:
+
+        titles = "|".join(titles_list) if isinstance(titles_list, list) else titles_list
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "pageassessments",
@@ -718,17 +731,14 @@ class NewApi(NewApiHelpers):
             "formatversion": 2,
         }
 
-        # ---
         def _load_data(body):
             return body.get("query", {}).get("pages") or []
 
-        # ---
         results = self.login_bot.post_continue_list(
-            params,
-            "query",
+            params=params,
+            action="query",
             _load_data=_load_data,
         )
-        # ---
         return results
 
     def get_revisions(
@@ -736,9 +746,9 @@ class NewApi(NewApiHelpers):
         title: str,
         rvprop: str = "comment|timestamp|user|content|ids",
         options=None,
-    ):
+    ) -> list[Any]:
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "revisions",
@@ -768,9 +778,14 @@ class NewApi(NewApiHelpers):
         # ---
         return results
 
-    def querypage_list(self, qppage: str = "Wantedcategories", qplimit=None, max=None):
+    def querypage_list(
+        self,
+        qppage: str = "Wantedcategories",
+        qplimit=None,
+        max=None,
+    ) -> list[Any]:
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "list": "querypage",
@@ -779,7 +794,7 @@ class NewApi(NewApiHelpers):
             "formatversion": 2,
         }
         # ---
-        if qplimit and qplimit.isdigit():
+        if qplimit and str(qplimit).isdigit():
             params["qplimit"] = qplimit
         # ---
         params["qppage"] = qppage
@@ -843,11 +858,16 @@ class NewApi(NewApiHelpers):
         # ---
         return results
 
-    def get_template_pages(self, title: str, namespace: str = "*", max: int = 10000):
+    def get_template_pages(
+        self,
+        title: str,
+        namespace: str = "*",
+        max: int = 10000,
+    ) -> list[Any]:
         # ---
         logger.debug(f'get_template_pages for template:"{title}", limit:"{max}",namespace:"{namespace}"')
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             # "prop": "info",
             "titles": title,
@@ -875,14 +895,14 @@ class NewApi(NewApiHelpers):
         # ---
         return pages
 
-    def get_image_url(self, title: str):
+    def get_image_url(self, title: str) -> str:
         # ---
         if not title.startswith("File:") and not title.startswith("ملف:"):
             title = f"File:{title}"
         # ---
         logger.debug(f' for file:"{title}":')
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "imageinfo",
@@ -907,14 +927,14 @@ class NewApi(NewApiHelpers):
         # ---
         return url
 
-    def get_imageinfo(self, title: str):
+    def get_imageinfo(self, title: str) -> Any:
         # ---
         if not title.startswith("File:") and not title.startswith("ملف:"):
             title = f"File:{title}"
         # ---
         logger.debug(f' for file:"{title}":')
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "prop": "imageinfo",
@@ -937,9 +957,9 @@ class NewApi(NewApiHelpers):
         pwppropname: str = "unlinkedwikibase_id",
         pwplimit=None,
         max=None,
-    ):
+    ) -> list[Any]:
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "list": "pageswithprop",
@@ -950,7 +970,7 @@ class NewApi(NewApiHelpers):
             "pwpprop": "title|value",
         }
         # ---
-        if pwplimit and pwplimit.isdigit():
+        if pwplimit and str(pwplimit).isdigit():
             params["pwplimit"] = pwplimit
         # ---
         if pwppropname != "":
@@ -972,13 +992,13 @@ class NewApi(NewApiHelpers):
         # ---
         return results
 
-    def get_titles_redirects(self, titles):
+    def get_titles_redirects(self, titles: list[str]) -> dict[str, str]:
         # ---
         redirects = {}
         # ---
         # for i in range(0, len(titles), 50): group = titles[i : i + 50]
         for title_chunk in self.chunk_titles(titles, chunk_size=50):
-            params = {
+            params: dict[str, Any] = {
                 "action": "query",
                 "format": "json",
                 "titles": "|".join(title_chunk),
@@ -1006,6 +1026,177 @@ class NewApi(NewApiHelpers):
         # ---
         return redirects
 
+    def expandtemplates(self, text: str) -> str:
+        # ---
+        params: dict[str, Any] = {
+            "action": "expandtemplates",
+            "format": "json",
+            "text": text,
+            "prop": "wikitext",
+            "formatversion": 2,
+        }
+        # ---
+        data = self.login_bot.client_request_safe(params)
+        # ---
+        if not data:
+            return text
+        # ---
+        newtext = data.get("expandtemplates", {}).get("wikitext") or text
+        # ---
+        return newtext
+
+    def parse_text(self, line, title: str) -> str:
+        # ---
+        params: dict[str, Any] = {
+            "action": "parse",
+            "prop": "wikitext",
+            "text": line,
+            "title": title,
+            "pst": 1,
+            "contentmodel": "wikitext",
+            "utf8": 1,
+            "formatversion": 2,
+        }
+        # ---
+        # {"parse": {"title": "كريس فروم", "pageid": 2639244, "wikitext": "{{subst:user:Mr._Ibrahem/line2|Q76|P31}}", "psttext": "\"Q76\":{\n\"P31\":\"إنسان\"\n\n\n\n\n},"}}
+        # ---
+        data = self.login_bot.client_request_safe(params)
+        # ---
+        if not data:
+            return ""
+        # ---
+        textnew = data.get("parse", {}).get("psttext", "")
+        # ---
+        textnew = textnew.replace("\\n\\n", "")
+        # ---
+        return textnew
+
+    def upload_by_file(
+        self,
+        file_name,
+        text: str,
+        file_path,
+        comment: str = "",
+        ignorewarnings: bool = False,
+    ) -> dict[str, Any]:
+        # ---
+        logger.info(f"<<lightyellow>> def . {file_name=}")
+        # ---
+        if file_name.startswith("File:"):
+            file_name = file_name.replace("File:", "")
+        # ---
+        if file_name.startswith("ملف:"):
+            file_name = file_name.replace("ملف:", "")
+        # ---
+        logger.info(f"<<lightyellow>> {file_path=}...")
+        # ---
+        params: dict[str, Any] = {
+            "action": "upload",
+            "format": "json",
+            "filename": file_name,
+            "comment": comment,
+            "text": text,
+            "utf8": 1,
+        }
+        # ---
+        if ignorewarnings:
+            params["ignorewarnings"] = 1
+        # ---
+        data = self.login_bot.client_request_safe(params, files={"file": open(file_path, "rb")})
+        # ---
+        upload_result = data.get("upload", {})
+        # ---
+        success = upload_result.get("result") == "Success"
+        _error = data.get("error", {})
+        # ---
+        duplicate = upload_result.get("warnings", {}).get("duplicate", [""])[0].replace("_", " ")
+        # ---
+        if success:
+            logger.info(f"<<lightgreen>> ** upload true .. [[File:{file_name}]] ")
+            return True
+        # ---
+        if duplicate:
+            logger.info(f"<<lightred>> ** duplicate file: {duplicate}.")
+        # ---
+        return data
+
+    def _get_title_redirect_normalize(
+        self,
+        title: str,
+        redirects: list[dict[str, dict]],
+        normalized: list[dict[str, dict]],
+    ) -> dict[str, Any]:
+        # ---
+        tab: dict[str, Any] = {
+            "user_input": title,
+            "redirect_to": "",
+            "normalized_to": "",
+            "real_title": title,
+        }
+        # ---
+        normalized_tab = {x["to"]: x["from"] for x in normalized}
+        # ---
+        redirects_tab = {x["to"]: x["from"] for x in redirects}
+        # ---
+        if tab["user_input"] in redirects_tab:
+            tab["redirect_to"] = tab["user_input"]
+            tab["user_input"] = redirects_tab[tab["user_input"]]
+        # ---
+        if tab["user_input"] in normalized_tab:
+            tab["normalized_to"] = tab["user_input"]
+            tab["user_input"] = normalized_tab[tab["user_input"]]
+        # ---
+        if tab["user_input"] == title:
+            return {}
+        # ---
+        return tab
+
+    def post_params(
+        self,
+        params,
+        method: str = "get",
+        files=None,
+        **kwargs,
+    ) -> dict[str, Any]:
+        # ---
+        return self.login_bot.client_request_safe(
+            params,
+            method=method,
+            files=files,
+            **kwargs,
+        )
+
+    def client_request_safe(
+        self,
+        params,
+        method: str = "get",
+        files=None,
+        **kwargs,
+    ) -> dict[str, Any]:
+        # ---
+        return self.login_bot.client_request_safe(
+            params,
+            method=method,
+            files=files,
+            **kwargs,
+        )
+
+    def users_infos(self, ususers: list[str]):
+        params: dict[str, Any] = {
+            "action": "query",
+            "format": "json",
+            "list": "users",
+            "formatversion": "2",
+            "usprop": "groups",
+            "ususers": ususers,
+        }
+
+        data = self.login_bot.client_request_safe(params, method="get")
+
+        data = data.get("query", {}).get("users", [{}])
+
+        return data
+
     def move(
         self,
         old_title,
@@ -1018,7 +1209,7 @@ class NewApi(NewApiHelpers):
         # ---
         logger.info(f"<<lightyellow>> def [[{old_title}]] to [[{to}]] ")
         # ---
-        params = {
+        params: dict[str, Any] = {
             "action": "move",
             "format": "json",
             "from": old_title,
@@ -1089,175 +1280,6 @@ class NewApi(NewApiHelpers):
             return {}
         # ---
         return {}
-
-    def expandtemplates(self, text: str):
-        # ---
-        params = {
-            "action": "expandtemplates",
-            "format": "json",
-            "text": text,
-            "prop": "wikitext",
-            "formatversion": 2,
-        }
-        # ---
-        data = self.login_bot.client_request_safe(params)
-        # ---
-        if not data:
-            return text
-        # ---
-        newtext = data.get("expandtemplates", {}).get("wikitext") or text
-        # ---
-        return newtext
-
-    def parse_text(self, line, title: str):
-        # ---
-        params = {
-            "action": "parse",
-            "prop": "wikitext",
-            "text": line,
-            "title": title,
-            "pst": 1,
-            "contentmodel": "wikitext",
-            "utf8": 1,
-            "formatversion": 2,
-        }
-        # ---
-        # {"parse": {"title": "كريس فروم", "pageid": 2639244, "wikitext": "{{subst:user:Mr._Ibrahem/line2|Q76|P31}}", "psttext": "\"Q76\":{\n\"P31\":\"إنسان\"\n\n\n\n\n},"}}
-        # ---
-        data = self.login_bot.client_request_safe(params)
-        # ---
-        if not data:
-            return ""
-        # ---
-        textnew = data.get("parse", {}).get("psttext", "")
-        # ---
-        textnew = textnew.replace("\\n\\n", "")
-        # ---
-        return textnew
-
-    def upload_by_file(
-        self,
-        file_name,
-        text: str,
-        file_path,
-        comment: str = "",
-        ignorewarnings: bool = False,
-    ):
-        # ---
-        logger.info(f"<<lightyellow>> def . {file_name=}")
-        # ---
-        if file_name.startswith("File:"):
-            file_name = file_name.replace("File:", "")
-        # ---
-        if file_name.startswith("ملف:"):
-            file_name = file_name.replace("ملف:", "")
-        # ---
-        logger.info(f"<<lightyellow>> {file_path=}...")
-        # ---
-        params = {
-            "action": "upload",
-            "format": "json",
-            "filename": file_name,
-            "comment": comment,
-            "text": text,
-            "utf8": 1,
-        }
-        # ---
-        if ignorewarnings:
-            params["ignorewarnings"] = 1
-        # ---
-        data = self.login_bot.client_request_safe(params, files={"file": open(file_path, "rb")})
-        # ---
-        upload_result = data.get("upload", {})
-        # ---
-        success = upload_result.get("result") == "Success"
-        _error = data.get("error", {})
-        # ---
-        duplicate = upload_result.get("warnings", {}).get("duplicate", [""])[0].replace("_", " ")
-        # ---
-        if success:
-            logger.info(f"<<lightgreen>> ** upload true .. [[File:{file_name}]] ")
-            return True
-        # ---
-        if duplicate:
-            logger.info(f"<<lightred>> ** duplicate file: {duplicate}.")
-        # ---
-        return data
-
-    def get_title_redirect_normalize(self, title: str, redirects, normalized):
-        # ---
-        redirects = redirects or []
-        normalized = normalized or []
-        # ---
-        tab = {
-            "user_input": title,
-            "redirect_to": "",
-            "normalized_to": "",
-            "real_title": title,
-        }
-        # ---
-        normalized = {x["to"]: x["from"] for x in normalized}
-        # ---
-        redirects = {x["to"]: x["from"] for x in redirects}
-        # ---
-        if tab["user_input"] in redirects:
-            tab["redirect_to"] = tab["user_input"]
-            tab["user_input"] = redirects[tab["user_input"]]
-        # ---
-        if tab["user_input"] in normalized:
-            tab["normalized_to"] = tab["user_input"]
-            tab["user_input"] = normalized[tab["user_input"]]
-        # ---
-        if tab["user_input"] == title:
-            return {}
-        # ---
-        return tab
-
-    def post_params(
-        self,
-        params,
-        method: str = "get",
-        files=None,
-        **kwargs,
-    ):
-        # ---
-        return self.login_bot.client_request_safe(
-            params,
-            method=method,
-            files=files,
-            **kwargs,
-        )
-
-    def client_request_safe(
-        self,
-        params,
-        method: str = "get",
-        files=None,
-        **kwargs,
-    ):
-        # ---
-        return self.login_bot.client_request_safe(
-            params,
-            method=method,
-            files=files,
-            **kwargs,
-        )
-
-    def users_infos(self, ususers: list[str]):
-        params = {
-            "action": "query",
-            "format": "json",
-            "list": "users",
-            "formatversion": "2",
-            "usprop": "groups",
-            "ususers": ususers,
-        }
-
-        data = self.login_bot.client_request_safe(params, method="get")
-
-        data = data.get("query", {}).get("users", [{}])
-
-        return data
 
     def __repr__(self) -> str:
         return f"NewApi(lang={self.lang!r}, username={self.username!r})"

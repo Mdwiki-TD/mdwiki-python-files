@@ -93,7 +93,7 @@ def get_targets(lang_o) -> None:
     # ---
     que = f"""select DISTINCT lang, target, pupdate from pages where target != "" {uu}"""
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
     for tab in sq:
         lang = tab["lang"].lower()
@@ -114,7 +114,7 @@ def get_views_sql(lang_o) -> None:
     # ---
     que11 = f"""select DISTINCT target, lang, year, views from views_new {uu}"""
     # ---
-    dad = sql_for_mdwiki.select_md_sql(que11, return_dict=True)
+    dad = sql_for_mdwiki.mdwiki_sql_dict(que11)
     # ---
     for tab in dad:
         # ---

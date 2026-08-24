@@ -224,7 +224,7 @@ def main() -> None:
             # python red.py -start:all
             #
             # ---
-            list = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
+            list = api_new.get_all_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
@@ -232,7 +232,7 @@ def main() -> None:
                 starts = page
     # ---
     if starts != "":
-        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+        listen = api_new.get_all_pages(start=starts, namespace=namespaces, limit=limite)
         for num, page in enumerate(listen, start=1):
             work(page, num, len(listen))
             # ---
@@ -259,7 +259,7 @@ def main() -> None:
             # python red.py -start:all
             #
             # ---
-            list = api_new.Get_All_pages(start="", namespace=namespaces, limit=limite)
+            list = api_new.get_all_pages(start="", namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))
@@ -275,7 +275,7 @@ def main() -> None:
             # python red.py -start:! -limit:3
             #
             # ---
-            list = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+            list = api_new.get_all_pages(start=starts, namespace=namespaces, limit=limite)
             start_done = starts
             for num, page in enumerate(list, start=1):
                 work(page, num, len(list))

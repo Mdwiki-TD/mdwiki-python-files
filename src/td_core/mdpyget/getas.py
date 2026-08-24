@@ -47,9 +47,9 @@ def work_for_list(en_keys, old_values):
     for i in range(0, len(en_keys), 50):
         group = en_keys[i : i + 50]
         # ---
-        logger.info(f"get_pageassessments: len of group: {len(group)}")
+        logger.info(f"get_page_assessments: len of group: {len(group)}")
         # ---
-        result = api_new.get_pageassessments("|".join(group))
+        result = api_new.get_page_assessments("|".join(group))
         # ---
         ase = {x["title"]: x for x in result}
         # ---
