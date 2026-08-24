@@ -38,7 +38,7 @@ replaces = {
 # ---
 
 
-class Sectios_links:
+class Sectioslinks:
     def __init__(self) -> None:
         """
         Initializes an instance of the class.
@@ -113,11 +113,11 @@ def dump_secs_links(d_links) -> None:
 
 def get_section_links(new: bool = False):
     """
-    Retrieves the links to the sections from the Sectios_links bot.
+    Retrieves the links to the sections from the Sectioslinks bot.
     """
     if new or len(old) == 0:
-        # Instantiate an object of the Sectios_links class.
-        bot = Sectios_links()
+        # Instantiate an object of the Sectioslinks class.
+        bot = Sectioslinks()
 
         bot.run()
 

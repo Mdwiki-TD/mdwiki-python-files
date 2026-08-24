@@ -60,7 +60,7 @@ def get_qids(noqids_list):
         # ---
         params["titles"] = "|".join(group)
         # ---
-        jsone = wiki_api.submitAPI(params, site="en")
+        jsone = wiki_api.submit_api(params, site="en")
         # ---
         if jsone and "batchcomplete" in jsone:
             query = jsone.get("query", {})

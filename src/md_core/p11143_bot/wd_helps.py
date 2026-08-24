@@ -110,7 +110,7 @@ def add_p11143_to_qids_in_wd(newlist) -> None:
             logger.info(f"<<yellow>> q {n} from {len(newlist)}")
             if q:
                 q = q.strip()
-                # wikidataapi.Claim_API_str(q, "P11143", value)
+                # wikidataapi.claim_api_str(q, "P11143", value)
                 if n % 30 == 0:
                     logger.info(f"<<yellow>> n: {n}")
                     time.sleep(5)
@@ -136,7 +136,7 @@ def fix_in_wd(merge_qids, qids) -> None:
                 value = x["value"]
                 claimid = x["id"]
                 if value == wd_value:
-                    uxx = wikidataapi.Delete_claim(claimid)
+                    uxx = wikidataapi.delete_claim(claimid)
                     if uxx:
                         logger.info(f"True.. Deleted {claimid}")
                     else:
@@ -145,7 +145,7 @@ def fix_in_wd(merge_qids, qids) -> None:
 
         # add the correct claim
         ase = False
-        # ase = wikidataapi.Claim_API_str(q, "P11143", md_title)
+        # ase = wikidataapi.claim_api_str(q, "P11143", md_title)
         if ase:
             logger.info(f"True.. Added P11143:{md_title}")
         else:

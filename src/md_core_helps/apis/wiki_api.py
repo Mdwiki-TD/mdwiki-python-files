@@ -2,7 +2,7 @@
 """
 # ---
 from md_core_helps.apis import wiki_api
-# wiki_api.submitAPI( params, site="en", returnjson = False )
+# wiki_api.submit_api( params, site="en", returnjson = False )
 # ---
 """
 
@@ -11,7 +11,7 @@ from mdwiki_api.wiki_page import newapi
 api_news = {}
 
 
-def submitAPI(params, site: str = "", returnjson: bool = False):
+def submit_api(params, site: str = "", returnjson: bool = False):
     # ---
     params["format"] = "json"
     # ---
@@ -24,7 +24,7 @@ def submitAPI(params, site: str = "", returnjson: bool = False):
     return json1
 
 
-def Get_page_qid(sitecode, title):
+def get_page_qid(sitecode, title):
     # ---
     sitecode = sitecode.removesuffix("wiki")
     # ---
@@ -39,7 +39,7 @@ def Get_page_qid(sitecode, title):
         "utf8": 1,
     }
     # ---
-    json1 = submitAPI(params, site=sitecode)
+    json1 = submit_api(params, site=sitecode)
     # ---
     if not json1:
         return ""

@@ -1288,14 +1288,15 @@ class NewApi(NewApiHelpers):
             **kwargs,
         )
 
-    def users_infos(self, ususers: list[str]):
+    def users_infos(self, ususers: list[str] | str):
+        users_str = "|".join(ususers) if isinstance(ususers, list) else ususers
         params: dict[str, Any] = {
             "action": "query",
             "format": "json",
             "list": "users",
             "formatversion": "2",
             "usprop": "groups",
-            "ususers": ususers,
+            "ususers": users_str,
         }
 
         data = self.login_bot.client_request_safe(params, method="get")

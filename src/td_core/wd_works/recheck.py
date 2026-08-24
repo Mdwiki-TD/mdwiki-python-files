@@ -14,9 +14,7 @@ from pymysql.converters import escape_string
 from db import WikiReplicaDB
 from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
 from md_core_helps.apis import wikidataapi
-
-# ---
-from md_core_helps.bots import en_to_md, py_tools
+from md_core_helps.bots import en_to_md
 
 logger = logging.getLogger(__name__)
 
@@ -87,7 +85,7 @@ def do_it_sql(lange, targets) -> None:
         laly = "', '".join(ase)
         # ---
         query = f"""
-            select DISTINCT p.page_title, pp.pp_value
+            select DISTINCT p.page_title as page_title, pp.pp_value as pp_value
             from page p, page_props pp
             where p.page_id = pp.pp_page
             and pp.pp_propname='wikibase_item'
@@ -110,8 +108,8 @@ def do_it_sql(lange, targets) -> None:
             # ---
             for liste in result:
                 # ---
-                target = py_tools.Decode_bytes(liste[0])
-                pp_value = py_tools.Decode_bytes(liste[1])
+                target = liste["page_title"]
+                pp_value = liste["pp_value"]
                 # ---
                 target = target.replace("_", " ")
                 result_n.append(target)
@@ -158,7 +156,7 @@ def work_with_2_qids(oldq, new_q) -> None:
             logger.info("<<red>> **remove sitelink false.")
             logger.info(remove)
         # ---
-        remove2 = wikidataapi.Labels_API(oldq, "", "en", remove=True)
+        remove2 = wikidataapi.labels_api(oldq, "", "en", remove=True)
         # ---
         if remove2:
             len_sites -= 1
@@ -270,7 +268,7 @@ def start() -> None:
             logger.info("no qid for en page.")
             continue
         # ---
-        _remove = wikidataapi.Labels_API(oldqid, "", "en", remove=True)
+        _remove = wikidataapi.labels_api(oldqid, "", "en", remove=True)
         # ---
         work_with_2_qids(oldqid, qid2)
     # ---

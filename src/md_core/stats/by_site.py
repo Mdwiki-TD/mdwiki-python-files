@@ -33,7 +33,7 @@ def filter_editors(editors, site):
     # ---
     editors = dict(sorted(editors.items(), key=lambda x: x[1], reverse=True))
     # ---
-    for x, v in editors.copy().items():
+    for x, _v in editors.copy().items():
         if validate_ip(x):
             del editors[x]
     # ---

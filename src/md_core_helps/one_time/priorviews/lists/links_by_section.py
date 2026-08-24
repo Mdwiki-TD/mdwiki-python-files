@@ -69,7 +69,7 @@ if "small" in sys.argv:
     sects_links_langlinks = {least_section: sects_links_langlinks[least_section]}
 # ---
 # make text for each section
-for section, links in sects_links_langlinks.items():
+for _section, links in sects_links_langlinks.items():
     # ---
     for _md, langs in links.items():
         for lang, title in langs.items():

@@ -11,7 +11,7 @@ import logging
 from pathlib import Path
 
 from db.mdapi_sql import sql_for_mdwiki
-from md_core_helps.apis.cat_cach import Cat_Depth
+from md_core_helps.apis.cat_cach import cat_depth
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +40,7 @@ def cats_pages():
     # ---
     for cat, depth in cats.items():
         # ---
-        ca = Cat_Depth(cat, depth=depth, ns="all", print_s=False)
+        ca = cat_depth(cat, depth=depth, ns="all", print_s=False)
         # ---
         ca_list = [x for x in ca if x not in all_pages]
         # ---

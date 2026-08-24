@@ -33,7 +33,7 @@ if not os.path.exists(file):
     with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
 # ---
-ViewsData = json.load(open(file, "r", encoding="utf-8"))
+views_data = json.load(open(file, "r", encoding="utf-8"))
 # ---
 _data = {"mdtitle": {"ar": {"title": "artitle", "views": 0}, "en": {"title": "entitle", "views": 0}}}
 # ---
@@ -53,10 +53,10 @@ def makeviews() -> None:
     dictionaries with the corresponding view counts for each markdown file and
     language.
     """
-    global ViewsData, views_by_mdtitle_langs, count_views_by_mdtitle, count_views_by_lang, views_by_lang
+    global views_data, views_by_mdtitle_langs, count_views_by_mdtitle, count_views_by_lang, views_by_lang
 
     # Iterate through each markdown file and language in `ViewsData`
-    for mdtitle, langs in ViewsData.items():
+    for mdtitle, langs in views_data.items():
         # Create a dictionary to store the view counts for a given markdown file
         views_by_mdtitle_langs[mdtitle] = {}
         count_views_by_mdtitle[mdtitle] = 0

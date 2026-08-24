@@ -153,7 +153,7 @@ from db.tools.services.wikidata.qid_others_service import get_title_to_qid, add_
 | `td_core/fix_user_pages/user_bot.py`               | `get_db_users()` → `user_service.list_usernames()`                                                 |
 | `td_core/fix_user_pages/fix_it_db.py`              | `mdwiki_sql` → ORM                                                                                 |
 | `td_core/fix_user_pages/fix_it_db_new.py`          | `mdwiki_sql` → ORM                                                                                 |
-| `td_core/fix_user_pages/del.py`                    | `mdwiki_sql` → ORM                                                                                 |
+| `td_core/fix_user_pages/del_records.py`                    | `mdwiki_sql` → ORM                                                                                 |
 | `td_core/mdpyget/sqlviews_new.py`                  | `select_md_sql` → ORM query                                                                        |
 | `td_core/mdpyget/pages_list.py`                    | `select_md_sql` → ORM query                                                                        |
 | `td_core/mdpyget/getas.py`                         | `select_md_sql` → ORM query                                                                        |

@@ -34,7 +34,7 @@ def create_qids(no_qids) -> None:
         new_qid = new_qid.strip()
         # ---
         if new_qid:
-            # wikidataapi.Claim_API_str(new_qid, "P11143", x)
+            # wikidataapi.claim_api_str(new_qid, "P11143", x)
             # ---
             # add new qid to article
             add_un_linked_wb(x, new_qid)

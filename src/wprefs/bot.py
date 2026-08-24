@@ -18,7 +18,7 @@ import logging
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from wprefs.api import GetPageText_raw, missingtitles, page_put
+from wprefs.api import getpagetext_raw, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
 
@@ -110,7 +110,7 @@ def work_one_lang(list_, lang) -> None:
             dns.append(title)
             continue
         # ---
-        text = GetPageText_raw(title, lang=lang)
+        text = getpagetext_raw(title, lang=lang)
         # ---
         if not text:
             logger.info('\ttext == ""')

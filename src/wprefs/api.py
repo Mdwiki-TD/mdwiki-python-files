@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-from wprefs.api import log, submitAPI, get_page_text, missingtitles, page_put
+from wprefs.api import log, submit_api, get_page_text, missingtitles, page_put
 
 """
 
@@ -147,11 +147,11 @@ def log(lang):
     session["token"] = token
 
 
-def Gettoken():
+def gettoken():
     return session["token"]
 
 
-def submitAPI(params, lang: str = "", _type: str = "post", add_token: bool = False):
+def submit_api(params, lang: str = "", _type: str = "post", add_token: bool = False):
     # ---
     log(lang)
     # ---
@@ -198,7 +198,7 @@ def get_revisions(title, lang: str = "") -> list[dict[str, Any]]:
         if rvcontinue != "x":
             params["rvcontinue"] = rvcontinue
         # ---
-        json1 = submitAPI(params, lang=lang)
+        json1 = submit_api(params, lang=lang)
         # ---
         if not json1 or not isinstance(json1, dict):
             return []
@@ -227,7 +227,7 @@ def get_page_text(title, lang: str = "", print_text: bool = True):
         # "normalize": 1,
     }
     # ---
-    json1 = submitAPI(params, lang=lang)
+    json1 = submit_api(params, lang=lang)
     # ---
     if not json1 or not isinstance(json1, dict):
         if print_text:
@@ -262,7 +262,7 @@ def get_page_text(title, lang: str = "", print_text: bool = True):
     return text
 
 
-def GetPageText_raw(title, lang: str = "", print_text: bool = True):
+def getpagetext_raw(title, lang: str = "", print_text: bool = True):
     # ---
     # parse.quote
     title2 = urllib.parse.quote(title)
@@ -275,7 +275,7 @@ def GetPageText_raw(title, lang: str = "", print_text: bool = True):
         text = r.text
     except Exception as e:
         if print_text:
-            print_s(f"GetPageText_raw Error {e}")
+            print_s(f"getpagetext_raw Error {e}")
         return ""
     # ---
     if not text:
@@ -322,7 +322,7 @@ def page_put(oldtext, new_text, summary, title, lang):
         "token": session["token"],
     }
     # ---
-    json1 = submitAPI(pparams, lang=lang)
+    json1 = submit_api(pparams, lang=lang)
     # ---
     if not json1:
         return ""

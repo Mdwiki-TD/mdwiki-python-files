@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-from td_core.db_work.check_titles_helps import get_new_target_log, Find_pages_exists, WikiPage, users_infos
-"""
+""" """
 
 import logging
 
@@ -62,7 +60,7 @@ def get_new_target_log(lang, target):
     return deleted, to_check
 
 
-def Find_pages_exists(lang, titles):
+def find_pages_exists(lang, titles):
     api_newx = newapi(lang, family="wikipedia")
     pages = api_newx.find_pages_exists_or_not(titles, get_redirect=True)
     # ---
@@ -76,5 +74,5 @@ def users_infos(lang, users):
     return result
 
 
-def WikiPage(title, lang, family: str = "wikipedia"):
+def wikipage(title, lang, family: str = "wikipedia"):
     return mainpage(title, lang, family=family)

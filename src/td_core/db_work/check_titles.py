@@ -19,7 +19,7 @@ from db.mdapi_sql.services import sql_for_mdwiki
 
 # ---
 from mdwiki_api.mdwiki_page import md_MainPage
-from td_core.db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
+from td_core.db_work.check_titles_helps import find_pages_exists, get_new_target_log, wikipage
 
 logger = logging.getLogger(__name__)
 
@@ -94,7 +94,7 @@ def start() -> None:
         # ---
         titles = [x["target"] for x in tabs]
         # ---
-        pages = Find_pages_exists(lang, titles)
+        pages = find_pages_exists(lang, titles)
         # ---
         missing = [x for x, v in pages.items() if not v]
         redirects = [x for x, v in pages.items() if v == "redirect"]
@@ -124,11 +124,11 @@ def start() -> None:
                     deleted_pages.append(iid)
                 # ---
             elif target in redirects:
-                page = WikiPage(target, lang, family="wikipedia")
+                page = wikipage(target, lang, family="wikipedia")
                 new_target = page.get_redirect_target()
             # ---
             if new_target:
-                page2 = WikiPage(new_target, lang, family="wikipedia")
+                page2 = wikipage(new_target, lang, family="wikipedia")
                 # ---
                 if page2.exists():
                     if page2.isredirect():

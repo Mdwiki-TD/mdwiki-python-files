@@ -43,64 +43,60 @@ def url_parser(url):
     return elements
 
 
-def filter_urls(links):
+def filter_urls(links: list[str]) -> list[str]:
     # ---
     liste1 = []
     # ---
     # delete link like web.archive.org
-    for x in links:
+    for x_str in links:
         # ---
-        if x.startswith("//"):
-            x = f"https:{x}"
+        if x_str.startswith("//"):
+            x_str = f"https:{x_str}"
         # ---
-        x = x.replace("//www.", "//").replace("http://", "https://")
+        x_str = x_str.replace("//www.", "//").replace("http://", "https://")
         # ---
         # un urlencode
         # x = x.replace('%3A', ':').replace('%2F', '/').replace('%3F', '?').replace('%3D', '=').replace('%26', '&')
-        x = urllib.parse.unquote(x)
+        x_str = urllib.parse.unquote(x_str)
         # ---
-        x = x.replace("//www.", "//").replace("http://", "https://")
+        x_str = x_str.replace("//www.", "//").replace("http://", "https://")
         # https://web.archive.org/web/20100724032458/https://nlm.nih.gov/medlineplus/druginfo/natural/patient-riboflavin.html
-        if "web.archive.org" in x:
+        if "web.archive.org" in x_str:
             # match https://web.archive.org/web/20230123155031 and delete it
-            x = re.sub(r"^https://web\.archive\.org/web/[\d]+/", "", x)
-        elif "archive.org/details" in x:
+            x_str = re.sub(r"^https://web\.archive\.org/web/[\d]+/", "", x_str)
+        elif "archive.org/details" in x_str:
             # https://archive.org/details/masterdentistry0000unse/page/180
-            x = x.split("/page")[0]
+            x_str = x_str.split("/page")[0]
         # ---
-        if "archive.is" in x:
-            x = re.sub(r"^https://[\w]+\.archive\.is/[\d]+/", "", x)
-        x = x.replace("//www.", "//").replace("http://", "https://")
+        if "archive.is" in x_str:
+            x_str = re.sub(r"^https://[\w]+\.archive\.is/[\d]+/", "", x_str)
+        x_str = x_str.replace("//www.", "//").replace("http://", "https://")
         # ---
-        if "googleusercontent" in x:
-            x = re.sub(r"^https://.*?googleusercontent.*?http", "http", x)
+        if "googleusercontent" in x_str:
+            x_str = re.sub(r"^https://.*?googleusercontent.*?http", "http", x_str)
         # ---
-        x = re.sub(r"^http.*?https://books", "https://books", x)
+        x_str = re.sub(r"^http.*?https://books", "https://books", x_str)
         # ---
         # https://books.google.ca/books?id=JaOoXdSlT9sC&pg=PA11
-        if "books.google" in x and "books" not in sys.argv:
+        if "books.google" in x_str and "books" not in sys.argv:
             # ---
-            prased = url_parser(x)
+            prased = url_parser(x_str)
             # {'scheme': 'https', 'netloc': 'books.google.ca', 'path': '/books', 'queries': {'id': 'JaOoXdSlT9sC', 'pg': 'PA11'}}
             # ---
-            x = re.sub(prased["netloc"], "books.google.com", x)
+            x_str = re.sub(prased["netloc"], "books.google.com", x_str)
             book_id = prased["queries"].get("id", "")
             if book_id != "":
                 x2 = f"https://books.google.com/books?id={book_id}"
-                if x2 != x:
+                if x2 != x_str:
                     # logger.info('<<yellow>> google books + 1')
-                    x = x2
+                    x_str = x2
         # ---
-        liste1.append(x.lower())
+        liste1.append(x_str.lower())
     # ---
     # remove duplicates
     liste1 = sorted(set(liste1))
     # ---
-    # ---
     return liste1
-
-
-# ---
 
 
 class WorkOneLang:

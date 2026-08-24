@@ -27,7 +27,7 @@ These 101 files are reachable from at least one active entry point through a tra
 | `md_core/unlinked_wb/bot`                 | `src/md_core/unlinked_wb/bot.py`                 |
 | `md_core/updates/io`                      | `src/md_core/updates/io.py`                      |
 | `md_core/updates/listo`                   | `src/md_core/updates/listo.py`                   |
-| `md_core/updates/Medicine_articles`       | `src/md_core/updates/Medicine_articles.py`       |
+| `md_core/updates/medicine_articles`       | `src/md_core/updates/medicine_articles.py`       |
 | `md_core_helps/apis/cat_cach`             | `src/md_core_helps/apis/cat_cach.py`             |
 | `td_core/copy_data/by_qid/sitelinks`      | `src/td_core/copy_data/by_qid/sitelinks.py`      |
 | `td_core/copy_data/by_title/all_articles` | `src/td_core/copy_data/by_title/all_articles.py` |
@@ -205,7 +205,7 @@ src/td_core/wd_works/__init__.py
 
 | Path                           | Reason                                                          |
 | ------------------------------ | --------------------------------------------------------------- |
-| `src/md_core/updates/c2023.py` | Not imported by `io.py`, `listo.py`, or `Medicine_articles.py`. |
+| `src/md_core/updates/c2023.py` | Not imported by `io.py`, `listo.py`, or `medicine_articles.py`. |
 
 ### `src/md_core_helps/apis/`
 
@@ -349,10 +349,10 @@ The whole subtree is unreachable. Naming convention (`one_time`) suggests these 
 
 ### `src/td_core/fix_user_pages/`
 
-| Path                                      | Reason                                                                      |
-| ----------------------------------------- | --------------------------------------------------------------------------- |
-| `src/td_core/fix_user_pages/del.py`       | Not imported by `bot.py` (which uses `fix_it_db_new.py` and `user_bot.py`). |
-| `src/td_core/fix_user_pages/fix_it_db.py` | Superseded by `fix_it_db_new.py`.                                           |
+| Path                                        | Reason                                                                      |
+| ------------------------------------------- | --------------------------------------------------------------------------- |
+| `src/td_core/fix_user_pages/del_records.py` | Not imported by `bot.py` (which uses `fix_it_db_new.py` and `user_bot.py`). |
+| `src/td_core/fix_user_pages/fix_it_db.py`   | Superseded by `fix_it_db_new.py`.                                           |
 
 ### `src/td_core/mdcount/`
 
@@ -369,28 +369,25 @@ The whole subtree is unreachable. Naming convention (`one_time`) suggests these 
 
 ### `src/wprefs/` (entire package)
 
-| Path                                    | Reason                             |
-| --------------------------------------- | ---------------------------------- |
-| `src/wprefs/__init__.py`                | No active entry uses this package. |
-| `src/wprefs/api.py`                     | —                                  |
-| `src/wprefs/bot.py`                     | —                                  |
-| `src/wprefs/bot1.py`                    | —                                  |
-| `src/wprefs/es.py`                      | —                                  |
-| `src/wprefs/files.py`                   | —                                  |
-| `src/wprefs/helps.py`                   | —                                  |
-| `src/wprefs/infobox.py`                 | —                                  |
-| `src/wprefs/todb.py`                    | —                                  |
-| `src/wprefs/wpref_text.py`              | —                                  |
-| `src/wprefs/bots/__init__.py`           | —                                  |
-| `src/wprefs/bots/Duplicatenew2.py`      | —                                  |
-| `src/wprefs/bots/es_months.py`          | —                                  |
-| `src/wprefs/bots/es_refs.py`            | —                                  |
-| `src/wprefs/bots/es_section.py`         | —                                  |
-| `src/wprefs/bots/fix_pt_months.py`      | —                                  |
-| `src/wprefs/bots/replace_except.py`     | —                                  |
-| `src/wprefs/bots/replace_except_old.py` | —                                  |
-| `src/wprefs/bots/test_pt_months.py`     | —                                  |
-| `src/wprefs/bots/txtlib2.py`            | —                                  |
+| Path                                | Reason                             |
+| ----------------------------------- | ---------------------------------- |
+| `src/wprefs/__init__.py`            | No active entry uses this package. |
+| `src/wprefs/api.py`                 | —                                  |
+| `src/wprefs/bot.py`                 | —                                  |
+| `src/wprefs/bot1.py`                | —                                  |
+| `src/wprefs/es.py`                  | —                                  |
+| `src/wprefs/files.py`               | —                                  |
+| `src/wprefs/helps.py`               | —                                  |
+| `src/wprefs/infobox.py`             | —                                  |
+| `src/wprefs/todb.py`                | —                                  |
+| `src/wprefs/wpref_text.py`          | —                                  |
+| `src/wprefs/bots/__init__.py`       | —                                  |
+| `src/wprefs/bots/Duplicatenew2.py`  | —                                  |
+| `src/wprefs/bots/es_months.py`      | —                                  |
+| `src/wprefs/bots/es_refs.py`        | —                                  |
+| `src/wprefs/bots/es_section.py`     | —                                  |
+| `src/wprefs/bots/fix_pt_months.py`  | —                                  |
+| `src/wprefs/bots/test_pt_months.py` | —                                  |
 
 ### `src1/` (entire alternate-source tree)
 
@@ -464,19 +461,17 @@ These files are _not_ reachable through static AST tracing from the 28 active en
 
 The repository ships `.github/workflows/pytest.yml` and `tests/conftest.py`, so these run on CI even though no `import` chain links them to a `pwb.py` entry point.
 
-| Path                                                   | Notes                                                                                                                     |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| `tests/conftest.py`                                    | Pytest fixture file — discovered automatically by pytest.                                                                 |
-| `tests/src/md_core/add_rtt/__init__.py`                | Test package marker.                                                                                                      |
-| `tests/src/md_core/add_rtt/add_r_col.py`               | Test helper — verify whether pytest collects it.                                                                          |
-| `tests/src/md_core/add_rtt/add_r_col_to_file.py`       | Test helper.                                                                                                              |
-| `tests/src/md_core/add_rtt/test.py`                    | Looks like a test.                                                                                                        |
-| `tests/src/md_core/add_rtt/tests/add_r_col.py`         | Nested duplicate of above — likely stale.                                                                                 |
-| `tests/src/md_core/add_rtt/tests/add_r_col_to_file.py` | Nested duplicate of above — likely stale.                                                                                 |
-| `tests/src/wprefs/bots/test_replace_except.py`         | Tests for the (otherwise unused) `wprefs/` package — confirm whether `wprefs/` is intentionally retained for these tests. |
-| `tests/src/wprefs/bots/test_replace_except_unit.py`    | Same as above.                                                                                                            |
-| `src/md_core/fix_cs1/tests.py`                         | Module-local test file; lives outside `tests/` so pytest may or may not pick it up depending on `testpaths` config.       |
-| `src1_test/src1/copy_to_en/test_alltext_changes.py`    | Tests for the unused `src1/` tree.                                                                                        |
+| Path                                                   | Notes                                                                                                               |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `tests/conftest.py`                                    | Pytest fixture file — discovered automatically by pytest.                                                           |
+| `tests/src/md_core/add_rtt/__init__.py`                | Test package marker.                                                                                                |
+| `tests/src/md_core/add_rtt/add_r_col.py`               | Test helper — verify whether pytest collects it.                                                                    |
+| `tests/src/md_core/add_rtt/add_r_col_to_file.py`       | Test helper.                                                                                                        |
+| `tests/src/md_core/add_rtt/test.py`                    | Looks like a test.                                                                                                  |
+| `tests/src/md_core/add_rtt/tests/add_r_col.py`         | Nested duplicate of above — likely stale.                                                                           |
+| `tests/src/md_core/add_rtt/tests/add_r_col_to_file.py` | Nested duplicate of above — likely stale.                                                                           |
+| `src/md_core/fix_cs1/tests.py`                         | Module-local test file; lives outside `tests/` so pytest may or may not pick it up depending on `testpaths` config. |
+| `src1_test/src1/copy_to_en/test_alltext_changes.py`    | Tests for the unused `src1/` tree.                                                                                  |
 
 ### Files possibly invoked outside the `pwb.py` dispatcher
 

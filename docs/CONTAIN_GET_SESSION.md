@@ -42,7 +42,7 @@ raw `text()` queries:
 | 18  | `td_core/db_work/days_7.py`                             | `pages` SELECT/UPDATE                     |
 | 19  | `td_core/db_work/check_titles.py`                       | `pages` + `pages_users` SELECT            |
 | 20  | `td_core/fix_user_pages/bot.py`                         | `pages_users_to_main` SELECT              |
-| 21  | `td_core/fix_user_pages/del.py`                         | `pages_users_to_main` DEL                 |
+| 21  | `td_core/fix_user_pages/del_records.py`                         | `pages_users_to_main` DEL                 |
 | 22  | `td_core/fix_user_pages/fix_it_db.py`                   | `words` SELECT + `pages` INSERT/DEL       |
 | 23  | `td_core/fix_user_pages/fix_it_db_new.py`               | `pages_users_to_main` INSERT              |
 | 24  | `td_core/after_translate/bots/fixcat.py`                | `pages` UPDATE                            |
@@ -117,7 +117,7 @@ with get_session() as session:
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `fix_it_db.py`             | `SELECT w_title, w_lead_words, w_all_words FROM words` + `INSERT INTO pages` + `SELECT from pages` + `DELETE FROM pages_users` |
 | `fix_it_db_new.py`         | `INSERT INTO pages_users_to_main` + `SELECT from pages_users_to_main`                                                          |
-| `del.py`                   | `SELECT from pages_users_to_main` + `DELETE FROM pages_users_to_main` + `DELETE FROM pages_users`                              |
+| `del_records.py`                   | `SELECT from pages_users_to_main` + `DELETE FROM pages_users_to_main` + `DELETE FROM pages_users`                              |
 | `add_to_pages_users_db.py` | `SELECT from pages_users` + `SELECT from pages`                                                                                |
 | `add_to_mdwiki.py`         | `SELECT from pages`                                                                                                            |
 | `get_pages.py`             | `SELECT from pages` + `SELECT from pages_users`                                                                                |
@@ -157,7 +157,7 @@ For each of the 27 files, in groups:
    `copy_enwiki_pageviews.py`, `copy_assessments.py`, `getas.py`, `enwiki_views.py`,
    `sqlviews_new.py`
 
-2. **Fix_user_pages group** (4 files): `bot.py`, `del.py`, `fix_it_db.py`,
+2. **Fix_user_pages group** (4 files): `bot.py`, `del_records.py`, `fix_it_db.py`,
    `fix_it_db_new.py`
 
 3. **after_translate group** (4 files): `fixcat.py`, `add_to_pages_users_db.py`,
