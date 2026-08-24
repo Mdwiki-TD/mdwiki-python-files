@@ -5,11 +5,11 @@ from __future__ import annotations
 from .api_client.client import WikiLoginClient
 from .client_wiki.all_apis import AllAPIS
 from .client_wiki.api_utils import (
-    txtlib,
     AskBot,
     HandleErrors,
     change_codes,
     is_page_editable,
+    txtlib,
 )
 from .client_wiki.pages import MainPage
 from .utils import function_timer

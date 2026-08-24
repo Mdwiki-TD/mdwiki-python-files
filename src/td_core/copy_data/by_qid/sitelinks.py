@@ -12,6 +12,7 @@ import json
 import logging
 import sys
 from collections import defaultdict
+from typing import Any
 
 import tqdm
 
@@ -205,7 +206,7 @@ def main() -> None:
     # ---
     qids_to_mdtitle = {qid: title for title, qid in qids_tab.items()}
     # ---
-    lists = {}
+    lists: dict[str, Any] = {}
     # ---
     if "json" in sys.argv:
         with open(paths.json_files.sitelinks, "r", encoding="utf-8") as aa:

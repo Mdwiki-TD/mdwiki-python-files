@@ -21,7 +21,7 @@ class DbConfig:
     db_password: str | None
 
     def to_dict(self) -> dict[str, Any]:
-        data = {
+        data: dict[str, Any] = {
             "db": self.db_name,
             "host": self.db_host,
             "user": self.db_user,
