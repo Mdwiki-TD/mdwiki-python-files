@@ -8,6 +8,7 @@ import logging
 import re
 from contextlib import suppress
 from dataclasses import dataclass, field
+from typing import Any
 
 from pywikibot.textlib import replaceExcept
 
@@ -44,7 +45,7 @@ def get_html_attributes_value(text: str, param) -> str:
     return ""
 
 
-def get_attrs(text: str) -> dict:
+def get_attrs(text: str) -> dict[str, Any]:
     text = f"<ref {text}>"
     attrfind_tolerant = re.compile(
         r'((?<=[\'"\s/])[^\s/>][^\s/=>]*)(\s*=+\s*(\'[^\']*\'|"[^"]*"|(?![\'"])[^>\s]*))?(?:\s|/(?!>))*'

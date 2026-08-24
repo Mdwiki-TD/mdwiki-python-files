@@ -180,7 +180,7 @@ def getrevid(title):
 
 
 def get_page_links(
-    title,
+    title: str,
     namespace: str = "0",
     limit: int | str = "max",
 ) -> dict[str, Any]:
@@ -241,7 +241,7 @@ def get_all_pages(
 
 
 def get_usercontribs(user, limit: int | str = "max", namespace: str = "*", ucshow: str = ""):
-    return api_new.usercontribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
+    return api_new.user_contribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
 
 
 def get_redirect(liste):

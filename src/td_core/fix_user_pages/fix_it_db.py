@@ -13,9 +13,8 @@ from db.mdapi_sql.services import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
-all_infos_data = sql_for_mdwiki.select_md_sql(
+all_infos_data = sql_for_mdwiki.mdwiki_sql_dict(
     "SELECT w_title, w_lead_words, w_all_words FROM words;",
-    return_dict=True,
 )
 # Index by title for O(1) lookup downstream. Previously this was loaded from
 # `all_articles`, which never carried the `w_lead_words` / `w_all_words`
@@ -66,6 +65,6 @@ def work_in_new_tabs_to_db(new_tabs_to_db) -> None:
             logger.info(f"<<green>> find_it: {find_it}")
             # ---
             # del it from pages_users
-            del_it = sql_for_mdwiki.mdwiki_sql("delete from pages_users where id = %s", values=[old["id"]])
+            del_it = sql_for_mdwiki.mdwiki_sql_update("delete from pages_users where id = %s", values=[old["id"]])
             # ---
             logger.info(f"<<green>> del_it: {del_it}")

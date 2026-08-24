@@ -11,20 +11,6 @@ from db.mdapi_sql.services import sql_for_mdwiki
 logger = logging.getLogger(__name__)
 
 
-def mdwiki_sql_one_table(
-    table_name: str,
-    query,
-    **kwargs,
-):
-    # ---
-    in_sql_list = sql_for_mdwiki.mdwiki_sql(
-        query,
-        **kwargs,
-    )
-    # ---
-    return in_sql_list
-
-
 def insert_dict(
     list_of_lines,
     table_name: str,
@@ -81,7 +67,7 @@ def insert_dict(
         # logger.info(qua)
         # logger.info(values)
         # ---
-        mdwiki_sql_one_table(table_name, qua, values=values, many=True)
+        sql_for_mdwiki.mdwiki_sql_update(qua, values=values, many=True)
         # ---
         done += len(tab)
         # ---
@@ -120,7 +106,7 @@ def update_table(
             # ---
             values.append(vav[title_column])
             # ---
-            mdwiki_sql_one_table(table_name, qua, values=values)
+            sql_for_mdwiki.mdwiki_sql_update(qua, values=values)
         # ---
         done += len(tab)
         # ---
@@ -156,7 +142,7 @@ def update_table_2(
             # ---
             values.extend([vav[x] for x in columns_where])
             # ---
-            mdwiki_sql_one_table(table_name, qua, values=values)
+            sql_for_mdwiki.mdwiki_sql_update(qua, values=values)
         # ---
         done += len(tab)
         # ---
@@ -176,7 +162,7 @@ def to_sql(
     # ---
     in_sql = {}
     # ---
-    in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
+    in_sql_list = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
     for q in in_sql_list:
         title = q[title_column]
@@ -235,7 +221,7 @@ def new_to_sql(
     in_sql = {}
     # ---
     if not in_sql_list:
-        in_sql_list = mdwiki_sql_one_table(table_name, que, return_dict=True)
+        in_sql_list = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
     for q in in_sql_list:
         title = ",".join([q[t] for t in title_columns])

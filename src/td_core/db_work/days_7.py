@@ -11,8 +11,6 @@ from db.mdapi_sql.services import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
-
-# sql_for_mdwiki.mdwiki_sql(query , update = False)
 # ---
 queries = {
     "pages": "where date < DATE_SUB(current_timestamp(), INTERVAL 7 DAY) and (target = '' OR target IS NULL)",
@@ -33,6 +31,6 @@ for name, qua in queries.items():
     # ---
     logger.info(qua_del)
     # ---
-    ty = sql_for_mdwiki.mdwiki_sql(qua_del, update=True)
+    ty = sql_for_mdwiki.mdwiki_sql_update(qua_del)
     # ---
     logger.info(ty)

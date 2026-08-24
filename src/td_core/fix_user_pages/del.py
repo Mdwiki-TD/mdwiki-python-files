@@ -22,7 +22,7 @@ from db.mdapi_sql.services import sql_for_mdwiki
 logger = logging.getLogger(__name__)
 
 # id, new_target, new_user, new_qid, id, title, word, translate_type, cat, lang, user, target, date, pupdate, add_date, deleted, id, title, word, translate_type, cat, lang, user, target, date, pupdate, add_date, deleted
-query = """
+query_select = """
     SELECT pum.id, pum.new_target, pum.new_user
     FROM pages_users_to_main pum, pages_users pu, pages p
     where pum.id = pu.id
@@ -33,18 +33,20 @@ query = """
     #and pu.user = p.user
 """
 
-result = sql_for_mdwiki.mdwiki_sql_dict(query=query)
+result = sql_for_mdwiki.mdwiki_sql_dict(query=query_select)
 
 for x in result:
     logger.info(x)
     # ---
-    query = "DELETE FROM pages_users_to_main WHERE id = %s"
-    sql_for_mdwiki.mdwiki_sql(query=query, values=[x["id"]])
+    x_id = x["id"]
     # ---
-    query = "DELETE FROM pages_users WHERE id = %s"
-    sql_for_mdwiki.mdwiki_sql(query=query, values=[x["id"]])
+    query_del_1 = "DELETE FROM pages_users_to_main WHERE id = %s"
+    sql_for_mdwiki.mdwiki_sql_update(query=query_del_1, values=[x_id])
     # ---
-    find_it = sql_for_mdwiki.mdwiki_sql(query="SELECT * FROM pages_users WHERE id = %s", values=[x["id"]])
+    query_del_2 = "DELETE FROM pages_users WHERE id = %s"
+    sql_for_mdwiki.mdwiki_sql_update(query=query_del_2, values=[x_id])
+    # ---
+    find_it = sql_for_mdwiki.mdwiki_sql_dict(query="SELECT * FROM pages_users WHERE id = %s", values=[x_id])
     # ---
     if len(find_it) > 0:
         logger.info("<<red>> not deleted")

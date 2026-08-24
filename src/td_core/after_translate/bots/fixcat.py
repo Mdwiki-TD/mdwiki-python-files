@@ -24,7 +24,7 @@ cat_for_pages = {}
 
 def get_cats_and_pages() -> None:
     # ---
-    sq = sql_for_mdwiki.select_md_sql("select category, depth from categories;", return_dict=True)
+    sq = sql_for_mdwiki.mdwiki_sql_dict("select category, depth from categories;")
     # ---
     catlen = {}
     # ---
@@ -62,7 +62,7 @@ def get_pages_with_no_cat_old() -> None:
     # ---
     add_cat = {}
     # ---
-    ioi = sql_for_mdwiki.select_md_sql("select title from pages where (cat = '' OR cat IS NULL);", return_dict=True)
+    ioi = sql_for_mdwiki.mdwiki_sql_dict("select title from pages where (cat = '' OR cat IS NULL);")
     # ---
     for tab in ioi:
         title = tab["title"]
@@ -81,7 +81,7 @@ def get_pages_with_no_cat_old() -> None:
         logger.info(quanew)
         # ---
         if "dont" not in sys.argv:
-            qu = sql_for_mdwiki.mdwiki_sql(quanew, update=True)
+            qu = sql_for_mdwiki.mdwiki_sql_update(quanew)
             # ---
             logger.info(qu)
 
@@ -91,7 +91,7 @@ def get_pages_with_no_cat() -> None:
     add_cat = {}
     cat_to_titles = {}
     # ---
-    ioi = sql_for_mdwiki.select_md_sql("select title, cat from pages where cat in ('RTT', '') ;", return_dict=True)
+    ioi = sql_for_mdwiki.mdwiki_sql_dict("select title, cat from pages where cat in ('RTT', '') ;")
     # ---
     for tab in tqdm.tqdm(ioi):
         title = tab["title"]
@@ -119,14 +119,13 @@ def get_pages_with_no_cat() -> None:
         logger.info(quanew)
         # ---
         if "dont" not in sys.argv:
-            # qu = sql_for_mdwiki.mdwiki_sql(quanew, update=True)
-            qu = sql_for_mdwiki.mdwiki_sql(quanew, values=values, update=True)
+            qu = sql_for_mdwiki.mdwiki_sql_update(quanew, values=values)
             # ---
             logger.info(qu)
     # ---
     qua2 = "update pages set cat = 'RTT' where (cat = '' OR cat IS NULL); "
     # ---
-    sql_for_mdwiki.mdwiki_sql(qua2, update=True)
+    sql_for_mdwiki.mdwiki_sql_update(qua2)
 
 
 if __name__ == "__main__":

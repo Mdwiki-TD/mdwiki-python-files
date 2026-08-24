@@ -52,8 +52,8 @@ class WikiReplicaBaseDB:
     ) -> None:
         self.dbname = dbname
         self.host = host
-        self.user = user or os.getenv("TOOL_REPLICA_USER")
-        self.password = password or os.getenv("TOOL_REPLICA_PASSWORD")
+        self.user = user or os.getenv("TOOL_REPLICA_USER") or ""
+        self.password = password or os.getenv("TOOL_REPLICA_PASSWORD") or ""
         self.port = port
         self.connection: pymysql.connections.Connection | None = None
 
@@ -78,7 +78,7 @@ class WikiReplicaBaseDB:
                     init_command="SET NAMES utf8mb4",  # Forces the connection to use utf8mb4
                     cursorclass=pymysql.cursors.DictCursor,
                     connect_timeout=10,
-                    **args,
+                    **args,  # pyright: ignore[reportArgumentType]
                 )  # type: ignore
             except pymysql.Error as e:
                 logger.error(f"Failed to connect to {self.host}/{self.dbname}: {e}")

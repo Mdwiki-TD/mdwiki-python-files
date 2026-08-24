@@ -9,6 +9,7 @@ python3 core8/pwb.py md_core/p11143_bot/bot -td
 import functools
 import logging
 import sys
+from typing import Any
 
 from db.mdapi_sql.services import sql_qids, sql_qids_others
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
@@ -93,7 +94,7 @@ def add_q(new_qids, ty) -> None:
         sql_qids_others.add_titles_to_qids(newtitles_not_td)
 
 
-def work_qids(ty, qids_list) -> dict:
+def work_qids(ty, qids_list) -> dict[str, Any]:
     # ---
     in_wd = make_in_wd_tab()
     # ---

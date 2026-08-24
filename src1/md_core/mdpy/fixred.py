@@ -29,7 +29,7 @@ def printtest(s) -> None:
 
 @functools.lru_cache(maxsize=1)
 def load_nonredirects() -> list[str]:
-    nonredirects = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="nonredirects")
+    nonredirects = mdwiki_api_call.get_all_pages("!", namespace="0", apfilterredir="nonredirects")
     logger.info(f"len of nonredirects {len(nonredirects)} ")
     return nonredirects
 

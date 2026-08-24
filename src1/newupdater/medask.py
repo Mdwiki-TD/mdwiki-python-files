@@ -136,7 +136,7 @@ def main():
         if starts == "all":
             starts = ""
         # ---
-        listen = api_new.Get_All_pages(start=starts, namespace=namespaces, limit=limite)
+        listen = api_new.get_all_pages(start=starts, namespace=namespaces, limit=limite)
         # ---
         for n, page in enumerate(listen):
             logger.info(f"<<green>> n:{n}, title:{page}")

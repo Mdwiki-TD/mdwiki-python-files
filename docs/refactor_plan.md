@@ -129,7 +129,7 @@ These files execute their entire logic on import because there's no `__main__` g
 | #   | File                                    | Problem                                                              |
 | --- | --------------------------------------- | -------------------------------------------------------------------- |
 | 1   | `src/md_core/updates/c2023.py`          | Entire data pipeline runs on import — API calls, loops, page saves   |
-| 2   | `src/md_core/updates/listo.py`          | API calls `Get_All_pages`, `GetPageText`, `CatDepth` at module level |
+| 2   | `src/md_core/updates/listo.py`          | API calls `get_all_pages`, `GetPageText`, `CatDepth` at module level |
 | 3   | `src/md_core/updates/io.py`             | File read + API calls + heavy loop with API calls per page           |
 | 4   | `src/copy_to_en/x.py`                   | `cat_cach.from_cache()` API call + HTTP requests loop                |
 | 5   | `src/td_core/td_other_qids/fix_qids.py` | `cat_cach.from_cache()` API call + list comp                         |

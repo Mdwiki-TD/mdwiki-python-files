@@ -3,79 +3,59 @@
 
 import logging
 import time
+from typing import Any
 
-from db.mdapi_sql import sql_td_bot
+from db.mdapi_sql.sql_td_bot import tf_sql_connect_dict, tf_sql_connect_update
 
 logger = logging.getLogger(__name__)
 
 
-def mdwiki_sql(
-    query,
-    return_dict: bool = False,
-    values=None,
+def mdwiki_sql_update(
+    query: str,
+    values: list | tuple | None = None,
     many: bool = False,
-    **kwargs,
-):
+) -> None | bool:
     # ---
     if not query:
         logger.info("query == ''")
-        return {}
+        return None
     # ---
-    return sql_td_bot.toolforge_tools_sql_connect(
-        query,
-        return_dict=return_dict,
+    return tf_sql_connect_update(
+        query=query,
         values=values,
         many=many,
-        **kwargs,
     )
 
 
 def mdwiki_sql_dict(
-    query,
-    values=None,
+    query: str,
+    values: list | tuple | None = None,
     many: bool = False,
     **kwargs,
-):
+) -> list[dict[str, Any]]:
     # ---
     if not query:
         logger.info("query == ''")
-        return {}
+        return []
     # ---
-    return sql_td_bot.toolforge_tools_sql_connect(
+    result = tf_sql_connect_dict(
         query,
-        return_dict=True,
         values=values,
         many=many,
         **kwargs,
     )
+    return result
 
 
-def select_md_sql(
-    query,
-    *args,
-    **kwargs,
-):
-    # ---
-    if not query:
-        logger.info("query == ''")
-        return {}
-    # ---
-    return mdwiki_sql(
-        query,
-        *args,
-        **kwargs,
-    )
+def get_all_pages() -> list[str]:
+    return [ta["title"] for ta in mdwiki_sql_dict("select DISTINCT title from pages;")]
 
 
-def get_all_pages():
-    return [ta["title"] for ta in select_md_sql("select DISTINCT title from pages;", return_dict=True)]
+def get_all_from_table(table_name: str = "enwiki_pageviews") -> list[dict[str, Any]]:
+    return mdwiki_sql_dict(f"select DISTINCT * from {table_name};")
 
 
-def get_all_from_table(table_name: str = "enwiki_pageviews"):
-    return select_md_sql(f"select DISTINCT * from {table_name};", return_dict=True)
-
-
-def get_all_pages_all_keys(lang: bool = False, table: str = "pages"):
+def get_all_pages_all_keys(lang: str | None = None, table: str = "pages") -> list[Any]:
     lang_line = ""
     # ---
     if lang:
@@ -85,18 +65,17 @@ def get_all_pages_all_keys(lang: bool = False, table: str = "pages"):
         table = "pages"
     # ---
     qua = f"select DISTINCT * from {table} {lang_line};"
-    return list(select_md_sql(qua, return_dict=True))
+    return mdwiki_sql_dict(qua)
 
 
-def get_db_categories() -> dict:
-    return {
-        c["category"]: c["depth"] for c in select_md_sql("select category, depth from categories;", return_dict=True)
-    }
+def get_db_categories() -> dict[str, Any]:
+    result = mdwiki_sql_dict("select category, depth from categories;")
+    return {c["category"]: c["depth"] for c in result}
 
 
 def get_db_category_members() -> dict[str, list]:
     data: dict[str, list] = {}
-    sql_result = select_md_sql("select category, article_id from category_members;", return_dict=True)
+    sql_result = mdwiki_sql_dict("select category, article_id from category_members;")
 
     for line in sql_result:
         if line["category"] not in data:
@@ -107,10 +86,10 @@ def get_db_category_members() -> dict[str, list]:
 
 
 def get_db_users() -> list:
-    return [c["username"] for c in select_md_sql("select username from users;", return_dict=True)]
+    return [c["username"] for c in mdwiki_sql_dict("select username from users;")]
 
 
-def set_target_where_id(new_target, iid):
+def set_target_where_id(new_target, iid) -> None | list[dict[str, Any]]:
     # ---
     logger.info(f"<<yellow>> () new_target:{new_target}, id:{iid}")
     # ---
@@ -120,10 +99,10 @@ def set_target_where_id(new_target, iid):
     query = "UPDATE pages set target = %s where id = %s;"
     values = [new_target, iid]
     # ---
-    return mdwiki_sql(query, return_dict=True, values=values)
+    return mdwiki_sql_dict(query, values=values)
 
 
-def set_deleted_where_id(iid):
+def set_deleted_where_id(iid) -> None | list[dict[str, Any]]:
     # ---
     logger.info(f"<<yellow>> (), id:{iid}")
     # ---
@@ -132,7 +111,7 @@ def set_deleted_where_id(iid):
     # ---
     query = "UPDATE pages set deleted = 1 where id = %s;"
     # ---
-    return mdwiki_sql(query, return_dict=True, values=[iid])
+    return mdwiki_sql_dict(query, values=[iid])
 
 
 def insert_to_pages_users_to_main(id, target, user, qid) -> bool:
@@ -143,7 +122,7 @@ def insert_to_pages_users_to_main(id, target, user, qid) -> bool:
     # ---
     params = [id, target, user, qid]
     # ---
-    mdwiki_sql(query, values=params)
+    mdwiki_sql_update(query, values=params)
     # ---
     qua = "select DISTINCT * from pages_users_to_main where id = %s and new_target = %s and new_user = %s and new_qid = %s"
     # ---
@@ -185,4 +164,4 @@ def add_new_to_pages(tab) -> None:
         tab.get("user"),
     ]
     # ---
-    mdwiki_sql(insert_qua, values=values)
+    mdwiki_sql_update(insert_qua, values=values)

@@ -38,7 +38,7 @@ in_sql = {}
 # ---
 que = """select DISTINCT title, en_views from enwiki_pageviews;"""
 # ---
-for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+for q in sql_for_mdwiki.mdwiki_sql_dict(que):
     title = q["title"]
     if not new_data.get(title):
         in_sql[title] = q["en_views"]

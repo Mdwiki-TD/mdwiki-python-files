@@ -36,7 +36,7 @@ def work_in_file(filename) -> None:
     text = {}
     # ---
     with open(filename2, "r", encoding="utf-8") as f:
-        text = f.read(f)
+        text = f.read()
     # ---
     n = 0
     # ---

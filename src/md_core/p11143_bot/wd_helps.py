@@ -130,7 +130,7 @@ def fix_in_wd(merge_qids, qids) -> None:
         merge_qids[q] = md_title
         # ---
         # delete the old
-        ae = wikidataapi.Get_claim(q, "P11143", get_claim_id=True)
+        ae = wikidataapi.get_claim(q, "P11143", get_claim_id=True)
         if ae:
             for x in ae:
                 value = x["value"]

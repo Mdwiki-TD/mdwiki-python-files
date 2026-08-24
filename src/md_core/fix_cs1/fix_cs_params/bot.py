@@ -308,7 +308,7 @@ def main() -> None:
             break
     # ---
     if "all" in sys.argv:
-        titles = api_new.Get_All_pages()
+        titles = api_new.get_all_pages()
     else:
         logger.info(f"cat: {cat}")
         titles = CatDepth(cat, sitecode="www", family="mdwiki")

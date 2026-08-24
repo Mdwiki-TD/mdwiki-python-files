@@ -48,7 +48,7 @@ logger.info(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
 # ---
 in_sql = {}
 # ---
-for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+for q in sql_for_mdwiki.mdwiki_sql_dict(que):
     w_title = q["w_title"]
     if not NEW_DATA.get(w_title):
         in_sql[w_title] = {"lead": q["w_lead_words"], "all": q["w_all_words"]}

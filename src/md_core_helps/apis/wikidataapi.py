@@ -20,7 +20,7 @@ Main_User = {1: ""}
 Save_2020_wd = {}
 
 
-def ask_put(s):
+def ask_put(s) -> bool | str:
     yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
 
     sa = input(s)
@@ -36,15 +36,15 @@ def post(params, token: bool = True):
     return post_it(params=params, token=token)
 
 
-def Get_sitelinks_From_Qid(q):
-    return wd_rest_new.Get_sitelinks_From_Qid(q)
+def get_sitelinks_from_qid(q):
+    return wd_rest_new.get_sitelinks_from_qid(q)
 
 
-def Get_claim(q, pid: int, get_claim_id: bool = False):
-    return wd_rest_new.Get_Claims_API(q=q, p=pid)
+def get_claim(q, pid: str, get_claim_id: bool = False):
+    return wd_rest_new.get_claims_api(q=q, p=pid)
 
 
-def WD_Merge(q1, q2) -> bool:
+def wd_merge(q1, q2) -> bool:
     # ---
     q11 = re.sub(r"Q", "", q1)
     q22 = re.sub(r"Q", "", q2)

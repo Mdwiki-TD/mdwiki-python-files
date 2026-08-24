@@ -12,7 +12,7 @@ numbers = {1: 20000, "done": 0}
 api_new = NewApi("www", family="mdwiki")
 
 # pages   = api_new.find_pages_exists_or_not(liste)
-# pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
+# pages   = api_new.get_all_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 # ---
 """
 page      = MainPage(title, 'www', family='mdwiki')
@@ -66,7 +66,7 @@ def work(title) -> None:
 def main() -> None:
     nn = ""
     # ---
-    list = api_new.Get_All_pages(start="COVID", namespace="0", limit="max", apfilterredir="", limit_all=0)
+    list = api_new.get_all_pages(start="COVID", namespace="0", limit="max", apfilterredir="", limit_all=0)
     # ---
     num = 0
     # ---

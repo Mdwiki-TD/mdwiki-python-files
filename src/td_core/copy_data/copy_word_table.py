@@ -26,7 +26,7 @@ que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
 in_sql_lead = {}
 in_sql_all = {}
 # ---
-for q in sql_for_mdwiki.select_md_sql(que, return_dict=True):
+for q in sql_for_mdwiki.mdwiki_sql_dict(que):
     # ---
     w_title = q["w_title"]
     w_lead_words = q["w_lead_words"]
@@ -120,7 +120,7 @@ if UPDATE:
                 # ---
                 logger.info(tt)
                 # ---
-                vfg = sql_for_mdwiki.mdwiki_sql(tt, values=values)
+                vfg = sql_for_mdwiki.mdwiki_sql_update(tt, values=values)
                 # ---
                 texts = []
                 # ---
@@ -143,7 +143,7 @@ if INSERT != []:
         # ---
         qu = "INSERT INTO words (w_title, w_lead_words, w_all_words) values\n" + insert_line
         logger.info(qu)
-        vfg = sql_for_mdwiki.mdwiki_sql(qu, update=True)
+        vfg = sql_for_mdwiki.mdwiki_sql_update(qu)
     else:
         logger.info('add "insert" to sys.argv to insert new words.')
         logger.info(f"{len(INSERT)=}")

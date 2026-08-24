@@ -2,6 +2,7 @@
 
 import functools
 import os
+from typing import Any
 
 from .client_wiki import bot_api
 from .client_wiki.all_apis import AllAPIS
@@ -20,7 +21,7 @@ def _load_credentials() -> tuple[str, str]:
     return username, password
 
 
-@functools.lru_cache(maxsize=1)
+@functools.lru_cache(maxsize=1024)
 def load_main_api(lang: str, family: str = "wikipedia") -> AllAPIS:
     """
     Loads and returns an instance of AllAPIS for the specified language and family, using cached credentials.
@@ -35,26 +36,28 @@ def load_main_api(lang: str, family: str = "wikipedia") -> AllAPIS:
 
 
 def mainpage(title: str, lang: str, family: str = "wikipedia"):
-    # ---
-    main_bot = load_main_api(lang, family)
-    # ---
-    page = main_bot.mainpage(title, lang, family=family)
-    # ---
-    return page
+    main_api = load_main_api(lang, family)
+    return main_api.mainpage(title)
 
 
-def catdepth(title: str, sitecode: str = "", family: str = "wikipedia", **kwargs):
-    # ---
-    main_bot = load_main_api(sitecode, family)
-    # ---
-    result = main_bot.catdepth(title, sitecode=sitecode, family=family, **kwargs)
-    # ---
-    return result
+def catdepth(
+    title: str,
+    sitecode: str = "",
+    family: str = "wikipedia",
+    **kwargs,
+) -> dict[str, Any]:
+    main_api = load_main_api(sitecode, family)
+    return main_api.catdepth(
+        title,
+        sitecode=sitecode,
+        family=family,
+        **kwargs,
+    )
 
 
 def newapi(lang: str = "", family: str = "wikipedia") -> bot_api.NewApi:
-    main_bot = load_main_api(lang, family)
-    return main_bot.newapi()
+    main_api = load_main_api(lang, family)
+    return main_api.newapi()
 
 
 __all__ = [

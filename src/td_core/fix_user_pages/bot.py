@@ -120,7 +120,7 @@ def work_one_tab(tab, missing, redirects):
             # ---
             logger.info(f"<<yellow>> new_target exists, ns: {ns}")
             # ---
-            if not page2.isRedirect() and ns == 0:
+            if not page2.isredirect() and ns == 0:
                 # ---
                 to_set[new_target] = tab
                 # sql_for_mdwiki.set_target_where_id(new_target, iid)

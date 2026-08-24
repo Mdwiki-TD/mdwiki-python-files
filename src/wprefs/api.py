@@ -29,13 +29,13 @@ except Exception:
 
 logger = logging.getLogger(__name__)
 
-username = os.getenv("WIKIPEDIA_BOT_USERNAME")
-password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
+username = os.getenv("WIKIPEDIA_BOT_USERNAME") or ""
+password = os.getenv("WIKIPEDIA_BOT_PASSWORD") or ""
 
-my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
+my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME") or ""
 
-bot_username = os.getenv("WIKIPEDIA_BOT_USERNAME")
-bot_password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
+bot_username = os.getenv("WIKIPEDIA_BOT_USERNAME") or ""
+bot_password = os.getenv("WIKIPEDIA_BOT_PASSWORD") or ""
 # ---
 user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 # ---
@@ -177,7 +177,7 @@ def submitAPI(params, lang: str = "", _type: str = "post", add_token: bool = Fal
     return json1
 
 
-def get_revisions(title, lang: str = "") -> list[Any]:
+def get_revisions(title, lang: str = "") -> list[dict[str, Any]]:
     params = {
         "action": "query",
         "format": "json",

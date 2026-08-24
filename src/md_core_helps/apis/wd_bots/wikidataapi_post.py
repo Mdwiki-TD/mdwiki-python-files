@@ -28,7 +28,7 @@ def get_session() -> requests.Session:
     return requests.Session()
 
 
-def do_request(params=None, method: str = "POST"):
+def do_request(params: dict | None = None, method: str = "POST"):
     # ---
     url = "https://www.wikidata.org/w/api.php"
     # ---
@@ -37,12 +37,16 @@ def do_request(params=None, method: str = "POST"):
         "timeout": 10,
     }
     # ---
+    params = params or {}
+    # ---
     if method == "POST":
         args["data"] = params
     else:
         args["params"] = params
     # ---
-    unurl = f"{url}?{urlencode(params)}"
+    params_str = urlencode(params)
+    # ---
+    unurl = f"{url}?{params_str}"
     # ---
     if "printurl" in sys.argv:
         logger.info(f":\t\t{unurl}")
@@ -117,7 +121,7 @@ def log_to_wiki(url: str = ""):
     login_not_done[1] = False
 
 
-def post_it(params=None, url=None, token: bool = True, method: str = "POST"):
+def post_it(params: dict | None = None, url=None, token: bool = True, method: str = "POST"):
     # ---
     params = params or {}
     # ---

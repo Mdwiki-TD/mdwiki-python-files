@@ -42,7 +42,7 @@ def dodo_sql() -> None:
     # ---
     logger.info(que)
     # ---
-    sq = sql_for_mdwiki.select_md_sql(que, return_dict=True)
+    sq = sql_for_mdwiki.mdwiki_sql_dict(que)
     # ---
     len_no_target = 0
     len_done_target = 0
@@ -135,7 +135,7 @@ def work_with_2_qids(oldq, new_q) -> None:
     logger.info("=============================")
     logger.info(f"start:: oldq:{oldq}, new_q:{new_q}")
     # ---
-    fas = wikidataapi.Get_sitelinks_From_Qid(oldq)
+    fas = wikidataapi.get_sitelinks_from_qid(oldq)
     # {'sitelinks': {'enwiki': 'User:Mr. Ibrahem/Baricitinib', 'orwiki': 'ବାରିସିଟିନିବ'}, 'q': 'Q112331510'}
     # ---
     false_sitelinks = fas.get("sitelinks", {})
@@ -168,7 +168,7 @@ def work_with_2_qids(oldq, new_q) -> None:
     # ---
     if len_sites in [1, 0]:
         logger.info("<<blue>> merge qids")
-        wikidataapi.WD_Merge(oldq, new_q)
+        wikidataapi.wd_merge(oldq, new_q)
     # ---
     logger.info(" ends.........")
     logger.info("=============================")

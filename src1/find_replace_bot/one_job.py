@@ -167,7 +167,7 @@ def get_titles(find, listtype):
         Add_pa = {"srsort": "just_match", "srwhat": "text"}
         titles = api_new.Search(value=find, ns="0", srlimit="max", return_dict=False, addparams=Add_pa)
     else:
-        titles = api_new.Get_All_pages()
+        titles = api_new.get_all_pages()
     # ---
     return titles
 

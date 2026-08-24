@@ -166,8 +166,8 @@ class FindInHistory:
 
 
 def search_history(
-    title,
-    lang,
+    title: str,
+    lang: str,
     en: str = "",
     refname: list[str] | None = None,
     extlinks: list[str] | None = None,

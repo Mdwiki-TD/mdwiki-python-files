@@ -37,11 +37,11 @@ endpoints = {
 }
 
 
-def parse_date(stringdate: str):
+def parse_date(stringdate: str) -> datetime:
     return datetime.strptime(stringdate.ljust(10, "0"), "%Y%m%d%H")
 
 
-def format_date(d):
+def format_date(d) -> str:
     return datetime.strftime(d, "%Y%m%d%H")
 
 
@@ -55,7 +55,7 @@ def timestamps_between(start, end, increment):
         start += increment
 
 
-def month_from_day(dt):
+def month_from_day(dt) -> datetime:
     return datetime(dt.year, dt.month, 1)
 
 
@@ -84,8 +84,8 @@ class PageviewsClient:
         access: str = "all-access",
         agent: str = "all-agents",
         granularity: str = "daily",
-        start=None,
-        end=None,
+        start: str | None = None,
+        end: str | None = None,
     ):
         """
         Get pageview counts for one or more articles
@@ -133,11 +133,11 @@ class PageviewsClient:
         """
         endDate = end or date.today()
         if type(endDate) is not date:
-            endDate = parse_date(end)
+            endDate = parse_date(end)  # pyright: ignore[reportArgumentType]
 
         startDate = start or endDate - timedelta(30)
         if type(startDate) is not date:
-            startDate = parse_date(start)
+            startDate = parse_date(start)  # pyright: ignore[reportArgumentType]
 
         # If the user passes in a string as "articles", convert to a list
         if type(articles) is str:
