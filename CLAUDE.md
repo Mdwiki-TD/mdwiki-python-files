@@ -76,10 +76,6 @@ Each module contains bot scripts in `bots/` subdirectories:
     -   `mdcount/` - Count references and words
 -   **`wprefs/`** - Wiki preferences and text replacement utilities
 
-### Key Utility: `replace_except`
-
-The `wprefs/bots/replace_except.py` module provides `replace_except()` for regex replacement that skips protected regions (comments, templates, links, headers, etc.). Used throughout the codebase for safe text manipulation.
-
 ## Important Patterns
 
 ### API Usage Pattern
