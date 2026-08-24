@@ -9,7 +9,7 @@ from md_core_helps.apis.wd_bots.wd_post_new import post_it
 
 import logging
 
-from md_core_helps.apis.sup.su_login import Get_MwClient_Site
+from md_core_helps.apis.sup.su_login import get_mwclient_site
 from md_core_helps.apis.user_accounts import password, username
 
 logger = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge
 
 SS = {"csrftoken": ""}
 
-wd_site = Get_MwClient_Site("www", "wikidata", username, password)
+wd_site = get_mwclient_site("www", "wikidata", username, password)
 
 
 def do_request(params: dict | None = None, method: str = "POST"):

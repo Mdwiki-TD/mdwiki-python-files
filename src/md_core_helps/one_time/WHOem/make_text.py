@@ -32,21 +32,21 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
         print("langlinks:", langlinks)
     # ---
 
-    for l in langs_keys_sorted:
+    for lang in langs_keys_sorted:
         u += 1
-        if l not in section_langs_views:
-            section_langs_views[l] = 0
+        if lang not in section_langs_views:
+            section_langs_views[lang] = 0
         view = ""
 
-        data = langlinks.get(l)
+        data = langlinks.get(lang)
         # logger.info('data:', data)#{'title': 'قائمة الأدوية الأساسية النموذجية لمنظمة الصحة العالمية', 'views': 159424}
 
         if data:
             title = data["title"]
             view = data["views"]
-            section_langs_views[l] += view
+            section_langs_views[lang] += view
             # ---
-            view = f"[[:w:{l}:{title}|{view:,}]]"
+            view = f"[[:w:{lang}:{title}|{view:,}]]"
             # ---
         # Create a formatted string with the view count for the current language and title
         tt = f" || {view}"
@@ -76,7 +76,7 @@ def fo_n(x) -> str:
     return f"{x:,}"
 
 
-def make_text(ViewsData):
+def make_text(views_data):
     """
     Generate formatted text from given section and links.
     """
@@ -91,7 +91,7 @@ def make_text(ViewsData):
         "!\n"
     )
     # ---
-    langs_keys = [lang for mdtitle, tab in ViewsData.items() for lang in tab.keys()]
+    langs_keys = [lang for mdtitle, tab in views_data.items() for lang in tab.keys()]
     langs_keys = sorted(set(langs_keys))
     # ---
     with open(f"{Dir}/lists/lang_links_mdtitles.json", "r", encoding="utf-8") as f:
@@ -112,7 +112,7 @@ def make_text(ViewsData):
     section_views = 0
 
     # Loop through the dictionary of links.
-    for mdtitle, langlinks in ViewsData.items():
+    for mdtitle, langlinks in views_data.items():
         n += 1
 
         articles = len(langlinks)
@@ -137,12 +137,12 @@ def make_text(ViewsData):
     text += "\n|-\n"
     text += f'! !! style="position: sticky;left: 0;colspan:2;" | Total views !! {section_views:,} \n'
     text += "! \n! "
-    text += " !! ".join([str(fo_n(section_langs_views.get(l, 0))) for l in langs_keys])
+    text += " !! ".join([str(fo_n(section_langs_views.get(code, 0))) for code in langs_keys])
 
     # Add the closing table tag and div tag to the text variable.
     text += "\n|}\n</div>"
     # ---
-    articles_all = sum([len(x) for x in ViewsData.values()])
+    articles_all = sum([len(x) for x in views_data.values()])
     # Create the final formatted text with the section header, number of links, and the table.
     # ---
     faf = f"* {articles_all:,} articles with work in {len(langs_keys):,} languages\n"
@@ -157,7 +157,7 @@ def start() -> None:
     with open(f"{Dir}/lists/views.json", "r", encoding="utf-8") as f:
         Views_Data = json.load(f)
     # ---
-    logger.info(f"len ViewsData: {len(Views_Data)}")
+    logger.info(f"len views_data: {len(Views_Data)}")
     # ---
     ntext = make_text(Views_Data)
     # ---

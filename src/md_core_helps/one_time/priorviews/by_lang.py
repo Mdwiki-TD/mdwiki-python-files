@@ -39,9 +39,9 @@ total_wrds = 0
 # ---
 mm = 0
 # ---
-for l, vv in keys_1.items():
+for lang, vv in keys_1.items():
     # ---
-    if l == "en":
+    if lang == "en":
         continue
     # ---
     mm += 1
@@ -50,16 +50,16 @@ for l, vv in keys_1.items():
     # ---
     # with translators
     # ---
-    trator = translators.counts_by_lang.get(l, 0) + len(creators_as_translators.get(l, {}))
+    trator = translators.counts_by_lang.get(lang, 0) + len(creators_as_translators.get(lang, {}))
     with_trator += trator
     # ---
-    tra = by_lang_tra.get(l, 0)
+    tra = by_lang_tra.get(lang, 0)
     total_tra += tra
     # ---
-    wrds = words.count_words_by_lang.get(l, 0)
+    wrds = words.count_words_by_lang.get(lang, 0)
     total_wrds += wrds
     # ---
-    te_langs += f"\n|-\n| {mm} || [[/{l}|{l}]] || {tra:,}  || {trator:,} || {vv:,} || {wrds:,}"
+    te_langs += f"\n|-\n| {mm} || [[/{lang}|{lang}]] || {tra:,}  || {trator:,} || {vv:,} || {wrds:,}"
 # ---
 te_langs += f"\n|-\n! || Total || {total_tra:,} || {with_trator:,} || {total_views:,} || {total_wrds:,} \n|-"
 te_langs += "\n|}"

@@ -102,7 +102,7 @@ def login():
     session["token"] = token
 
 
-def submitAPI(params, _type="post", add_token=False):
+def submit_api(params, _type="post", add_token=False):
     # ---
     login()
     # ---
@@ -118,7 +118,7 @@ def submitAPI(params, _type="post", add_token=False):
         json1 = r4.json()
         # ---
     except Exception as e:
-        debug_print(f"submitAPI Error {e}")
+        debug_print(f"submit_api Error {e}")
         debug_print(params)
         return json1
     # ---
@@ -146,7 +146,7 @@ def get_revisions(title, lang=""):
         if rvcontinue != "x":
             params["rvcontinue"] = rvcontinue
         # ---
-        json1 = submitAPI(params, _type="post")
+        json1 = submit_api(params, _type="post")
         # ---
         if not json1 or not isinstance(json1, dict):
             return ""
@@ -175,7 +175,7 @@ def GetPageText(title, lang="", print_text=True):
         # "normalize": 1,
     }
     # ---
-    json1 = submitAPI(params, _type="post")
+    json1 = submit_api(params, _type="post")
     # ---
     if not json1 or not isinstance(json1, dict):
         if print_text:
@@ -227,7 +227,7 @@ def page_put(new_text, summary, title):
         "token": session["token"],
     }
     # ---
-    json1 = submitAPI(pparams, add_token=True)
+    json1 = submit_api(pparams, add_token=True)
     # ---
     if not json1:
         return ""

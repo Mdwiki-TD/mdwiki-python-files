@@ -63,7 +63,7 @@ def dump_data(revids) -> None:
         logger.error(f"<<red>> dump to {file4} error: {e}")
 
 
-def Cat_Depth(title, depth: int = 0):
+def cat_depth(title, depth: int = 0):
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
@@ -86,7 +86,7 @@ def get_all_revids() -> None:
     # ---
     for cat, depth in cats.items():
         # ---
-        ca = Cat_Depth(cat, depth=depth)
+        ca = cat_depth(cat, depth=depth)
         # ---
         revids.update(ca)
     # ---

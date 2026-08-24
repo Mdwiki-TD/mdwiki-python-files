@@ -78,7 +78,7 @@ Each module contains bot scripts in `bots/` subdirectories:
 
 ### Key Utility: `replace_except`
 
-The `wprefs/bots/replace_except.py` module provides `replaceExcept()` for regex replacement that skips protected regions (comments, templates, links, headers, etc.). Used throughout the codebase for safe text manipulation.
+The `wprefs/bots/replace_except.py` module provides `replace_except()` for regex replacement that skips protected regions (comments, templates, links, headers, etc.). Used throughout the codebase for safe text manipulation.
 
 ## Important Patterns
 

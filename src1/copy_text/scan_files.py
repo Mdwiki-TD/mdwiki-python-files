@@ -33,7 +33,7 @@ to_del = []
 for path in paths:
     files = list(path.glob("*.html"))
 
-    for n, file in tqdm.tqdm(enumerate(files, 1), total=len(files)):
+    for _n, file in tqdm.tqdm(enumerate(files, 1), total=len(files)):
         # logger.info(f"<<yellow>> f: {n}/{len(files)} : {file}")
 
         with open(file, "r", encoding="utf-8") as f:

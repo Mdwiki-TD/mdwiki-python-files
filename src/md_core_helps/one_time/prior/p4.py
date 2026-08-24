@@ -52,17 +52,17 @@ def main_links() -> list[str | None]:
     return links
 
 
-def log_all(main_File) -> None:
+def log_all(main_file) -> None:
     # ---
     if "enonly" in sys.argv or "newenonly" in sys.argv:
         return
     # ---
-    with open(main_File, "w", encoding="utf-8") as file:
+    with open(main_file, "w", encoding="utf-8") as file:
         file.write(json.dumps(All))
 
 
-def log_allen(main_File) -> None:
-    with open(main_File, "w", encoding="utf-8") as file:
+def log_allen(main_file) -> None:
+    with open(main_file, "w", encoding="utf-8") as file:
         file.write(json.dumps(allen))
 
 
@@ -168,7 +168,7 @@ def work_in_en_page(title) -> None:
     # ---
 
 
-def work_in_links(links, main_File, main_File_en, Log: bool = True) -> None:
+def work_in_links(links, main_file, main_file_en, log_it: bool = True) -> None:
     # ---
     global n_al
     global allen, All
@@ -177,15 +177,15 @@ def work_in_links(links, main_File, main_File_en, Log: bool = True) -> None:
     # ---
     en_in = {}
     # ---
-    basefilename = os.path.basename(main_File_en)
+    basefilename = os.path.basename(main_file_en)
     # ---
-    if os.path.exists(main_File_en):
-        en_in = json.load(open(main_File_en, encoding="utf-8"))
+    if os.path.exists(main_file_en):
+        en_in = json.load(open(main_file_en, encoding="utf-8"))
         allen = en_in
         logger.info(f"<<green>> There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links...")
     # ---
-    if os.path.exists(main_File):
-        All = json.load(open(main_File, encoding="utf-8"))
+    if os.path.exists(main_file):
+        All = json.load(open(main_file, encoding="utf-8"))
     # ---
     for x in links:
         n_al += 1
@@ -211,11 +211,11 @@ def work_in_links(links, main_File, main_File_en, Log: bool = True) -> None:
         work_in_en_page(x)
         # ---
         # log every 30 pages
-        if Log and n_al % 30 == 0:
-            log_all(main_File)
+        if log_it and n_al % 30 == 0:
+            log_all(main_file)
     # ---
-    if Log:
-        log_allen(main_File_en)
+    if log_it:
+        log_allen(main_file_en)
 
 
 def start_all() -> None:
@@ -233,10 +233,10 @@ def start_all() -> None:
         # ---
         titles = links[i : i + 100]
         # ---
-        main_File = f"{project_js_new}{n}.json"
-        main_File_en = f"{project_js_newen}en_{n}.json"
+        main_file = f"{project_js_new}{n}.json"
+        main_file_en = f"{project_js_newen}en_{n}.json"
         # ---
-        tanko[str(n)] = {"file": main_File, "file_en": main_File_en, "links": titles}
+        tanko[str(n)] = {"file": main_file, "file_en": main_file_en, "links": titles}
         # ---
         logger.info(f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"')
 
@@ -264,15 +264,15 @@ def start_all() -> None:
     for x, tab in tanko.items():
         valu = x
         links = tab["links"]
-        main_File = tab["file"]
-        main_File_en = tab["file_en"]
+        main_file = tab["file"]
+        main_file_en = tab["file_en"]
         # ---
         logger.info(f"list number:{valu} len of it: {len(links)}")
         # ---
-        work_in_links(links, main_File, main_File_en)
+        work_in_links(links, main_file, main_file_en)
         # ---
-        log_all(main_File)
-        log_allen(main_File_en)
+        log_all(main_file)
+        log_allen(main_file_en)
 
 
 if __name__ == "__main__":

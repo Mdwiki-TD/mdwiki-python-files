@@ -27,7 +27,7 @@ These 101 files are reachable from at least one active entry point through a tra
 | `md_core/unlinked_wb/bot`                 | `src/md_core/unlinked_wb/bot.py`                 |
 | `md_core/updates/io`                      | `src/md_core/updates/io.py`                      |
 | `md_core/updates/listo`                   | `src/md_core/updates/listo.py`                   |
-| `md_core/updates/Medicine_articles`       | `src/md_core/updates/Medicine_articles.py`       |
+| `md_core/updates/medicine_articles`       | `src/md_core/updates/medicine_articles.py`       |
 | `md_core_helps/apis/cat_cach`             | `src/md_core_helps/apis/cat_cach.py`             |
 | `td_core/copy_data/by_qid/sitelinks`      | `src/td_core/copy_data/by_qid/sitelinks.py`      |
 | `td_core/copy_data/by_title/all_articles` | `src/td_core/copy_data/by_title/all_articles.py` |
@@ -205,7 +205,7 @@ src/td_core/wd_works/__init__.py
 
 | Path                           | Reason                                                          |
 | ------------------------------ | --------------------------------------------------------------- |
-| `src/md_core/updates/c2023.py` | Not imported by `io.py`, `listo.py`, or `Medicine_articles.py`. |
+| `src/md_core/updates/c2023.py` | Not imported by `io.py`, `listo.py`, or `medicine_articles.py`. |
 
 ### `src/md_core_helps/apis/`
 
@@ -351,7 +351,7 @@ The whole subtree is unreachable. Naming convention (`one_time`) suggests these 
 
 | Path                                      | Reason                                                                      |
 | ----------------------------------------- | --------------------------------------------------------------------------- |
-| `src/td_core/fix_user_pages/del.py`       | Not imported by `bot.py` (which uses `fix_it_db_new.py` and `user_bot.py`). |
+| `src/td_core/fix_user_pages/del_records.py`       | Not imported by `bot.py` (which uses `fix_it_db_new.py` and `user_bot.py`). |
 | `src/td_core/fix_user_pages/fix_it_db.py` | Superseded by `fix_it_db_new.py`.                                           |
 
 ### `src/td_core/mdcount/`

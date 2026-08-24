@@ -13,7 +13,7 @@ python3 c9/pwb.py md_core/unlinked_wb/bot
 
 python3 c9/pwb.py md_core/updates/io
 python3 c9/pwb.py md_core/updates/listo
-python3 c9/pwb.py md_core/updates/Medicine_articles
+python3 c9/pwb.py md_core/updates/medicine_articles
 
 python3 c9/pwb.py md_core_helps/apis/cat_cach
 

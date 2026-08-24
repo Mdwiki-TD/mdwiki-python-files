@@ -9,7 +9,7 @@ import sys
 
 from md_core_helps.apis.cat_cach import from_cache
 from md_core_helps.apis.mdwiki_api_call import get_all_pages
-from md_core_helps.apis.wiki_api import submitAPI
+from md_core_helps.apis.wiki_api import submit_api
 from md_core_helps.bots.check_title import valid_title
 from td_core.td_dirs import paths
 
@@ -117,7 +117,7 @@ def check_qids(work_list, all_xpages, ty):
         # ---
         # { "error": { "code": "toomanyvalues", "info": "Too many values supplied for parameter \"titles\". The limit is 50.",
         # ---
-        jsone = submitAPI(params, site="en", returnjson=False)
+        jsone = submit_api(params, site="en", returnjson=False)
         # ---
         if jsone and "batchcomplete" in jsone:
             # ---

@@ -110,7 +110,7 @@ def get_v(links, views_data, file_path):
 def start() -> None:
     n = 0
     # ---
-    ViewsData = json.load(open(file, "r", encoding="utf-8"))
+    views_data = json.load(open(file, "r", encoding="utf-8"))
     # ---
     # make text for each section
     for section, links in sects_links_langlinks.items():
@@ -120,10 +120,10 @@ def start() -> None:
         # ---
         n += 1
         # ---
-        get_v(links, ViewsData, file)
+        get_v(links, views_data, file)
         # ---
     # ---
-    log_views(file, ViewsData)
+    log_views(file, views_data)
 
 
 def test() -> None:
@@ -157,11 +157,11 @@ def test() -> None:
         }
     }
     # ---
-    ViewsData = json.load(open(file, "r", encoding="utf-8"))
+    views_data = json.load(open(file, "r", encoding="utf-8"))
     # ---
-    get_v(da, ViewsData, file)
+    get_v(da, views_data, file)
     # ---
-    log_views(file, ViewsData)
+    log_views(file, views_data)
 
 
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ import sys
 import tqdm
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from td_core.db_work.check_titles_helps import Find_pages_exists, WikiPage, get_new_target_log
+from td_core.db_work.check_titles_helps import find_pages_exists, get_new_target_log, wikipage
 
 # from td_core.fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 from td_core.fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
@@ -102,13 +102,13 @@ def work_one_tab(tab, missing, redirects):
             deleted_pages.append(iid)
         # ---
     elif target in redirects:
-        page = WikiPage(target, lang, family="wikipedia")
+        page = wikipage(target, lang, family="wikipedia")
         new_target = page.get_redirect_target()
     # ---
     if new_target:
         logger.info(f"<<yellow>> : {target=}, {new_target=}")
         # ---
-        page2 = WikiPage(new_target, lang, family="wikipedia")
+        page2 = wikipage(new_target, lang, family="wikipedia")
         # ---
         if page2.exists():
             ns = page2.namespace() or page2.ns
@@ -143,7 +143,7 @@ def work_in_titles(lang, tabs) -> None:
     # ---
     titles = [x["target"] for x in tabs]
     # ---
-    pages = Find_pages_exists(lang, titles)
+    pages = find_pages_exists(lang, titles)
     # ---
     missing = [x for x, v in pages.items() if not v]
     redirects = [x for x, v in pages.items() if v == "redirect"]

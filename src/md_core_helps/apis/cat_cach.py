@@ -4,7 +4,7 @@
 python3 core8/pwb.py apis/cat_cach
 
 from md_core_helps.apis import cat_cach
-from md_core_helps.apis.cat_cach import Cat_Depth
+from md_core_helps.apis.cat_cach import cat_depth
 all_pages = cat_cach.from_cache()
 
 """
@@ -89,7 +89,7 @@ def dump_to_cache(cat, data) -> None:
         logger.info(f"<<green>> {cat}.json is updated ({len_data})")
 
 
-def Cat_Depth(title, depth: int = 0, ns: str = "all", print_s: bool = True) -> list[str]:
+def cat_depth(title, depth: int = 0, ns: str = "all", print_s: bool = True) -> list[str]:
     # ---
     if not title.startswith("Category:"):
         title = "Category:" + title
@@ -124,7 +124,7 @@ def make_cash_to_cats(dump_data: bool = False) -> list[str]:
     # ---
     for cat, depth in cats.items():
         # ---
-        ca = Cat_Depth(cat, depth=depth, ns="all", print_s=False)
+        ca = cat_depth(cat, depth=depth, ns="all", print_s=False)
         # ---
         all_cats[cat] = ca
         # ---

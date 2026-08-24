@@ -6,7 +6,7 @@ from td_core.fix_user_pages.user_bot import get_new_user
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from td_core.db_work.check_titles_helps import WikiPage, users_infos
+from td_core.db_work.check_titles_helps import users_infos, wikipage
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ def filter_revisions(lang, revisions):
 
 def get_new_user(new_target, lang, user):
     # ---
-    page = WikiPage(new_target, lang, family="wikipedia")
+    page = wikipage(new_target, lang, family="wikipedia")
     # ---
     # user = page.get_user()
     # userinfo    = page.get_userinfo() # "id", "name", "groups"

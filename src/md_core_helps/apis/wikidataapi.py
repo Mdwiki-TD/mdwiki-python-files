@@ -103,7 +103,7 @@ def wd_merge(q1, q2) -> bool:
     return False
 
 
-def Labels_API(qid, label: str, lang, remove: bool = False, summary: str = "") -> bool:
+def labels_api(qid, label: str, lang, remove: bool = False, summary: str = "") -> bool:
     # ---
     if not qid:
         logger.info(" Qid == '' ")
@@ -236,7 +236,7 @@ def new_item(label: str = "", lang: str = "", summary: str = "", returnid: bool 
     return None
 
 
-def Claim_API_str(qid, property, string: str):
+def claim_api_str(qid, property, string: str):
     """Add a claim to a specified QID in the API.
 
     This function constructs a request to add a claim to a given QID using
@@ -290,7 +290,7 @@ def Claim_API_str(qid, property, string: str):
     return False
 
 
-def Delete_claim(claimid) -> bool:
+def delete_claim(claimid) -> bool:
     # ---
     params = {"action": "wbremoveclaims", "claim": claimid}
     # ---

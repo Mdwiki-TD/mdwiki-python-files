@@ -14,7 +14,7 @@ for root, _dirs, files in os.walk(folder_path):
     for file_name in files:
         if file_name.endswith(".json"):  # فقط الملفات بامتداد .json
             file_path = os.path.join(root, file_name)
-            logger.info("path:", file_path)
+            logger.info("path: %s", file_path)
 
             # قراءة الملف كـ JSON
             with open(file_path) as file:
@@ -22,7 +22,7 @@ for root, _dirs, files in os.walk(folder_path):
 
             # طباعة حجم الملف قبل التعديل
             file_size_before = os.path.getsize(file_path)
-            logger.info("size before: ", file_size_before)
+            logger.info("size before:  %s", file_size_before)
 
             # كتابة الملف بدون تنسيق
             with open(file_path, "w", encoding="utf-8") as file:
@@ -30,6 +30,6 @@ for root, _dirs, files in os.walk(folder_path):
 
             # طباعة حجم الملف بعد التعديل
             file_size_after = os.path.getsize(file_path)
-            logger.info("size after:", file_size_after)
+            logger.info("size after: %s", file_size_after)
             logger.info("--------------------")
-            logger.info("Difference:", file_size_after - file_size_before)
+            logger.info("Difference: %s", file_size_after - file_size_before)

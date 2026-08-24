@@ -15,6 +15,7 @@ exclude = '''
       | \.venv
       | _build
       | buck-out
+      | src1
       | build
       | dist
       | typings
@@ -44,6 +45,7 @@ ensure_newline_before_comments = true
 skip = [
     ".env",
     "env",
+    "src1",
     ".venv",
     "venv",
     "build",
@@ -64,6 +66,7 @@ exclude = [
     "**/.git/**",
     "**/.git-rewrite/**",
     "**/.hg/**",
+    "**/src1/**",
     "**/.svn/**",
 
     # Editors & IDEs
@@ -106,6 +109,7 @@ exclude = [
     "**/MagicMock/**",
 
     # Global System Paths
+    "I:/core/core8/**",
     "C:/**",
 ]
 line-length = 120
@@ -202,6 +206,7 @@ exclude = [
     "**/.git/**",
     "**/.git-rewrite/**",
     "**/.hg/**",
+    "**/src1/**",
     "**/.svn/**",
 
     # Editors & IDEs
@@ -244,6 +249,60 @@ exclude = [
     "**/MagicMock/**",
 
     # Global System Paths
+    "I:/core/core8/**",
+    "C:/**",
+    "**/.*",
+]
+ignore = [
+    # System & Version Control
+    "**/$RECYCLE.BIN/**",
+    "**/.git/**",
+    "**/.git-rewrite/**",
+    "**/.hg/**",
+    "**/src1/**",
+    "**/.svn/**",
+
+    # Editors & IDEs
+    "**/.vscode/**",
+    "**/.ipynb_checkpoints/**",
+
+    # Python Caches & Environments
+    "**/__pycache__/**",
+    "**/.venv/**",
+    "**/venv/**",
+    "**/.pyenv/**",
+    "**/site-packages/**",
+    "**/__pypackages__/**",
+
+    # Tools, Linters & Builders
+    "**/.mypy_cache/**",
+    "**/.pytest_cache/**",
+    "**/.ruff_cache/**",
+    "**/.nox/**",
+    "**/.pants.d/**",
+    "**/.pytype/**",
+    "**/.tox/**",
+    "**/_build/**",
+    "**/buck-out/**",
+    "**/build/**",
+    "**/dist/**",
+
+    # Project Specific Modules & Vendors
+    "**/node_modules/**",
+    "**/setuptools/**",
+    "**/typings/**",
+    "**/vendor/**",
+
+    # Archive & Old Codes
+    "**/old/**",
+    "**/OLD_REPOS/**",
+    "**/OldCodes/**",
+    "**/core8/**",
+    "**/i18n/**",
+    "**/MagicMock/**",
+
+    # Global System Paths
+    "I:/core/core8/**",
     "C:/**",
     "**/.*",
 ]

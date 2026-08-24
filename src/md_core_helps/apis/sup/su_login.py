@@ -1,5 +1,5 @@
 """
-from md_core_helps.apis.sup.su_login import Get_MwClient_Site
+from md_core_helps.apis.sup.su_login import get_mwclient_site
 """
 
 import logging
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
 
 
-def Get_MwClient_Site(lang, family, username: str, password: str) -> None | Site:
+def get_mwclient_site(lang, family, username: str, password: str) -> None | Site:
     cookies_file = get_file_name(lang, family, username)
 
     domain = f"{lang}.{family}.org"

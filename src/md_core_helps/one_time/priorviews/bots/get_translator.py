@@ -95,7 +95,7 @@ class FindTranslator:
                         self.translator = user
                         return
 
-    def Translator(self):
+    def get_translator(self):
         logger.info(f"\t\t : {self.translator}")
         return self.translator
 
@@ -104,7 +104,7 @@ def get_au(title, lang):
     # ---
     bot = FindTranslator(title, lang=lang)
     # ---
-    auu = bot.Translator()
+    auu = bot.get_translator()
     # ---
     return auu
 

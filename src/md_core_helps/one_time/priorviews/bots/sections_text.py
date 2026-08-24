@@ -54,20 +54,20 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
         logger.info(langlinks)
 
     # Loop through all available languages in the sorted order
-    for l in langs_keys_sorted:
+    for lang in langs_keys_sorted:
         u += 1
-        if l not in section_langs_views[section]:
-            section_langs_views[section][l] = 0
+        if lang not in section_langs_views[section]:
+            section_langs_views[section][lang] = 0
         view = ""
 
         # Get the title of the current language, or an empty string if not found
-        title = langlinks.get(l, "")
+        title = langlinks.get(lang, "")
         if title != "":
             # Get the view count for the current language and title, or 0 if not found
-            view = views.views_by_lang.get(l, {}).get(title.lower(), 0)
-            section_langs_views[section][l] += view
+            view = views.views_by_lang.get(lang, {}).get(title.lower(), 0)
+            section_langs_views[section][lang] += view
             # ---
-            view = helps.views_url(title, l, view)
+            view = helps.views_url(title, lang, view)
             # ---
             """
             params = {
@@ -88,7 +88,7 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
             """
             # ---
             if "test1" in sys.argv:
-                view = f"[[:w:{l}:{title}|a]] {view}"
+                view = f"[[:w:{lang}:{title}|a]] {view}"
         # Create a formatted string with the view count for the current language and title
         tt = f" || {view}"
 
@@ -113,7 +113,7 @@ def make_text(section, links):
     langs_keys = []
 
     # Loop through the dictionary of links and add the keys to langs_keys.
-    for mdtitle, langs in links.items():
+    for _, langs in links.items():
         langs_keys.extend(langs.keys())
 
     # Strip whitespace from keys in langs_keys and remove any empty strings.
@@ -172,7 +172,7 @@ def make_text(section, links):
     # total views by language
     text += "\n|-\n"
     text += f'! !! style="position: sticky;left: 0;colspan:2;" | Total views !! {section_views:,} \n'
-    text += "! " + " !! ".join([str(fo_n(section_langs_views[section].get(l, 0))) for l in langs_keys])
+    text += "! " + " !! ".join([str(fo_n(section_langs_views[section].get(code, 0))) for code in langs_keys])
     # text += '! ' + " !! ".join([ str(views.count_views_by_lang.get(l, 0)) for l in langs_keys ])
 
     # Add the closing table tag and div tag to the text variable.

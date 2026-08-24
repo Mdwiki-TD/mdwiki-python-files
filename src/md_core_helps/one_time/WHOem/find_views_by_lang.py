@@ -143,19 +143,19 @@ def start() -> None:
             json.dump({}, f)
     # ---
     with open(file_path, "r", encoding="utf-8") as f:
-        ViewsData = json.load(f)
+        views_data = json.load(f)
     # ---
     for lang, tab in to_work.items():
         # ---
         n += 1
         # ---
-        ViewsData.update({x: {} for x in tab.values() if x not in ViewsData})
+        views_data.update({x: {} for x in tab.values() if x not in views_data})
         # ---
         logger.info(f"<<blue>> p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
         # ---
-        ViewsData = get_v(lang, tab, lang_links_mdtitles, file_path, ViewsData)
+        views_data = get_v(lang, tab, lang_links_mdtitles, file_path, views_data)
     # ---
-    dump_data(file_path, ViewsData)
+    dump_data(file_path, views_data)
 
 
 if __name__ == "__main__":

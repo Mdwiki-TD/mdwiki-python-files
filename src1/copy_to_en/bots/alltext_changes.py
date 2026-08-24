@@ -16,7 +16,7 @@ from copy_to_en.bots import text_changes
 logger = logging.getLogger(__name__)
 
 
-def change_last_Section(section):
+def change_last_section(section):
     # del all categories
     text = section.contents
     # ---
@@ -47,9 +47,9 @@ def do_alltext_changes(text):
         last_Section = section
         break
 
-    last_new = change_last_Section(last_Section)
+    last_new = change_last_section(last_Section)
 
-    text = text.replace(last_Section.contents, last_new)
+    text = text.replace(str(last_Section.contents), last_new)
 
     return text
 
