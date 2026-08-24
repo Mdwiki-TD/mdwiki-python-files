@@ -6,6 +6,7 @@ python3 core8/pwb.py md_core/updates/Medicine_articles
 """
 
 import datetime
+from typing import Any
 
 from db import WikiReplicaDB
 from mdwiki_api.mdwiki_page import md_MainPage

@@ -8,6 +8,7 @@ import logging
 import re
 from contextlib import suppress
 from dataclasses import dataclass, field
+from typing import Any
 
 from pywikibot.textlib import replaceExcept
 

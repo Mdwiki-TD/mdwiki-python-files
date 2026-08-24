@@ -52,8 +52,8 @@ class WikiReplicaBaseDB:
     ) -> None:
         self.dbname = dbname
         self.host = host
-        self.user = user or os.getenv("TOOL_REPLICA_USER")
-        self.password = password or os.getenv("TOOL_REPLICA_PASSWORD")
+        self.user = user or os.getenv("TOOL_REPLICA_USER") or ""
+        self.password = password or os.getenv("TOOL_REPLICA_PASSWORD") or ""
         self.port = port
         self.connection: pymysql.connections.Connection | None = None
 

@@ -49,7 +49,7 @@ def post_s(params, addtoken: bool = False, files=None):
     # ---
     main_api = load_main_api()
     # ---
-    api_new = main_api.NewApi("www", family="mdwiki")
+    api_new = main_api.newapi("www", family="mdwiki")
     # ---
     params["format"] = "json"
     params["utf8"] = 1
@@ -69,7 +69,7 @@ def fix_dup(from_title, to_title):
     # ---
     main_api = load_main_api()
     # ---
-    page = main_api.MainPage(from_title, "www", family="mdwiki")
+    page = main_api.mainpage(from_title, "www", family="mdwiki")
     _exists = page.exists()
     # ---
     oldtext = page.get_text()

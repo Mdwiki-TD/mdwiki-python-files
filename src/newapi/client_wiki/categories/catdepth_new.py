@@ -1,5 +1,7 @@
 """ """
 
+from __future__ import annotations
+
 import functools
 import logging
 from typing import Any
@@ -51,7 +53,6 @@ def subcatquery(
     login_bot,
     title: str,
     sitecode: str = SITECODE,
-    family: str = FAMILY,
     **kwargs,
 ) -> dict[str, Any]:
     print_s = kwargs.get("print_s", True)
@@ -62,7 +63,7 @@ def subcatquery(
 
     if print_s:
         logger.debug(
-            f"<<lightyellow>> catdepth_new.py sub cat query for {sitecode}:{title}, depth:{args2['depth']}, ns:{args2['ns']}, onlyns:{args2['onlyns']}"
+            f"sub cat query for {sitecode}:{title}, depth:{args2['depth']}, ns:{args2['ns']}, onlyns:{args2['onlyns']}"
         )
 
     # logger.debug(f"starting subcategory query: {sitecode}:{title}")
@@ -75,7 +76,7 @@ def subcatquery(
     if print_s:
         lenpages = bot.get_len_pages()
         logger.debug(
-            f"<<lightblue>> find {len(result)} pages({args2['ns']}) in {sitecode}:{title}, depth:{args2['depth']} | {lenpages=}"
+            f"find {len(result)} pages({args2['ns']}) in {sitecode}:{title}, depth:{args2['depth']} | {lenpages=}"
         )
 
     return result

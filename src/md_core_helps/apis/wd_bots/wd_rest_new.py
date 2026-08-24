@@ -72,14 +72,14 @@ def get_one_qid_info(qid, only=None) -> dict[str, Any]:
     return main_table
 
 
-def Get_sitelinks_From_Qid(q):
+def get_sitelinks_from_qid(q):
     # ---
     sitelinks = get_one_qid_info(q, only="sitelinks")
     # ---
     return sitelinks
 
 
-def Get_Claims_API(q: str = "", p: str = ""):
+def get_claims_api(q: str = "", p: str = ""):
     # ---
     statements = get_one_qid_info(q, only="statements").get("statements", {})
     # ---

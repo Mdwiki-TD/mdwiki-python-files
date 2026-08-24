@@ -10,12 +10,12 @@ try:
 except Exception:
     pass
 
-bot_username = os.getenv("WIKIPEDIA_BOT_USERNAME")
-bot_password = os.getenv("WIKIPEDIA_BOT_PASSWORD")
+bot_username = os.getenv("WIKIPEDIA_BOT_USERNAME") or ""
+bot_password = os.getenv("WIKIPEDIA_BOT_PASSWORD") or ""
 
-my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME")
-mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD")
-lgpass_enwiki = os.getenv("WIKIPEDIA_HIMO_PASSWORD")
+my_username = os.getenv("WIKIPEDIA_HIMO_USERNAME") or ""
+mdwiki_pass = os.getenv("MDWIKI_HIMO_PASSWORD") or ""
+lgpass_enwiki = os.getenv("WIKIPEDIA_HIMO_PASSWORD") or ""
 
 username = bot_username
 password = bot_password

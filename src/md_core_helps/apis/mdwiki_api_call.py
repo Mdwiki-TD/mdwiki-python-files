@@ -180,7 +180,7 @@ def getrevid(title):
 
 
 def get_page_links(
-    title,
+    title: str,
     namespace: str = "0",
     limit: int | str = "max",
 ) -> dict[str, Any]:
