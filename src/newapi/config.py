@@ -2,6 +2,8 @@
 Centralized settings configuration for the project.
 """
 
+from __future__ import annotations
+
 import sys
 from dataclasses import dataclass, field
 
@@ -68,9 +70,9 @@ class Settings:
                 self.bot.force_edit = True
 
 
-settings = Settings()
+main_settings = Settings()
 
 __all__ = [
     "Settings",
-    "settings",
+    "main_settings",
 ]

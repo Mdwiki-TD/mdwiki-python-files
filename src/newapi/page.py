@@ -5,7 +5,7 @@ import os
 
 from .client_wiki import bot_api
 from .client_wiki.all_apis import AllAPIS
-from .config import settings
+from .config import main_settings
 
 
 @functools.lru_cache(maxsize=1)
@@ -13,7 +13,7 @@ def _load_credentials() -> tuple[str, str]:
     username = os.getenv("WIKIPEDIA_BOT_USERNAME", "")
     password = os.getenv("WIKIPEDIA_BOT_PASSWORD", "")
 
-    if settings.bot.workibrahem:
+    if main_settings.bot.workibrahem:
         username = os.getenv("WIKIPEDIA_HIMO_USERNAME", "")
         password = os.getenv("WIKIPEDIA_HIMO_PASSWORD", "")
 
@@ -34,31 +34,31 @@ def load_main_api(lang: str, family: str = "wikipedia") -> AllAPIS:
     )
 
 
-def MainPage(title: str, lang: str, family: str = "wikipedia"):
+def mainpage(title: str, lang: str, family: str = "wikipedia"):
     # ---
     main_bot = load_main_api(lang, family)
     # ---
-    page = main_bot.MainPage(title, lang, family=family)
+    page = main_bot.mainpage(title, lang, family=family)
     # ---
     return page
 
 
-def CatDepth(title: str, sitecode: str = "", family: str = "wikipedia", **kwargs):
+def catdepth(title: str, sitecode: str = "", family: str = "wikipedia", **kwargs):
     # ---
     main_bot = load_main_api(sitecode, family)
     # ---
-    result = main_bot.CatDepth(title, sitecode=sitecode, family=family, **kwargs)
+    result = main_bot.catdepth(title, sitecode=sitecode, family=family, **kwargs)
     # ---
     return result
 
 
-def NewApi(lang: str = "", family: str = "wikipedia") -> bot_api.NewApi:
+def newapi(lang: str = "", family: str = "wikipedia") -> bot_api.NewApi:
     main_bot = load_main_api(lang, family)
-    return main_bot.NewApi()
+    return main_bot.newapi()
 
 
 __all__ = [
-    "MainPage",
-    "NewApi",
-    "CatDepth",
+    "mainpage",
+    "newapi",
+    "catdepth",
 ]

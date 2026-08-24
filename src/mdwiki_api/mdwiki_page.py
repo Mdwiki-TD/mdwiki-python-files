@@ -35,9 +35,9 @@ def load_main_api() -> AllAPIS:
 
 main_api = load_main_api()
 
-NewApi = main_api.NewApi
-MainPage = main_api.MainPage
-CatDepth = main_api.CatDepth
+NewApi = main_api.newapi
+MainPage = main_api.mainpage
+CatDepth = main_api.catdepth
 md_MainPage = MainPage  # noqa: N816
 
 __all__ = [

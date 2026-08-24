@@ -1,10 +1,12 @@
 """ """
 
+from __future__ import annotations
+
 import logging
 
 import pywikibot
 
-from ...config import settings
+from ...config import main_settings
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +42,7 @@ class AskBot:
             return True
 
         text = text or ""
-        if settings.bot.ask:
+        if main_settings.bot.ask:
             if text or newtext:
                 if not self.nodiff:
                     pywikibot.showDiff(text, newtext)

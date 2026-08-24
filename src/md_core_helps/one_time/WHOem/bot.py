@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 from mdwiki_api.mdwiki_page import CatDepth
-from mdwiki_api.wiki_page import MainPage
+from mdwiki_api.wiki_page import mainpage
 from newapi import change_codes
 
 logger = logging.getLogger(__name__)
@@ -66,7 +66,7 @@ def get_lang_links(md_links):
         # ---
         title = x
         # ---
-        page = MainPage(title, "en")
+        page = mainpage(title, "en")
         # ---
         if not page.exists():
             logger.error(f"<<red>> page: {title} not found in enwiki.")
@@ -79,7 +79,7 @@ def get_lang_links(md_links):
         if page.isRedirect():
             target = page.get_redirect_target()
             if target != "":
-                page = MainPage(target, "en")
+                page = mainpage(target, "en")
                 lang_links[title]["en"] = target
                 lang_links[title]["redirect_to"] = target
         # ---

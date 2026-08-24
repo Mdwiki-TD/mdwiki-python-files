@@ -32,12 +32,12 @@ def load_main_api(lang: str = "www", family: str = "wikipedia") -> AllAPIS:
     )
 
 
-def MainPage(title, lang, family: str = "wikipedia"):
+def mainpage(title, lang, family: str = "wikipedia"):
     main_api = load_main_api(lang, family)
-    return main_api.MainPage(title)
+    return main_api.mainpage(title)
 
 
-def CatDepth(
+def catdepth(
     title,
     sitecode: str = "",
     family: str = "wikipedia",
@@ -45,7 +45,7 @@ def CatDepth(
 ) -> dict:
     sitecode = sitecode or "www"
     main_api = load_main_api(sitecode, family)
-    return main_api.CatDepth(
+    return main_api.catdepth(
         title,
         sitecode=sitecode,
         family=family,
@@ -53,15 +53,15 @@ def CatDepth(
     )
 
 
-def NewApi(lang: str = "", family: str = "wikipedia"):
+def newapi(lang: str = "", family: str = "wikipedia"):
     lang = lang or "www"
     main_api = load_main_api(lang, family)
-    return main_api.NewApi()
+    return main_api.newapi()
 
 
 __all__ = [
     "user_agent",
-    "MainPage",
-    "NewApi",
-    "CatDepth",
+    "mainpage",
+    "newapi",
+    "catdepth",
 ]

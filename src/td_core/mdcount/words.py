@@ -44,7 +44,7 @@ def start_to_sql():
 
 def count_words(title) -> None:
     # ---
-    text = mdwiki_api_call.GetPageText(title)
+    text = mdwiki_api_call.get_page_text(title)
     # ---
     lead_c, all_c = lead.count_all(title="", text=text)
     # ---

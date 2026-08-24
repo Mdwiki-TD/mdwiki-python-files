@@ -59,7 +59,7 @@ def get_valid_links(words_tab) -> list[Any]:
         logger.info(f"ALL SQL LINKS:{len(vav2)}, to work:{len(vav)}")
     # ---
     elif "oldway" in sys.argv:
-        ptext = mdwiki_api_call.GetPageText("WikiProjectMed:List")
+        ptext = mdwiki_api_call.get_page_text("WikiProjectMed:List")
         for m2 in link_regex.finditer(ptext):
             sa = re.compile(r"\[\[(\:|)(\w{2}|\w{3}|w|en|image|file|category|template)\:", flags=re.IGNORECASE)
             sal = sa.findall(m2.group(0))
@@ -76,7 +76,7 @@ def get_valid_links(words_tab) -> list[Any]:
         vav = [x.strip() for x in ttt.split("\n") if x.strip() != ""]
     # ---
     elif "fromlist" in sys.argv:
-        result = mdwiki_api_call.Get_page_links("WikiProjectMed:List")
+        result = mdwiki_api_call.get_page_links("WikiProjectMed:List")
         vav = result.get("links", {}).keys()
         logger.info("Get vaild_links fromlist : WikiProjectMed:List")
     # ---

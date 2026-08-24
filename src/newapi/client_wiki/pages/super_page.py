@@ -1,5 +1,7 @@
 """ """
 
+from __future__ import annotations
+
 import logging
 import sys
 from typing import Any
@@ -8,7 +10,7 @@ import wikitextparser as wtp
 
 from ...api_client import WikiLoginClient
 from ...client_wiki.api_utils.handel_errors import HandleErrors
-from ...config import settings
+from ...config import main_settings
 from ..api_utils import change_codes, txtlib
 from ..api_utils.ask_bot import AskBot
 from ..api_utils.bot_edit import is_page_editable
@@ -104,7 +106,7 @@ class MainPage:
         if self.ns is False or self.ns != 0:
             return False
 
-        if settings.bot.no_false_edit:
+        if main_settings.bot.no_false_edit:
             return False
 
         if not self.text:

@@ -36,13 +36,13 @@ for arg in sys.argv:
 redirects_pages = []
 # ---
 if "nored" not in sys.argv:
-    redirects_pages = mdwiki_api_call.Get_All_pages("!", namespace="0", apfilterredir="redirects", limit_all=limit_m[1])
+    redirects_pages = mdwiki_api_call.get_all_pages("!", namespace="0", apfilterredir="redirects", limit_all=limit_m[1])
 # ---
 dones = []
 links = []
 re_links = []
 # ---
-ptext = mdwiki_api_call.GetPageText("WikiProjectMed:List")
+ptext = mdwiki_api_call.get_page_text("WikiProjectMed:List")
 link_regex = re.compile(r"\[\[(.*?)\]\]")
 # ---
 vaild_links = []

@@ -81,7 +81,7 @@ def get_users(pages):
 
 title = "User:Mr. Ibrahem/stats"
 
-pages = mdwiki_api_call.Get_All_pages("!", namespace="0", limit=limit, limit_all=limit, apfilterredir="nonredirects")
+pages = mdwiki_api_call.get_all_pages("!", namespace="0", limit=limit, limit_all=limit, apfilterredir="nonredirects")
 # ---
 usersbyyear = get_users(pages)
 # ---

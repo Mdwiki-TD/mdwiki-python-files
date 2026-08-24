@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-# revid    = mdwiki_api.GetRevid(title)
+# revid    = mdwiki_api.getrevid(title)
 """
 
 import logging
@@ -40,7 +40,7 @@ def page_put(
     return save_page
 
 
-def create_Page(
+def create_page(
     text: str,
     summary,
     title,
@@ -117,7 +117,7 @@ def gettext_and_revid(title, redirects: bool = False):
     return text, json1.get("parse", {}).get("revid", 0)
 
 
-def GetPageText(title, redirects: bool = False) -> str:
+def get_page_text(title, redirects: bool = False) -> str:
     """
     Retrieve the wikitext of a specified page from a wiki.
     """
@@ -151,7 +151,7 @@ def GetPageText(title, redirects: bool = False) -> str:
     return text
 
 
-def GetRevid(title):
+def getrevid(title):
     """Retrieve the revision ID for a given page title.
 
     This function sends a request to a specified API to retrieve the
@@ -179,7 +179,7 @@ def GetRevid(title):
     return ""
 
 
-def Get_page_links(
+def get_page_links(
     title,
     namespace: str = "0",
     limit: int | str = "max",
@@ -224,14 +224,14 @@ def Get_page_links(
     return Main_table
 
 
-def Get_template_pages(title, namespace: str = "*", limit: int | str = "max"):
-    return api_new.Get_template_pages(title, namespace=namespace)
+def get_template_pages(title, namespace: str = "*", limit: int | str = "max"):
+    return api_new.get_template_pages(title, namespace=namespace)
 
 
-def Get_All_pages(
+def get_all_pages(
     start, namespace: str = "0", limit: int | str = "max", apfilterredir: str = "", limit_all: int = 0
 ) -> list[str]:
-    return api_new.Get_All_pages(
+    return api_new.get_all_pages(
         start=start,
         namespace=namespace,
         limit=limit,
@@ -240,13 +240,13 @@ def Get_All_pages(
     )
 
 
-def Get_UserContribs(user, limit: int | str = "max", namespace: str = "*", ucshow: str = ""):
-    return api_new.UserContribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
+def get_usercontribs(user, limit: int | str = "max", namespace: str = "*", ucshow: str = ""):
+    return api_new.usercontribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
 
 
 def get_redirect(liste):
     return api_new.get_titles_redirects(liste)
 
 
-def Find_pages_exists_or_not(liste):
-    return api_new.Find_pages_exists_or_not(liste)
+def find_pages_exists_or_not(liste):
+    return api_new.find_pages_exists_or_not(liste)

@@ -1,5 +1,7 @@
 """ """
 
+from __future__ import annotations
+
 from .api_client.client import WikiLoginClient
 from .client_wiki.all_apis import AllAPIS
 from .client_wiki.api_utils import change_codes, txtlib

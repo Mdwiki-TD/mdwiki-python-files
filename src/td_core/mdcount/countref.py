@@ -40,7 +40,7 @@ def start_to_sql():
 
 def count_refs(title) -> None:
     # ---
-    text = mdwiki_api_call.GetPageText(title)
+    text = mdwiki_api_call.get_page_text(title)
     # ---
     # extend short refs
     text2 = text

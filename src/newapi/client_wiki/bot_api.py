@@ -1,5 +1,7 @@
 """ """
 
+from __future__ import annotations
+
 import datetime
 import logging
 import sys
@@ -19,7 +21,7 @@ class NewApiHelpers:
     def __init__(self) -> None:
         pass
 
-    def chunk_titles(self, titles, chunk_size: int = 50):
+    def chunk_titles(self, titles: Any, chunk_size: int = 50):
         # ---
         if isinstance(titles, dict):
             titles = list(titles.keys())
@@ -57,7 +59,7 @@ class NewApi(NewApiHelpers):
     def get_username(self):
         return self.username
 
-    def Find_pages_exists_or_not(
+    def find_pages_exists_or_not(
         self,
         liste,
         get_redirect: bool = False,
@@ -74,7 +76,7 @@ class NewApi(NewApiHelpers):
             # ---
             done += len(titles)
             # ---
-            params = {
+            params: dict[str, Any] = {
                 "action": "query",
                 "titles": "|".join(titles),
                 "prop": "info|pageprops",
@@ -123,11 +125,11 @@ class NewApi(NewApiHelpers):
             else:
                 exists += 1
         # ---
-        logger.debug(f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}, redirects: {redirects}")
+        logger.debug(f"find_pages_exists_or_not : missing:{missing}, exists: {exists}, redirects: {redirects}")
         # ---
         return table
 
-    def Find_pages_exists_or_not_with_qids(
+    def find_pages_exists_or_not_with_qids(
         self,
         liste,
         get_redirect: bool = False,
@@ -214,14 +216,14 @@ class NewApi(NewApiHelpers):
                 table[title_x]["exist"] = True
                 exists += 1
         # ---
-        logger.debug(f"Find_pages_exists_or_not : missing:{missing}, exists: {exists}, redirects: {redirects}")
+        logger.debug(f"find_pages_exists_or_not : missing:{missing}, exists: {exists}, redirects: {redirects}")
         # ---
         if return_all_jsons:
             return table, all_jsons
         # ---
         return table
 
-    def Get_All_pages(
+    def get_all_pages(
         self,
         start: str = "",
         namespace: str = "0",
@@ -275,7 +277,7 @@ class NewApi(NewApiHelpers):
         # ---
         return Main_table
 
-    def Get_All_pages_generator(
+    def get_all_pages_generator(
         self,
         start: str = "",
         namespace: str = "0",
@@ -286,7 +288,7 @@ class NewApi(NewApiHelpers):
     ):
         # ---
         logger.debug(
-            f"Get_All_pages_generator for start:{start}, limit:{limit},namespace:{namespace},filterredir:{filterredir}"
+            f"get_all_pages_generator for start:{start}, limit:{limit},namespace:{namespace},filterredir:{filterredir}"
         )
         # ---
         params = {
@@ -325,17 +327,17 @@ class NewApi(NewApiHelpers):
             max=limit_all,
         )
         # ---
-        logger.debug(f"<<lightpurple>> --- Get_All_pages_generator : find {len(newp)} pages.")
+        logger.debug(f"<<lightpurple>> --- get_all_pages_generator : find {len(newp)} pages.")
         # ---
         Main_table = {x["title"]: x for x in newp}
         # ---
         logger.debug(f"len of Main_table {len(Main_table)}.")
         # ---
-        logger.info(f"bot_api.py Get_All_pages_generator : find {len(Main_table)} pages.")
+        logger.info(f"bot_api.py get_all_pages_generator : find {len(Main_table)} pages.")
         # ---
         return Main_table
 
-    def PrefixSearch(
+    def prefixsearch(
         self,
         pssearch: str = "",
         ns: str = "0",
@@ -410,7 +412,7 @@ class NewApi(NewApiHelpers):
         # ---
         return Main_table
 
-    def Search(
+    def search(
         self,
         value: str = "",
         ns: str = "*",
@@ -468,7 +470,7 @@ class NewApi(NewApiHelpers):
         # ---
         return results
 
-    def Get_Newpages(
+    def get_newpages(
         self,
         limit: int | str = 5000,
         namespace: str = "0",
@@ -518,7 +520,7 @@ class NewApi(NewApiHelpers):
 
         return Main_table
 
-    def UserContribs(
+    def usercontribs(
         self,
         user,
         limit: int | str = 5000,
@@ -559,7 +561,7 @@ class NewApi(NewApiHelpers):
         # ---
         return results
 
-    def Get_langlinks_for_list(self, titles, targtsitecode: str = "", numbes: int = 40):
+    def get_langlinks_for_list(self, titles, targtsitecode: str = "", numbes: int = 40):
         """Retrieve language links for a list of titles from a specified target
         site.
 
@@ -841,9 +843,9 @@ class NewApi(NewApiHelpers):
         # ---
         return results
 
-    def Get_template_pages(self, title: str, namespace: str = "*", max: int = 10000):
+    def get_template_pages(self, title: str, namespace: str = "*", max: int = 10000):
         # ---
-        logger.debug(f'Get_template_pages for template:"{title}", limit:"{max}",namespace:"{namespace}"')
+        logger.debug(f'get_template_pages for template:"{title}", limit:"{max}",namespace:"{namespace}"')
         # ---
         params = {
             "action": "query",
@@ -873,7 +875,7 @@ class NewApi(NewApiHelpers):
         # ---
         return pages
 
-    def Get_image_url(self, title: str):
+    def get_image_url(self, title: str):
         # ---
         if not title.startswith("File:") and not title.startswith("ملف:"):
             title = f"File:{title}"
@@ -905,7 +907,7 @@ class NewApi(NewApiHelpers):
         # ---
         return url
 
-    def Get_imageinfo(self, title: str):
+    def get_imageinfo(self, title: str):
         # ---
         if not title.startswith("File:") and not title.startswith("ملف:"):
             title = f"File:{title}"
@@ -1107,7 +1109,7 @@ class NewApi(NewApiHelpers):
         # ---
         return newtext
 
-    def Parse_Text(self, line, title: str):
+    def parse_text(self, line, title: str):
         # ---
         params = {
             "action": "parse",

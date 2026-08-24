@@ -11,7 +11,7 @@ numbers = {1: 20000, "done": 0}
 # ---
 api_new = NewApi("www", family="mdwiki")
 
-# pages   = api_new.Find_pages_exists_or_not(liste)
+# pages   = api_new.find_pages_exists_or_not(liste)
 # pages   = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 # ---
 """

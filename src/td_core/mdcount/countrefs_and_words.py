@@ -162,7 +162,7 @@ def main() -> None:
         if numb >= limit:
             break
         # ---
-        text = mdwiki_api_call.GetPageText(x)
+        text = mdwiki_api_call.get_page_text(x)
         # ---
         count_words(x, text)
         count_refs(x, text)

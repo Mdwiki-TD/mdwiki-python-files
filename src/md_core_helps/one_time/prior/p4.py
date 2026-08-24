@@ -19,7 +19,7 @@ from pathlib import Path
 
 from md_core_helps.one_time.prior import get_them
 from mdwiki_api.mdwiki_page import md_MainPage
-from mdwiki_api.wiki_page import MainPage
+from mdwiki_api.wiki_page import mainpage
 from newapi import change_codes
 
 logger = logging.getLogger(__name__)
@@ -113,14 +113,14 @@ def work_in_en_page(title) -> None:
     if title not in allen:
         allen[title] = {"extlinks": [], "refsname": [], "en": title, "lead": {"extlinks": [], "refsname": []}}
     # ---
-    page = MainPage(title, "en")
+    page = mainpage(title, "en")
     # ---
     title2 = title
     # ---
     if page.isRedirect():
         target = page.get_redirect_target()
         if target != "":
-            page = MainPage(target, "en")
+            page = mainpage(target, "en")
             allen[title]["en"] = target
             title2 = target
     # ---
