@@ -8,7 +8,7 @@ python3 core8/pwb.py md_core/add_rtt/tests/add_r_col_to_file
 import logging
 from pathlib import Path
 
-from src.md_core.add_rtt.r_column_bots.pup_table import add_to_tables
+from src1.md_core.add_rtt.r_column_bots.pup_table import add_to_tables
 
 logger = logging.getLogger(__name__)
 
