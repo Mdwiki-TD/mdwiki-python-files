@@ -53,6 +53,9 @@ class AllAPIS:
         title: str,
         **kwargs,
     ) -> dict[Any, Any]:
+        kwargs.pop("lang", None)
+        kwargs.pop("sitecode", None)
+        kwargs.pop("family", None)
         return catdepth_new.subcatquery(
             self.login_bot,
             title,
