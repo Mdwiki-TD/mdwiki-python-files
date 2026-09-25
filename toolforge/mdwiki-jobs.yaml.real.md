@@ -1,0 +1,43 @@
+# To be moved to mdw.toolforge.org
+
+-   [x] $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/bot
+-   [x] $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/fix_cs_params/bot
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/p11143_bot/bot all add addq
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/unlinked_wb/bot
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/updates/io
+-   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/updates/listo
+-   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/updates/medicine_articles
+
+# All
+
+-   [x] $HOME/local/bin/python3 c9/pwb.py copy_to_en/revid
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py md_core_helps/apis/cat_cach
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_qid/sitelinks
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_title/all_articles
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_title/exists_db
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/check_titles
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/days_7
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/get_red
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/fix_user_pages/bot
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref newpages
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref sql
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/words newpages
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/cashwd
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/find_qids redirects add
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/enwiki_views
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/getas
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/sqlviews_new
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/wd_works/recheck
+
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/td_other_qids/fix_qids fix all
+-   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/td_other_qids/make_list all add

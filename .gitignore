@@ -59,4 +59,3 @@ throttle.ctrl
 scan.py
 .env
 /src/db/tools
-toolforge/mdwiki-jobs.yaml.real.md
