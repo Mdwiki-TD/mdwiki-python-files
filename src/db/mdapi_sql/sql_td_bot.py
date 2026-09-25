@@ -31,8 +31,8 @@ class DbConfig:
             "autocommit": True,
         }
 
-        data["conv"][pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
         data["conv"] = pymysql.converters.conversions.copy()
+        data["conv"][pymysql.FIELD_TYPE.DATE] = lambda x: str(x)
 
         return data
 
