@@ -26,11 +26,11 @@
 -   [x] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/days_7
 -   [x] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/get_red
 
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/fix_user_pages/bot
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/fix_user_pages/bot
 
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref newpages
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref sql
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/words newpages
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref newpages
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref sql
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/words newpages
 
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/cashwd
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/find_qids redirects add
