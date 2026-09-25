@@ -19,13 +19,12 @@
 
 -   [x] $HOME/local/bin/python3 c9/pwb.py md_core_helps/apis/cat_cach
 
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_qid/sitelinks
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_title/all_articles
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_qid/sitelinks
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_title/all_articles
 
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_title/exists_db
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/check_titles
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/days_7
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/get_red
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/check_titles
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/days_7
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/db_work/get_red
 
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/fix_user_pages/bot
 
