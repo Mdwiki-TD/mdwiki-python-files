@@ -37,7 +37,6 @@ for tool in "${tools[@]}"; do
         become "$tool" sh -c "cp \"$FULL_FILE_PATH\" \$HOME/$filename;"
         become "$tool" sh -c "tfj flush"
         become "$tool" sh -c "tfj load $filename"
-
         echo "Successfully deployed jobs for tool: $tool"
         echo "-----------------------------------------------"
     fi
