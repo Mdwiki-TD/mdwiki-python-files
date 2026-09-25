@@ -16,6 +16,7 @@ tools=("mdwiki")
 # Loop through each defined tool
 for tool in "${tools[@]}"; do
     # Construct the filename matching the tool name
+    # mdwiki-jobs.yaml
     filename="${tool}-jobs.yaml"
     FULL_FILE_PATH="${SOURCE_PATH}/$filename"
 
@@ -33,7 +34,9 @@ for tool in "${tools[@]}"; do
         echo "Deploying jobs for tool: $tool using file: $filename"
 
         # Run deployment and ensure internal commands exit with error if they fail
-        become "$tool" sh -c "cp \"$FULL_FILE_PATH\" \$HOME/$filename; tfj flush; tfj load $filename"
+        become "$tool" sh -c "cp \"$FULL_FILE_PATH\" \$HOME/$filename;"
+        become "$tool" sh -c "tfj flush"
+        become "$tool" sh -c "tfj load $filename"
 
         echo "Successfully deployed jobs for tool: $tool"
         echo "-----------------------------------------------"
