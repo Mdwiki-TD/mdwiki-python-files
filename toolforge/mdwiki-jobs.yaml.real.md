@@ -1,4 +1,6 @@
-# To be moved to mdw.toolforge.org
+# Check list to make sure all the jobs are working
+
+## To be moved to mdw.toolforge.org
 
 -   [x] $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/bot
 -   [x] $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/fix_cs_params/bot
@@ -11,11 +13,11 @@
 -   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/updates/listo
 -   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/updates/medicine_articles
 
-# All
+## All
 
 -   [x] $HOME/local/bin/python3 c9/pwb.py copy_to_en/revid
 
--   [ ] $HOME/local/bin/python3 c9/pwb.py md_core_helps/apis/cat_cach
+-   [x] $HOME/local/bin/python3 c9/pwb.py md_core_helps/apis/cat_cach
 
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_qid/sitelinks
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_title/all_articles
