@@ -28,6 +28,8 @@ def get_table(titles):
     # ---
     len_grup = 100
     # ---
+    logger.info(f"get_table: start for {len(titles)} titles, groups of {len_grup}.")
+    # ---
     for i in range(0, len(titles), len_grup):
         group = titles[i : i + len_grup]
         # ---
@@ -35,7 +37,7 @@ def get_table(titles):
         # ---
         asa = mdwiki_api_call.get_redirect(group)
         # ---
-        logger.info(f"work on {len_grup} pagees, done: {done}/{len(titles)}.")
+        logger.info(f"work on group of {len(group)} pages, got {len(asa)} redirects, done: {done}/{len(titles)}.")
         # ---
         table = {**table, **asa}
     # ---
