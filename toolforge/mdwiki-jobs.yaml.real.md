@@ -32,11 +32,11 @@
 -   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref sql
 -   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/words newpages
 
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/cashwd
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/find_qids redirects add
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/cashwd
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/find_qids redirects add
 
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/enwiki_views
--   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/getas
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/enwiki_views
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/getas
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/sqlviews_new
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/wd_works/recheck
 
