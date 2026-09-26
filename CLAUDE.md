@@ -33,15 +33,15 @@ pre-commit run --all-files      # Run all pre-commit hooks
 Bots are typically run via a wrapper script (`pwb.py`):
 
 ```bash
-python3 core8/pwb.py copy_text/bot           # Run copy_text bot
-python3 core8/pwb.py newupdater/med Aspirin  # Update specific page
-python3 core8/pwb.py copy_text/scan_files del  # With arguments
+python3 c9/pwb.py copy_text/bot           # Run copy_text bot
+python3 c9/pwb.py newupdater/med Aspirin  # Update specific page
+python3 c9/pwb.py copy_text/scan_files del  # With arguments
 ```
 
 On Toolforge:
 
 ```bash
-tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/bot"
+tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_text/bot"
 ```
 
 ## Architecture
@@ -66,7 +66,6 @@ Each module contains bot scripts in `bots/` subdirectories:
 -   **`copy_to_en/`** - Copies content to English Wikipedia
 -   **`md_core/`** - Core MDWiki operations:
     -   `add_rtt/` - Add reference columns to tables
-    -   `fix_cs1/` - Fix Citation Style 1 templates
     -   `mdpy/` - General MDWiki Python utilities
     -   `stats/` - Statistics generation
 -   **`newupdater/`** - Updates drugbox/chembox infoboxes and moves sections

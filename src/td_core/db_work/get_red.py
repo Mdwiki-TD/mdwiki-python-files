@@ -28,6 +28,8 @@ def get_table(titles):
     # ---
     len_grup = 100
     # ---
+    logger.info(f"get_table: start for {len(titles)} titles, groups of {len_grup}.")
+    # ---
     for i in range(0, len(titles), len_grup):
         group = titles[i : i + len_grup]
         # ---
@@ -35,7 +37,7 @@ def get_table(titles):
         # ---
         asa = mdwiki_api_call.get_redirect(group)
         # ---
-        logger.info(f"work on {len_grup} pagees, done: {done}/{len(titles)}.")
+        logger.info(f"work on group of {len(group)} pages, got {len(asa)} redirects, done: {done}/{len(titles)}.")
         # ---
         table = {**table, **asa}
     # ---
@@ -48,14 +50,22 @@ def get_pages(tab) -> None:
     # ---
     titles = list(tab.keys())
     # ---
+    logger.info(f"get_pages: start for {len(titles)} pages.")
+    # ---
     table = get_table(titles)
+    # ---
+    logger.info(f"get_pages: found {len(table)} redirects.")
     # ---
     tat = ""
     # ---
     set_new_title = {}
     to_del = []
+    no_old_qid = 0
     # ---
     just_test = "no" in sys.argv
+    # ---
+    if just_test:
+        logger.info("get_pages: just_test mode (no SQL changes).")
     # ---
     for old_title, new_title in table.items():
         # ---
@@ -63,15 +73,18 @@ def get_pages(tab) -> None:
         old_qid = tab.get(old_title, False)
         # ---
         if not old_qid:
+            no_old_qid += 1
             continue
         # ---
         if not new_qid:
             # استبدال
             # ---
             if qids_title_to_qid.get(old_title):
+                logger.info(f"qids: set title '{old_title}' -> '{new_title}' (qid: {old_qid}).")
                 sql_qids.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
             # ---
             if qids_others_title_to_qid.get(old_title):
+                logger.info(f"qids_others: set title '{old_title}' -> '{new_title}' (qid: {old_qid}).")
                 sql_qids_others.qids_set_title_where_title_qid(old_title, new_title, old_qid, no_do=just_test)
             # ---
             tat += f'old_title: "{old_title}" to: "{new_title}",\n'
@@ -80,6 +93,10 @@ def get_pages(tab) -> None:
             # ---
         elif new_qid == old_qid:
             to_del.append(old_title)
+    # ---
+    logger.info(f"get_pages: {no_old_qid} redirects skipped (no old_qid).")
+    # ---
+    logger.info(f"get_pages: {len(set_new_title)} titles to set new title.")
     # ---
     logger.info(f"len to_del {len(to_del)}: \n" + "\n\t".join(to_del))
     # ---

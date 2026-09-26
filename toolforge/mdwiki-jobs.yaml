@@ -31,14 +31,6 @@
   image: tf-python39
   emails: none
 
-# $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/bot
-# $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/fix_cs_params/bot
-- name: fixrefs
-  command: "$HOME/jobs/fix_refs.sh"
-  schedule: "@weekly"
-  image: tf-python39
-  emails: none
-
 # Find qids and fix qids
 # $HOME/local/bin/python3 c9/pwb.py td_core/td_other_qids/make_list all add
 # $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/find_qids redirects add
