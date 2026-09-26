@@ -66,7 +66,6 @@ Each module contains bot scripts in `bots/` subdirectories:
 -   **`copy_to_en/`** - Copies content to English Wikipedia
 -   **`md_core/`** - Core MDWiki operations:
     -   `add_rtt/` - Add reference columns to tables
-    -   `fix_cs1/` - Fix Citation Style 1 templates
     -   `mdpy/` - General MDWiki Python utilities
     -   `stats/` - Statistics generation
 -   **`newupdater/`** - Updates drugbox/chembox infoboxes and moves sections

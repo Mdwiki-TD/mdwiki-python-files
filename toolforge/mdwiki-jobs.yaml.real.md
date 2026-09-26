@@ -2,9 +2,6 @@
 
 ## To be moved to mdw.toolforge.org
 
--   [x] $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/bot
--   [x] $HOME/local/bin/python3 c9/pwb.py md_core/fix_cs1/fix_cs_params/bot
-
 -   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/p11143_bot/bot all add addq
 
 -   [ ] $HOME/local/bin/python3 c9/pwb.py md_core/unlinked_wb/bot
