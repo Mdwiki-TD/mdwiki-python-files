@@ -7,10 +7,10 @@
 +
 قاعدة البيانات
 
-python3 core8/pwb.py md_core/mdpyget/enwiki_views merge
-python3 core8/pwb.py md_core/mdpyget/enwiki_views from_cats newpages nodump
-python3 core8/pwb.py md_core/mdpyget/enwiki_views newpages nodump
-python3 core8/pwb.py md_core/mdpyget/enwiki_views newpages nowork
+python3 c9/pwb.py md_core/mdpyget/enwiki_views merge
+python3 c9/pwb.py md_core/mdpyget/enwiki_views from_cats newpages nodump
+python3 c9/pwb.py md_core/mdpyget/enwiki_views newpages nodump
+python3 c9/pwb.py md_core/mdpyget/enwiki_views newpages nowork
 
 """
 
@@ -167,7 +167,7 @@ def main() -> None:
 
 
 def test() -> None:
-    # python3 core8/pwb.py md_core/mdpyget/getas test
+    # python3 c9/pwb.py md_core/mdpyget/getas test
     # ---
     data_tab[1]["Yemen1"] = "Top"
     # ---

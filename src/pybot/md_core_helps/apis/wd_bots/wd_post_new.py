@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py apis/wd_bots/wd_post_new
+python3 c9/pwb.py apis/wd_bots/wd_post_new
 
 from md_core_helps.apis.wd_bots.wd_post_new import post_it
 

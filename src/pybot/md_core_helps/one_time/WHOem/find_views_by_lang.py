@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py WHOem/find_views_by_lang
+python3 c9/pwb.py WHOem/find_views_by_lang
 
 """
 

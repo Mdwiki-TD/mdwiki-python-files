@@ -1,7 +1,7 @@
 """
 
-python3 core8/pwb.py priorviews/find/find_translators new
-python3 core8/pwb.py priorviews/find/find_translators removeip
+python3 c9/pwb.py priorviews/find/find_translators new
+python3 c9/pwb.py priorviews/find/find_translators removeip
 
 """
 

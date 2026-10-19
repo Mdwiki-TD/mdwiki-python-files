@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py wprefs/bots/es_refs
+python3 c9/pwb.py wprefs/bots/es_refs
 """
 
 import logging

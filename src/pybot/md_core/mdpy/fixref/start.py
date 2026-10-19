@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Change refs to newlines
-python3 core8/pwb.py md_core/mdpy/fixref
+python3 c9/pwb.py md_core/mdpy/fixref
 """
 
 import logging

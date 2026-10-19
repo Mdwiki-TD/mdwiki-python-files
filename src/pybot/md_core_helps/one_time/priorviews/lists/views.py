@@ -8,7 +8,7 @@ from md_core_helps.one_time.priorviews.lists import views
 # views.views_by_lang
 # ---
 
-python3 core8/pwb.py priorviews/views
+python3 c9/pwb.py priorviews/views
 
 """
 

@@ -5,7 +5,7 @@ from md_core_helps.one_time.priorviews.lists import translators
 # translators.counts_by_translator
 # translators.counts_by_lang
 # ---
-python3 core8/pwb.py priorviews/lists/translators
+python3 c9/pwb.py priorviews/lists/translators
 
 """
 

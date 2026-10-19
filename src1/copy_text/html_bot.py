@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_text/html_bot
+python3 c9/pwb.py copy_text/html_bot
 
 """
 

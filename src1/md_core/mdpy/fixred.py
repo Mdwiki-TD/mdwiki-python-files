@@ -3,7 +3,7 @@
 
 إيجاد التحويلات واصلاحها
 
-python3 core8/pwb.py md_core/mdpy/fixred
+python3 c9/pwb.py md_core/mdpy/fixred
 
 """
 

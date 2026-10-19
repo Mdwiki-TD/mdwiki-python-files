@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py prior/remove_wikis
+python3 c9/pwb.py prior/remove_wikis
 """
 
 import json

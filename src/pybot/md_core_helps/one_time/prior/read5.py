@@ -3,9 +3,9 @@ write code to read page in en.wikipedia.org using API, then create list with All
 title: WikiProjectMed:List/Prior
 links like [[example]]
 
-python3 core8/pwb.py prior/read5 dontsave
-python3 core8/pwb.py prior/read5 logall split
-python3 core8/pwb.py prior/read5 dontsave logall
+python3 c9/pwb.py prior/read5 dontsave
+python3 c9/pwb.py prior/read5 logall split
+python3 c9/pwb.py prior/read5 dontsave logall
 
 """
 

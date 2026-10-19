@@ -1,7 +1,7 @@
 """
 python pwb.py niosh/get write ask
 
-python3 core8/pwb.py niosh/get write ask
+python3 c9/pwb.py niosh/get write ask
 
 """
 

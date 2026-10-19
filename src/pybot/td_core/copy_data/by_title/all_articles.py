@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py td_core/copy_data/by_title/all_articles
+python3 c9/pwb.py td_core/copy_data/by_title/all_articles
 
 """
 
@@ -86,7 +86,7 @@ def add_category_members_to_sql(to_add_category_members) -> None:
 
 
 def test() -> None:
-    # python3 core8/pwb.py td_core/copy_data/all_articles test
+    # python3 c9/pwb.py td_core/copy_data/all_articles test
     # ---
     to_add_category_members = {"RTT": ["Asbestosis", "Zoster vaccine"]}
     # ---

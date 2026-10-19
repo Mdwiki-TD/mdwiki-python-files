@@ -3,7 +3,7 @@
 
 from md_core_helps.one_time.priorviews.lists.links_by_section import sects_links_langlinks
 
-python3 core8/pwb.py priorviews/lists/links_by_section
+python3 c9/pwb.py priorviews/lists/links_by_section
 
 """
 

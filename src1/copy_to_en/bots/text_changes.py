@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py copy_to_en/text_changes
+python3 c9/pwb.py copy_to_en/text_changes
 
 Usage:
 from copy_to_en import text_changes# text = text_changes.work(text)

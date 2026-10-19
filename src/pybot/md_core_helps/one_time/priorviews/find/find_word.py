@@ -1,7 +1,7 @@
 """
 
-python3 core8/pwb.py priorviews/find/find_word -lang:ar
-python3 core8/pwb.py priorviews/find/find_word new
+python3 c9/pwb.py priorviews/find/find_word -lang:ar
+python3 c9/pwb.py priorviews/find/find_word new
 
 """
 

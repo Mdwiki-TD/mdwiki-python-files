@@ -4,7 +4,7 @@ write code to read page in en.wikipedia.org using API, then create list with All
 title: WikiProjectMed:List/Prior
 links like [[example]]
 
-python3 core8/pwb.py prior/p4 test
+python3 c9/pwb.py prior/p4 test
 """
 
 import logging

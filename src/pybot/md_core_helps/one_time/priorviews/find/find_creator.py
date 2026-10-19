@@ -1,7 +1,7 @@
 """
 
-python3 core8/pwb.py priorviews/find/find_creator new
-python3 core8/pwb.py priorviews/find/find_creator -lang:ar
+python3 c9/pwb.py priorviews/find/find_creator new
+python3 c9/pwb.py priorviews/find/find_creator -lang:ar
 
 """
 

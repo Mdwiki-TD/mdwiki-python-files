@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py priorviews/add_blame_to_tra
+python3 c9/pwb.py priorviews/add_blame_to_tra
 
 """
 

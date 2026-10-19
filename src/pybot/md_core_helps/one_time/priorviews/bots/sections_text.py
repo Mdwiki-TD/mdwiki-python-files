@@ -2,7 +2,7 @@
 
 from md_core_helps.one_time.priorviews.bots import sections_text #make_text(section, links)
 
-python3 core8/pwb.py priorviews/sections_text
+python3 c9/pwb.py priorviews/sections_text
 
 """
 

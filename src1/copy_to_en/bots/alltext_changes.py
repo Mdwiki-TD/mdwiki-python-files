@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py copy_to_en/bots/alltext_changes
+python3 c9/pwb.py copy_to_en/bots/alltext_changes
 
 Usage:
 from copy_to_en import alltext_changes

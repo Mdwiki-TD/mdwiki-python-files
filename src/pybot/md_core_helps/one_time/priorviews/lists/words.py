@@ -4,7 +4,7 @@ from md_core_helps.one_time.priorviews.lists import words
 # words.words_by_lang
 # words.count_words_by_lang
 # ---
-python3 core8/pwb.py priorviews/words
+python3 c9/pwb.py priorviews/words
 
 """
 

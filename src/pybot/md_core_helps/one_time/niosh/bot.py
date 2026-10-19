@@ -1,6 +1,6 @@
 """
 python pwb.py niosh/bot
-python3 core8/pwb.py niosh/bot
+python3 c9/pwb.py niosh/bot
 """
 
 import json

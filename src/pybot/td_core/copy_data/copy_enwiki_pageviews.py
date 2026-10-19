@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py td_core/copy_data/copy_enwiki_pageviews
+python3 c9/pwb.py td_core/copy_data/copy_enwiki_pageviews
 
 """
 

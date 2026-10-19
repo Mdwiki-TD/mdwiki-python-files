@@ -4,7 +4,7 @@ write code to read page in en.wikipedia.org using API, then create list with All
 title: WikiProjectMed:List/Prior
 links like [[example]]
 
-python3 core8/pwb.py prior/p4 test
+python3 c9/pwb.py prior/p4 test
 """
 
 import json
@@ -238,7 +238,7 @@ def start_all() -> None:
         # ---
         tanko[str(n)] = {"file": main_file, "file_en": main_file_en, "links": titles}
         # ---
-        logger.info(f'toolforge jobs run s{n} --image python3.9 --command "python3 core8/pwb.py prior/p4 -s:{n}"')
+        logger.info(f'toolforge jobs run s{n} --image python3.9 --command "python3 c9/pwb.py prior/p4 -s:{n}"')
 
         # ---
     # ---

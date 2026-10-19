@@ -8,10 +8,10 @@
 قاعدة البيانات
 
 
-python3 core8/pwb.py td_core/mdcount/countref merge
-python3 core8/pwb.py td_core/mdcount/countref newpages
+python3 c9/pwb.py td_core/mdcount/countref merge
+python3 c9/pwb.py td_core/mdcount/countref newpages
 
-python3 core8/pwb.py td_core/mdcount/countref -title:Esophageal_rupture
+python3 c9/pwb.py td_core/mdcount/countref -title:Esophageal_rupture
 
 """
 
@@ -114,7 +114,7 @@ def main() -> None:
     # ---
     limit = 100 if "limit100" in sys.argv else 10000
     # ---
-    # python3 core8/pwb.py td_core/mdcount/countref -title:Testosterone_\(medication\)
+    # python3 c9/pwb.py td_core/mdcount/countref -title:Testosterone_\(medication\)
     # ---
     vaild_links = []
     # ---
@@ -150,7 +150,7 @@ def main() -> None:
 
 
 def test() -> None:
-    # python3 core8/pwb.py td_core/mdcount/countref test
+    # python3 c9/pwb.py td_core/mdcount/countref test
     # ---
     tab_data["lead"]["Yemen1"] = 50
     tab_data["all"]["Yemen1"] = 50

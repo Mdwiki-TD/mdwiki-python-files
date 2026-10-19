@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-tfj run revid --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/revid"
+tfj run revid --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_to_en/revid"
 
 """
 

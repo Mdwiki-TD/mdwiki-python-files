@@ -5,24 +5,24 @@
 مجلد json_en
 
 
-python3.10 core8/pwb.py prior/add_old new
+python3.10 c9/pwb.py prior/add_old new
 
-python3.10 core8/pwb.py prior/add_old
+python3.10 c9/pwb.py prior/add_old
 
-python3 core8/pwb.py prior/add_old new  -file:en_1.json
-python3 core8/pwb.py prior/add_old new  -file:en_2.json
-python3 core8/pwb.py prior/add_old new  -file:en_3.json
-python3 core8/pwb.py prior/add_old new  -file:en_4.json
-python3 core8/pwb.py prior/add_old new  -file:en_5.json
-python3 core8/pwb.py prior/add_old new  -file:en_6.json
-python3 core8/pwb.py prior/add_old new  -file:en_7.json
-python3 core8/pwb.py prior/add_old new  -file:en_8.json
-python3 core8/pwb.py prior/add_old new  -file:en_9.json
-python3 core8/pwb.py prior/add_old new  -file:en_10.json
-python3 core8/pwb.py prior/add_old new  -file:en_11.json
-python3 core8/pwb.py prior/add_old new  -file:en_12.json
-python3 core8/pwb.py prior/add_old new  -file:en_13.json
-python3 core8/pwb.py prior/add_old new  -file:en_14.json
+python3 c9/pwb.py prior/add_old new  -file:en_1.json
+python3 c9/pwb.py prior/add_old new  -file:en_2.json
+python3 c9/pwb.py prior/add_old new  -file:en_3.json
+python3 c9/pwb.py prior/add_old new  -file:en_4.json
+python3 c9/pwb.py prior/add_old new  -file:en_5.json
+python3 c9/pwb.py prior/add_old new  -file:en_6.json
+python3 c9/pwb.py prior/add_old new  -file:en_7.json
+python3 c9/pwb.py prior/add_old new  -file:en_8.json
+python3 c9/pwb.py prior/add_old new  -file:en_9.json
+python3 c9/pwb.py prior/add_old new  -file:en_10.json
+python3 c9/pwb.py prior/add_old new  -file:en_11.json
+python3 c9/pwb.py prior/add_old new  -file:en_12.json
+python3 c9/pwb.py prior/add_old new  -file:en_13.json
+python3 c9/pwb.py prior/add_old new  -file:en_14.json
 """
 
 import copy
@@ -57,7 +57,7 @@ class PriorAddOld:
                 p += 1
                 self.all_file.append(filename)
                 logger.info(
-                    f'toolforge jobs run p{p} --command "python3 core8/pwb.py prior/add_old -file:{filename}" --image python3.9'
+                    f'toolforge jobs run p{p} --command "python3 c9/pwb.py prior/add_old -file:{filename}" --image python3.9'
                 )
         # ---
         file_to = ""

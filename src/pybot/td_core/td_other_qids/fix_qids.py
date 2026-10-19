@@ -1,8 +1,8 @@
 """
-python3 core8/pwb.py td_core/td_other_qids/fix_qids all
-python3 core8/pwb.py td_core/td_other_qids/fix_qids -others
-python3 core8/pwb.py td_core/td_other_qids/fix_qids td
-python3 core8/pwb.py td_core/td_other_qids/fix_qids redirects
+python3 c9/pwb.py td_core/td_other_qids/fix_qids all
+python3 c9/pwb.py td_core/td_other_qids/fix_qids -others
+python3 c9/pwb.py td_core/td_other_qids/fix_qids td
+python3 c9/pwb.py td_core/td_other_qids/fix_qids redirects
 
 """
 
@@ -31,7 +31,7 @@ def replace_in_sql(reds, ty) -> None:
         qua = f'update {table_name} set qid = "{new_q}" where qid = "{old_q}"'
         # ---
         if "fix" in sys.argv:
-            # python3 core8/pwb.py md_core/mdpy/cashwd redirects fix
+            # python3 c9/pwb.py md_core/mdpy/cashwd redirects fix
             if table_name == "qids_others":
                 sql_qids_others.set_qid_where_qid(new_q, old_q)
             else:

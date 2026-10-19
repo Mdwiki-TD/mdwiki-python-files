@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py priorviews/find/find_blame -lang:ar
+python3 c9/pwb.py priorviews/find/find_blame -lang:ar
 
 """
 

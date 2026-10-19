@@ -135,12 +135,12 @@ exclude = [
     "**/old/**",
     "**/OLD_REPOS/**",
     "**/OldCodes/**",
-    "**/core8/**",
+    "**/c9/**",
     "**/i18n/**",
     "**/MagicMock/**",
 
     # Global System Paths
-    "I:/core/core8/**",
+    "I:/core/c9/**",
     "C:/**",
 ]
 line-length = 120
@@ -277,12 +277,12 @@ exclude = [
     "**/old/**",
     "**/OLD_REPOS/**",
     "**/OldCodes/**",
-    "**/core8/**",
+    "**/c9/**",
     "**/i18n/**",
     "**/MagicMock/**",
 
     # Global System Paths
-    "I:/core/core8/**",
+    "I:/core/c9/**",
     "C:/**",
     "**/.*",
 ]
@@ -330,12 +330,12 @@ ignore = [
     "**/old/**",
     "**/OLD_REPOS/**",
     "**/OldCodes/**",
-    "**/core8/**",
+    "**/c9/**",
     "**/i18n/**",
     "**/MagicMock/**",
 
     # Global System Paths
-    "I:/core/core8/**",
+    "I:/core/c9/**",
     "C:/**",
     "**/.*",
 ]

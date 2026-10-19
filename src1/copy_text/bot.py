@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_text/bot
+python3 c9/pwb.py copy_text/bot
 
-tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/bot"
+tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_text/bot"
 
 """
 

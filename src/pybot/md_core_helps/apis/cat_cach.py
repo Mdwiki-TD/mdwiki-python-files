@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py apis/cat_cach
+python3 c9/pwb.py apis/cat_cach
 
 from md_core_helps.apis import cat_cach
 from md_core_helps.apis.cat_cach import cat_depth

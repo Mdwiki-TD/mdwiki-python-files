@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py priorviews/by_lang ask
+python3 c9/pwb.py priorviews/by_lang ask
 
 """
 
