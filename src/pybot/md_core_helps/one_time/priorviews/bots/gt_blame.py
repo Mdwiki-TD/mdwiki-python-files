@@ -11,7 +11,6 @@ from urllib.parse import urlencode
 
 import requests
 import wikitextparser
-
 from md_core_helps.one_time.prior.json_en.lists import json_en_all
 from md_core_helps.one_time.prior.json_langs.lists import json_langs_by_langs
 from md_core_helps.one_time.priorviews.bots import helps

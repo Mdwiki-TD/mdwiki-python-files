@@ -3,7 +3,6 @@ import logging
 import re
 
 import wikitextparser as wtp
-
 from md_core_helps.apis import mdwiki_api_call
 
 logger = logging.getLogger(__name__)

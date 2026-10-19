@@ -19,7 +19,6 @@ if Dir := Path(__file__).parent.parent:
     sys.path.append(str(Dir))
 
 from dotenv import load_dotenv
-
 from wprefs.helps import print_s
 
 try:

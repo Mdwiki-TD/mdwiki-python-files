@@ -3,7 +3,6 @@
 import re
 
 import wikitextparser as wtp
-
 from wprefs.bots.es_months import fix_es_months
 from wprefs.bots.es_refs import mv_es_refs
 from wprefs.bots.es_section import add_section

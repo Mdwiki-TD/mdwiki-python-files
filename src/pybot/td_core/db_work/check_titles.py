@@ -14,7 +14,6 @@ import sys
 import time
 
 import tqdm
-
 from db.mdapi_sql.services import sql_for_mdwiki
 
 # ---

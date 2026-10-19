@@ -6,7 +6,6 @@ import os
 from typing import Any
 
 from dotenv import load_dotenv
-
 from newapi import AllAPIS
 from newapi.client_wiki import bot_api
 

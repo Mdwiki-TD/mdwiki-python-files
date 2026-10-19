@@ -9,12 +9,11 @@ xpython3 c9/pwb.py td_core/wd_works/recheck
 import logging
 import sys
 
-from pymysql.converters import escape_string
-
 from db import WikiReplicaDB
 from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
 from md_core_helps.apis import wikidataapi
 from md_core_helps.bots import en_to_md
+from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

@@ -13,10 +13,9 @@ from datetime import datetime
 from pathlib import Path
 
 import tqdm
-from pymysql.converters import escape_string
-
 from db import WikiReplicaDB
 from md_core.stats.ar import get_ar_results
+from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 

@@ -8,7 +8,6 @@ from urllib.parse import urlencode, urlparse
 
 import requests
 import wikitextparser
-
 from newapi import change_codes
 
 logger = logging.getLogger(__name__)

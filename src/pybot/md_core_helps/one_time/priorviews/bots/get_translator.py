@@ -9,7 +9,6 @@ import sys
 from urllib.parse import urlencode
 
 import requests
-
 from md_core_helps.one_time.priorviews.bots import helps
 
 logger = logging.getLogger(__name__)

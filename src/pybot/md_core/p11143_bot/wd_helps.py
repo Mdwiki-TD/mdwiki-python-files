@@ -8,9 +8,8 @@ import time
 from typing import Any
 from urllib.error import HTTPError, URLError
 
-from SPARQLWrapper import JSON, SPARQLWrapper
-
 from md_core_helps.apis import wikidataapi
+from SPARQLWrapper import JSON, SPARQLWrapper
 
 logger = logging.getLogger(__name__)
 

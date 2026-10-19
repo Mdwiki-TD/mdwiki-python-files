@@ -11,7 +11,6 @@ import sys
 from urllib.parse import urlencode
 
 import requests
-
 from md_core_helps.apis.user_accounts import password, username
 
 logger = logging.getLogger(__name__)

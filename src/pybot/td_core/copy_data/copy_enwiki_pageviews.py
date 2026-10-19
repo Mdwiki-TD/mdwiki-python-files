@@ -9,9 +9,8 @@ import json
 import logging
 from pathlib import Path
 
-from pymysql.converters import escape_string
-
 from db.mdapi_sql.services import sql_for_mdwiki
+from pymysql.converters import escape_string
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)

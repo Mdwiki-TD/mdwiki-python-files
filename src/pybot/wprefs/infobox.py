@@ -9,7 +9,6 @@ from wprefs.wpref_text import fix_page
 import re
 
 import wikitextparser as wtp
-
 from newapi import txtlib
 from wprefs.helps import print_s
 

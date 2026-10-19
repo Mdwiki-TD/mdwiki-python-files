@@ -14,7 +14,6 @@ import os
 from pathlib import Path
 
 import wikitextparser
-
 from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)

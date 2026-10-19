@@ -18,7 +18,6 @@ import sys
 from pathlib import Path
 
 import wikitextparser
-
 from md_core_helps.one_time.prior import text_bot
 from mdwiki_api.mdwiki_page import md_MainPage
 

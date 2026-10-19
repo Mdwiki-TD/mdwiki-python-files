@@ -2,7 +2,6 @@ import re
 import sys
 
 import wikitextparser as wtp
-
 from md_core.mdpy.fixref import make_title_bot
 
 

@@ -13,11 +13,10 @@ import os
 import sys
 from pathlib import Path
 
-from pymysql.converters import escape_string
-
 from db import WikiReplicaDB
 from md_core_helps.one_time.priorviews.bots import helps
 from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_lang
+from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)
 
