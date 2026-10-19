@@ -83,7 +83,7 @@ class WikiBlame:
         if text and text.find("present in the oldest revision searched") != -1:
             self.in_first = True
         # ---
-        results = text.find_all("a")
+        results = results_div.find_all("a")
         for x in results:
             href = x.get("href")
 
@@ -92,7 +92,7 @@ class WikiBlame:
                 continue
             # match url like https://es.wikipedia.org/w/index.php?title=Letrina_de_hoyo&amp;diff=prev&amp;oldid=87638632
             # logger.info(href)
-            search = re.search(r"oldid=(\d+)", href)
+            search = re.search(r"oldid=(\d+)", str(href))
             if search:
                 oldid = search.group(1)
                 self.oldids.append(oldid)

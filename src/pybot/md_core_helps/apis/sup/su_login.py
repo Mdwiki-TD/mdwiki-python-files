@@ -8,6 +8,7 @@ import sys
 from http.cookiejar import MozillaCookieJar
 
 import mwclient
+import mwclient.errors
 import requests
 from mwclient.client import Site
 
