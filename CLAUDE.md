@@ -80,8 +80,10 @@ Each module contains bot scripts in `bots/` subdirectories:
 
 ```python
 from mdwiki_api.wiki_page import MainPage, NewApi
+
 # For MDWiki
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
+
 # High-level helpers
 from apis import wiki_api, mdwiki_api, wikidataapi
 ```
@@ -90,6 +92,7 @@ from apis import wiki_api, mdwiki_api, wikidataapi
 
 ```python
 from mdapi_sql import sql_for_mdwiki
+
 # Execute queries
 result = sql_for_mdwiki.mdwiki_sql(query, return_dict=True)
 ```

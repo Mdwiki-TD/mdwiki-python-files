@@ -405,7 +405,8 @@ def make_text(allo, ttt: str = ""):
         # ---
         red_line += f"{ta['red']} || "
     # ---
-    te_langs = f"""
+    te_langs = (
+        f"""
 {te_langs}
 
 |- style="position: sticky;top: 0; z-index: 2;"
@@ -415,7 +416,9 @@ def make_text(allo, ttt: str = ""):
 |- style="position: sticky;top: 0; z-index: 2;"
 ! style="position: sticky;top: 0;left: 0;" | red
 | {red_line}
-""" + "\n|}\n</div>"
+"""
+        + "\n|}\n</div>"
+    )
     # ---
     lrnn = len(allo.keys())
     # ---
