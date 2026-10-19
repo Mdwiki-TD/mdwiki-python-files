@@ -10,7 +10,7 @@ if [ -z "$REPO_TMP_DIR" ]; then
     exit 1
 fi
 
-export SUB_DIR_COPY="src"
+export SUB_DIR_COPY="src/pybot"
 export CLEAN_INSTALL=0
 
 # Optional clean of jsons files before copy to avoid issues with old jsons files
