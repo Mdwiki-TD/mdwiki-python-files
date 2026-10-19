@@ -1,4 +1,35 @@
 
+[project]
+name = "pybot"
+version = "0.1.0"
+description = "mdwiki pthon code"
+authors = [{ name = "Mr. Ibrahem", email = "ibrahem.al-radaei@outlook.com" }]
+license = { text = "GPL-3.0-or-later" }
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["mediawiki", "parser", "wikitext", "wikipedia"]
+classifiers = []
+dependencies = ["requests>=2.31.0", "wikitextparser>=2.0.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4.0"]
+
+[build-system]
+requires = ["hatchling>=1.17"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pybot"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"requirements.txt" = "requirements.txt"
+
+[tool.hatch.build.targets.wheel.force-include]
+"requirements.txt" = "pybot/requirements.txt"
+
+[tool.hatch.build.targets.sdist]
+include = ["src/pybot", "requirements.txt"]
+
 # ============================================
 #                 BLACK
 # ============================================
@@ -192,6 +223,8 @@ disable = [
     "R0913", # too-many-arguments
 ]
 
+[tool.pylint.format]
+max-line-length = 120
 
 [tool.pyright]
 reportIncompatibleMethodOverride = "none"
