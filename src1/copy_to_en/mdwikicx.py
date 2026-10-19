@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
 
-python3 core8/pwb.py copy_to_en/mdwikicx ask nodone
+python3 c9/pwb.py copy_to_en/mdwikicx ask nodone
 
-tfj run copymulti --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/mdwikicx multi"
-tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/mdwikicx"
-tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_to_en/mdwikicx nodone"
+tfj run copymulti --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_to_en/mdwikicx multi"
+tfj run main2 --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_to_en/mdwikicx"
+tfj run nodone --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_to_en/mdwikicx nodone"
 
 """
 

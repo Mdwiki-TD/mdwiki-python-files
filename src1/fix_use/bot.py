@@ -1,6 +1,6 @@
 """
 
-python3 core8/pwb.py fix_use/bot path:I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/Translation_Dashboard
+python3 c9/pwb.py fix_use/bot path:I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/Translation_Dashboard
 
 """
 

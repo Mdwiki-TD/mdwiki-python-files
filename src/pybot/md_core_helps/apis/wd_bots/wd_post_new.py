@@ -1,0 +1,84 @@
+#!/usr/bin/python3
+"""
+
+python3 c9/pwb.py apis/wd_bots/wd_post_new
+
+from md_core_helps.apis.wd_bots.wd_post_new import post_it
+
+"""
+
+import logging
+
+from md_core_helps.apis.sup.su_login import get_mwclient_site
+from md_core_helps.apis.user_accounts import password, username
+
+logger = logging.getLogger(__name__)
+
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+
+SS = {"csrftoken": ""}
+
+wd_site = get_mwclient_site("www", "wikidata", username, password)
+
+
+def do_request(params: dict | None = None, method: str = "POST"):
+    # ---
+    if not wd_site:
+        logger.info("no wd_site")
+        return {}
+    # ---
+    params = (params or {}).copy()
+    # ---
+    action = params["action"]
+    # ---
+    del params["action"]
+    # ---
+    if wd_site:
+        try:
+            r4 = wd_site.api(action, http_method=method, **params)
+            return r4
+
+        except Exception:
+            logger.exception("Exception:", exc_info=True)
+    # ---
+    return {}
+
+
+def get_token(mk_new: bool = False) -> str | None:
+    # get edit token
+    # ---
+    if SS["csrftoken"] and not mk_new:
+        return SS["csrftoken"]
+    # ---
+    csrftoken = None
+    # ---
+    if wd_site:
+        try:
+            csrftoken = wd_site.get_token("csrf")
+        except Exception as e:
+            logger.error(f"Could not get token: {e}")
+            return None
+        # ---
+        SS["csrftoken"] = csrftoken
+    # ---
+    return csrftoken
+
+
+def post_it(params: dict | None = None, url=None, token: bool = True, method: str = "POST"):
+    # ---
+    params = params or {}
+    # ---
+    if not url:
+        url = "https://www.wikidata.org/w/api.php"
+    # ---
+    if token:
+        params["token"] = get_token()
+    # ---
+    params["format"] = "json"
+    # ---
+    if method not in ["POST", "GET"]:
+        method = "POST"
+    # ---
+    jsone = do_request(params=params, method=method)
+    # ---
+    return jsone

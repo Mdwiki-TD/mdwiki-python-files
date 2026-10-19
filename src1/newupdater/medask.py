@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
-python3 core8/pwb.py newupdater/medask -page:Haemophilus_influenzae
-python3 core8/pwb.py newupdater/medask -page:Crohn's_disease
-python3 core8/pwb.py newupdater/medask -newpages:1000
-python3 core8/pwb.py newupdater/medask -newpages:20000
-python3 core8/pwb.py newupdater/medask -ns:0 search:drug
-python3 core8/pwb.py newupdater/medask -start:!
-python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Edoderoobot
-python3 core8/pwb.py newupdater/medask -ns:0 -usercontribs:Ghuron
+python3 c9/pwb.py newupdater/medask -page:Haemophilus_influenzae
+python3 c9/pwb.py newupdater/medask -page:Crohn's_disease
+python3 c9/pwb.py newupdater/medask -newpages:1000
+python3 c9/pwb.py newupdater/medask -newpages:20000
+python3 c9/pwb.py newupdater/medask -ns:0 search:drug
+python3 c9/pwb.py newupdater/medask -start:!
+python3 c9/pwb.py newupdater/medask -ns:0 -usercontribs:Edoderoobot
+python3 c9/pwb.py newupdater/medask -ns:0 -usercontribs:Ghuron
 """
 
 import logging

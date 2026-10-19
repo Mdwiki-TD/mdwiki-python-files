@@ -5,14 +5,14 @@ This repository contains a set of Python scripts designed to process and manage 
 
 # Usage
 ```sh
-python3 core8/pwb.py copy_text/files_list
-python3 core8/pwb.py copy_text/bot
+python3 c9/pwb.py copy_text/files_list
+python3 c9/pwb.py copy_text/bot
 ```
 
 `scan_files.py` can be run with the `del` argument to delete files with errors:
 
 ```sh
-python3 core8/pwb.py copy_text/scan_files del
+python3 c9/pwb.py copy_text/scan_files del
 ```
 
 # Then

@@ -33,48 +33,46 @@ pre-commit run --all-files      # Run all pre-commit hooks
 Bots are typically run via a wrapper script (`pwb.py`):
 
 ```bash
-python3 core8/pwb.py copy_text/bot           # Run copy_text bot
-python3 core8/pwb.py newupdater/med Aspirin  # Update specific page
-python3 core8/pwb.py copy_text/scan_files del  # With arguments
+python3 c9/pwb.py copy_text/bot           # Run copy_text bot
+python3 c9/pwb.py newupdater/med Aspirin  # Update specific page
+python3 c9/pwb.py copy_text/scan_files del  # With arguments
 ```
 
 On Toolforge:
 
 ```bash
-tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 core8/pwb.py copy_text/bot"
+tfj run tofiles --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_text/bot"
 ```
 
 ## Architecture
 
 ### Core Modules
 
--   **`mdwiki_api/`** - Low-level API wrappers for MediaWiki interaction.
+- **`mdwiki_api/`** - Low-level API wrappers for MediaWiki interaction.
 
--   **`md_core_helps/apis/`** - High-level API helpers:
+- **`md_core_helps/apis/`** - High-level API helpers:
+    - `mdwiki_api.py` - MDWiki-specific API operations
+    - `wiki_api.py` - Wikipedia API operations
+    - `wikidataapi.py` - Wikidata API operations
 
-    -   `mdwiki_api.py` - MDWiki-specific API operations
-    -   `wiki_api.py` - Wikipedia API operations
-    -   `wikidataapi.py` - Wikidata API operations
-
--   **`md_core_helps/mdapi_sql/`** - Database operations for MDWiki SQL tables. Use `sql_for_mdwiki.py` for database queries.
+- **`md_core_helps/mdapi_sql/`** - Database operations for MDWiki SQL tables. Use `sql_for_mdwiki.py` for database queries.
 
 ### Bot/Task Modules
 
 Each module contains bot scripts in `bots/` subdirectories:
 
--   **`copy_text/`** - Copies wiki text to HTML segments for the MDWiki website
--   **`copy_to_en/`** - Copies content to English Wikipedia
--   **`md_core/`** - Core MDWiki operations:
-    -   `add_rtt/` - Add reference columns to tables
-    -   `fix_cs1/` - Fix Citation Style 1 templates
-    -   `mdpy/` - General MDWiki Python utilities
-    -   `stats/` - Statistics generation
--   **`newupdater/`** - Updates drugbox/chembox infoboxes and moves sections
--   **`td_core/`** - Translation-related tasks:
-    -   `after_translate/` - Post-translation processing
-    -   `copy_data/` - Copy data between databases
-    -   `mdcount/` - Count references and words
--   **`wprefs/`** - Wiki preferences and text replacement utilities
+- **`copy_text/`** - Copies wiki text to HTML segments for the MDWiki website
+- **`copy_to_en/`** - Copies content to English Wikipedia
+- **`md_core/`** - Core MDWiki operations:
+    - `add_rtt/` - Add reference columns to tables
+    - `mdpy/` - General MDWiki Python utilities
+    - `stats/` - Statistics generation
+- **`newupdater/`** - Updates drugbox/chembox infoboxes and moves sections
+- **`td_core/`** - Translation-related tasks:
+    - `after_translate/` - Post-translation processing
+    - `copy_data/` - Copy data between databases
+    - `mdcount/` - Count references and words
+- **`wprefs/`** - Wiki preferences and text replacement utilities
 
 ## Important Patterns
 
@@ -82,8 +80,10 @@ Each module contains bot scripts in `bots/` subdirectories:
 
 ```python
 from mdwiki_api.wiki_page import MainPage, NewApi
+
 # For MDWiki
 from mdwiki_api.mdwiki_page import NewApi, md_MainPage
+
 # High-level helpers
 from apis import wiki_api, mdwiki_api, wikidataapi
 ```
@@ -92,6 +92,7 @@ from apis import wiki_api, mdwiki_api, wikidataapi
 
 ```python
 from mdapi_sql import sql_for_mdwiki
+
 # Execute queries
 result = sql_for_mdwiki.mdwiki_sql(query, return_dict=True)
 ```
@@ -102,7 +103,7 @@ Tests are consolidated in the top-level `tests/` directory. The test configurati
 
 ## Configuration
 
--   **Python version**: 3.13 (configured in pyproject.toml)
--   **Line length**: 120 characters
--   **Target platforms**: Runs on Toolforge (Toolforge) and locally on Windows
--   **Credentials**: Stored externally, accessed via environment or user account modules
+- **Python version**: 3.13 (configured in pyproject.toml)
+- **Line length**: 120 characters
+- **Target platforms**: Runs on Toolforge (Toolforge) and locally on Windows
+- **Credentials**: Stored externally, accessed via environment or user account modules

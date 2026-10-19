@@ -1,0 +1,139 @@
+#!/usr/bin/python3
+"""
+
+from md_core_helps.apis.wd_bots.wikidataapi_post import log_to_wiki, post_it
+
+"""
+
+import functools
+import logging
+import sys
+from urllib.parse import urlencode
+
+import requests
+from md_core_helps.apis.user_accounts import password, username
+
+logger = logging.getLogger(__name__)
+
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+
+SS = {"ss": requests.Session(), "r3_token": ""}
+
+login_not_done = {1: True}
+
+
+@functools.lru_cache(maxsize=1000)
+def get_session() -> requests.Session:
+    return requests.Session()
+
+
+def do_request(params: dict | None = None, method: str = "POST"):
+    # ---
+    url = "https://www.wikidata.org/w/api.php"
+    # ---
+    args = {
+        "headers": {"User-Agent": user_agent},
+        "timeout": 10,
+    }
+    # ---
+    params = params or {}
+    # ---
+    if method == "POST":
+        args["data"] = params
+    else:
+        args["params"] = params
+    # ---
+    params_str = urlencode(params)
+    # ---
+    unurl = f"{url}?{params_str}"
+    # ---
+    if "printurl" in sys.argv:
+        logger.info(f":\t\t{unurl}")
+    # ---
+    session = get_session()
+    # ---
+    try:
+        r4 = session.request(method, url, **args)
+        status = r4.status_code
+        # ---
+        if status != 200:
+            logger.error(f"<<red>> wikidataapi.py: post error status: {str(status)}")
+            return {}
+        # ---
+        return r4.json()
+
+    except Exception:
+        logger.exception("Exception:", exc_info=True)
+        return {}
+
+
+def get_token(mk_new: bool = False) -> str:
+    # get edit token
+    # ---
+    if SS["r3_token"] and not mk_new:
+        return SS["r3_token"]  # type: ignore
+    # ---
+    params = {"format": "json", "action": "query", "meta": "tokens"}
+    # ---
+    result = do_request(params=params)
+    # ---
+    r3_token = result.get("query", {}).get("tokens", {}).get("csrftoken")
+    # ---
+    SS["r3_token"] = r3_token
+    # ---
+    return r3_token
+
+
+def log_to_wiki(url: str = ""):
+    # ---
+    if not login_not_done[1]:
+        return ""
+    # ---
+    r1_params = {"format": "json", "action": "query", "meta": "tokens", "type": "login"}
+    # ---
+    r2_params = {"format": "json", "action": "login", "lgname": username, "lgpassword": password}
+    # ---
+    if not url:
+        url = "https://www.wikidata.org/w/api.php"
+    # ---
+    logger.info(f"wikidataapi.py: log to {url} user:{r2_params['lgname']}")
+    # ---
+    session = get_session()
+    # ---
+    try:
+        r11 = session.get(url, params=r1_params, headers={"User-Agent": user_agent}, timeout=10)
+        # ---
+        r11.raise_for_status()
+        r2_params["lgtoken"] = r11.json()["query"]["tokens"]["logintoken"]
+        r22 = session.post(url, data=r2_params, headers={"User-Agent": user_agent}, timeout=10)
+    except Exception:
+        logger.exception("wikidataapi.py: Can't log in . ")
+        return False
+    # ---
+    if r22.json().get("login", {}).get("result", "") != "Success":
+        logger.info(r22.json()["login"]["reason"])
+    else:
+        logger.info("wikidataapi.py login Success")
+    # ---
+    get_token(mk_new=True)
+    # ---
+    login_not_done[1] = False
+
+
+def post_it(params: dict | None = None, url=None, token: bool = True, method: str = "POST"):
+    # ---
+    params = params or {}
+    # ---
+    log_to_wiki()
+    # ---
+    if token:
+        params["token"] = get_token()
+    # ---
+    params["format"] = "json"
+    # ---
+    if method not in ["POST", "GET"]:
+        method = "POST"
+    # ---
+    jsone = do_request(params=params, method=method)
+    # ---
+    return jsone

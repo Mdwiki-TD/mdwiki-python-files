@@ -61,10 +61,12 @@ def get_full_translate():
 def get_qids():
     return sql_qids.get_all_qids()
 
+
 @functools.lru_cache(maxsize=1)
 def get_qids_already():
     qids = get_qids()
     return {q: title for title, q in qids.items() if q != ""}
+
 
 @functools.lru_cache(maxsize=1)
 def get_noqids():

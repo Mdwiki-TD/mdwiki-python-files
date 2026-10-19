@@ -59,10 +59,10 @@ import os
 from configparser import ConfigParser
 
 config = ConfigParser()
-config.read(os.path.expanduser('~/.config/mdwiki/credentials.ini'))
+config.read(os.path.expanduser("~/.config/mdwiki/credentials.ini"))
 
-username = os.getenv('MDWIKI_USERNAME', config.get('mdwiki', 'username', fallback=''))
-password = os.getenv('MDWIKI_PASSWORD', config.get('mdwiki', 'password', fallback=''))
+username = os.getenv("MDWIKI_USERNAME", config.get("mdwiki", "username", fallback=""))
+password = os.getenv("MDWIKI_PASSWORD", config.get("mdwiki", "password", fallback=""))
 ```
 
 ---
@@ -411,6 +411,7 @@ class BotState:
             password=User_tables["password"],
         )
 
+
     main_api = load_main_api()  # Instantiated at import time
     ```
 
@@ -633,8 +634,10 @@ except (UnicodeDecodeError, AttributeError) as e:
     # UNSAFE FOR MULTIPROCESSING
     done_pages = {1: 0}  # Shared state
 
+
     def __init__(self, title):
         done_pages[1] += 1  # Not atomic, race condition in Pool
+
 
     if "multi" in sys.argv:
         pool = Pool(processes=2)
@@ -651,12 +654,14 @@ except (UnicodeDecodeError, AttributeError) as e:
 # SAFER
 from multiprocessing import Manager, Pool
 
+
 def init_worker(counter):
     global done_counter
     done_counter = counter
 
+
 with Manager() as manager:
-    counter = manager.Value('i', 0)
+    counter = manager.Value("i", 0)
     with Pool(processes=2, initializer=init_worker, initargs=(counter,)) as pool:
         pool.map(one_page_new, all_pages)
 ```

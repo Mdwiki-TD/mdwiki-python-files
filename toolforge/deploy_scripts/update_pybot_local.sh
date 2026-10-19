@@ -10,7 +10,7 @@ if [ -z "$REPO_TMP_DIR" ]; then
     exit 1
 fi
 
-export SUB_DIR_COPY="src"
+export SUB_DIR_COPY="src/pybot"
 export CLEAN_INSTALL=0
 
 # Optional clean of jsons files before copy to avoid issues with old jsons files
@@ -24,6 +24,8 @@ export COMPILE_PYTHON_FILES=1
 export COPY_TO_TARGET=""
 
 TARGET_DIR="pybot"
+
+export REPO_NAME="pybot"
 
 # Execute the local deployment script directly without cloning from GitHub
 # We copy the script to ~/deploy_scripts/ first from the github action workflow, then call it

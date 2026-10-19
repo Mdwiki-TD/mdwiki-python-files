@@ -10,8 +10,8 @@ except Exception as e:
     print(e)
 
 user_script_paths = [
-    "I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/",
-    "I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/pybot/src/",
+    "I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/pybot/src",
+    "I:/MD_TOOLS/mdwiki.toolforge.org/PYTHON_REPOS/pybot/src/pybot",
 ]
 
 if os.getenv("APP_ENV") == "production":
