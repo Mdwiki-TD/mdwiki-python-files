@@ -9,7 +9,7 @@ import json
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import to_sql
+from db.utils.to_sql_1 import to_sql
 
 logger = logging.getLogger(__name__)
 

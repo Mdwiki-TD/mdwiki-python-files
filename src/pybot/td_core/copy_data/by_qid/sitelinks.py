@@ -74,6 +74,10 @@ def start_to_sql(data) -> None:
     # ---
     columns = ["qid", "code", "target"]
     # ---
+    que = """select DISTINCT qid, code, target from all_qids_exists;"""
+    # ---
+    db_data_main = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
     logger.info(f"<<yellow>> new_data_all: {len(new_data_all)}.")
     # ---
     if new_data_all:

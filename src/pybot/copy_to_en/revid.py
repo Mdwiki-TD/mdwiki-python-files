@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import to_sql
+from db.utils.to_sql_1 import to_sql
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
 

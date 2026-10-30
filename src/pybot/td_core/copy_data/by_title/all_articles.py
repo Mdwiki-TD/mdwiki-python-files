@@ -82,7 +82,11 @@ def add_category_members_to_sql(to_add_category_members) -> None:
         logger.info(f"Category:{category}: {len(titles_from_mdwiki)=}, {len(cats_in_db)=}")
         data2.extend(not_in)
     # ---
-    insert_dict(data2, "category_members", ["article_id", "category"])
+    insert_dict(
+        data2,
+        "category_members",
+        ["article_id", "category"],
+    )
 
 
 def test() -> None:

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-python3 c9/pwb.py td_core/copy_data/sitelinks
+python c9/pwb.py td_core/copy_data/by_qid/sitelinks_full.py
 
 """
 
@@ -10,14 +10,52 @@ import logging
 from collections import defaultdict
 from typing import Any
 
+import requests
 import tqdm
-from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
-from db.utils.to_sql import new_to_sql
-from md_core_helps.apis.wd_bots.wikidataapi_post import log_to_wiki, post_it
+from db.mdapi_sql.sql_td_bot import tf_sql_connect_dict
+from td_core.copy_data.by_qid.sitelinks_to_sql import new_to_sql
 
 logger = logging.getLogger(__name__)
 
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
+
+user_agent = "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)"
+
+
+def get_all_qids() -> dict[str, str]:
+    # ---
+    query = "select DISTINCT title, qid from qids;"
+    sq = tf_sql_connect_dict(query)
+    return {ta["title"]: ta["qid"] for ta in sq}
+
+
+def do_request(session, params: dict, method: str = "POST"):
+    # ---
+    url = "https://www.wikidata.org/w/api.php"
+    # ---
+    args = {
+        "headers": {"User-Agent": user_agent},
+        "timeout": 10,
+    }
+    # ---
+    if method == "POST":
+        args["data"] = params
+    else:
+        args["params"] = params
+    # ---
+    try:
+        r4 = session.request(method, url, **args)
+        status = r4.status_code
+        # ---
+        if status != 200:
+            logger.error(f"<<red>> wikidataapi.py: post error status: {str(status)}")
+            return {}
+        # ---
+        return r4.json()
+
+    except Exception:
+        logger.exception("Exception:", exc_info=True)
+        return {}
 
 
 def load_in_sql_qid_targets():
@@ -26,7 +64,7 @@ def load_in_sql_qid_targets():
     # ---
     que = """select DISTINCT qid, code, target from all_qids_exists;"""
     # ---
-    db_data_main = sql_for_mdwiki.mdwiki_sql_dict(que)
+    db_data_main = tf_sql_connect_dict(que)
     # ---
     for q in db_data_main:
         qid = q["qid"]
@@ -66,35 +104,17 @@ def start_to_sql(data) -> None:
         if new_data:
             new_data_all.extend(new_data)
     # ---
-    columns = ["qid", "code", "target"]
-    # ---
     logger.info(f"<<yellow>> new_data_all: {len(new_data_all)}.")
     # ---
     if new_data_all:
-        new_to_sql(
-            new_data_all,
-            "all_qids_exists",
-            columns,
-            in_sql_list=db_data_main,
-            title_columns=["qid", "code"],
-            update_columns=["target"],
-            ignore=True,
-        )
+        new_to_sql(new_data_all)
 
 
 def wbgetentities(qs_list):
     # ---
-    log_to_wiki()
-    # ---
-    params_wd = {
-        "action": "wbgetentities",
-        "format": "json",
-        "redirects": "yes",
-        "props": "sitelinks",
-        "utf8": 1,
-    }
-    # ---
     all_entities = {}
+    # ---
+    session = requests.Session()
     # ---
     logger.info(f" for:{len(qs_list)}:")
     # ---
@@ -104,12 +124,20 @@ def wbgetentities(qs_list):
         # ---
         qids = [x for x in qids if x]
         # ---
+        params_wd = {
+            "action": "wbgetentities",
+            "format": "json",
+            "redirects": "yes",
+            "props": "sitelinks",
+            "utf8": 1,
+        }
+        # ---
         params_wd["ids"] = "|".join(qids)
         # ---
-        # logger.info(f"done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
-        # ---
-        # json1 = wikidataapi.post(params_wd)
-        json1 = post_it(params_wd)
+        json1 = do_request(
+            session=session,
+            params=params_wd,
+        )
         # ---
         if json1:
             # ---
@@ -189,7 +217,7 @@ def main() -> None:
     # ---
     logger.info("<<green>> ")
     # ---
-    qids_tab = sql_qids.get_all_qids()
+    qids_tab = get_all_qids()
     # ---
     qids = list(qids_tab.values())
     qids = list(set(qids))
