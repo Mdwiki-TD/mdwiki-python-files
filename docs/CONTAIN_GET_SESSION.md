@@ -42,7 +42,7 @@ raw `text()` queries:
 | 18  | `td_core/db_work/days_7.py`                             | `pages` SELECT/UPDATE                     |
 | 19  | `td_core/db_work/check_titles.py`                       | `pages` + `pages_users` SELECT            |
 | 20  | `td_core/fix_user_pages/bot.py`                         | `pages_users_to_main` SELECT              |
-| 21  | `td_core/fix_user_pages/del_records.py`                         | `pages_users_to_main` DEL                 |
+| 21  | `td_core/fix_user_pages/del_records.py`                 | `pages_users_to_main` DEL                 |
 | 22  | `td_core/fix_user_pages/fix_it_db.py`                   | `words` SELECT + `pages` INSERT/DEL       |
 | 23  | `td_core/fix_user_pages/fix_it_db_new.py`               | `pages_users_to_main` INSERT              |
 | 24  | `td_core/after_translate/bots/fixcat.py`                | `pages` UPDATE                            |
@@ -93,10 +93,10 @@ accessors to each existing analytics service.
 
 **Better approach — add convenience functions per service:**
 
--   `word_service.fetch_all_as_dicts()` → `dict[str, dict]`
--   `refs_count_service.fetch_all_as_dicts()` → `dict[str, dict]`
--   `enwiki_pageview_service.fetch_all_as_dicts()` → `dict[str, dict]`
--   `assessment_service.fetch_all_as_dicts()` → `dict[str, dict]`
+- `word_service.fetch_all_as_dicts()` → `dict[str, dict]`
+- `refs_count_service.fetch_all_as_dicts()` → `dict[str, dict]`
+- `enwiki_pageview_service.fetch_all_as_dicts()` → `dict[str, dict]`
+- `assessment_service.fetch_all_as_dicts()` → `dict[str, dict]`
 
 ### 1.2 Extend `views_new_service`
 
@@ -117,7 +117,7 @@ with get_session() as session:
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `fix_it_db.py`             | `SELECT w_title, w_lead_words, w_all_words FROM words` + `INSERT INTO pages` + `SELECT from pages` + `DELETE FROM pages_users` |
 | `fix_it_db_new.py`         | `INSERT INTO pages_users_to_main` + `SELECT from pages_users_to_main`                                                          |
-| `del_records.py`                   | `SELECT from pages_users_to_main` + `DELETE FROM pages_users_to_main` + `DELETE FROM pages_users`                              |
+| `del_records.py`           | `SELECT from pages_users_to_main` + `DELETE FROM pages_users_to_main` + `DELETE FROM pages_users`                              |
 | `add_to_pages_users_db.py` | `SELECT from pages_users` + `SELECT from pages`                                                                                |
 | `add_to_mdwiki.py`         | `SELECT from pages`                                                                                                            |
 | `get_pages.py`             | `SELECT from pages` + `SELECT from pages_users`                                                                                |
@@ -127,10 +127,10 @@ with get_session() as session:
 
 **Action:** Add missing query methods:
 
--   `page_service.fetch_pages_by_conditions(lang, cat, deleted, ...)` → `list[PageRecord]`
--   `page_service.fetch_titles_targets(lang)` → `list[tuple[str, str]]`
--   `user_page_service.delete_by_ids(ids: list[int])`
--   `pages_users_to_main_service.delete_by_ids(ids: list[int])`
+- `page_service.fetch_pages_by_conditions(lang, cat, deleted, ...)` → `list[PageRecord]`
+- `page_service.fetch_titles_targets(lang)` → `list[tuple[str, str]]`
+- `user_page_service.delete_by_ids(ids: list[int])`
+- `pages_users_to_main_service.delete_by_ids(ids: list[int])`
 
 ### 1.4 Extend `qid_service` / `qid_others_service`
 

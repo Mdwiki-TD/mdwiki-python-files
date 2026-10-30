@@ -24,23 +24,26 @@ logger = logging.getLogger(__name__)
 
 # ---
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
-# ---
-mis_qids = []
-in_sql_qid_targets = defaultdict(dict)
-# ---
-que = """select DISTINCT qid, code, target from all_qids_exists;"""
-# ---
-db_data_main = sql_for_mdwiki.mdwiki_sql_dict(que)
-# ---
-for q in db_data_main:
-    qid = q["qid"]
-    target = q["target"]
-    lang = q["code"]
-    # ----
-    if target and lang:
-        in_sql_qid_targets[qid][lang] = target
 
-logger.info(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
+
+def load_in_sql_qid_targets():
+    # ---
+    in_sql_qid_targets = defaultdict(dict)
+    # ---
+    que = """select DISTINCT qid, code, target from all_qids_exists;"""
+    # ---
+    db_data_main = sql_for_mdwiki.mdwiki_sql_dict(que)
+    # ---
+    for q in db_data_main:
+        qid = q["qid"]
+        target = q["target"]
+        lang = q["code"]
+        # ----
+        if target and lang:
+            in_sql_qid_targets[qid][lang] = target
+
+    logger.info(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
+    return in_sql_qid_targets
 
 
 def start_to_sql(data) -> None:
@@ -51,6 +54,7 @@ def start_to_sql(data) -> None:
     data = {q: v["sitelinks"] for q, v in data.items()}
     # ---
     new_data_all = []
+    in_sql_qid_targets = load_in_sql_qid_targets()
     # ---
     # for qid, codes in data.items():
     for qid, sitelinks in data.items():
@@ -137,6 +141,7 @@ def wbgetentities(qs_list):
 
 def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
     # ---
+    mis_qids = []
     qids_to_mdtitle = qids_to_mdtitle or {}
     # ---
     all_entities = wbgetentities(qs_list)
