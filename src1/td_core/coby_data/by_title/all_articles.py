@@ -6,13 +6,78 @@ python3 c9/pwb.py td_core/copy_data/by_title/all_articles
 """
 
 import logging
-import sys
+from typing import Any
 
-from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import insert_dict
+from db.mdapi_sql.sql_td_bot import tf_sql_connect_dict
 from mdwiki_api.mdwiki_page import CatDepth
 
 logger = logging.getLogger(__name__)
+
+
+def insert_dict(
+    list_of_lines,
+    table_name: str,
+    columns,
+    lento: int = 10,
+) -> None:
+
+    logger.info(f"insert dict({table_name}): list_of_lines: {len(list_of_lines)}")
+
+    if not list_of_lines:
+        return
+
+    done = 0
+
+    # co_line = "title, importance"
+    co_line = ", ".join(columns)
+    values_line = ", ".join(["%s"] * len(columns))
+
+    for i in range(0, len(list_of_lines), lento):
+        tab = list_of_lines[i : i + lento]
+
+        values = []
+
+        for vav in tab:
+            values_k = [vav.get(x, "") for x in columns]
+
+            values_2 = []
+
+            for value in values_k:
+                # value = escape_string(value) if isinstance(value, str) else value
+
+                values_2.append(value)
+
+            values_2 = tuple(values_2)
+
+            values.append(values_2)
+
+        qua = f"""
+            INSERT INTO {table_name} ({co_line})
+            values ({values_line})
+            """
+
+        tf_sql_connect_dict(qua, values=values, many=True)
+
+        done += len(tab)
+
+        logger.info(f"to_sql.py insert dict({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
+
+
+def get_db_category_members() -> dict[str, list]:
+    data: dict[str, list] = {}
+    sql_result = tf_sql_connect_dict("select category, article_id from category_members;")
+
+    for line in sql_result:
+        if line["category"] not in data:
+            data[line["category"]] = []
+        data[line["category"]].append(line["article_id"])
+
+    return data
+
+
+def get_db_categories() -> dict[str, Any]:
+    result = tf_sql_connect_dict("select category, depth from categories;")
+    return {c["category"]: c["depth"] for c in result}
 
 
 def main() -> None:
@@ -21,7 +86,7 @@ def main() -> None:
     # ---
     length = {}
     # ---
-    cats = sql_for_mdwiki.get_db_categories()
+    cats = get_db_categories()
     # ---
     if "RTT" in cats:
         del cats["RTT"]
@@ -69,7 +134,7 @@ def add_category_members_to_sql(to_add_category_members) -> None:
     # ---
     data2 = []
     # ---
-    db_category_members = sql_for_mdwiki.get_db_category_members()
+    db_category_members = get_db_category_members()
     # ---
     for category, titles_from_mdwiki in to_add_category_members.items():
         # ---
@@ -89,18 +154,6 @@ def add_category_members_to_sql(to_add_category_members) -> None:
     )
 
 
-def test() -> None:
-    # python3 c9/pwb.py td_core/copy_data/all_articles test
-    # ---
-    to_add_category_members = {"RTT": ["Asbestosis", "Zoster vaccine"]}
-    # ---
-    add_category_members_to_sql(to_add_category_members)
-
-
 if __name__ == "__main__":
-    # ---
-    if "test" in sys.argv:
-        test()
-        exit()
     # ---
     main()
