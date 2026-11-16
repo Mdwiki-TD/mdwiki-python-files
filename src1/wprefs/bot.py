@@ -18,7 +18,7 @@ import logging
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from wprefs.api import getpagetext_raw, missingtitles, page_put
+from pybot.wprefs.wprefs_api import getpagetext_raw, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
 

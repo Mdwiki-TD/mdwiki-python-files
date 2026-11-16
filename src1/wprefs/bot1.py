@@ -19,7 +19,7 @@ import random
 import sys
 from pathlib import Path
 
-from wprefs.api import get_page_text  # , page_put
+from pybot.wprefs.wprefs_api import get_page_text  # , page_put
 from wprefs.files import save_wprefcash, setting
 from wprefs.helps import ec_de_code
 
