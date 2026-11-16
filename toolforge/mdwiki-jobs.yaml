@@ -136,10 +136,3 @@
   schedule: "0 22 1 * *"
   image: python3.13
   emails: none
-
-# 1st of each month at 23:00
-- name: upstats
-  command: "python3 c9/pwb.py md_core/updates/medicine_articles"
-  schedule: "0 23 1 * *"
-  image: python3.13
-  emails: none

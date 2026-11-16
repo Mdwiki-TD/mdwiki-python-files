@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
-
 python3 c9/pwb.py md_core/updates/medicine_articles
 
+REPLACED BY medicine_articles/worker.py
 """
 
 import datetime
