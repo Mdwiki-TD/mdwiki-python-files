@@ -3,31 +3,31 @@
 
 # ===== qids jobs (sequential, every 30 minutes) =====
 - name: qids1
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/td_other_qids/make_list all add"
+  command: "python3 c9/pwb.py td_core/td_other_qids/make_list all add"
   schedule: "1 0 * * *"
   image: python3.13
   emails: none
 
 - name: qids-redirects
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/mdpages/find_qids redirects add && $HOME/local/bin/python3 c9/pwb.py td_core/db_work/get_red"
+  command: "python3 c9/pwb.py td_core/mdpages/find_qids redirects add && python3 c9/pwb.py td_core/db_work/get_red"
   schedule: "31 0 * * *"
   image: python3.13
   emails: none
 
 - name: fix-qids
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/td_other_qids/fix_qids fix all"
+  command: "python3 c9/pwb.py td_core/td_other_qids/fix_qids fix all"
   schedule: "1 1 * * *"
   image: python3.13
   emails: none
 
 - name: qids-p11143-bot
-  command: "$HOME/local/bin/python3 c9/pwb.py md_core/p11143_bot/bot all add addq"
+  command: "python3 c9/pwb.py md_core/p11143_bot/bot all add addq"
   schedule: "31 1 * * *"
   image: python3.13
   emails: none
 
 - name: qids-unlinked-wb
-  command: "$HOME/local/bin/python3 c9/pwb.py md_core/unlinked_wb/bot"
+  command: "python3 c9/pwb.py md_core/unlinked_wb/bot"
   schedule: "1 2 * * *"
   image: python3.13
   emails: none
@@ -44,42 +44,42 @@
 
 # daily at 04:30
 - name: countref
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref newpages && $HOME/local/bin/python3 c9/pwb.py td_core/mdcount/countref sql"
+  command: "python3 c9/pwb.py td_core/mdcount/countref newpages && python3 c9/pwb.py td_core/mdcount/countref sql"
   schedule: "30 4 * * *"
   image: python3.13
   emails: none
 
 # daily at 05:45
 - name: countwords
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/mdcount/words newpages"
+  command: "python3 c9/pwb.py td_core/mdcount/words newpages"
   schedule: "45 5 * * *"
   image: python3.13
   emails: none
 
 # make views - daily at 07:00
 - name: views1
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/sqlviews_new"
+  command: "python3 c9/pwb.py td_core/mdpyget/sqlviews_new"
   schedule: "0 7 * * *"
   image: python3.13
   emails: none
 
 # important - daily at 08:20
 - name: getas
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/getas"
+  command: "python3 c9/pwb.py td_core/mdpyget/getas"
   schedule: "20 8 * * *"
   image: python3.13
   emails: none
 
 # daily at 10:00
 - name: cach-jobs2
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/db_work/check_titles && $HOME/local/bin/python3 c9/pwb.py td_core/wd_works/recheck"
+  command: "python3 c9/pwb.py td_core/db_work/check_titles && python3 c9/pwb.py td_core/wd_works/recheck"
   schedule: "0 10 * * *"
   image: python3.13
   emails: none
 
 # daily at 12:30
 - name: fixusers
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/fix_user_pages/bot"
+  command: "python3 c9/pwb.py td_core/fix_user_pages/bot"
   schedule: "30 12 * * *"
   image: python3.13
   emails: none
@@ -93,7 +93,7 @@
 
 # find old pages - daily at 16:00
 - name: updates
-  command: "$HOME/local/bin/python3 c9/pwb.py md_core/updates/io && $HOME/local/bin/python3 c9/pwb.py md_core/updates/listo"
+  command: "python3 c9/pwb.py md_core/updates/io && python3 c9/pwb.py md_core/updates/listo"
   schedule: "0 16 * * *"
   image: python3.13
   emails: none
@@ -102,21 +102,21 @@
 
 # Monday at 18:00
 - name: medwiki
-  command: "$HOME/local/bin/python3 c9/pwb.py copy_to_en/revid"
+  command: "python3 c9/pwb.py copy_to_en/revid"
   schedule: "0 18 * * 1"
   image: python3.13
   emails: none
 
 # Monday at 20:00
 - name: days7
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/db_work/days_7"
+  command: "python3 c9/pwb.py td_core/db_work/days_7"
   schedule: "0 20 * * 1"
   image: python3.13
   emails: none
 
 # Wednesday at 19:00
 - name: enpv
-  command: "$HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/enwiki_views"
+  command: "python3 c9/pwb.py td_core/mdpyget/enwiki_views"
   schedule: "0 19 * * 3"
   image: python3.13
   emails: none
@@ -132,14 +132,14 @@
 
 # 1st of each month at 22:00
 - name: cach-jobs1
-  command: "$HOME/local/bin/python3 c9/pwb.py md_core_helps/apis/cat_cach && $HOME/local/bin/python3 c9/pwb.py td_core/copy_data/by_title/all_articles"
+  command: "python3 c9/pwb.py md_core_helps/apis/cat_cach && python3 c9/pwb.py td_core/copy_data/by_title/all_articles"
   schedule: "0 22 1 * *"
   image: python3.13
   emails: none
 
 # 1st of each month at 23:00
 - name: upstats
-  command: "$HOME/local/bin/python3 c9/pwb.py md_core/updates/medicine_articles"
+  command: "python3 c9/pwb.py md_core/updates/medicine_articles"
   schedule: "0 23 1 * *"
   image: python3.13
   emails: none
