@@ -133,3 +133,11 @@ def fix_page(
         newtext = fix_es(newtext, title)
 
     return newtext
+
+
+__all__ = [
+    "add_lang_en",
+    "remove_false_code",
+    "move_dots_text",
+    "fix_page",
+]

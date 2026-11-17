@@ -158,3 +158,9 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
 
 def work_not_pages() -> None:
     not_pages(titles_not_0)
+
+
+__all__ = [
+    "start",
+    "work_not_pages",
+]

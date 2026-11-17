@@ -38,3 +38,8 @@ def not_pages(lista) -> None:
 
             logger.info(f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")
 
+
+
+__all__ = [
+    "not_pages",
+]

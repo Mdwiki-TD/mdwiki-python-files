@@ -25,3 +25,8 @@ def remove_in_db_elements(qids_x, list_1, list_2):
     logger.info(f" new len: {len(n_qids):,}")
 
     return n_qids
+
+
+__all__ = [
+    "remove_in_db_elements",
+]

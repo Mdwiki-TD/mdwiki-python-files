@@ -30,3 +30,8 @@ def get_links_from_cats(getcat: str = ""):
         titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
 
     return titles
+
+
+__all__ = [
+    "get_links_from_cats",
+]

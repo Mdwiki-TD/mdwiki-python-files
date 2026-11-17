@@ -125,3 +125,8 @@ if "test" in sys.argv:
 else:
     mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
 
+
+
+__all__ = [
+    "get_timestamp",
+]

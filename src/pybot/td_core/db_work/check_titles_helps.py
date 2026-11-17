@@ -76,3 +76,11 @@ def users_infos(lang, users):
 
 def wikipage(title, lang, family: str = "wikipedia"):
     return mainpage(title, lang, family=family)
+
+
+__all__ = [
+    "get_new_target_log",
+    "find_pages_exists",
+    "users_infos",
+    "wikipage",
+]

@@ -138,3 +138,10 @@ def get_new_user(new_target, lang, user):
     # logger.info(f"get_new_user: {user=}, {revisions=}")
 
     return ""
+
+
+__all__ = [
+    "count_users",
+    "filter_revisions",
+    "get_new_user",
+]

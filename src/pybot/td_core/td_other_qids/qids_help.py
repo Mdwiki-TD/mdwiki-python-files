@@ -224,3 +224,13 @@ def get_o_qids_new(o_qids, t_qids_in):
             logger.info(f"\t x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")
 
     return o_qids_new
+
+
+__all__ = [
+    "load_td_list",
+    "load_all_pages",
+    "get_pages_to_work",
+    "dump_jsons",
+    "check_qids",
+    "get_o_qids_new",
+]

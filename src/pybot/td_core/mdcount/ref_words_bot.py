@@ -144,3 +144,15 @@ def get_jsons(file_all, file_lead, ty):
     all_data = {k: all_data[k] for k in sorted(all_data)}
 
     return all_data, lead_data
+
+
+__all__ = [
+    "get_table_and_columns",
+    "do_to_sql",
+    "make_old_values",
+    "logaa",
+    "check_it",
+    "get_data",
+    "get_jsons_new",
+    "get_jsons",
+]

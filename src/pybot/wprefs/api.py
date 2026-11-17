@@ -338,3 +338,14 @@ def page_put(oldtext, new_text, summary, title, lang):
             ggg.write(new_text)
 
     return False
+
+
+__all__ = [
+    "log",
+    "gettoken",
+    "submit_api",
+    "get_revisions",
+    "get_page_text",
+    "getpagetext_raw",
+    "page_put",
+]

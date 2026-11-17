@@ -136,3 +136,8 @@ class PriorAddOld:
 pao = PriorAddOld()
 pao.run()
 
+
+
+__all__ = [
+    "PriorAddOld",
+]

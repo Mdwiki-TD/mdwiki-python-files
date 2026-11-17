@@ -230,3 +230,10 @@ def fix_es(text: str, title):
     newtext = mv_es_refs(newtext)
 
     return newtext
+
+
+__all__ = [
+    "fix_temps",
+    "add_lang_en",
+    "fix_es",
+]

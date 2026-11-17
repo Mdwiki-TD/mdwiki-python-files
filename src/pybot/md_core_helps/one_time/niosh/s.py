@@ -94,3 +94,8 @@ for filename in os.listdir(Dird):
 
 with open(cite_file, "w", encoding="utf-8") as gg:
     json.dump(cite_all_links, gg, ensure_ascii=False, indent=2)
+
+
+__all__ = [
+    "work_in_file",
+]

@@ -48,3 +48,9 @@ def wikiblame(table) -> None:
     url = f"{endpoint}?{urllib.parse.urlencode(params)}"
 
     html = get_url(url)
+
+
+__all__ = [
+    "get_url",
+    "wikiblame",
+]

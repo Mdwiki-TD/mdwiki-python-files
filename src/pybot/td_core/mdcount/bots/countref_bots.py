@@ -60,3 +60,10 @@ def count_ref_from_text(text: str, get_short: bool = False):
     ref_list.extend(refs)
 
     return len(ref_list)
+
+
+__all__ = [
+    "get_refs_new",
+    "get_short_refs",
+    "count_ref_from_text",
+]

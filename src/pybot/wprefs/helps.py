@@ -30,3 +30,10 @@ def exepts() -> None:
         logger.error("Traceback (most recent call last):")
         logger.error(traceback.format_exc())
         logger.error("CRITICAL:")
+
+
+__all__ = [
+    "print_s",
+    "ec_de_code",
+    "exepts",
+]

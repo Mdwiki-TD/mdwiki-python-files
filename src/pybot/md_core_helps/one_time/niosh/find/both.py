@@ -71,3 +71,8 @@ for x, le in aa.items():
 
 
 do_all()
+
+
+__all__ = [
+    "do_all",
+]

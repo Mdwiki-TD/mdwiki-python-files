@@ -113,3 +113,11 @@ def add_to_mdwiki_sql(lange, tab, to_updatex) -> None:
     add_to_pages_db(lange, ns0_pages, to_updatex)
 
     add_to_mdwiki_sql_users(ns2_pages)
+
+
+__all__ = [
+    "add_new_row",
+    "update_row_new",
+    "add_to_pages_db",
+    "add_to_mdwiki_sql",
+]

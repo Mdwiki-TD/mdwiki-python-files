@@ -88,3 +88,8 @@ for filename in os.listdir(project_js_newen):
 
         work_in_jsfile(filename2)
 
+
+
+__all__ = [
+    "work_in_jsfile",
+]

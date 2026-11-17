@@ -162,3 +162,10 @@ write_to_mdwiki(by_title_all, "all")
 
 write_main()
 
+
+
+__all__ = [
+    "write_main",
+    "write_to_mdwiki",
+    "run",
+]

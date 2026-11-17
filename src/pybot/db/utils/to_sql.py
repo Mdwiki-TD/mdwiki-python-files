@@ -260,3 +260,12 @@ def new_to_sql(
         update_table_2(
             new_data_update, table_name, columns_to_set=update_columns, lento=100, columns_where=title_columns
         )
+
+
+__all__ = [
+    "insert_dict",
+    "update_table",
+    "update_table_2",
+    "to_sql",
+    "new_to_sql",
+]

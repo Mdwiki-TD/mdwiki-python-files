@@ -495,3 +495,11 @@ class GetOld:
 
             if contents == "" and new_co != "":
                 self.section0 = self.section0.replace(str(x), new_co)
+
+
+__all__ = [
+    "WorkOneLang",
+    "GetOld",
+    "url_parser",
+    "filter_urls",
+]

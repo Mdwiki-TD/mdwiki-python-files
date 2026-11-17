@@ -121,3 +121,10 @@ def work_all(translators_all) -> None:
 
 
 
+
+
+__all__ = [
+    "make_by_lang",
+    "sect_text",
+    "work_all",
+]

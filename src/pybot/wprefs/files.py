@@ -83,3 +83,10 @@ def save_wprefcash(title, newtext):
             gf.write(newtext)
 
     return filename
+
+
+__all__ = [
+    "make_ref_done_list",
+    "append_reffixed_file",
+    "save_wprefcash",
+]

@@ -44,3 +44,8 @@ def get_ar_results():
 
 
     return editors
+
+
+__all__ = [
+    "get_ar_results",
+]

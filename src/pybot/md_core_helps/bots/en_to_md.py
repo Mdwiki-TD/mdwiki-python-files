@@ -49,3 +49,8 @@ def make_mdwiki_list() -> None:
 
 
 make_mdwiki_list()
+
+
+__all__ = [
+    "make_mdwiki_list",
+]

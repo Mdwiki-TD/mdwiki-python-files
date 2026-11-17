@@ -446,3 +446,12 @@ def make_text(allo, ttt: str = ""):
 
 
 
+
+
+__all__ = [
+    "match_p",
+    "get_t_sections",
+    "make_color",
+    "log_all_pages_states",
+    "make_text",
+]

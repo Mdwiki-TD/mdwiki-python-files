@@ -125,3 +125,9 @@ def expend_infobox(text: str, title, section_0) -> str:
             newtext = newtext.replace(f"{new_temp}'''", f"{new_temp}\n'''")
 
     return newtext
+
+
+__all__ = [
+    "expend_new",
+    "expend_infobox",
+]
