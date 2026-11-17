@@ -30,7 +30,7 @@ with open(qids_file, "r", encoding="utf-8") as f:
 
 
 def get_en_articles():
-    # ---
+
     query = """
     SELECT p.page_title, pp_value
         FROM page p, categorylinks, page_props, page p2
@@ -43,20 +43,20 @@ def get_en_articles():
         and p.page_title = p2.page_title
         and pp_page = p2.page_id
     """
-    # ---
+
     lang_db = WikiReplicaDB("enwiki")
     result = lang_db.select_safe(query)
     return {x["page_title"]: x["pp_value"] for x in result}
 
 
 def start() -> None:
-    # ---
+
     articles = get_en_articles()
-    # ---
+
     logger.info(f"len articles: {len(articles)}")
-    # ---
+
     qids_list = list(articles.values())
-    # ---
+
     # dump
     with open(qids_file, "w", encoding="utf-8") as f:
         json.dump(qids_list, f, sort_keys=True)

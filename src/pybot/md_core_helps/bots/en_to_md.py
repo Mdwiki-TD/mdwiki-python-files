@@ -24,25 +24,25 @@ logger = logging.getLogger(__name__)
 
 enwiki_to_mdwiki = {}
 mdwiki_to_enwiki = {}
-# ---
+
 mdtitle_to_qid = sql_qids.get_all_qids()
-# ---
+
 lala = ""
 
 
 def make_mdwiki_list() -> None:
-    # ---
+
     ffile = paths.json_files.medwiki_to_enwiki
-    # ---
+
     From_json = {}
-    # ---
+
     # read the file without errors
     try:
         From_json = json.loads(open(ffile, "r", encoding="utf-8-sig").read())
     except Exception as e:
         logger.info(e)
         return
-    # ---
+
     for md, en in From_json.items():
         enwiki_to_mdwiki[en] = md
         mdwiki_to_enwiki[md] = en

@@ -7,10 +7,10 @@ tfj run stats1 --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py md
 
 import json
 
-# ---
+
 import logging
 
-# ---
+
 import os
 
 # import sys
@@ -21,7 +21,7 @@ from md_core_helps.apis import wikidataapi
 
 logger = logging.getLogger(__name__)
 
-# ---
+
 Dir = Path(__file__).parent
 
 # make dir sites
@@ -30,9 +30,9 @@ if not os.path.exists(Dir / "sites"):
 
 
 def get_sitelinks(qs_list, lena: int = 300):
-    # ---
+
     qs_list = list(qs_list)
-    # ---
+
     params_wd = {
         "action": "wbgetentities",
         "format": "json",
@@ -41,51 +41,51 @@ def get_sitelinks(qs_list, lena: int = 300):
         "props": "sitelinks",
         "utf8": 1,
     }
-    # ---
+
     all_entities = {}
-    # ---
+
     for i in range(0, len(qs_list), lena):
-        # ---
+
         qids = qs_list[i : i + lena]
-        # ---
+
         params_wd["ids"] = "|".join(qids)
-        # ---
+
         logger.info(f"<<green>> done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
-        # ---
+
         json1 = wikidataapi.post(params_wd)
-        # ---
+
         if json1:
-            # ---
+
             entities = json1.get("entities", {})
-            # ---
+
             all_entities = {**all_entities, **entities}
-    # ---
+
     sitelinks = {}
-    # ---
+
     for _qid_1, kk in all_entities.items():
-        # ---
+
         # "abwiki": {"site": "abwiki","title": "Обама, Барак","badges": []}
-        # ---
+
         for _, tab in kk.get("sitelinks", {}).items():
-            # ---
+
             title = tab.get("title", "")
             site = tab.get("site", "")
-            # ---
+
             if site not in sitelinks:
                 sitelinks[site] = []
-            # ---
+
             sitelinks[site].append(title)
-    # ---
+
     return sitelinks
 
 
 def start() -> None:
-    # ---
+
     sits = get_sitelinks(qids_list, lena=500)
-    # ---
+
     # dump each site to file
     for site, links in sits.items():
-        # ---
+
         with open(Dir / "sites" / f"{site}.json", "w", encoding="utf-8") as f:
             json.dump(links, f, sort_keys=True)
             logger.info(f"dump <<green>> {site} of {len(links)}")

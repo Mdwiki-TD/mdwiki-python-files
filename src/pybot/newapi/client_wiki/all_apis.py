@@ -65,7 +65,7 @@ class AllAPIS:
         )
 
     def newapi(self, *args, **kwargs) -> bot_api.NewApi:
-        # ---
+
         return bot_api.NewApi(self.login_bot, lang=self.lang, family=self.family)
 
     def _login(self) -> WikiLoginClient:

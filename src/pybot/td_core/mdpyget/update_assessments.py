@@ -2,6 +2,8 @@
 """
 Fetch article importance ratings from English Wikipedia (WikiProject Medicine)
 and store them in the `assessments` table of the mdwiki database.
+
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

@@ -15,11 +15,11 @@ def mdwiki_sql_update(
     values: list | tuple | None = None,
     many: bool = False,
 ) -> None | bool:
-    # ---
+
     if not query:
         logger.info("query == ''")
         return None
-    # ---
+
     return tf_sql_connect_update(
         query=query,
         values=values,
@@ -33,11 +33,11 @@ def mdwiki_sql_dict(
     many: bool = False,
     **kwargs,
 ) -> list[dict[str, Any]]:
-    # ---
+
     if not query:
         logger.info("query == ''")
         return []
-    # ---
+
     result = tf_sql_connect_dict(
         query,
         values=values,
@@ -57,13 +57,13 @@ def get_all_from_table(table_name: str = "enwiki_pageviews") -> list[dict[str, A
 
 def get_all_pages_all_keys(lang: str | None = None, table: str = "pages") -> list[Any]:
     lang_line = ""
-    # ---
+
     if lang:
         lang_line = f' where lang = "{lang}"'
-    # ---
+
     if table not in ["pages", "pages_users"]:
         table = "pages"
-    # ---
+
     qua = f"select DISTINCT * from {table} {lang_line};"
     return mdwiki_sql_dict(qua)
 
@@ -90,44 +90,44 @@ def get_db_users() -> list:
 
 
 def set_target_where_id(new_target, iid) -> None | list[dict[str, Any]]:
-    # ---
+
     logger.info(f"<<yellow>> () new_target:{new_target}, id:{iid}")
-    # ---
+
     if new_target == "" or iid == "":
         return None
-    # ---
+
     query = "UPDATE pages set target = %s where id = %s;"
     values = [new_target, iid]
-    # ---
+
     return mdwiki_sql_dict(query, values=values)
 
 
 def set_deleted_where_id(iid) -> None | list[dict[str, Any]]:
-    # ---
+
     logger.info(f"<<yellow>> (), id:{iid}")
-    # ---
+
     if iid == "":
         return None
-    # ---
+
     query = "UPDATE pages set deleted = 1 where id = %s;"
-    # ---
+
     return mdwiki_sql_dict(query, values=[iid])
 
 
 def insert_to_pages_users_to_main(id, target, user, qid) -> bool:
-    # ---
+
     logger.info(f"<<yellow>> : {id}, {target=}, {user=}, {qid=}")
-    # ---
+
     query = "insert into pages_users_to_main (id, new_target, new_user, new_qid) select %s, %s, %s, %s"
-    # ---
+
     params = [id, target, user, qid]
-    # ---
+
     mdwiki_sql_update(query, values=params)
-    # ---
+
     qua = "select DISTINCT * from pages_users_to_main where id = %s and new_target = %s and new_user = %s and new_qid = %s"
-    # ---
+
     find_it = mdwiki_sql_dict(qua, values=params)
-    # ---
+
     if find_it:
         logger.info("<<green>> TRUE.. ")
         return True
@@ -137,17 +137,17 @@ def insert_to_pages_users_to_main(id, target, user, qid) -> bool:
 
 
 def add_new_to_pages(tab) -> None:
-    # ---
+
     date = time.strftime("%Y-%m-%d")
-    # ---
+
     logger.info("______ \\/\\/\\/ _______")
-    # ---
+
     insert_qua = """
         INSERT INTO pages (title, word, translate_type, cat, lang, user, target, date, pupdate, add_date)
         SELECT %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
         WHERE NOT EXISTS ( SELECT 1 FROM pages WHERE title=%s AND lang=%s AND user=%s );
         """
-    # ---
+
     values = [
         tab.get("title", ""),
         tab.get("word"),
@@ -163,5 +163,5 @@ def add_new_to_pages(tab) -> None:
         tab.get("lang"),
         tab.get("user"),
     ]
-    # ---
+
     mdwiki_sql_update(insert_qua, values=values)

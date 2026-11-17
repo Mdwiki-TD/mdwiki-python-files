@@ -18,36 +18,36 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    # ---
+
     all_pages = cat_cach.from_cache()
-    # ---
+
     for n, x in enumerate(all_pages):
         logger.info(f"{n}/{len(all_pages)} : {x}")
-        # ---
+
         alltext = mdwiki_api_call.GetPageText(x)
-        # ---
+
         if not alltext:
             logger.info("no text: " + x)
             continue
-        # ---
+
         first = alltext.split("==")[0].strip()
-        # ---
+
         first = first + "\n\n==References==\n<references />"
         newtext = first
-        # ---
+
         newtext = fix_ref(first, alltext)
-        # ---
+
         newtext = text_changes.work(newtext)
-        # ---
+
         new_title = "User:Mr. Ibrahem/" + x
-        # ---
+
         page = MainPage(new_title, "simple")
-        # ---
+
         summary = "from https://mdwiki.org/wiki/" + x.replace(" ", "_")
-        # ---
+
         if page.exists():
             _p_t = page.get_text()
-            # ---
+
             page.save(newtext, summary=summary, nocreate=0)
         else:
             logger.info("page not found: " + new_title)

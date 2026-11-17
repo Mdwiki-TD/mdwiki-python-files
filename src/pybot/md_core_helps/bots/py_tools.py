@@ -9,21 +9,21 @@ logger = logging.getLogger(__name__)
 
 def quoteurl(fao):
     endash = False
-    # ---
+
     # url2 = urllib.parse.quote_plus(url)
-    # ---
+
     if fao.find("–") != -1:
         endash = True
         fao = fao.replace("–", "ioioioioio")
-    # ---
+
     try:
         fao = urllib.parse.quote(fao)
     except Exception as e:
         logger.exception("Exception:", exc_info=True)
-    # ---
+
     if endash:
         fao = fao.replace("ioioioioio", "%E2%80%93")
-    # ---
+
     return fao
 
 

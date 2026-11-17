@@ -3,6 +3,7 @@
 
 python3 c9/pwb.py td_core/db_work/days_7
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging
@@ -11,26 +12,26 @@ from db.mdapi_sql.services import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
 
-# ---
+
 queries = {
     "pages": "where date < DATE_SUB(current_timestamp(), INTERVAL 7 DAY) and (target = '' OR target IS NULL)",
     "in_process": "where add_date < DATE_SUB(current_timestamp(), INTERVAL 7 DAY) ",
 }
-# ---
+
 for name, qua in queries.items():
     logger.info(f"--- {name} ---")
-    # ---
+
     qua_select = f"select * from {name} {qua}"
-    # ---
+
     pages = sql_for_mdwiki.mdwiki_sql_dict(qua_select)
-    # ---
+
     for n, page in enumerate(pages, start=1):
         print(name, n, page)
-    # ---
+
     qua_del = f"delete from {name} {qua}"
-    # ---
+
     logger.info(qua_del)
-    # ---
+
     ty = sql_for_mdwiki.mdwiki_sql_update(qua_del)
-    # ---
+
     logger.info(ty)

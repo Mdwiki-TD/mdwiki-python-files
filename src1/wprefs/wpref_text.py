@@ -11,90 +11,90 @@ from wprefs.wpref_text import fix_page
 import re
 import sys
 
-# ---
+
 from wprefs.bots.duplicate import duplicate_references
 from wprefs.bots.fix_pt_months import pt_months
 from wprefs.es import fix_es
 
-# ---
+
 from wprefs.helps import print_s
 from wprefs.infobox import expend_infobox
 
 
 def add_lang_en(text: str, lang: str = ""):
-    # ---
+
     print_s("add_lang_en:")
-    # ---
+
     # Match references
     REFS = re.compile(r"(?is)(?P<pap><ref[^>\/]*>)(?P<ref>.*?<\/ref>)")
-    # ---
+
     for Match in REFS.finditer(text):
         pap = Match.group("pap")
         ref = Match.group("ref")
-        # ---
+
         if not ref.strip():
             continue
-        # ---
+
         if re.sub(r"\|\s*language\s*\=\s*\w+", "", ref) != ref:
             continue
-        # ---
+
         ref2 = re.sub(r"(\|\s*language\s*\=\s*)(\|\}\})", r"\g<1>en\g<2>", ref)
-        # ---
+
         if ref2 == ref:
             ref2 = ref.replace("}}</ref>", "|language=en}}</ref>")
-        # ---
+
         if ref2 != ref:
             text = text.replace(pap + ref, pap + ref2)
-    # ---
+
     return text
 
 
 def remove_false_code(text: str):
-    # ---
+
     if "newcite" not in sys.argv:
         return text
-    # ---
+
     # }}<cite class="citation journal cs1" data-ve-ignore="true" id="CITEREFSmithLopezSilberman2020">Smith, N; Lopez, RA; Silberman, M (January 2020). "Distributive Shock". [[PMID (identifier)|PMID]]&nbsp;[//pubmed.ncbi.nlm.nih.gov/29261964 29261964].</cite><span data-ve-ignore="true"> </span><span class="cs1-hidden-error citation-comment" data-ve-ignore="true"><code class="cs1-code"><nowiki>{{</nowiki>[[Template:cite journal|cite journal]]<nowiki>}}</nowiki></code>: </span><span class="cs1-hidden-error citation-comment" data-ve-ignore="true">Cite journal requires <code class="cs1-code">&#124;journal=</code> ([[Help:CS1 errors#missing_periodical|help]])</span></ref>
-    # ---
+
     # Match references
     REFS = re.compile(r"(?is)(?P<pap><ref[^>\/]*>)(?P<ref>.*?<\/ref>)")
-    # ---
+
     for Match in REFS.finditer(text):
         pap = Match.group("pap")
         ref = Match.group("ref")
         if not ref.strip():
             # logger.info( "\tno ref" )
             continue
-        # ---
+
         # find html code like <cite></cite> and all span code after it
         # find and get html code like <cite></cite>
         if not re.search(r"(?is)<cite[^>]*>", ref):
             # logger.info( "\tno cite" )
             continue
-        # ---
+
         # find and get html code like <cite></cite>
         ref2 = ref
         if ref.find("<span ") != -1:
             ref2 = re.sub(r"(\s*<span[^>]*>.*?<\/span>+?)</ref>", "</ref>", ref2)
         ref2 = re.sub(r"<cite[^>]*>.*?<\/cite>", "", ref2)
-        # ---
+
         if ref2 != ref and ref2.strip() != "</ref>":
             text = text.replace(pap + ref, pap + ref2)
-    # ---
+
     return text
 
 
 def move_dots_text(newtext, lang: str = ""):
-    # ---
+
     dot = r"(\.|\,)"
-    # ---
+
     if lang == "zh":
         dot = "(。)"
-    # ---
+
     regline = r"((?:\s*<ref[\s\S]+?(?:<\/ref|\/)>)+)"
-    # ---
+
     newtext = re.sub(rf"{dot}\s*{regline}", r"\g<2>\g<1>", newtext)
-    # ---
+
     return newtext
 
 
@@ -107,29 +107,29 @@ def fix_page(
     lang: str = "",
     add_en_lang: bool = False,
 ):
-    # ---
+
     print_s(f"fix page: {title}, move_dots:{move_dots}, expend_infobox:{infobox}")
-    # ---
+
     if infobox:
         newtext = expend_infobox(newtext, title, section_0)
-    # ---
+
     newtext = remove_false_code(newtext)
-    # ---
+
     # match and delete any text like {{mdwiki revid|555}}
     newtext = re.sub(r"\{\{mdwiki[ _]revid\s*\|\s*(\d+)\s*\}\}", "", newtext, flags=re.IGNORECASE)
-    # ---
+
     newtext = duplicate_references(newtext)
-    # ---
+
     if move_dots:
         newtext = move_dots_text(newtext, lang=lang)
-    # ---
+
     if add_en_lang:
         newtext = add_lang_en(newtext, lang=lang)
-    # ---
+
     if lang == "pt":
         newtext = pt_months(newtext)
-    # ---
+
     if lang == "es":
         newtext = fix_es(newtext, title)
-    # ---
+
     return newtext

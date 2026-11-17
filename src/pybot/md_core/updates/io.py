@@ -6,6 +6,7 @@
 
 python3 c9/pwb.py md_core/updates/io
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging
@@ -18,32 +19,30 @@ logger = logging.getLogger(__name__)
 
 
 Dir = Path(__file__).parent
-# ---
+
 NewList = {}
-# ---
+
 date_before_20200701 = Dir / "date_before_20200701.txt"
-# ---
+
 fakalist = []
-# ---
+
 if date_before_20200701.exists():
     fska = date_before_20200701.read_text()
     fakalist = [x.strip().split("]]")[0].replace("[[", "").strip() for x in fska.split("\n")]
-# ---
+
 listo = mdwiki_api_call.get_all_pages("!", namespace="0")
 listo = [x for x in listo if x not in fakalist]
-if "test" in sys.argv:
-    listo = listo[:100]
-# ---
+
 if "200" in sys.argv:
     listo = listo[:200]
-# ---
+
 logger.info(f"len of listo: {len(listo)}")
 
 
 def get_timestamp(titles) -> None:
-    # ---
+
     global NewList
-    # ---
+
     for num, page in enumerate(titles, start=1):
         params = {
             "action": "query",
@@ -55,48 +54,48 @@ def get_timestamp(titles) -> None:
             "rvdir": "newer",
         }
         hh = mdwiki_api_call.post_s(params)
-        # ---
+
         # { "action": "query", "format": "json", "prop": "revisions", "titles": "Etizolam", "utf8": 1, "rvprop": "timestamp", "rvlimit": "1", "rvdir": "newer" }
-        # ---
+
         kk = hh.get("query", {}).get("pages", {})
         for _, vav in kk.items():
             timestamp = vav.get("revisions", [{"timestamp": ""}])[0].get("timestamp", "")
             NewList[page] = timestamp
-        # ---
+
         if str(num).endswith("00"):
             logger.info("page:%d:%s", num, page)
 
 
-# ---
+
 get_timestamp(listo)
-# ---
+
 laly = [[int(io.split("T")[0].replace("-", "")), x] for x, io in NewList.items() if io.split("T")[0].replace("-", "")]
 laly.sort(reverse=True)
-# ---
+
 logger.info(f"has {len(laly)} pages. ")
-# ---
+
 if not laly:
     exit()
-# ---
+
 new = [[z, g] for z, g in laly if z > 20200701]
 new.sort(reverse=True)
-# ---
+
 old = [[z, g] for z, g in laly if z < 20200701]
 old.sort(reverse=True)
-# ---
+
 logger.info(f"we have {len(old)} pages with date < 20200701. ")
 logger.info(f"we have {len(new)} pages with date > 20200701. ")
-# ---
+
 masha = "\n".join([f"{s}" for d, s in new])
-# ---
+
 with open(f"{Dir}/date_after_20200701.txt", "w", encoding="utf-8") as logfil3e:
     logfil3e.write(masha)
-# ---
+
 masha3 = "\n".join([f"{ss}" for ds, ss in old])
-# ---
+
 with open(f"{Dir}/date_before_20200701.txt", "w", encoding="utf-8") as ooo:
     ooo.write(masha3)
-# ---
+
 text = f"""
 * all pages: {len(laly)}
 ** pages with date < 20200701: {len(old)}
@@ -120,8 +119,5 @@ for Date, pag in new:
 text += """|-
 |}
 """
-if "test" in sys.argv:
-    logger.info(text)
-else:
-    mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
-# ---
+
+mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")

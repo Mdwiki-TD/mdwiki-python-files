@@ -1,7 +1,7 @@
-# ---
+
 # from md_core.fix_cs1.bots.temps_list import ref_temps
 # from md_core.fix_cs1.bots.temps_list import in_params_en, in_params_ar
-# ---
+
 in_params_en = [
     "journal",
     "magazine",
@@ -10,7 +10,7 @@ in_params_en = [
     "website",
     "work",
 ]
-# ---
+
 in_params_ar = [
     "journal",
     "magazine",
@@ -40,7 +40,7 @@ in_params_ar = [
     "من عمل",
     "موقع",
 ]
-# ---
+
 ref_temps = [
     "Cite web",
     "Cite thesis",
@@ -72,5 +72,5 @@ ref_temps = [
     "Cite AV media notes",
     "Citation",
 ]
-# ---
+
 ref_temps = [x.lower() for x in ref_temps]

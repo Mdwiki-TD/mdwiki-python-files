@@ -1,8 +1,8 @@
 """
 python3 c9/pwb.py wikiblame/bot
-# ---
+
 from md_core_helps.one_time.wikiblame.bot import get_blame #first, result = get_blame({"lang": "es", "article": "Letrina " ,"needle": "Till2014"})
-# ---
+
 """
 
 import logging
@@ -59,10 +59,10 @@ class WikiBlame:
     def fetch_content(self) -> None:
         """Fetch the content of the web page."""
         url = f"{self.base_url}?{urlencode(self.params)}"
-        # ---
+
         if "printurl" in sys.argv:
             logger.info(url)
-        # ---
+
         response = requests.get(url)
         self.content = response.text
 
@@ -77,12 +77,12 @@ class WikiBlame:
         if not results_div:
             logger.info("No results found.")
             return None
-        # ---
+
         text = results_div.text
-        # ---
+
         if text and text.find("present in the oldest revision searched") != -1:
             self.in_first = True
-        # ---
+
         results = results_div.find_all("a")
         for x in results:
             href = x.get("href")
@@ -96,7 +96,7 @@ class WikiBlame:
             if search:
                 oldid = search.group(1)
                 self.oldids.append(oldid)
-        # ---
+
         return list(set(self.oldids))
 
     def scrape(self):
@@ -109,9 +109,9 @@ def get_blame(params):
     scraper = WikiBlame(params)
     result = scraper.scrape()
     first = scraper.in_first
-    # ---
+
     return first, result
-    # ---
+
 
 
 if __name__ == "__main__":

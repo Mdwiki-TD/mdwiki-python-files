@@ -100,110 +100,110 @@ tab = {
 
 
 def make_find_rep():
-    # ---
+
     new = {}
-    # ---
+
     for file, functions in tab.items():
-        # ---
+
         for func in functions:
-            # ---
+
             # (r"use function Actions\HtmlSide\create_side;",)
             line = f"use function {file}\\{func};"
-            # ---
+
             new[func] = line
-    # ---
+
     return new
 
 
 def one_file(file):
-    # ---
+
     with open(file, "r", encoding="utf-8") as f:
         lines = f.readlines()
-    # ---
+
     logger.info(f"\n\n_______{file=}, {len(lines)=}")
-    # ---
+
     ns = None
     ta = []
-    # ---
+
     for line in lines:
-        # ---
+
         if line.startswith((" ", "\t", "//")) or not line.strip():
             continue
-        # ---
+
         if not line.startswith("namespace ") and not line.startswith("function "):
             continue
-        # ---
+
         line = line.strip()
-        # ---
+
         logger.info([line])
-        # ---
+
         # match page namespace like:
         # namespace EnWiki\API;
-        # ---
+
         ma = re.match(r"^namespace (.*?)\;$", line)
         if ma:
             ns = ma.group(1)
             continue
-        # ---
+
         # match page function like:
         # function getLoginToken($session)
-        # ---
+
         ma = re.match(r"^function (.*?)\s*\(", line)
         if ma:
             ta.append(ma.group(1))
-    # ---
+
     return ns, ta
 
 
 def start():
     path = ""
-    # ---
+
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
-        # ---
+
         if arg == "path":
             path = value.strip()
-    # ---
+
     logger.info(f" <<blue>> work on path : {path}\n" * 3)
-    # ---
+
     if not os.path.exists(path):
         logger.info(" <<blue>> path not exist")
         return
-    # ---
+
     from fix_use.add import add_use
 
-    # ---
+
     tab2 = {}
-    # ---
+
     for root, _dirs, files in os.walk(path, topdown=True):
-        # ---
+
         for file in files:
-            # ---
+
             if not file.endswith(".php"):
                 continue
-            # ---
+
             file_path = os.path.join(root, file)
-            # ---
+
             ns, ta = one_file(file_path)
-            # ---
+
             if not ns or not ta:
                 continue
-            # ---
+
             if ns in tab:  # and ta == tab[ns]:
                 continue
-            # ---
+
             tab2[ns] = ta
-            # ---
+
             ta2 = [f"use function {ns}\\{func};" for func in ta]
-            # ---
+
             add_use(file_path, ns_line=f"namespace {ns};", add_lines=ta2)
-            # ---
+
             if "break" in sys.argv:
                 break
-    # ---
+
     logger.info(json.dumps(tab2, indent=4))
 
 
 if __name__ == "__main__":
-    # ---
+
     start()

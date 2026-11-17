@@ -44,7 +44,7 @@ def wikiblame(table) -> None:
         "force_wikitags": "on",
         "user": table.get("user", ""),
     }
-    # ---
+
     url = f"{endpoint}?{urllib.parse.urlencode(params)}"
-    # ---
+
     html = get_url(url)

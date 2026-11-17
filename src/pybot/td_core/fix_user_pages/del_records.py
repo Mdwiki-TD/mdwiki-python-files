@@ -37,17 +37,17 @@ result = sql_for_mdwiki.mdwiki_sql_dict(query=query_select)
 
 for x in result:
     logger.info(x)
-    # ---
+
     x_id = x["id"]
-    # ---
+
     query_del_1 = "DELETE FROM pages_users_to_main WHERE id = %s"
     sql_for_mdwiki.mdwiki_sql_update(query=query_del_1, values=[x_id])
-    # ---
+
     query_del_2 = "DELETE FROM pages_users WHERE id = %s"
     sql_for_mdwiki.mdwiki_sql_update(query=query_del_2, values=[x_id])
-    # ---
+
     find_it = sql_for_mdwiki.mdwiki_sql_dict(query="SELECT * FROM pages_users WHERE id = %s", values=[x_id])
-    # ---
+
     if len(find_it) > 0:
         logger.info("<<red>> not deleted")
     else:

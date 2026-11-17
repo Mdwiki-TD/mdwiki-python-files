@@ -85,10 +85,10 @@ def del_temps(text):
         str: The modified text with specified templates and functions removed.
     """
 
-    # ---
+
     parsed = wtp.parse(text)
     for temp in parsed.templates:
-        # ---
+
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
         if name in temps_to_delete:
             text = text.replace(temp.string.strip(), "")
@@ -97,26 +97,26 @@ def del_temps(text):
                 if re.match(pattern, name):
                     text = text.replace(temp.string.strip(), "")
                     break
-    # ---
+
     parsed = wtp.parse(text)
-    # ---
+
     for func in parsed.parser_functions:
         name = str(func.name).strip().lower().replace("_", " ")
-        # ---
+
         if name in temps_to_delete:
             text = text.replace(func.string.strip(), "")
-    # ---
+
     return text.strip()
 
 
 def work(text):
-    # ---
+
     # text = remove_images(text)
-    # ---
+
     text = del_temps(text)
-    # ---
+
     # text += "\n[[Category:Mdwiki Translation Dashboard articles]]"
-    # ---
+
     return text
 
 
@@ -133,12 +133,12 @@ def do_text_fixes_newxx(newtext):
             - Content before first infobox removed
 
     """
-    # ---
+
     newtext = work(newtext)
-    # ---
+
     # Case-insensitive template replacement
     newtext = re.sub(r"\{\{drugbox", "{{Infobox drug", newtext, flags=re.IGNORECASE)
-    # ---
+
     # Find first occurrence of infobox
     infobox_match = re.search(r"{{(infobox|drugbox)", newtext, re.IGNORECASE)
     if infobox_match:
@@ -146,24 +146,24 @@ def do_text_fixes_newxx(newtext):
         if prefix:
             logger.info(f"Warning: Removing content before infobox: {prefix[:100]}...")
         newtext = newtext[infobox_match.start() :]
-    # ---
+
     return newtext
 
 
 def do_text_fixes(newtext):
     newtext = work(newtext)
-    # ---
+
     newtext = newtext.replace("{{Drugbox", "{{Infobox drug")
     newtext = newtext.replace("{{drugbox", "{{Infobox drug")
-    # ---
+
     # remove any text before {{Infobox or {{Drugbox
     if newtext.lower().find("{{infobox") != -1:
         newtext = newtext[newtext.lower().find("{{infobox") :]
     elif newtext.lower().find("{{drugbox") != -1:
         newtext = newtext[newtext.lower().find("{{drugbox") :]
-    # ---
+
     newtext = fix_ref_names(newtext)
-    # ---
+
     return newtext
 
 
@@ -232,6 +232,6 @@ Netilmicin was patented in 1973 and approved for medical use in 1981.<ref name=F
 ==References==
 <references />
 """
-    # ---
+
     newtext = work(tet)
-    # ---
+

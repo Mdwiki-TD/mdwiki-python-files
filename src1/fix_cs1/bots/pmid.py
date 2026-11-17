@@ -20,7 +20,7 @@ journal_cach = {}
 
 def get_pmid_json(pmid):
     url = f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={pmid}&resulttype=core&format=json"
-    # ---
+
     # get url content
     try:
         content = requests.get(url)
@@ -32,18 +32,18 @@ def get_pmid_json(pmid):
 
 
 def pmid_journal(pmid, param):
-    # ---
+
     if param not in journal_cach:
         journal_cach[param] = {}
-    # ---
+
     if pmid in journal_cach[param]:
         logger.info(f"** journal_cach has {param} for {pmid} - {journal_cach[param][pmid]}")
         return journal_cach[param][pmid]
-    # ---
+
     journal = ""
-    # ---
+
     result = get_pmid_json(pmid)
-    # ---
+
     _data_exmple = {
         "pmid": "29083719",
         "bookOrReportDetails": {
@@ -52,7 +52,7 @@ def pmid_journal(pmid, param):
             "comprisingTitle": "StatPearls",
         },
     }
-    # ---
+
     _data_exmple2 = {
         "doi": "10.1177/0363546508322496",
         "journalInfo": {
@@ -76,26 +76,26 @@ def pmid_journal(pmid, param):
     if not result:
         logger.info(f"no result for |{param}={pmid}")
         return journal
-    # ---
+
     hit = result.get("resultList", {}).get("result", [])
     if not hit:
         # logger.info(f"no hit for |{param}={pmid}")
         # logger.info(result)
         return journal
-    # ---
+
     da_true = {}
-    # ---
+
     for n, da in enumerate(hit):
         id_in = da.get(param, "")
-        # ---
+
         if id_in == pmid:
             da_true = da
-            # ---
+
             journal = da_true.get("bookOrReportDetails", {}).get("comprisingTitle", "")
-            # ---
+
             if not journal:
                 journal = da_true.get("journalInfo", {}).get("journal", {}).get("title", "")
-            # ---
+
             if journal:
                 logger.info(f"{n}/{len(hit)}: <<green>> id_in: {id_in} - journal: {journal}")
                 journal_cach[param][pmid] = journal
@@ -103,5 +103,5 @@ def pmid_journal(pmid, param):
                 logger.info(f"{n}/{len(hit)}: <<red>> |{param}={pmid} - journal: {journal}")
 
             break
-    # ---
+
     return journal

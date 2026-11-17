@@ -9,12 +9,12 @@ from ..lists.expend_lists import main_temps_list
 
 
 def expend_new(template, min_len=1):
-    # ---
+
     echo_debug("expend_new")
-    # ---
+
     if not template:
         return template
-    # ---
+
     template_name = str(template.normal_name()).strip()
     template.name = f"{template_name}\n"
     to_del = []
@@ -35,9 +35,9 @@ def expend_new(template, min_len=1):
 
 
 def expend_infoboxs(new_text):
-    # ---
+
     echo_debug("expend_infoboxs")
-    # ---
+
     parsed = wtp.parse(new_text)
     for temp in parsed.templates:
         temp_str = temp.string

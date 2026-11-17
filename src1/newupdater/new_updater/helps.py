@@ -17,7 +17,7 @@ def print_s(s):
 def echo_debug(func_name="", message=""):
     if not DEBUG:
         return
-    # ---
+
     if message:
         print("\t>>>", message)
     else:

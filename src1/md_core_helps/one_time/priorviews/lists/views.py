@@ -1,12 +1,12 @@
 """
-# ---
+
 from md_core_helps.one_time.priorviews.lists import views
-# ---
+
 # views.views_by_mdtitle_langs
 # views.count_views_by_mdtitle
 # views.count_views_by_lang
 # views.views_by_lang
-# ---
+
 
 python3 c9/pwb.py priorviews/views
 
@@ -22,31 +22,31 @@ from md_core_helps.one_time.priorviews.bots import helps
 logger = logging.getLogger(__name__)
 
 
-# ---
 
-# ---
+
+
 Dir = Path(__file__).parent
-# ---
+
 file = f"{Dir}/views_mdwiki_langs.json"
-# ---
+
 if not os.path.exists(file):
     with open(file, "w", encoding="utf-8") as f:
         json.dump({}, f)
-# ---
+
 views_data = json.load(open(file, "r", encoding="utf-8"))
-# ---
+
 _data = {"mdtitle": {"ar": {"title": "artitle", "views": 0}, "en": {"title": "entitle", "views": 0}}}
-# ---
+
 views_by_mdtitle_langs = {}
 count_views_by_mdtitle = {}
-# ---
+
 count_tra_by_lang = {}
 count_views_by_lang = {}
 views_by_lang = {}
 
 
 def makeviews() -> None:
-    # ---
+
     """
     This function iterates through the `_data_` dictionary and updates the
     `count_views_by_mdtitle`, `count_views_by_lang`, and `views_by_lang`
@@ -89,18 +89,18 @@ def makeviews() -> None:
                 views_by_lang[lang][v["title"].lower()] = _views
 
 
-# ---
+
 makeviews()
-# ---
+
 # dump count_views_by_lang to json file
 filee = f"{Dir}/count_views_by_lang.json"
-# ---
+
 if __name__ == "__main__":
     # with open(filee, "w", encoding="utf-8") as f:  json.dump(count_views_by_lang, f)
     helps.dump_data(filee, count_views_by_lang)
-    # ---
+
     logger.info(f"len of views_by_mdtitle_langs: {len(views_by_mdtitle_langs)}")
     logger.info(f"len of count_views_by_mdtitle: {len(count_views_by_mdtitle)}")
     logger.info(f"len of count_views_by_lang: {len(count_views_by_lang)}")
     logger.info(f"len of views_by_lang: {len(views_by_lang)}")
-# ---
+

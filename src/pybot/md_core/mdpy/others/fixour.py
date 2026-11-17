@@ -3,86 +3,86 @@
 
 import re
 
-# ---
+
 from mdwiki_api.mdwiki_page import MainPage, NewApi
 
-# ---
+
 numbers = {1: 20000, "done": 0}
-# ---
+
 api_new = NewApi("www", family="mdwiki")
 
 # pages   = api_new.find_pages_exists_or_not(liste)
 # pages   = api_new.get_all_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
-# ---
+
 """
 page      = MainPage(title, 'www', family='mdwiki')
 exists    = page.exists()
 if not exists: return
-# ---
+
 text        = page.get_text()
 save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
-# ---
+
 """
 
 
 def work(title) -> None:
-    # ---
+
     page = MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         return
-    # ---
+
     text = page.get_text()
     # <templatestyles src="Owid/styles.css"/><ourworldindatamirror>cumulative-covid-cases-region</ourworldindatamirror>
-    # ---
+
     regref = re.compile(
         r'<templatestyles\s*src="Owid/styles.css"\s*/\s*>\s*<ourworldindatamirror>(?P<content>.*?)</ourworldindatamirror>',
         re.IGNORECASE | re.DOTALL,
     )
-    # ---
+
     newtext = text
-    # ---
+
     for match in regref.finditer(text):
-        # ---
+
         aaa = match.group()
-        # ---
+
         content = match.group("content")
         if not content.strip():
             continue
-        # ---
+
         content = content.strip()
-        # ---
+
         if newtext.find(content) != -1:
             newtext = newtext.replace(aaa, "{{ourworldindatamirror|%s}}" % content)
-    # ---
+
     if newtext != text:
         numbers["done"] += 1
-        # ---
+
         sus = "fix ourworldindatamirror"
-        # ---
+
         save_page = page.save(newtext=newtext, summary=sus)
 
 
 def main() -> None:
     nn = ""
-    # ---
+
     list = api_new.get_all_pages(start="COVID", namespace="0", limit="max", apfilterredir="", limit_all=0)
-    # ---
+
     num = 0
-    # ---
+
     for page in list:
         num += 1
-        # ---
+
         if numbers["done"] >= numbers[1]:
             break
-        # ---
+
         work(page)
 
-    # ---
+
 
 
 # python py/replace1.py
-# ---
+
 if __name__ == "__main__":
     main()
-# ---
+

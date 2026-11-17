@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-# ---
-# ---
+
+
 """
 
 import logging
@@ -12,9 +12,9 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-# ---
+
 Title_cash = {}
-# ---
+
 globalbadtitles = r"""
 # is
 (test|
@@ -57,45 +57,45 @@ globalbadtitles = r"""
 
 
 def get_url(url):
-    # ---
+
     json1 = {}
-    # ---
+
     try:
         req = requests.get(url, timeout=10)
-        # ---
+
         if 500 <= req.status_code < 600:
             logger.info(f"received {req.status_code} status from {req.url}")
         else:
             json1 = req.json()
-    # ---
+
     except Exception as e:
         logger.exception("Exception:", exc_info=True)
-    # ---
+
     return json1
 
 
 def make_title(url):
     url = url.strip()
     url2 = ""
-    # ---
+
     if url in Title_cash:
         return Title_cash[url]
-    # ---
+
     Title_cash[url] = ""
-    # ---
+
     if not url.strip():
         logger.info("<<red>> url = '' return False")
         return {}
-    # ---
+
     url2 = urllib.parse.quote(url)
-    # ---
+
     url2 = url2.replace("/", "%2F")
     url2 = url2.replace(":", "%3A")
     url2 = url2.replace("&", "%26")
     url2 = url2.replace("#", "%23")
-    # ---
+
     urlr = f"https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki-basefields/{url2}"
-    # ---
+
     _json1_ = [
         {
             "key": "JSJVMKE6",
@@ -112,33 +112,33 @@ def make_title(url):
             "websiteTitle": "drugs.ncats.io",
         }
     ]
-    # ---
+
     json1 = get_url(urlr)
-    # ---
+
     if not json1:
         return ""
-    # ---
+
     results = json1
-    # ---
+
     if isinstance(json1, list):
         results = json1[0]
-    # ---
+
     title = results.get("title", "")
-    # ---
+
     if title == "" or title.strip().lower() == "not found.":
         return ""
-    # ---
+
     titleBlackList = re.compile(globalbadtitles, re.I | re.S | re.X)
-    # ---
+
     if titleBlackList.match(title):
         logger.error(f"<<red>> WARNING<<default>> {url} : Blacklisted title ({{title}})")
-    # ---
+
     Title_cash[url] = title
-    # ---
+
     if title != "":
         logger.info(f"<<green>> make_title_bot: newtitle: ({title})")
-    # ---
+
     return title
 
 
-# ---
+

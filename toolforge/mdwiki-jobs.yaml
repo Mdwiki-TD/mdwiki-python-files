@@ -117,6 +117,7 @@
 # ===== Monthly / semi-monthly jobs =====
 
 # 1st and 15th of each month at 21:00
+# source www/python/venv/bin/activate && cd ~/data && python3 copy_rtt_members.py update
 - name: copyrtt
   command: "~/data/copy.sh"
   schedule: "0 21 1,15 * *"
@@ -125,7 +126,7 @@
 
 # 1st of each month at 22:00
 - name: cach-jobs1
-  command: "python3 c9/pwb.py md_core_helps/apis/cat_cach && python3 c9/pwb.py td_core/copy_data/by_title/all_articles"
+  command: "python3 c9/pwb.py md_core_helps/apis/cat_cach"
   schedule: "0 22 1 * *"
   image: python3.13
   emails: none

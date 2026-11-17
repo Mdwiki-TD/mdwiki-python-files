@@ -14,12 +14,12 @@ api_new = NewApi("www", family="mdwiki")
 
 
 def post_s(params, addtoken: bool = False, files=None):
-    # ---
+
     params["format"] = "json"
     params["utf8"] = 1
-    # ---
+
     json1 = api_new.post_params(params, addtoken=addtoken, files=files)
-    # ---
+
     return json1
 
 
@@ -31,12 +31,12 @@ def page_put(
     nocreate: int = 1,
     **kwargs,
 ):
-    # ---
+
     page = md_MainPage(title, "www", family="mdwiki")
     exists = page.exists()
-    # ---
+
     save_page = page.save(newtext=newtext, summary=summary, nocreate=nocreate, minor=minor)
-    # ---
+
     return save_page
 
 
@@ -47,11 +47,11 @@ def create_page(
     ask,
     **kwargs,
 ):
-    # ---
+
     page = md_MainPage(title, "www", family="mdwiki")
-    # ---
+
     create = page.create(text=text, summary=summary)
-    # ---
+
     return create
 
 
@@ -65,21 +65,21 @@ def wordcount(title, srlimit: str = "30"):
         "format": "json",
     }
     data = post_s(params)
-    # ---
+
     if not data:
         return 0
-    # ---
+
     search = data.get("query", {}).get("search", [])
-    # ---
+
     words = 0
-    # ---
+
     for pag in search:
         tit = pag["title"]
         if tit == title:
             count = pag["wordcount"]
             words = count
             break
-    # ---
+
     return words
 
 
@@ -89,7 +89,7 @@ def gettext_and_revid(title, redirects: bool = False):
     """
 
     # logger.info( '**GetarPageText: ')
-    # ---
+
     params = {
         "action": "parse",
         # "prop": "wikitext|sections",
@@ -98,22 +98,22 @@ def gettext_and_revid(title, redirects: bool = False):
         # "redirects": 1,
         # "normalize": 1,
     }
-    # ---
+
     if redirects:
         params["redirects"] = 1
-    # ---
+
     text = ""
-    # ---
+
     json1 = post_s(params) or {}
     if json1:
         text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
     else:
         logger.info("no parse in json1:")
         logger.info(json1)
-    # ---
+
     if not text:
         logger.info(f'page {title} text == "".')
-    # ---
+
     return text, json1.get("parse", {}).get("revid", 0)
 
 
@@ -123,7 +123,7 @@ def get_page_text(title, redirects: bool = False) -> str:
     """
 
     # logger.info( '**GetarPageText: ')
-    # ---
+
     params = {
         "action": "parse",
         # "prop": "wikitext|sections",
@@ -132,22 +132,22 @@ def get_page_text(title, redirects: bool = False) -> str:
         # "redirects": 1,
         # "normalize": 1,
     }
-    # ---
+
     if redirects:
         params["redirects"] = 1
-    # ---
+
     text = ""
-    # ---
+
     json1 = post_s(params) or {}
     if json1:
         text = json1.get("parse", {}).get("wikitext", {}).get("*", "")
     else:
         logger.info("no parse in json1:")
         logger.info(json1)
-    # ---
+
     if not text:
         logger.info(f'page {title} text == "".')
-    # ---
+
     return text
 
 
@@ -168,14 +168,14 @@ def getrevid(title):
             found.
     """
 
-    # ---
+
     params = {"action": "parse", "prop": "revid", "page": title}
-    # ---
+
     json1 = post_s(params) or {}
     if json1:
         revid = json1.get("parse", {}).get("revid", 0)
         return revid
-    # ---
+
     return ""
 
 
@@ -184,9 +184,9 @@ def get_page_links(
     namespace: str = "0",
     limit: int | str = "max",
 ) -> dict[str, Any]:
-    # ---
+
     logger.info(f' for title:"{title}", limit:"{limit}",namespace:"{namespace}"')
-    # ---
+
     params = {
         "action": "query",
         "prop": "links",
@@ -195,32 +195,32 @@ def get_page_links(
         "pllimit": limit,
         "converttitles": 1,
     }
-    # ---
+
     json1 = post_s(params) or {}
-    # ---
+
     Main_table = {
         "links": {},
         "normalized": [],
         "redirects": [],
     }
-    # ---
+
     if json1:
-        # ---
+
         query = json1.get("query", {})
         Main_table["normalized"] = query.get("normalized", [])
         Main_table["redirects"] = query.get("redirects", [])
-        # ---
+
         pages = query.get("pages", {})
-        # ---
+
         for page in pages:
             tab = pages[page]
             for pa in tab.get("links", []):
                 Main_table["links"][pa["title"]] = {"ns": pa["ns"], "title": pa["title"]}
     else:
         logger.info("mdwiki_api.py no json1")
-    # ---
+
     logger.info(f"mdwiki_api.py : find {len(Main_table['links'])} pages.")
-    # ---
+
     return Main_table
 
 

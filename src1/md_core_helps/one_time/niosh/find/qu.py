@@ -10,22 +10,22 @@ import re
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
-# ---
+
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
-# ---
+
 file = f"{Dir2}/jsons/old/quarry.json"
 file_json2 = f"{Dir2}/jsons/old/niosh.json"
-# ---
+
 data = {}
-# ---
+
 with open(file, "r", encoding="utf-8") as f:
     data = json.load(f)
 new = {}
-# ---
+
 with open(file_json2, "r", encoding="utf-8") as f:
     new = json.load(f)
-# ---
+
 result = {}
 """
 for item in data:
@@ -40,10 +40,10 @@ for item in data:
     result[page_title].sort()
 json.dump(result, open(file, "w", encoding="utf-8"))
 """
-# ---
+
 # sort
 titles = sorted(data.keys())
-# ---
+
 all_links = []
 
 
@@ -52,13 +52,13 @@ def fix_links(x):
     return x
 
 
-# ---
+
 for title in titles:
     exts = data[title]
     title = title.replace("_", " ")
-    # ---
+
     tat = new.get(title, [])
-    # ---
+
     for x in exts:
         if x.find("web.archive.org") > -1:
             # remove url suffix like https://web.archive.org/web/20150530203735/
@@ -68,22 +68,22 @@ for title in titles:
         if x.find("cdc.gov/niosh/") > -1:
             x = fix_links(x)
             tat.append(x)
-    # ---
+
     tat = list(set(tat))
-    # ---
+
     if tat:
         new[title] = tat
         all_links.extend(tat)
-# ---
+
 all_links = sorted(set(all_links))
-# ---
-# ---
+
+
 len_all_links = len(all_links)
-# ---
+
 logger.info(f"all pages:{len(new.keys())}, {len_all_links=}")
-# ---
+
 # sort dict keys
 new = dict(sorted(new.items(), key=lambda item: item[0].lower(), reverse=False))
-# ---
+
 with open(f"{Dir2}/jsons/both.json", "w", encoding="utf-8") as ii:
     json.dump(new, ii, ensure_ascii=False, indent=2)

@@ -37,74 +37,74 @@ def get_query_data(query) -> dict[Any, Any]:
 
     # endpoint_url = "https://query-main.wikidata.org/sparql"
     endpoint_url = "https://query.wikidata.org/sparql"
-    # ---
+
     user_agent = f"WDQS-example Python/{sys.version_info[0]}.{sys.version_info[1]}"
-    # ---
+
     sparql = SPARQLWrapper(endpoint_url, agent=user_agent)
-    # ---
+
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     sparql.setTimeout(30)
-    # ---
+
     data = {}
-    # ---
+
     try:
         data = sparql.query().convert()
     except (HTTPError, URLError, TimeoutError, ValueError, json.JSONDecodeError):
         logger.exception("wd_helps.get_query_data failed")
-    # ---
+
     result = dict(data)  # type: ignore
-    # ---
+
     return result
 
 
 def get_query_result(query) -> list[Any]:
-    # ---
+
     data = get_query_data(query)
-    # ---
+
     lista = list(data.get("results", {}).get("bindings", []))
-    # ---
+
     return lista
 
 
 def make_in_wd_tab(limit: int | None = None):
-    # ---
+
     query = """select distinct ?item ?prop where { ?item wdt:P11143 ?prop .}"""
-    # ---
+
     if limit:
         query += f" limit {limit}"
-    # ---
+
     wdlist = get_query_result(query)
-    # ---
+
     in_wd = {}
-    # ---
+
     for wd in wdlist:
-        # ---
+
         prop = wd.get("prop", {}).get("value", "")
-        # ---
+
         qid = wd.get("item", {}).get("value", "")
         if qid:
             qid = qid.split("/entity/")[1]
-        # ---
+
         in_wd[qid] = prop
-    # ---
+
     return in_wd
 
 
 def add_p11143_to_qids_in_wd(newlist) -> None:
-    # ---
+
     logger.info(f"len of newlist: {len(newlist)}")
-    # ---
+
     if len(newlist) > 0:
-        # ---
+
         logger.info(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
         if len(newlist.items()) < 100:
             logger.info("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
-        # ---
+
         if "add" not in sys.argv:
             logger.info('<<puruple>> add "add" to sys.argv to add them?')
             return
-        # ---
+
         for n, (q, _) in enumerate(newlist.items(), start=1):
             logger.info(f"<<yellow>> q {n} from {len(newlist)}")
             if q:
@@ -118,16 +118,16 @@ def add_p11143_to_qids_in_wd(newlist) -> None:
 def fix_in_wd(merge_qids, qids) -> None:
     # mdwiki != P11143
     # تصحيح قيم الخاصية التي لا تساوي اسم المقالة
-    # ---
+
     for q, wd_value in copy.deepcopy(merge_qids).items():
         md_title = qids.get(q)
         if md_title == wd_value:
             continue
-        # ---
+
         logger.info(f"wd_value:{wd_value} != md_title:{md_title}, qid:{q}")
-        # ---
+
         merge_qids[q] = md_title
-        # ---
+
         # delete the old
         ae = wikidataapi.get_claim(q, "P11143", get_claim_id=True)
         if ae:
@@ -140,7 +140,7 @@ def fix_in_wd(merge_qids, qids) -> None:
                         logger.info(f"True.. Deleted {claimid}")
                     else:
                         logger.info(f"Failed to delete {claimid}")
-        # ---
+
 
         # add the correct claim
         ase = False

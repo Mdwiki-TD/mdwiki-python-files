@@ -154,82 +154,76 @@ def get_all():
         return json.loads(file.read_text())
     # ----
     all_pages = cat_cach.from_cache()
-    # ---
+
     with open(file, "w", encoding="utf-8") as f:
         f.write(json.dumps(all_pages))
-    # ---
+
     return all_pages
 
 
 def start(all_pages):
-    # ---
+
     if "slash" in sys.argv:
         all_pages = [x for x in all_pages if x.find("/") != -1]
-    # ---
+
     len_of_all_pages[1] = len(all_pages)
-    # ---
+
     # sort all_pages randmly
     random.shuffle(all_pages)
-    # ---
+
     if "multi" in sys.argv:
         pool = Pool(processes=2)
         pool.map(one_page_new, all_pages)
         pool.close()
         pool.terminate()
         return
-    # ---
+
     for n, x in enumerate(all_pages):
         logger.info(f"{n}/{len(all_pages)} : {x}")
-        # ---
+
         one_page_new(x)
 
 
 def get_done(all_pages):
-    # ---
+
     all_pages = [x.replace(" ", "_") for x in all_pages]
-    # ---
+
     dir_to_fetch = Dir / "segments"
-    # ---
+
     done = list(dir_to_fetch.glob("*.html"))
-    # ---
+
     done = [str(x.name).replace(".html", "") for x in done]
-    # ---
+
     not_done = [x for x in all_pages if x not in done]
-    # ---
+
     for x in not_done:
         x2 = fix_title(x)
-        # ---
+
         if x2 in done:
             done.append(x)
-    # ---
+
     return done
 
 
 def main():
-    # ---
+
     all_pages = get_all()
-    # ---
+
     len_old = len(all_pages)
-    # ---
+
     logger.info(f"all_pages: {len(all_pages)}")
-    # ---
+
     if "nodone" not in sys.argv:
         done = get_done(all_pages)
-        # ---
+
         logger.info(f"<<yellow>> done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
-        # ---
+
         all_pages = [x for x in all_pages if fix_title(x) not in done]
-    # ---
+
     logger.info(f"<<green>> all_pages: {len(all_pages)}, len_old: {len_old}")
-    # ---
+
     start(all_pages)
 
 
 if __name__ == "__main__":
-    if "test" in sys.argv:
-        one_page_new("Gout")
-        one_page_new("Sofosbuvir/daclatasvir")
-        one_page_new("Lamivudine/tenofovir")
-        one_page_new("WHO AWaRe")
-    else:
-        main()
+    main()

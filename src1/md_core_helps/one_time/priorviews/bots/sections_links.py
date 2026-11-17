@@ -8,7 +8,7 @@ python3 c9/pwb.py priorviews/sections_links
 
 import json
 
-# ---
+
 import logging
 import os
 from pathlib import Path
@@ -18,23 +18,23 @@ from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
 
-# ---
 
-# ---
+
+
 Dir = Path(__file__).parent
 Dir = os.path.dirname(Dir)
-# ---
+
 sect_file = f"{Dir}/lists/secs_links.json"
 if not os.path.exists(sect_file):
     with open(sect_file, "w", encoding="utf-8") as f:
         json.dump({}, f)
-# ---
+
 old = json.load(open(sect_file, "r", encoding="utf-8"))
-# ---
+
 replaces = {
     "Syncope": "Syncope (medicine)",
 }
-# ---
+
 
 
 class Sectioslinks:
@@ -102,9 +102,9 @@ class Sectioslinks:
 
 
 def dump_secs_links(d_links) -> None:
-    # ---
+
     global sect_file
-    # ---
+
     if d_links != {}:
         logger.info(f"<<yellow>> d_links(): length: {len(d_links.keys())}")
         json.dump(d_links, open(sect_file, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
@@ -126,32 +126,32 @@ def get_section_links(new: bool = False):
         dump_secs_links(o_links)
     else:
         o_links = old
-    # ---
+
     return o_links
 
 
-# ---
+
 if __name__ == "__main__":
     all_links = {}
-    # ---
+
     ll = get_section_links()
-    # ---
+
     for s, ls in ll.items():
         logger.info(f"section: {s}")
         logger.info(f"len of links: {len(ls)}")
         if len(ls) < 10:
             logger.info(ls)
-        # ---
+
         for link in ls:
             if link.lower() not in all_links:
                 all_links[link.lower()] = []
             if s not in all_links[link.lower()]:
                 all_links[link.lower()].append(s)
-    # ---
+
     logger.info("<<red>>---------------")
-    # ---
+
     for x, v in all_links.items():
         if len(v) > 1:
             sections = ", ".join(v)
             logger.info(f"link: ({x}) in {len(v)} sections: {sections}")
-    # ---
+

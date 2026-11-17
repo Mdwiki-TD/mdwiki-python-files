@@ -24,9 +24,9 @@ text = """Boala se agravează în timp și este de obicei diagnosticată atunci 
 |titlu=Lewy body dementia: Hope through research
 |lucrare=National Institute of Neurological Disorders and Stroke
 |archiveurl=https://web.archive.org/web/20210430175606/https://www.ninds.nih.gov/Disorders/Patient-Caregiver-Education/Hope-Through-Research/Lewy-Body-Dementia-Hope-Through-Research}}</ref>"""
-# ---
-# ---
-# ---
+
+
+
 newtext = fix_page(text, "Demența cu corpi Lewy", move_dots=False, infobox=True, lang="pt")
 
 # python3 c9/pwb.py wprefs/bots/test_pt_months

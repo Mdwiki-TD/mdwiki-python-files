@@ -24,11 +24,11 @@ def fix_ref_names(text):
     for tag in ref_tags:
         if not tag.contents:
             continue
-        # ---
+
         for x in tag.attrs:
             u = tag.get_attr(x)
             tag.set_attr(x, u)
-    # ---
+
     new_text = parsed_page.string
-    # ---
+
     return new_text
