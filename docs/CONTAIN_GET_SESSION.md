@@ -27,7 +27,7 @@ raw `text()` queries:
 | 3   | `md_core/mdpy/others/copy_qids.py`                      | `SELECT title, qid FROM qids`             |
 | 4   | `td_core/wd_works/recheck.py`                           | Various qid queries                       |
 | 5   | `td_core/mdpyget/sqlviews_new.py`                       | `views_new` SELECT/INSERT/UPDATE          |
-| 6   | `td_core/mdpyget/getas.py`                              | `assessments` SELECT                      |
+| 6   | `td_core/mdpyget/update_assessments.py`                              | `assessments` SELECT                      |
 | 7   | `td_core/mdpyget/enwiki_views.py`                       | `enwiki_pageviews` SELECT                 |
 | 8   | `td_core/mdcount/words.py`                              | `words` SELECT                            |
 | 9   | `td_core/mdcount/countref.py`                           | `refs_counts` SELECT                      |
@@ -81,7 +81,7 @@ into a `dict[key → value]` for in-memory comparison:
 | `copy_refs_2.py`           | `refs_counts`         | `r_title`           | `r_lead_refs`, `r_all_refs`   | `SELECT *` → `dict` |
 | `copy_enwiki_pageviews.py` | `enwiki_pageviews`    | `title`             | `en_views`                    | `SELECT *` → `dict` |
 | `copy_assessments.py`      | `assessments`         | `title`             | `importance`                  | `SELECT *` → `dict` |
-| `getas.py`                 | `assessments`         | `title`             | `importance`                  | `SELECT *` → `dict` |
+| `update_assessments.py`                 | `assessments`         | `title`             | `importance`                  | `SELECT *` → `dict` |
 | `enwiki_views.py`          | `enwiki_pageviews`    | `title`             | `en_views`                    | `SELECT *` → `dict` |
 | `words.py`                 | `words`               | `w_title`           | lead/all                      | `SELECT *` → `dict` |
 | `countref.py`              | `refs_counts`         | `r_title`           | lead/all                      | `SELECT *` → `dict` |
@@ -154,7 +154,7 @@ For each of the 27 files, in groups:
 
 1. **Analytics group** (8 files): `words.py`, `countref.py`, `countrefs_and_words.py`,
    `ref_words_bot.py`, `copy_word_table.py`, `copy_word_2.py`, `copy_refs_2.py`,
-   `copy_enwiki_pageviews.py`, `copy_assessments.py`, `getas.py`, `enwiki_views.py`,
+   `copy_enwiki_pageviews.py`, `copy_assessments.py`, `update_assessments.py`, `enwiki_views.py`,
    `sqlviews_new.py`
 
 2. **Fix_user_pages group** (4 files): `bot.py`, `del_records.py`, `fix_it_db.py`,

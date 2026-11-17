@@ -6,11 +6,11 @@
 وحفظها في paths.json_tables_path
 +
 قاعدة البيانات
-python3 c9/pwb.py md_core/mdpyget/getas merge
-python3 c9/pwb.py md_core/mdpyget/getas newpages nodump
-python3 c9/pwb.py md_core/mdpyget/getas from_cats newpages nowork
-python3 c9/pwb.py md_core/mdpyget/getas newpages nowork
-python3 c9/pwb.py md_core/mdpyget/getas video
+python3 c9/pwb.py md_core/mdpyget/update_assessments merge
+python3 c9/pwb.py md_core/mdpyget/update_assessments newpages nodump
+python3 c9/pwb.py md_core/mdpyget/update_assessments from_cats newpages nowork
+python3 c9/pwb.py md_core/mdpyget/update_assessments newpages nowork
+python3 c9/pwb.py md_core/mdpyget/update_assessments video
 
 """
 
@@ -209,7 +209,7 @@ def main() -> None:
 
 
 def test() -> None:
-    # python3 c9/pwb.py md_core/mdpyget/getas test
+    # python3 c9/pwb.py md_core/mdpyget/update_assessments test
 
     data_tab[1]["Yemen1"] = "Top"
 

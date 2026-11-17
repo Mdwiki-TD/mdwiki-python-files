@@ -64,8 +64,8 @@
   emails: none
 
 # important - daily at 08:20
-- name: getas
-  command: "python3 c9/pwb.py td_core/mdpyget/getas"
+- name: update_assessments
+  command: "python3 c9/pwb.py td_core/mdpyget/update_assessments"
   schedule: "20 8 * * *"
   image: python3.13
   emails: none
