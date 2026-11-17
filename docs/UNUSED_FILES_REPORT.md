@@ -40,7 +40,7 @@ These 101 files are reachable from at least one active entry point through a tra
 | `td_core/mdpages/cashwd`                  | `src/td_core/mdpages/cashwd.py`                  |
 | `td_core/mdpages/find_qids`               | `src/td_core/mdpages/find_qids.py`               |
 | `td_core/mdpyget/enwiki_views`            | `src/td_core/mdpyget/enwiki_views.py`            |
-| `td_core/mdpyget/getas`                   | `src/td_core/mdpyget/getas.py`                   |
+| `td_core/mdpyget/update_assessments`                   | `src/td_core/mdpyget/update_assessments.py`                   |
 | `td_core/mdpyget/sqlviews_new`            | `src/td_core/mdpyget/sqlviews_new.py`            |
 | `td_core/td_other_qids/fix_qids`          | `src/td_core/td_other_qids/fix_qids.py`          |
 | `td_core/td_other_qids/make_list`         | `src/td_core/td_other_qids/make_list.py`         |

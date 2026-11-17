@@ -156,7 +156,7 @@ from db.tools.services.wikidata.qid_others_service import get_title_to_qid, add_
 | `td_core/fix_user_pages/del_records.py`                    | `mdwiki_sql` → ORM                                                                                 |
 | `td_core/mdpyget/sqlviews_new.py`                  | `select_md_sql` → ORM query                                                                        |
 | `td_core/mdpyget/pages_list.py`                    | `select_md_sql` → ORM query                                                                        |
-| `td_core/mdpyget/getas.py`                         | `select_md_sql` → ORM query                                                                        |
+| `td_core/mdpyget/update_assessments.py`                         | `select_md_sql` → ORM query                                                                        |
 | `td_core/mdpyget/enwiki_views.py`                  | `select_md_sql` → ORM query                                                                        |
 | `td_core/after_translate/fixcat.py`                | `mdwiki_sql` → ORM                                                                                 |
 | `td_core/after_translate/get_pages.py`             | `get_all_pages_all_keys` → `page_service.list_pages()`                                             |

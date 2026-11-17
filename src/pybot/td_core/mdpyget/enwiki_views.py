@@ -167,7 +167,7 @@ def main() -> None:
 
 
 def test() -> None:
-    # python3 c9/pwb.py md_core/mdpyget/getas test
+    # python3 c9/pwb.py md_core/mdpyget/update_assessments test
     # ---
     data_tab[1]["Yemen1"] = "Top"
     # ---

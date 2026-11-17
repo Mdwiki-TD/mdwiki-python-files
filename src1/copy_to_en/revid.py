@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-tfj run revid --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_to_en/revid"
+REPLACED BY update_category_members/worker.py
 
 """
 
