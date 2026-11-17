@@ -69,26 +69,6 @@ def update_in_sql(lang, table, already_in_sql) -> None:
     )
 
 
-def insert_to_sql(lang, table) -> None:
-
-    for target, tab in table.items():
-        if "all" in tab:
-            del tab["all"]
-
-        # years = {y : x["all"] for y, x in tab.items() if y.isdigit() and x["all"] > 0}
-        years = {y: x for y, x in tab.items() if y.isdigit() and x > 0}
-
-        data_list = [{"target": target, "lang": lang, "year": x, "views": views} for x, views in years.items()]
-
-        insert_dict(
-            list_of_lines=data_list,
-            table_name="views_new",
-            columns=["target", "lang", "year", "views"],
-            lento=1000,
-            ignore=True,
-        )
-
-
 def get_targets():
 
     que = 'select DISTINCT lang, target, pupdate from pages where target != ""'
@@ -185,17 +165,6 @@ def main() -> None:
             # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
             numbs = {**numbs, **new_data}
-
-        insert = {}
-        update = {}
-
-        sql_values = already_in_sql.get(lange, {})
-
-        for target, tab in numbs.items():
-            if sql_values.get(target, {}) != {}:
-                update[target] = tab
-            else:
-                insert[target] = tab
 
         update_in_sql(lange, numbs, already_in_sql)
 
