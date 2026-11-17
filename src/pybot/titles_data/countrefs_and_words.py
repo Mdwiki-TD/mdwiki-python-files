@@ -47,12 +47,12 @@ class TitleInfo:
         lead_words = count_text(lead_section)
         full_words = count_text(text)
 
-        logger.info(f"all:{full_words} \t lead:{lead_words}")
-
         # =====================
         # Refs
         refs_all_count = len(WtpRefs.load(text).full_refs)
         refs_lead_count = len(WtpRefs.load(lead_section).all_refs)
+
+        logger.info(f"title:{title}\t {full_words=}\t {lead_words=}\t {refs_all_count=}\t {refs_lead_count=}")
 
         return cls(
             title=title,
