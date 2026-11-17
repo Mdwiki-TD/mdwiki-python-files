@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-إنشاء قائمة بمشاهدات المقالات من الانجليزية
-
-وحفظها في قاعدة البيانات
+Fetch article page views from English Wikipedia and store them
+in the `enwiki_pageviews` table of the mdwiki database.
 
 python3 c9/pwb.py titles_data/enwiki_views from_cats newpages nodump
 python3 c9/pwb.py titles_data/enwiki_views newpages nodump
@@ -21,6 +20,10 @@ from md_core_helps.apis.mw_views import PageviewsClient
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki
 
 logger = logging.getLogger(__name__)
+
+TABLE_NAME = "enwiki_pageviews"
+VIDEO_MD_PREFIX = "Video:"
+VIDEO_EN_PREFIX = "Wikipedia:VideoWiki/"
 
 
 def new_to_sql(
@@ -62,45 +65,39 @@ def new_to_sql(
 
 
 def fetch_pages_views(en_keys: list[str]) -> dict[str, int]:
+    """Return {mdwiki title: total views} for every title that has at least one view."""
+    en_keys = [re.sub(rf"^{VIDEO_MD_PREFIX}", VIDEO_EN_PREFIX, x, flags=re.IGNORECASE) for x in en_keys]
 
-    en_keys = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in en_keys]
-
-    view_bot = PageviewsClient()
-
-    enviews = view_bot.article_views_new("en.wikipedia", en_keys)
-
-    # {'Yemen': {'all': 187379, '2025': 187379}, 'COVID-19': {'all': 230007, '2025': 230007}}
-
-    enviews_0 = {k: v for k, v in enviews.items() if v.get("all", 0) == 0}
-
-    logger.info(f"<<purple>> len of enviews: {len(enviews.keys())}, len of enviews_0: {len(enviews_0.keys())}")
+    # Shape: {'Yemen': {'all': 187379, '2025': 187379}, ...}
+    enviews = PageviewsClient().article_views_new("en.wikipedia", en_keys)
 
     data: dict[str, int] = {}
-    no_views = 0
 
-    for k, view in enviews.items():
-        view_all = view.get("all", 0)
+    for title, view in enviews.items():
+        total = int(view.get("all") or 0)
 
-        if view_all == 0 or view_all == "0" or not view_all:
-            no_views += 1
+        if not total:
             continue
 
-        k = k.replace("Wikipedia:VideoWiki/", "Video:")
-        k = enwiki_to_mdwiki.get(k) or k
+        # Map the English title back to the mdwiki title.
+        title = title.replace(VIDEO_EN_PREFIX, VIDEO_MD_PREFIX)
+        title = enwiki_to_mdwiki.get(title) or title
 
-        data[k] = view_all
+        data[title] = total
 
-    logger.info(f"no_views:{no_views},\t len of old_values: {len(data.keys())}")
+    no_views = len(enviews) - len(data)
+    logger.info(f"<<purple>> len of enviews: {len(enviews)}, with views: {len(data)}, no views: {no_views}")
 
     return data
 
 
-def save_to_sql(data, from_sql) -> None:
-    tab = [{"title": x, "en_views": v} for x, v in data.items()]
+def save_to_sql(data: dict[str, int], from_sql) -> None:
+    """Insert new titles and update titles whose view count changed."""
+    rows = [{"title": title, "en_views": views} for title, views in data.items()]
 
     new_to_sql(
-        data=tab,
-        table_name="enwiki_pageviews",
+        data=rows,
+        table_name=TABLE_NAME,
         columns=["title", "en_views"],
         title_columns=["title"],
     )
