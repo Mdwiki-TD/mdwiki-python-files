@@ -12,10 +12,10 @@ from newapi import AllAPIS
 
 
 def get_cx():
-    # ---
+
     username_cx: str = os.getenv("MDWIKI_CX_USERNAME")
     password_cx: str = os.getenv("MDWIKI_CX_PASSWORD")
-    # ---
+
     api = AllAPIS(
         lang="mdwikicx",
         family="toolforge",
@@ -23,18 +23,18 @@ def get_cx():
         password=password_cx,
         use_cookies=False,
     )
-    # ---
+
     CatDepth = api.CatDepth
     MainPage = api.MainPage
-    # ---
+
     return CatDepth, MainPage
 
 
 def get_md():
-    # ---
+
     username: str = os.getenv("MDWIKI_USERNAME")
     password: str = os.getenv("MDWIKI_HIMO_PASSWORD")
-    # ---
+
     api = AllAPIS(
         lang="medwiki",
         family="toolforge",
@@ -42,8 +42,8 @@ def get_md():
         password=password,
         use_cookies=False,
     )
-    # ---
+
     CatDepth = api.CatDepth
     MainPage = api.MainPage
-    # ---
+
     return CatDepth, MainPage

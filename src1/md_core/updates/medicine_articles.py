@@ -29,12 +29,12 @@ def sql_result() -> dict[str, Any]:
         group by ll_lang
         #limit 10
     """
-    # ---
+
     lang_db = WikiReplicaDB("enwiki")
     result = lang_db.select_safe(query)
-    # ---
+
     languages = {x["ll_lang"]: x["counts"] for x in result}
-    # ---
+
     return languages
 
 
@@ -45,7 +45,7 @@ def get_articles():
     Returns:
         int: The number of articles.
     """
-    # ---
+
     query = """
     select count(pa_page_id) as articles
         from page, page_assessments , page_assessments_projects
@@ -55,15 +55,15 @@ def get_articles():
         and page_is_redirect = 0
         and page_namespace = 0
     """
-    # ---
+
     lang_db = WikiReplicaDB("enwiki")
     result = lang_db.select_safe(query)
-    # ---
+
     articles = [x["articles"] for x in result]
-    # ---
+
     if articles:
         return articles[0]
-    # ---
+
     return 0
 
 
@@ -81,34 +81,34 @@ def start() -> None:
     """
     # year
     year = datetime.datetime.now().year
-    # ---
+
     month = datetime.datetime.now().month
-    # ---
+
     title = f"WikiProjectMed:WikiProject Medicine/Stats/Number of articles by language {year}"
-    # ---
+
     languages = sql_result()
-    # ---
+
     articles = get_articles()
-    # ---
+
     if "en" not in languages:
         languages["en"] = articles
-    # ---
+
     # count all languages values
     articles_all = sum(languages.values())
-    # ---
+
     text = "{{:WPM:WikiProject Medicine/Total medical articles}}\n"
-    # ---
+
     text += f"Numbers are as {month} {year}. There are {articles_all:,} medical articles across {len(languages)} languages.\n"
     text += """{| class="sortable wikitable"\n!Lang\n!#\n|-"""
-    # ---
+
     # sort languages by count
     languages = dict(sorted(languages.items(), key=lambda item: item[1], reverse=True))
-    # ---
+
     for lang, count in languages.items():
         text += f"\n!{lang}\n|{count:,}\n|-"
-    # ---
+
     text += "\n|}"
-    # ---
+
     page = md_MainPage(title, "www", family="mdwiki")
     page.save(newtext=text, summary="update", nocreate=0, minor="")
 

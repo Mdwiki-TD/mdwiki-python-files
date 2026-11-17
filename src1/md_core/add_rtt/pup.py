@@ -15,7 +15,7 @@ https://github.com/wikimedia/popularpages
 import logging
 import re
 
-# ---
+
 import sys
 from pathlib import Path
 
@@ -30,29 +30,29 @@ api_new = NewApi("www", family="mdwiki")
 
 
 def find_redirects(pages, text):
-    # ---
+
     to_f = "== List =="
-    # ---
+
     mdwiki_pages = []
-    # ---
+
     if text.find(to_f) != -1:
         text = text.split(to_f)[1]
         # match all links like [[.*?]]
         pattern = r"\[\[(.*?)\]\]"
         links = re.findall(pattern, text)
         mdwiki_pages = links
-    # ---
+
     mdwiki_pages = list(set(mdwiki_pages))
-    # ---
+
     mdwiki_pages = [fix_title(x.strip()) for x in mdwiki_pages if x.find("|") == -1 and x not in pages]
-    # ---
+
     logger.info(f" pages: {len(mdwiki_pages)}")
-    # ---
+
     titles = api_new.get_titles_redirects(mdwiki_pages)
-    # ---
+
     # titles = api_new.get_titles_redirects(["Ehlers–Danlos syndrome"]) # {'Ehlers–Danlos syndrome': 'Ehlers–Danlos syndromes'}
     redirects = dict(titles.items())
-    # ---
+
     return redirects
 
 
@@ -70,12 +70,12 @@ def work_page() -> bool | None:
     if new_text != text:
         page.save(newtext=new_text, summary="Add R column")
         text = new_text
-    # ---
+
     if "only_column" in sys.argv:
         return None
-    # ---
+
     old_counts = text.count(R_NEW_ROW.strip())
-    # ---
+
     # pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
     pages = api_new.Get_template_pages("Template:RTT", namespace=0)
 

@@ -4,7 +4,7 @@
 python3 c9/pwb.py md_core/add_rtt/remove
 
 """
-# ---
+
 
 import logging
 
@@ -40,7 +40,7 @@ def work_page(title):
 
 def main():
     mdwiki_pages = CatDepth("Category:RTT", sitecode="www", family="mdwiki", depth=0, ns=0)
-    # ---
+
     temp_pages = api_new.Get_template_pages("Template:RTT", namespace=0)
     logger.info(f"len of mdwiki_pages: {len(mdwiki_pages)}, temp_pages: {len(temp_pages)}")
     pages_to_remoe = [x for x in temp_pages if x not in mdwiki_pages]

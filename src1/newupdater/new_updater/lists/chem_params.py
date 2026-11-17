@@ -114,4 +114,4 @@ rename_chem_params = {
     # "ImageAltR2":		"",
     # "ImageCaptionR2":		"",
 }
-# ---
+

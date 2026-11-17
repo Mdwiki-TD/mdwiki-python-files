@@ -20,27 +20,27 @@ logger = logging.getLogger(__name__)
 
 
 def one_page(title) -> None:
-    # ---
+
     page = md_MainPage(title, "www", family="mdwiki")
-    # ---
+
     text = page.get_text()
-    # ---
+
     newtext = fix_it(text)
-    # ---
+
     if text == newtext:
         return
-    # ---
+
     page.save(newtext=newtext, summary="Fix missing periodical")
 
 
 def main() -> None:
-    # ---
+
     cat = "Category:CS1 errors: missing periodical"
 
     cat_members = CatDepth(cat, sitecode="www", family="mdwiki", depth=0, ns="all")
 
     for n, page in enumerate(cat_members):
-        # ---
+
         logger.info(f"n: {n}/{len(cat_members)} - Page: {page}")
         one_page(page)
 

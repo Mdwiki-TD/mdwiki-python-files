@@ -21,20 +21,20 @@ logger = logging.getLogger(__name__)
 
 def get_param(temp, arg):
     va = temp.get_arg(arg) or temp.get_arg(arg.lower())
-    # ---
+
     if va and va.value and va.value.strip():
         do = va.value.strip()
         return do
     # else:
     # logger.info(f"Parameter {arg} not found in template.")
-    # ---
+
     return ""
 
 
 def get_journal_value(temp):
-    # ---
+
     journal = ""
-    # ---
+
     to_do_params = [
         "pmid",
         "doi",
@@ -43,16 +43,16 @@ def get_journal_value(temp):
         "lccn",
         "دوي",
     ]
-    # ---
+
     for param in to_do_params:
         va = get_param(temp, param)
         if not va:
             continue
-        # ---
+
         # logger.info(f"** temp has |{param} = {va}")
         journal = pmid_journal(va, param)
-        # ---
+
         if journal:
             break
-    # ---
+
     return journal

@@ -1,13 +1,13 @@
-# ---
+
 params_placeholders = {
     "uses": "<!-- primary uses -->",
     "side_effects": "<!-- common side effects and notable side effects -->",
     "interactions": "<!-- notable interactions -->",
 }
-# ---
+
 all_params = {}
 params_to_add = {}
-# ---
+
 all_params["first"] = [
     "Verifiedfields",
     "Verifiedrevid",
@@ -35,7 +35,7 @@ all_params["first"] = [
     "altR",
     "captionLR",
 ]
-# ---
+
 all_params["combo"] = {
     "mab": [
         "type",
@@ -63,10 +63,10 @@ all_params["combo"] = {
     ],
     "all": [],
 }
-# ---
+
 all_params["combo"]["all"] = all_params["combo"]["mab"] + all_params["combo"]["vaccine"] + all_params["combo"]["combo"]
 all_params["combo"]["all"] = list(set(all_params["combo"]["all"]))
-# ---
+
 all_params["names"] = [
     "pronounce",
     "pronounce_ref",
@@ -80,9 +80,9 @@ all_params["names"] = [
     "USAN",
     "IUPAC_name",
 ]
-# ---
+
 params_to_add["names"] = ["pronounce", "tradename", "synonyms", "IUPAC_name"]
-# ---
+
 all_params["gene"] = [
     "gt_target_gene",
     "gt_vector",
@@ -90,7 +90,7 @@ all_params["gene"] = [
     "gt_editing_method",
     "gt_delivery_method",
 ]
-# ---
+
 all_params["clinical"] = [
     "class",
     "uses",
@@ -116,7 +116,7 @@ all_params["clinical"] = [
     "addiction_liability",
     "duration",
 ]
-# ---
+
 params_to_add["clinical"] = [
     "class",
     "uses",
@@ -128,19 +128,19 @@ params_to_add["clinical"] = [
     "typical_dose",
     "breastfeeding",
 ]
-# ---
+
 all_params["external"] = [
     "Drugs.com",
     "NLM",
     "MedlinePlus",
 ]
-# ---
+
 params_to_add["external"] = [
     "Drugs.com",
     # "NLM",
     "MedlinePlus",
 ]
-# ---
+
 all_params["legal"] = [
     "INN_EMA",
     "engvar",
@@ -171,7 +171,7 @@ all_params["legal"] = [
     "licence_EU",
     "license_EU",
 ]
-# ---
+
 all_params["physiological"] = [
     "source_tissues",
     "target_tissues",
@@ -183,7 +183,7 @@ all_params["physiological"] = [
     "sources",
     "targets",
 ]
-# ---
+
 all_params["pharmacokinetic"] = [
     "bioavailability",
     "protein_bound",
@@ -192,7 +192,7 @@ all_params["pharmacokinetic"] = [
     "elimination_half-life",
     "excretion",
 ]
-# ---
+
 all_formola_params = [
     "Ac",
     "Ag",
@@ -314,7 +314,7 @@ all_formola_params = [
     "Zn",
     "Zr",
 ]
-# ---
+
 all_params["chemical"] = all_formola_params + [
     "charge",
     "chemical_formula",
@@ -351,6 +351,6 @@ all_params["chemical"] = all_formola_params + [
     "sol_units",
     "specific_rotation",
 ]
-# ---
+
 all_params["last"] = []
-# ---
+

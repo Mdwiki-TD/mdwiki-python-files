@@ -45,32 +45,32 @@ def add_param_named(text, title):
         "named after",
         "eponym",
     ]
-    # ---
+
     false_params = []
 
     for temp in parsed.templates:
         name = str(temp.normal_name()).strip().lower().replace("_", " ")
         if name in target_infoboxs:
-            # ---
+
             if temp.has_arg(param):
                 value = temp.get_arg(param).value
                 logger.info(f"page {title} already had temp {name} with (|{param}={value}). ")
                 return text
-            # ---
+
             for x in false_params:
                 value = gt_arg(temp, x)
                 if value:
                     logger.info(f"page {title} already had temp {name} with (|{x}={value}). ")
                     return text
-            # ---
+
             t_value = ""
-            # ---
+
             if temp.has_arg("eponym"):
                 if gt_arg(temp, "eponym"):
                     t_value = gt_arg(temp, "eponym")
-                # ---
+
                 temp.del_arg("eponym")
-            # ---
+
             temp.set_arg(f" {param} ", f" {t_value}\n")
 
     newtext = parsed.string

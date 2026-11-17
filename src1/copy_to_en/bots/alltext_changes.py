@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 def change_last_section(section):
     # del all categories
     text = section.contents
-    # ---
+
     for cat in section.wikilinks:
         # logger.info(cat)
         if str(cat).startswith("[[Category:"):
@@ -55,15 +55,15 @@ def do_alltext_changes(text):
 
 
 def do_all_text(alltext, revid, unlinkedwikibase):
-    # ---
+
     revid_temp = f"{{{{mdwiki revid|{revid}}}}}"
-    # ---
+
     alltext = text_changes.do_text_fixes(alltext)
-    # ---
+
     alltext = do_alltext_changes(alltext)
-    # ---
+
     alltext += "\n[[Category:Mdwiki Translation Dashboard articles/fulltext]]"
-    # ---
+
     alltext = f"{unlinkedwikibase}\n{revid_temp}\n{alltext}"
-    # ---
+
     return alltext
