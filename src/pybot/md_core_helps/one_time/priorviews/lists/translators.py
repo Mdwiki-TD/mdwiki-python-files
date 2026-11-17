@@ -19,7 +19,6 @@ from md_core_helps.one_time.priorviews.bots import helps
 logger = logging.getLogger(__name__)
 
 
-
 Dir = Path(__file__).parent
 
 file = f"{Dir}/translators_mdwiki_langs.json"
@@ -41,14 +40,12 @@ counts_by_lang = {}
 
 # Iterate through each markdown file and language in `tra_by_lang`
 for lang, titles in tra_by_lang.items():
-
     if lang not in counts_by_translator:
         counts_by_translator[lang] = {}
     if lang not in counts_by_lang:
         counts_by_lang[lang] = 0
 
     for _, user in titles.items():
-
         if not user:
             continue
 
@@ -72,4 +69,3 @@ if __name__ == "__main__":
         for title, user in titles.items():
             if user != "":
                 logger.info(f"{lang=}, {title=}, {user=}")
-

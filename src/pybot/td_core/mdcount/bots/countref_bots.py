@@ -18,7 +18,6 @@ def get_refs_new(text: str):
     scanner = RegexScanner(r"(?i)<ref(?P<name>[^>/]*)>(?P<content>.*?)</ref>", text)
 
     for m in scanner.requests:
-
         name = m.get("name", "")
         content = m.get("content", "")
 

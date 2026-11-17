@@ -5,8 +5,6 @@ python3 c9/pwb.py WHOem/find_views_by_lang
 """
 
 import json
-
-
 import logging
 import os
 import sys
@@ -51,7 +49,6 @@ def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
 
     # split links to groups by 50 titles
     for i in range(0, len(links), 50):
-
         group = dict(list(links.items())[i : i + 50])
 
         new_data = view_bot.article_views_new(
@@ -65,7 +62,6 @@ def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
         # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
         for title, tabe in new_data.items():
-
             mdtitle = lang_links_mdtitle_s.get(lang, {}).get(title, None)
 
             if mdtitle is None:
@@ -146,7 +142,6 @@ def start() -> None:
         views_data = json.load(f)
 
     for lang, tab in to_work.items():
-
         n += 1
 
         views_data.update({x: {} for x in tab.values() if x not in views_data})

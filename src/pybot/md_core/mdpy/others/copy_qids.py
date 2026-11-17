@@ -37,7 +37,6 @@ texts = ""
 logger.info(f"len(qids_list) = {len(qids_list)}")
 
 for title, qid in qids_list.items():
-
     qid_in = in_qids.get(title, "")
 
     qua = "INSERT INTO qids (title, qid) SELECT %s, %s;"
@@ -70,4 +69,3 @@ if texts != "":
 # log all_texts
 with open(f"{Dir}/copy_qids.txt", "w", encoding="utf-8") as f:
     f.write(all_texts)
-

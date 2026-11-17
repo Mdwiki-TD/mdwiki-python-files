@@ -15,9 +15,6 @@ from mdwiki_api.wiki_page import mainpage, newapi
 logger = logging.getLogger(__name__)
 
 
-
-
-
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 
@@ -80,7 +77,6 @@ def new_vals() -> None:
         x = re.sub(r"^https*://(www.|)cdc.gov/", "https://www.cdc.gov/", x)
         return x
 
-
     for title, exts in toto.items():
         tat = []
 
@@ -121,7 +117,6 @@ def start() -> None:
         # logger.info(f'n:{n}/{ns}, title:{x} length:{len(exts)}')
 
     all_links = sorted(set(all_links))
-
 
     with open(file_all_links, "w", encoding="utf-8") as ff:
         json.dump(all_links, ff, ensure_ascii=False, indent=2)

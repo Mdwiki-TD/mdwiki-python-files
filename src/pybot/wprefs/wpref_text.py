@@ -11,12 +11,9 @@ from wprefs.wpref_text import fix_page
 import re
 import sys
 
-
 from wprefs.bots.duplicate import duplicate_references
 from wprefs.bots.fix_pt_months import pt_months
 from wprefs.es import fix_es
-
-
 from wprefs.helps import print_s
 from wprefs.infobox import expend_infobox
 

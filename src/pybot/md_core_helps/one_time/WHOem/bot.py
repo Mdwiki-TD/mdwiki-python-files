@@ -54,7 +54,6 @@ def get_lang_links(md_links):
     n = 0
 
     for x in md_links:
-
         n += 1
 
         if "new" in sys.argv and len(lang_links.get(x, {}).get("langs", {})) > 0:
@@ -90,11 +89,9 @@ def get_lang_links(md_links):
         logger.info(f"<<blue>> en:{title}, \n\tlanglinks: {len(langlinks)}")
 
         for lang, tit in langlinks.items():
-
             lang = change_codes.get(lang) or lang
 
             lang_links[title]["langs"][lang] = tit
-
 
     with open(f"{Dir}/lists/lang_links.json", "w", encoding="utf-8") as f:
         json.dump(lang_links, f, ensure_ascii=False, indent=2)

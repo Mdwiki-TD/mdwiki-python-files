@@ -79,7 +79,6 @@ def make_in_wd_tab(limit: int | None = None):
     in_wd = {}
 
     for wd in wdlist:
-
         prop = wd.get("prop", {}).get("value", "")
 
         qid = wd.get("item", {}).get("value", "")
@@ -96,7 +95,6 @@ def add_p11143_to_qids_in_wd(newlist) -> None:
     logger.info(f"len of newlist: {len(newlist)}")
 
     if len(newlist) > 0:
-
         logger.info(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
         if len(newlist.items()) < 100:
             logger.info("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
@@ -140,7 +138,6 @@ def fix_in_wd(merge_qids, qids) -> None:
                         logger.info(f"True.. Deleted {claimid}")
                     else:
                         logger.info(f"Failed to delete {claimid}")
-
 
         # add the correct claim
         ase = False

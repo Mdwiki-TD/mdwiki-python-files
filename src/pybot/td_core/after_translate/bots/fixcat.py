@@ -71,7 +71,6 @@ def get_pages_with_no_cat_old() -> None:
             add_cat[title] = cat
 
     for tit, cat in add_cat.items():
-
         tit2 = escape_string(tit)
 
         quanew = f"""UPDATE pages SET cat = '{cat}' WHERE title = '{tit2}';"""
@@ -107,7 +106,6 @@ def get_pages_with_no_cat() -> None:
             cat_to_titles.setdefault(cat, []).append(title)
 
     for cat, titles in cat_to_titles.items():
-
         values = list(set(titles))
 
         place_holder = ", ".join(["%s"] * len(values))

@@ -1,4 +1,3 @@
-
 import logging
 import re
 
@@ -6,9 +5,6 @@ import wikitextparser as wtp
 from md_core_helps.apis import mdwiki_api_call
 
 logger = logging.getLogger(__name__)
-
-
-
 
 
 def count_text(text: str):
@@ -63,7 +59,6 @@ def count_all(title: str = "", text: str = ""):
 
 
 if __name__ == "__main__":
-
     x = "Spondyloperipheral dysplasia"
 
     leadword, pageword = count_all(title=x)

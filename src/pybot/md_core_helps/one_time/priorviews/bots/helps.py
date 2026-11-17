@@ -11,8 +11,6 @@ from md_core_helps.one_time.priorviews.bots import helps
 
 import datetime
 import json
-
-
 import logging
 import re
 import sys
@@ -103,9 +101,6 @@ def dump_data(file, data) -> None:
         sys.exit()
     except Exception as e:
         logger.error(f"<<red>> dump Error: {e}")
-
-
-
 
 
 __all__ = [

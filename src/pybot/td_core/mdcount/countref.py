@@ -29,7 +29,6 @@ from td_core.td_dirs import paths
 logger = logging.getLogger(__name__)
 
 
-
 tab_data = {"all": {}, "lead": {}}
 # ---s
 
@@ -99,7 +98,6 @@ def main() -> None:
     )
 
     if "merge" in sys.argv:
-
         with open(paths.json_files.all_refcount, "w", encoding="utf-8") as outfile:
             logger.info(f"<<green>> {len(tab_data['all'])} lines to {paths.json_files.all_refcount}")
             json.dump(tab_data["all"], outfile, sort_keys=True, indent=2)
@@ -128,7 +126,6 @@ def main() -> None:
         vaild_links = get_links()
 
     for numb, x in enumerate(vaild_links):
-
         x = x.replace("\\'", "'")
 
         logger.info("------------------")

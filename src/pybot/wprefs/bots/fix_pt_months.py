@@ -49,7 +49,6 @@ def make_new_val(val):
         pt_m = months_lower.get(m.lower(), "")
 
         if pt_m != "":
-
             if d != "":
                 pt_m = f"de {pt_m}"
 
@@ -67,7 +66,6 @@ def make_new_val(val):
         pt_m = months_lower.get(m.lower(), "")
 
         if pt_m != "":
-
             if d != "":
                 pt_m = f"de {pt_m}"
 
@@ -109,18 +107,13 @@ def pt_months(text: str):
                     # arg.value = new_val
                     temp.set_arg(na, new_val)
 
-
         _new = parsed2.string
 
         x.contents = _new
 
-
     text = parsed.string
 
     return text
-
-
-
 
 
 __all__ = [

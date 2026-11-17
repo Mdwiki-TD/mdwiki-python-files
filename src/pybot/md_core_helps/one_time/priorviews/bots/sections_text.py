@@ -16,7 +16,6 @@ from md_core_helps.one_time.priorviews.lists import views
 logger = logging.getLogger(__name__)
 
 
-
 Dir = Path(__file__).parent
 
 text_v = """
@@ -186,7 +185,6 @@ def make_text(section, links):
     return faf
 
 
-
 if __name__ == "__main__":
     lngs = [
         "af",
@@ -311,4 +309,3 @@ if __name__ == "__main__":
     }
     u = make_text("Dentistry", lala)
     logger.info(u.replace("height:580px;", ""))
-

@@ -79,7 +79,6 @@ def fix_ref_template(text: str, returnsummary: bool = False):
     parsed = wtp.parse(text)
 
     for tag in parsed.get_tags(name="ref"):
-
         content = tag.contents
 
         if not content or not content.strip():
@@ -88,7 +87,6 @@ def fix_ref_template(text: str, returnsummary: bool = False):
         templates = tag.templates
 
         for temp in templates:
-
             name = str(temp.normal_name()).strip()
 
             temp_str = temp.string

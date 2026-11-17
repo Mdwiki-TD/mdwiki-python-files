@@ -50,14 +50,12 @@ def get_t(links, lang, data):
 
     m = 0
 
-
     if "onlynew" in sys.argv:
         links = [x for x in links if valid(x, data[lang])]
 
     lena = len(links)
 
     for title in links:
-
         title_lower = title.lower()
 
         m += 1
@@ -104,7 +102,6 @@ def start() -> None:
     tra_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
     for lang in langkeys:
-
         links = links_by_lang[lang]
 
         logger.info(f"lang: {lang}")
@@ -113,7 +110,6 @@ def start() -> None:
         n += 1
 
         tra_by_lang = get_t(links, lang, tra_by_lang)
-
 
     logem(file, tra_by_lang)
 

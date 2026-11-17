@@ -45,9 +45,7 @@ text = """
 parsed = wtp.parse(text)
 
 for table in parsed.tables:
-
     for x in table.cells():
-
         # logger.info("x[6]:", x[6])
 
         r_s = x[1].value.strip()

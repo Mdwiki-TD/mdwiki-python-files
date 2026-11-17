@@ -9,8 +9,6 @@ python3 c9/pwb.py priorviews/lists/links_by_section
 
 import copy
 import json
-
-
 import logging
 import os
 import sys
@@ -19,8 +17,6 @@ from pathlib import Path
 from md_core_helps.one_time.priorviews.bots.sections_links import get_section_links
 
 logger = logging.getLogger(__name__)
-
-
 
 
 Dir = Path(__file__).parent
@@ -35,7 +31,6 @@ logger.info(f"<<green>> len of all_pages_states: {len(all_pages_states)}")
 mdtitles_lang_title = {}
 
 for mdtitle, langs in all_pages_states.items():
-
     newlangs = {lang: v["title"] for lang, v in langs.items() if v["title"] != "" and v["color"] == "green"}
 
     # if 'test' in sys.argv: logger.info(newlangs)
@@ -52,7 +47,6 @@ links_done = []
 
 # split lists by sections
 for section, links in sections_links.items():
-
     _links_ = ["Tooth decay", "Angular cheilitis", "Bad breath", "Leukoplakia", "Periodontal disease", "Tonsil stones"]
 
     sec_links = {x: tab for x, tab in mdtitles_lang_title.items() if x in links}
@@ -70,7 +64,6 @@ if "small" in sys.argv:
 
 # make text for each section
 for _section, links in sects_links_langlinks.items():
-
     for _md, langs in links.items():
         for lang, title in langs.items():
             if lang not in links_by_lang:
@@ -115,4 +108,3 @@ if __name__ == "__main__":
 
     # logger.info(links_by_lang['ar'])
     logger.info(len(links_by_lang["ar"]))
-

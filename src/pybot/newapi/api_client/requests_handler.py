@@ -22,7 +22,6 @@ logger = logging.getLogger(__name__)
 # RequestsHandler — transport + retry layer
 
 
-
 class RequestsHandler:
     """
     Owns a ``requests.Session`` and drives every HTTP call through a unified
@@ -51,9 +50,7 @@ class RequestsHandler:
         self.maxlag_header = maxlag_header
         self._on_assertnameduserfailed = on_assertnameduserfailed or self._on_assertnameduserfailed_default
 
-
     # Abstract-ish contract that subclasses must satisfy
-
 
     @property
     def _session(self) -> requests.Session:
@@ -68,9 +65,7 @@ class RequestsHandler:
     def _on_assertnameduserfailed_default() -> None:
         raise NotImplementedError  # pragma: no cover
 
-
     # Retry loop  (called by WikiLoginClient.client_request)
-
 
     def request_with_retry(
         self,
@@ -202,9 +197,7 @@ class RequestsHandler:
 
         raise MaxlagError(f"Exceeded {self.max_retries} retries without a successful response.")
 
-
     # Protected CSRF helpers
-
 
     @staticmethod
     def _is_csrf_error(code: str, info: str) -> bool:
@@ -255,9 +248,7 @@ class RequestsHandler:
                 return data, bucket
         return data, params
 
-
     # Protected maxlag helper
-
 
     def _handle_maxlag(self, response: requests.Response, attempt: int) -> None:
         """

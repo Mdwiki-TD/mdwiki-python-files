@@ -3,8 +3,6 @@ import re
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-
-
 from md_core_helps.apis import mdwiki_api_call
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
@@ -27,7 +25,6 @@ def get_links_from_cats(getcat: str = ""):
     cac = sql_for_mdwiki.get_db_categories()
 
     for cat, dep in cac.items():
-
         if getcat != "" and cat != getcat:
             continue
 

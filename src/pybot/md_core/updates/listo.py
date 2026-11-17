@@ -103,4 +103,3 @@ text += "\n".join([f"# [[{dx}]]" for dx in re_listo])
 logger.info(text)
 
 mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/List", nocreate=0)
-

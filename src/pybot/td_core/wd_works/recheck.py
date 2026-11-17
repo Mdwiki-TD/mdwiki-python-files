@@ -106,7 +106,6 @@ def do_it_sql(lange, targets) -> None:
             logger.info(f'recheck.py len(result) = "{res_len}"')
 
             for liste in result:
-
                 target = liste["page_title"]
                 pp_value = liste["pp_value"]
 
@@ -247,7 +246,6 @@ def start() -> None:
     logger.info(f'len(newtabs) = "{len(newtabs)}"')
 
     for oldqid, tab in newtabs.items():
-
         en = tab.get("label", "").replace("User:Mr. Ibrahem/", "")
 
         numb += 1

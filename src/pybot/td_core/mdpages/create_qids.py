@@ -24,7 +24,6 @@ def create_qids(no_qids) -> None:
     """
 
     for x in no_qids:
-
         new_qid = wikidataapi.new_item(label="", lang="", returnid=True)
 
         if not new_qid or not str(new_qid).startswith("Q"):

@@ -68,7 +68,6 @@ def get_pages(tab) -> None:
         logger.info("get_pages: just_test mode (no SQL changes).")
 
     for old_title, new_title in table.items():
-
         new_qid = tab.get(new_title, False)
         old_qid = tab.get(old_title, False)
 
@@ -113,7 +112,6 @@ def get_pages(tab) -> None:
 
         if "no" not in sys.argv:
             if set_new_title:
-
                 for new_title, old_qid in set_new_title.items():
                     sql_qids.set_title_where_qid(new_title, old_qid)
 

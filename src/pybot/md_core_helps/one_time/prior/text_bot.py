@@ -1,8 +1,6 @@
 """ """
 
 import json
-
-
 import logging
 import sys
 from pathlib import Path
@@ -41,7 +39,6 @@ def match_p(refs, p_ref):
 
     # Otherwise, return True and the length of `same`
     return True, len_same
-
 
 
 t_sections = {}
@@ -111,7 +108,6 @@ def get_t_sections():
     red_line = ""
 
     for _, ta in all_langs_states.items():
-
         all_o = ta["green"] + ta["red"]
 
         all_line += f"{all_o:,} || "
@@ -166,11 +162,9 @@ def make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_ref
                     logger.info(f"ref {x}, count:{count}....")
                     break
 
-
     tab = {"same1": same1, "same2": same2, "color": color}
 
     return tab
-
 
 
 all_pages_states = {}
@@ -183,9 +177,6 @@ def log_all_pages_states() -> None:
     if all_pages_states != {}:
         logger.info(f"<<yellow>> (): length: {len(all_pages_states.keys())}")
         json.dump(all_pages_states, open(file, "w", encoding="utf-8"))
-
-
-
 
 
 log_all_pages_states()
@@ -228,7 +219,6 @@ def make_text(allo, ttt: str = ""):
 
     text = text_main
 
-
     # Add the language keys to text separated by '!!'.
     # text += " !! ".join(langs_keys)
 
@@ -244,7 +234,6 @@ def make_text(allo, ttt: str = ""):
     langs_keys_text = " !! ".join([format_x(x) for x in langs_keys])
     text += f" {langs_keys_text}"
 
-
     n = 0
 
     all_green = 0
@@ -254,7 +243,6 @@ def make_text(allo, ttt: str = ""):
     langs_green_red = {}
 
     for en, ta in allo.items():
-
         en_extlinks = [x.lower() for x in ta["extlinks"]]
         en_refsname = [x.lower() for x in ta["refsname"].keys()]
 
@@ -280,7 +268,6 @@ def make_text(allo, ttt: str = ""):
         lang_text = ""
 
         for z in langs_keys:
-
             if z not in all_langs_states:
                 all_langs_states[z] = {"red": 0, "green": 0}
             if z not in langs_green_red:
@@ -298,7 +285,6 @@ def make_text(allo, ttt: str = ""):
             tito = "|"
 
             if z in langs:
-
                 all_langlinks += 1
 
                 color_tab = make_color(en_extlinks, en_refsname, p_ext, p_names, lead_extlinks, lead_refsname)
@@ -306,7 +292,6 @@ def make_text(allo, ttt: str = ""):
                 color = color_tab["color"]
 
                 if color == "red" and ta.get("old", {}) != {}:
-
                     old = ta["old"]
 
                     old_lead = old["lead"]
@@ -328,7 +313,6 @@ def make_text(allo, ttt: str = ""):
                     color = color_tab["color"]
 
                     if color == "red":
-
                         en_extlinks_o = [x.lower() for x in old["extlinks"]]
                         en_refsname_o = [x.lower() for x in old["refsname"].keys()]
                         lead_refsname_o = [x.lower() for x in old_lead["refsname"].keys()]
@@ -339,7 +323,6 @@ def make_text(allo, ttt: str = ""):
                         )
 
                         color = color_tab2["color"]
-
 
                 if color == "red":
                     translator = translators.tra_by_lang.get(z, {}).get(tit.lower(), "")
@@ -362,7 +345,6 @@ def make_text(allo, ttt: str = ""):
                     all_langs_states[z]["red"] += 1
                     all_red += 1
                     color = "#fcc0c0"  # red
-
 
                 same = f"{same1}/{same2}"
 
@@ -400,7 +382,6 @@ def make_text(allo, ttt: str = ""):
     red_line = ""
 
     for _, ta in langs_green_red.items():
-
         green_line += f"{ta['green']} || "
 
         red_line += f"{ta['red']} || "
@@ -443,9 +424,6 @@ def make_text(allo, ttt: str = ""):
         text = text.replace("height:580px;", "")
 
     return text
-
-
-
 
 
 __all__ = [

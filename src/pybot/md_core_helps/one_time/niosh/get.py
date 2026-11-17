@@ -6,8 +6,6 @@ python3 c9/pwb.py niosh/get write ask
 """
 
 import json
-
-
 import logging
 import sys
 from pathlib import Path
@@ -137,9 +135,6 @@ def run(x, urls) -> None:
     write_to_mdwiki(by_title, x)
 
 
-
-
-
 for x, urls in data.items():
     run(x, urls)
     # break
@@ -161,7 +156,6 @@ logger.info(f"wrote {file4}")
 write_to_mdwiki(by_title_all, "all")
 
 write_main()
-
 
 
 __all__ = [

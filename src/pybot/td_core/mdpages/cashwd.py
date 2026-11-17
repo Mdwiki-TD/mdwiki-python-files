@@ -6,8 +6,6 @@ python3 c9/pwb.py td_core/mdpages/cashwd
 """
 
 import json
-
-
 import logging
 import os
 from datetime import datetime
@@ -30,7 +28,6 @@ main_table_sites = {}
 missing = {"all": 0, "date": datetime.now().strftime("%Y-%m-%d"), "langs": {}}
 
 skip_codes = ["commons", "species", "ary", "arz", "meta"]
-
 
 
 def get_qids_sitelinks(qidslist):
@@ -75,7 +72,6 @@ def get_qids_sitelinks(qidslist):
     all_entities = {}
 
     for i in range(0, len(qs_list), 100):
-
         qids = qs_list[i : i + 100]
 
         qids = [x for x in qids if x]
@@ -87,16 +83,13 @@ def get_qids_sitelinks(qidslist):
         json1 = wikidataapi.post(params_wd)
 
         if json1:
-
             entities = json1.get("entities", {})
 
             all_entities = {**all_entities, **entities}
 
         for _qid_1, kk in all_entities.items():
-
             numb += 1
             if "missing" in kk:
-
                 mis_qids.append(kk.get("id"))
 
                 continue
@@ -120,7 +113,6 @@ def get_qids_sitelinks(qidslist):
             # "abwiki": {"site": "abwiki","title": "Обама, Барак","badges": []}
 
             for _, tab in kk.get("sitelinks", {}).items():
-
                 title = tab.get("title", "")
                 site = tab.get("site", "")
 
@@ -199,7 +191,6 @@ def cash_wd() -> None:
     cac = sql_for_mdwiki.get_db_categories()
 
     for cat, dep in cac.items():
-
         mdwiki_pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=dep, ns="0")
 
         titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
@@ -211,7 +202,6 @@ def cash_wd() -> None:
     missing["all"] = len(titles)
     # ---s
     for x in titles:
-
         qid = en_to_md.mdtitle_to_qid.get(x, "")
 
         if qid != "":

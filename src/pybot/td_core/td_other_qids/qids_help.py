@@ -109,7 +109,6 @@ def check_qids(work_list, all_xpages, ty):
     #     params["rdlimit"] = "max"
 
     for i in range(0, len(work_list), 50):
-
         group = work_list[i : i + 50]
         group = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in group]
 
@@ -120,7 +119,6 @@ def check_qids(work_list, all_xpages, ty):
         jsone = submit_api(params, site="en", returnjson=False)
 
         if jsone and "batchcomplete" in jsone:
-
             query = jsone.get("query", {})
 
             redirects_x = {x["to"]: x["from"] for x in query.get("redirects", [])}
@@ -139,7 +137,6 @@ def check_qids(work_list, all_xpages, ty):
             # { "-1": { "ns": 0, "title": "Fsdfdsf", "missing": "" }, "2767": { "pageid": 2767, "ns": 0, "title": "ACE inhibitor" } }
 
             for _, tab in pages.items():
-
                 title = tab.get("title", "")
 
                 qid = tab.get("pageprops", {}).get("wikibase_item", "")

@@ -23,8 +23,6 @@ logger = logging.getLogger(__name__)
 last_year = datetime.now().year - 1
 
 
-
-
 Dir = Path(__file__).parent
 editors_dir = Dir / "editors"
 
@@ -71,7 +69,6 @@ def get_editors_sql(links, site, split_by: int = 100):
     for i in tqdm.tqdm(
         range(0, len(links), split_by), desc=f"get_editors_sql site:{site}", total=len(links) // split_by
     ):
-
         pages = links[i : i + split_by]
 
         # lim = ' , '.join(['?' for x in pages])
@@ -85,7 +82,6 @@ def get_editors_sql(links, site, split_by: int = 100):
         result = lang_db.select_safe(qua2)
 
         for x in result:
-
             actor_name = x["actor_name"]
 
             # skip if actor_name iis IP address
@@ -96,7 +92,6 @@ def get_editors_sql(links, site, split_by: int = 100):
                 editors[actor_name] = 0
 
             editors[actor_name] += x["count"]
-
 
     return editors
 

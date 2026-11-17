@@ -8,13 +8,9 @@ python3 c9/pwb.py prior/p4 test
 """
 
 import json
-
-
 import logging
 import os
 import sys
-
-
 from pathlib import Path
 
 from md_core_helps.one_time.prior import get_them
@@ -138,7 +134,6 @@ def work_in_en_page(title) -> None:
     # if 'test' in sys.argv: logger.info(xss)
 
     for lang, tit in langlinks.items():
-
         n += 1
 
         lang = change_codes.get(lang) or lang
@@ -163,9 +158,6 @@ def work_in_en_page(title) -> None:
         logger.info(f"\tp{n}/{len(langlinks)}:\t{lang.ljust(20)}\t{lenex} extlinks, {lenre} refsname..")
 
         All[title]["langs"][lang] = tata
-
-
-
 
 
 def work_in_links(links, main_file, main_file_en, log_it: bool = True) -> None:
@@ -197,14 +189,12 @@ def work_in_links(links, main_file, main_file_en, log_it: bool = True) -> None:
 
         if "newenonly" in sys.argv:
             if x in en_in and en_in[x] != {}:
-
                 ext = en_in[x].get("extlinks", [])
                 ref = en_in[x].get("refsname", [])
                 lead_ex = en_in[x].get("lead", {}).get("extlinks", [])
                 lead_re = en_in[x].get("lead", {}).get("refsname", [])
 
                 if len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0 and len(lead_re) > 0:
-
                     logger.info(f"<<yellow>> en {x} already in {basefilename}, skip..........")
                     continue
 
@@ -223,7 +213,6 @@ def start_all() -> None:
     links = sorted(main_links())
     # start work in All links
 
-
     tanko = {}
 
     n = 0
@@ -239,8 +228,6 @@ def start_all() -> None:
         tanko[str(n)] = {"file": main_file, "file_en": main_file_en, "links": titles}
 
         logger.info(f'toolforge jobs run s{n} --image python3.9 --command "python3 c9/pwb.py prior/p4 -s:{n}"')
-
-
 
     valu = ""
 

@@ -10,7 +10,6 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
-
 Dir = Path(__file__).parent
 
 project_js_new = f"{Dir}/json_langs/"
@@ -40,12 +39,10 @@ def work_in_jsfile(filename) -> None:
 
         return extlinks2
 
-
     for title, tabs in data.items():
         if tabs.get("langs"):
             langs = tabs["langs"]
             for lang, tab in langs.items():
-
                 extlinks = fix_extlinks(tab["extlinks"])
 
                 data[title]["langs"][lang]["extlinks"] = extlinks
@@ -65,11 +62,7 @@ def work_in_jsfile(filename) -> None:
 
             data[title]["old"]["extlinks"] = extlinks
 
-
     json.dump(data, open(filename, "w", encoding="utf-8"))
-
-
-
 
 
 for filename in os.listdir(project_js_new):
@@ -87,7 +80,6 @@ for filename in os.listdir(project_js_newen):
         logger.info(f"filename: {filename2}..")
 
         work_in_jsfile(filename2)
-
 
 
 __all__ = [

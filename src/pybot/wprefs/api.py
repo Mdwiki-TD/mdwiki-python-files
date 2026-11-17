@@ -122,7 +122,6 @@ def log(lang):
         print_s(f"wpref.py login Success to {lang}.{family}.org")
         login_done[1] = lang
 
-
     # if r2.json()['login']['result'] != 'Success': logger.info(r2.json()['login']['reason'])
     # raise RuntimeError(r2.json()['login']['reason'])
     # get edit token
@@ -193,7 +192,6 @@ def get_revisions(title, lang: str = "") -> list[dict[str, Any]]:
     revisions = []
 
     while rvcontinue != "":
-
         if rvcontinue != "x":
             params["rvcontinue"] = rvcontinue
 
@@ -291,7 +289,6 @@ def page_put(oldtext, new_text, summary, title, lang):
         return {}
 
     if "ask" in sys.argv and not ask_a[1]:
-
         print_s(f" -Edit summary: {summary}:")
         sa = input(
             f"<<yellow>>mdwiki/wpref.py: Do you want to accept these changes? ([y]es, [N]o, [a]ll): for page ({lang}:{title})"

@@ -6,11 +6,9 @@ python3 c9/pwb.py priorviews/by_lang ask
 
 from pathlib import Path
 
-
 from md_core_helps.one_time.priorviews.lists import translators, views, words
 from md_core_helps.one_time.priorviews.lists.creators_to_translators import creators_as_translators
 from mdwiki_api.mdwiki_page import md_MainPage
-
 
 Dir = Path(__file__).parent
 
@@ -40,7 +38,6 @@ total_wrds = 0
 mm = 0
 
 for lang, vv in keys_1.items():
-
     if lang == "en":
         continue
 
@@ -85,7 +82,5 @@ if __name__ == "__main__":
     if not exists:
         create = page.create(text=newtext, summary="update")
     else:
-
         text = page.get_text()
         save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
-

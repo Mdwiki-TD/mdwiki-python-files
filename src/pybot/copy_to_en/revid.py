@@ -85,7 +85,6 @@ def get_all_revids() -> None:
     cats = sql_for_mdwiki.get_db_categories()
 
     for cat, depth in cats.items():
-
         ca = cat_depth(cat, depth=depth)
 
         revids.update(ca)

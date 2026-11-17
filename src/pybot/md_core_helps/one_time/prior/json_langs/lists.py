@@ -13,7 +13,6 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
-
 Dir = Path(__file__).parent
 
 project_js_new = Dir
@@ -43,4 +42,3 @@ for en, tab in json_langs_all.items():
         refsname = ta["refsname"]
 
         json_langs_by_langs[lang][title] = {"extlinks": extlinks, "refsname": refsname, "en": en}
-

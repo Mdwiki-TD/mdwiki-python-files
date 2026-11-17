@@ -18,7 +18,6 @@ def outputnew(s) -> None:
         logger.info(s)
 
 
-
 ref_complite = re.compile(r"(<ref\s*name\s*\=*\s*[\"\']*([^>]*)[\"\']*\s*>[^<>]+</ref>)")
 ref_short = re.compile(r"(<ref\s*name\s*\=\s*[\"\']*([^>]*)[\"\']*\s*\/\s*>)")
 
@@ -57,7 +56,6 @@ def fix_ref(first, alltext):
     return first
 
 
-
 if __name__ == "__main__":
     ff = """"""
 
@@ -65,4 +63,3 @@ if __name__ == "__main__":
 
     if "test" in sys.argv:
         new = fix_ref(ff, all)
-

@@ -14,7 +14,6 @@ def make_line(refs):
     line = "\n"
 
     for g, gag in refs.items():
-
         for name, ref in gag.items():
             la = f'<ref name="{name}">{ref}</ref>\n'
             if g != "":
@@ -38,7 +37,6 @@ def get_refs(text: str):
     refs_to_name = {}
 
     for x in tags:
-
         if not x or not x.name:
             continue
         if x.name != "ref":
@@ -85,7 +83,6 @@ def add_line_to_temp(line, new_text):
     parsed = wtp.parse(new_text)
 
     for template in reversed(parsed.templates):
-
         if not template:
             continue
 

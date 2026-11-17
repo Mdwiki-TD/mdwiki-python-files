@@ -6,8 +6,6 @@ python3 c9/pwb.py priorviews/find/find_creator -lang:ar
 """
 
 import json
-
-
 import logging
 import os
 import sys
@@ -52,7 +50,6 @@ def get_creator(links, lang) -> None:
         if not i or i == empty:
             return True
         return False
-
 
     if "new" in sys.argv:
         # links = [ x for x in links if not x in CreatorsData[lang] or CreatorsData[lang][x] == '']
@@ -104,7 +101,6 @@ def get_creator(links, lang) -> None:
             if added % 50 == 0:
                 log_data()
 
-
         if "testt" in sys.argv:
             logger.info(result)
             break
@@ -122,17 +118,13 @@ def start() -> None:
     n = 0
 
     for lang in langkeys:
-
         links = links_by_lang[lang]
 
         n += 1
 
         get_creator(links, lang)
 
-
     log_data()
-
-
 
 
 if __name__ == "__main__":

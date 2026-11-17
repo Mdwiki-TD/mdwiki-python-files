@@ -66,7 +66,6 @@ def get_titles(lang: str = ""):
     pages_users_tab = {}
 
     for tab in pages_users:
-
         if tab["id"] in already_in_db:
             continue
 
@@ -120,7 +119,6 @@ def work_one_tab(tab, missing, redirects):
             logger.info(f"<<yellow>> new_target exists, ns: {ns}")
 
             if not page2.isredirect() and ns == 0:
-
                 to_set[new_target] = tab
                 # sql_for_mdwiki.set_target_where_id(new_target, iid)
 
@@ -221,7 +219,6 @@ def start() -> None:
     logger.info(f"<<green>> len of titles_by_lang {len(titles_by_lang)}")
 
     for lang, tabs in titles_by_lang.items():
-
         work_in_titles(lang, tabs)
 
     """

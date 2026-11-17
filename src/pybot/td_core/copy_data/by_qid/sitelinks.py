@@ -54,7 +54,6 @@ def start_to_sql(data) -> None:
 
     # for qid, codes in data.items():
     for qid, sitelinks in data.items():
-
         qid_in_sql = in_sql_qid_targets.get(qid, {})
 
         logger.info(f"<<green>> {qid=} {len(sitelinks)=}, qid_in_sql: {len(qid_in_sql)=}")
@@ -107,7 +106,6 @@ def wbgetentities(qs_list):
     logger.info(f" for:{len(qs_list)}:")
 
     for i in tqdm.tqdm(range(0, len(qs_list), 100)):
-
         qids = qs_list[i : i + 100]
 
         qids = [x for x in qids if x]
@@ -120,7 +118,6 @@ def wbgetentities(qs_list):
         json1 = post_it(params_wd)
 
         if json1:
-
             entities = json1.get("entities", {})
 
             # {'Q133247108': {'type': 'item', 'id': 'Q133247108', 'sitelinks': {'arwiki': {'site': 'arwiki', 'title': 'تصنيف:حشرات كولومبيا', 'badges': []}, 'enwiki': {'site': 'enwiki', 'title': 'Category:Insects of Colombia', 'badges': []}}}}
@@ -148,9 +145,7 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
     logger.info(f"<<yellow>> {len(all_entities)=}.")
 
     for qid, tab in all_entities.items():
-
         if "missing" in tab:
-
             mis_qids.append(tab.get("id"))
 
             continue
@@ -164,7 +159,6 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
         # "abwiki": {"site": "abwiki","title": "Обама, Барак","badges": []}
 
         for _, sub_tab in tab.get("sitelinks", {}).items():
-
             title = sub_tab.get("title", "")
             site = sub_tab.get("site", "")
 
@@ -213,7 +207,6 @@ def main() -> None:
 
         logger.info(f"len of qids in json file: {len(lists.get('qids', {}))}.")
     else:
-
         lists = get_qids_sitelinks(qids, qids_to_mdtitle)
 
         logger.info(f"len of qids from wikidata: {len(lists.get('qids', {}))}.")

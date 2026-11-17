@@ -52,7 +52,6 @@ def fix_links(x):
     return x
 
 
-
 for title in titles:
     exts = data[title]
     title = title.replace("_", " ")

@@ -7,8 +7,6 @@ python3 c9/pwb.py priorviews/sections_links
 """
 
 import json
-
-
 import logging
 import os
 from pathlib import Path
@@ -17,8 +15,6 @@ import wikitextparser
 from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
-
-
 
 
 Dir = Path(__file__).parent
@@ -34,7 +30,6 @@ old = json.load(open(sect_file, "r", encoding="utf-8"))
 replaces = {
     "Syncope": "Syncope (medicine)",
 }
-
 
 
 class Sectioslinks:
@@ -130,7 +125,6 @@ def get_section_links(new: bool = False):
     return o_links
 
 
-
 if __name__ == "__main__":
     all_links = {}
 
@@ -154,4 +148,3 @@ if __name__ == "__main__":
         if len(v) > 1:
             sections = ", ".join(v)
             logger.info(f"link: ({x}) in {len(v)} sections: {sections}")
-

@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 Dir = str(Path(__file__).parents[0])
 
 
-
 NEW_DATA_duplicate = {}
 new_data = {}
 

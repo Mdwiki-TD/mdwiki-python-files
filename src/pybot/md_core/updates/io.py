@@ -67,7 +67,6 @@ def get_timestamp(titles) -> None:
             logger.info("page:%d:%s", num, page)
 
 
-
 get_timestamp(listo)
 
 laly = [[int(io.split("T")[0].replace("-", "")), x] for x, io in NewList.items() if io.split("T")[0].replace("-", "")]
@@ -124,7 +123,6 @@ if "test" in sys.argv:
     logger.info(text)
 else:
     mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
-
 
 
 __all__ = [

@@ -109,7 +109,6 @@ class FindInHistory:
         d = 0
 
         while continue_params != {} or d == 0:
-
             d += 1
 
             if continue_params:
@@ -246,10 +245,7 @@ def search_history(
     return ""
 
 
-
 if __name__ == "__main__":
-
     t = search_history("نكاف", "ar")
     logger.info(f"au: {t}")
     sys.exit()
-

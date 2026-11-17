@@ -18,7 +18,6 @@ logger = logging.getLogger(__name__)
 Dir = str(Path(__file__).parents[0])
 
 
-
 que = """select DISTINCT title, importance from assessments;"""
 
 NEW_DATA_duplicate = {}

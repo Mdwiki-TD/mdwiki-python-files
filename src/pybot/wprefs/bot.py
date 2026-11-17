@@ -25,7 +25,6 @@ from wprefs.wpref_text import fix_page
 logger = logging.getLogger(__name__)
 
 
-
 skip_langs = ["en"]
 move_dot = {1: False}
 expend_infobox = {1: False}
@@ -76,7 +75,6 @@ def work_one_lang(list_, lang) -> None:
         such as logging output and modifying files.
     """
 
-
     logger.info(f"<<blue>> work on lang: {lang}.wikipedia......................")
 
     if lang in skip_langs:
@@ -97,7 +95,6 @@ def work_one_lang(list_, lang) -> None:
     dns = []
 
     for title in newlist:
-
         lio = f"{lang}:{title}"
         number += 1
         logger.info(f"<<yellow>> {number} from {len(newlist)}, page: {lio}")

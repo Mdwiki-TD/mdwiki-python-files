@@ -10,7 +10,6 @@ from pathlib import Path
 from md_core_helps.one_time.priorviews.bots import helps
 from mdwiki_api.mdwiki_page import md_MainPage
 
-
 Dir = Path(__file__).parent
 
 
@@ -36,7 +35,6 @@ def make_by_lang(one_langs_only):
                 tab2[lang]["list"][cunts] = []
             tab2[lang]["list"][cunts].append(user)
 
-
     return tab2
 
 
@@ -47,7 +45,6 @@ def sect_text(lang, userstable):
     lang_cunt = 0
 
     for cunts, users in userstable.items():
-
         for _u in users:
             lang_cunt += cunts
 
@@ -56,7 +53,6 @@ def sect_text(lang, userstable):
         usrs_line = ", ".join([helps.talk_url(lang, x, x) for x in users])
 
         sc2 += f"\n! {cunts} \n| {usrs_line}\n|-"
-
 
     sc2 += "\n|}"
     seec = f"\n==={lang} ({lang_cunt})===\n{sc2}"
@@ -73,7 +69,6 @@ def work_all(translators_all) -> None:
     all_usrs = len(translators_a.keys())
 
     for x in list(translators_a):
-
         # skip user match ip address
         if helps.is_ip(x):
             del translators_a[x]
@@ -88,13 +83,11 @@ def work_all(translators_all) -> None:
     text += f"* all users in the report: {all_usrs}\n==multi langs==\n"
 
     for x, v in multiple_langs.items():
-
         text += f"\n# [[w:en:User talk:{x}|User:{x}]]: {v['all']}\n#*"
         bylang = v["by_lang"]
         # sort by lang
         bylang = dict(sorted(bylang.items(), key=lambda item: item[1], reverse=True))
         text += ", ".join([helps.talk_url(langg, x, langg) + f": {v}" for langg, v in bylang.items()])
-
 
     seec = "\n\n==by lang==\n\n"
 
@@ -104,9 +97,7 @@ def work_all(translators_all) -> None:
     langs_a = dict(sorted(langs_a.items(), key=lambda item: item[1]["all"], reverse=True))
 
     for lang, users in langs_a.items():
-
         seec += sect_text(lang, users["list"])
-
 
     text += seec
 
@@ -116,11 +107,7 @@ def work_all(translators_all) -> None:
     if not exists:
         page.create(text=text, summary="update")
     elif oldtext != text:
-
         page.save(newtext=text, summary="update", nocreate=1, minor="")
-
-
-
 
 
 __all__ = [

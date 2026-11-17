@@ -31,7 +31,6 @@ def main() -> None:
     to_add_category_members = {}
 
     for cat in cats.keys():
-
         is_video_cat = cat in videos_cats or "video" in cat.lower()
         onlyns = 3000 if is_video_cat else ""
         ns = 3000 if is_video_cat else 0
@@ -72,7 +71,6 @@ def add_category_members_to_sql(to_add_category_members) -> None:
     db_category_members = sql_for_mdwiki.get_db_category_members()
 
     for category, titles_from_mdwiki in to_add_category_members.items():
-
         cats_in_db = db_category_members.get(category, [])
 
         not_in = [
@@ -94,7 +92,6 @@ def test() -> None:
 
 
 if __name__ == "__main__":
-
     if "test" in sys.argv:
         test()
         exit()

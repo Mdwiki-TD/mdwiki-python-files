@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 Dir = str(Path(__file__).parents[0])
 
 
-
 que = """select DISTINCT r_title, r_lead_refs, r_all_refs from refs_counts;"""
 
 NEW_DATA_duplicate = {}

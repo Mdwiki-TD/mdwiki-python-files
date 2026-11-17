@@ -31,19 +31,16 @@ def insert_dict(
     values_line = ", ".join(["%s"] * len(columns))
 
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
-
         tab = list_of_lines[i : i + lento]
 
         values = []
 
         for vav in tab:
-
             values_k = [vav.get(x, "") for x in columns]
 
             values_2 = []
 
             for value in values_k:
-
                 # value = escape_string(value) if isinstance(value, str) else value
 
                 values_2.append(value)
@@ -92,11 +89,9 @@ def update_table(
     columns2 = update_columns or [x for x in columns if x != title_column]
 
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
-
         tab = list_of_lines[i : i + lento]
 
         for vav in tab:
-
             values = [vav.get(x, "") for x in columns2]
 
             set_line = ", ".join([f"{x} = %s" for x in columns2])
@@ -128,11 +123,9 @@ def update_table_2(
     done = 0
 
     for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
-
         tab = list_of_lines[i : i + lento]
 
         for vav in tab:
-
             values = [vav.get(x, "") for x in columns_to_set]
 
             set_line = ", ".join([f"{x} = %s" for x in columns_to_set])

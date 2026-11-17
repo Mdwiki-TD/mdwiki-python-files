@@ -6,8 +6,6 @@ python3 c9/pwb.py priorviews/find/find_views test
 
 import datetime
 import json
-
-
 import logging
 import os
 import sys
@@ -66,7 +64,6 @@ def get_v(links, views_data, file_path):
     lena = len(links.keys())
 
     for mdtitle, langs in links.items():
-
         m += 1
 
         if mdtitle not in views_data:
@@ -80,7 +77,6 @@ def get_v(links, views_data, file_path):
         leno = len(langs.keys())
 
         for lang, title in langs.items():
-
             if lang != "en" and "en" in sys.argv:
                 continue
 
@@ -114,14 +110,12 @@ def start() -> None:
 
     # make text for each section
     for section, links in sects_links_langlinks.items():
-
         logger.info(f"section: {section}")
         logger.info(f"links: {len(links)}")
 
         n += 1
 
         get_v(links, views_data, file)
-
 
     log_views(file, views_data)
 

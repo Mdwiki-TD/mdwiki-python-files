@@ -25,7 +25,6 @@ def replace_in_sql(reds, ty) -> None:
     table_name = "qids_others" if ty == "other" else "qids"
 
     for numb, (old_q, new_q) in enumerate(reds.items(), start=1):
-
         logger.info(f"<<blue>> {numb}, old_q: {old_q}, new_q: {new_q}")
 
         qua = f'update {table_name} set qid = "{new_q}" where qid = "{old_q}"'

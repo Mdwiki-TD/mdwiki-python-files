@@ -50,11 +50,9 @@ def work(title) -> None:
     newtext = text
 
     for temp in ingr:
-
         namestrip, params = temp["namestrip"], temp["params"]
 
         if namestrip.lower() == "ourworldindatamirror":
-
             pas += f"{str(params)}\n"
 
             param = params.get(1) or params.get("1") or ""
@@ -66,7 +64,6 @@ def work(title) -> None:
                     param = f"{pp}={vv}"
 
                     newtext = fix_p(title, newtext, param)
-
 
             param = param.strip()
             if param not in values:

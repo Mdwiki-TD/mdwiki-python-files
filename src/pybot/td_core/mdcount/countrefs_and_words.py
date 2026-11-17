@@ -116,7 +116,6 @@ def main() -> None:
     refs_tab_data["all"], refs_tab_data["lead"] = get_jsons_new(file_all_refs, file_lead_refs, "ref")
 
     if "merge" in sys.argv:
-
         with open(file_all_words, "w", encoding="utf-8") as outfile:
             logger.info(f"<<green>> {len(words_tab_data['all'])} lines to {file_all_words}")
             json.dump(words_tab_data["all"], outfile, sort_keys=True, indent=2)
@@ -153,7 +152,6 @@ def main() -> None:
         vaild_links = get_links()
 
     for numb, x in enumerate(vaild_links):
-
         x = x.replace("\\'", "'")
 
         logger.info("------------------")

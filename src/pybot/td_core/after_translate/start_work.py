@@ -60,7 +60,6 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
     done = 0
 
     for lis in result:
-
         done += 1
 
         target = lis["title"]
@@ -136,7 +135,6 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
 
         # للتأكد من الصفحات غير المنشورة
         if not_puplished and target_in == "":
-
             if not tul_target:
                 logger.info(laox)
                 to_add += 1

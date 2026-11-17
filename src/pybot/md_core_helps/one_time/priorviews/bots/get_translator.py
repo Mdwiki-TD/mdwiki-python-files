@@ -26,7 +26,6 @@ from md_core_helps.one_time.priorviews.bots import get_translator
 # helps.is_ip(user)
 
 
-
 class FindTranslator:
     def __init__(self, title, lang: str = "en") -> None:
 
@@ -70,7 +69,6 @@ class FindTranslator:
         rvcontinue = "x"
 
         while rvcontinue != "":
-
             if rvcontinue != "x":
                 params["rvcontinue"] = rvcontinue
 
@@ -108,10 +106,7 @@ def get_au(title, lang):
     return auu
 
 
-
 if __name__ == "__main__":
-
     t = get_au("نكاف", "ar")
     logger.info(f"au: {t}")
     sys.exit()
-

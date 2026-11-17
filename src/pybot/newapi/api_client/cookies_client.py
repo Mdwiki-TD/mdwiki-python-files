@@ -112,9 +112,7 @@ def _delete_cookie_file(path: Path | None, reason: str = "") -> None:
         logger.exception("Could not delete cookie file %s: %s", path, exc)
 
 
-
 # CookiesClient — isolated cookie I/O (unchanged from original)
-
 
 
 class CookiesClient:

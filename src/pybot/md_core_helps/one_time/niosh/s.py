@@ -4,8 +4,6 @@ python3 c9/pwb.py niosh/s
 """
 
 import json
-
-
 import logging
 import os
 import re
@@ -69,7 +67,6 @@ def work_in_file(filename) -> None:
                 nan[na] = value
 
         tab.append(nan)
-
 
     lista = [x["url"].replace("http://", "https://") for x in tab if x.get("url", "").find("cdc.gov/niosh/") != -1]
     lista = sorted(lista, key=lambda x: x.lower(), reverse=False)

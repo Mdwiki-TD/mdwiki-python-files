@@ -54,7 +54,6 @@ def work_for_list(en_keys, old_values):
         ase = {x["title"]: x for x in result}
 
         for title, tabe in ase.items():
-
             # {'pageid': 3186837, 'ns': 0, 'title': 'WAGR syndrome', 'pageassessments': {'Medicine': {'class': 'Start', 'importance': 'Low'}}}
 
             importance = tabe.get("pageassessments", {}).get("Medicine", {}).get("importance", "")
@@ -131,7 +130,6 @@ def get_old_values(json_file):
     old_dict = {}
 
     for _, y in old_values.items():
-
         old_dict.setdefault(y, 0)
 
         old_dict[y] += 1
@@ -140,11 +138,9 @@ def get_old_values(json_file):
     old_dict = dict(sorted(old_dict.items(), key=lambda item: item[1], reverse=True))
 
     for k, v in old_dict.items():
-
         logger.info(f"<<green>> importance:({k}) count:({v})")
 
     if "merge" in sys.argv:
-
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(old_values, outfile, sort_keys=True, indent=2)
 
@@ -185,7 +181,6 @@ def main() -> None:
         logger.info(f"old vaild_links: {len(en_keys_2)}, new video pages: {len(vaild_links)}")
 
     elif "newpages" in sys.argv:
-
         en_keys_2 = list(vaild_links)
 
         pages_new = [x for x in en_keys_2 if x not in old_values]
@@ -204,7 +199,6 @@ def main() -> None:
     data_tab[1] = work_for_list(vaild_links, old_values)
 
     if "nodump" not in sys.argv:
-
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(data_tab[1], outfile, sort_keys=True, indent=2)
 

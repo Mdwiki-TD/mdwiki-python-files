@@ -21,7 +21,6 @@ def extract_templates_and_params(text: str | Any) -> list[dict[str, Any]]:
     parsed = wtp.parse(text)
 
     for template in parsed.templates:
-
         if not template:
             continue
 

@@ -67,7 +67,6 @@ def main() -> None:
         if arg in ["-page", "-title"]:
             List = [value]
 
-
     num = 0
     for title in List:
         num += 1
@@ -77,9 +76,5 @@ def main() -> None:
         work(title)
 
 
-
-
-
 if __name__ == "__main__":
     main()
-

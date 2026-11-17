@@ -5,7 +5,6 @@ from td_core.fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 
 """
 
-
 import logging
 import sys
 
@@ -28,7 +27,6 @@ def work_in_new_tabs_to_db(new_tabs_to_db) -> None:
     logger.info(f"len of new_tabs_to_db {len(new_tabs_to_db)}")
 
     for tab in new_tabs_to_db:
-
         old = tab["old"]
         new = tab["new"]
 

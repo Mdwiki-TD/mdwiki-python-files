@@ -129,7 +129,6 @@ def one_file(file, lang) -> str:
         str: An empty string indicating the result of the operation.
     """
 
-
     text = ""
 
     rand_title = random.randint(1000000, 9999999)
@@ -179,7 +178,6 @@ def maine() -> str:
     Returns:
         str: An empty string upon completion of processing.
     """
-
 
     page = ""
     lange = ""
