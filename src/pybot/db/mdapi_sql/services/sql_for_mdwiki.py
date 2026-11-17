@@ -165,3 +165,19 @@ def add_new_to_pages(tab) -> None:
     ]
 
     mdwiki_sql_update(insert_qua, values=values)
+
+
+__all__ = [
+    "mdwiki_sql_update",
+    "mdwiki_sql_dict",
+    "get_all_pages",
+    "get_all_from_table",
+    "get_all_pages_all_keys",
+    "get_db_categories",
+    "get_db_category_members",
+    "get_db_users",
+    "set_target_where_id",
+    "set_deleted_where_id",
+    "insert_to_pages_users_to_main",
+    "add_new_to_pages",
+]

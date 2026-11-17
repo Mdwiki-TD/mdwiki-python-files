@@ -36,3 +36,8 @@ def not_pages(lista) -> None:
             namespace = ta["namespace"]
 
             logger.info(f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")
+
+
+__all__ = [
+    "not_pages",
+]

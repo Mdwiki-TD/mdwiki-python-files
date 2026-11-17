@@ -35,3 +35,9 @@ def ec_de_code(tt, _type):
     elif _type == "decode":
         fao = urllib.parse.unquote(tt)
     return fao
+
+
+__all__ = [
+    "quoteurl",
+    "ec_de_code",
+]

@@ -60,3 +60,8 @@ def get_mwclient_site(lang, family, username: str, password: str) -> None | Site
     cookie_jar.save(ignore_discard=True, ignore_expires=True)
 
     return site
+
+
+__all__ = [
+    "get_mwclient_site",
+]

@@ -146,3 +146,15 @@ def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)
         logger.info(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
+
+
+__all__ = [
+    "get_all_qids",
+    "add_qid",
+    "set_qid_where_qid",
+    "set_qid_where_title",
+    "delete_title_from_db",
+    "set_title_where_qid",
+    "qids_set_title_where_title_qid",
+    "add_titles_to_qids",
+]

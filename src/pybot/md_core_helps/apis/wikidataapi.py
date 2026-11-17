@@ -363,3 +363,18 @@ def wbsearchentities(search, language, match_alias: bool = False):
         table[s["id"]] = table_x or s
 
     return table
+
+
+__all__ = [
+    "ask_put",
+    "post",
+    "get_sitelinks_from_qid",
+    "get_claim",
+    "wd_merge",
+    "labels_api",
+    "get_redirects",
+    "new_item",
+    "claim_api_str",
+    "delete_claim",
+    "wbsearchentities",
+]

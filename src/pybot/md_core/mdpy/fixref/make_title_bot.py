@@ -136,3 +136,9 @@ def make_title(url):
         logger.info(f"<<green>> make_title_bot: newtitle: ({title})")
 
     return title
+
+
+__all__ = [
+    "get_url",
+    "make_title",
+]

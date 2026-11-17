@@ -88,3 +88,9 @@ def get_valid_links(words_tab) -> list[str]:
     logger.info(f"len of vaild_links: {len(vav_list)}")
 
     return vav_list
+
+
+__all__ = [
+    "get_links_from_cats",
+    "get_valid_links",
+]

@@ -40,3 +40,8 @@ def create_qids(no_qids) -> None:
 
             # add new qid to db
             sql_qids.add_titles_to_qids({x: new_qid})
+
+
+__all__ = [
+    "create_qids",
+]

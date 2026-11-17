@@ -145,3 +145,12 @@ def new_to_sql(
     insert_dict(to_insert, table_name, columns, ignore=ignore)
 
     update_table(to_update, table_name, columns_to_set=update_columns, columns_where=title_columns)
+
+
+__all__ = [
+    "run_in_batches",
+    "insert_dict",
+    "update_table",
+    "split_new_and_changed",
+    "new_to_sql",
+]

@@ -55,3 +55,9 @@ def get_page_qid(sitecode, title):
         break
 
     return qid
+
+
+__all__ = [
+    "submit_api",
+    "get_page_qid",
+]

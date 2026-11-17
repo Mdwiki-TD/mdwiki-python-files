@@ -19,3 +19,8 @@ def valid_title(title: str) -> bool:
 
     # if title.startswith('category:') or title.startswith('file:') or title.startswith('template:') or title.startswith('user:'):
     return not any(title.startswith(prefix) for prefix in falses)
+
+
+__all__ = [
+    "valid_title",
+]

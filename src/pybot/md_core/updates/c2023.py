@@ -106,3 +106,8 @@ if not page.exists():
     page.create(text=text, summary="update")
 else:
     page.save(newtext=text, summary="update")
+
+
+__all__ = [
+    "get_users",
+]

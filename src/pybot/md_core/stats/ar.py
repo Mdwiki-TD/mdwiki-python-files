@@ -42,3 +42,8 @@ def get_ar_results():
         editors[actor_name] += x["count"]
 
     return editors
+
+
+__all__ = [
+    "get_ar_results",
+]

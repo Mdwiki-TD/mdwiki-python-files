@@ -67,3 +67,9 @@ paths = Paths(
     cash_exists_path=_TABLES_PATH / "cash_exists",
     json_files=_json_files,
 )
+
+
+__all__ = [
+    "PathsFiles",
+    "Paths",
+]

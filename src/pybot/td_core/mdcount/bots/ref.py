@@ -52,3 +52,9 @@ def fix_ref(first, alltext):
             first = first.replace(refe, rr)
 
     return first
+
+
+__all__ = [
+    "outputnew",
+    "fix_ref",
+]

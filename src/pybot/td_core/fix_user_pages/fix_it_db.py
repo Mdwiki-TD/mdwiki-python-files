@@ -62,3 +62,8 @@ def work_in_new_tabs_to_db(new_tabs_to_db) -> None:
             del_it = sql_for_mdwiki.mdwiki_sql_update("delete from pages_users where id = %s", values=[old["id"]])
 
             logger.info(f"<<green>> del_it: {del_it}")
+
+
+__all__ = [
+    "work_in_new_tabs_to_db",
+]

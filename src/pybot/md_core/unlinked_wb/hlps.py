@@ -52,3 +52,9 @@ def get_qids():
     qids = {v[0]: q for q, v in vals_d.items() if len(v) == 1}
 
     return qids, vals_d
+
+
+__all__ = [
+    "get_pages_in_use",
+    "get_qids",
+]
