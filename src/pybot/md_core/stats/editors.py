@@ -21,9 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 last_year = datetime.now().year - 1
-# ---
 
-# ---
+
+
 
 Dir = Path(__file__).parent
 editors_dir = Dir / "editors"
@@ -49,7 +49,7 @@ def validate_ip(ip_address) -> bool:
 
 
 def get_editors_sql(links, site, split_by: int = 100):
-    # ---
+
     qua = f"""
         SELECT actor_name, count(*) as count from revision
             join actor on rev_actor = actor_id
@@ -65,39 +65,39 @@ def get_editors_sql(links, site, split_by: int = 100):
         group by actor_id
         order by count(*) desc
     """
-    # ---
+
     editors = {}
-    # ---
+
     for i in tqdm.tqdm(
         range(0, len(links), split_by), desc=f"get_editors_sql site:{site}", total=len(links) // split_by
     ):
-        # ---
+
         pages = links[i : i + split_by]
-        # ---
+
         # lim = ' , '.join(['?' for x in pages])
         lim = ",".join([f'"{escape_string(x)}"' for x in pages])
-        # ---
+
         qua2 = qua.replace("%s", lim)
-        # ---
+
         # logger.info(qua2)
-        # ---
+
         lang_db = WikiReplicaDB(site)
         result = lang_db.select_safe(qua2)
-        # ---
+
         for x in result:
-            # ---
+
             actor_name = x["actor_name"]
-            # ---
+
             # skip if actor_name iis IP address
             if validate_ip(actor_name):
                 continue
-            # ---
+
             if actor_name not in editors:
                 editors[actor_name] = 0
-            # ---
+
             editors[actor_name] += x["count"]
-            # ---
-        # ---
+
+
     return editors
 
 
@@ -108,19 +108,19 @@ def dumpit(editors, site) -> None:
 
 def get_editors(links, site, do_dump: bool = True):
     editors = {}
-    # ---
+
     if os.path.exists(editors_dir / f"{site}.json"):
         with open(editors_dir / f"{site}.json", "r", encoding="utf-8") as f:
             editors = json.load(f)
             return editors
-    # ---
+
     if site == "ar":
         editors = get_ar_results()
     else:
         editors = get_editors_sql(links, site, split_by=150)
-    # ---
+
     if ("dump" in sys.argv or do_dump) and editors:
         dumpit(editors, site)
         return editors
-    # ---
+
     return editors

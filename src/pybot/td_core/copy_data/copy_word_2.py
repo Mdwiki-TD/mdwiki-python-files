@@ -19,43 +19,43 @@ logger = logging.getLogger(__name__)
 Dir = str(Path(__file__).parents[0])
 
 
-# ---
+
 que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
-# ---
+
 NEW_DATA_duplicate = {}
 NEW_DATA = {}
-# ---
+
 with open(paths.json_files.words, "r", encoding="utf-8") as f:
     lead_words = json.load(f)
 
 with open(paths.json_files.allwords, "r", encoding="utf-8") as f:
     all_words = json.load(f)
-# ---
+
 lead_words = {x.strip(): lead_words[x] for x in lead_words}
 all_words = {x.strip(): all_words[x] for x in all_words}
-# ---
+
 for x, numb in lead_words.items():
     NEW_DATA[x] = {"lead": numb, "all": all_words.get(x, 0)}
-# ---
+
 for x3, numb2 in all_words.items():
     if x3 not in NEW_DATA:
         NEW_DATA[x3] = {"lead": lead_words.get(x3, 0), "all": numb2}
     elif numb2 != NEW_DATA[x3]["all"]:
         NEW_DATA_duplicate[x3] = {"lead": lead_words.get(x3, 0), "all": numb2}
-# ---
+
 logger.info(f"{len(NEW_DATA)=}, {len(NEW_DATA_duplicate)=}")
-# ---
+
 in_sql = {}
-# ---
+
 for q in sql_for_mdwiki.mdwiki_sql_dict(que):
     w_title = q["w_title"]
     if not NEW_DATA.get(w_title):
         in_sql[w_title] = {"lead": q["w_lead_words"], "all": q["w_all_words"]}
-# ---
+
 logger.info(f"{len(in_sql)=}")
-# ---
+
 NEW_DATA.update(in_sql)
-# ---
+
 text = """
 -- Adminer 4.8.1 MySQL 5.5.5-10.6.20-MariaDB-log dump
 
@@ -78,22 +78,22 @@ CREATE TABLE `words` (
 INSERT INTO `words` (`w_id`, `w_title`, `w_lead_words`, `w_all_words`) VALUES
 """
 # (1,	'Second-degree atrioventricular block',	278,	1267),
-# ---
+
 n = 0
-# ---
+
 lines = []
-# ---
+
 for title, tab in NEW_DATA.items():
     n += 1
-    # ---
+
     title = escape_string(title)
-    # ---
+
     line = f"({n},	'{title}',	{tab['lead']},	{tab['all']})"
-    # ---
+
     lines.append(line)
-# ---
+
 text += ",\n".join(lines)
 text += ";"
-# ---
+
 with open(f"{Dir}/words.txt", "w", encoding="utf-8") as f:
     f.write(text)

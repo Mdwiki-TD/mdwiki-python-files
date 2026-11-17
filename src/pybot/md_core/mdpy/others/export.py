@@ -14,10 +14,10 @@ La_si = {1: 2500000}
 
 for arg in sys.argv:
     arg, _, value = arg.partition(":")
-    # ---
+
     if arg == "-lasi" or arg == "lasi" and value.isdigit():
         logger.info(f'<<yellow>> change La_si[1] from "{La_si[1]}" to {value}')
-        # ---
+
         La_si[1] = int(value)
 
 
@@ -26,22 +26,22 @@ def export_en_history(title):
         "pages": title,
         "title": "Special:Export",
     }
-    # ---
+
     # if title == 'Pubic lice' : paramse['pages'] =
-    # ---
+
     if "teest" in sys.argv:
         xmldata = {}
-        # ---
+
         with open("mdwiki/xml/w.xml", "r", encoding="utf-8") as f:
             xmldata = f.read()
     else:
-        # ---
+
         gg = Session.post(url="https://en.wikipedia.org/w/index.php", data=paramse)
         xmldata = gg.text
-        # ---
-    # ---
+
+
     logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
-    # ---
+
     last = """
     </page>
 </mediawiki>"""
@@ -50,72 +50,72 @@ def export_en_history(title):
     # logger.info( 'first' )
     # logger.info( first )
     # logger.info( 'first' )
-    # ---
+
     # 16282189
-    # ---
+
     texts = {}
-    # ---
+
     revisione = xmldata.replace(first, "").split("</page>")[0].split("</revision>")
     revisions = [f"{x}</revision>" for x in revisione if x.strip().startswith("<revision>")]
     if "teest" in sys.argv:
         logger.info(revisions)
-    # ---
+
     logger.info(f'<<yellow>> > title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
-    # ---
-    # ---
+
+
     title2 = title.replace(":", "-").replace("/", "-")
     num = 1
     FILE_PATHS = []
-    # ---
+
     numbdone = []
-    # ---
+
     if len(xmldata) > La_si[1] and "nosplit" not in sys.argv:
         # while done == False :
         for rev in revisions:
-            # ---
+
             if num not in texts:
                 texts[num] = ""
-            # ---
+
             texts[num] += rev
-            # ---
+
             if len(texts[num]) > La_si[1]:
-                # ---
+
                 path = f"mdwiki/xml/{title2}-{num}.xml"
                 # tf = tempfile.NamedTemporaryFile()
                 # path = tf.name
-                # ---
+
                 # oodfo.write( first + texts[num] + last )
-                # ---
+
                 with open(path, "w", encoding="utf-8") as oodfo:
                     oodfo.write(first + texts[num] + last)
-                # ---
+
                 FILE_PATHS.append(path)
-                # ---
+
                 numbdone.append(num)
                 num += 1
-            # ---
-        # ---
+
+
         if num not in numbdone and num in texts and texts[num] != "":
-            # ---
+
             path2 = f"mdwiki/xml/{title2}-{num}.xml"
-            # ---
+
             with open(path2, "w", encoding="utf-8") as oodfo:
                 oodfo.write(first + texts[num] + last)
-            # ---
+
             FILE_PATHS.append(path2)
-            # ---
-        # ---
+
+
         logger.info(f" split revisions to {len(FILE_PATHS)} files..")
         logger.info(FILE_PATHS)
         return FILE_PATHS
-        # ---
+
     else:
         FILE_PATH = f"mdwiki/xml/{title2}.xml"
         with open(FILE_PATH, "w", encoding="utf-8") as ooo:
             ooo.write(xmldata)
-        # ---
+
         logger.info(" revisions in one file.")
-        # ---
+
         return FILE_PATH
 
 
@@ -127,37 +127,37 @@ def export(title):
         "followRedirects": True,
         "timeout": 500,
     }
-    # ---
+
     # if title == 'Pubic lice' : paramse['pages'] =
-    # ---
+
     urll = f"https://en.wikipedia.org/w/index.php?title=Special:Export/{title.replace(' ', '_')}"
     # urll = "https://" + 'en.wikipedia.org/wiki/Special:Export/' + title.replace(' ','_')
-    # ---
+
     gg = Session.post(url=urll, data=paramse)
     xmldata = gg.text
-    # ---
+
     logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
-    # ---
+
     _revisions = xmldata.split("</revision>")
-    # ---
+
     logger.info(f'<<yellow>> > title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
-    # ---
+
     title2 = title.replace(":", "-").replace("/", "-")
-    # ---
+
     FILE_PATH = f"mdwiki/xml/{title2}.xml"
     with open(FILE_PATH, "w", encoding="utf-8") as ooo:
         ooo.write(xmldata)
-    # ---
+
     # logger.info( ' revisions in one file.' )
-    # ---
+
     return FILE_PATH
 
 
-# ---
+
 if __name__ == "__main__":
     if "teest" in sys.argv:
         export_en_history("fafa")
     elif len(sys.argv) > 1:
         export(sys.argv[1])
         # export_en_history( sys.argv[1] )
-# ---
+

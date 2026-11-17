@@ -16,9 +16,9 @@ from md_core_helps.one_time.priorviews.lists import views
 logger = logging.getLogger(__name__)
 
 
-# ---
+
 Dir = Path(__file__).parent
-# ---
+
 text_v = """
 <div style="height:580px;width:100%;overflow-x:auto; overflow-y:auto">
 {| class="wikitable sortable" style="width:100%;background-color:#dedede"
@@ -27,13 +27,13 @@ text_v = """
 ! style="position: sticky;top: 0;left: 0;" | Title
 ! Views
 !"""
-# ---
-# ---
+
+
 # views.views_by_mdtitle_langs
 # views.count_views_by_mdtitle
 # views.count_views_by_lang
 # views.views_by_lang
-# ---
+
 section_langs_views = {}
 all_section_views = 0
 
@@ -66,9 +66,9 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
             # Get the view count for the current language and title, or 0 if not found
             view = views.views_by_lang.get(lang, {}).get(title.lower(), 0)
             section_langs_views[section][lang] += view
-            # ---
+
             view = helps.views_url(title, lang, view)
-            # ---
+
             """
             params = {
                 'project': f"{l}.wikipedia.org",
@@ -86,7 +86,7 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted, section):
 
             view = f'[{url_views} {view:,}]'
             """
-            # ---
+
             if "test1" in sys.argv:
                 view = f"[[:w:{lang}:{title}|a]] {view}"
         # Create a formatted string with the view count for the current language and title
@@ -129,10 +129,10 @@ def make_text(section, links):
     def format_x(x):
         if len(x) < 4:
             return x
-        # ---
+
         x2 = x.replace("-", "")
         x2 = x2[:3]
-        # ---
+
         return "{{abbr|" + f"{x2}|{x}" + "}}"
 
     def fo_n(x) -> str:
@@ -186,7 +186,7 @@ def make_text(section, links):
     return faf
 
 
-# ---
+
 if __name__ == "__main__":
     lngs = [
         "af",
@@ -311,4 +311,4 @@ if __name__ == "__main__":
     }
     u = make_text("Dentistry", lala)
     logger.info(u.replace("height:580px;", ""))
-# ---
+

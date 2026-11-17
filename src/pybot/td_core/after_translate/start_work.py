@@ -17,9 +17,9 @@ from td_core.after_translate.bots.users_pages import not_pages
 
 logger = logging.getLogger(__name__)
 
-# ---
+
 titles_not_0 = []
-# ---
+
 Skip_titles = {
     "Mr. Ibrahem": {
         "targets": [
@@ -42,7 +42,7 @@ Skip_titles = {
         ],
     },
 }
-# ---
+
 Skip_titles_global = [
     "جامعة نورث كارولاينا",
     "جامعة ولاية كارولينا الشمالية إيه آند تي",
@@ -53,63 +53,63 @@ Skip_titles_global = [
 
 def start(result, lange, tgd, tgd_by_md, tit_user_lang):
     logger.info(f'len(result) = "{len(result)}"')
-    # ---
+
     tab_lang = {}
-    # ---
+
     to_add = 0
     done = 0
-    # ---
+
     for lis in result:
-        # ---
+
         done += 1
-        # ---
+
         target = lis["title"]
         co_text = lis["comment_text"]
         user = lis["actor_name"]
         pupdate = lis["rev_timestamp"]
         ns = str(lis["page_namespace"])
-        # ---
+
         pupdate = pupdate[:8]
         pupdate = re.sub(r"^(\d\d\d\d)(\d\d)(\d\d)$", r"\g<1>-\g<2>-\g<3>", pupdate)
-        # ---
+
         # Normalize the title: replace underscores with spaces and strip whitespace
         md_title = co_text.replace("_", " ").strip()
         # Remove "/full" suffix from the title (used for full-page translations)
         # BUGFIX: Use md_title instead of co_text to preserve the normalization
         md_title = re.sub("/full$", "", md_title)
-        # ---
+
         target = target.replace("_", " ")
-        # ---
+
         target = f"user:{target}" if ns == "2" else target
-        # ---
+
         user = user.replace("_", " ")
-        # ---
+
         # tgd_by_md
         target_in = tgd_by_md.get(md_title, "")
-        # ---
+
         line_p = "<<yellow>>{}:<<default>>{},\t"
-        # ---
+
         laox = line_p.format("md_title", md_title)
         laox += line_p.format("user", user)
         laox += line_p.format("ns", ns)
         laox += line_p.format("target", f"[[{lange}:{target.ljust(20)}]]")
         laox += line_p.format("pupdate", pupdate)
-        # ---
+
         if ns != "0" and target_in != target:
             # laox += f", <<purple>>[[{target_in=}]]"
             laox += line_p.format("target_in", target_in)
-        # ---
+
         if "print" in sys.argv:
             logger.info(laox)
-        # ---
+
         if target in Skip_titles_global:
             continue
         if target in Skip_titles.get(user, {}).get("targets", []):
             continue
-        # ---
+
         if md_title in Skip_titles.get(user, {}).get("mdtitles", []):
             continue
-        # ---
+
         Taba2 = {
             "mdtitle": md_title,
             "target": target,
@@ -118,30 +118,30 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
             "pupdate": pupdate,
             "namespace": ns,
         }
-        # ---
+
         target2 = py_tools.ec_de_code(target, "encode")
-        # ---
+
         tul = md_title + user + lange
         tul_target = tit_user_lang.get(tul, "")
-        # ---
+
         cattest = cat_for_pages.get(md_title, "")
-        # ---
+
         # if ns != "0":
         if target_in != "" and target_in != target:
             if "ns" in sys.argv and tul_target == "" and cattest:
                 logger.info(laox)
             continue
-        # ---
+
         not_puplished = target2 not in tgd and target not in tgd
-        # ---
+
         # للتأكد من الصفحات غير المنشورة
         if not_puplished and target_in == "":
-            # ---
+
             if not tul_target:
                 logger.info(laox)
                 to_add += 1
                 tab_lang[md_title] = Taba2
-                # ---
+
                 if ns != "0":
                     titles_not_0.append(Taba2)
 
@@ -150,9 +150,9 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
 
             else:
                 logger.info(f"puplished target: {tul_target} != target to add: {target}")
-    # ---
+
     logger.info(f"lang: {lange} done: {done}, to_add: {to_add}")
-    # ---
+
     return tab_lang
 
 

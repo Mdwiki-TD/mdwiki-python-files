@@ -18,33 +18,33 @@ logger = logging.getLogger(__name__)
 Dir = str(Path(__file__).parents[0])
 
 
-# ---
+
 que = """select DISTINCT title, importance from assessments;"""
-# ---
+
 NEW_DATA_duplicate = {}
 new_data = {}
-# ---
+
 with open(paths.json_files.assessments, "r", encoding="utf-8") as f:
     data_in_json = json.load(f)
-# ---
+
 data_in_json = {x.strip(): data_in_json[x] for x in data_in_json}
-# ---
+
 for x, numb in data_in_json.items():
     new_data[x] = numb
-# ---
+
 logger.info(f"{len(new_data)=}, {len(NEW_DATA_duplicate)=}")
-# ---
+
 in_sql = {}
-# ---
+
 for q in sql_for_mdwiki.mdwiki_sql_dict(que):
     title = q["title"]
     if not new_data.get(title):
         in_sql[title] = q["importance"]
-# ---
+
 logger.info(f"{len(in_sql)=}")
-# ---
+
 new_data.update(in_sql)
-# ---
+
 text = """
 -- Adminer 4.8.1 MySQL 5.5.5-10.6.20-MariaDB-log dump
 
@@ -65,32 +65,32 @@ CREATE TABLE `assessments` (
 
 INSERT INTO `assessments` (`id`, `title`, `importance`) VALUES
 """
-# ---
+
 n = 0
-# ---
+
 lines = []
-# ---
+
 # sort new_data by importance
 NEW_DATA = dict(sorted(new_data.items(), key=lambda item: item[1]))
-# ---
+
 len_empty = len([x for x in NEW_DATA.values() if not x])
-# ---
+
 logger.info(f"{len(NEW_DATA)=}, {len_empty=}")
-# ---
+
 for title, importance in NEW_DATA.items():
     n += 1
-    # ---
+
     title = escape_string(title)
-    # ---
+
     if importance.lower() in ["unknown", "na"]:
         importance = ""
-    # ---
+
     line = f"({n},	'{title}',	'{importance}')"
-    # ---
+
     lines.append(line)
-# ---
+
 text += ",\n".join(lines)
 text += ";"
-# ---
+
 with open(f"{Dir}/assessments.txt", "w", encoding="utf-8") as f:
     f.write(text)

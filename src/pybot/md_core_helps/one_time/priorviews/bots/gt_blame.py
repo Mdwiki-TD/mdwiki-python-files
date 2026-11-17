@@ -22,38 +22,38 @@ def match_ref_names(r, refnames: list[str], lang):
     # dict_keys(['revid', 'parentid', 'user', 'timestamp', 'contentformat', 'contentmodel', 'content', 'comment'])
     text_pp = r.get("content")
     user = r.get("user")
-    # ---
+
     if not text_pp:
         return ""
     if not user:
         return ""
-    # ---
+
     parsed = wikitextparser.parse(text_pp)
     tags = parsed.get_tags()
-    # ---
+
     _tags_ = {}
-    # ---
+
     for x in tags:
         if not x or not x.name:
             continue
         if x.name != "ref":
             continue
-        # ---
+
         attrs = x.attrs
         name = attrs.get("name", "").replace("/", "").lower().strip()
         if not name:
             continue
-        # ---
+
         contents = x.contents
-        # ---
+
         if re.sub(r"[:\d\s]+", "", name) == "":
             continue
-        # ---
+
         if name not in _tags_:
             _tags_[name] = 0
-        # ---
+
         _tags_[name] += 1
-    # ---
+
     # sort by count
     _tags_ = dict(sorted(_tags_.items(), key=lambda item: item[1], reverse=True))
     for k, v in _tags_.items():
@@ -62,78 +62,78 @@ def match_ref_names(r, refnames: list[str], lang):
             logger.info(f"https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r['revid']}")
             logger.info(f"new user: {user}")
             return user
-    # ---
+
     return ""
 
 
 class FindInHistory:
     def __init__(self, title, lang: str = "en", refname: str = [], extlinks=None) -> None:
-        # ---
+
         if extlinks is None:
             extlinks = []
         self.lang = lang
         self.title = title
         self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
         self.author = ""
-        # ---
+
         self.revisions = []
         self.refname = refname
         self.extlinks = extlinks
-        # ---
+
         self.session = requests.Session()
-        # ---
+
         self.start()
 
     def post_to_json(self, params):
         json1 = {}
-        # ---
+
         unurl = f"{self.url}?{urlencode(params)}"
-        # ---
+
         if "printurl" in sys.argv and "text" not in params:
             logger.info(f":\t\t{unurl}")
-        # ---
+
         try:
             req = self.session.post(self.url, data=params, timeout=10)
             json1 = req.json()
         except Exception as e:
             logger.error(f"except: lang:{self.lang} {e}")
-        # ---
+
         return json1
 
     def post_continue(self, params, action, _p_, p_empty):
-        # ---
+
         continue_params = {}
-        # ---
+
         results = p_empty
-        # ---
+
         d = 0
-        # ---
+
         while continue_params != {} or d == 0:
-            # ---
+
             d += 1
-            # ---
+
             if continue_params:
                 params = {**params, **continue_params}
-            # ---
+
             json1 = self.post_to_json(params)
-            # ---
+
             if not json1:
                 break
-            # ---
+
             continue_params = json1.get("continue", {})
-            # ---
+
             data = json1.get(action, {}).get(_p_, p_empty)
-            # ---
+
             if not data:
                 break
-            # ---
+
             # logger.info(f', len:{len(data)}, all: {len(results)}')
-            # ---
+
             if isinstance(results, list):
                 results.extend(data)
             else:
                 results = {**results, **data}
-        # ---
+
         return results
 
     def get_revisions(self, title):
@@ -150,9 +150,9 @@ class FindInHistory:
             # "rvend": "2018-01-01T00:00:00.000Z",
             "rvlimit": "max",
         }
-        # ---
+
         pages = self.post_continue(params, "query", "pages", [])
-        # ---
+
         return pages
 
     def start(self) -> None:
@@ -175,81 +175,81 @@ def search_history(
         refname = []
     if extlinks is None:
         extlinks = []
-    # ---
+
     tab = {"lang": lang, "article": title, "needle": ""}
-    # ---
+
     if refname == [] or extlinks == []:
         infos = json_langs_by_langs.get(lang, {}).get(title)  # {'extlinks': extlinks, 'refsname': refsname}
-        # ---
+
         if not infos:
             return ""
-        # ---
+
         en = infos.get("en", "")
         refname = infos.get("refsname")
         extlinks = infos.get("extlinks")
-    # ---
+
     en_refname = []
     en_extlinks = []
-    # ---
+
     if en != "":
         tab = json_en_all.get(en, {})
         en_refname = tab.get("refsname", [])
         en_extlinks = tab.get("extlinks", [])
-    # ---
+
     bot = FindInHistory(title, lang, refname, extlinks)
     revisions = bot.revisions
-    # ---
+
     # sort revisions by timestamp
     revisions.sort(key=lambda r: r.get("timestamp", ""))
-    # ---
+
     length_before = len(revisions)
-    # ---
+
     # skip bots
     revisions = [rev for rev in revisions if not rev.get("user", "").lower().endswith("bot")]
-    # ---
+
     bots_length = length_before - len(revisions)
-    # ---
+
     logger.info(f"len of revisions: {len(revisions)}, bots_lents: {bots_length}")
-    # ---
+
     for r in revisions:
         # logger.info(r.keys())
         # dict_keys(['revid', 'parentid', 'user', 'timestamp', 'contentformat', 'contentmodel', 'content', 'comment'])
-        # ---
+
         timestamp = r.get("timestamp", "")
         text_pp = r.get("content")
         user = r.get("user")
-        # ---
+
         if not text_pp:
             continue
         if not user:
             continue
         # logger.info(timestamp)
-        # ---
+
         if user.lower().endswith("bot"):
             logger.info(f"skip bots {user}...")
             continue
-        # ---
+
         comment = r.get("comment")
         if comment:
             comment_v = helps.isv(comment)
             if comment_v:
                 logger.info(f"<<green>> find: {comment_v=}")
                 return user
-        # ---
+
         rs = match_ref_names(r, refname, lang)
-        # ---
+
         if rs != "":
             return rs
-    # ---
+
     # logger.info(f'len of revisions: {len(revisions)}')
-    # ---
+
     return ""
 
 
-# ---
+
 if __name__ == "__main__":
-    # ---
+
     t = search_history("نكاف", "ar")
     logger.info(f"au: {t}")
     sys.exit()
-    # ---
+

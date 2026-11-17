@@ -24,7 +24,7 @@ from wprefs.wpref_text import fix_page
 
 logger = logging.getLogger(__name__)
 
-# ---
+
 
 skip_langs = ["en"]
 move_dot = {1: False}
@@ -33,27 +33,27 @@ expend_infobox = {1: False}
 
 def fix_page_here(text: str, title, langcode):
     newtext = text
-    # ---
+
     section_0_text = ""
-    # ---
+
     lang_default = setting.get(langcode, {})
-    # ---
+
     dots = move_dot[1]
     if lang_default.get("move_dots", 0) == 1:
         dots = True
-    # ---
+
     expend = expend_infobox[1]
     if lang_default.get("expend", 0) == 1:
         expend = True
-    # ---
+
     adden = False
     if lang_default.get("add_en_lang", 0) == 1:
         adden = True
-    # ---
+
     newtext = fix_page(
         newtext, title, move_dots=dots, infobox=expend, section_0=section_0_text, lang=langcode, add_en_lang=adden
     )
-    # ---
+
     return newtext
 
 
@@ -76,59 +76,59 @@ def work_one_lang(list_, lang) -> None:
         such as logging output and modifying files.
     """
 
-    # ---
+
     logger.info(f"<<blue>> work on lang: {lang}.wikipedia......................")
-    # ---
+
     if lang in skip_langs:
         logger.info(f"<<blue>> skip lang: {lang}.wikipedia......................")
         return
-    # ---
+
     newlist = list_
-    # ---
+
     if "lala" not in sys.argv:
         newlist = [x for x in list_ if f"{lang}:{x}" not in reffixed_list]
         dd = int(len(list_)) - int(len(newlist))
         logger.info(f"already in reffixed_list :{dd}")
-    # ---
+
     # if len(newlist) > 0: log(lang)
-    # ---
+
     number = 0
-    # ---
+
     dns = []
-    # ---
+
     for title in newlist:
-        # ---
+
         lio = f"{lang}:{title}"
         number += 1
         logger.info(f"<<yellow>> {number} from {len(newlist)}, page: {lio}")
-        # ---
+
         if lio in reffixed_list and "lala" not in sys.argv:
             logger.info("<<red>>\talready in reffixed_list.")
             continue
-        # ---
+
         if "adddone" in sys.argv:
             dns.append(title)
             continue
-        # ---
+
         text = getpagetext_raw(title, lang=lang)
-        # ---
+
         if not text:
             logger.info('\ttext == ""')
             continue
-        # ---
+
         newtext = fix_page_here(text, title, lang)
-        # ---
+
         donee = False
-        # ---
+
         if text != newtext:
             aa = page_put(text, newtext, "Fix references, Expand infobox #mdwiki .toolforge.org.", title, lang)
-            # ---
+
             if aa:
                 donee = True
-        # ---
+
         if donee or "donee" in sys.argv:
             append_reffixed_file(lang, title)
-    # ---
+
     if dns:
         append_reffixed_file(lang, "", dns)
 
@@ -143,20 +143,20 @@ def work_sql_result(lange, nolange, year: int = 2024):
         and date like "{year}-%"
         ;
     """
-    # ---
+
     if nolange != "":
         que = que.replace('and lang != ""', f'and lang != "{nolange}"')
     elif lange != "":
         que = f'select lang, target from pages where target != "" and lang = "{lange}" and date like "{year}-%";'
-    # ---
+
     logger.info(que)
-    # ---
+
     sq = sql_for_mdwiki.mdwiki_sql_dict(que)
-    # ---
+
     for tab in sq:
         lang = tab["lang"]
         target = tab["target"]
-        # ---
+
         if lang not in newtable:
             newtable[lang] = []
         if target not in newtable[lang]:
@@ -165,34 +165,34 @@ def work_sql_result(lange, nolange, year: int = 2024):
 
 
 def maine() -> None:
-    # ---
+
     lange = ""
     nolange = ""
-    # ---
+
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
-        # ---
+
         arg = arg.removeprefix("-")
-        # ---
+
         if arg == "infobox":
             expend_infobox[1] = True
-        # ---
+
         if arg == "movedots":
             move_dot[1] = True
-        # ---
+
         if arg == "nolang":
             nolange = value
-        # ---
+
         if arg == "lang":
             lange = value
-    # ---
+
     newtable = work_sql_result(lange, nolange)
-    # ---
+
     for lang, tab in newtable.items():
         work_one_lang(tab, lang)
-    # ---
+
     logger.info(f"find {len(missingtitles)} pages in missingtitles")
-    # ---
+
     for x, lang in missingtitles.items():
         logger.info(f"lang: {lang}, title: {x}")
 

@@ -7,10 +7,10 @@ from wprefs.bots.es_months import fix_es_months
 from wprefs.bots.es_refs import mv_es_refs
 from wprefs.bots.es_section import add_section
 
-# ---
+
 from wprefs.helps import print_s
 
-# ---
+
 refs_temps = {
     "cite web": "cita web",
     "cite arxiv": "cita arxiv",
@@ -35,7 +35,7 @@ refs_temps = {
     "cite av media": "cita video",
     "cite video game": "cita videojuego",
 }
-# ---
+
 args_to = {
     "title": "título",
     "website": "sitioweb",
@@ -54,7 +54,7 @@ args_to = {
     "last2": "apellidos2",
     "first2": "nombre2",
 }
-# ---
+
 params = {
     "nombre1": ["first1", "given1"],
     "enlaceautor1": [
@@ -128,105 +128,105 @@ params = {
     "número-autores": ["display-authors"],
     "otros": ["others"],
 }
-# ---
+
 for _new, _lal in params.items():
     for _old in _lal:
         args_to[_old] = _new
 
 
 def fix_temps(text: str):
-    # ---
+
     parsed = wtp.parse(text)
-    # ---
+
     new_text = text
-    # ---
+
     for template in parsed.templates:
-        # ---
-        # ---
+
+
         if not template:
             continue
-        # ---
+
         name = str(template.normal_name()).strip()
-        # ---
+
         if name.lower() in refs_temps.keys() or name.lower() in refs_temps.values():
-            # ---
+
             old = template.string
-            # ---
+
             # print_s(f'template = {template}')
             # ---=
             for arg in template.arguments:
                 param = arg.name.strip()
                 # value = arg.value.strip()
-                # ---
+
                 if param in args_to:
-                    # ---
+
                     arg.name = args_to[param]
-            # ---
+
             if template.has_arg("url-status"):
                 template.del_arg("url-status")
-            # ---
+
             template_name = refs_temps.get(name, name).strip()
-            # ---
+
             if template_name.lower() != name.lower():
                 template.name = template_name
-            # ---
+
             new = template.string
-            # ---
+
             # print_s(f'new = {new}')
-            # ---
+
             new_text = new_text.replace(old, new)
-            # ---
-    # ---
+
+
     return new_text
 
 
 def add_lang_en(text: str, lang: str = ""):
-    # ---
+
     print_s("add_lang_en:")
-    # ---
+
     # Match references
     REFS = re.compile(r"(?is)(?P<pap><ref[^>\/]*>)(?P<ref>.*?<\/ref>)")
-    # ---
+
     for Match in REFS.finditer(text):
         pap = Match.group("pap")
         ref = Match.group("ref")
-        # ---
+
         if not ref.strip():
             continue
-        # ---
+
         if re.sub(r"\|\s*language\s*\=\s*\w+", "", ref) != ref:
             continue
-        # ---
+
         ref2 = re.sub(r"(\|\s*language\s*\=\s*)(\|\}\})", r"\g<1>en\g<2>", ref)
-        # ---
+
         if ref2 == ref:
             ref2 = ref.replace("}}</ref>", "|language=en}}</ref>")
-        # ---
+
         if ref2 != ref:
             text = text.replace(pap + ref, pap + ref2)
-    # ---
+
     return text
 
 
 def fix_es(text: str, title):
-    # ---
+
     if text.find("#REDIRECCIÓN") != -1:
         return text
-    # ---
+
     if len(text.split("\n")) < 10:
         return text
-    # ---
+
     newtext = text
-    # ---
+
     newtext = fix_es_months(newtext)
-    # ---
+
     newtext = fix_temps(newtext)
-    # ---
+
     newtext = add_section(newtext, title)
-    # ---
+
     newtext = newtext.replace("<references />", "{{listaref}}")
     newtext = newtext.replace("<references/>", "{{listaref}}")
-    # ---
+
     newtext = mv_es_refs(newtext)
-    # ---
+
     return newtext

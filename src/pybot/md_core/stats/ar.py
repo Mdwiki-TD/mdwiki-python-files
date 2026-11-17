@@ -27,20 +27,20 @@ def get_ar_results():
         order by count(*) desc
     limit 100;
     """
-    # ---
+
     editors = {}
-    # ---
+
     lang_db = WikiReplicaDB("arwiki")
     result = lang_db.select_safe(qua)
-    # ---
+
     for x in result:
-        # ---
+
         actor_name = x["actor_name"]
-        # ---
+
         if actor_name not in editors:
             editors[actor_name] = 0
-        # ---
+
         editors[actor_name] += x["count"]
-        # ---
-    # ---
+
+
     return editors

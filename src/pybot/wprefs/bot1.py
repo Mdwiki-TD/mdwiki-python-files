@@ -39,27 +39,27 @@ expend_infobox = {1: False}
 
 def fix_page_here(text: str, title, langcode):
     newtext = text
-    # ---
+
     section_0_text = ""
-    # ---
+
     lang_default = setting.get(langcode, {})
-    # ---
+
     dots = move_dot[1]
     if lang_default.get("move_dots", 0) == 1:
         dots = True
-    # ---
+
     expend = expend_infobox[1]
     if lang_default.get("expend", 0) == 1:
         expend = True
-    # ---
+
     adden = False
     if lang_default.get("add_en_lang", 0) == 1:
         adden = True
-    # ---
+
     newtext = fix_page(
         newtext, title, move_dots=dots, infobox=expend, section_0=section_0_text, lang=langcode, add_en_lang=adden
     )
-    # ---
+
     return newtext
 
 
@@ -81,32 +81,32 @@ def one_page(page, lang) -> str:
     """
 
     title = ec_de_code(page, "decode")
-    # ---
+
     text = get_page_text(title, lang=lang, print_text=False)
-    # ---
+
     if not text:
         logger.info("notext")
         return ""
-    # ---
+
     newtext = fix_page_here(text, title, lang)
-    # ---
+
     if text == newtext:
         logger.info("no changes")
         return ""
-    # ---
+
     if not newtext:
         logger.info("notext")
         return ""
-    # ---
+
     # if "save" in sys.argv:
     #     a = page_put(text, newtext, "Fix references, Expand infobox mdwiki.toolforge.org.", title, lang)
     #     if a:
     #         logger.info("save ok")
     #         return ""
-    # ---
+
     filee = save_wprefcash(title, newtext)
     logger.info(filee)
-    # ---
+
     return ""
 
 
@@ -129,15 +129,15 @@ def one_file(file, lang) -> str:
         str: An empty string indicating the result of the operation.
     """
 
-    # ---
+
     text = ""
-    # ---
+
     rand_title = random.randint(1000000, 9999999)
     rand_title = f"t_{rand_title}"
-    # ---
+
     if file.startswith("texts/"):
         file = Dir.parent / "public_html/fixwikirefs" / file
-    # ---
+
     try:
         with open(file, "r", encoding="utf-8") as f:
             text = f.read()
@@ -145,25 +145,25 @@ def one_file(file, lang) -> str:
         text = ""
         logger.info(e)
         return ""
-    # ---
+
     if text == "":
         logger.info("notext")
         return ""
-    # ---
+
     newtext = fix_page_here(text, rand_title, lang)
-    # ---
+
     if text == newtext:
         logger.info("no changes")
         return ""
-    # ---
+
     if not newtext:
         logger.info("notext")
         return ""
-    # ---
+
     filee = save_wprefcash(rand_title, newtext)
-    # ---
+
     logger.info(filee)
-    # ---
+
     return ""
 
 
@@ -180,40 +180,40 @@ def maine() -> str:
         str: An empty string upon completion of processing.
     """
 
-    # ---
+
     page = ""
     lange = ""
     file = ""
-    # ---
+
     for arg in sys.argv:
         arg, _, value = arg.partition(":")
         arg = arg.removeprefix("-")
-        # ---
+
         if arg == "infobox":
             expend_infobox[1] = True
         if arg == "movedots":
             move_dot[1] = True
-        # ---
+
         if arg == "lang":
             lange = value.strip()
         if arg == "page":
             page = value.replace("_", " ")
         if arg == "file":
             file = value.replace("_", " ")
-    # ---
+
     if page == "" and file == "":
         logger.info("no page or file")
         return ""
-    # ---
+
     if lange == "":
         logger.info("no lang")
         return ""
-    # ---
+
     if file:
         one_file(file, lange)
     else:
         one_page(page, lange)
-    # ---
+
     return ""
 
 

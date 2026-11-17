@@ -3,7 +3,7 @@
 
 import json
 
-# ---
+
 import logging
 import re
 import sys
@@ -45,12 +45,12 @@ def get_claim(q, pid: str, get_claim_id: bool = False):
 
 
 def wd_merge(q1, q2) -> bool:
-    # ---
+
     q11 = re.sub(r"Q", "", q1)
     q22 = re.sub(r"Q", "", q2)
-    # ---
+
     if q11.isdigit() and q22.isdigit():
-        # ---
+
         if int(q11) > int(q22):
             from_title = q1
             to_title = q2
@@ -60,9 +60,9 @@ def wd_merge(q1, q2) -> bool:
     else:
         from_title = q2
         to_title = q1
-    # ---
+
     logger.info(f"from {from_title} to {to_title} ")
-    # ---
+
     params = {
         "action": "wbmergeitems",
         "fromid": from_title,
@@ -70,19 +70,19 @@ def wd_merge(q1, q2) -> bool:
         "ignoreconflicts": "description",
         "summary": "",
     }
-    # ---
+
     r4 = post_it(params=params, token=True)
-    # ---
+
     if not r4:
         return False
-    # ---
+
     if "success" in r4:
         if '"redirected":1' in r4:
             logger.info("<<green>> ** true .. redirected.")
             return True
         else:
             logger.info("<<green>> ** true.")
-            # ---
+
             pams2 = {
                 "action": "wbcreateredirect",
                 "from": from_title,
@@ -90,9 +90,9 @@ def wd_merge(q1, q2) -> bool:
                 "ignoreconflicts": "description",
                 "summary": "",
             }
-            # ---
+
             r5 = post_it(params=pams2, token=True)
-            # ---
+
             if "success" in r5:
                 logger.info("<<green>> **createredirect true.")
                 return True
@@ -104,35 +104,35 @@ def wd_merge(q1, q2) -> bool:
 
 
 def labels_api(qid, label: str, lang, remove: bool = False, summary: str = "") -> bool:
-    # ---
+
     if not qid:
         logger.info(" Qid == '' ")
         return False
-    # ---
+
     if label == "" and not remove:
         logger.info(" label == '' and remove = False ")
         return False
-    # ---
+
     # save the edit
     _out = f'{qid} label:"{lang}"@{label}.'
-    # ---
+
     Save_2020_wd.setdefault("labels", False)
-    # ---
+
     if not Save_2020_wd["labels"] and "ask" in sys.argv:
-        # ---
+
         sa = ask_put(
             f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {qid} Yes or No ? {Main_User[1]} '
         )
-        # ---
+
         if not sa:
             return False
-        # ---
+
         if sa == "a":
             logger.info("<<lightgreen>> ----------------------------------------------")
             logger.info("<<lightgreen>> wikidataapi.py save without asking.")
             logger.info("<<lightgreen>> ----------------------------------------------")
             Save_2020_wd["labels"] = True
-    # ---
+
     params = {
         "action": "wbsetlabel",
         "id": qid,
@@ -140,9 +140,9 @@ def labels_api(qid, label: str, lang, remove: bool = False, summary: str = "") -
         "value": label,
         "summary": summary,
     }
-    # ---
+
     req = post_it(params=params, token=True)
-    # ---
+
     if req:
         text = str(req)
         if ("using the same description text" in text) and ("associated with language code" in text):
@@ -150,38 +150,38 @@ def labels_api(qid, label: str, lang, remove: bool = False, summary: str = "") -
             match = re.search(r"(Q\d+)", str(req["error"]["info"]))
             item2 = match.group(1) if match else "Unknown"
             logger.error(f"<<red>>API: same label item: {item2}")
-        # ---
+
         if "success" in req:
             logger.info("<<green>> ** true.")
             return True
         else:
             logger.error(f"<<red>> r5{str(req)}")
-    # ---
+
     return False
 
 
 def get_redirects(liste):
-    # ---
+
     if not liste:
         return {}
-    # ---
+
     redirects = {}
-    # ---
+
     # logger.info(liste)
-    # ---
+
     for i in range(0, len(liste), 50):
-        # ---
+
         group = []
-        # ---
+
         if isinstance(liste, list):
             group = liste[i : i + 50]
         elif isinstance(liste, dict):
             group = list(liste.keys())[i : i + 50]
-        # ---
+
         group = [x for x in group if x]
-        # ---
+
         titles_line = "|".join(group)
-        # ---
+
         params = {
             "action": "query",
             "format": "json",
@@ -189,9 +189,9 @@ def get_redirects(liste):
             "redirects": 1,
             "utf8": 1,
         }
-        # ---
+
         json1 = post_it(params=params, token=True)
-        # ---
+
         if json1:
             redd = json1.get("query", {}).get("redirects", [])
             for red in redd:
@@ -200,9 +200,9 @@ def get_redirects(liste):
 
 
 def new_item(label: str = "", lang: str = "", summary: str = "", returnid: bool = False) -> str | None:
-    # ---
+
     data = {"labels": {lang: {"language": lang, "value": label}}}
-    # ---
+
     params = {
         "action": "wbeditentity",
         "new": "item",
@@ -210,29 +210,29 @@ def new_item(label: str = "", lang: str = "", summary: str = "", returnid: bool 
         "data": json.JSONEncoder().encode(data),
         "format": "json",
     }
-    # ---
+
     req = post_it(params=params, token=True)
-    # ---
+
     if not req:
         logger.info(f"req:str({req})")
         return None
-    # ---
+
     if "success" not in req:
         logger.error(f"<<red>> req{str(req)}")
         return None
-    # ---
+
     logger.info("<<green>> **Claim_API true.")
-    # ---
+
     if returnid:
-        # ---
+
         qid = None
-        # ---
+
         if "entity" in req and "id" in req["entity"]:
             qid = req["entity"]["id"]
             logger.info(f'<<green>> returnid:"{qid}" ')
-        # ---
+
         return qid
-    # ---
+
     return None
 
 
@@ -256,14 +256,14 @@ def claim_api_str(qid, property, string: str):
             An empty string is returned if any input parameter is empty.
     """
 
-    # ---
+
     qid = qid.strip()
-    # ---
+
     logger.info(f"<<yellow>> : add claim to qid: {qid}, [{property}:{string}]")
-    # ---
+
     if string == "" or qid == "" or property == "":
         return ""
-    # ---
+
     params = {
         "action": "wbcreateclaim",
         "entity": qid,
@@ -271,41 +271,41 @@ def claim_api_str(qid, property, string: str):
         "property": property,
         "value": json.JSONEncoder().encode(string),
     }
-    # ---
+
     if property == "P11143":
         params["summary"] = "([[:toollabs:editgroups/b/CB/p11143000|details]])"
-    # ---
+
     req = post_it(params=params, token=True)
-    # ---
+
     if not req:
         logger.info(f"req:str({req})")
         return False
-    # ---
+
     if "success" in req:
         logger.info("<<green>> **Claim_API true.")
         return True
     else:
         logger.error(f"<<red>> req{str(req)}")
-    # ---
+
     return False
 
 
 def delete_claim(claimid) -> bool:
-    # ---
+
     params = {"action": "wbremoveclaims", "claim": claimid}
-    # ---
+
     req = post_it(params=params, token=True)
-    # ---
+
     if not req:
         logger.info(f"req:str({req})")
         return False
-    # ---
+
     if "success" in req:
         logger.info("<<green>> **Claim_API true.")
         return True
     else:
         logger.error(f"<<red>> req{str(req)}")
-    # ---
+
     return False
 
 
@@ -319,21 +319,21 @@ def wbsearchentities(search, language, match_alias: bool = False):
         "type": "item",
         "utf8": 1,
     }
-    # ---
+
     req = post_it(params=params)
-    # ---
+
     if not req:
         logger.info(" no req ")
         return False
-    # ---
+
     if "success" not in req:
         logger.error(f"<<red>> : {str(req)}")
         return False
-    # ---
+
     table = {}
-    # ---
+
     search_table = req.get("search", [])
-    # ---
+
     for s in search_table:
         _ss = {
             "id": "Q111587429",
@@ -346,13 +346,13 @@ def wbsearchentities(search, language, match_alias: bool = False):
             "label": "User:Mr. Ibrahem/Sodium nitrite (medical use)",
             "match": {"type": "label", "language": "en", "text": "User:Mr. Ibrahem/Sodium nitrite (medical use)"},
         }
-        # ---
+
         table_x = {}
-        # ---
+
         match_one = s.get("match", {})
-        # ---
+
         match_one_text = match_one.get("text", "")
-        # ---
+
         if match_one_text.lower() == search.lower():
             if match_one.get("type", "") == "label":
                 table_x["label"] = match_one_text
@@ -362,11 +362,11 @@ def wbsearchentities(search, language, match_alias: bool = False):
                 # "match": { "type": "alias", "language": "fi", "text": "Costae" }
                 table_x["label"] = match_one_text
                 table_x["lang"] = match_one["language"]
-        # ---
+
         if not table_x and s.get("display", {}).get("label", {}).get("value", "") != "":
             table_x["label"] = s["display"]["label"]["value"]
             table_x["lang"] = s["display"]["label"]["language"]
-        # ---
+
         table[s["id"]] = table_x or s
-    # ---
+
     return table

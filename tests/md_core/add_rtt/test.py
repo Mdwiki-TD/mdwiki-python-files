@@ -45,20 +45,20 @@ text = """
 parsed = wtp.parse(text)
 
 for table in parsed.tables:
-    # ---
+
     for x in table.cells():
-        # ---
+
         # logger.info("x[6]:", x[6])
-        # ---
+
         r_s = x[1].value.strip()
         title = x[2].value.strip()
-        # ---
+
         logger.info(f"<<green>> title: ({title}), r_s: ({r_s})")
-        # ---
+
         if x[1].is_header:
             logger.info("skip header")
             continue
-        # ---
+
         x[1].value = "R"
         x[1].set_attr("style", "text-align:center; white-space:nowrap; font-weight:bold; background:#C66A05")  # ffd6ff
 

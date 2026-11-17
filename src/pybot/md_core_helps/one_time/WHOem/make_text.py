@@ -14,11 +14,11 @@ from mdwiki_api.mdwiki_page import md_MainPage
 logger = logging.getLogger(__name__)
 
 
-# ---
 
-# ---
+
+
 section_langs_views = {}
-# ---
+
 Dir = Path(__file__).parent
 
 
@@ -26,11 +26,11 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
     lang_text = ""
     u = 0
 
-    # ---
+
     if "test1" in sys.argv:
         print("mdtitle:", mdtitle)
         print("langlinks:", langlinks)
-    # ---
+
 
     for lang in langs_keys_sorted:
         u += 1
@@ -45,9 +45,9 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
             title = data["title"]
             view = data["views"]
             section_langs_views[lang] += view
-            # ---
+
             view = f"[[:w:{lang}:{title}|{view:,}]]"
-            # ---
+
         # Create a formatted string with the view count for the current language and title
         tt = f" || {view}"
 
@@ -65,10 +65,10 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
 def format_x(x):
     if len(x) < 4:
         return x
-    # ---
+
     x2 = x.replace("-", "")
     x2 = x2[:3]
-    # ---
+
     return "{{abbr|" + f"{x2}|{x}" + "}}"
 
 
@@ -90,20 +90,20 @@ def make_text(views_data):
         "! Articles\n"
         "!\n"
     )
-    # ---
+
     langs_keys = [lang for mdtitle, tab in views_data.items() for lang in tab.keys()]
     langs_keys = sorted(set(langs_keys))
-    # ---
+
     with open(f"{Dir}/lists/lang_links_mdtitles.json", "r", encoding="utf-8") as f:
         lang_links_mdtitles = json.load(f)
-    # ---
+
     # sort lang_links_mdtitles by length
     lang_to_wrks = dict(sorted(lang_links_mdtitles.items(), key=lambda x: len(x[1]), reverse=True))
     # change it to list
     lang_to_wrks = list(lang_to_wrks.keys())
-    # ---
+
     langs_keys = lang_to_wrks
-    # ---
+
     langs_keys_text = " !! ".join([format_x(x) for x in langs_keys])
     text += f" {langs_keys_text}"
 
@@ -141,10 +141,10 @@ def make_text(views_data):
 
     # Add the closing table tag and div tag to the text variable.
     text += "\n|}\n</div>"
-    # ---
+
     articles_all = sum([len(x) for x in views_data.values()])
     # Create the final formatted text with the section header, number of links, and the table.
-    # ---
+
     faf = f"* {articles_all:,} articles with work in {len(langs_keys):,} languages\n"
     faf += f"* {section_views:,} pageviews from July 2015 to Sept 2023\n{text}"
 
@@ -153,28 +153,28 @@ def make_text(views_data):
 
 
 def start() -> None:
-    # ---
+
     with open(f"{Dir}/lists/views.json", "r", encoding="utf-8") as f:
         Views_Data = json.load(f)
-    # ---
+
     logger.info(f"len views_data: {len(Views_Data)}")
-    # ---
+
     ntext = make_text(Views_Data)
-    # ---
+
     if "test" in sys.argv:
         logger.info(ntext)
-    # ---
+
     with open(f"{Dir}/text.txt", "w", encoding="utf-8") as f:
         f.write(ntext)
-    # ---
+
     title = "User:Mr. Ibrahem/WHOem"
-    # ---
+
     page = md_MainPage(title, "www", family="mdwiki")
     exists = page.exists()
     if not exists:
         create = page.create(text=ntext, summary="update")
     else:
-        # ---
+
         text = page.get_text()
         save_page = page.save(newtext=ntext, summary="update", nocreate=1, minor="")
 

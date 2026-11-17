@@ -14,57 +14,57 @@ import wikitextparser
 
 logger = logging.getLogger(__name__)
 
-# ---
+
 """
-# ---
+
 from md_core_helps.one_time.priorviews.bots import count_words
 tt = count_words.get_words(title, lang)
-# ---
+
 """
-# ---
+
 
 
 class InOldText:
     def __init__(self, title, lang: str = "en") -> None:
-        # ---
+
         self.lang = lang
         self.title = title
         self.url = f"https://{self.lang}.wikipedia.org/w/api.php"
         self.oldtext = ""
         self.newtext = ""
         self.words = 0
-        # ---
+
         self.session = requests.Session()
-        # ---
+
         self.start()
 
     def start(self) -> None:
         self.get_oldtext()
         self.count(self.oldtext)
-        # ---
+
         if self.words < 50:
             logger.info(f"\twords: {self.words} < 50 ")
             words = self.words
             self.get_newtext()
             self.count(self.newtext)
-            # ---
+
             if words > self.words:
                 self.words = words
-            # ---
-        # ---
+
+
         text = self.oldtext
 
     def count(self, text: str) -> None:
         text = text.replace("'''", "").replace("''", "")
-        # ---
+
         tem_text = text
-        # ---
+
         parsed = wikitextparser.parse(tem_text)
-        # ---
+
         # remove cat links
         # for link in parsed.wikilinks:   if ":" in link.title:   tem_text = tem_text.replace(str(link), "")
         # parsed = wtp.parse(tem_text)
-        # ---
+
         # remove tables
         # remove template
         # remove html tag include ref tags
@@ -83,29 +83,29 @@ class InOldText:
 
         # get counts of words
         length = len(re.findall(r"\w+", tem_text))
-        # ---
+
         # logger.info(f'count_text: {length}')
         self.words = length
 
     def post_to_json(self, params):
         json1 = {}
-        # ---
+
         unurl = f"{self.url}?{urlencode(params)}"
-        # ---
+
         if "printurl" in sys.argv and "text" not in params:
             logger.info(f"get_old:\t\t{unurl}")
-        # ---
+
         try:
             req = self.session.post(self.url, data=params)
             json1 = req.json()
         except Exception as e:
             logger.error(f"except: lang:{self.lang} {e}")
-        # ---
+
         return json1
 
     def get_oldtext(self) -> None:
         params = {"action": "parse", "format": "json", "prop": "wikitext", "page": self.title, "utf8": 1}
-        # ---
+
         params = {
             "action": "query",
             "format": "json",
@@ -119,9 +119,9 @@ class InOldText:
             "rvstart": "2020-05-31T22:00:00.000Z",
             "rvdir": "older",
         }
-        # ---
+
         json1 = self.post_to_json(params)
-        # ---
+
         revisions = json1.get("query", {}).get("pages", [{}])[0].get("revisions", [{}])[0]
         self.timestamp = revisions.get("timestamp", "")
         # logger.info(f'timestamp: {self.timestamp}')
@@ -137,9 +137,9 @@ class InOldText:
             "utf8": 1,
             "formatversion": "2",
         }
-        # ---
+
         json1 = self.post_to_json(params)
-        # ---
+
         self.newtext = json1.get("parse", {}).get("wikitext", "")
 
     def count_words(self) -> int:
@@ -148,18 +148,18 @@ class InOldText:
 
 
 def get_words(title, lang) -> int:
-    # ---
+
     bot = InOldText(title, lang=lang)
-    # ---
+
     words = bot.count_words()
-    # ---
+
     return words
 
 
-# ---
+
 if __name__ == "__main__":
-    # ---
+
     t = get_words("التهاب الفقار القسطي", "ar")
     logger.info(f"words: {t}")
     sys.exit()
-    # ---
+

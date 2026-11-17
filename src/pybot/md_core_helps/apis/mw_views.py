@@ -233,7 +233,7 @@ class PageviewsClient:
 
     def filter_data(self, data):
         # remove any key < 2015 and not = "all"
-        # ---
+
         new_data = {}
         """
         new_data = {
@@ -241,12 +241,12 @@ class PageviewsClient:
             for title, views in data.items()
         }
         """
-        # ---
+
         for title, views in data.items():
             new_data[title] = {
                 k: v for k, v in views.items() if (k.isnumeric() and int(k) >= 2015) or k == "all" or v > 0
             }
-        # ---
+
         return new_data
 
     def article_views_new(
@@ -255,17 +255,17 @@ class PageviewsClient:
         articles,
         **kwargs,
     ):
-        # ---
+
         time_start = time.time()
-        # ---
+
         dd = self.article_views(
             project,
             articles,
             **kwargs,
         )
-        # ---
+
         new_data = {}
-        # ---
+
         for month, y in dd.items():
             # month = datetime.datetime(2024, 5, 1, 0, 0)
             year_n = month.strftime("%Y")
@@ -273,22 +273,22 @@ class PageviewsClient:
                 article = article.replace("_", " ")
                 # ensure nested dict & the specific year key both exist
                 article_dict = new_data.setdefault(article, {"all": 0, year_n: 0})
-                # ---
+
                 if count is not None:
                     article_dict[year_n] = article_dict.get(year_n, 0) + count
                     article_dict["all"] = article_dict.get("all", 0) + count
-                # ---
+
                 # sort article_dict keys
                 article_dict = dict(sorted(article_dict.items(), key=lambda item: item[0]))
-                # ---
+
                 new_data[article] = article_dict
-        # ---
+
         new_data = self.filter_data(new_data)
-        # ---
+
         delta = time.time() - time_start
-        # ---
+
         logger.info(
             f"<<green>> article_views, (articles:{len(articles):,}) new_data:{len(new_data):,} time: {delta:.2f} sec"
         )
-        # ---
+
         return new_data

@@ -12,25 +12,25 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
-# ---
+
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
-# ---
+
 both_file = f"{Dir2}/jsons/both.json"
 file_all_links = f"{Dir2}/jsons/all_links.json"
-# ---
+
 both = {}
-# ---
+
 with open(both_file, "r", encoding="utf-8") as f:
     both = json.load(f)
-# ---
+
 logger.info(f"all pages:{len(both.keys())}")
-# ---
+
 # sort both keys by length of it list
 
 
 def do_all() -> None:
-    # ---
+
     all_links = []
 
     def fix_links(x):
@@ -38,23 +38,23 @@ def do_all() -> None:
         x = re.sub(r"^https*://(www.|)cdc.gov/", "https://www.cdc.gov/", x)
         return x
 
-    # ---
+
     for _x, le in both.items():
         all_links.extend(le)
-    # ---
+
     all_links = list(set(all_links))
-    # ---
+
     all_links = [fix_links(x) for x in all_links]
-    # ---
+
     all_links = sorted(all_links, key=lambda x: x.lower(), reverse=False)
-    # ---
+
     all_links = list(set(all_links))
-    # ---
+
     with open(file_all_links, "w", encoding="utf-8") as ff:
         json.dump(all_links, ff, ensure_ascii=False, indent=2)
-    # ---
+
     len_all_links = len(all_links)
-    # ---
+
     logger.info(f"{len_all_links=}")
 
 
@@ -68,6 +68,6 @@ for x, le in aa.items():
     logger.info(f"x: {x2}\t length:{len(le)}")
     if len(le) < 15:
         break
-# ---
+
 
 do_all()

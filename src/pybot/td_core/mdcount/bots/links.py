@@ -4,7 +4,7 @@ import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
 
-# ---
+
 from md_core_helps.apis import mdwiki_api_call
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
@@ -19,44 +19,44 @@ reg_templates = re.compile(r"{{(?:msg:)?(?P<name>[^{\|]+?)(?:\|(?P<params>[^{]+?
 
 
 def get_links_from_cats(getcat: str = ""):
-    # ---
+
     titles = []
-    # ---
+
     videos_cats = ["Videowiki scripts", "RTTVideo"]
-    # ---
+
     cac = sql_for_mdwiki.get_db_categories()
-    # ---
+
     for cat, dep in cac.items():
-        # ---
+
         if getcat != "" and cat != getcat:
             continue
-        # ---
+
         is_video_cat = cat in videos_cats or "video" in cat.lower()
         onlyns = 3000 if is_video_cat else ""
         ns = 3000 if is_video_cat else 0
-        # ---
+
         mdwiki_pages = CatDepth(f"Category:{cat}", sitecode="www", family="mdwiki", depth=dep, ns=ns, onlyns=onlyns)
-        # ---
+
         titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
-    # ---
+
     return titles
 
 
 def get_valid_links(words_tab) -> list[str]:
-    # ---
+
     vav = get_links_from_cats()
-    # ---
+
     if "newpages" in sys.argv:
         vav2 = vav
         vav = [t for t in vav2 if (t not in words_tab or words_tab[t] < 50)]
-        # ---
+
         logger.info(f"Category-members:{len(vav2)}, New-members:{len(vav)}")
-    # ---
+
     elif "sql" in sys.argv:
         vav2 = sql_for_mdwiki.get_all_pages()
         vav = [t for t in vav2 if (t not in words_tab or words_tab[t] < 50)]
         logger.info(f"ALL SQL LINKS:{len(vav2)}, to work:{len(vav)}")
-    # ---
+
     elif "oldway" in sys.argv:
         ptext = mdwiki_api_call.get_page_text("WikiProjectMed:List")
         for m2 in link_regex.finditer(ptext):
@@ -66,28 +66,28 @@ def get_valid_links(words_tab) -> list[str]:
                 itemu = m2.group(1).split("|")[0].strip()
                 itemu = itemu[0].upper() + itemu[1:]
                 vav.append(itemu)
-        # ---
+
         logger.info("Get vaild_links fromlist : WikiProjectMed:List (oldway)")
-    # ---
+
     elif "listnew" in sys.argv:
         logger.info("Get vaild_links listnew")
         ttt = """Lymphogranuloma venereum"""
         vav = [x.strip() for x in ttt.split("\n") if x.strip() != ""]
-    # ---
+
     elif "fromlist" in sys.argv:
         result = mdwiki_api_call.get_page_links("WikiProjectMed:List")
         vav = result.get("links", {}).keys()
         logger.info("Get vaild_links fromlist : WikiProjectMed:List")
-    # ---
+
     else:
         logger.info("Get vaild_links from cat : RTT")
-    # ---
+
     vav_list = list(vav)
-    # ---
+
     for x in vav_list[:]:
         if x.startswith("Category:"):
             vav_list.remove(x)
-    # ---
+
     logger.info(f"len of vaild_links: {len(vav_list)}")
-    # ---
+
     return vav_list
