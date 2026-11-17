@@ -92,7 +92,8 @@ def count_text(text: str) -> int:
     """Count the words in wikitext, ignoring tags (such as refs) and numbers."""
     parsed = wtp.parse(text)
 
-    for tag in parsed.get_tags():
+    # use reversed to prevent DeadIndexError
+    for tag in reversed(parsed.get_tags()):
         tag.string = ""
 
     plain = wtp.parse(parsed.string).plain_text(replace_templates=_template_to_text)
