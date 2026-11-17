@@ -6,7 +6,6 @@ from td_core.fix_user_pages.fix_it_db import work_in_new_tabs_to_db
 """
 
 import logging
-import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
 
@@ -39,9 +38,6 @@ def work_in_new_tabs_to_db(new_tabs_to_db) -> None:
 
         # logger.info(new)
         # {'id': '3381', 'title': 'Sympathetic crashing acute pulmonary edema', 'lang': 'ar', 'user': 'Karimabenkrid', 'pupdate': '2025-03-26', 'target': 'استسقاء رئوي حاد مفاجئ ودي', 'add_date': '2025-03-26 23:43:12'}
-
-        if "test" in sys.argv:
-            continue
 
         new["translate_type"] = new.get("translate_type") or "lead"
 

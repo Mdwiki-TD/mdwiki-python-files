@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
-
 Usage:
 # python3 c9/pwb.py td_core/td_other_qids/make_list -td add
 # python3 c9/pwb.py td_core/td_other_qids/make_list -others add
 # python3 c9/pwb.py td_core/td_other_qids/make_list add
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

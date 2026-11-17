@@ -4,7 +4,7 @@ python3 c9/pwb.py wprefs/bots/es_section
 
 import re
 
-from wprefs.api import get_revisions
+from pybot.wprefs.wprefs_api import get_revisions
 from wprefs.bots.es_months import es_months_tab
 from wprefs.helps import print_s
 
@@ -154,11 +154,3 @@ def add_section(text: str, title):
         text += temp
 
     return text
-
-
-if __name__ == "__main__":
-    d = "2022-01-24"
-    # print_s(make_date(d))
-
-    temp = make_template("Glasdegib")
-    print_s(f"{temp=}")

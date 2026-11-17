@@ -4,6 +4,7 @@
 
 xpython3 c9/pwb.py td_core/wd_works/recheck
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

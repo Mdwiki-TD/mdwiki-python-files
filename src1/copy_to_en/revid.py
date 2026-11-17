@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-tfj run revid --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_to_en/revid"
+REPLACED BY update_category_members/worker.py
 
 """
 
@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import to_sql
+from db.to_sql import new_to_sql
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
 
@@ -25,7 +25,6 @@ if not dir2:
 
 file = Dir / "all_pages_revids.json"
 
-# file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
 file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
 file4 = Path(dir2) / "data" / "all_pages_revids.json"
 
@@ -85,6 +84,7 @@ def get_all_revids() -> None:
     cats = sql_for_mdwiki.get_db_categories()
 
     for cat, depth in cats.items():
+
         ca = cat_depth(cat, depth=depth)
 
         revids.update(ca)
@@ -97,7 +97,12 @@ def get_all_revids() -> None:
 
     data2 = [{"title": x, "revid": v} for x, v in revids.items()]
 
-    to_sql(data2, table_name, columns, title_column="title")
+    new_to_sql(
+        data=data2,
+        table_name=table_name,
+        columns=columns,
+        title_columns=["title"],
+    )
 
 
 if __name__ == "__main__":

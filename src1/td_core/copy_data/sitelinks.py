@@ -16,7 +16,7 @@ from typing import Any
 
 import tqdm
 from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
-from db.utils.to_sql import new_to_sql
+from db.to_sql_new import new_to_sql
 from md_core_helps.apis.wd_bots.wikidataapi_post import log_to_wiki, post_it
 from td_core.td_dirs import paths
 
@@ -223,17 +223,5 @@ def main() -> None:
         start_to_sql(lists.get("qids", {}))
 
 
-def test() -> None:
-    qids = ["Q192309"]
-    lists = get_qids_sitelinks(qids)
-    logger.info(f"len of lists: {len(lists)}.")
-    qids = lists.get("qids", {})
-    # logger.info(qids)
-    start_to_sql(qids)
-
-
 if __name__ == "__main__":
-    if "test" in sys.argv:
-        test()
-    else:
-        main()
+    main()

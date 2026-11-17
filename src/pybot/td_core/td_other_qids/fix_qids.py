@@ -4,6 +4,7 @@ python3 c9/pwb.py td_core/td_other_qids/fix_qids -others
 python3 c9/pwb.py td_core/td_other_qids/fix_qids td
 python3 c9/pwb.py td_core/td_other_qids/fix_qids redirects
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

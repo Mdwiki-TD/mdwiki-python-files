@@ -16,6 +16,7 @@ from md_core_helps.one_time.priorviews.lists import views
 logger = logging.getLogger(__name__)
 
 
+
 Dir = Path(__file__).parent
 
 text_v = """
@@ -142,9 +143,6 @@ def make_text(section, links):
 
     n = 0
 
-    if "test" in sys.argv:
-        logger.info(langs_keys)
-
     section_views = 0
 
     # Loop through the dictionary of links.
@@ -183,6 +181,7 @@ def make_text(section, links):
 
     # Return the final formatted text.
     return faf
+
 
 
 if __name__ == "__main__":
@@ -309,3 +308,4 @@ if __name__ == "__main__":
     }
     u = make_text("Dentistry", lala)
     logger.info(u.replace("height:580px;", ""))
+

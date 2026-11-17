@@ -5,6 +5,7 @@
 
 python3 c9/pwb.py td_core/db_work/get_red
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

@@ -7,6 +7,7 @@ retrieving and modifying page content, and adding tags based on QIDs.
 Usage:
     python3 c9/pwb.py md_core/unlinked_wb/bot
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

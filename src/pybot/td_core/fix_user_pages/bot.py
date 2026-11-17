@@ -9,6 +9,7 @@
 python3 c9/pwb.py td_core/fix_user_pages/bot test -lang:ar
 python3 c9/pwb.py td_core/fix_user_pages/bot addall
 
+USED IN mdwiki-jobs.yaml
 """
 
 import copy
@@ -41,26 +42,6 @@ already_in_db = [x["id"] for x in already_in_db]
 
 
 def get_titles(lang: str = ""):
-
-    if "test" in sys.argv and not lang:
-        return {
-            "ar": [
-                {
-                    "id": 5,
-                    "title": "Beta blocker toxicity",
-                    "word": 0,
-                    "translate_type": 0,
-                    "cat": 0,
-                    "lang": "ar",
-                    "user": "Mina karaca",
-                    "target": "user:Mina karaca/التسمم بحاصرات بيتا",
-                    "date": 0,
-                    "pupdate": "2024-02-11",
-                    "add_date": "2024-02-15 03:00:00",
-                    "deleted": 0,
-                }
-            ]
-        }
 
     pages_users = sql_for_mdwiki.get_all_pages_all_keys(lang=lang, table="pages_users")
     pages_users_tab = {}
@@ -199,8 +180,6 @@ def work_in_to_set(new_target, tab):
     logger.info(f"<<purple>> {user=}, {newuser=}")
 
     new_tabs_to_db.append({"old": tab, "new": new_tab})
-
-    # if "test" not in sys.argv: sql_for_mdwiki.set_target_where_id(new_target, tab_id)
 
     return {"old": tab, "new": new_tab}
 

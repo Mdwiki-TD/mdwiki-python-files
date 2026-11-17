@@ -12,6 +12,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
+
 Dir = Path(__file__).parent
 Dir2 = os.path.dirname(Dir)
 
@@ -36,6 +37,7 @@ def do_all() -> None:
         x = x.split("#")[0].strip()
         x = re.sub(r"^https*://(www.|)cdc.gov/", "https://www.cdc.gov/", x)
         return x
+
 
     for _x, le in both.items():
         all_links.extend(le)
@@ -69,8 +71,3 @@ for x, le in aa.items():
 
 
 do_all()
-
-
-__all__ = [
-    "do_all",
-]

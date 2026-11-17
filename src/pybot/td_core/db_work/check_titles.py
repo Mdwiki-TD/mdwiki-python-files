@@ -7,6 +7,7 @@ python3 c9/pwb.py td_core/db_work/check_titles -lang:ur
 
 python3 c9/pwb.py td_core/db_work/check_titles test
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging
@@ -142,18 +143,16 @@ def start() -> None:
 
     for iid, new_target in to_set.items():
         logger.info(f"<<green>> set_target_where_id() new_target:{new_target}, old iid:{iid}")
-        if "test" not in sys.argv:
-            sql_for_mdwiki.set_target_where_id(new_target, iid)
+        sql_for_mdwiki.set_target_where_id(new_target, iid)
 
     logger.info(f"len of deleted_pages {len(deleted_pages)}")
     logger.info(f"len of text {len(text)}")
 
-    if "test" not in sys.argv:
-        for iid in deleted_pages:
-            sql_for_mdwiki.set_deleted_where_id(iid)
+    for iid in deleted_pages:
+        sql_for_mdwiki.set_deleted_where_id(iid)
 
-        if text:
-            add_text(text)
+    if text:
+        add_text(text)
 
 
 if __name__ == "__main__":

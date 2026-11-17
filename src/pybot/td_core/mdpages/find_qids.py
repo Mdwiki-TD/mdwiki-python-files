@@ -9,6 +9,7 @@ The script retrieves all Wikidata identifiers (QIDs) and filters them based on w
 Usage:
 python3 c9/pwb.py td_core/mdpages/find_qids
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

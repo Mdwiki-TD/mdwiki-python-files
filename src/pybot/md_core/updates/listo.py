@@ -11,6 +11,7 @@ python3 $HOME/pybot/src/md_core/mdpy/listo.py save
 
 python3 c9/pwb.py md_core/mdpy/listo save
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

@@ -38,9 +38,9 @@ COMPILE_PYTHON_FILES="${COMPILE_PYTHON_FILES:-0}"
 
 REPO_URL="https://github.com/${USER_NAME}/${REPO_NAME}.git"
 
-
+# ---------------------------------------------------------------------------
 # Functions
-
+# ---------------------------------------------------------------------------
 
 cleanup_old_backups() {
     local prefix="$1"
@@ -178,9 +178,9 @@ install_requirements() {
     "$python_bin" -m pip install -r "$target_dir/requirements.in"
 }
 
-
+# ---------------------------------------------------------------------------
 # Main
-
+# ---------------------------------------------------------------------------
 
 main() {
     local src_dir

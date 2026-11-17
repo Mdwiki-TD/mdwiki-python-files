@@ -23,8 +23,7 @@ normalized = {}
 
 
 def printtest(s) -> None:
-    if "test" in sys.argv:
-        logger.info(s)
+    logger.info(s)
 
 
 @functools.lru_cache(maxsize=1)

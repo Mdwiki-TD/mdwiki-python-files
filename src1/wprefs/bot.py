@@ -18,11 +18,12 @@ import logging
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from wprefs.api import getpagetext_raw, missingtitles, page_put
+from pybot.wprefs.wprefs_api import getpagetext_raw, missingtitles, page_put
 from wprefs.files import append_reffixed_file, reffixed_list, setting
 from wprefs.wpref_text import fix_page
 
 logger = logging.getLogger(__name__)
+
 
 
 skip_langs = ["en"]
@@ -75,6 +76,7 @@ def work_one_lang(list_, lang) -> None:
         such as logging output and modifying files.
     """
 
+
     logger.info(f"<<blue>> work on lang: {lang}.wikipedia......................")
 
     if lang in skip_langs:
@@ -95,6 +97,7 @@ def work_one_lang(list_, lang) -> None:
     dns = []
 
     for title in newlist:
+
         lio = f"{lang}:{title}"
         number += 1
         logger.info(f"<<yellow>> {number} from {len(newlist)}, page: {lio}")

@@ -4,6 +4,8 @@ python3 c9/pwb.py niosh/s
 """
 
 import json
+
+
 import logging
 import os
 import re
@@ -68,6 +70,7 @@ def work_in_file(filename) -> None:
 
         tab.append(nan)
 
+
     lista = [x["url"].replace("http://", "https://") for x in tab if x.get("url", "").find("cdc.gov/niosh/") != -1]
     lista = sorted(lista, key=lambda x: x.lower(), reverse=False)
 
@@ -91,8 +94,3 @@ for filename in os.listdir(Dird):
 
 with open(cite_file, "w", encoding="utf-8") as gg:
     json.dump(cite_all_links, gg, ensure_ascii=False, indent=2)
-
-
-__all__ = [
-    "work_in_file",
-]

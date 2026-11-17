@@ -47,9 +47,6 @@ def get_short_refs(text: str):
 def count_ref_from_text(text: str, get_short: bool = False):
 
     ref_list = []
-
-    # short_list = get_short_refs(text)
-
     if get_short:
         short_list = get_short_refs(text)
         ref_list.extend(short_list)
@@ -57,7 +54,6 @@ def count_ref_from_text(text: str, get_short: bool = False):
     refs = get_refs_new(text)
 
     ref_list.extend(refs)
-
     return len(ref_list)
 
 

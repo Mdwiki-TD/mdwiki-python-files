@@ -33,7 +33,7 @@
 -   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpages/find_qids redirects add
 
 -   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/enwiki_views
--   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/getas
+-   [x] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/update_assessments
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/mdpyget/sqlviews_new
 -   [ ] $HOME/local/bin/python3 c9/pwb.py td_core/wd_works/recheck
 

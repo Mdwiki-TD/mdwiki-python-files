@@ -2,8 +2,9 @@
 """
 page views_new bot
 
-python3 c9/pwb.py md_core/mdpyget/sqlviews_new -lang:ga
+python3 c9/pwb.py titles_data/sqlviews_new -lang:ga
 
+USED IN mdwiki-jobs.yaml
 """
 
 import copy
@@ -12,7 +13,7 @@ import re
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import insert_dict, update_table_2
+from db.to_sql_new import insert_dict, update_table
 from md_core_helps.apis.mw_views import PageviewsClient
 
 logger = logging.getLogger(__name__)
@@ -46,7 +47,6 @@ def update_in_sql(lang, table) -> None:
         if "all" in tab:
             del tab["all"]
 
-        # years = {str(y) : x["all"] for y, x in tab.items() if str(y).isdigit() and x["all"] > 0}
         years = {str(y): x for y, x in tab.items() if str(y).isdigit() and x > 0}
 
         years2 = copy.deepcopy(years)
@@ -63,10 +63,19 @@ def update_in_sql(lang, table) -> None:
 
         new_data.extend([{"target": target, "lang": lang, "year": x, "views": views} for x, views in years.items()])
 
-    update_table_2(new_data, "views_new", columns_to_set=["views"], columns_where=["target", "lang", "year"])
+    update_table(
+        new_data,
+        "views_new",
+        columns_to_set=["views"],
+        columns_where=["target", "lang", "year"],
+    )
 
     insert_dict(
-        to_insert, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", ignore=True
+        list_of_lines=to_insert,
+        table_name="views_new",
+        columns=["target", "lang", "year", "views"],
+        lento=1000,
+        ignore=True,
     )
 
 
@@ -82,7 +91,11 @@ def insert_to_sql(lang, table) -> None:
         data_list = [{"target": target, "lang": lang, "year": x, "views": views} for x, views in years.items()]
 
         insert_dict(
-            data_list, "views_new", ["target", "lang", "year", "views"], lento=1000, title_column="target", ignore=True
+            list_of_lines=data_list,
+            table_name="views_new",
+            columns=["target", "lang", "year", "views"],
+            lento=1000,
+            ignore=True,
         )
 
 

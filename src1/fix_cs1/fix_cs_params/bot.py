@@ -324,8 +324,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    if "test" in sys.argv:
-        title = "Urinary_system"
-        one_title(title)
-    else:
-        main()
+    main()

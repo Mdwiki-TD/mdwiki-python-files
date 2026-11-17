@@ -14,6 +14,9 @@ from mdwiki_api.mdwiki_page import md_MainPage
 logger = logging.getLogger(__name__)
 
 
+
+
+
 section_langs_views = {}
 
 Dir = Path(__file__).parent
@@ -23,9 +26,11 @@ def make_lang_text(mdtitle, langlinks, langs_keys_sorted):
     lang_text = ""
     u = 0
 
+
     if "test1" in sys.argv:
         print("mdtitle:", mdtitle)
         print("langlinks:", langlinks)
+
 
     for lang in langs_keys_sorted:
         u += 1
@@ -156,9 +161,6 @@ def start() -> None:
 
     ntext = make_text(Views_Data)
 
-    if "test" in sys.argv:
-        logger.info(ntext)
-
     with open(f"{Dir}/text.txt", "w", encoding="utf-8") as f:
         f.write(ntext)
 
@@ -169,6 +171,7 @@ def start() -> None:
     if not exists:
         create = page.create(text=ntext, summary="update")
     else:
+
         text = page.get_text()
         save_page = page.save(newtext=ntext, summary="update", nocreate=1, minor="")
 

@@ -6,6 +6,7 @@ import re
 
 import wikitextparser as wtp
 
+
 es_months_tab = {
     "January": "enero",
     "February": "febrero",
@@ -49,6 +50,7 @@ def make_new_val(val):
         pt_m = es_months_lower.get(m.lower(), "").strip()
 
         if pt_m != "":
+
             if d != "":
                 pt_m = f"de {pt_m}"
 
@@ -85,16 +87,15 @@ def fix_es_months(text: str):
                     # arg.value = new_val
                     temp.set_arg(na, new_val)
 
+
         _new = parsed2.string
 
         x.contents = _new
+
 
     text = parsed.string
 
     return text
 
 
-__all__ = [
-    "make_new_val",
-    "fix_es_months",
-]
+

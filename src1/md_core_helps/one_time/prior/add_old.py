@@ -37,10 +37,13 @@ from md_core_helps.one_time.prior import get_them
 logger = logging.getLogger(__name__)
 
 
+
+
 Dir = str(Path(__file__).parents[0])
 # logger.info(f'Dir : {Dir}')
 
 project_js_new = f"{Dir}/json_en/"
+
 
 
 class PriorAddOld:
@@ -86,6 +89,7 @@ class PriorAddOld:
             n = 0
 
             for title, tab in data_new.items():
+
                 n += 1
 
                 logger.info(f"page: {n}/{len_all}")
@@ -99,6 +103,7 @@ class PriorAddOld:
                     lead_re = tab["old"].get("lead", {}).get("refsname", [])
 
                     if len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0 and len(lead_re) > 0:
+
                         continue
 
                 old = get_them.GetOld(title2)
@@ -122,14 +127,12 @@ class PriorAddOld:
             if data_new == data:
                 logger.info(f"no change: {filename}")
             else:
+
                 with open(filename, "w", encoding="utf-8") as file:
                     json.dump(data_new, file)
+
 
 
 pao = PriorAddOld()
 pao.run()
 
-
-__all__ = [
-    "PriorAddOld",
-]

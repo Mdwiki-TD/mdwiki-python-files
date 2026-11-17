@@ -8,14 +8,12 @@ python pwb.py mdwiki/public_html/Translation_Dashboard/ref test
 
 import logging
 import re
-import sys
 
 logger = logging.getLogger(__name__)
 
 
 def outputnew(s) -> None:
-    if "test" in sys.argv:
-        logger.info(s)
+    logger.info(s)
 
 
 ref_complite = re.compile(r"(<ref\s*name\s*\=*\s*[\"\']*([^>]*)[\"\']*\s*>[^<>]+</ref>)")
@@ -56,10 +54,7 @@ def fix_ref(first, alltext):
     return first
 
 
-if __name__ == "__main__":
-    ff = """"""
-
-    all = """"""
-
-    if "test" in sys.argv:
-        new = fix_ref(ff, all)
+__all__ = [
+    "outputnew",
+    "fix_ref",
+]

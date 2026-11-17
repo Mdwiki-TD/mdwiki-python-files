@@ -270,11 +270,7 @@ def main2():
 
 
 if __name__ == "__main__":
-    if "test" in sys.argv:
-        one_page("Sudden infant death syndrome")
-        one_page("Menopause")
-        one_page("Panic attack")
-    elif "main2" in sys.argv:
+    if "main2" in sys.argv:
         main2()
     else:
         main()
