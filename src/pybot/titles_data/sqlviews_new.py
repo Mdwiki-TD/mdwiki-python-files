@@ -1,172 +1,158 @@
 #!/usr/bin/python3
 """
-page views_new bot
-
-python3 c9/pwb.py titles_data/sqlviews_new -lang:ga
+Fetch yearly page views of the translated pages in every language edition
+and store them in the `views_new` table of the mdwiki database.
 
 USED IN mdwiki-jobs.yaml
 """
 
-import copy
 import logging
 import re
+from collections import defaultdict
+from collections.abc import Iterator
+from typing import Any
+
+import tqdm
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.to_sql_new import insert_dict, update_table
 from md_core_helps.apis.mw_views import PageviewsClient
 
 logger = logging.getLogger(__name__)
 
-# new_data = view_bot.article_views_new(f'{site}.wikipedia', ["title1", "title2"], granularity='monthly', start=f'{year}0101', end=f'{year}1231')
-# {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
+DEFAULT_START = "20210401"
+END_DATE = "20300101"
+DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
+INSERT_BATCH_SIZE = 1000
+UPDATE_BATCH_SIZE = 100
+
+INSERT_QUERY = "INSERT IGNORE INTO views_new (target, lang, year, views) VALUES (%s, %s, %s, %s)"
+UPDATE_QUERY = "UPDATE views_new SET views = %s WHERE target = %s AND lang = %s AND year = %s"
 
 
-def update_in_sql(lang, table, already_in_sql) -> None:
-
-    logger.info("update_in_sql:")
-
-    sql_values = already_in_sql.get(lang, {})
-
-    to_insert = []
-
-    new_data = []
-
-    for target, tab in table.items():
-        sq = sql_values.get(target, {})
-
-        if "all" in tab:
-            del tab["all"]
-
-        years = {str(y): x for y, x in tab.items() if str(y).isdigit() and x > 0}
-
-        years2 = copy.deepcopy(years)
-
-        for y, views in years2.items():
-            if not sq.get(y):
-                to_insert.append({"target": target, "lang": lang, "year": y, "views": views})
-            elif sq.get(y, 0) > views:
-                years[y] = sq.get(y, 0)
-
-        if all(sq.get(str(year), 0) == years.get(str(year), 0) for year in years.keys()):
-            logger.debug(f"page:{target} has same views_new.. skip")
-            continue
-
-        new_data.extend([{"target": target, "lang": lang, "year": x, "views": views} for x, views in years.items()])
-
-    update_table(
-        new_data,
-        "views_new",
-        columns_to_set=["views"],
-        columns_where=["target", "lang", "year"],
-    )
-
-    insert_dict(
-        list_of_lines=to_insert,
-        table_name="views_new",
-        columns=["target", "lang", "year", "views"],
-        lento=1000,
-        ignore=True,
-    )
+def batched(items: list, size: int) -> Iterator[list]:
+    """Yield successive slices of items, showing a progress bar."""
+    for start in tqdm.tqdm(range(0, len(items), size)):
+        yield items[start : start + size]
 
 
-def get_targets():
+def get_targets() -> dict[str, dict[str, str]]:
+    """Return {lang: {target title: publish date}} for every translated page."""
+    rows = sql_for_mdwiki.mdwiki_sql_dict('SELECT DISTINCT lang, target, pupdate FROM pages WHERE target != ""')
 
-    que = 'select DISTINCT lang, target, pupdate from pages where target != ""'
+    lang_to_targets: dict[str, dict[str, str]] = defaultdict(dict)
 
-    sq = sql_for_mdwiki.mdwiki_sql_dict(que)
+    for row in rows:
+        lang_to_targets[row["lang"].lower()][row["target"]] = row["pupdate"]
 
-    lang_to_targets = {}
-    for tab in sq:
-        lang = tab["lang"].lower()
-        target = tab["target"]
-        pupdate = tab["pupdate"]
+    logger.info(f"find {len(rows)} to work. ")
 
-        if target != "":
-            if lang not in lang_to_targets:
-                lang_to_targets[lang] = {}
-            lang_to_targets[lang][target] = pupdate
-
-    logger.info(f"find {len(sq)} to work. ")
     return lang_to_targets
 
 
-def get_views_sql():
+def get_views_sql() -> dict[str, dict[str, dict[str, int]]]:
+    """Return the stored views as {lang: {target: {year: views}}}."""
+    rows = sql_for_mdwiki.mdwiki_sql_dict("SELECT DISTINCT target, lang, year, views FROM views_new")
 
-    que11 = """select DISTINCT target, lang, year, views from views_new"""
+    already_in_sql: dict[str, dict[str, dict[str, int]]] = defaultdict(lambda: defaultdict(dict))
 
-    dad = sql_for_mdwiki.mdwiki_sql_dict(que11)
-
-    already_in_sql = {}
-    for tab in dad:
-        target = tab["target"]
-        lang = tab["lang"].lower()
-        views = tab["views"]
-        year = tab["year"]
-
-        if lang not in already_in_sql:
-            already_in_sql[lang] = {}
-
-        if target not in already_in_sql[lang]:
-            already_in_sql[lang][target] = {}
-
-        already_in_sql[lang][target][str(year)] = views
+    for row in rows:
+        already_in_sql[row["lang"].lower()][row["target"]][str(row["year"])] = row["views"]
 
     return already_in_sql
 
 
-def main() -> None:
-    logger.info(" _finder: ")
+def fetch_views(
+    view_bot: PageviewsClient,
+    lang: str,
+    targets: dict[str, str],
+) -> dict[str, dict[str, int]]:
+    """Fetch daily views per target, starting from each page's publish date."""
+    titles_by_date: dict[str, list[str]] = defaultdict(list)
 
+    for target, pupdate in targets.items():
+        titles_by_date[str(pupdate)].append(target)
+
+    views: dict[str, dict[str, int]] = {}
+
+    for pupdate, titles in titles_by_date.items():
+        start = pupdate.replace("-", "") if DATE_RE.fullmatch(pupdate) else DEFAULT_START
+
+        logger.info("---")
+        logger.info(f"get pageviews for {len(titles)} pages, date_start:{start}")
+
+        if len(titles) < 5:
+            logger.info(", ".join(titles))
+
+        # Shape: {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ...}
+        views.update(
+            view_bot.article_views_new(
+                f"{lang}.wikipedia",
+                titles,
+                granularity="daily",
+                start=start,
+                end=END_DATE,
+            )
+        )
+
+    return views
+
+
+def split_views(
+    lang: str,
+    lang_views: dict[str, dict[str, int]],
+    sql_values: dict[str, dict[str, int]],
+) -> tuple[list[tuple], list[tuple]]:
+    """Return (rows to insert, rows to update); a stored value is only ever raised, never lowered."""
+    to_insert = []
+    to_update = []
+
+    for target, tab in lang_views.items():
+        old_years = sql_values.get(target, {})
+
+        for year, views in tab.items():
+            # Skip the "all" total and years without views.
+            if not str(year).isdigit() or views <= 0:
+                continue
+
+            year = str(year)
+
+            if year not in old_years:
+                to_insert.append((target, lang, year, views))
+            elif views > (old_years[year] or 0):
+                to_update.append((views, target, lang, year))
+
+    return to_insert, to_update
+
+
+def save_views(
+    lang: str,
+    lang_views: dict[str, dict[str, int]],
+    sql_values: dict[str, Any],
+) -> None:
+    """Write the new and changed yearly views of one language to the database."""
+    to_insert, to_update = split_views(lang, lang_views, sql_values)
+
+    logger.info(f"{lang}: {len(to_insert)=}, {len(to_update)=}")
+
+    for query, rows, size in (
+        (UPDATE_QUERY, to_update, UPDATE_BATCH_SIZE),
+        (INSERT_QUERY, to_insert, INSERT_BATCH_SIZE),
+    ):
+        for batch in batched(rows, size):
+            sql_for_mdwiki.mdwiki_sql_update(query, values=batch, many=True)
+
+
+def main() -> None:
     lang_to_targets = get_targets()
     already_in_sql = get_views_sql()
 
-    lang_pupdate_titles = {}
-
-    for lang, tit_list in lang_to_targets.items():
-        if lang not in lang_pupdate_titles:
-            lang_pupdate_titles[lang] = {}
-
-        # قوائم حسب تاريخ النشر
-        for tit, pupdate in tit_list.items():
-            if pupdate not in lang_pupdate_titles[lang]:
-                lang_pupdate_titles[lang][pupdate] = []
-
-            lang_pupdate_titles[lang][pupdate].append(tit)
-
     view_bot = PageviewsClient()
 
-    for lange, tab in lang_pupdate_titles.items():
-        numbs = {}
+    for lang, targets in lang_to_targets.items():
+        lang_views = fetch_views(view_bot, lang, targets)
 
-        for pupdate, title_list in tab.items():
-            start = "20210401"
-
-            rem = re.match(r"^(?P<y>\d\d\d\d)-(?P<m>\d\d)-(?P<d>\d\d)$", pupdate)
-
-            if rem:
-                start = rem.group("y") + rem.group("m") + rem.group("d")
-
-            lenlist = len(title_list)
-
-            logger.info("---")
-            logger.info(f"get pageviews for {lenlist} pages, date_start:{start}")
-
-            if lenlist < 5:
-                logger.info(", ".join(title_list))
-
-            new_data = view_bot.article_views_new(
-                f"{lange}.wikipedia",
-                title_list,
-                granularity="daily",
-                start=start,
-                end="20300101",
-            )
-
-            # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
-
-            numbs = {**numbs, **new_data}
-
-        update_in_sql(lange, numbs, already_in_sql)
+        save_views(lang, lang_views, already_in_sql.get(lang, {}))
 
 
 if __name__ == "__main__":
