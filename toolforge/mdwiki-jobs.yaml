@@ -42,30 +42,23 @@
   image: mariadb
   emails: none
 
-# daily at 04:30
-- name: countref
-  command: "python3 c9/pwb.py td_core/mdcount/countref newpages && python3 c9/pwb.py td_core/mdcount/countref sql"
-  schedule: "30 4 * * *"
-  image: python3.13
-  emails: none
-
 # daily at 05:45
-- name: countwords
-  command: "python3 c9/pwb.py td_core/mdcount/words newpages"
+- name: count-data
+  command: "python3 c9/pwb.py titles_data/countrefs_and_words"
   schedule: "45 5 * * *"
   image: python3.13
   emails: none
 
 # make views - daily at 07:00
 - name: views1
-  command: "python3 c9/pwb.py td_core/mdpyget/sqlviews_new"
+  command: "python3 c9/pwb.py titles_data/sqlviews_new"
   schedule: "0 7 * * *"
   image: python3.13
   emails: none
 
 # important - daily at 08:20
 - name: update-assessments
-  command: "python3 c9/pwb.py td_core/mdpyget/update_assessments"
+  command: "python3 c9/pwb.py titles_data/update_assessments"
   schedule: "20 8 * * *"
   image: python3.13
   emails: none
@@ -109,7 +102,7 @@
 
 # Wednesday at 19:00
 - name: enpv
-  command: "python3 c9/pwb.py td_core/mdpyget/enwiki_views"
+  command: "python3 c9/pwb.py titles_data/enwiki_views"
   schedule: "0 19 * * 3"
   image: python3.13
   emails: none
