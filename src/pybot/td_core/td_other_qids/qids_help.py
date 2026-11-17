@@ -7,10 +7,10 @@ import logging
 import re
 import sys
 
+from db.mdapi_sql.services import sql_for_mdwiki
 from md_core_helps.apis.mdwiki_api_call import get_all_pages
 from md_core_helps.apis.wiki_api import submit_api
 from md_core_helps.bots.check_title import valid_title
-from db.mdapi_sql.services import sql_for_mdwiki
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)

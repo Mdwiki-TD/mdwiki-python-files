@@ -52,9 +52,8 @@ skip_log_params = [
     "text",
 ]
 
-# ---------------------------------------------------------------------------
+
 # WikiLoginClient — business layer
-# ---------------------------------------------------------------------------
 
 
 class WikiLoginClient:
@@ -160,9 +159,7 @@ class WikiLoginClient:
             api_url = "https://mdwiki.org/w/api.php"
         return api_url
 
-    # ------------------------------------------------------------------
     # RequestsHandler contract — concrete implementations
-    # ------------------------------------------------------------------
 
     def _on_assertnameduserfailed(self) -> None:
         """
@@ -178,9 +175,7 @@ class WikiLoginClient:
         self.cookies_client.delete_cookie_file(reason="assertnameduserfailed")
         self._do_login()
 
-    # ------------------------------------------------------------------
     # Public interface
-    # ------------------------------------------------------------------
 
     @property
     def site(self) -> mwclient.Site:
@@ -228,9 +223,7 @@ class WikiLoginClient:
 
         return self._is_bot_cached or False
 
-    # ------------------------------------------------------------------
     # Private helpers
-    # ------------------------------------------------------------------
 
     def _client_request(
         self,

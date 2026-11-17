@@ -36,7 +36,7 @@ for q in db_data_main:
     qid = q["qid"]
     target = q["target"]
     lang = q["code"]
-    # ----
+
     if target and lang:
         in_sql_qid_targets[qid][lang] = target
 

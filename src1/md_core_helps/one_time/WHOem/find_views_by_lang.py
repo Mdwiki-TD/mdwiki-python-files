@@ -135,7 +135,7 @@ def start() -> None:
     to_work = lang_links_mdtitles
 
     n = 0
-    # ---
+
     file_path = f"{Dir}/lists/views.json"
 
     if not os.path.exists(file_path):

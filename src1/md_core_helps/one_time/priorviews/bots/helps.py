@@ -82,7 +82,7 @@ def is_ip(user) -> bool:
 
 def talk_url(lang, user, labl) -> str:
     old = f"[[w:{lang}:User talk:{user}|{user}]]"
-    # --
+
     pas = {"title": f"User_talk:{user}", "action": "edit", "section": "new"}
     url = f"//{lang}.wikipedia.org/w/index.php?{urlencode(pas)}"
 

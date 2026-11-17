@@ -89,9 +89,9 @@ def do(ty) -> None:
     if reds:
         logger.info(f'<<green>> {len(reds)=} add "fix" to sys.argv to fix them..')
         replace_in_sql(reds, ty)
-    # ----
+
     tab = {to_work.get(old_q): new_q for old_q, new_q in reds.items() if to_work.get(old_q)}
-    # ----
+
     work_un(tab)
 
     logger.info("_______________")

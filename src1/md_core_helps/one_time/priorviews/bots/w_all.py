@@ -35,7 +35,7 @@ def make_by_lang(one_langs_only):
             if cunts not in tab2[lang]["list"]:
                 tab2[lang]["list"][cunts] = []
             tab2[lang]["list"][cunts].append(user)
-            # --
+
 
     return tab2
 

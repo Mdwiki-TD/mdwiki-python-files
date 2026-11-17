@@ -47,7 +47,7 @@ tab_new["translates"] = []  # ['mdtitle', 'target', 'lang', 'views', 'words', 't
 
 def authors_table(authors, lang):
     # authors_text += "\n*".join( [ f"{x}: {v}" for x, v in authors.items()])
-    # ----
+
     tab2 = {}
     for user, cunts in authors.items():
         if cunts not in tab2:
@@ -208,15 +208,15 @@ def make_lang_textso(lang):
     newtext += f"* Views: {lang_views:,} (from July 2015 to June 2023)\n"
     newtext += f"* Words: {lang_words:,}\n"
     newtext += "\n"
-    # ----
+
     logger.info(newtext)
-    # ----
+
     # authors = sorted(authors.items(), key=lambda x: x[1])
     authors_2 = dict(sorted(authors_2.items(), key=lambda item: item[1], reverse=True))
     authors_text = "\n==Translators==\n"
-    # ----
+
     authors_text += authors_table(authors_2, lang)
-    # ----
+
     newtext += authors_text
     newtext += "\n\n"
     newtext += secs_texts

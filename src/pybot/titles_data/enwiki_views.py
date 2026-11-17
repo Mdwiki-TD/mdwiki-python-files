@@ -12,7 +12,6 @@ from collections.abc import Iterator
 from typing import Any
 
 import tqdm
-
 from db.mdapi_sql.services import sql_for_mdwiki
 from md_core_helps.apis.mw_views import PageviewsClient
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki

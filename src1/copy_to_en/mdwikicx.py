@@ -201,10 +201,10 @@ def one_page(x):
 
 def get_all():
     file = Dir / "all_pages.json"
-    # ----
+
     if file.exists() and "nodone" not in sys.argv:
         return json.loads(file.read_text())
-    # ----
+
     all_pages = cat_cach.from_cache()
 
     with open(file, "w", encoding="utf-8") as f:
