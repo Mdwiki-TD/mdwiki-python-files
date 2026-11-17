@@ -19,14 +19,12 @@ logger = logging.getLogger(__name__)
 Dir = str(Path(__file__).parents[0])
 
 
-
 que = """select DISTINCT w_title, w_lead_words, w_all_words from words;"""
 
 in_sql_lead = {}
 in_sql_all = {}
 
 for q in sql_for_mdwiki.mdwiki_sql_dict(que):
-
     w_title = q["w_title"]
     w_lead_words = q["w_lead_words"]
     w_all_words = q["w_all_words"]
@@ -58,7 +56,6 @@ INSERT = []
 same = 0
 
 for tit in na_list:
-
     tit = tit.strip()
 
     lead = lead_words.get(tit, 0)
@@ -87,7 +84,6 @@ logger.info("<<yellow>> UPDATE: ")
 if UPDATE:
     if "update" in sys.argv:
         for tab in UPDATE:
-
             lead, All, tit = tab
 
             # title2 = escape_string(tit)
@@ -134,12 +130,10 @@ logger.info("----------------")
 logger.info("<<yellow>> INSERT: ")
 
 if INSERT != []:
-
     intert_quas = [f"""('{title2}', {lead}, {All})""" for lead, All, title2 in INSERT]
 
     insert_line = ",\n".join(INSERT)
     if "insert" in sys.argv:
-
         qu = "INSERT INTO words (w_title, w_lead_words, w_all_words) values\n" + insert_line
         logger.info(qu)
         vfg = sql_for_mdwiki.mdwiki_sql_update(qu)

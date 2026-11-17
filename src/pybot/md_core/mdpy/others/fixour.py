@@ -3,9 +3,7 @@
 
 import re
 
-
 from mdwiki_api.mdwiki_page import MainPage, NewApi
-
 
 numbers = {1: 20000, "done": 0}
 
@@ -43,7 +41,6 @@ def work(title) -> None:
     newtext = text
 
     for match in regref.finditer(text):
-
         aaa = match.group()
 
         content = match.group("content")
@@ -79,10 +76,7 @@ def main() -> None:
         work(page)
 
 
-
-
 # python py/replace1.py
 
 if __name__ == "__main__":
     main()
-

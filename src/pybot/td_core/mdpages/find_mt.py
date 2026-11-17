@@ -58,22 +58,17 @@ def doo() -> None:
     qids_othrs = sql_qids_others.get_others_qids()
     logger.info(f"len of qids_othrs: {len(qids_othrs):,}")
 
-
     qids_td = sql_qids.get_all_qids()
     logger.info(f"len of qids_td: {len(qids_td):,}")
-
 
     to_work = [title for title, q in qids_td.items() if q == "" and valid_title(title)]
     logger.info(f"<<green>> len of to_work list: {len(to_work)}")
 
-
     new_qids = {x: qids_othrs[x] for x in to_work if x in qids_othrs}
     logger.info(f"<<green>> new_qids list: {len(new_qids)}")
 
-
     if to_work and new_qids:
         sql_qids.add_titles_to_qids(new_qids)
-
 
     remove_from_others(qids_othrs, qids_td)
 

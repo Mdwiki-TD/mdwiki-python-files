@@ -16,8 +16,6 @@ import time
 
 import tqdm
 from db.mdapi_sql.services import sql_for_mdwiki
-
-
 from mdwiki_api.mdwiki_page import md_MainPage
 from td_core.db_work.check_titles_helps import find_pages_exists, get_new_target_log, wikipage
 
@@ -89,7 +87,6 @@ def start() -> None:
     langs = get_langs_tabs()
 
     for lang, tabs in langs.items():
-
         logger.info(f"<<green>> lang:{lang}, has {len(tabs)} tabs")
 
         titles = [x["target"] for x in tabs]

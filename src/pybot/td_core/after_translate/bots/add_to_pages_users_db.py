@@ -15,8 +15,6 @@ import sys
 import time
 
 from db.mdapi_sql.services import sql_for_mdwiki
-
-
 from pymysql.converters import escape_string
 
 logger = logging.getLogger(__name__)

@@ -35,10 +35,8 @@ def export_en_history(title):
         with open("mdwiki/xml/w.xml", "r", encoding="utf-8") as f:
             xmldata = f.read()
     else:
-
         gg = Session.post(url="https://en.wikipedia.org/w/index.php", data=paramse)
         xmldata = gg.text
-
 
     logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
 
@@ -62,7 +60,6 @@ def export_en_history(title):
 
     logger.info(f'<<yellow>> > title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
 
-
     title2 = title.replace(":", "-").replace("/", "-")
     num = 1
     FILE_PATHS = []
@@ -72,14 +69,12 @@ def export_en_history(title):
     if len(xmldata) > La_si[1] and "nosplit" not in sys.argv:
         # while done == False :
         for rev in revisions:
-
             if num not in texts:
                 texts[num] = ""
 
             texts[num] += rev
 
             if len(texts[num]) > La_si[1]:
-
                 path = f"mdwiki/xml/{title2}-{num}.xml"
                 # tf = tempfile.NamedTemporaryFile()
                 # path = tf.name
@@ -94,16 +89,13 @@ def export_en_history(title):
                 numbdone.append(num)
                 num += 1
 
-
         if num not in numbdone and num in texts and texts[num] != "":
-
             path2 = f"mdwiki/xml/{title2}-{num}.xml"
 
             with open(path2, "w", encoding="utf-8") as oodfo:
                 oodfo.write(first + texts[num] + last)
 
             FILE_PATHS.append(path2)
-
 
         logger.info(f" split revisions to {len(FILE_PATHS)} files..")
         logger.info(FILE_PATHS)
@@ -153,11 +145,9 @@ def export(title):
     return FILE_PATH
 
 
-
 if __name__ == "__main__":
     if "teest" in sys.argv:
         export_en_history("fafa")
     elif len(sys.argv) > 1:
         export(sys.argv[1])
         # export_en_history( sys.argv[1] )
-

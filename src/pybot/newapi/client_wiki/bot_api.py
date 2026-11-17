@@ -71,9 +71,7 @@ class NewApi(NewApiHelpers):
         pages_table: list = []
         normalized_table: list = []
 
-
         for titles in self.chunk_titles(liste, chunk_size=chunk_size):
-
             done += len(titles)
 
             params: dict[str, Any] = {
@@ -103,7 +101,6 @@ class NewApi(NewApiHelpers):
         table = {}
 
         for kk in pages_table:
-
             if isinstance(pages_table, dict):
                 kk = pages_table[kk]
 
@@ -147,7 +144,6 @@ class NewApi(NewApiHelpers):
         all_jsons = {}
 
         for titles in self.chunk_titles(liste, chunk_size=chunk_size):
-
             done += len(titles)
 
             params: dict[str, Any] = {
@@ -181,7 +177,6 @@ class NewApi(NewApiHelpers):
         table = {}
 
         for kk in pages_table:
-
             if isinstance(pages_table, dict):
                 kk = pages_table[kk]
 
@@ -260,7 +255,6 @@ class NewApi(NewApiHelpers):
         if start:
             params["apfrom"] = start
 
-
         def _load_data(body):
             return body.get("query", {}).get("allpages") or []
 
@@ -319,10 +313,8 @@ class NewApi(NewApiHelpers):
         if start:
             params["gapfrom"] = start
 
-
         def _load_data(body):
             return body.get("query", {}).get("pages") or []
-
 
         newp = self.login_bot.post_continue_list(
             params=params,
@@ -394,10 +386,8 @@ class NewApi(NewApiHelpers):
         if str(pslimit).isdigit():
             params["pslimit"] = pslimit
 
-
         def _load_data(body):
             return body.get("query", {}).get("prefixsearch") or []
-
 
         newp = self.login_bot.post_continue_list(
             params=params,
@@ -509,7 +499,6 @@ class NewApi(NewApiHelpers):
         def _load_data(body):
             return body.get("query", {}).get("recentchanges") or []
 
-
         json1 = self.login_bot.post_continue_list(
             params=params,
             action="query",
@@ -550,10 +539,8 @@ class NewApi(NewApiHelpers):
         if ucshow:
             params["ucshow"] = ucshow
 
-
         def _load_data(body):
             return body.get("query", {}).get("usercontribs") or []
-
 
         results_data = self.login_bot.post_continue_list(
             params=params,
@@ -592,7 +579,6 @@ class NewApi(NewApiHelpers):
             dict: A dictionary where keys are titles and values are dictionaries of
                 language links associated with those titles.
         """
-
 
         logger.debug(f'bot_api.get_langlinks_for_list for "{len(titles)} pages". in wiki:{self.lang}')
 
@@ -695,14 +681,12 @@ class NewApi(NewApiHelpers):
             "formatversion": 2,
         }
 
-
         def _load_data(body):
             data = body.get("query", {}).get("pages") or []
             if isinstance(data, list) and data:
                 data = data[0]
                 data = data.get("extlinks", [])
             return data
-
 
         results = self.login_bot.post_continue_list(
             params=params,
@@ -762,10 +746,8 @@ class NewApi(NewApiHelpers):
         if options:
             params.update(options)
 
-
         def _load_data(body):
             return body.get("query", {}).get("pages") or []
-
 
         results = self.login_bot.post_continue_list(
             params=params,
@@ -874,10 +856,8 @@ class NewApi(NewApiHelpers):
             "formatversion": "2",
         }
 
-
         def _load_data(body):
             return body.get("query", {}).get("pages") or []
-
 
         results = self.login_bot.post_continue_list(
             params=params,
@@ -973,10 +953,8 @@ class NewApi(NewApiHelpers):
         if pwppropname != "":
             params["pwppropname"] = pwppropname
 
-
         def _load_data(body):
             return body.get("query", {}).get("pageswithprop") or []
-
 
         results = self.login_bot.post_continue_list(
             params=params,
@@ -1005,10 +983,8 @@ class NewApi(NewApiHelpers):
                 # "normalize": 1,
             }
 
-
             def _load_data(body):
                 return body.get("query", {}).get("redirects") or []
-
 
             json1 = self.login_bot.post_continue_list(
                 params=params,

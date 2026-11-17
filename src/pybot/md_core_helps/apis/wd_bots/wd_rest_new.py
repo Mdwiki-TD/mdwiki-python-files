@@ -98,7 +98,6 @@ def get_claims_api(q: str = "", p: str = ""):
             }
         )
 
-
     return claims_new
 
 

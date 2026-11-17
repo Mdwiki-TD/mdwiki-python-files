@@ -56,7 +56,6 @@ def get_qids(noqids_list):
     num = 0
 
     for i in range(0, len(noqids_list), 100):
-
         group = noqids_list[i : i + 100]
 
         params["titles"] = "|".join(group)
@@ -76,7 +75,6 @@ def get_qids(noqids_list):
             # { "-1": { "ns": 0, "title": "Fsdfdsf", "missing": "" }, "2767": { "pageid": 2767, "ns": 0, "title": "ACE inhibitor" } }
 
             for _, kk in pages.items():
-
                 num += 1
 
                 title = kk.get("title", "")
@@ -110,7 +108,6 @@ def empty_qids_wrk(empty_qids) -> None:
     logger.error(f"<<red>>no qids: {len(empty_qids)}")
 
     if empty_qids:
-
         for x in empty_qids:
             logger.info(f"\t<<red>>{x}")
 
@@ -144,7 +141,6 @@ def start() -> None:
     empty_qids = []
 
     for x, q in new_title_qid.items():
-
         if not q:
             empty_qids.append(x)
             continue

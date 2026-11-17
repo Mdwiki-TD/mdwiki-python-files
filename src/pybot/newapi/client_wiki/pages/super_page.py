@@ -726,7 +726,6 @@ class MainPage:
         def _load_data(body):
             return body.get("parse", {}).get("links") or []
 
-
         data: list = self.login_bot.post_continue_list(
             params=params,
             action="parse",
@@ -797,7 +796,6 @@ class MainPage:
 
         def _load_data(body):
             return body.get("query", {}).get("pages") or []
-
 
         _revisions = self.login_bot.post_continue_list(
             params=params,
@@ -1002,7 +1000,6 @@ class MainPage:
 
         def _load_data(body):
             return body.get("query", {}).get("pages") or []
-
 
         pages = self.login_bot.post_continue_list(
             params=params,

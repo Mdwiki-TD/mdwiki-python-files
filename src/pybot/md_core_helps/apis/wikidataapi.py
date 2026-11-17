@@ -2,8 +2,6 @@
 """ """
 
 import json
-
-
 import logging
 import re
 import sys
@@ -50,7 +48,6 @@ def wd_merge(q1, q2) -> bool:
     q22 = re.sub(r"Q", "", q2)
 
     if q11.isdigit() and q22.isdigit():
-
         if int(q11) > int(q22):
             from_title = q1
             to_title = q2
@@ -119,7 +116,6 @@ def labels_api(qid, label: str, lang, remove: bool = False, summary: str = "") -
     Save_2020_wd.setdefault("labels", False)
 
     if not Save_2020_wd["labels"] and "ask" in sys.argv:
-
         sa = ask_put(
             f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {qid} Yes or No ? {Main_User[1]} '
         )
@@ -170,7 +166,6 @@ def get_redirects(liste):
     # logger.info(liste)
 
     for i in range(0, len(liste), 50):
-
         group = []
 
         if isinstance(liste, list):
@@ -224,7 +219,6 @@ def new_item(label: str = "", lang: str = "", summary: str = "", returnid: bool 
     logger.info("<<green>> **Claim_API true.")
 
     if returnid:
-
         qid = None
 
         if "entity" in req and "id" in req["entity"]:
@@ -255,7 +249,6 @@ def claim_api_str(qid, property, string: str):
         bool: True if the claim was successfully added, False otherwise.
             An empty string is returned if any input parameter is empty.
     """
-
 
     qid = qid.strip()
 

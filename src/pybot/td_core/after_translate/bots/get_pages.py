@@ -6,8 +6,6 @@ from td_core.after_translate.bots.get_pages import get_pages_from_db
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki
-
-
 from md_core_helps.bots import py_tools
 
 logger = logging.getLogger(__name__)
@@ -18,7 +16,6 @@ targets_done = {}
 tit_user_lang = {}
 langs_to_t_u = {}
 to_update = {}
-
 
 
 def get_pages_from_db(lang_o: str):

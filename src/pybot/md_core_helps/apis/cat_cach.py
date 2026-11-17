@@ -44,7 +44,6 @@ def from_cache() -> list[str]:
     file = Path(__file__).parent / "all_pages.json"
     # ----
     if file.exists() and "nodone" not in sys.argv:
-
         last_modified = datetime.fromtimestamp(os.path.getmtime(file)).strftime("%Y-%m-%d")
 
         if last_modified == today:
@@ -124,7 +123,6 @@ def make_cash_to_cats(dump_data: bool = False) -> list[str]:
     all_cats = {}
 
     for cat, depth in cats.items():
-
         ca = cat_depth(cat, depth=depth, ns="all", print_s=False)
 
         all_cats[cat] = ca

@@ -34,13 +34,11 @@ def get_ar_results():
     result = lang_db.select_safe(qua)
 
     for x in result:
-
         actor_name = x["actor_name"]
 
         if actor_name not in editors:
             editors[actor_name] = 0
 
         editors[actor_name] += x["count"]
-
 
     return editors

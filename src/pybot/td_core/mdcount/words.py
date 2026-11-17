@@ -108,7 +108,6 @@ def main() -> None:
         vaild_links = get_links()
 
     for numb, x in enumerate(vaild_links):
-
         x = x.replace("\\'", "'")
 
         logger.info("------------------")
@@ -127,6 +126,7 @@ def main() -> None:
     logaa(file_all, tab_data["all"])
 
     start_to_sql()
+
 
 if __name__ == "__main__":
     main()

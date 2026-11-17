@@ -26,7 +26,6 @@ def not_pages(lista) -> None:
         tab[lang].append(ta)
 
     for lang, tabs in tab.items():
-
         logger.info(f"<<blue>> {lang=}, pages: {len(tabs)}:")
 
         for ta in tabs:
@@ -37,4 +36,3 @@ def not_pages(lista) -> None:
             namespace = ta["namespace"]
 
             logger.info(f"{target=}, {user=}, {mdtitle=}, {pupdate=}, {namespace=}")
-

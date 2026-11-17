@@ -42,7 +42,6 @@ def update_in_sql(lang, table) -> None:
     new_data = []
 
     for target, tab in table.items():
-
         sq = sql_values.get(target, {})
 
         if "all" in tab:
@@ -83,7 +82,6 @@ def update_in_sql(lang, table) -> None:
 def insert_to_sql(lang, table) -> None:
 
     for target, tab in table.items():
-
         if "all" in tab:
             del tab["all"]
 
@@ -130,7 +128,6 @@ def get_views_sql(lang_o) -> None:
     dad = sql_for_mdwiki.mdwiki_sql_dict(que11)
 
     for tab in dad:
-
         target = tab["target"]
         lang = tab["lang"].lower()
         views = tab["views"]
@@ -163,20 +160,17 @@ def main() -> None:
     lang_pupdate_titles = {}
 
     for lang, tit_list in Lang_to_targets.items():
-
         if lang not in lang_pupdate_titles:
             lang_pupdate_titles[lang] = {}
 
         # قوائم حسب تاريخ النشر
         for tit, pupdate in tit_list.items():
-
             if pupdate not in lang_pupdate_titles[lang]:
                 lang_pupdate_titles[lang][pupdate] = []
 
             lang_pupdate_titles[lang][pupdate].append(tit)
 
     for lange, tab in lang_pupdate_titles.items():
-
         numbs = {}
 
         for pupdate, title_list in tab.items():
@@ -212,7 +206,6 @@ def main() -> None:
         sql_values = already_in_sql.get(lange, {})
 
         for target, tab in numbs.items():
-
             if sql_values.get(target, {}) != {}:
                 update[target] = tab
             else:

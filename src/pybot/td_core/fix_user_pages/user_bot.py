@@ -51,10 +51,8 @@ def filter_revisions(lang, revisions):
             continue
 
         if x_user.lower().endswith("bot"):
-
             revisions.remove(x)
             continue
-
 
     return revisions
 
@@ -79,7 +77,6 @@ def get_new_user(new_target, lang, user):
     for x in revisions:
         x_user = x.get("user")
         if "parentid" in x and x["parentid"] == 0:
-
             second_revid = x["revid"]
 
             if x_user != user:
@@ -95,11 +92,9 @@ def get_new_user(new_target, lang, user):
             break
 
     if user in false_users:
-
         revs = [x for x in revisions if x["parentid"] == second_revid]
 
         if revs and revs[0]["user"] not in false_users:
-
             rev_user = revs[0]["user"]
 
             in_db = rev_user in db_users
@@ -114,13 +109,11 @@ def get_new_user(new_target, lang, user):
         users_count = count_users(revisions)
 
         for x in revisions:
-
             x_user = x.get("user")
 
             x_count = users_count.get(x_user, 0)
 
             if x_user not in false_users:
-
                 if not user_2nd:
                     user_2nd = x_user
 

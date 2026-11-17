@@ -6,8 +6,6 @@ tfj run stats2 --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py md
 """
 
 import json
-
-
 import logging
 import os
 import re
@@ -85,14 +83,12 @@ def work_in_one_site(site, links):
     text += """{| class="sortable wikitable"\n!#\n!User\n!Count\n|-"""
 
     for i, (user, count) in enumerate(editors.items(), start=1):
-
         user = user.replace("_", " ")
 
         text += f"\n|-\n!{i}\n|[[:w:{site}:user:{user}|{user}]]\n|{count:,}"
 
         if i == 100:
             break
-
 
     text += "\n|}"
 
@@ -122,7 +118,6 @@ def start() -> None:
     files = sorted(files, key=lambda x: os.stat(sites_dir / x).st_size, reverse=True)
 
     for numb, file in enumerate(files, start=1):
-
         logger.info(f"<<green>> n: {numb} file: {file}:")
 
         if not file.endswith("wiki.json"):

@@ -17,7 +17,6 @@ def get_links_from_cats(getcat: str = ""):
     cac = sql_for_mdwiki.get_db_categories()
 
     for cat, dep in cac.items():
-
         if getcat != "" and cat != getcat:
             continue
 

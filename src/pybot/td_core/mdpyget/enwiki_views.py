@@ -47,7 +47,6 @@ def make_n_views(en_keys, old_values):
     no_views = 0
 
     for k, view in enviews.items():
-
         view_all = view.get("all", 0)
 
         if view_all == 0 or view_all == "0" or not view_all:
@@ -149,7 +148,6 @@ def main() -> None:
     data_tab[1] = make_n_views(vaild_links, data_tab[1])
 
     if "nodump" not in sys.argv:
-
         with open(json_file, "w", encoding="utf-8") as outfile:
             json.dump(data_tab[1], outfile, sort_keys=True, indent=2)
 
@@ -157,6 +155,7 @@ def main() -> None:
     logger.info(f"<<green>> len old assessments {len_old}")
 
     start_to_sql(data_tab[1])
+
 
 if __name__ == "__main__":
     main()

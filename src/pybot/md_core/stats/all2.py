@@ -20,7 +20,6 @@ logger = logging.getLogger(__name__)
 last_year = datetime.now().year - 1
 
 
-
 Dir = Path(__file__).parent
 editors_dir = Dir / "editors"
 
@@ -71,7 +70,6 @@ def work_all(editors):
     targets = ""
 
     for i, (user, ta) in enumerate(editors.items(), start=1):
-
         count = ta["count"]
 
         wiki = ta["site"]
@@ -87,7 +85,6 @@ def work_all(editors):
 
         if count < 10:
             break
-
 
     txt_table += "\n|}"
 
@@ -115,7 +112,6 @@ def start() -> None:
     all_editors = {}
 
     for numb, file in enumerate(files, start=1):
-
         logger.info(f"<<green>> n: {numb} file: {file}:")
 
         if not file.endswith(".json"):

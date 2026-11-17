@@ -129,7 +129,6 @@ def main() -> None:
         vaild_links = get_links()
 
     for numb, x in enumerate(vaild_links):
-
         x = x.replace("\\'", "'")
 
         logger.info("------------------")

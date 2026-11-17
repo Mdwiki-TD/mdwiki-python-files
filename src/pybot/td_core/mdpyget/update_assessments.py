@@ -11,7 +11,6 @@ import re
 from collections.abc import Iterator
 
 import tqdm
-
 from db.mdapi_sql.services import sql_for_mdwiki
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki
 from mdwiki_api.wiki_page import newapi

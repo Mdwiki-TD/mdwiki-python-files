@@ -123,7 +123,6 @@ def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:
         return
 
     for title, new_qid in rest_qids.items():
-
         if not ids_in_db.get(title):
             set_qid_where_title(title, new_qid)
 

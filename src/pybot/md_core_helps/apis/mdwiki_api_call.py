@@ -168,7 +168,6 @@ def getrevid(title):
             found.
     """
 
-
     params = {"action": "parse", "prop": "revid", "page": title}
 
     json1 = post_s(params) or {}
@@ -205,7 +204,6 @@ def get_page_links(
     }
 
     if json1:
-
         query = json1.get("query", {})
         Main_table["normalized"] = query.get("normalized", [])
         Main_table["redirects"] = query.get("redirects", [])

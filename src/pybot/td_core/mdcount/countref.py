@@ -28,7 +28,6 @@ from td_core.td_dirs import paths
 logger = logging.getLogger(__name__)
 
 
-
 tab_data = {"all": {}, "lead": {}}
 # ---s
 
@@ -115,7 +114,6 @@ def main() -> None:
         vaild_links = get_links()
 
     for numb, x in enumerate(vaild_links):
-
         x = x.replace("\\'", "'")
 
         logger.info("------------------")

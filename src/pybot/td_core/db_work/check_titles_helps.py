@@ -23,7 +23,6 @@ def get_new_target_log(lang, target):
     n = 0
 
     while to_check != "":
-
         n += 1
 
         logger.info(f"<<blue>> ({n}) lang:{lang}, target:{target}")

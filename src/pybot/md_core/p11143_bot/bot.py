@@ -36,7 +36,6 @@ def duplicate(merge_qids) -> None:
     va_tab = {}
 
     for q, va in merge_qids.items():
-
         if va not in va_tab:
             va_tab[va] = []
 

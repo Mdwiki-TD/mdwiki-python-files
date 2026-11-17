@@ -5,7 +5,6 @@ from td_core.fix_user_pages.fix_it_db_new import work_in_new_tabs_to_db_new
 
 """
 
-
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki
@@ -17,7 +16,6 @@ def work_in_new_tabs_to_db_new(new_tabs_to_db) -> None:
     logger.info(f"len of new_tabs_to_db {len(new_tabs_to_db)}")
 
     for tab in new_tabs_to_db:
-
         old = tab["old"]
         new = tab["new"]
 

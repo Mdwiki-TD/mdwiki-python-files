@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-"""
-
-
-"""
+""" """
 
 import logging
 import re
@@ -139,6 +136,3 @@ def make_title(url):
         logger.info(f"<<green>> make_title_bot: newtitle: ({title})")
 
     return title
-
-
-

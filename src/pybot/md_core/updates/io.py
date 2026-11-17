@@ -66,7 +66,6 @@ def get_timestamp(titles) -> None:
             logger.info("page:%d:%s", num, page)
 
 
-
 get_timestamp(listo)
 
 laly = [[int(io.split("T")[0].replace("-", "")), x] for x, io in NewList.items() if io.split("T")[0].replace("-", "")]

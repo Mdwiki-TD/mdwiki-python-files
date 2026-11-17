@@ -33,9 +33,7 @@ limit = 200 if "test" in sys.argv else 100000
 def get_users(pages):
     usersbyyear = {"all": {}, "2024": {}, "2023": {}, "2022": {}, "2021": {}}
 
-
     for num, title in enumerate(pages, start=1):
-
         logger.info(f"num:{num}/{len(pages)}, title:{title}")
 
         revisions = api_new.get_revisions(
@@ -108,4 +106,3 @@ if not page.exists():
     page.create(text=text, summary="update")
 else:
     page.save(newtext=text, summary="update")
-
