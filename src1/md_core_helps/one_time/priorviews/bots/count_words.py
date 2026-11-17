@@ -23,6 +23,7 @@ tt = count_words.get_words(title, lang)
 """
 
 
+
 class InOldText:
     def __init__(self, title, lang: str = "en") -> None:
 
@@ -49,6 +50,7 @@ class InOldText:
 
             if words > self.words:
                 self.words = words
+
 
         text = self.oldtext
 
@@ -154,7 +156,10 @@ def get_words(title, lang) -> int:
     return words
 
 
+
 if __name__ == "__main__":
+
     t = get_words("التهاب الفقار القسطي", "ar")
     logger.info(f"words: {t}")
     sys.exit()
+

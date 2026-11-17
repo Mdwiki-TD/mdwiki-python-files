@@ -13,6 +13,8 @@ import json
 import logging
 import os
 import sys
+
+
 from pathlib import Path
 
 import wikitextparser
@@ -20,6 +22,7 @@ from md_core_helps.one_time.prior import text_bot
 from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
+
 
 
 Dir = str(Path(__file__).parents[0])
@@ -98,6 +101,7 @@ class WorkAll:
 
     def get_sectios_links(self) -> None:
         for s in self.sections:
+
             title = s.title
             contents = s.contents
 
@@ -136,6 +140,7 @@ class WorkAll:
             n = 1
 
             for i in range(0, len(_all_), numb):
+
                 las = dict(list(_all_.items())[i : i + numb])
 
                 ta = f"{title}_{n}"
@@ -151,7 +156,7 @@ class WorkAll:
         for t, _all_ in self.all_sections.items():
             lrnn = len(_all_.keys())
 
-            logger.info(f"<<yellow>> section:({t}), \t\twikilinks: {lrnn}")
+            logger.info(f"section:({t}), \t\twikilinks: {lrnn}")
 
             ttt = f"User:Mr. Ibrahem/prior/{t}"
 
@@ -189,7 +194,7 @@ def work_all() -> None:
     if "logall" in sys.argv:
         text_bot.log_all_pages_states()
     else:
-        logger.info('<<yellow>> add "logall" to args to log All pages links green/red..')
+        logger.info('add "logall" to args to log All pages links green/red..')
 
 
 if __name__ == "__main__":

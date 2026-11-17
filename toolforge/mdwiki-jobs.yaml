@@ -42,34 +42,6 @@
   image: mariadb
   emails: none
 
-# daily at 04:30
-- name: countref
-  command: "python3 c9/pwb.py td_core/mdcount/countref newpages && python3 c9/pwb.py td_core/mdcount/countref sql"
-  schedule: "30 4 * * *"
-  image: python3.13
-  emails: none
-
-# daily at 05:45
-- name: countwords
-  command: "python3 c9/pwb.py td_core/mdcount/words newpages"
-  schedule: "45 5 * * *"
-  image: python3.13
-  emails: none
-
-# make views - daily at 07:00
-- name: views1
-  command: "python3 c9/pwb.py td_core/mdpyget/sqlviews_new"
-  schedule: "0 7 * * *"
-  image: python3.13
-  emails: none
-
-# important - daily at 08:20
-- name: update_assessments
-  command: "python3 c9/pwb.py td_core/mdpyget/update_assessments"
-  schedule: "20 8 * * *"
-  image: python3.13
-  emails: none
-
 # daily at 10:00
 - name: cach-jobs2
   command: "python3 c9/pwb.py td_core/db_work/check_titles && python3 c9/pwb.py td_core/wd_works/recheck"
@@ -98,14 +70,17 @@
   image: python3.13
   emails: none
 
-# ===== Weekly jobs =====
+# ===== Monthly / semi-monthly jobs =====
 
-# Monday at 18:00
-- name: medwiki
-  command: "python3 c9/pwb.py copy_to_en/revid"
-  schedule: "0 18 * * 1"
+# 1st and 15th of each month at 21:00
+# source www/python/venv/bin/activate && cd ~/data && python3 copy_rtt_members.py update
+- name: copyrtt
+  command: "~/data/copy.sh"
+  schedule: "0 21 1,15 * *"
   image: python3.13
   emails: none
+
+# ===== Weekly jobs =====
 
 # Monday at 20:00
 - name: days7
@@ -116,23 +91,30 @@
 
 # Wednesday at 19:00
 - name: enpv
-  command: "python3 c9/pwb.py td_core/mdpyget/enwiki_views"
+  command: "python3 c9/pwb.py titles_data/enwiki_views"
   schedule: "0 19 * * 3"
   image: python3.13
   emails: none
 
-# ===== Monthly / semi-monthly jobs =====
+# ===== Daily =====
 
-# 1st and 15th of each month at 21:00
-- name: copyrtt
-  command: "~/data/copy.sh"
-  schedule: "0 21 1,15 * *"
+# daily at 05:45
+- name: count-data
+  command: "python3 c9/pwb.py titles_data/countrefs_and_words"
+  schedule: "45 5 * * *"
   image: python3.13
   emails: none
 
-# 1st of each month at 22:00
-- name: cach-jobs1
-  command: "python3 c9/pwb.py md_core_helps/apis/cat_cach && python3 c9/pwb.py td_core/copy_data/by_title/all_articles"
-  schedule: "0 22 1 * *"
+# make views - daily at 07:00
+- name: views1
+  command: "python3 c9/pwb.py titles_data/sqlviews_new"
+  schedule: "0 7 * * *"
+  image: python3.13
+  emails: none
+
+# important - daily at 08:20
+- name: update-assessments
+  command: "python3 c9/pwb.py titles_data/update_assessments"
+  schedule: "20 8 * * *"
   image: python3.13
   emails: none

@@ -32,9 +32,9 @@ PYTHON_BIN="${PYTHON_BIN:-$HOME/local/bin/python3}"
 COMPILE_PYTHON_FILES="${COMPILE_PYTHON_FILES:-0}"
 
 
-
+# ---------------------------------------------------------------------------
 # Functions
-
+# ---------------------------------------------------------------------------
 
 cleanup_old_backups() {
     local prefix="$1"
@@ -153,9 +153,9 @@ install_requirements() {
     "$python_bin" -m pip install -r "$target_dir/requirements.in"
 }
 
-
+# ---------------------------------------------------------------------------
 # Main
-
+# ---------------------------------------------------------------------------
 
 main() {
     local src_dir

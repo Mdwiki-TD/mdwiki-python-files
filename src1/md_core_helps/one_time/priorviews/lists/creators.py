@@ -20,6 +20,9 @@ from md_core_helps.one_time.priorviews.bots import helps
 logger = logging.getLogger(__name__)
 
 
+
+
+
 Dir = Path(__file__).parent
 
 file_cts = f"{Dir}/creators_as_translators.json"
@@ -46,6 +49,7 @@ Dump_it = False
 
 # Iterate through each markdown file and language in `CreatorsData`
 for lang in list(CreatorsData):
+
     titles = CreatorsData[lang]
 
     if lang not in counts_creators_by_lang:
@@ -54,6 +58,7 @@ for lang in list(CreatorsData):
         Creators_by_lang_title[lang] = {}
 
     for title, tab in titles.items():
+
         actor = tab["actor"]
         _time_ = tab["time"]
         TD = tab["TD"]
@@ -91,3 +96,6 @@ if __name__ == "__main__":
                 print(x, z)
 
         logger.info(f"len of counts_creators_by_lang: {len(counts_creators_by_lang)}")
+
+
+

@@ -83,7 +83,7 @@ def get_red(title):
 
 def work(title, num: int, length: int, from_title: str = "") -> None:
 
-    logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
+    logger.info(f'-------------------------------------------\n*>{num}/{length} title:"{title}".')
 
     if num < offset[1]:
         return
@@ -118,7 +118,7 @@ def work(title, num: int, length: int, from_title: str = "") -> None:
 
 
 def main() -> None:
-    logger.info("*<<red>> > :")
+    logger.info("*> :")
 
     # python3 red.py -page:Allopurinol
     # python3 red.py -page:Activated_charcoal_\(medication\)

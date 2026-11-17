@@ -51,7 +51,7 @@ def get_cats_and_pages() -> None:
     # for cat, lena in catlen.items():
     # logger.info(f'cat: {cat} , len: {lena}')
 
-    logger.info(f"<<yellow>> RTT_dpl: {RTT_dpl}")
+    logger.info(f"RTT_dpl: {RTT_dpl}")
 
 
 get_cats_and_pages()

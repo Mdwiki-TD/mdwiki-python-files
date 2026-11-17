@@ -90,7 +90,7 @@ def add_to_mdwiki_sql_users(lista) -> None:
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
 
     if "pages_users" not in sys.argv:
-        logger.info('skip pages_users, <<green>> add "pages_users" to sys.argv to add it to pages_users')
+        logger.info('skip pages_users, add "pages_users" to sys.argv to add it to pages_users')
         return
 
     for _, tabe in lista.items():

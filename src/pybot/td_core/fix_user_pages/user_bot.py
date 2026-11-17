@@ -80,13 +80,13 @@ def get_new_user(new_target, lang, user):
             second_revid = x["revid"]
 
             if x_user != user:
-                logger.error(f"<<red>> user:{user} new page not new!, created by:({x_user}) while user is :({user})")
+                logger.error(f"user:{user} new page not new!, created by:({x_user}) while user is :({user})")
                 return False
             else:
-                logger.info("<<green>> new page created same user:({x_user}).")
+                logger.info("new page created same user:({x_user}).")
 
                 if user not in false_users:
-                    logger.info(f"<<green>> return x_user :{x_user}")
+                    logger.info(f"return x_user :{x_user}")
                     return x_user
 
             break
@@ -99,7 +99,7 @@ def get_new_user(new_target, lang, user):
 
             in_db = rev_user in db_users
 
-            logger.info(f"<<green>> rev_user is :{rev_user}, {in_db=}")
+            logger.info(f"rev_user is :{rev_user}, {in_db=}")
 
             if in_db:
                 return rev_user
@@ -119,7 +119,7 @@ def get_new_user(new_target, lang, user):
 
                 in_db = x_user in db_users
 
-                logger.info(f"<<green>> x_user is: {x_user}, {in_db=}, {x_count=}")
+                logger.info(f"x_user is: {x_user}, {in_db=}, {x_count=}")
 
                 if not in_db and x_count == 1:
                     continue

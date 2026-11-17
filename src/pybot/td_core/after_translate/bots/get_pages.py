@@ -64,7 +64,7 @@ def get_pages_from_db(lang_o: str):
 
             targets_done_by_mdtitle[lang][mdtitle] = target
 
-    logger.info(f"<<yellow>> find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
+    logger.info(f"find {len_done_target} with target, and {len_no_target} without in mdwiki database. ")
 
     return to_update, langs_to_t_u, targets_done, tit_user_lang, targets_done_by_mdtitle
 

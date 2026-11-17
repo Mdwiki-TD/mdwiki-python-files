@@ -49,6 +49,6 @@ for x in result:
     find_it = sql_for_mdwiki.mdwiki_sql_dict(query="SELECT * FROM pages_users WHERE id = %s", values=[x_id])
 
     if len(find_it) > 0:
-        logger.info("<<red>> not deleted")
+        logger.info("not deleted")
     else:
-        logger.info("<<green>> deleted.")
+        logger.info("deleted.")

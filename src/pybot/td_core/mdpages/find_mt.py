@@ -32,7 +32,7 @@ def remove_from_others(qids_othrs, qids_td) -> None:
     same_q = [x for x in in_both if qids_othrs[x] == qids_td[x]]
     diff_q = [x for x in in_both if qids_othrs[x] != qids_td[x]]
 
-    logger.info(f"<<yellow>> len of in_both list: {len(in_both):,}, same_q: {len(same_q):,}, diff_q: {len(diff_q):,}")
+    logger.info(f"len of in_both list: {len(in_both):,}, same_q: {len(same_q):,}, diff_q: {len(diff_q):,}")
 
     for n, title in enumerate(diff_q, start=1):
         qid_td = qids_td[title]
@@ -44,9 +44,7 @@ def remove_from_others(qids_othrs, qids_td) -> None:
 
     same_q_in_td = [x for x in same_q if x in TD_list]
 
-    logger.info(
-        f"<<yellow>> len of list: {len(same_q_in_td)=:,}, add 'delete' to sys.argv to delete them from sql_qids_others."
-    )
+    logger.info(f"len of list: {len(same_q_in_td)=:,}, add 'delete' to sys.argv to delete them from sql_qids_others.")
 
     if "delete" in sys.argv:
         for n, title in enumerate(same_q_in_td, start=1):
@@ -62,10 +60,10 @@ def doo() -> None:
     logger.info(f"len of qids_td: {len(qids_td):,}")
 
     to_work = [title for title, q in qids_td.items() if q == "" and valid_title(title)]
-    logger.info(f"<<green>> len of to_work list: {len(to_work)}")
+    logger.info(f"len of to_work list: {len(to_work)}")
 
     new_qids = {x: qids_othrs[x] for x in to_work if x in qids_othrs}
-    logger.info(f"<<green>> new_qids list: {len(new_qids)}")
+    logger.info(f"new_qids list: {len(new_qids)}")
 
     if to_work and new_qids:
         sql_qids.add_titles_to_qids(new_qids)

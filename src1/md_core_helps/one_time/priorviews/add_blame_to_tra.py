@@ -5,6 +5,8 @@ python3 c9/pwb.py priorviews/add_blame_to_tra
 """
 
 import json
+
+
 import logging
 import sys
 from pathlib import Path
@@ -14,6 +16,8 @@ from md_core_helps.one_time.priorviews.find.find_blame import new_data
 from md_core_helps.one_time.priorviews.lists.translators import tra_by_lang
 
 logger = logging.getLogger(__name__)
+
+
 
 
 Dir = Path(__file__).parent
@@ -26,6 +30,7 @@ def add_to_translators() -> None:
     new = 1
     dd = 1
     for lang, titles in new_data.items():
+
         if lang not in tra_by_lang:
             tra_by_lang[lang] = {}
 
@@ -41,12 +46,14 @@ def add_to_translators() -> None:
             title: user for title, user in titles.items() if user != "" and not user.lower().endswith("bot")
         }
 
-        # logger.info(f'<<blue>> lang:{lang} found {len(titles_bots)} bots, {len(titles_no_bots)} no bots')
+        # logger.info(f'lang:{lang} found {len(titles_bots)} bots, {len(titles_no_bots)} no bots')
+
 
         for title, user in titles_no_bots.items():
+
             if user.lower().endswith("bot"):
                 sk += 1
-                # logger.info(f'<<red>> {sk} skip bots: {lang=}, {title=}, {user=}')
+                # logger.info(f'{sk} skip bots: {lang=}, {title=}, {user=}')
                 continue
 
             in_ = tra_by_lang[lang].get(title, "")
@@ -57,10 +64,11 @@ def add_to_translators() -> None:
             if in_ == "" or in_.lower() in skip_users or helps.is_ip(in_):
                 new += 1
                 tra_by_lang[lang][title] = user
-                logger.info(f"<<green>> {new=} {lang=}, {title=}, {user=}, old: {in_}")
+                logger.info(f"{new=} {lang=}, {title=}, {user=}, old: {in_}")
             elif in_ != user:
                 dd += 1
-                logger.info(f"<<purple>> {dd=} skip, userin: {in_=}, new: {user}")
+                logger.info(f"{dd=} skip, userin: {in_=}, new: {user}")
+
 
     file = f"{Dir}/lists/translators_mdwiki_langs.json"
 
@@ -80,8 +88,9 @@ def sea55() -> None:
         for title in titls:
             if title.lower() not in new_data[lang] and title not in new_data[lang]:
                 n += 1
-                logger.error(f"<<red>>{n=}/{len(titls)} {lang=}, {title=}")
+                logger.error(f"{n=}/{len(titls)} {lang=}, {title=}")
                 new_data[lang][title.lower()] = ""
+
 
     file = f"{Dir}/lists/blames.json"
 
@@ -89,7 +98,11 @@ def sea55() -> None:
     helps.dump_data(file, new_data)
 
 
+
+
+
 if __name__ == "__main__":
+
     if "sea55" in sys.argv:
         sea55()
     else:

@@ -29,6 +29,9 @@ src1/
 │   ├── tf_page.py
 │   └── x.py
 │
+├── db/
+│   └── to_sql_new.py
+│
 ├── find_replace_bot/
 │   ├── __init__.py
 │   ├── bot.py
@@ -348,22 +351,29 @@ src1/
 │
 ├── td_core/
 │   │
-│   └── coby_data/
+│   ├── copy_data/
+│   │   │
+│   │   ├── by_qid/
+│   │   │
+│   │   ├── by_title/
+│   │   │   ├── __init__.py
+│   │   │   └── all_articles.py
+│   │   │
+│   │   ├── __init__.py
+│   │   ├── copy_assessments.py
+│   │   ├── copy_enwiki_pageviews.py
+│   │   ├── copy_refs_2.py
+│   │   ├── copy_word_2.py
+│   │   ├── copy_word_table.py
+│   │   ├── enwiki_pageviews.txt
+│   │   └── sitelinks.py
+│   │
+│   └── mdcount/
 │       │
-│       ├── by_qid/
+│       ├── bots/
+│       │   └── links.py
 │       │
-│       ├── by_title/
-│       │   ├── __init__.py
-│       │   └── all_articles.py
-│       │
-│       ├── __init__.py
-│       ├── copy_assessments.py
-│       ├── copy_enwiki_pageviews.py
-│       ├── copy_refs_2.py
-│       ├── copy_word_2.py
-│       ├── copy_word_table.py
-│       ├── enwiki_pageviews.txt
-│       └── sitelinks.py
+│       └── lead.py
 │
 ├── wprefs/
 │   │

@@ -48,6 +48,7 @@ def filter_urls(links: list[str]) -> list[str]:
 
     # delete link like web.archive.org
     for x_str in links:
+
         if x_str.startswith("//"):
             x_str = f"https:{x_str}"
 
@@ -77,6 +78,7 @@ def filter_urls(links: list[str]) -> list[str]:
 
         # https://books.google.ca/books?id=JaOoXdSlT9sC&pg=PA11
         if "books.google" in x_str and "books" not in sys.argv:
+
             prased = url_parser(x_str)
             # {'scheme': 'https', 'netloc': 'books.google.ca', 'path': '/books', 'queries': {'id': 'JaOoXdSlT9sC', 'pg': 'PA11'}}
 
@@ -85,7 +87,7 @@ def filter_urls(links: list[str]) -> list[str]:
             if book_id != "":
                 x2 = f"https://books.google.com/books?id={book_id}"
                 if x2 != x_str:
-                    # logger.info('<<yellow>> google books + 1')
+                    # logger.info('google books + 1')
                     x_str = x2
 
         liste1.append(x_str.lower())
@@ -219,6 +221,7 @@ class WorkOneLang:
         links = []
 
         while elcontinue != "":
+
             if elcontinue not in ["x", ""]:
                 params["elcontinue"] = elcontinue
 
@@ -234,6 +237,7 @@ class WorkOneLang:
 
         # remove duplicates
         liste1 = sorted(set(links))
+
 
         if "nofilter" not in sys.argv:
             liste1 = filter_urls(liste1)
@@ -275,6 +279,7 @@ class WorkOneLang:
 
         # remove duplicates
         liste1 = sorted(set(links))
+
 
         if "nofilter" not in sys.argv:
             liste1 = filter_urls(liste1)
@@ -466,6 +471,7 @@ class GetOld:
         # remove duplicates
         liste1 = sorted(set(links))
 
+
         if "nofilter" not in sys.argv:
             liste1 = filter_urls(liste1)
 
@@ -489,11 +495,3 @@ class GetOld:
 
             if contents == "" and new_co != "":
                 self.section0 = self.section0.replace(str(x), new_co)
-
-
-__all__ = [
-    "WorkOneLang",
-    "GetOld",
-    "url_parser",
-    "filter_urls",
-]

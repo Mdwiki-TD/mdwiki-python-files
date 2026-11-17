@@ -105,7 +105,7 @@ if __name__ == "__main__":
     qids = ["Q26981430"]
 
     for q in qids:
-        logger.info(f"<<blue>>_______\n{q} :")
+        logger.info(f"_______\n{q} :")
 
         j = get_one_qid_info(q)
 

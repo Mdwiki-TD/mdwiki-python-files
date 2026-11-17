@@ -45,7 +45,7 @@ def get_sitelinks(qs_list, lena: int = 300):
 
         params_wd["ids"] = "|".join(qids)
 
-        logger.info(f"<<green>> done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
+        logger.info(f"done:{len(all_entities)} from {len(qs_list)}, get sitelinks for {len(qids)} qids.")
 
         json1 = wikidataapi.post(params_wd)
 
@@ -79,7 +79,7 @@ def start() -> None:
     for site, links in sits.items():
         with open(Dir / "sites" / f"{site}.json", "w", encoding="utf-8") as f:
             json.dump(links, f, sort_keys=True)
-            logger.info(f"dump <<green>> {site} of {len(links)}")
+            logger.info(f"dump {site} of {len(links)}")
 
 
 if __name__ == "__main__":

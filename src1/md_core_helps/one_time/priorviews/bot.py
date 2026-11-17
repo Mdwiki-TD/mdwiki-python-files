@@ -17,6 +17,7 @@ from mdwiki_api.mdwiki_page import md_MainPage
 logger = logging.getLogger(__name__)
 
 
+
 Dir = Path(__file__).parent
 
 
@@ -34,10 +35,8 @@ titles_1 = []
 
 # make text for each section
 for section, links in sects_links_langlinks.items():
-    ntext = sections_text.make_text(section, links)
 
-    if "test" in sys.argv:
-        logger.info(ntext)
+    ntext = sections_text.make_text(section, links)
 
     title = f"User:Mr. Ibrahem/priorviews/{section}"
 
@@ -50,12 +49,13 @@ for section, links in sects_links_langlinks.items():
         if not exists:
             create = page.create(text=ntext, summary="update")
         else:
+
             text = page.get_text()
             save_page = page.save(newtext=ntext, summary="update", nocreate=1, minor="")
 
 
 all_section_views = sections_text.all_section_views - by_lang.en_views
-logger.info(f"<<green>> all_section_views: {all_section_views:,}")
+logger.info(f"all_section_views: {all_section_views:,}")
 
 newtext = ""
 newtext += "; (Views from July 2015 to June 2023).\n"
@@ -84,5 +84,10 @@ exists = page.exists()
 if not exists:
     create = page.create(text=newtext, summary="update")
 else:
+
     text = page.get_text()
     save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
+
+
+
+

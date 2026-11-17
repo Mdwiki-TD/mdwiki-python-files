@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-tfj run revid --image python3.9 --command "$HOME/local/bin/python3 c9/pwb.py copy_to_en/revid"
+REPLACED BY update_category_members/worker.py
 
 """
 
@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import to_sql
+from db.to_sql import new_to_sql
 from md_core_helps.bots.check_title import valid_title
 from mdwiki_api.mdwiki_page import CatDepth
 
@@ -25,7 +25,6 @@ if not dir2:
 
 file = Dir / "all_pages_revids.json"
 
-# file2 = Path(dir2) / "public_html" / "publish" / "all_pages_revids.json"
 file3 = Path(dir2) / "public_html" / "all_pages_revids.json"
 file4 = Path(dir2) / "data" / "all_pages_revids.json"
 
@@ -34,33 +33,33 @@ def dump_data(revids) -> None:
     logger.info(f"len(revids): {len(revids)}")
 
     if not revids:
-        logger.info("<<red>> revids is empty")
+        logger.info("revids is empty")
         return
 
     with open(file, "w", encoding="utf-8") as f:
         json.dump(revids, f, ensure_ascii=False)
-        logger.info(f"<<blue>> dump to {file}")
+        logger.info(f"dump to {file}")
 
     # try:
     # with open(file2, "w", encoding="utf-8") as f:
     # json.dump(revids, f, ensure_ascii=False)
-    # logger.info(f"<<blue>> dump to {file2}")
+    # logger.info(f"dump to {file2}")
     # except Exception as e:
-    # logger.error(f"<<red>> dump to {file2} error: {e}")
+    # logger.error(f"dump to {file2} error: {e}")
 
     try:
         with open(file3, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
-            logger.info(f"<<blue>> dump to {file3}")
+            logger.info(f"dump to {file3}")
     except Exception as e:
-        logger.error(f"<<red>> dump to {file3} error: {e}")
+        logger.error(f"dump to {file3} error: {e}")
 
     try:
         with open(file4, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
-            logger.info(f"<<blue>> dump to {file4}")
+            logger.info(f"dump to {file4}")
     except Exception as e:
-        logger.error(f"<<red>> dump to {file4} error: {e}")
+        logger.error(f"dump to {file4} error: {e}")
 
 
 def cat_depth(title, depth: int = 0):
@@ -73,7 +72,7 @@ def cat_depth(title, depth: int = 0):
     # result_table = {key: result_table[key] for key in result_table if valid_title(key)}
     result_table = dict(filter(lambda item: valid_title(item[0]), result_table.items()))
 
-    logger.info(f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) in {title}, depth:{depth}.")
+    logger.info(f"CatDepth result({len(result_table)}) in {title}, depth:{depth}.")
 
     return result_table
 
@@ -85,6 +84,7 @@ def get_all_revids() -> None:
     cats = sql_for_mdwiki.get_db_categories()
 
     for cat, depth in cats.items():
+
         ca = cat_depth(cat, depth=depth)
 
         revids.update(ca)
@@ -97,7 +97,12 @@ def get_all_revids() -> None:
 
     data2 = [{"title": x, "revid": v} for x, v in revids.items()]
 
-    to_sql(data2, table_name, columns, title_column="title")
+    new_to_sql(
+        data=data2,
+        table_name=table_name,
+        columns=columns,
+        title_columns=["title"],
+    )
 
 
 if __name__ == "__main__":

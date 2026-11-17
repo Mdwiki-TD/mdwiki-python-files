@@ -16,6 +16,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
+
 Dir = Path(__file__).parent
 
 file = f"{Dir}/words_mdwiki_langs.json"
@@ -32,6 +33,7 @@ count_words_by_lang = {}
 
 # Iterate through each markdown file and language in `words_by_lang`
 for lang, titles in words_by_lang.items():
+
     if lang not in count_words_by_lang:
         count_words_by_lang[lang] = 0
 
@@ -48,3 +50,5 @@ if __name__ == "__main__":
     for lang, titles in words_by_lang.items():
         for title, words in titles.items():
             print(lang, title, words)
+
+

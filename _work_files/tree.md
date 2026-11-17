@@ -22,26 +22,7 @@ src/
 │   │   │   ├── __init__.py
 │   │   │   └── sql_td_bot.py
 │   │   │
-│   │   ├── tools/
-│   │   │   │
-│   │   │   ├── models/
-│   │   │   │
-│   │   │   └── services/
-│   │   │       │
-│   │   │       ├── analytics/
-│   │   │       │
-│   │   │       ├── content/
-│   │   │       │
-│   │   │       ├── pages/
-│   │   │       │
-│   │   │       ├── reports/
-│   │   │       │
-│   │   │       ├── utils/
-│   │   │       │
-│   │   │       └── wikidata/
-│   │   │
-│   │   ├── __init__.py
-│   │   └── to_sql_new.py
+│   │   └── __init__.py
 │   │
 │   ├── md_core/
 │   │   │
@@ -124,7 +105,6 @@ src/
 │   │   │   │   └── wikidataapi_post.py
 │   │   │   │
 │   │   │   ├── __init__.py
-│   │   │   ├── all_pages.json
 │   │   │   ├── cat_cach.py
 │   │   │   ├── mdwiki_api_call.py
 │   │   │   ├── mw_views.py
@@ -233,10 +213,9 @@ src/
 │   │   │   ├── bots/
 │   │   │   │   ├── __init__.py
 │   │   │   │   ├── countref_bots.py
-│   │   │   │   ├── lead.py
-│   │   │   │   ├── links.py
 │   │   │   │   ├── ref.py
-│   │   │   │   └── regex_scanner.py
+│   │   │   │   ├── regex_scanner.py
+│   │   │   │   └── wtp_refs.py
 │   │   │   │
 │   │   │   └── __init__.py
 │   │   │
@@ -245,8 +224,7 @@ src/
 │   │   │   ├── cashwd.py
 │   │   │   ├── create_qids.py
 │   │   │   ├── find_mt.py
-│   │   │   ├── find_qids.py
-│   │   │   └── findqids.sh
+│   │   │   └── find_qids.py
 │   │   │
 │   │   ├── td_other_qids/
 │   │   │   ├── __init__.py

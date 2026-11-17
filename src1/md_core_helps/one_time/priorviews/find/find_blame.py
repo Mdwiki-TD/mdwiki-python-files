@@ -5,6 +5,8 @@ python3 c9/pwb.py priorviews/find/find_blame -lang:ar
 """
 
 import json
+
+
 import logging
 import os
 import sys
@@ -22,6 +24,9 @@ from md_core_helps.one_time.wikiblame.bot import (  # first, result = get_blame(
 logger = logging.getLogger(__name__)
 
 # tab = json_langs_by_langs.get(lang, {}).get(title, {})# {'extlinks': extlinks, 'refsname': refsname}
+
+
+
 
 
 links_without_translator = {}
@@ -65,7 +70,9 @@ def gtblame_value(title, lang):
         if ne:
             return ne
     else:
+
         for ref in refname:
+
             logger.info(f"search for: ref: ({ref}), page: [[{lang}:{title}]]")
 
             tab["needle"] = ref
@@ -79,7 +86,7 @@ def gtblame_value(title, lang):
 
 
 def logem() -> None:
-    logger.info(f"<<yellow>> {len(new_data)} words")
+    logger.info(f"{len(new_data)} words")
     # dump new_data
     helps.dump_data(file, new_data)
 
@@ -97,6 +104,7 @@ def get_b(links, lang) -> None:
             return True
         return False
 
+
     if "new" in sys.argv:
         # links = [ x for x in links if not x in new_data[lang] or v[lang][x] == '']
         links = [x for x in links if valid(x, new_data[lang], empty="")]
@@ -108,6 +116,7 @@ def get_b(links, lang) -> None:
     lena = len(links)
 
     for title in links:
+
         title_lower = title.lower()
 
         m += 1
@@ -124,17 +133,17 @@ def get_b(links, lang) -> None:
 
         new_data[lang][title_lower] = value_in
 
-        logger.info(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        logger.info(f"title: {m}/{lena} get_t {title}, value_in:{value_in}")
 
         # {"time": 20140721110644, "actor": "CFCF", "comment": "Translated from [[:en:African trypanosomiasis|English]] by Somil.Mishra at [[:en:Translators Without Borders|Translators Without Borders]]", "TD": false}
         crate = lang_creators.get(title, {})
         page_time = crate.get("time")
 
         if page_time:
-            logger.info(f"<<yellow>> page_time: {page_time}")
+            logger.info(f"page_time: {page_time}")
             year = int(str(page_time)[0:4])
             if year < 2012 and "all" not in sys.argv:
-                logger.info("<<red>> skip....")
+                logger.info("skip....")
                 continue
 
         _value = gtblame_value(title, lang)
@@ -144,12 +153,13 @@ def get_b(links, lang) -> None:
 
         if _value == "creator":
             _value = crate.get("actor", "")
-            logger.info(f"<<green>> creator _value: {_value}")
+            logger.info(f"creator _value: {_value}")
 
         if value_in != 0 and _value == 0:
             continue
 
         new_data[lang][title_lower] = _value
+
 
     # logem()
 
@@ -166,6 +176,7 @@ def start() -> None:
     n = 0
 
     for la in langkeys:
+
         links = links_without_translator[la]
 
         logger.info("=============================" * 2)
@@ -176,6 +187,9 @@ def start() -> None:
         get_b(links, la)
 
     logem()
+
+
+
 
 
 if __name__ == "__main__":

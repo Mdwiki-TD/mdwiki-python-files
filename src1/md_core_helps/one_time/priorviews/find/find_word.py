@@ -6,6 +6,8 @@ python3 c9/pwb.py priorviews/find/find_word new
 """
 
 import json
+
+
 import logging
 import os
 import sys
@@ -21,7 +23,7 @@ Dir2 = os.path.dirname(Dir)
 
 
 def log_words(file_path, data) -> None:
-    logger.info(f"<<yellow>> {len(data)} words")
+    logger.info(f"{len(data)} words")
     helps.dump_data(file_path, data)
 
 
@@ -46,6 +48,7 @@ def get_w(links, lang, _words_by_lang):
     lena = len(links)
 
     for title in links:
+
         title_lower = title.lower()
 
         m += 1
@@ -55,7 +58,7 @@ def get_w(links, lang, _words_by_lang):
         if "new" in sys.argv and words_in > 40:
             continue
 
-        logger.info(f"<<yellow>> title: {m}/{lena} {title}, words_in:{words_in}")
+        logger.info(f"title: {m}/{lena} {title}, words_in:{words_in}")
 
         _words = count_words.get_words(title, lang)
 
@@ -63,6 +66,7 @@ def get_w(links, lang, _words_by_lang):
             continue
 
         _words_by_lang[lang][title_lower] = _words
+
 
     return _words_by_lang
 
@@ -87,6 +91,7 @@ def start() -> None:
     words_by_lang = json.load(open(file, "r", encoding="utf-8"))
 
     for lang in langkeys:
+
         links = links_by_lang[lang]
 
         logger.info(f"lang: {lang}")
@@ -97,6 +102,7 @@ def start() -> None:
         words_by_lang = get_w(links, lang, words_by_lang)
 
         log_words(file, words_by_lang)
+
 
     log_words(file, words_by_lang)
 

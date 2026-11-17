@@ -57,7 +57,7 @@ def do_request(params: dict | None = None, method: str = "POST"):
         status = r4.status_code
 
         if status != 200:
-            logger.error(f"<<red>> wikidataapi.py: post error status: {str(status)}")
+            logger.error(f"wikidataapi.py: post error status: {str(status)}")
             return {}
 
         return r4.json()

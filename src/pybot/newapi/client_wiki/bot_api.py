@@ -265,7 +265,7 @@ class NewApi(NewApiHelpers):
             _load_data=_load_data,
         )
 
-        logger.debug(f"<<lightpurple>> --- : find {len(newp)} pages.")
+        logger.debug(f"--- : find {len(newp)} pages.")
 
         Main_table = [x["title"] for x in newp]
 
@@ -323,7 +323,7 @@ class NewApi(NewApiHelpers):
             max=limit_all,
         )
 
-        logger.debug(f"<<lightpurple>> --- get_all_pages_generator : find {len(newp)} pages.")
+        logger.debug(f"--- get_all_pages_generator : find {len(newp)} pages.")
 
         Main_table = {x["title"]: x for x in newp}
 
@@ -396,7 +396,7 @@ class NewApi(NewApiHelpers):
             max=limit_all,
         )
 
-        logger.debug(f"<<lightpurple>> --- : find {len(newp)} pages.")
+        logger.debug(f"--- : find {len(newp)} pages.")
 
         Main_table = [x["title"] for x in newp]
 
@@ -820,7 +820,7 @@ class NewApi(NewApiHelpers):
         ]
 
         if qppage not in qppage_values:
-            logger.info(f"<<lightred>> qppage {qppage} not in qppage_values.")
+            logger.info(f"qppage {qppage} not in qppage_values.")
 
         def _load_data(body):
             query = body.get("query", {})
@@ -1053,7 +1053,7 @@ class NewApi(NewApiHelpers):
         ignorewarnings: bool = False,
     ) -> dict[str, Any]:
 
-        logger.info(f"<<lightyellow>> def . {file_name=}")
+        logger.info(f"def . {file_name=}")
 
         if file_name.startswith("File:"):
             file_name = file_name.replace("File:", "")
@@ -1061,7 +1061,7 @@ class NewApi(NewApiHelpers):
         if file_name.startswith("ملف:"):
             file_name = file_name.replace("ملف:", "")
 
-        logger.info(f"<<lightyellow>> {file_path=}...")
+        logger.info(f"{file_path=}...")
 
         params: dict[str, Any] = {
             "action": "upload",
@@ -1085,11 +1085,11 @@ class NewApi(NewApiHelpers):
         duplicate = upload_result.get("warnings", {}).get("duplicate", [""])[0].replace("_", " ")
 
         if success:
-            logger.info(f"<<lightgreen>> ** upload true .. [[File:{file_name}]] ")
+            logger.info(f"** upload true .. [[File:{file_name}]] ")
             return {"success": True, **upload_result}
 
         if duplicate:
-            logger.info(f"<<lightred>> ** duplicate file: {duplicate}.")
+            logger.info(f"** duplicate file: {duplicate}.")
 
         return {"success": False, **upload_result}
 
@@ -1291,7 +1291,7 @@ class NewApi(NewApiHelpers):
         return_dict: bool = False,
     ):
 
-        logger.info(f"<<lightyellow>> def [[{old_title}]] to [[{to}]] ")
+        logger.info(f"def [[{old_title}]] to [[{to}]] ")
 
         params: dict[str, Any] = {
             "action": "move",
@@ -1311,7 +1311,7 @@ class NewApi(NewApiHelpers):
             params["reason"] = reason
 
         if old_title == to:
-            logger.debug(f"<<lightred>>** old_title == to {to} ")
+            logger.debug(f"** old_title == to {to} ")
             return {}
 
         message = f"Do you want to move page:[[{old_title}]] to [[{to}]]?"
@@ -1335,7 +1335,7 @@ class NewApi(NewApiHelpers):
         # elif "Please choose another name." in r4:
 
         if move_done:
-            logger.info("<<lightgreen>>** true.")
+            logger.info("** true.")
 
             if return_dict:
                 return move_done
@@ -1344,7 +1344,7 @@ class NewApi(NewApiHelpers):
 
         if error:
             if error_code == "ratelimited":
-                logger.info("<<red>> ratelimited:")
+                logger.info("ratelimited:")
                 return self.move(
                     old_title,
                     to,
@@ -1355,10 +1355,10 @@ class NewApi(NewApiHelpers):
                 )
 
             if error_code == "articleexists":
-                logger.info("<<red>> articleexists")
+                logger.info("articleexists")
                 return "articleexists"
 
-            logger.info("<<red>> error")
+            logger.info("error")
             logger.info(error)
 
             return {}

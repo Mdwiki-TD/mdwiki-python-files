@@ -164,10 +164,10 @@ def start():
         if arg == "path":
             path = value.strip()
 
-    logger.info(f" <<blue>> work on path : {path}\n" * 3)
+    logger.info(f" work on path : {path}\n" * 3)
 
     if not os.path.exists(path):
-        logger.info(" <<blue>> path not exist")
+        logger.info(" path not exist")
         return
 
     from fix_use.add import add_use

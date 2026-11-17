@@ -38,7 +38,7 @@ class HandleErrors:
         err_code = error.get("code", "")
         err_info = error.get("info", "")
 
-        tt = f"<<lightred>>{function} ERROR:code:{err_code}."
+        tt = f"{function} ERROR:code:{err_code}."
         logger.info(tt)
 
         # ["protectedpage", "تأخير البوتات 3 ساعات", False]
@@ -48,7 +48,7 @@ class HandleErrors:
 
             abusefilter = error.get("abusefilter", "")
             description = abusefilter.get("description", "") if isinstance(abusefilter, dict) else ""
-            logger.info(f"<<lightred>> ** abusefilter-disallowed: {description} ")
+            logger.info(f"** abusefilter-disallowed: {description} ")
             if description in [
                 "تأخير البوتات 3 ساعات",
                 "تأخير البوتات 3 ساعات- 3 من 3",
@@ -56,31 +56,31 @@ class HandleErrors:
                 "تأخير البوتات 3 ساعات- 2 من 3",
             ]:
                 # return False
-                logger.debug(f"<<lightred>> ** abusefilter-disallowed: {description} ")
+                logger.debug(f"** abusefilter-disallowed: {description} ")
             return {"success": False, "error_code": err_code, "error": error}
 
         if err_code == "no-such-entity":
-            logger.info("<<lightred>> ** no-such-entity. ")
+            logger.info("** no-such-entity. ")
             return {"success": False, "error_code": err_code, "error": error}
 
         if err_code == "protectedpage":
-            logger.info("<<lightred>> ** protectedpage. ")
+            logger.info("** protectedpage. ")
             return {"success": False, "error_code": err_code, "error": error}
 
         if err_code == "articleexists":
-            logger.info("<<lightred>> ** article already created. ")
+            logger.info("** article already created. ")
             # return "articleexists"
             return {"success": False, "error_code": err_code, "error": error}
 
         if err_code == "maxlag":
-            logger.info("<<lightred>> ** maxlag. ")
+            logger.info("** maxlag. ")
             return {"success": False, "error_code": err_code, "error": error}
 
         if do_error:
             if params:
                 params["data"] = {}
                 params["text"] = {}
-            logger.error(f"<<lightred>>{function} ERROR:info: {err_info}, {params=}")
+            logger.error(f"{function} ERROR:info: {err_info}, {params=}")
 
         if "raise" in sys.argv:
             raise Exception(error)

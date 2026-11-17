@@ -76,7 +76,7 @@ def main() -> None:
 
     length["RTT"] = len(rtt_pages_subs)
     data.update(rtt_pages_subs)
-    # ---s
+
     for cat, len_titles in length.items():
         logger.info(f"Category:{cat}: {len_titles=}")
 

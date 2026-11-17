@@ -16,6 +16,7 @@ from wprefs.helps import print_s
 def expend_new(main_temp):
     parsed = wtp.parse(main_temp)
     for template in parsed.templates:
+
         if not template:
             continue
 
@@ -60,6 +61,7 @@ def expend_infobox(text: str, title, section_0) -> str:
     Returns:
         str: The modified text with the expanded infobox.
     """
+
 
     newtext = text
 
@@ -123,9 +125,3 @@ def expend_infobox(text: str, title, section_0) -> str:
             newtext = newtext.replace(f"{new_temp}'''", f"{new_temp}\n'''")
 
     return newtext
-
-
-__all__ = [
-    "expend_new",
-    "expend_infobox",
-]

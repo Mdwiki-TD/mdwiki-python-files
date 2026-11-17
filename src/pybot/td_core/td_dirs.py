@@ -11,12 +11,9 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-_tables_path = os.getenv("TABLES_PATH")  # /data/project/mdwiki/public_html/td/Tables
+_tables_path = os.getenv("TABLES_PATH") or "/data/project/mdwiki/public_html/td/Tables"
 
-if not _tables_path:
-    raise RuntimeError("TABLES_PATH is not set")
-
-if os.getenv("APP_ENV") == "development" and not _tables_path:
+if os.getenv("APP_ENV") == "development":
     _tables_path = "I:/MD_TOOLS/MDWIKI_MAIN_REPO/public_html/td/Tables"
 
 _TABLES_PATH = Path(_tables_path).expanduser()

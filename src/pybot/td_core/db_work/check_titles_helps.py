@@ -25,7 +25,7 @@ def get_new_target_log(lang, target):
     while to_check != "":
         n += 1
 
-        logger.info(f"<<blue>> ({n}) lang:{lang}, target:{target}")
+        logger.info(f"({n}) lang:{lang}, target:{target}")
 
         logs = api_new1.get_logs(to_check)
 

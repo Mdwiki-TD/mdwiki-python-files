@@ -36,7 +36,7 @@ api_new = NewApi("www", family="mdwiki")
 
 def work(title, num: int, length: int, from_title: str = "") -> None:
 
-    logger.info(f'-------------------------------------------\n*<<yellow>> >{num}/{length} title:"{title}".')
+    logger.info(f'-------------------------------------------\n*>{num}/{length} title:"{title}".')
 
     if num < offset[1]:
         return
@@ -54,12 +54,9 @@ def work(title, num: int, length: int, from_title: str = "") -> None:
 
     ing = page.import_page(family="wikipedia")
 
-    if "test" in sys.argv:
-        logger.info(ing)
-
     done = ing.get("import", [{}])[0].get("revisions", 0)
 
-    logger.info(f"<<green>> imported {done} revisions")
+    logger.info(f"imported {done} revisions")
 
     if done > 0:
 
@@ -74,7 +71,7 @@ def work(title, num: int, length: int, from_title: str = "") -> None:
 
 
 def main() -> None:
-    logger.info("*<<red>> > :")
+    logger.info("*> :")
 
     # python3 imp.py -page:Crohn's_disease
     # python imp.py -newpages:1000

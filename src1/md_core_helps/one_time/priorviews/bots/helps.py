@@ -11,6 +11,8 @@ from md_core_helps.one_time.priorviews.bots import helps
 
 import datetime
 import json
+
+
 import logging
 import re
 import sys
@@ -48,14 +50,14 @@ def isv(comment: str) -> bool:
     comment = comment.lower()
 
     if comment.find("translators without borders") != -1:
-        logger.info(f" <<yellow>> translators without borders: {comment}")
+        logger.info(f" translators without borders: {comment}")
         return True
     if comment.find("(twb)") != -1:
-        logger.info(f" <<yellow>> (twb): {comment}")
+        logger.info(f" (twb): {comment}")
         return True
 
     if comment.find("|user:mr. ibrahem/") != -1:
-        logger.info(f" <<yellow>> |user:mr. ibrahem/ {comment}")
+        logger.info(f" |user:mr. ibrahem/ {comment}")
         return True
 
     return False
@@ -64,7 +66,7 @@ def isv(comment: str) -> bool:
 def is_ip(user) -> bool:
     # skip user match ip address
     if re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", user):
-        logger.info(f" <<yellow>> skip user match ip address: {user}")
+        logger.info(f" skip user match ip address: {user}")
         return True
 
     # skip user match ip address like: 2001:569:F867:EE00:1540:D99D:3F7:3EAE
@@ -72,7 +74,7 @@ def is_ip(user) -> bool:
         r"^(?:(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}|::(?:[A-Fa-f0-9]{1,4}:){0,5}[A-Fa-f0-9]{1,4}|(?:[A-Fa-f0-9]{1,4}:){1,2}:|:(?::[A-Fa-f0-9]{1,4}){1,6}|(?:[A-Fa-f0-9]{1,4}:){1,6}:|:(?::[A-Fa-f0-9]{1,4}){1,7}|(?:[A-Fa-f0-9]{1,4}:){1,7}:|:(?::[A-Fa-f0-9]{1,4}){1,8}|(?:[A-Fa-f0-9]{1,4}:){1,8}:)$",
         user,
     ):
-        logger.info(f" <<yellow>> skip user match ip address: {user}")
+        logger.info(f" skip user match ip address: {user}")
         return True
 
     return False
@@ -88,25 +90,19 @@ def talk_url(lang, user, labl) -> str:
 
 
 def dump_data(file, data) -> None:
-    logger.info(f"<<green>> () file:{file}.")
+    logger.info(f"() file:{file}.")
     try:
         with open(file, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
-        logger.error("<<red>> keyboard interrupt sys.exit()")
+        logger.error("keyboard interrupt sys.exit()")
 
         with open(f"{file}_1", "w", encoding="utf-8") as f:
             json.dump(data, f)
 
         sys.exit()
     except Exception as e:
-        logger.error(f"<<red>> dump Error: {e}")
+        logger.error(f"dump Error: {e}")
 
 
-__all__ = [
-    "views_url",
-    "isv",
-    "is_ip",
-    "talk_url",
-    "dump_data",
-]
+

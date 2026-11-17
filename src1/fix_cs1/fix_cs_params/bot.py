@@ -218,11 +218,11 @@ class OnePage:
                 temp.set_arg(new_p, p1_value)
 
             if p1_value == p2_value:
-                logger.info(f"<<yellow>> : {old_p} && {new_p} == <<green>> ({p1_value})")
+                logger.info(f": {old_p} && {new_p} == ({p1_value})")
             else:
-                logger.info(f"<<yellow>> : |{old_p}={p1_value} && |{new_p}={p2_value}")
+                logger.info(f": |{old_p}={p1_value} && |{new_p}={p2_value}")
 
-            logger.info(f"\t <<red>> del {old_p=}")
+            logger.info(f"\t del {old_p=}")
 
             self.removed.setdefault(old_p, 0)
             self.removed[old_p] += 1
@@ -296,7 +296,7 @@ def one_title(title) -> None:
 
 
 def main() -> None:
-    logger.info("*<<red>> > :")
+    logger.info("*> :")
 
     cat = "Category:CS1 errors: redundant parameter"
 
@@ -324,8 +324,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    if "test" in sys.argv:
-        title = "Urinary_system"
-        one_title(title)
-    else:
-        main()
+    main()

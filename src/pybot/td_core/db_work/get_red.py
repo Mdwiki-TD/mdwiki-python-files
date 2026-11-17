@@ -5,6 +5,7 @@
 
 python3 c9/pwb.py td_core/db_work/get_red
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging
@@ -104,7 +105,7 @@ def get_pages(tab) -> None:
     if old_way:
         logger.info("===================")
         if tat != "":
-            logger.info("<<red>> redirects: ")
+            logger.info("redirects: ")
             logger.info(tat)
             logger.info("===================")
 

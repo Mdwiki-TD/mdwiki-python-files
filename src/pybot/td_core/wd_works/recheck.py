@@ -4,6 +4,7 @@
 
 xpython3 c9/pwb.py td_core/wd_works/recheck
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging
@@ -66,7 +67,7 @@ def dodo_sql() -> None:
         # targets_done[lang][py_tools.ec_de_code(target , 'encode')] = { "user" : user , "target" : target, "mdtitle" : title }
         targets_done[lang][target] = {"user": user, "target": target, "mdtitle": title}
 
-    logger.info(f"<<yellow>> find {len_done_target} with target, and {len_no_target} without ")
+    logger.info(f"find {len_done_target} with target, and {len_no_target} without ")
 
 
 def do_it_sql(lange, targets) -> None:
@@ -98,7 +99,7 @@ def do_it_sql(lange, targets) -> None:
         res_len = len(result)
 
         if res_len == len(group):
-            logger.info("<<green>> len(result) == len(group) 100.")
+            logger.info("len(result) == len(group) 100.")
 
         result_n = []
 
@@ -138,32 +139,32 @@ def work_with_2_qids(oldq, new_q) -> None:
 
     len_sites = len(false_sitelinks)
 
-    logger.info(f"<<blue>> len_sites {len_sites}")
+    logger.info(f"len_sites {len_sites}")
 
     logger.info(false_sitelinks)
 
     en = false_sitelinks.get("enwiki", "")
 
     if en.startswith("User:Mr. Ibrahem"):
-        logger.info(f"<<blue>> remove sitelink {en}")
+        logger.info(f"remove sitelink {en}")
         remove = wikidataapi.post({"action": "wbsetsitelink", "id": oldq, "linksite": "enwiki"}, token=True)
         if "success" in remove:
             len_sites -= 1
-            logger.info("<<green>> **remove sitelink true.")
+            logger.info("**remove sitelink true.")
         else:
-            logger.info("<<red>> **remove sitelink false.")
+            logger.info("**remove sitelink false.")
             logger.info(remove)
 
         remove2 = wikidataapi.labels_api(oldq, "", "en", remove=True)
 
         if remove2:
             len_sites -= 1
-            logger.info("<<green>> **remove2 label true.")
+            logger.info("**remove2 label true.")
         else:
-            logger.info("<<red>> **remove2 label false.")
+            logger.info("**remove2 label false.")
 
     if len_sites in [1, 0]:
-        logger.info("<<blue>> merge qids")
+        logger.info("merge qids")
         wikidataapi.wd_merge(oldq, new_q)
 
     logger.info(" ends.........")
@@ -199,25 +200,25 @@ def start() -> None:
         # logger.info( 'recheck: target:%s, lang:%s' % (target,lang) )
 
         if qid_mdwiki == "" and qid_2 == "":
-            # logger.info( '<<red>> qid_mdwiki is empty for mdtitle:%s' % mdtitle )
+            # logger.info( 'qid_mdwiki is empty for mdtitle:%s' % mdtitle )
             mdwiki_empty_qids[mdtitle] = (lang, target, qid_target)
             continue
 
         if not qid_target:
             empty_qid_target.append(f"{line22},qid_mdwiki:{qid_mdwiki}")
-            # logger.info( '<<red>> qid_target is empty> target:%s' % dsd )
+            # logger.info( 'qid_target is empty> target:%s' % dsd )
             continue
 
         if qid_mdwiki == "" and qid_2 != "":
             mdtitle = tit2
             qid_mdwiki = qid_2
-            logger.info(f"<<yellow>> mdtitle: ({mdtitle}), tit2: ({tit2})")
-            logger.info("<<yellow>> qid_mdwiki for mdtitle is empty, but qid_2 for tit2 is not empty")
+            logger.info(f"mdtitle: ({mdtitle}), tit2: ({tit2})")
+            logger.info("qid_mdwiki for mdtitle is empty, but qid_2 for tit2 is not empty")
 
         if qid_target == qid_mdwiki:
             continue
 
-        # logger.info( '<<red>> qid_target != qid_mdwiki' )
+        # logger.info( 'qid_target != qid_mdwiki' )
 
         qids_to_merge[qid_target] = {"wd_qid": qid_mdwiki, "md_title": mdtitle, "lang": lang}
 
@@ -226,7 +227,7 @@ def start() -> None:
     for oldq, tab in qids_to_merge.items():
         new_q = tab["wd_qid"]
         md_title = tab["md_title"]
-        logger.info(f"<<blue>> oldq:{oldq}, new_q:{new_q},md_title:{md_title}")
+        logger.info(f"oldq:{oldq}, new_q:{new_q},md_title:{md_title}")
 
         work_with_2_qids(oldq, new_q)
 
@@ -269,17 +270,17 @@ def start() -> None:
 
         work_with_2_qids(oldqid, qid2)
 
-    logger.info("<<blue>> mdwiki_empty_qids:")
+    logger.info("mdwiki_empty_qids:")
     to_add = {}
 
     for mdm in mdwiki_empty_qids:
         lang, target, qid_target = mdwiki_empty_qids[mdm]
-        logger.error(f"<<red>> no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}")
+        logger.error(f"no qid for md_title:{mdm}> {lang}: {target}, qid: {qid_target}")
         to_add[mdm] = qid_target
 
-    logger.info("<<blue>> empty_qid_target:")
+    logger.info("empty_qid_target:")
     for lal in empty_qid_target:
-        logger.error(f"<<red>> qid_target is empty> target:{lal}")
+        logger.error(f"qid_target is empty> target:{lal}")
 
     if "add" in sys.argv:
         sql_qids.add_titles_to_qids(to_add)

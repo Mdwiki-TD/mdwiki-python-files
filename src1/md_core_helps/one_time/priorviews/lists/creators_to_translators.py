@@ -8,6 +8,8 @@ from md_core_helps.one_time.priorviews.lists.creators_to_translators import crea
 
 import datetime
 import json
+
+
 import logging
 import os
 from pathlib import Path
@@ -18,6 +20,8 @@ from md_core_helps.one_time.priorviews.lists import translators
 from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_lang
 
 logger = logging.getLogger(__name__)
+
+
 
 
 Dir = Path(__file__).parent
@@ -38,7 +42,7 @@ added = 0
 for lang, links in links_by_lang.items():
     n += 1
 
-    # logger.info(f'<<yellow>> {n}/{len(links_by_lang.keys())} lang: {lang}:')
+    # logger.info(f'{n}/{len(links_by_lang.keys())} lang: {lang}:')
 
     if lang not in creators_as_translators:
         creators_as_translators[lang] = {}
@@ -48,6 +52,7 @@ for lang, links in links_by_lang.items():
     links = [x for x in links if lang_translations.get(x.lower(), "") == ""]
 
     for title in links:
+
         _creator = creators.Creators_by_lang_title.get(lang, {}).get(title, {})
 
         TD = _creator.get("TD")
@@ -71,13 +76,14 @@ for lang, links in links_by_lang.items():
             creators_as_translators[lang][title] = actor
             added += 1
 
-            # logger.info(f'<<blue>> {added}: {title}, actor: {actor}, TD: {TD}')
+            # logger.info(f'{added}: {title}, actor: {actor}, TD: {TD}')
         else:
             notadded += 1
 
-logger.info(f"<<blue>> added: {added}")
-logger.info(f"<<blue>> notadded: {notadded}")
+logger.info(f"added: {added}")
+logger.info(f"notadded: {notadded}")
 
 if __name__ == "__main__":
     # dump creators_as_translators
     helps.dump_data(file_cts, creators_as_translators)
+

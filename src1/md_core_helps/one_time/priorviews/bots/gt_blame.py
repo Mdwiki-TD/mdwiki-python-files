@@ -58,7 +58,7 @@ def match_ref_names(r, refnames: list[str], lang):
     _tags_ = dict(sorted(_tags_.items(), key=lambda item: item[1], reverse=True))
     for k, v in _tags_.items():
         if k in refnames:
-            logger.info(f"<<green>> find: {k=} count: {v=}| main: {refnames[k]=}")
+            logger.info(f"find: {k=} count: {v=}| main: {refnames[k]=}")
             logger.info(f"https://{lang}.wikipedia.org/w/index.php?diff=prev&oldid={r['revid']}")
             logger.info(f"new user: {user}")
             return user
@@ -109,6 +109,7 @@ class FindInHistory:
         d = 0
 
         while continue_params != {} or d == 0:
+
             d += 1
 
             if continue_params:
@@ -232,7 +233,7 @@ def search_history(
         if comment:
             comment_v = helps.isv(comment)
             if comment_v:
-                logger.info(f"<<green>> find: {comment_v=}")
+                logger.info(f"find: {comment_v=}")
                 return user
 
         rs = match_ref_names(r, refname, lang)
@@ -245,7 +246,10 @@ def search_history(
     return ""
 
 
+
 if __name__ == "__main__":
+
     t = search_history("نكاف", "ar")
     logger.info(f"au: {t}")
     sys.exit()
+

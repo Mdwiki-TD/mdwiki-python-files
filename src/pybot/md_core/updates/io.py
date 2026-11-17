@@ -6,6 +6,7 @@
 
 python3 c9/pwb.py md_core/updates/io
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging
@@ -31,8 +32,6 @@ if date_before_20200701.exists():
 
 listo = mdwiki_api_call.get_all_pages("!", namespace="0")
 listo = [x for x in listo if x not in fakalist]
-if "test" in sys.argv:
-    listo = listo[:100]
 
 if "200" in sys.argv:
     listo = listo[:200]
@@ -119,10 +118,8 @@ for Date, pag in new:
 text += """|-
 |}
 """
-if "test" in sys.argv:
-    logger.info(text)
-else:
-    mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
+
+mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
 
 
 __all__ = [

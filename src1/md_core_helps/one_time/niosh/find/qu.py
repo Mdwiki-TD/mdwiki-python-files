@@ -52,6 +52,7 @@ def fix_links(x):
     return x
 
 
+
 for title in titles:
     exts = data[title]
     title = title.replace("_", " ")
@@ -86,8 +87,3 @@ new = dict(sorted(new.items(), key=lambda item: item[0].lower(), reverse=False))
 
 with open(f"{Dir2}/jsons/both.json", "w", encoding="utf-8") as ii:
     json.dump(new, ii, ensure_ascii=False, indent=2)
-
-
-__all__ = [
-    "fix_links",
-]

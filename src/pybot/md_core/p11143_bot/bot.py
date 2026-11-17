@@ -4,9 +4,9 @@ Usage:
 python3 c9/pwb.py md_core/p11143_bot/bot -others
 python3 c9/pwb.py md_core/p11143_bot/bot -td
 
+USED IN mdwiki-jobs.yaml
 """
 
-import functools
 import logging
 import sys
 from typing import Any
@@ -14,20 +14,10 @@ from typing import Any
 from db.mdapi_sql.services import sql_qids, sql_qids_others
 from md_core.p11143_bot.filter_helps import remove_in_db_elements
 from md_core.p11143_bot.wd_helps import add_p11143_to_qids_in_wd, fix_in_wd, make_in_wd_tab
-from md_core_helps.apis.cat_cach import from_cache
-from md_core_helps.bots.check_title import valid_title
+
+from pybot.db.mdapi_sql.services import sql_for_mdwiki
 
 logger = logging.getLogger(__name__)
-
-
-@functools.lru_cache(maxsize=1)
-def load_td_list() -> list[str]:
-    logger.info("make_cash_to_cats:")
-
-    td_list: list[str] = from_cache()
-    td_list = [x for x in td_list if valid_title(x)]
-
-    return td_list
 
 
 def duplicate(merge_qids) -> None:
@@ -44,12 +34,12 @@ def duplicate(merge_qids) -> None:
     va_tab_x = {k: v for k, v in va_tab.items() if len(v) > 1}
 
     if va_tab_x:
-        logger.info(f"<<yellow>> len of va_tab_x: {len(va_tab_x)}")
+        logger.info(f"len of va_tab_x: {len(va_tab_x)}")
 
         for va, qs in va_tab_x.items():
             logger.info(f"va:{va}, qs:{qs}")
 
-    logger.info("<<yellow>> () end...")
+    logger.info("() end...")
 
 
 def add_q(new_qids, ty) -> None:
@@ -62,30 +52,31 @@ def add_q(new_qids, ty) -> None:
     if len(new_qids) < 10:
         logger.info("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
 
-    td_list = load_td_list()
+    rows = sql_for_mdwiki.mdwiki_sql_dict("SELECT DISTINCT article_id FROM category_members")
+    td_list = [x["article_id"] for x in rows]
 
     newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in td_list}
     newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in td_list}
 
-    logger.info(f"<<yellow>> : {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
+    logger.info(f": {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
 
     if not newtitles_in_td and not newtitles_not_td:
         return
 
-    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('add "addq" to sys.argv to add them to qids')
 
     if newtitles_in_td:
-        logger.info("<<yellow>> sql_qids.add_titles_to_qids(newtitles_in_td):")
+        logger.info("sql_qids.add_titles_to_qids(newtitles_in_td):")
         for title, qid in newtitles_in_td.items():
             logger.info(f"\t add {title} to qid {qid}")
 
     if newtitles_in_td:
-        logger.info("<<yellow>> sql_qids_others.add_titles_to_qids(newtitles_not_td):")
+        logger.info("sql_qids_others.add_titles_to_qids(newtitles_not_td):")
 
         for title, qid in newtitles_not_td.items():
             logger.info(f"\t add {title} to qid {qid}")
 
-    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('add "addq" to sys.argv to add them to qids')
 
     if "addq" in sys.argv:
         sql_qids.add_titles_to_qids(newtitles_in_td)

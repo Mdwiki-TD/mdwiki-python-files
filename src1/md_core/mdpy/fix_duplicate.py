@@ -84,7 +84,7 @@ def fix_dup(from_title, to_title):
 
 
 def main() -> None:
-    logger.info("*<<red>> > :")
+    logger.info("*> :")
 
     # python3 dup.py -page:Allopurinol
     # python3 dup.py -page:Activated_charcoal_\(medication\)
@@ -114,7 +114,7 @@ def main() -> None:
 
     for nu, title in enumerate(redirects, start=1):
         from_title = title["from"]
-        logger.info(f'-------\n*<<yellow>> >{nu}/{len(redirects)} from_title:"{from_title}".')
+        logger.info(f'-------\n*>{nu}/{len(redirects)} from_title:"{from_title}".')
         to_title = title["to"]
         if to_title in from_to:
             fix_dup(from_title, to_title)

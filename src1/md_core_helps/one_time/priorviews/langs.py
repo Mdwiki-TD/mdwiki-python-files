@@ -6,6 +6,8 @@ python3 c9/pwb.py priorviews/langs -lang:ar write ask
 
 import datetime
 import json
+
+
 import logging
 import sys
 from pathlib import Path
@@ -17,6 +19,8 @@ from md_core_helps.one_time.priorviews.lists.links_by_section import links_by_la
 from mdwiki_api.mdwiki_page import md_MainPage
 
 logger = logging.getLogger(__name__)
+
+
 
 
 Dir = Path(__file__).parent
@@ -31,6 +35,7 @@ tab_new = {}
 tab_new["links"] = {}
 
 for section, links in sects_links_langlinks.items():
+
     for x in links:
         tab_new["links"][x] = {"section": section, "words": 0, "views": 0}
 
@@ -57,6 +62,7 @@ def authors_table(authors, lang):
     lang_cunt = 0
 
     for cunts, users in tab2.items():
+
         for _u in users:
             lang_cunt += cunts
 
@@ -65,6 +71,7 @@ def authors_table(authors, lang):
         usrs_line = ", ".join([helps.talk_url(lang, x, x) for x in users])
 
         authors_text += f"\n! {cunts} \n| {usrs_line}\n|-"
+
 
     authors_text += "\n|}"
 
@@ -87,6 +94,7 @@ def make_lang_textso(lang):
     all_links_with_ar = 0
 
     for section, links in sects_links_langlinks.items():
+
         tab = {x: v[lang] for x, v in links.items() if lang in v}
 
         all_links += len(links)
@@ -229,9 +237,13 @@ def work(lang) -> None:
     if not exists:
         create = page.create(text=newtext, summary="update")
     elif text != newtext:
+
         save_page = page.save(newtext=newtext, summary="update", nocreate=1, minor="")
     else:
         logger.info("no change")
+
+
+
 
 
 if __name__ == "__main__":
@@ -251,7 +263,7 @@ if __name__ == "__main__":
 
     for lang in langs:
         n += 1
-        logger.info(f"<<yellow>> {n}/{lenn} langs.py lang: {lang}")
+        logger.info(f"{n}/{lenn} langs.py lang: {lang}")
 
         work(lang)
 
@@ -259,3 +271,4 @@ if __name__ == "__main__":
         w_all.work_all(translators_all)
 
     json.dump(tab_new, open(sql_file, "w", encoding="utf-8"), indent=2)
+

@@ -9,37 +9,20 @@ logger = logging.getLogger(__name__)
 
 def count_text(text: str):
 
-    text = text.replace("'''", "").replace("''", "")
-
-    tem_text = text
-
-    parsed = wtp.parse(tem_text)
+    parsed = wtp.parse(text)
 
     # remove cat links
     # for link in parsed.wikilinks:   if ":" in link.title:   tem_text = tem_text.replace(str(link), "")
     # parsed = wtp.parse(tem_text)
 
-    # remove tables
-    # remove template
-    # remove html tag include ref tags
-    # remove all comments
-    # remove all external links
-    tem_text = parsed.plain_text()
-    parsed = wtp.parse(tem_text)
-    # replace all wikilinks to be like  [from|some text ] to from
-    # for wikilink in parsed.wikilinks:   tem_text = tem_text.replace(str(wikilink), str(wikilink.title))
-
-    # remove tables like this "{| |}"
-    tem_text = re.sub(r"{|\|[.|\w|\W]*?\|}", "", tem_text)
+    plain = parsed.plain_text()
 
     # remove numbers in string"
-    tem_text = re.sub(r"\d+", "", tem_text)
+    plain = re.sub(r"\d+", "", plain)
 
     # get counts of words
-    length = len(re.findall(r"\w+", tem_text))
-
-    # logger.info(f'count_text: {length}')
-    return tem_text, length
+    length = len(re.findall(r"\w+", plain))
+    return length
 
 
 def count_all(title: str = "", text: str = ""):
@@ -49,11 +32,11 @@ def count_all(title: str = "", text: str = ""):
 
     parsed = wtp.parse(text)
 
-    _te_, pageword = count_text(text)
+    pageword = count_text(text)
 
     section = parsed.get_sections(level=0)[0].contents
 
-    _te_, leadword = count_text(section)
+    leadword = count_text(section)
 
     return leadword, pageword
 

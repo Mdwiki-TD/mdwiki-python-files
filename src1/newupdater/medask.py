@@ -51,14 +51,14 @@ def work_on_title(title, returntext=False):
     text, new_text = get_new_text(title)
 
     if text == "" or new_text == "":
-        logger.info("<<red>> notext")
+        logger.info("notext")
         return None
 
     if text == new_text:
         logger.info("no changes")
         return None
 
-    ask = input(f"<<yellow>> save title:{title}? ")
+    ask = input(f"save title:{title}? ")
 
     if ask in ["y", "", "a"]:
         return mdapi.page_put(new_text, "mdwiki changes.", title)
@@ -77,7 +77,7 @@ def main1():
 
 
 def main():
-    logger.info("*<<red>> > :")
+    logger.info("*> :")
 
     user = ""
     user_limit = "3000"
@@ -139,7 +139,7 @@ def main():
         listen = api_new.get_all_pages(start=starts, namespace=namespaces, limit=limite)
 
         for n, page in enumerate(listen):
-            logger.info(f"<<green>> n:{n}, title:{page}")
+            logger.info(f"n:{n}, title:{page}")
             work_on_title(page)
 
 
@@ -153,7 +153,7 @@ def main():
         lista = pages
 
     for n, page in enumerate(lista):
-        logger.info(f"<<green>> n:{n}, title:{page}")
+        logger.info(f"n:{n}, title:{page}")
         work_on_title(page)
 
 

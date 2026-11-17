@@ -6,7 +6,10 @@ import wikitextparser as wtp
 from wprefs.bots.es_months import fix_es_months
 from wprefs.bots.es_refs import mv_es_refs
 from wprefs.bots.es_section import add_section
+
+
 from wprefs.helps import print_s
+
 
 refs_temps = {
     "cite web": "cita web",
@@ -138,12 +141,15 @@ def fix_temps(text: str):
     new_text = text
 
     for template in parsed.templates:
+
+
         if not template:
             continue
 
         name = str(template.normal_name()).strip()
 
         if name.lower() in refs_temps.keys() or name.lower() in refs_temps.values():
+
             old = template.string
 
             # print_s(f'template = {template}')
@@ -153,6 +159,7 @@ def fix_temps(text: str):
                 # value = arg.value.strip()
 
                 if param in args_to:
+
                     arg.name = args_to[param]
 
             if template.has_arg("url-status"):
@@ -168,6 +175,7 @@ def fix_temps(text: str):
             # print_s(f'new = {new}')
 
             new_text = new_text.replace(old, new)
+
 
     return new_text
 
@@ -222,10 +230,3 @@ def fix_es(text: str, title):
     newtext = mv_es_refs(newtext)
 
     return newtext
-
-
-__all__ = [
-    "fix_temps",
-    "add_lang_en",
-    "fix_es",
-]

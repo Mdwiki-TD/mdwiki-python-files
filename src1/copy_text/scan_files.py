@@ -34,7 +34,7 @@ for path in paths:
     files = list(path.glob("*.html"))
 
     for _n, file in tqdm.tqdm(enumerate(files, 1), total=len(files)):
-        # logger.info(f"<<yellow>> f: {n}/{len(files)} : {file}")
+        # logger.info(f"f: {n}/{len(files)} : {file}")
 
         with open(file, "r", encoding="utf-8") as f:
             text = f.read()
@@ -43,7 +43,7 @@ for path in paths:
             to_del.append(file)
 
 for n, file in enumerate(to_del, 1):
-    logger.error(f"<<red>> f: {n}/{len(to_del)} : Error: {file}")
+    logger.error(f"f: {n}/{len(to_del)} : Error: {file}")
     # del the file
     if "del" in sys.argv:
         os.remove(file)

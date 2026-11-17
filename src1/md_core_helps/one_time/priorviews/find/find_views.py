@@ -6,6 +6,8 @@ python3 c9/pwb.py priorviews/find/find_views test
 
 import datetime
 import json
+
+
 import logging
 import os
 import sys
@@ -31,7 +33,7 @@ N_g = 0
 
 
 def log_views(file_path, data) -> None:
-    logger.info(f"<<yellow>> {len(data)} views")
+    logger.info(f"{len(data)} views")
     # dump data
     helps.dump_data(file_path, data)
 
@@ -64,12 +66,13 @@ def get_v(links, views_data, file_path):
     lena = len(links.keys())
 
     for mdtitle, langs in links.items():
+
         m += 1
 
         if mdtitle not in views_data:
             views_data[mdtitle] = {}
 
-        logger.info(f"<<yellow>> title: {m}/{lena} {mdtitle}")
+        logger.info(f"title: {m}/{lena} {mdtitle}")
 
         if "en" in sys.argv:
             langs["en"] = mdtitle
@@ -77,6 +80,7 @@ def get_v(links, views_data, file_path):
         leno = len(langs.keys())
 
         for lang, title in langs.items():
+
             if lang != "en" and "en" in sys.argv:
                 continue
 
@@ -110,6 +114,7 @@ def start() -> None:
 
     # make text for each section
     for section, links in sects_links_langlinks.items():
+
         logger.info(f"section: {section}")
         logger.info(f"links: {len(links)}")
 
@@ -117,49 +122,8 @@ def start() -> None:
 
         get_v(links, views_data, file)
 
-    log_views(file, views_data)
-
-
-def test() -> None:
-
-    da = {
-        "Pit latrine": {
-            "ar": "مرحاض ذو حفرة",
-            "bn": "খাটা পায়খানা",
-            "ca": "Latrina de fossa",
-            "ee": "Do nugododeƒe",
-            "es": "Letrina de hoyo",
-            "fa": "توالت گودالی",
-            "ha": "Shaddar gargajiya",
-            "hi": "खुड्डी शौचालय",
-            "ig": "Ụlọ mposi",
-            "it": "Latrina a fossa",
-            "ln": "Latrine ya libulu",
-            "nso": "Boithomelo bja mokoti",
-            "or": "ବରପାଲି ପାଇଖାନା",
-            "pl": "Latryna",
-            "ru": "Ямный туалет",
-            "sw": "Choo cha shimo",
-            "ta": "குழி கழிவறை",
-            "tr": "Köy tuvaleti",
-            "ur": "گڑھے والا بیت الخلا",
-            "wo": "Duus",
-            "xh": "Ithoyilethi yomngxuma",
-            "yo": "Ṣalanga oniho",
-            "zh": "旱廁",
-            "zu": "Ithoyilethe lomgodi",
-        }
-    }
-
-    views_data = json.load(open(file, "r", encoding="utf-8"))
-
-    get_v(da, views_data, file)
 
     log_views(file, views_data)
-
 
 if __name__ == "__main__":
-    if "test1" in sys.argv:
-        test()
-    else:
-        start()
+    start()

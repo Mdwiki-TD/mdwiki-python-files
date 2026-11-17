@@ -95,21 +95,21 @@ def add_p11143_to_qids_in_wd(newlist) -> None:
     logger.info(f"len of newlist: {len(newlist)}")
 
     if len(newlist) > 0:
-        logger.info(f"<<yellow>>claims to add_P11143_to_qids: {len(newlist.items())}")
+        logger.info(f"claims to add_P11143_to_qids: {len(newlist.items())}")
         if len(newlist.items()) < 100:
             logger.info("\n".join([f"{k}\t:\t{v}" for k, v in newlist.items()]))
 
         if "add" not in sys.argv:
-            logger.info('<<puruple>> add "add" to sys.argv to add them?')
+            logger.info('add "add" to sys.argv to add them?')
             return
 
         for n, (q, _) in enumerate(newlist.items(), start=1):
-            logger.info(f"<<yellow>> q {n} from {len(newlist)}")
+            logger.info(f"q {n} from {len(newlist)}")
             if q:
                 q = q.strip()
                 # wikidataapi.claim_api_str(q, "P11143", value)
                 if n % 30 == 0:
-                    logger.info(f"<<yellow>> n: {n}")
+                    logger.info(f"n: {n}")
                     time.sleep(5)
 
 
@@ -152,4 +152,4 @@ if __name__ == "__main__":
     # python3 c9/pwb.py md_core/p11143_bot/wd_helps
 
     op = make_in_wd_tab(limit=10)
-    logger.info("<<blue>>\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))
+    logger.info("\n".join([f"{k}\t:\t{v}" for k, v in op.items()]))

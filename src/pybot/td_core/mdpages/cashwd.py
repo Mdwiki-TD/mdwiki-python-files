@@ -78,7 +78,7 @@ def get_qids_sitelinks(qidslist):
 
         params_wd["ids"] = "|".join(qids)
 
-        logger.info(f"<<green>> done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.")
+        logger.info(f"done:{len(all_entities)} from {len(qidslist)}, get sitelinks for {len(qids)} qids.")
 
         json1 = wikidataapi.post(params_wd)
 
@@ -157,7 +157,7 @@ def dump_all(main_table_sites, len_titles):
     missing_langs = {}
 
     for site, miss_list in main_table_sites.items():
-        # logger.info('<<blue>> main_table_sites:%s, len:%d.' % (site, len(miss_list)) )
+        # logger.info('main_table_sites:%s, len:%d.' % (site, len(miss_list)) )
 
         # remove duplicates
         miss_list = list(set(miss_list))
@@ -168,13 +168,13 @@ def dump_all(main_table_sites, len_titles):
         json_file = paths.cash_exists_path / f"{site}.json"
 
         if not os.path.exists(json_file):
-            logger.info(f'.... <<red>> file:"{site}.json not exists ....')
+            logger.info(f'.... file:"{site}.json not exists ....')
 
         # dump miss_list to json_file
         try:
             with open(json_file, "w", encoding="utf-8") as aa:
                 json.dump(miss_list, aa, ensure_ascii=False, indent=2)
-            logger.info(f"<<greenn>>dump to cash_exists/{site}.json done..")
+            logger.info(f"dump to cash_exists/{site}.json done..")
         except Exception:
             logger.exception("Exception:", exc_info=True)
             continue
@@ -184,7 +184,7 @@ def dump_all(main_table_sites, len_titles):
 
 def cash_wd() -> None:
 
-    logger.info("<<green>> ")
+    logger.info("")
 
     titles = []
 
@@ -195,7 +195,7 @@ def cash_wd() -> None:
 
         titles.extend([dd for dd in mdwiki_pages if valid_title(dd) and dd not in titles])
 
-    logger.info(f"<<green>> len of mdwiki_api.subcat:RTT:{len(titles)}.")
+    logger.info(f"len of mdwiki_api.subcat:RTT:{len(titles)}.")
 
     qids_list = {}
 
@@ -226,10 +226,10 @@ def cash_wd() -> None:
     # mis_qids
 
     for old_q, new_q in redirects_qids.items():
-        logger.info(f"<<blue>> redirects_qids:{old_q.ljust(15)} -> {new_q}.")
+        logger.info(f"redirects_qids:{old_q.ljust(15)} -> {new_q}.")
 
     for qd in mis_qids:
-        logger.info(f"<<blue>> missing qids:{qd}.")
+        logger.info(f"missing qids:{qd}.")
 
     logger.info(f" len of redirects_qids: {len(redirects_qids.keys())}")
     logger.info(f" len of missing qids: {len(mis_qids)}")

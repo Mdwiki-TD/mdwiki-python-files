@@ -16,7 +16,7 @@ from typing import Any
 
 import tqdm
 from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
-from db.utils.to_sql import new_to_sql
+from db.to_sql_new import new_to_sql
 from md_core_helps.apis.wd_bots.wikidataapi_post import log_to_wiki, post_it
 from td_core.td_dirs import paths
 
@@ -40,12 +40,12 @@ for q in db_data_main:
     if target and lang:
         in_sql_qid_targets[qid][lang] = target
 
-logger.info(f"<<blue>> found {len(in_sql_qid_targets):,} qid in sql")
+logger.info(f"found {len(in_sql_qid_targets):,} qid in sql")
 
 
 def start_to_sql(data) -> None:
 
-    logger.info(f"<<green>> {len(data)=}")
+    logger.info(f"{len(data)=}")
 
     # data = {q: list(v['sitelinks'].keys()) for q, v in data.items()}
     data = {q: v["sitelinks"] for q, v in data.items()}
@@ -56,7 +56,7 @@ def start_to_sql(data) -> None:
     for qid, sitelinks in data.items():
         qid_in_sql = in_sql_qid_targets.get(qid, {})
 
-        logger.info(f"<<green>> {qid=} {len(sitelinks)=}, qid_in_sql: {len(qid_in_sql)=}")
+        logger.info(f"{qid=} {len(sitelinks)=}, qid_in_sql: {len(qid_in_sql)=}")
 
         new_data = [
             {"qid": qid, "code": code, "target": target}
@@ -69,7 +69,7 @@ def start_to_sql(data) -> None:
 
     columns = ["qid", "code", "target"]
 
-    logger.info(f"<<yellow>> new_data_all: {len(new_data_all)}.")
+    logger.info(f"new_data_all: {len(new_data_all)}.")
 
     if new_data_all:
         new_to_sql(
@@ -84,7 +84,7 @@ def start_to_sql(data) -> None:
 
 
 def dump_sitelinks(lists) -> None:
-    logger.info(f"<<green>> , len of qids: {len(lists.get('qids', {}))}.")
+    logger.info(f", len of qids: {len(lists.get('qids', {}))}.")
     with open(paths.json_files.sitelinks, "w", encoding="utf-8") as aa:
         json.dump(lists, aa)
 
@@ -142,7 +142,7 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
 
     heads = []
 
-    logger.info(f"<<yellow>> {len(all_entities)=}.")
+    logger.info(f"{len(all_entities)=}.")
 
     for qid, tab in all_entities.items():
         if "missing" in tab:
@@ -181,14 +181,14 @@ def get_qids_sitelinks(qs_list, qids_to_mdtitle=None):
 
     table_d["heads"] = list(set(heads))
 
-    logger.info(f"<<yellow>> len of mis_qids: {len(mis_qids)}.")
+    logger.info(f"len of mis_qids: {len(mis_qids)}.")
 
     return table_d
 
 
 def main() -> None:
 
-    logger.info("<<green>> ")
+    logger.info("")
 
     qids_tab = sql_qids.get_all_qids()
 
@@ -213,7 +213,7 @@ def main() -> None:
 
     qids_not = [x for x in qids if x not in lists.get("qids", {})]
 
-    logger.error(f"<<red>> len of qids_not: {len(qids_not)}")
+    logger.error(f"len of qids_not: {len(qids_not)}")
 
     for x in qids_not:
         lists["qids"][x] = {"mdtitle": qids_to_mdtitle.get(x, ""), "sitelinks": {}}
@@ -223,17 +223,5 @@ def main() -> None:
         start_to_sql(lists.get("qids", {}))
 
 
-def test() -> None:
-    qids = ["Q192309"]
-    lists = get_qids_sitelinks(qids)
-    logger.info(f"len of lists: {len(lists)}.")
-    qids = lists.get("qids", {})
-    # logger.info(qids)
-    start_to_sql(qids)
-
-
 if __name__ == "__main__":
-    if "test" in sys.argv:
-        test()
-    else:
-        main()
+    main()

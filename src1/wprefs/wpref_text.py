@@ -11,9 +11,12 @@ from wprefs.wpref_text import fix_page
 import re
 import sys
 
+
 from wprefs.bots.duplicate import duplicate_references
 from wprefs.bots.fix_pt_months import pt_months
 from wprefs.es import fix_es
+
+
 from wprefs.helps import print_s
 from wprefs.infobox import expend_infobox
 
@@ -130,11 +133,3 @@ def fix_page(
         newtext = fix_es(newtext, title)
 
     return newtext
-
-
-__all__ = [
-    "add_lang_en",
-    "remove_false_code",
-    "move_dots_text",
-    "fix_page",
-]

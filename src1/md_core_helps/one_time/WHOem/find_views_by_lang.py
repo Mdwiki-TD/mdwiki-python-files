@@ -5,6 +5,8 @@ python3 c9/pwb.py WHOem/find_views_by_lang
 """
 
 import json
+
+
 import logging
 import os
 import sys
@@ -22,20 +24,20 @@ N_g = {1: 0}
 
 
 def dump_data(file_path, data) -> None:
-    logger.info(f"<<green>> () file:{file_path}.")
-    logger.info(f"<<yellow>> {len(data)} views")
+    logger.info(f"() file:{file_path}.")
+    logger.info(f"{len(data)} views")
     try:
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
-        logger.error("<<red>> keyboard interrupt sys.exit()")
+        logger.error("keyboard interrupt sys.exit()")
 
         with open(f"{file_path}_1", "w", encoding="utf-8") as f:
             json.dump(data, f)
 
         sys.exit()
     except Exception as e:
-        logger.error(f"<<red>> dump Error: {e}")
+        logger.error(f"dump Error: {e}")
 
 
 def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
@@ -49,6 +51,7 @@ def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
 
     # split links to groups by 50 titles
     for i in range(0, len(links), 50):
+
         group = dict(list(links.items())[i : i + 50])
 
         new_data = view_bot.article_views_new(
@@ -62,6 +65,7 @@ def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
         # {'title1': {'all': 501, '2024': 501}, 'title2': {'all': 480, '2024': 480}, ... }
 
         for title, tabe in new_data.items():
+
             mdtitle = lang_links_mdtitle_s.get(lang, {}).get(title, None)
 
             if mdtitle is None:
@@ -142,11 +146,12 @@ def start() -> None:
         views_data = json.load(f)
 
     for lang, tab in to_work.items():
+
         n += 1
 
         views_data.update({x: {} for x in tab.values() if x not in views_data})
 
-        logger.info(f"<<blue>> p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
+        logger.info(f"p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
 
         views_data = get_v(lang, tab, lang_links_mdtitles, file_path, views_data)
 

@@ -3,6 +3,7 @@
 
 python3 c9/pwb.py td_core/db_work/days_7
 
+USED IN mdwiki-jobs.yaml
 """
 
 import logging

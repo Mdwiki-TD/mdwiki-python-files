@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 def not_pages(lista) -> None:
 
-    logger.info("<<green>> start bot users_pages:")
+    logger.info("start bot users_pages:")
 
     tab = {}
 
@@ -26,7 +26,7 @@ def not_pages(lista) -> None:
         tab[lang].append(ta)
 
     for lang, tabs in tab.items():
-        logger.info(f"<<blue>> {lang=}, pages: {len(tabs)}:")
+        logger.info(f"{lang=}, pages: {len(tabs)}:")
 
         for ta in tabs:
             mdtitle = ta["mdtitle"]
