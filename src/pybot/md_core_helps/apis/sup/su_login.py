@@ -29,7 +29,7 @@ def get_mwclient_site(lang, family, username: str, password: str) -> None | Site
     connection.headers["User-Agent"] = user_agent
 
     if os.path.exists(cookies_file):
-        logger.info("<<yellow>>loading cookies")
+        logger.info("loading cookies")
         try:
             # Load cookies from file, including session cookies
             cookie_jar.load(ignore_discard=True, ignore_expires=True)
@@ -47,14 +47,14 @@ def get_mwclient_site(lang, family, username: str, password: str) -> None | Site
             return None
 
     if not site.logged_in:
-        logger.info(f"<<yellow>>logging in to ({domain}), username: {username}")
+        logger.info(f"logging in to ({domain}), username: {username}")
         try:
             site.login(username=username, password=password)
         except mwclient.errors.LoginError as e:
             logger.error(f"Could not login to ({domain}): %s" % e)
 
     if site.logged_in:
-        logger.info(f"<<yellow>>logged in as {site.username} to ({domain})")
+        logger.info(f"logged in as {site.username} to ({domain})")
 
     # Save cookies to file, including session cookies
     cookie_jar.save(ignore_discard=True, ignore_expires=True)

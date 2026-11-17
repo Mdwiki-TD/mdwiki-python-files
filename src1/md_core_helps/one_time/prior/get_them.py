@@ -87,7 +87,7 @@ def filter_urls(links: list[str]) -> list[str]:
             if book_id != "":
                 x2 = f"https://books.google.com/books?id={book_id}"
                 if x2 != x_str:
-                    # logger.info('<<yellow>> google books + 1')
+                    # logger.info('google books + 1')
                     x_str = x2
 
         liste1.append(x_str.lower())

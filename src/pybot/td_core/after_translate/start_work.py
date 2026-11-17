@@ -84,7 +84,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         # tgd_by_md
         target_in = tgd_by_md.get(md_title, "")
 
-        line_p = "<<yellow>>{}:<<default>>{},\t"
+        line_p = "{}:{},\t"
 
         laox = line_p.format("md_title", md_title)
         laox += line_p.format("user", user)
@@ -93,7 +93,7 @@ def start(result, lange, tgd, tgd_by_md, tit_user_lang):
         laox += line_p.format("pupdate", pupdate)
 
         if ns != "0" and target_in != target:
-            # laox += f", <<purple>>[[{target_in=}]]"
+            # laox += f", [[{target_in=}]]"
             laox += line_p.format("target_in", target_in)
 
         if "print" in sys.argv:

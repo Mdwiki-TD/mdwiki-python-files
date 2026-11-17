@@ -91,7 +91,7 @@ def get_db_users() -> list:
 
 def set_target_where_id(new_target, iid) -> None | list[dict[str, Any]]:
 
-    logger.info(f"<<yellow>> () new_target:{new_target}, id:{iid}")
+    logger.info(f"() new_target:{new_target}, id:{iid}")
 
     if new_target == "" or iid == "":
         return None
@@ -104,7 +104,7 @@ def set_target_where_id(new_target, iid) -> None | list[dict[str, Any]]:
 
 def set_deleted_where_id(iid) -> None | list[dict[str, Any]]:
 
-    logger.info(f"<<yellow>> (), id:{iid}")
+    logger.info(f"(), id:{iid}")
 
     if iid == "":
         return None
@@ -116,7 +116,7 @@ def set_deleted_where_id(iid) -> None | list[dict[str, Any]]:
 
 def insert_to_pages_users_to_main(id, target, user, qid) -> bool:
 
-    logger.info(f"<<yellow>> : {id}, {target=}, {user=}, {qid=}")
+    logger.info(f": {id}, {target=}, {user=}, {qid=}")
 
     query = "insert into pages_users_to_main (id, new_target, new_user, new_qid) select %s, %s, %s, %s"
 
@@ -129,10 +129,10 @@ def insert_to_pages_users_to_main(id, target, user, qid) -> bool:
     find_it = mdwiki_sql_dict(qua, values=params)
 
     if find_it:
-        logger.info("<<green>> TRUE.. ")
+        logger.info("TRUE.. ")
         return True
     else:
-        logger.info("<<red>> FALSE.. ")
+        logger.info("FALSE.. ")
         return False
 
 

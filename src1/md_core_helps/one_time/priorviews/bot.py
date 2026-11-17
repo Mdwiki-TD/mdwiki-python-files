@@ -55,7 +55,7 @@ for section, links in sects_links_langlinks.items():
 
 
 all_section_views = sections_text.all_section_views - by_lang.en_views
-logger.info(f"<<green>> all_section_views: {all_section_views:,}")
+logger.info(f"all_section_views: {all_section_views:,}")
 
 newtext = ""
 newtext += "; (Views from July 2015 to June 2023).\n"

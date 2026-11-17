@@ -116,7 +116,7 @@ def get_targets(lang_o) -> None:
                 Lang_to_targets[lang] = {}
             Lang_to_targets[lang][target] = pupdate
 
-    logger.info(f"<<yellow>> find {len(sq)} to work. ")
+    logger.info(f"find {len(sq)} to work. ")
 
 
 def get_views_sql(lang_o) -> None:
@@ -184,7 +184,7 @@ def main() -> None:
             lenlist = len(title_list)
 
             logger.info("---")
-            logger.info(f"<<yellow>> get pageviews for {lenlist} pages, date_start:{start}")
+            logger.info(f"get pageviews for {lenlist} pages, date_start:{start}")
 
             if lenlist < 5:
                 logger.info(", ".join(title_list))

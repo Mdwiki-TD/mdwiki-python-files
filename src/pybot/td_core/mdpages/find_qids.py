@@ -92,9 +92,9 @@ def to_add_wrk(to_add, noqids) -> None:
     logger.info(f"find qid to {len(to_add)} from {len(noqids)} pages.")
 
     if to_add:
-        logger.info("<<yellow>>\n".join([f"{k}\t:\t{v}" for k, v in to_add.items()]))
+        logger.info("\n".join([f"{k}\t:\t{v}" for k, v in to_add.items()]))
 
-        logger.info('<<purple>> add "add" to sys.argv to add them?')
+        logger.info('add "add" to sys.argv to add them?')
 
         if "add" in sys.argv:
             sql_qids.add_titles_to_qids(to_add)
@@ -105,13 +105,13 @@ def to_add_wrk(to_add, noqids) -> None:
 def empty_qids_wrk(empty_qids) -> None:
     logger.info("===================")
 
-    logger.error(f"<<red>>no qids: {len(empty_qids)}")
+    logger.error(f"no qids: {len(empty_qids)}")
 
     if empty_qids:
         for x in empty_qids:
-            logger.info(f"\t<<red>>{x}")
+            logger.info(f"\t{x}")
 
-        logger.info('<<purple>> add "createq" to sys.argv to create new items for them?')
+        logger.info('add "createq" to sys.argv to create new items for them?')
 
         if "createq" in sys.argv:
             create_qids(empty_qids)
@@ -120,7 +120,7 @@ def empty_qids_wrk(empty_qids) -> None:
 def false_qids_wrk(false_qids) -> None:
     logger.info("===================")
     if false_qids:
-        logger.info("<<red>> flase qids:")
+        logger.info("flase qids:")
         for xz, q in false_qids.items():
             title_in = qids_already.get(q, "")
 
@@ -130,7 +130,7 @@ def false_qids_wrk(false_qids) -> None:
 def start() -> None:
 
     if len(noqids) == 0:
-        logger.info('<<green>> noqids list is empty. return "".')
+        logger.info('noqids list is empty. return "".')
         return
 
     new_title_qid = get_qids(noqids)

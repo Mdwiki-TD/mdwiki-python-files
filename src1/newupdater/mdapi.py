@@ -233,7 +233,7 @@ def page_put(new_text, summary, title):
         return ""
 
     if "Success" in str(json1):
-        print_s(f"<<green>> ** true .. [[mdwiki:{title}]]")
+        print_s(f"** true .. [[mdwiki:{title}]]")
         return True
 
     else:

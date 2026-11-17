@@ -126,7 +126,7 @@ def work_in_en_page(title) -> None:
 
     langlinks = page.get_langlinks()
 
-    logger.info(f"<<blue>> en:{title}, \n\tlanglinks: {len(langlinks)}")
+    logger.info(f"en:{title}, \n\tlanglinks: {len(langlinks)}")
 
     advance_work_en(title, title2, page)
 
@@ -182,7 +182,7 @@ def work_in_links(links, main_file, main_file_en, log_it: bool = True) -> None:
     if os.path.exists(main_file_en):
         en_in = json.load(open(main_file_en, encoding="utf-8"))
         allen = en_in
-        logger.info(f"<<green>> There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links...")
+        logger.info(f"There are {len(en_in)} en title in file: {basefilename}, from {len(links)} links...")
 
     if os.path.exists(main_file):
         All = json.load(open(main_file, encoding="utf-8"))
@@ -205,7 +205,7 @@ def work_in_links(links, main_file, main_file_en, log_it: bool = True) -> None:
 
                 if len(ext) > 0 and len(ref) > 0 and len(lead_ex) > 0 and len(lead_re) > 0:
 
-                    logger.info(f"<<yellow>> en {x} already in {basefilename}, skip..........")
+                    logger.info(f"en {x} already in {basefilename}, skip..........")
                     continue
 
         work_in_en_page(x)

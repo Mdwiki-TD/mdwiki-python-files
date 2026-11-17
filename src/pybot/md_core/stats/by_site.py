@@ -54,10 +54,10 @@ def work_in_one_site(site, links):
 
     site = re.sub(r"wiki$", "", site)
 
-    logger.info(f"<<green>> site:{site} links: {len(links)}")
+    logger.info(f"site:{site} links: {len(links)}")
 
     if len(links) < 100:
-        logger.info("<<red>> less than 100 articles")
+        logger.info("less than 100 articles")
         # return
 
     editors = get_editors(links, site)
@@ -65,7 +65,7 @@ def work_in_one_site(site, links):
     editors = filter_editors(editors, site)
 
     if not editors:
-        logger.info("<<red>> no editors")
+        logger.info("no editors")
         return None
 
     if "dump" in sys.argv:
@@ -98,7 +98,7 @@ def work_in_one_site(site, links):
     if p_text != text:
         page.save(newtext=text, summary="update", nocreate=0, minor="")
     else:
-        logger.info("<<green>> no changes")
+        logger.info("no changes")
 
     return editors
 
@@ -118,7 +118,7 @@ def start() -> None:
     files = sorted(files, key=lambda x: os.stat(sites_dir / x).st_size, reverse=True)
 
     for numb, file in enumerate(files, start=1):
-        logger.info(f"<<green>> n: {numb} file: {file}:")
+        logger.info(f"n: {numb} file: {file}:")
 
         if not file.endswith("wiki.json"):
             continue

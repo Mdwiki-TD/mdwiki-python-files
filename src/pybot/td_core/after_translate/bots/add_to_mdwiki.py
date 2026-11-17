@@ -103,7 +103,7 @@ def add_to_pages_db(lange, tab, to_updatex) -> None:
 def add_to_mdwiki_sql(lange, tab, to_updatex) -> None:
     # Taba2 = {"mdtitle": md_title , "target": target, "user":user,"lang":lange,"pupdate":pupdate}
 
-    logger.info("<<red>> :: ")
+    logger.info(":: ")
 
     ns0_pages = {x: va for x, va in tab.items() if str(va["namespace"]) == "0"}
     ns2_pages = {x: va for x, va in tab.items() if str(va["namespace"]) != "0"}

@@ -23,9 +23,9 @@ ta_dir = tool / "cookies"
 
 if not ta_dir.exists():
     ta_dir.mkdir()
-    logger.info("<<green>> mkdir:")
+    logger.info("mkdir:")
     logger.info(f"ta_dir:{ta_dir}")
-    logger.info("<<green>> mkdir:")
+    logger.info("mkdir:")
     os.chmod(ta_dir, statgroup)
 
 ta_tab = {}
@@ -38,9 +38,9 @@ def del_cookies_file(file_path) -> None:
     if file.exists():
         try:
             file.unlink(missing_ok=True)
-            logger.info(f"<<green>> unlink: file:{file}")
+            logger.info(f"unlink: file:{file}")
         except Exception as e:
-            logger.error(f"<<red>> unlink: Exception:{e}")
+            logger.error(f"unlink: Exception:{e}")
 
 
 def get_file_name(lang, family, username: str):
@@ -79,7 +79,7 @@ def get_cookies(lang, family, username: str):
         cookies = from_folder(lang, family, username)
 
     if not cookies:
-        logger.info(f" <<red>> : <<yellow>> [[{lang}:{family}]] user:{username} <<red>> not found")
+        logger.info(f" : [[{lang}:{family}]] user:{username} not found")
         return "make_new"
 
     return cookies

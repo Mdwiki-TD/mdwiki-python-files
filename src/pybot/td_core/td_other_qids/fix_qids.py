@@ -26,7 +26,7 @@ def replace_in_sql(reds, ty) -> None:
     table_name = "qids_others" if ty == "other" else "qids"
 
     for numb, (old_q, new_q) in enumerate(reds.items(), start=1):
-        logger.info(f"<<blue>> {numb}, old_q: {old_q}, new_q: {new_q}")
+        logger.info(f"{numb}, old_q: {old_q}, new_q: {new_q}")
 
         qua = f'update {table_name} set qid = "{new_q}" where qid = "{old_q}"'
 
@@ -38,16 +38,16 @@ def replace_in_sql(reds, ty) -> None:
                 sql_qids.set_qid_where_qid(new_q, old_q)
         else:
             logger.info(qua)
-            logger.info('<<green>> add "fix" to sys.argv to fix them..')
+            logger.info('add "fix" to sys.argv to fix them..')
 
 
 def get_redirects(to_work):
 
-    logger.info("<<yellow>> start ()")
+    logger.info("start ()")
 
     new_list = list(to_work.keys())
 
-    logger.info(f"<<yellow>> start (), {len(new_list)=}")
+    logger.info(f"start (), {len(new_list)=}")
 
     reds = wikidataapi.get_redirects(new_list)
 
@@ -56,7 +56,7 @@ def get_redirects(to_work):
 
 def add_to_qids(sql_results_qids, ty) -> None:
 
-    logger.info(f"<<yellow>> start ({ty=})")
+    logger.info(f"start ({ty=})")
 
     all_in = list(sql_results_qids)
 
@@ -65,7 +65,7 @@ def add_to_qids(sql_results_qids, ty) -> None:
     logger.info(f"len of new_list: {len(new_list)}")
 
     if not new_list:
-        logger.info("<<red>> new_list empty.. exit()..")
+        logger.info("new_list empty.. exit()..")
         return
 
     sql_qids.add_titles_to_qids(new_list, add_empty_qid=True)
@@ -87,7 +87,7 @@ def do(ty) -> None:
     logger.info(f"len of redirects: {len(p_reds)}, len of reds after remove the sames: {len(reds)}")
 
     if reds:
-        logger.info(f'<<green>> {len(reds)=} add "fix" to sys.argv to fix them..')
+        logger.info(f'{len(reds)=} add "fix" to sys.argv to fix them..')
         replace_in_sql(reds, ty)
 
     tab = {to_work.get(old_q): new_q for old_q, new_q in reds.items() if to_work.get(old_q)}

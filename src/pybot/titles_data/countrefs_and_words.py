@@ -47,7 +47,7 @@ class TitleInfo:
         lead_words = count_text(lead_section)
         full_words = count_text(text)
 
-        logger.info(f"<<green>> all:{full_words} \t lead:{lead_words}")
+        logger.info(f"all:{full_words} \t lead:{lead_words}")
 
         # =====================
         # Refs

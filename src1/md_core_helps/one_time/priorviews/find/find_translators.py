@@ -28,7 +28,7 @@ N_g = 0
 
 
 def logem(file, data) -> None:
-    logger.info(f"<<yellow>> {len(data)} words")
+    logger.info(f"{len(data)} words")
     # dump tra_by_lang
     helps.dump_data(file, data)
 
@@ -66,7 +66,7 @@ def get_t(links, lang, data):
         if "new" in sys.argv and value_in != "":
             continue
 
-        logger.info(f"<<yellow>> title: {m}/{lena} {title}, value_in:{value_in}")
+        logger.info(f"title: {m}/{lena} {title}, value_in:{value_in}")
 
         _value = get_translator.get_au(title, lang)
 

@@ -144,22 +144,22 @@ def check_qids(work_list, all_xpages, ty):
                     sames.append(title)
 
     if medwiki_to_en:
-        logger.info("<<yellow>> en titles medwiki_to_enwiki:")
+        logger.info("en titles medwiki_to_enwiki:")
         for numb, (fromm, to) in enumerate(medwiki_to_en.items(), start=1):
             faf = f'["{fromm}"]'
             logger.info(f'\t {numb} from_to{faf.ljust(30)} = "{to}"')
 
     if missing_in_en:
-        logger.info("<<yellow>> titles missing_in_enwiki:")
+        logger.info("titles missing_in_enwiki:")
         for numb, mis in enumerate(missing_in_en, start=1):
-            logger.info(f"\t <<yellow>>{numb}\t{mis.ljust(25)}")
+            logger.info(f"\t {numb}\t{mis.ljust(25)}")
 
     if medwiki_to_enwiki_conflic:
-        logger.info("<<red>> pages both in mdwiki cat:::")
+        logger.info("pages both in mdwiki cat:::")
         for numb, (md, en) in enumerate(medwiki_to_enwiki_conflic.items(), start=1):
             faf = f'["{md}"]'
             fen = f'["{en}"]'
-            logger.info(f"\t <<red>> {numb} page{faf.ljust(40)} to enwiki{fen}")
+            logger.info(f"\t {numb} page{faf.ljust(40)} to enwiki{fen}")
 
     sames = list(set(sames))
     missing_in_en = list(set(missing_in_en))
@@ -170,12 +170,12 @@ def check_qids(work_list, all_xpages, ty):
         if x not in o_qids:
             o_qids[x] = ""
 
-    logger.info(f"<<green>> len of medwiki_to_enwiki: {len(medwiki_to_en):,}")
-    logger.info(f"<<green>> len of missing_in_enwiki: {len(missing_in_en):,}")
-    logger.info(f"<<green>> len of medwiki_to_enwiki_conflic: {len(medwiki_to_enwiki_conflic):,}")
-    logger.info(f"<<green>> len of sames: {len(sames):,}")
-    logger.info(f"<<green>> len of o_qids: {len(o_qids):,}")
-    logger.info(f'<<green>> len of o_qids (qid != ""): {len(o_qids_n):,}')
+    logger.info(f"len of medwiki_to_enwiki: {len(medwiki_to_en):,}")
+    logger.info(f"len of missing_in_enwiki: {len(missing_in_en):,}")
+    logger.info(f"len of medwiki_to_enwiki_conflic: {len(medwiki_to_enwiki_conflic):,}")
+    logger.info(f"len of sames: {len(sames):,}")
+    logger.info(f"len of o_qids: {len(o_qids):,}")
+    logger.info(f'len of o_qids (qid != ""): {len(o_qids_n):,}')
 
     dump_jsons(ty, medwiki_to_en, missing_in_en, sames)
 
@@ -197,7 +197,7 @@ def get_o_qids_new(o_qids, t_qids_in):
     o_qids_new = {x: y for x, y in o_qids.items() if x not in same and x not in diff}
 
     len_empty = [x for x in o_qids_new if o_qids_new[x] == "" and t_qids_in.get(x) == ""]
-    logger.info(f"<<green>> new len of len_empty: {len(len_empty)}")
+    logger.info(f"new len of len_empty: {len(len_empty)}")
 
     # del empty qids but not empty in sql qids
     for ti, q in copy.deepcopy(o_qids_new).items():
@@ -207,7 +207,7 @@ def get_o_qids_new(o_qids, t_qids_in):
     logger.info(f"o_qids_new: len of diff: {len(diff)}")
 
     if diff:
-        logger.info("<<purple>> diff:")
+        logger.info("diff:")
 
         for x in diff:
             logger.info(f"\t x: {x}, qid_in: {t_qids_in[x]} != new qid: {o_qids[x]}")

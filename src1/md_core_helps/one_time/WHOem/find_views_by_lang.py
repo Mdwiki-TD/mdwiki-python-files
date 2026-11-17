@@ -24,20 +24,20 @@ N_g = {1: 0}
 
 
 def dump_data(file_path, data) -> None:
-    logger.info(f"<<green>> () file:{file_path}.")
-    logger.info(f"<<yellow>> {len(data)} views")
+    logger.info(f"() file:{file_path}.")
+    logger.info(f"{len(data)} views")
     try:
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f)
     except KeyboardInterrupt:
-        logger.error("<<red>> keyboard interrupt sys.exit()")
+        logger.error("keyboard interrupt sys.exit()")
 
         with open(f"{file_path}_1", "w", encoding="utf-8") as f:
             json.dump(data, f)
 
         sys.exit()
     except Exception as e:
-        logger.error(f"<<red>> dump Error: {e}")
+        logger.error(f"dump Error: {e}")
 
 
 def get_v(lang, links, lang_links_mdtitle_s, file_path, views_data):
@@ -151,7 +151,7 @@ def start() -> None:
 
         views_data.update({x: {} for x in tab.values() if x not in views_data})
 
-        logger.info(f"<<blue>> p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
+        logger.info(f"p:{n}/{all_length} lang: {lang}, titles: {len(tab)}")
 
         views_data = get_v(lang, tab, lang_links_mdtitles, file_path, views_data)
 

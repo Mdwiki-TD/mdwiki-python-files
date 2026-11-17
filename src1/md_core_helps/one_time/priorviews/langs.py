@@ -263,7 +263,7 @@ if __name__ == "__main__":
 
     for lang in langs:
         n += 1
-        logger.info(f"<<yellow>> {n}/{lenn} langs.py lang: {lang}")
+        logger.info(f"{n}/{lenn} langs.py lang: {lang}")
 
         work(lang)
 

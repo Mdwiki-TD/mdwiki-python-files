@@ -33,7 +33,7 @@ N_g = 0
 
 
 def log_views(file_path, data) -> None:
-    logger.info(f"<<yellow>> {len(data)} views")
+    logger.info(f"{len(data)} views")
     # dump data
     helps.dump_data(file_path, data)
 
@@ -72,7 +72,7 @@ def get_v(links, views_data, file_path):
         if mdtitle not in views_data:
             views_data[mdtitle] = {}
 
-        logger.info(f"<<yellow>> title: {m}/{lena} {mdtitle}")
+        logger.info(f"title: {m}/{lena} {mdtitle}")
 
         if "en" in sys.argv:
             langs["en"] = mdtitle

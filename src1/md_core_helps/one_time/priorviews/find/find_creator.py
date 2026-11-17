@@ -36,7 +36,7 @@ CreatorsData = json.load(open(file, "r", encoding="utf-8"))
 
 
 def log_data() -> None:
-    logger.info(f"<<yellow>> {len(CreatorsData)} CreatorsData")
+    logger.info(f"{len(CreatorsData)} CreatorsData")
     # dump CreatorsData
     helps.dump_data(file, CreatorsData)
 

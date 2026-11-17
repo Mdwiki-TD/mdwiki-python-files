@@ -23,7 +23,7 @@ Dir2 = os.path.dirname(Dir)
 
 
 def log_words(file_path, data) -> None:
-    logger.info(f"<<yellow>> {len(data)} words")
+    logger.info(f"{len(data)} words")
     helps.dump_data(file_path, data)
 
 
@@ -58,7 +58,7 @@ def get_w(links, lang, _words_by_lang):
         if "new" in sys.argv and words_in > 40:
             continue
 
-        logger.info(f"<<yellow>> title: {m}/{lena} {title}, words_in:{words_in}")
+        logger.info(f"title: {m}/{lena} {title}, words_in:{words_in}")
 
         _words = count_words.get_words(title, lang)
 

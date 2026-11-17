@@ -26,7 +26,7 @@ def write(oldtext, text, filepath):
 
     if ASK_all:
 
-        logger.info("<<green>> Save?")
+        logger.info("Save?")
         ask = input(f"save new text?...{filepath}:")
         if ask in ["", "a", "y"]:
             logger.info("save new text")
@@ -48,7 +48,7 @@ def write(oldtext, text, filepath):
 
         with open(filepath, "w", encoding="utf-8") as f:
             f.write(text)
-        logger.info("<<green>> save done..")
+        logger.info("save done..")
 
         return text
 

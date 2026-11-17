@@ -103,7 +103,7 @@ def check_urls(urls) -> None:
             continue
 
         if 500 <= response.status_code < 600:
-            logger.error(f"<<red>> received {response.url} status code {response.status_code}")
+            logger.error(f"received {response.url} status code {response.status_code}")
             errors[u] = True
 
 
@@ -155,7 +155,7 @@ def main() -> None:
         for page in listas:
             num += 1
 
-            logger.info(f"<<yellow>> work {num}/{len(listas)} page: {page}")
+            logger.info(f"work {num}/{len(listas)} page: {page}")
 
             work(page)
 

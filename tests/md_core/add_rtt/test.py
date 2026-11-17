@@ -48,7 +48,7 @@ for table in parsed.tables:
         r_s = x[1].value.strip()
         title = x[2].value.strip()
 
-        logger.info(f"<<green>> title: ({title}), r_s: ({r_s})")
+        logger.info(f"title: ({title}), r_s: ({r_s})")
 
         if x[1].is_header:
             logger.info("skip header")

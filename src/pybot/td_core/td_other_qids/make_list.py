@@ -33,7 +33,7 @@ def add_q(new_qids, ty) -> None:
     if len(new_qids) < 10:
         logger.info("\n".join([f"{k}:{v}" for k, v in new_qids.items()]))
 
-    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('add "addq" to sys.argv to add them to qids')
 
     if ty == "other":
         sql_qids_others.add_titles_to_qids(new_qids, add_empty_qid=True)
@@ -52,7 +52,7 @@ def work_qids(ty, qids_list):
 
     new_qids = get_o_qids_new(o_qids, qids_list)
 
-    logger.info(f"<<green>> new len of new_qids:{len(new_qids)}")
+    logger.info(f"new len of new_qids:{len(new_qids)}")
 
     return new_qids
 

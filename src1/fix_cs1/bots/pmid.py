@@ -97,10 +97,10 @@ def pmid_journal(pmid, param):
                 journal = da_true.get("journalInfo", {}).get("journal", {}).get("title", "")
 
             if journal:
-                logger.info(f"{n}/{len(hit)}: <<green>> id_in: {id_in} - journal: {journal}")
+                logger.info(f"{n}/{len(hit)}: id_in: {id_in} - journal: {journal}")
                 journal_cach[param][pmid] = journal
             else:
-                logger.info(f"{n}/{len(hit)}: <<red>> |{param}={pmid} - journal: {journal}")
+                logger.info(f"{n}/{len(hit)}: |{param}={pmid} - journal: {journal}")
 
             break
 

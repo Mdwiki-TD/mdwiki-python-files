@@ -86,7 +86,7 @@ def gtblame_value(title, lang):
 
 
 def logem() -> None:
-    logger.info(f"<<yellow>> {len(new_data)} words")
+    logger.info(f"{len(new_data)} words")
     # dump new_data
     helps.dump_data(file, new_data)
 
@@ -133,17 +133,17 @@ def get_b(links, lang) -> None:
 
         new_data[lang][title_lower] = value_in
 
-        logger.info(f"<<yellow>> title: {m}/{lena} get_t {title}, value_in:{value_in}")
+        logger.info(f"title: {m}/{lena} get_t {title}, value_in:{value_in}")
 
         # {"time": 20140721110644, "actor": "CFCF", "comment": "Translated from [[:en:African trypanosomiasis|English]] by Somil.Mishra at [[:en:Translators Without Borders|Translators Without Borders]]", "TD": false}
         crate = lang_creators.get(title, {})
         page_time = crate.get("time")
 
         if page_time:
-            logger.info(f"<<yellow>> page_time: {page_time}")
+            logger.info(f"page_time: {page_time}")
             year = int(str(page_time)[0:4])
             if year < 2012 and "all" not in sys.argv:
-                logger.info("<<red>> skip....")
+                logger.info("skip....")
                 continue
 
         _value = gtblame_value(title, lang)
@@ -153,7 +153,7 @@ def get_b(links, lang) -> None:
 
         if _value == "creator":
             _value = crate.get("actor", "")
-            logger.info(f"<<green>> creator _value: {_value}")
+            logger.info(f"creator _value: {_value}")
 
         if value_in != 0 and _value == 0:
             continue

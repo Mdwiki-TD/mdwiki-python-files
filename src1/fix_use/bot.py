@@ -114,7 +114,7 @@ def fix_used(filepath):
 
 
 def start():
-    logger.info(f"<<green>> fixpy: {path=}")
+    logger.info(f"fixpy: {path=}")
 
     pathss = []
 
@@ -123,7 +123,7 @@ def start():
         scanroot = scan_root(root)
 
         if not scanroot:
-            # logger.info(f"<<green>> root: {root}.")
+            # logger.info(f"root: {root}.")
             continue
 
         for f in files:
@@ -133,16 +133,16 @@ def start():
             scanit = scan_root(filepath)
 
             if not scanit:
-                # logger.info(f"<<green>> filepath: {filepath}.")
+                # logger.info(f"filepath: {filepath}.")
                 continue
 
-            # logger.info(f"<<green>> file: {filepath}.")
+            # logger.info(f"file: {filepath}.")
 
             if filepath.endswith(".php"):
                 pathss.append(filepath)
 
     for n, filepath in enumerate(pathss):
-        logger.info(f"<<yellow>> {n}/{len(pathss)}: file: {filepath}.")
+        logger.info(f"{n}/{len(pathss)}: file: {filepath}.")
 
         fix_used(filepath)
 

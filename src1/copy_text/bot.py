@@ -100,7 +100,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"wikitext/{self.sanitized_name}.txt"
         self.save_text(newtext, file_path)
 
-        logger.info("<<yellow>> True.")
+        logger.info("True.")
 
         return newtext
 
@@ -113,7 +113,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"html/{self.sanitized_name}.html"
         self.save_text(html, file_path)
 
-        logger.info(f"<<yellow>> True. {file_path}")
+        logger.info(f"True. {file_path}")
         return html
 
     def to_segments(self, html_text):
@@ -125,7 +125,7 @@ class WikiProcessor:
         file_path = self.base_dir / f"segments/{self.sanitized_name}.html"
         self.save_text(segments, file_path)
 
-        logger.info(f"<<yellow>> True. {file_path}")
+        logger.info(f"True. {file_path}")
 
         return segments
 
@@ -216,11 +216,11 @@ def main():
     if "nodone" not in sys.argv:
         done = get_done(all_pages)
 
-        logger.info(f"<<yellow>> done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
+        logger.info(f"done: {len(done)}. add 'nodone' to sys.argv to skip find done pages.")
 
         all_pages = [x for x in all_pages if fix_title(x) not in done]
 
-    logger.info(f"<<green>> all_pages: {len(all_pages)}, len_old: {len_old}")
+    logger.info(f"all_pages: {len(all_pages)}, len_old: {len_old}")
 
     start(all_pages)
 

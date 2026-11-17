@@ -22,7 +22,7 @@ api_new = NewApi("or", family="wikipedia")
 def create_redirect(target, mdtitle) -> None:
 
     if not target or not mdtitle:
-        logger.error(f"<<red>>** false .. {mdtitle=} | {target=} ")
+        logger.error(f"** false .. {mdtitle=} | {target=} ")
         return
 
     text = f"#redirect [[{target}]]"
@@ -34,7 +34,7 @@ def create_redirect(target, mdtitle) -> None:
         create = page.create(text=text, summary=sus)
 
         if create:
-            logger.info(f"<<green>>** true .. [[or:{mdtitle}]] ")
+            logger.info(f"** true .. [[or:{mdtitle}]] ")
 
 
 def check_all(links):
@@ -62,7 +62,7 @@ def start() -> None:
 
         targets_to_titles[target] = mdtitle
 
-    logger.info("<<yellow>> check targets")
+    logger.info("check targets")
 
     pages, p_not_exists = check_all(list(targets_to_titles.keys()))
 
@@ -71,18 +71,18 @@ def start() -> None:
     mdtitle_exists, c_not_exists = check_all(list(targets_exists.values()))
 
     logger.info(
-        f"<<yellow>> check targets({len(targets_to_titles)}) exists:{len(pages):,} not_exists:{len(p_not_exists):,}"
+        f"check targets({len(targets_to_titles)}) exists:{len(pages):,} not_exists:{len(p_not_exists):,}"
     )
 
     logger.info(
-        f"<<yellow>> check mdwikis({len(targets_exists)}) exists:{len(mdtitle_exists):,} not_exists:{len(c_not_exists):,}"
+        f"check mdwikis({len(targets_exists)}) exists:{len(mdtitle_exists):,} not_exists:{len(c_not_exists):,}"
     )
 
     to_work = {x: v for x, v in targets_exists.items() if v in c_not_exists}
 
     for n, (target, mdtitle) in enumerate(to_work.items(), start=1):
 
-        logger.info(f"----------\n*<<yellow>> p{n}/{len(to_work)} >{target=}, {mdtitle=}.")
+        logger.info(f"----------\n*p{n}/{len(to_work)} >{target=}, {mdtitle=}.")
 
         create_redirect(target, mdtitle)
 

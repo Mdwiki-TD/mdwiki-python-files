@@ -55,7 +55,7 @@ def fetch_pages_views(en_keys: list[str]) -> dict[str, int]:
         data[title] = total
 
     no_views = len(enviews) - len(data)
-    logger.info(f"<<purple>> len of enviews: {len(enviews)}, with views: {len(data)}, no views: {no_views}")
+    logger.info(f"len of enviews: {len(enviews)}, with views: {len(data)}, no views: {no_views}")
 
     return data
 

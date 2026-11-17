@@ -79,7 +79,7 @@ texts = []
 n = 0
 
 logger.info("----------------")
-logger.info("<<yellow>> UPDATE: ")
+logger.info("UPDATE: ")
 
 if UPDATE:
     if "update" in sys.argv:
@@ -127,7 +127,7 @@ if UPDATE:
         logger.info(UPDATE[0])
 
 logger.info("----------------")
-logger.info("<<yellow>> INSERT: ")
+logger.info("INSERT: ")
 
 if INSERT != []:
     intert_quas = [f"""('{title2}', {lead}, {All})""" for lead, All, title2 in INSERT]

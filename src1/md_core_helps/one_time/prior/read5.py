@@ -156,7 +156,7 @@ class WorkAll:
         for t, _all_ in self.all_sections.items():
             lrnn = len(_all_.keys())
 
-            logger.info(f"<<yellow>> section:({t}), \t\twikilinks: {lrnn}")
+            logger.info(f"section:({t}), \t\twikilinks: {lrnn}")
 
             ttt = f"User:Mr. Ibrahem/prior/{t}"
 
@@ -194,7 +194,7 @@ def work_all() -> None:
     if "logall" in sys.argv:
         text_bot.log_all_pages_states()
     else:
-        logger.info('<<yellow>> add "logall" to args to log All pages links green/red..')
+        logger.info('add "logall" to args to log All pages links green/red..')
 
 
 if __name__ == "__main__":

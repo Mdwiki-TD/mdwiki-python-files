@@ -87,7 +87,7 @@ def start() -> None:
     langs = get_langs_tabs()
 
     for lang, tabs in langs.items():
-        logger.info(f"<<green>> lang:{lang}, has {len(tabs)} tabs")
+        logger.info(f"lang:{lang}, has {len(tabs)} tabs")
 
         titles = [x["target"] for x in tabs]
 
@@ -108,16 +108,16 @@ def start() -> None:
             skip_it = skip_by_lang.get(lang, {})
 
             if target in skip_it:
-                logger.info(f"<<yellow>> skip {target}")
+                logger.info(f"skip {target}")
                 continue
 
             new_target = ""
 
             if target in missing and "onlyredirect" not in sys.argv:
-                logger.info(f'<<red>> page "{target}" not exists in {lang}')
+                logger.info(f'page "{target}" not exists in {lang}')
                 deleted, new_target = get_new_target_log(lang, target)
                 if deleted:
-                    logger.info(f'<<red>> page "{target}" deleted in {lang}')
+                    logger.info(f'page "{target}" deleted in {lang}')
                     deleted_pages.append(iid)
 
             elif target in redirects:
@@ -129,20 +129,20 @@ def start() -> None:
 
                 if page2.exists():
                     if page2.isredirect():
-                        logger.info(f"<<yellow>> set_target_where_id() new_target:{new_target}, old target:{target}")
+                        logger.info(f"set_target_where_id() new_target:{new_target}, old target:{target}")
 
                         to_set[iid] = new_target
                         # sql_for_mdwiki.set_target_where_id(new_target, iid)
 
                         text.append([lang, target, new_target])
                 # else:
-                # logger.info(f'<<red>> page "{new_target}" deleted from {lang}')
+                # logger.info(f'page "{new_target}" deleted from {lang}')
                 #     deleted.append(iid)
 
     logger.info(f"len of to_set {len(to_set)}")
 
     for iid, new_target in to_set.items():
-        logger.info(f"<<green>> set_target_where_id() new_target:{new_target}, old iid:{iid}")
+        logger.info(f"set_target_where_id() new_target:{new_target}, old iid:{iid}")
         sql_for_mdwiki.set_target_where_id(new_target, iid)
 
     logger.info(f"len of deleted_pages {len(deleted_pages)}")

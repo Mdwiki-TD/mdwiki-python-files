@@ -75,10 +75,10 @@ def wd_merge(q1, q2) -> bool:
 
     if "success" in r4:
         if '"redirected":1' in r4:
-            logger.info("<<green>> ** true .. redirected.")
+            logger.info("** true .. redirected.")
             return True
         else:
-            logger.info("<<green>> ** true.")
+            logger.info("** true.")
 
             pams2 = {
                 "action": "wbcreateredirect",
@@ -91,12 +91,12 @@ def wd_merge(q1, q2) -> bool:
             r5 = post_it(params=pams2, token=True)
 
             if "success" in r5:
-                logger.info("<<green>> **createredirect true.")
+                logger.info("**createredirect true.")
                 return True
             else:
-                logger.error(f"<<red>> r5{str(r5)}")
+                logger.error(f"r5{str(r5)}")
     else:
-        logger.error(f"<<red>> r4{str(r4)}")
+        logger.error(f"r4{str(r4)}")
     return False
 
 
@@ -116,17 +116,15 @@ def labels_api(qid, label: str, lang, remove: bool = False, summary: str = "") -
     Save_2020_wd.setdefault("labels", False)
 
     if not Save_2020_wd["labels"] and "ask" in sys.argv:
-        sa = ask_put(
-            f'<<lightyellow>> wikidataapi.py Add label:<<lightyellow>>"{lang}:{label}"<<default>> for {qid} Yes or No ? {Main_User[1]} '
-        )
+        sa = ask_put(f'wikidataapi.py Add label:"{lang}:{label}"for {qid} Yes or No ? {Main_User[1]} ')
 
         if not sa:
             return False
 
         if sa == "a":
-            logger.info("<<lightgreen>> ----------------------------------------------")
-            logger.info("<<lightgreen>> wikidataapi.py save without asking.")
-            logger.info("<<lightgreen>> ----------------------------------------------")
+            logger.info("----------------------------------------------")
+            logger.info("wikidataapi.py save without asking.")
+            logger.info("----------------------------------------------")
             Save_2020_wd["labels"] = True
 
     params = {
@@ -145,13 +143,13 @@ def labels_api(qid, label: str, lang, remove: bool = False, summary: str = "") -
             # item2 = re.search(r'(Q\d+)', str(req["error"]['info'])).group(1)
             match = re.search(r"(Q\d+)", str(req["error"]["info"]))
             item2 = match.group(1) if match else "Unknown"
-            logger.error(f"<<red>>API: same label item: {item2}")
+            logger.error(f"API: same label item: {item2}")
 
         if "success" in req:
-            logger.info("<<green>> ** true.")
+            logger.info("** true.")
             return True
         else:
-            logger.error(f"<<red>> r5{str(req)}")
+            logger.error(f"r5{str(req)}")
 
     return False
 
@@ -213,17 +211,17 @@ def new_item(label: str = "", lang: str = "", summary: str = "", returnid: bool 
         return None
 
     if "success" not in req:
-        logger.error(f"<<red>> req{str(req)}")
+        logger.error(f"req{str(req)}")
         return None
 
-    logger.info("<<green>> **Claim_API true.")
+    logger.info("**Claim_API true.")
 
     if returnid:
         qid = None
 
         if "entity" in req and "id" in req["entity"]:
             qid = req["entity"]["id"]
-            logger.info(f'<<green>> returnid:"{qid}" ')
+            logger.info(f'returnid:"{qid}" ')
 
         return qid
 
@@ -252,7 +250,7 @@ def claim_api_str(qid, property, string: str):
 
     qid = qid.strip()
 
-    logger.info(f"<<yellow>> : add claim to qid: {qid}, [{property}:{string}]")
+    logger.info(f": add claim to qid: {qid}, [{property}:{string}]")
 
     if string == "" or qid == "" or property == "":
         return ""
@@ -275,10 +273,10 @@ def claim_api_str(qid, property, string: str):
         return False
 
     if "success" in req:
-        logger.info("<<green>> **Claim_API true.")
+        logger.info("**Claim_API true.")
         return True
     else:
-        logger.error(f"<<red>> req{str(req)}")
+        logger.error(f"req{str(req)}")
 
     return False
 
@@ -294,10 +292,10 @@ def delete_claim(claimid) -> bool:
         return False
 
     if "success" in req:
-        logger.info("<<green>> **Claim_API true.")
+        logger.info("**Claim_API true.")
         return True
     else:
-        logger.error(f"<<red>> req{str(req)}")
+        logger.error(f"req{str(req)}")
 
     return False
 
@@ -320,7 +318,7 @@ def wbsearchentities(search, language, match_alias: bool = False):
         return False
 
     if "success" not in req:
-        logger.error(f"<<red>> : {str(req)}")
+        logger.error(f": {str(req)}")
         return False
 
     table = {}

@@ -16,7 +16,7 @@ for arg in sys.argv:
     arg, _, value = arg.partition(":")
 
     if arg == "-lasi" or arg == "lasi" and value.isdigit():
-        logger.info(f'<<yellow>> change La_si[1] from "{La_si[1]}" to {value}')
+        logger.info(f'change La_si[1] from "{La_si[1]}" to {value}')
 
         La_si[1] = int(value)
 
@@ -38,7 +38,7 @@ def export_en_history(title):
         gg = Session.post(url="https://en.wikipedia.org/w/index.php", data=paramse)
         xmldata = gg.text
 
-    logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
+    logger.info(f"len of history == {len(xmldata)} ")
 
     last = """
     </page>
@@ -58,7 +58,7 @@ def export_en_history(title):
     if "teest" in sys.argv:
         logger.info(revisions)
 
-    logger.info(f'<<yellow>> > title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
+    logger.info(f'> title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
 
     title2 = title.replace(":", "-").replace("/", "-")
     num = 1
@@ -128,11 +128,11 @@ def export(title):
     gg = Session.post(url=urll, data=paramse)
     xmldata = gg.text
 
-    logger.info(f"<<yellow>> len of history == {len(xmldata)} ")
+    logger.info(f"len of history == {len(xmldata)} ")
 
     _revisions = xmldata.split("</revision>")
 
-    logger.info(f'<<yellow>> > title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
+    logger.info(f'> title:"{title}" has {len(xmldata.split("<revision>"))} revisions')
 
     title2 = title.replace(":", "-").replace("/", "-")
 

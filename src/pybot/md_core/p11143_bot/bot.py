@@ -34,12 +34,12 @@ def duplicate(merge_qids) -> None:
     va_tab_x = {k: v for k, v in va_tab.items() if len(v) > 1}
 
     if va_tab_x:
-        logger.info(f"<<yellow>> len of va_tab_x: {len(va_tab_x)}")
+        logger.info(f"len of va_tab_x: {len(va_tab_x)}")
 
         for va, qs in va_tab_x.items():
             logger.info(f"va:{va}, qs:{qs}")
 
-    logger.info("<<yellow>> () end...")
+    logger.info("() end...")
 
 
 def add_q(new_qids, ty) -> None:
@@ -58,25 +58,25 @@ def add_q(new_qids, ty) -> None:
     newtitles_not_td = {title: qid for qid, title in new_qids.items() if title not in td_list}
     newtitles_in_td = {title: qid for qid, title in new_qids.items() if title in td_list}
 
-    logger.info(f"<<yellow>> : {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
+    logger.info(f": {len(newtitles_in_td)=}, {len(newtitles_not_td)=}")
 
     if not newtitles_in_td and not newtitles_not_td:
         return
 
-    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('add "addq" to sys.argv to add them to qids')
 
     if newtitles_in_td:
-        logger.info("<<yellow>> sql_qids.add_titles_to_qids(newtitles_in_td):")
+        logger.info("sql_qids.add_titles_to_qids(newtitles_in_td):")
         for title, qid in newtitles_in_td.items():
             logger.info(f"\t add {title} to qid {qid}")
 
     if newtitles_in_td:
-        logger.info("<<yellow>> sql_qids_others.add_titles_to_qids(newtitles_not_td):")
+        logger.info("sql_qids_others.add_titles_to_qids(newtitles_not_td):")
 
         for title, qid in newtitles_not_td.items():
             logger.info(f"\t add {title} to qid {qid}")
 
-    logger.info('<<puruple>> add "addq" to sys.argv to add them to qids')
+    logger.info('add "addq" to sys.argv to add them to qids')
 
     if "addq" in sys.argv:
         sql_qids.add_titles_to_qids(newtitles_in_td)

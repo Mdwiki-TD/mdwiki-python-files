@@ -64,8 +64,6 @@ def cat_depth(title, depth: int = 0, ns: str = "all", print_s: bool = True) -> l
 
     delta = round(delta, 5)
 
-    logger.info(
-        f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) ns:{ns} in {title}, depth:{depth} in {delta} seconds"
-    )
+    logger.info(f"CatDepth result({len(result_table)}) ns:{ns} in {title}, depth:{depth} in {delta} seconds")
 
     return list(result_table.keys())

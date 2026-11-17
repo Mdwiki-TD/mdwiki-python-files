@@ -33,33 +33,33 @@ def dump_data(revids) -> None:
     logger.info(f"len(revids): {len(revids)}")
 
     if not revids:
-        logger.info("<<red>> revids is empty")
+        logger.info("revids is empty")
         return
 
     with open(file, "w", encoding="utf-8") as f:
         json.dump(revids, f, ensure_ascii=False)
-        logger.info(f"<<blue>> dump to {file}")
+        logger.info(f"dump to {file}")
 
     # try:
     # with open(file2, "w", encoding="utf-8") as f:
     # json.dump(revids, f, ensure_ascii=False)
-    # logger.info(f"<<blue>> dump to {file2}")
+    # logger.info(f"dump to {file2}")
     # except Exception as e:
-    # logger.error(f"<<red>> dump to {file2} error: {e}")
+    # logger.error(f"dump to {file2} error: {e}")
 
     try:
         with open(file3, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
-            logger.info(f"<<blue>> dump to {file3}")
+            logger.info(f"dump to {file3}")
     except Exception as e:
-        logger.error(f"<<red>> dump to {file3} error: {e}")
+        logger.error(f"dump to {file3} error: {e}")
 
     try:
         with open(file4, "w", encoding="utf-8") as f:
             json.dump(revids, f, ensure_ascii=False)
-            logger.info(f"<<blue>> dump to {file4}")
+            logger.info(f"dump to {file4}")
     except Exception as e:
-        logger.error(f"<<red>> dump to {file4} error: {e}")
+        logger.error(f"dump to {file4} error: {e}")
 
 
 def cat_depth(title, depth: int = 0):
@@ -72,7 +72,7 @@ def cat_depth(title, depth: int = 0):
     # result_table = {key: result_table[key] for key in result_table if valid_title(key)}
     result_table = dict(filter(lambda item: valid_title(item[0]), result_table.items()))
 
-    logger.info(f"<<blue>>CatDepth result<<yellow>> ({len(result_table)}) in {title}, depth:{depth}.")
+    logger.info(f"CatDepth result({len(result_table)}) in {title}, depth:{depth}.")
 
     return result_table
 

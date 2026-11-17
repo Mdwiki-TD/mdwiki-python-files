@@ -21,7 +21,7 @@ def get_others_qids() -> dict[str, str]:
 
 
 def add_qid(title, qid):
-    logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
+    logger.info(f"() title:{title}, qid:{qid}")
     qua = f"""
         INSERT INTO {TABLE_NAME} (title, qid)
         SELECT %s, %s
@@ -36,7 +36,7 @@ def add_qid(title, qid):
 
 
 def set_qid_where_qid(new_qid, old_qid):
-    logger.info(f"<<yellow>> () new_qid:{new_qid}, old_qid:{old_qid}")
+    logger.info(f"() new_qid:{new_qid}, old_qid:{old_qid}")
 
     qua = f"UPDATE {TABLE_NAME} set qid = %s where qid = %s;"
     values = [new_qid, old_qid]
@@ -45,7 +45,7 @@ def set_qid_where_qid(new_qid, old_qid):
 
 
 def set_qid_where_title(title, qid):
-    logger.info(f"<<yellow>> () title:{title}, qid:{qid}")
+    logger.info(f"() title:{title}, qid:{qid}")
 
     qua = f"UPDATE {TABLE_NAME} set qid = %s where title = %s;"
     values = [qid, title]
@@ -56,14 +56,14 @@ def set_qid_where_title(title, qid):
 def delete_title_from_db(title, pr: str = ""):
     qua = f"DELETE FROM {TABLE_NAME} where title = %s;"
 
-    logger.info(f"<<yellow>> {pr} ({TABLE_NAME}) title:{title}")
+    logger.info(f"{pr} ({TABLE_NAME}) title:{title}")
 
     return tf_sql_connect_dict(qua, values=[title])
 
 
 def set_title_where_qid(new_title, qid):
 
-    logger.info(f"<<yellow>> () new_title:{new_title}, qid:{qid}")
+    logger.info(f"() new_title:{new_title}, qid:{qid}")
 
     qua = f"UPDATE {TABLE_NAME} set title = %s where qid = %s;"
     values = [new_title, qid]
@@ -80,17 +80,17 @@ def qids_set_title_where_title_qid(old_title, new_title, qid, no_do: bool = Fals
         logger.info(qua % (f'"{new_title}"', f'"{qid}"', f'"{old_title}"'))
         return None
 
-    logger.info(f"<<yellow>> () {new_title=}, {qid=}, {old_title=}")
+    logger.info(f"() {new_title=}, {qid=}, {old_title=}")
 
     return tf_sql_connect_dict(qua, values=values)
 
 
 def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:
 
-    logger.info(f"<<green>> start {add_empty_qid=}:")
+    logger.info(f"start {add_empty_qid=}:")
 
     if not tab0:
-        logger.info("<<red>> tab0 empty..")
+        logger.info("tab0 empty..")
         return
 
     ids_in_db = get_others_qids()
@@ -99,25 +99,25 @@ def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:
     # remove empty qids if add_empty_qid == False
     tab = {t: q for t, q in tab0.items() if t.strip() and (q.strip() or add_empty_qid)}
 
-    logger.info(f"<<yellow>> len of tab: {len(tab)}, tab0: {len(tab0)}")
+    logger.info(f"len of tab: {len(tab)}, tab0: {len(tab0)}")
 
     same = {x: qid for x, qid in tab.items() if qid == ids_in_db.get(x)}
     not_in = {x: qid for x, qid in tab.items() if x not in ids_in_db}
 
-    logger.info(f"<<yellow>> len of ids_in_db: {len(ids_in_db)}")
-    logger.info(f"<<yellow>> len of same qids: {len(same)}")
-    logger.info(f"<<yellow>> len of not_in: {len(not_in)}")
+    logger.info(f"len of ids_in_db: {len(ids_in_db)}")
+    logger.info(f"len of same qids: {len(same)}")
+    logger.info(f"len of not_in: {len(not_in)}")
 
     for title, new_qid in not_in.items():
         add_qid(title, new_qid)
 
     rest_qids = {x: qid for x, qid in tab.items() if x not in same and x not in not_in}
 
-    logger.info(f"<<yellow>> len of rest_qids: {len(rest_qids)}.")
+    logger.info(f"len of rest_qids: {len(rest_qids)}.")
 
     rest_qids = {x: qid for x, qid in rest_qids.items() if qid}
 
-    logger.info(f"<<yellow>> len of rest_qids: {len(rest_qids)} after remove empty qids..")
+    logger.info(f"len of rest_qids: {len(rest_qids)} after remove empty qids..")
 
     if not rest_qids:
         return
@@ -128,11 +128,11 @@ def add_titles_to_qids(tab0, add_empty_qid: bool = False) -> None:
 
     has_diff_qid_in_db = {x: qid for x, qid in rest_qids.items() if ids_in_db.get(x)}
 
-    logger.info(f"<<yellow>> len of last_qids: {len(has_diff_qid_in_db)} after remove titles in db..")
+    logger.info(f"len of last_qids: {len(has_diff_qid_in_db)} after remove titles in db..")
 
     for t, q in has_diff_qid_in_db.items():
         qid_in = ids_in_db.get(t)
-        logger.info(f"<<yellow>>skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
+        logger.info(f"skip... set_qid_where_title({t=}) {qid_in=}, {q=}")
 
 
 __all__ = [
