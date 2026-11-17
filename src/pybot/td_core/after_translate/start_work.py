@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """
-
 from td_core.after_translate import start_work
 # start_work.start(result, lange, tgd, tgd_by_md, tit_user_lang)
 # start_work.work_not_pages()
-
 """
 
 import logging
