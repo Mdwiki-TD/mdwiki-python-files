@@ -73,7 +73,11 @@ def work(title) -> None:
 
     if newtext != text:
         mdwiki_api_call.page_put(
-            newtext=newtext, summary="fix ourworldindatamirror template.", title=title, returntrue=False, diff=True
+            newtext=newtext,
+            summary="fix ourworldindatamirror template.",
+            title=title,
+            returntrue=False,
+            diff=True,
         )
 
     logger.info(pas)

@@ -17,22 +17,16 @@ Prostate abscess
 import json
 import logging
 
-from db.mdapi_sql.services import sql_qids
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
 
 enwiki_to_mdwiki = {}
-mdwiki_to_enwiki = {}
-
-mdtitle_to_qid = sql_qids.get_all_qids()
-
-lala = ""
 
 
 def make_mdwiki_list() -> None:
 
-    ffile = paths.json_files.medwiki_to_enwiki
+    ffile = paths.json_files.medwiki_to_enwiki  # "medwiki_to_enwiki.json"
 
     From_json = {}
 
@@ -45,12 +39,6 @@ def make_mdwiki_list() -> None:
 
     for md, en in From_json.items():
         enwiki_to_mdwiki[en] = md
-        mdwiki_to_enwiki[md] = en
 
 
 make_mdwiki_list()
-
-
-__all__ = [
-    "make_mdwiki_list",
-]

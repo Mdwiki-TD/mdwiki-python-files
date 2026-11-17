@@ -35,7 +35,12 @@ def work(title) -> None:
         thenumbers["done"] += 1
 
         mdwiki_api_call.page_put(
-            oldtext=text, newtext=new_text, summary=summary, title=title, returntrue=False, diff=True
+            oldtext=text,
+            newtext=new_text,
+            summary=summary,
+            title=title,
+            returntrue=False,
+            diff=True,
         )
     else:
         logger.info("no changes.")

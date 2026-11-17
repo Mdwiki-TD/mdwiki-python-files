@@ -240,28 +240,3 @@ def get_all_pages(
 
 def get_usercontribs(user, limit: int | str = "max", namespace: str = "*", ucshow: str = ""):
     return api_new.user_contribs(user, limit=limit, namespace=namespace, ucshow=ucshow)
-
-
-def get_redirect(liste):
-    return api_new.get_titles_redirects(liste)
-
-
-def find_pages_exists_or_not(liste):
-    return api_new.find_pages_exists_or_not(liste)
-
-
-__all__ = [
-    "post_s",
-    "page_put",
-    "create_page",
-    "wordcount",
-    "gettext_and_revid",
-    "get_page_text",
-    "getrevid",
-    "get_page_links",
-    "get_template_pages",
-    "get_all_pages",
-    "get_usercontribs",
-    "get_redirect",
-    "find_pages_exists_or_not",
-]

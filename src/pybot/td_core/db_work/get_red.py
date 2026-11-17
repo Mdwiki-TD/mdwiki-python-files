@@ -12,14 +12,17 @@ import logging
 import sys
 
 from db.mdapi_sql.services import sql_qids, sql_qids_others
-from md_core_helps.apis import mdwiki_api_call
+from mdwiki_api.mdwiki_page import NewApi
 
 logger = logging.getLogger(__name__)
 
-# mdwiki_api.api_new.Login_to_wiki()
-
 qids_title_to_qid = sql_qids.get_all_qids()
 qids_others_title_to_qid = sql_qids_others.get_others_qids()
+
+
+def get_redirect(liste):
+    api_new = NewApi("www", family="mdwiki")
+    return api_new.get_titles_redirects(liste)
 
 
 def get_table(titles):
@@ -36,7 +39,7 @@ def get_table(titles):
 
         done += len(group)
 
-        asa = mdwiki_api_call.get_redirect(group)
+        asa = get_redirect(group)
 
         logger.info(f"work on group of {len(group)} pages, got {len(asa)} redirects, done: {done}/{len(titles)}.")
 
