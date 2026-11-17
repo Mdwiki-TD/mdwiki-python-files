@@ -7,23 +7,13 @@ import logging
 import re
 import sys
 
-from md_core_helps.apis.cat_cach import from_cache
 from md_core_helps.apis.mdwiki_api_call import get_all_pages
 from md_core_helps.apis.wiki_api import submit_api
 from md_core_helps.bots.check_title import valid_title
+from db.mdapi_sql.services import sql_for_mdwiki
 from td_core.td_dirs import paths
 
 logger = logging.getLogger(__name__)
-
-
-@functools.lru_cache(maxsize=1)
-def load_td_list() -> list[str]:
-    logger.info("make_cash_to_cats:")
-
-    td_list: list[str] = from_cache()
-    td_list = [x for x in td_list if valid_title(x)]
-
-    return td_list
 
 
 @functools.lru_cache(maxsize=1)
@@ -41,7 +31,9 @@ def get_pages_to_work(ty: str = "td|other"):
     get pages to work
     """
 
-    td_list = load_td_list()
+    rows = sql_for_mdwiki.mdwiki_sql_dict("SELECT DISTINCT article_id FROM category_members")
+    td_list = [x["article_id"] for x in rows]
+
     all_pages = load_all_pages()
 
     tds_list = td_list[:]
@@ -224,7 +216,6 @@ def get_o_qids_new(o_qids, t_qids_in):
 
 
 __all__ = [
-    "load_td_list",
     "load_all_pages",
     "get_pages_to_work",
     "dump_jsons",

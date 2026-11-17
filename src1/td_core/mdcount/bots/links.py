@@ -43,7 +43,7 @@ def get_valid_links(words_tab) -> list[str]:
 
     vav = get_links_from_cats()
 
-    if "newpages" in sys.argv:
+    if "z" in sys.argv:
         vav2 = vav
         vav = [t for t in vav2 if (t not in words_tab or words_tab[t] < 50)]
 
@@ -92,5 +92,4 @@ def get_valid_links(words_tab) -> list[str]:
 
 __all__ = [
     "get_links_from_cats",
-    "get_valid_links",
 ]

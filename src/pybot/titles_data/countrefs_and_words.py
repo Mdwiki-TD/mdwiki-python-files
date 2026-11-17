@@ -1,152 +1,215 @@
 #!/usr/bin/python3
 """
-إنشاء قائمة بعدد المراجع والكلمات وحفظها في قاعدة البيانات
-
-python3 c9/pwb.py td_core/mdcount/countrefs_and_words newpages
-
-python3 c9/pwb.py td_core/mdcount/countrefs_and_words -title:Esophageal_rupture
+Count references and words (in the lead and in the whole article) for every
+mdwiki article, and store the counts in the `refs_counts` and `words` tables.
 
 USED IN mdwiki-jobs.yaml
 """
 
-import logging
-import sys
+from __future__ import annotations
 
+import logging
+import re
+from collections.abc import Iterator
+from dataclasses import dataclass
+from typing import Any
+
+import tqdm
+import wikitextparser as wtp
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.to_sql_new import new_to_sql
 from md_core_helps.apis import mdwiki_api_call
-from td_core.mdcount.bots.countref_bots import count_ref_from_text
-from td_core.mdcount.bots.lead import count_all
+from td_core.mdcount.bots.wtp_refs import WtpRefs
 
 logger = logging.getLogger(__name__)
 
-refs_tab_data = {"all": {}, "lead": {}}
-words_tab_data = {"all": {}, "lead": {}}
+SQL_BATCH_SIZE = 100
 
 
-def get_table_and_columns(ty):
-    if ty == "ref":
-        table = "refs_counts"
-        title_c = "r_title"
-        all_c = "r_all_refs"
-        lead_c = "r_lead_refs"
-    elif ty == "word":
-        table = "words"
-        title_c = "w_title"
-        all_c = "w_all_words"
-        lead_c = "w_lead_words"
-    else:
-        logger.exception("Unknown type %s", ty)
-        raise ValueError(f"Unknown type {ty}")
-
-    return table, title_c, all_c, lead_c
+@dataclass
+class TitleCount:
+    all: int
+    lead: int
 
 
-def do_to_sql(data_all, data_lead, ty: str = "ref") -> None:
-    table, title_c, all_c, lead_c = get_table_and_columns(ty)
+@dataclass
+class TitleInfo:
+    title: str
+    words: TitleCount
+    refs: TitleCount
 
-    data2 = [{title_c: x, lead_c: v, all_c: data_all.get(x, 0)} for x, v in data_lead.items()]
+    @classmethod
+    def load(cls, title: str, text: str) -> TitleInfo:
+        lead_section = wtp.parse(text).get_sections(level=0)[0].contents
 
-    new_to_sql(
-        data=data2,
-        table_name=table,
-        columns=[title_c, lead_c, all_c],
-        title_columns=[title_c],
+        # =====================
+        # Words
+
+        lead_words = count_text(lead_section)
+        full_words = count_text(text)
+
+        logger.info(f"<<green>> all:{full_words} \t lead:{lead_words}")
+
+        # =====================
+        # Refs
+        refs_all_count = len(WtpRefs.load(text).full_refs)
+        refs_lead_count = len(WtpRefs.load(lead_section).all_refs)
+
+        return cls(
+            title=title,
+            words=TitleCount(all=full_words, lead=lead_words),
+            refs=TitleCount(all=refs_all_count, lead=refs_lead_count),
+        )
+
+    @property
+    def word_table(self) -> dict[str, str | int]:
+        return {
+            "w_title": self.title,
+            "w_lead_words": self.words.lead,
+            "w_all_words": self.words.all,
+        }
+
+    @property
+    def ref_table(self) -> dict[str, str | int]:
+        return {
+            "r_title": self.title,
+            "r_lead_refs": self.refs.lead,
+            "r_all_refs": self.refs.all,
+        }
+
+
+def _plain(text: str) -> str:
+    return wtp.parse(text).plain_text()
+
+
+def _template_to_text(template: wtp.Template) -> str:
+    """Flatten a template into its non-empty argument values, one per bullet."""
+    values = (_plain(arg.value.strip()) for arg in template.arguments if arg.value and arg.value.strip())
+
+    return "\n* ".join(v.strip() for v in values if v.strip())
+
+
+def count_text(text: str) -> int:
+    """Count the words in wikitext, ignoring tags (such as refs) and numbers."""
+    parsed = wtp.parse(text)
+
+    for tag in parsed.get_tags():
+        tag.string = ""
+
+    plain = wtp.parse(parsed.string).plain_text(replace_templates=_template_to_text)
+
+    plain = re.sub(r"\d+", "", plain)
+
+    return len(re.findall(r"\w+", plain))
+
+
+def batched(items: list, size: int) -> Iterator[list]:
+    """Yield successive slices of items, showing a progress bar."""
+    for start in tqdm.tqdm(range(0, len(items), size)):
+        yield items[start : start + size]
+
+
+def sync_table(
+    table_name: str,
+    key_column: str,
+    value_columns: list[str],
+    rows: list[dict[str, Any]],
+    existing: list[dict[str, Any]],
+) -> None:
+    """Insert rows missing from the table, and update rows whose values changed."""
+    columns = [key_column, *value_columns]
+
+    insert_query = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({', '.join(['%s'] * len(columns))})"
+    set_line = ", ".join(f"{col} = %s" for col in value_columns)
+    update_query = f"UPDATE {table_name} SET {set_line} WHERE {key_column} = %s"
+
+    old_by_key = {row[key_column]: row for row in existing}
+
+    to_insert = []
+    to_update = []
+
+    # Later duplicates in rows win.
+    for key, row in {row[key_column]: row for row in rows}.items():
+        old = old_by_key.get(key)
+
+        if old is None:
+            to_insert.append(tuple(row[col] for col in columns))
+        elif any(str(old.get(col, "")) != str(row[col]) for col in value_columns):
+            to_update.append(tuple(row[col] for col in value_columns) + (key,))
+
+    logger.info(f"{table_name}: {len(to_insert)=}, {len(to_update)=}")
+
+    for query, values in ((insert_query, to_insert), (update_query, to_update)):
+        for batch in batched(values, SQL_BATCH_SIZE):
+            sql_for_mdwiki.mdwiki_sql_update(query, values=batch, many=True)
+
+
+def sync_words_table(
+    rows: list[dict[str, Any]],
+    existing: list[dict[str, Any]],
+) -> None:
+    sync_table(
+        table_name="words",
+        key_column="w_title",
+        value_columns=["w_lead_words", "w_all_words"],
+        rows=rows,
+        existing=existing,
     )
 
 
-def get_jsons_new(ty):
-
-    table, title_c, all_c, lead_c = get_table_and_columns(ty)
-
-    in_sql = sql_for_mdwiki.mdwiki_sql_dict(f"select DISTINCT {title_c}, {lead_c}, {all_c} from {table}")
-
-    all_data = {x[title_c]: x[all_c] for x in in_sql}
-
-    lead_data = {x[title_c]: x[lead_c] for x in in_sql}
-
-    logger.info(f"len of lead_data:{len(lead_data.keys())}, all :{len(all_data.keys())}")
-
-    # sort lead_data by name
-    lead_data = {k: lead_data[k] for k in sorted(lead_data)}
-    all_data = {k: all_data[k] for k in sorted(all_data)}
-
-    return all_data, lead_data
+def sync_refs_counts_table(
+    rows: list[dict[str, Any]],
+    existing: list[dict[str, Any]],
+) -> None:
+    sync_table(
+        table_name="refs_counts",
+        key_column="r_title",
+        value_columns=["r_lead_refs", "r_all_refs"],
+        rows=rows,
+        existing=existing,
+    )
 
 
-def count_words(title, text: str) -> None:
+def load_title_infos(titles: list[str]) -> list[TitleInfo]:
+    """Download every page and compute its word and reference counts."""
+    data: list[TitleInfo] = []
 
-    lead_c, all_c = count_all(title="", text=text)
+    for numb, title in enumerate(titles):
+        title = title.replace("\\'", "'")
 
-    words_tab_data["all"][title] = all_c
-    words_tab_data["lead"][title] = lead_c
+        logger.info("------------------")
+        logger.info(f"page {numb} from {len(titles)}, x:{title}")
 
-    logger.info(f"<<green>> all:{all_c} \t lead:{lead_c}")
+        text = mdwiki_api_call.get_page_text(title)
 
+        data.append(TitleInfo.load(title, text))
 
-def count_refs(title, text: str) -> None:
-
-    text2 = text
-
-    all_c = count_ref_from_text(text2)
-
-    leadtext = text2.split("==")[0]
-    lead_c = count_ref_from_text(leadtext, get_short=True)
-
-    refs_tab_data["all"][title] = all_c
-    refs_tab_data["lead"][title] = lead_c
-
-    logger.info(f"<<green>> all:{all_c} \t lead:{lead_c}")
-
-
-def from_sql():
-    que = """select DISTINCT article_id from category_members;"""
-
-    sq = sql_for_mdwiki.mdwiki_sql_dict(que)
-
-    titles2 = [q["article_id"] for q in sq]
-
-    logger.info(f"<<yellow>> sql: find {len(titles2)} titles")
-
-    return titles2
+    return data
 
 
 def main() -> None:
+    rows = sql_for_mdwiki.mdwiki_sql_dict("SELECT DISTINCT article_id FROM category_members")
+    all_titles = [x["article_id"] for x in rows]
 
-    words_tab_data["all"], words_tab_data["lead"] = get_jsons_new("word")
+    data = load_title_infos(all_titles)
 
-    refs_tab_data["all"], refs_tab_data["lead"] = get_jsons_new("ref")
+    # Read the tables after the slow download so the comparison is fresh.
+    words_in_sql = sql_for_mdwiki.mdwiki_sql_dict("SELECT DISTINCT w_title, w_lead_words, w_all_words FROM words")
+    refs_in_sql = sql_for_mdwiki.mdwiki_sql_dict("SELECT DISTINCT r_title, r_lead_refs, r_all_refs FROM refs_counts")
 
-    vaild_links = from_sql()
-
-    for numb, x in enumerate(vaild_links):
-        x = x.replace("\\'", "'")
-
-        logger.info("------------------")
-        logger.info(f"page {numb} from {len(vaild_links)}, x:{x}")
-
-        text = mdwiki_api_call.get_page_text(x)
-
-        count_words(x, text)
-        count_refs(x, text)
-
-    do_to_sql(
-        words_tab_data["all"],
-        words_tab_data["lead"],
-        ty="word",
+    # ==============================
+    # Words
+    sync_words_table(
+        rows=[x.word_table for x in data],
+        existing=words_in_sql,
     )
 
-    do_to_sql(
-        refs_tab_data["all"],
-        refs_tab_data["lead"],
-        ty="ref",
+    # ==============================
+    # Refs
+    sync_refs_counts_table(
+        rows=[x.ref_table for x in data],
+        existing=refs_in_sql,
     )
 
 
 if __name__ == "__main__":
     main()
-
-    if "sql" not in sys.argv:
-        sys.argv.append("sql")
-
-        main()
