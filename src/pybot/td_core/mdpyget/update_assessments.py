@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """
-إنشاء قائمة بالاهمية من الانجليزية
-وحفظها في قاعدة البيانات
+Fetch article importance ratings from English Wikipedia (WikiProject Medicine)
+and store them in the `assessments` table of the mdwiki database.
 """
 
 import logging
 import re
+from collections.abc import Iterator
+
 import tqdm
 
 from db.mdapi_sql.services import sql_for_mdwiki
@@ -16,188 +18,101 @@ logger = logging.getLogger(__name__)
 
 api_new = newapi("en", family="wikipedia")
 
-fals_ase = ["", "na", "unknown"]
+# Importance values that carry no information and may be overwritten.
+EMPTY_IMPORTANCE = {"", "na", "unknown"}
+
+TABLE_NAME = "assessments"
+VIDEO_MD_PREFIX = "Video:"
+VIDEO_EN_PREFIX = "Wikipedia:VideoWiki/"
+API_CHUNK_SIZE = 50
+SQL_BATCH_SIZE = 100
+
+INSERT_QUERY = f"INSERT INTO {TABLE_NAME} (title, importance) VALUES (%s, %s)"
+UPDATE_QUERY = f"UPDATE {TABLE_NAME} SET importance = %s WHERE title = %s"
 
 
-logger = logging.getLogger(__name__)
+def is_empty_importance(value: str | None) -> bool:
+    """Return True when the value is missing or a placeholder such as 'na'."""
+    return (value or "").strip().lower() in EMPTY_IMPORTANCE
 
 
-def insert_dict(
-    list_of_lines,
-    table_name: str,
-    columns: list[str],
-    lento: int = 10,
-) -> None:
-
-    logger.info(f"insert_dict({table_name}): list_of_lines: {len(list_of_lines)}")
-
-    if not list_of_lines:
-        return
-
-    done = 0
-
-    co_line = ", ".join(columns)
-    values_line = ", ".join(["%s"] * len(columns))
-
-    for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
-        tab = list_of_lines[i : i + lento]
-
-        values = []
-
-        for vav in tab:
-            values_k = [vav.get(x, "") for x in columns]
-
-            values_2 = []
-
-            for value in values_k:
-                values_2.append(value)
-
-            values_2 = tuple(values_2)
-
-            values.append(values_2)
-
-        qua = f"""
-            INSERT INTO {table_name} ({co_line})
-            values ({values_line})
-            """
-
-        sql_for_mdwiki.mdwiki_sql_update(qua, values=values, many=True)
-
-        done += len(tab)
-
-        logger.info(f"to_sql.py insert_dict({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
+def batched(items: list, size: int) -> Iterator[list]:
+    """Yield successive slices of items, showing a progress bar."""
+    for start in tqdm.tqdm(range(0, len(items), size)):
+        yield items[start : start + size]
 
 
-def update_table_2(
-    list_of_lines,
-    table_name: str,
-    columns_to_set: list[str] | None = None,
-    lento: int = 10,
-    columns_where: list[str] | None = None,
-) -> None:
+def get_importance(page: dict, title: str) -> str:
+    """Extract the importance of a page from the Medicine project, falling back to VideoWiki for video pages."""
+    assessments = page.get("pageassessments", {})
 
-    columns_to_set = columns_to_set or []
-    columns_where = columns_where or []
+    importance = assessments.get("Medicine", {}).get("importance", "")
 
-    logger.info(f"update_table_2({table_name}): list_of_lines: {len(list_of_lines)}")
+    if is_empty_importance(importance) and title.startswith(VIDEO_EN_PREFIX):
+        importance = assessments.get("Videowiki", {}).get("importance", "")
 
-    done = 0
-
-    for i in tqdm.tqdm(range(0, len(list_of_lines), lento)):
-        tab = list_of_lines[i : i + lento]
-
-        for vav in tab:
-            values = [vav.get(x, "") for x in columns_to_set]
-
-            set_line = ", ".join([f"{x} = %s" for x in columns_to_set])
-
-            qua = f""" update {table_name} set {set_line} where """ + " and ".join([f"{x} = %s" for x in columns_where])
-
-            values.extend([vav[x] for x in columns_where])
-
-            sql_for_mdwiki.mdwiki_sql_update(qua, values=values)
-
-        done += len(tab)
-
-        logger.info(f"to_sql.py update_table_2({table_name}) {done} done, from {len(list_of_lines)} | batch: {lento}.")
+    return importance
 
 
 def fetch_page_assessments(en_keys: list[str]) -> dict[str, str]:
-
+    """Return {mdwiki title: importance} for every title that has a real importance value."""
     data: dict[str, str] = {}
-    # من ميد إلى الإنجليزية
-    # listo = [mdwiki_to_enwiki.get(cc, cc) for cc in en_keys]
 
-    en_keys = [re.sub(r"^Video:", "Wikipedia:VideoWiki/", x, flags=re.IGNORECASE) for x in en_keys]
+    en_keys = [re.sub(rf"^{VIDEO_MD_PREFIX}", VIDEO_EN_PREFIX, x, flags=re.IGNORECASE) for x in en_keys]
 
-    lenn = 0
-
-    for i in range(0, len(en_keys), 50):
-        group = en_keys[i : i + 50]
+    for i in range(0, len(en_keys), API_CHUNK_SIZE):
+        group = en_keys[i : i + API_CHUNK_SIZE]
 
         logger.info(f"get_page_assessments: len of group: {len(group)}")
 
-        result = api_new.get_page_assessments("|".join(group))
+        for page in api_new.get_page_assessments("|".join(group)):
+            title = page["title"]
 
-        ase = {x["title"]: x for x in result}
+            importance = get_importance(page, title)
 
-        for title, tabe in ase.items():
-            # {'pageid': 3186837, 'ns': 0, 'title': 'WAGR syndrome', 'pageassessments': {'Medicine': {'class': 'Start', 'importance': 'Low'}}}
-
-            importance = tabe.get("pageassessments", {}).get("Medicine", {}).get("importance", "")
-
-            if importance.lower() in fals_ase and title.startswith("Wikipedia:VideoWiki/"):
-                importance = tabe.get("pageassessments", {}).get("Videowiki", {}).get("importance", "")
-
-            title = title.replace("Wikipedia:VideoWiki/", "Video:")
-
-            # من الإنجليزية إلى ميد
-            title = enwiki_to_mdwiki.get(title, title)
-
-            if importance.lower() in fals_ase:
+            if is_empty_importance(importance):
                 continue
 
-            lenn += 1 if importance else 0
+            # Map the English title back to the mdwiki title.
+            title = title.replace(VIDEO_EN_PREFIX, VIDEO_MD_PREFIX)
+            title = enwiki_to_mdwiki.get(title, title)
 
             data[title] = importance
 
-    logger.info(f"len of new assessments:{lenn}")
+    logger.info(f"len of new assessments: {len(data)}")
 
     return data
 
 
-def check_it(x, y, old_values) -> bool:
+def save_assessments(data: dict[str, str], from_sql: dict[str, str]) -> None:
+    """Insert new titles, and update existing ones only if their stored importance is empty."""
+    to_insert = [(title, importance) for title, importance in data.items() if title not in from_sql]
 
-    if not old_values.get(x):
-        return True
-
-    if old_values.get(x, "").lower() in fals_ase:
-        return True
-
-    return False
-
-
-def start_to_sql(data: dict[str, str], from_sql: dict[str, str]) -> None:
-    table_name = "assessments"
-    columns = ["title", "importance"]
-
-    new_data_insert = [{"title": x, "importance": v} for x, v in data.items() if x not in from_sql]
-
-    new_data_update = [
-        {"title": x, "importance": v} for x, v in data.items() if x in from_sql and not check_it(x, v, from_sql)
+    to_update = [
+        (importance, title)
+        for title, importance in data.items()
+        if title in from_sql and is_empty_importance(from_sql[title])
     ]
 
-    insert_dict(
-        list_of_lines=new_data_insert,
-        table_name=table_name,
-        columns=columns,
-    )
+    logger.info(f"to insert: {len(to_insert)}, to update: {len(to_update)}")
 
-    update_table_2(
-        list_of_lines=new_data_update,
-        table_name=table_name,
-        columns_to_set=["importance"],
-        lento=100,
-        columns_where=["title"],
-    )
+    for query, rows in ((INSERT_QUERY, to_insert), (UPDATE_QUERY, to_update)):
+        for batch in batched(rows, SQL_BATCH_SIZE):
+            sql_for_mdwiki.mdwiki_sql_update(query, values=batch, many=True)
 
 
 def main() -> None:
+    rows = sql_for_mdwiki.mdwiki_sql_dict("SELECT DISTINCT article_id FROM category_members")
+    all_titles = [x["article_id"] for x in rows]
 
-    article_id_list = sql_for_mdwiki.mdwiki_sql_dict("select DISTINCT article_id from category_members")
-
-    all_titles = [x["article_id"] for x in article_id_list]
-
-    in_sql = sql_for_mdwiki.mdwiki_sql_dict("select DISTINCT title, importance from assessments")
+    in_sql = sql_for_mdwiki.mdwiki_sql_dict(f"SELECT DISTINCT title, importance FROM {TABLE_NAME}")
     from_sql = {x["title"]: x["importance"] for x in in_sql}
 
-    logger.info(f"len of all_titles: {len(all_titles)}, assessments table: {len(from_sql)}")
-
-    logger.info(f"<<green>> len old assessments {len(from_sql)}")
+    logger.info(f"len of all_titles: {len(all_titles)}, old assessments: {len(from_sql)}")
 
     data = fetch_page_assessments(all_titles)
 
-    start_to_sql(data, from_sql)
+    save_assessments(data, from_sql)
 
 
 if __name__ == "__main__":

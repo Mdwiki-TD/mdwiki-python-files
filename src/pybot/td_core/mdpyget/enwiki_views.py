@@ -20,7 +20,7 @@ import re
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import to_sql
+from db.to_sql_new import new_to_sql
 from md_core_helps.apis.mw_views import PageviewsClient
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki, mdwiki_to_enwiki
 from td_core.mdpyget.pages_list import get_links_from_cats
@@ -70,7 +70,12 @@ def make_n_views(en_keys, old_values):
 def start_to_sql(tab) -> None:
     tab = [{"title": x, "en_views": v} for x, v in tab.items()]
     # ---
-    to_sql(tab, "enwiki_pageviews", columns=["title", "en_views"], title_column="title")
+    new_to_sql(
+        data=tab,
+        table_name="enwiki_pageviews",
+        columns=["title", "en_views"],
+        title_columns=["title"],
+    )
 
 
 def check_it(x, y, old_values) -> bool:

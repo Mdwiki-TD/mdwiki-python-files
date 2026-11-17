@@ -9,7 +9,7 @@ import json
 import logging
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.utils.to_sql import to_sql
+from db.to_sql_new import new_to_sql, to_sql
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,12 @@ def do_to_sql(data_all, data_lead, ty: str = "ref") -> None:
     # ---
     data2 = [{title_c: x, lead_c: v, all_c: data_all.get(x, 0)} for x, v in data_lead.items()]
     # ---
-    to_sql(data2, table, [title_c, lead_c, all_c], title_column=title_c)
+    new_to_sql(
+        data=data2,
+        table_name=table,
+        columns=[title_c, lead_c, all_c],
+        title_columns=[title_c],
+    )
 
 
 def make_old_values(all_data, lead_data):

@@ -16,7 +16,7 @@ from typing import Any
 
 import tqdm
 from db.mdapi_sql.services import sql_for_mdwiki, sql_qids
-from db.utils.to_sql import new_to_sql
+from db.to_sql_new import new_to_sql
 from md_core_helps.apis.wd_bots.wikidataapi_post import log_to_wiki, post_it
 from td_core.td_dirs import paths
 
