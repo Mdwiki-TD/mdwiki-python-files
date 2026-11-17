@@ -13,11 +13,10 @@ import logging
 import sys
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from md_core_helps.apis import mdwiki_api_call
-from td_core.mdcount.bots.lead import count_all
-from td_core.mdcount.bots.countref_bots import count_ref_from_text
 from db.to_sql_new import new_to_sql
-
+from md_core_helps.apis import mdwiki_api_call
+from td_core.mdcount.bots.countref_bots import count_ref_from_text
+from td_core.mdcount.bots.lead import count_all
 
 logger = logging.getLogger(__name__)
 

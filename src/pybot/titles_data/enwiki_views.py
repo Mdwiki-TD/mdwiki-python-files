@@ -16,7 +16,7 @@ import re
 from typing import Any
 
 from db.mdapi_sql.services import sql_for_mdwiki
-from db.to_sql_new import insert_dict, update_table, split_new_and_changed
+from db.to_sql_new import insert_dict, split_new_and_changed, update_table
 from md_core_helps.apis.mw_views import PageviewsClient
 from md_core_helps.bots.en_to_md import enwiki_to_mdwiki
 
