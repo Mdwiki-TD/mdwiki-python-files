@@ -17,7 +17,7 @@ from typing import Any
 import tqdm
 import wikitextparser as wtp
 from db.mdapi_sql.services import sql_for_mdwiki
-from md_core_helps.apis import mdwiki_api_call
+from api_services import WikiSiteClient
 from td_core.mdcount.bots.wtp_refs import WtpRefs
 
 logger = logging.getLogger(__name__)
@@ -174,13 +174,19 @@ def load_title_infos(titles: list[str]) -> list[TitleInfo]:
     """Download every page and compute its word and reference counts."""
     data: list[TitleInfo] = []
 
+    wikisite_client = WikiSiteClient()
+    mdsite = wikisite_client.get_site("mdwiki.org")
+    if not mdsite:
+        return []
+
     for numb, title in enumerate(titles):
         title = title.replace("\\'", "'")
 
         logger.info("------------------")
         logger.info(f"page {numb} from {len(titles)}, x:{title}")
 
-        text = mdwiki_api_call.get_page_text(title)
+        page = mdsite.pages[title]
+        text = page.text()
 
         data.append(TitleInfo.load(title, text))
 

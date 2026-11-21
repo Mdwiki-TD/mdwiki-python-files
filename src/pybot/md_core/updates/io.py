@@ -119,7 +119,11 @@ text += """|-
 |}
 """
 
-mdwiki_api_call.page_put(newtext=text, summary="update", title="User:Mr. Ibrahem/pages")
+mdwiki_api_call.page_put(
+    newtext=text,
+    summary="update",
+    title="User:Mr. Ibrahem/pages",
+)
 
 
 __all__ = [

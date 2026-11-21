@@ -9,19 +9,6 @@ numbers = {1: 20000, "done": 0}
 
 api_new = NewApi("www", family="mdwiki")
 
-# pages   = api_new.find_pages_exists_or_not(liste)
-# pages   = api_new.get_all_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
-
-"""
-page      = MainPage(title, 'www', family='mdwiki')
-exists    = page.exists()
-if not exists: return
-
-text        = page.get_text()
-save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
-
-"""
-
 
 def work(title) -> None:
 

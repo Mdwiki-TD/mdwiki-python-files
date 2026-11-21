@@ -122,7 +122,7 @@ class NewApi(NewApiHelpers):
             else:
                 exists += 1
 
-        logger.debug(f"find_pages_exists_or_not : missing:{missing}, exists: {exists}, redirects: {redirects}")
+        logger.debug(f"missing:{missing}, exists: {exists}, redirects: {redirects}")
 
         return table
 
@@ -211,7 +211,7 @@ class NewApi(NewApiHelpers):
                 table[title_x]["exist"] = True
                 exists += 1
 
-        logger.debug(f"find_pages_exists_or_not : missing:{missing}, exists: {exists}, redirects: {redirects}")
+        logger.debug(f"missing:{missing}, exists: {exists}, redirects: {redirects}")
 
         if return_all_jsons:
             return table, all_jsons
@@ -708,7 +708,7 @@ class NewApi(NewApiHelpers):
             "prop": "pageassessments",
             "titles": titles,
             "utf8": 1,
-            "ellimit": "max",
+            "palimit": "max",
             "formatversion": 2,
         }
 
