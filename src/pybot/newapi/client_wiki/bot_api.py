@@ -708,7 +708,7 @@ class NewApi(NewApiHelpers):
             "prop": "pageassessments",
             "titles": titles,
             "utf8": 1,
-            "ellimit": "max",
+            "palimit": "max",
             "formatversion": 2,
         }
 
